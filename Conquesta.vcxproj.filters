@@ -702,6 +702,9 @@
     <ClInclude Include="ColorTheme.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PopUpWindow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">

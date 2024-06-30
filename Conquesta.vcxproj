@@ -597,6 +597,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
+    <ClInclude Include="PopUpWindow.hpp" />
     <ClInclude Include="PressAnyKeyScreen.hpp" />
     <ClInclude Include="Root.hpp" />
   </ItemGroup>
