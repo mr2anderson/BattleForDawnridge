@@ -47,5 +47,6 @@ private:
 	void initGameLogick();
 	int32_t start(sf::RenderWindow &window);
 	void handleGameEvent(GameEvent event);
+	void handlePopUpWindowEvent(PopUpWindowEvent event);
 	void drawCells(sf::RenderWindow &window);
 };

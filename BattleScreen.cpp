@@ -45,13 +45,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 			}
 			else {
 				if (event.type == sf::Event::MouseButtonPressed) {
-					auto pos = sf::Mouse::getPosition();
-					PopUpWindowEvent popUpWindowEvent = this->popUpWindow->click(pos.x, pos.y);
-					if (popUpWindowEvent.close) {
-						delete this->popUpWindow;
-						this->popUpWindow = nullptr;
-					}
-					handleGameEvent(popUpWindowEvent.gameEvent);
+					handlePopUpWindowEvent(this->popUpWindow->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
 				}
 			}
 			
@@ -66,6 +60,13 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 }
 void BattleScreen::handleGameEvent(GameEvent event) {
 
+}
+void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
+	if (event.close) {
+		delete this->popUpWindow;
+		this->popUpWindow = nullptr;
+	}
+	this->handleGameEvent(event.gameEvent);
 }
 void BattleScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < MAP_SIZE_X; i = i + 1) {
