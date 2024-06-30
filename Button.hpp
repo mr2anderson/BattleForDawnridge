@@ -17,17 +17,16 @@
  */
 
 
-#include "MessageWindow.hpp"
+
+#include "Label.hpp"
 
 
-MessageWindow::MessageWindow(uint32_t windowW, uint32_t windowH, const std::string& message) : PopUpWindow(windowW, windowH) {
-	this->label = Label((this->getWindowW() - W) / 2, (this->getWindowH() - H) / 2, W, H, message, 12);
-	this->button = Button((this->getWindowW() - W) / 2 + (W - buttonW) / 2, (this->getWindowH() - H) / 2 + H - buttonH - 5, buttonW, buttonH, "OK", 16);
-}
-void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(this->label, states);
-	target.draw(this->button, states);
-}
-PopUpWindowEvent MessageWindow::click(uint32_t x, uint32_t y) const {
-	return PopUpWindowEvent(this->button.click(x, y));
-}
+#pragma once
+
+
+class Button : public Label {
+public:
+	Button();
+	Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& message, uint32_t charSize);
+	bool click(uint32_t x, uint32_t y) const;
+};

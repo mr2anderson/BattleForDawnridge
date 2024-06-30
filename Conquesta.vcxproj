@@ -486,6 +486,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleScreen.hpp" />
+    <ClInclude Include="Button.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />
@@ -589,6 +590,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameEvent.hpp" />
     <ClInclude Include="HPBar.hpp" />
+    <ClInclude Include="Label.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="MenuScreen.hpp" />
     <ClInclude Include="MessageWindow.hpp" />
@@ -606,10 +608,12 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BattleScreen.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="FontStorage.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="HPBar.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />

@@ -17,10 +17,9 @@
  */
 
 
-#include <sstream>
 #include "PopUpWindow.hpp"
-#include "FontStorage.hpp"
-#include "ColorTheme.hpp"
+#include "Label.hpp"
+#include "Button.hpp"
 
 
 #pragma once
@@ -32,14 +31,11 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	PopUpWindowEvent click(uint32_t x, uint32_t y) const override;
 private:
-	sf::RectangleShape mainRect;
-	sf::RectangleShape button;
-	sf::Text messageText;
-	sf::Text buttonText;
+	Label label;
+	Button button;
 
-	static constexpr uint32_t mainRectW = 200;
-	static constexpr uint32_t mainRectH = 100;
-
+	static constexpr uint32_t W = 200;
+	static constexpr uint32_t H = 100;
 	static constexpr uint32_t buttonW = 50;
 	static constexpr uint32_t buttonH = 25;
 };
