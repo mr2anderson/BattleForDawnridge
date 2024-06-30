@@ -24,13 +24,33 @@ LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
 void LoadingScreen::run(sf::RenderWindow &window) {
-	this->setScreen(window);
-	this->load();
+	this->setBaseScreen(window);
+	this->loadBase();
+
+	this->setNormalScreen(window);
+	this->loadAll();
 }
-void LoadingScreen::setScreen(sf::RenderWindow &window) {
+void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.clear(BACKGROUND_COLOR);
 	window.display();
 }
-void LoadingScreen::load() {
+void LoadingScreen::loadBase() {
 	FontStorage::get()->add("1", "/fonts/1.otf");
+}
+void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
+	sf::Text text;
+	text.setFont(*FontStorage::get()->get("1"));
+	text.setString("Please, wait...");
+	text.setCharacterSize(32);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(2);
+	text.setPosition((window.getSize().x - text.getLocalBounds().width) / 2, window.getSize().y - text.getLocalBounds().height - 50);
+
+	window.clear(BACKGROUND_COLOR);
+	window.draw(text);
+	window.display();
+}
+void LoadingScreen::loadAll() {
+	
 }

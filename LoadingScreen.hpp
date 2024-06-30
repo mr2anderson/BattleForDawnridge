@@ -38,6 +38,8 @@ private:
 	LoadingScreen(const LoadingScreen& copy) = delete;
 	static LoadingScreen* singletone;
 
-	void setScreen(sf::RenderWindow &window);
-	void load();
+	void setBaseScreen(sf::RenderWindow &window);
+	void loadBase();
+	void setNormalScreen(sf::RenderWindow& window);
+	void loadAll();
 };
