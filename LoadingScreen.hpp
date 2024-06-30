@@ -17,11 +17,28 @@
  */
 
 
-#include "LoadingScreen.hpp"
+#include <SFML/Graphics.hpp>
 
 
-int main() {
-	LoadingScreen::get()->run();
+#pragma once
 
-	return 0;
-}
+
+class LoadingScreen {
+public:
+	static LoadingScreen* get() {
+		if (LoadingScreen::singletone == nullptr) {
+			LoadingScreen::singletone = new LoadingScreen();
+		}
+		return LoadingScreen::singletone;
+	}
+	void run();
+private:
+	LoadingScreen() = default;
+	LoadingScreen(const LoadingScreen& copy) = delete;
+	static LoadingScreen* singletone;
+
+	sf::Window window;
+
+	void createWindow();
+	void load();
+};

@@ -20,8 +20,19 @@
 #include "LoadingScreen.hpp"
 
 
-int main() {
-	LoadingScreen::get()->run();
+LoadingScreen* LoadingScreen::singletone = nullptr;
 
-	return 0;
+
+void LoadingScreen::run() {
+	this->createWindow();
+	this->load();
+}
+void LoadingScreen::createWindow() {
+	this->window.create(sf::VideoMode::getDesktopMode(), "Conquesta. Loading...", sf::Style::Fullscreen);
+	this->window.setVerticalSyncEnabled(true);
+	this->window.setFramerateLimit(60);
+	this->window.setMouseCursorVisible(false);
+}
+void LoadingScreen::load() {
+	
 }
