@@ -17,23 +17,15 @@
  */
 
 
-#include "HPBar.hpp"
+#include "FontStorage.hpp"
 
 
-#pragma once
+FontStorage* FontStorage::singletone = nullptr;
 
 
-class BattleScreen {
-public:
-	static BattleScreen* get() {
-		if (BattleScreen::singletone == nullptr) {
-			BattleScreen::singletone = new BattleScreen();
-		}
-		return BattleScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow& window);
-private:
-	BattleScreen() = default;
-	BattleScreen(const BattleScreen& copy) = delete;
-	static BattleScreen* singletone;
-};
+void FontStorage::add(const std::string& name, const std::string& path) {
+    this->fonts[name].loadFromFile(std::string(ROOT) + "/" + path);
+}
+sf::Font* FontStorage::get(const std::string& name) {
+    return &this->fonts[name];
+}

@@ -17,23 +17,23 @@
  */
 
 
-#include "HPBar.hpp"
+
+#include "FontStorage.hpp"
 
 
 #pragma once
 
 
-class BattleScreen {
+class HPBar : public sf::Drawable {
 public:
-	static BattleScreen* get() {
-		if (BattleScreen::singletone == nullptr) {
-			BattleScreen::singletone = new BattleScreen();
-		}
-		return BattleScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow& window);
+	HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	friend HPBar operator+(HPBar a, uint32_t b);
+	friend HPBar operator-(HPBar a, uint32_t b);
 private:
-	BattleScreen() = default;
-	BattleScreen(const BattleScreen& copy) = delete;
-	static BattleScreen* singletone;
+	uint32_t current;
+	uint32_t max;
+	uint32_t x;
+	uint32_t y;
 };

@@ -39,6 +39,12 @@
     <ClCompile Include="BattleScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HPBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontStorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extlibs\bin\x64\sfml-audio-2.dll">
@@ -684,6 +690,15 @@
     <ClInclude Include="BattleScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HPBar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontStorage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Root.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -694,5 +709,6 @@
     <Font Include="resources\sansation.ttf">
       <Filter>Resource Files</Filter>
     </Font>
+    <Font Include="data\fonts\1.ttf" />
   </ItemGroup>
 </Project>

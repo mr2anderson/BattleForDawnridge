@@ -17,23 +17,7 @@
  */
 
 
-#include "HPBar.hpp"
-
-
 #pragma once
 
 
-class BattleScreen {
-public:
-	static BattleScreen* get() {
-		if (BattleScreen::singletone == nullptr) {
-			BattleScreen::singletone = new BattleScreen();
-		}
-		return BattleScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow& window);
-private:
-	BattleScreen() = default;
-	BattleScreen(const BattleScreen& copy) = delete;
-	static BattleScreen* singletone;
-};
+#define ROOT "data"

@@ -368,7 +368,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BattleScreen.cpp" />
+    <ClCompile Include="FontStorage.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
@@ -590,14 +592,18 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
+    <ClInclude Include="FontStorage.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="PressAnyKeyScreen.hpp" />
+    <ClInclude Include="Root.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav" />
   </ItemGroup>
   <ItemGroup>
+    <Font Include="data\fonts\1.ttf" />
     <Font Include="resources\sansation.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

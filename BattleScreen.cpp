@@ -26,6 +26,8 @@ BattleScreen* BattleScreen::singletone = nullptr;
 int32_t BattleScreen::run(sf::RenderWindow& window) {
 	sf::Event event{};
 
+	HPBar a(0, 1000, 5, 5);
+
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
@@ -35,7 +37,9 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 				return 0;
 			}
 		}
-		window.clear(sf::Color::Green);
+		window.clear(sf::Color::Blue);
+		window.draw(a);
+		a = a + 1;
 		window.display();
 	}
 }

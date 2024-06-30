@@ -17,23 +17,31 @@
  */
 
 
-#include "HPBar.hpp"
+#include <unordered_map>
+#include <cstdint>
+#include <string>
+#include <SFML/Graphics.hpp>
+#include "Root.hpp"
 
 
 #pragma once
 
 
-class BattleScreen {
+class FontStorage {
 public:
-	static BattleScreen* get() {
-		if (BattleScreen::singletone == nullptr) {
-			BattleScreen::singletone = new BattleScreen();
-		}
-		return BattleScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow& window);
+    static FontStorage* get() {
+        if (FontStorage::singletone == nullptr) {
+            FontStorage::singletone = new FontStorage();
+        }
+        return FontStorage::singletone;
+    }
+
+    void add(const std::string& name, const std::string& path);
+    sf::Font* get(const std::string& name);
 private:
-	BattleScreen() = default;
-	BattleScreen(const BattleScreen& copy) = delete;
-	static BattleScreen* singletone;
+    FontStorage() = default;
+    FontStorage(const FontStorage& copy);
+    static FontStorage* singletone;
+
+    std::unordered_map<std::string, sf::Font> fonts;
 };
