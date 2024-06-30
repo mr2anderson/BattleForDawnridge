@@ -32,5 +32,5 @@ void LoadingScreen::setScreen(sf::RenderWindow &window) {
 	window.display();
 }
 void LoadingScreen::load() {
-	FontStorage::get()->add("1", "/fonts/1.ttf");
+	FontStorage::get()->add("1", "/fonts/1.otf");
 }
