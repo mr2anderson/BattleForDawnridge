@@ -17,25 +17,16 @@
  */
 
 
-#include "HPBar.hpp"
-#include "ColorTheme.hpp"
-#include "MessageWindow.hpp"
+#include "PopUpWindow.hpp"
 
 
-#pragma once
-
-
-class BattleScreen {
-public:
-	static BattleScreen* get() {
-		if (BattleScreen::singletone == nullptr) {
-			BattleScreen::singletone = new BattleScreen();
-		}
-		return BattleScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow& window);
-private:
-	BattleScreen() = default;
-	BattleScreen(const BattleScreen& copy) = delete;
-	static BattleScreen* singletone;
-};
+PopUpWindow::PopUpWindow(uint32_t windowW, uint32_t windowH) {
+	this->windowW = windowW;
+	this->windowH = windowH;
+}
+uint32_t PopUpWindow::getWindowW() const {
+	return this->windowW;
+}
+uint32_t PopUpWindow::getWindowH() const {
+	return this->windowH;
+}

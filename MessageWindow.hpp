@@ -17,25 +17,29 @@
  */
 
 
-#include "HPBar.hpp"
+#include <sstream>
+#include "PopUpWindow.hpp"
+#include "FontStorage.hpp"
 #include "ColorTheme.hpp"
-#include "MessageWindow.hpp"
 
 
 #pragma once
 
 
-class BattleScreen {
+class MessageWindow : public PopUpWindow {
 public:
-	static BattleScreen* get() {
-		if (BattleScreen::singletone == nullptr) {
-			BattleScreen::singletone = new BattleScreen();
-		}
-		return BattleScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow& window);
+	MessageWindow(uint32_t windowW, uint32_t windowH, const std::string& message);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	std::string click(uint32_t x, uint32_t y) const override;
 private:
-	BattleScreen() = default;
-	BattleScreen(const BattleScreen& copy) = delete;
-	static BattleScreen* singletone;
+	sf::RectangleShape mainRect;
+	sf::RectangleShape button;
+	sf::Text messageText;
+	sf::Text buttonText;
+
+	static constexpr uint32_t mainRectW = 200;
+	static constexpr uint32_t mainRectH = 100;
+
+	static constexpr uint32_t buttonW = 50;
+	static constexpr uint32_t buttonH = 25;
 };

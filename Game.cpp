@@ -45,5 +45,4 @@ void Game::initWindow() {
 	this->window.create(sf::VideoMode::getDesktopMode(), "Conquesta", sf::Style::Fullscreen, settings);
 	this->window.setVerticalSyncEnabled(true);
 	this->window.setFramerateLimit(60);
-	this->window.setMouseCursorVisible(false);
 }

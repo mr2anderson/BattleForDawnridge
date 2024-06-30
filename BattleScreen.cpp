@@ -27,18 +27,26 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 	sf::Event event{};
 
 	HPBar a(0, 1000, 5, 5);
+	MessageWindow w(1920, 1080, "House was damaged or is not built yet");
+	bool wClosed = false;
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
 				return -1;
 			}
-			if (event.type == sf::Event::KeyPressed) {
-				return 0;
+			if (event.type == sf::Event::MouseButtonPressed) {
+				auto pos = sf::Mouse::getPosition();
+				if (w.click(pos.x, pos.y) == "close") {
+					wClosed = true;
+				}
 			}
 		}
 		window.clear(BACKGROUND_COLOR);
 		window.draw(a);
+		if (!wClosed) {
+			window.draw(w);
+		}
 		a = a + 1;
 		window.display();
 	}

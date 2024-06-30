@@ -24,3 +24,4 @@
 
 
 static const sf::Color BACKGROUND_COLOR = sf::Color(10, 10, 10);
+static const sf::Color UI_COLOR = sf::Color(0, 0, 0, 100);

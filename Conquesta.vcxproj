@@ -367,17 +367,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BattleScreen.cpp" />
-    <ClCompile Include="FontStorage.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="HPBar.cpp" />
-    <ClCompile Include="LoadingScreen.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MenuScreen.cpp" />
-    <ClCompile Include="MenuScreen.hpp" />
-    <ClCompile Include="PressAnyKeyScreen.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="extlibs\bin\x64\openal32.dll" />
     <None Include="extlibs\bin\x64\sfml-audio-2.dll" />
     <None Include="extlibs\bin\x64\sfml-audio-d-2.dll" />
@@ -431,6 +421,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <None Include="extlibs\lib\x86\sfml-system-s-d.pdb" />
     <None Include="extlibs\lib\x86\sfml-window-d.pdb" />
     <None Include="extlibs\lib\x86\sfml-window-s-d.pdb" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib" />
@@ -597,6 +588,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
+    <ClInclude Include="MenuScreen.hpp" />
+    <ClInclude Include="MessageWindow.hpp" />
     <ClInclude Include="PopUpWindow.hpp" />
     <ClInclude Include="PressAnyKeyScreen.hpp" />
     <ClInclude Include="Root.hpp" />
@@ -607,6 +600,21 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   <ItemGroup>
     <Font Include="data\fonts\1.ttf" />
     <Font Include="resources\sansation.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BattleScreen.cpp" />
+    <ClCompile Include="FontStorage.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HPBar.cpp" />
+    <ClCompile Include="LoadingScreen.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuScreen.cpp" />
+    <ClCompile Include="MessageWindow.cpp" />
+    <ClCompile Include="PopUpWindow.cpp" />
+    <ClCompile Include="PressAnyKeyScreen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

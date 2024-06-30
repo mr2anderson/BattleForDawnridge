@@ -27,5 +27,11 @@
 
 class PopUpWindow : public sf::Drawable {
 public:
+	PopUpWindow(uint32_t windowW, uint32_t windowH);
 	virtual std::string click(uint32_t x, uint32_t y) const = 0;
+protected:
+	uint32_t getWindowW() const;
+	uint32_t getWindowH() const;
+private:
+	uint32_t windowW, windowH;
 };
