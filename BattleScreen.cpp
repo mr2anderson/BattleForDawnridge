@@ -17,33 +17,25 @@
  */
 
 
-#include "Game.hpp"
+#include "BattleScreen.hpp"
 
 
-Game* Game::singletone = nullptr;
+BattleScreen* BattleScreen::singletone = nullptr;
 
 
-void Game::run() {
-	this->initWindow();
-	LoadingScreen::get()->run(this->window);
-	if (PressAnyKeyScreen::get()->run(this->window) != 0) {
-		return;
-	}
+int32_t BattleScreen::run(sf::RenderWindow& window) {
+	sf::Event event{};
+
 	for (; ;) {
-		if (MenuScreen::get()->run(this->window) != 0) {
-			return;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
+				return -1;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				return 0;
+			}
 		}
-		if (BattleScreen::get()->run(this->window) != 0) {
-			return;
-		}
+		window.clear(sf::Color::Green);
+		window.display();
 	}
-}
-void Game::initWindow() {
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 4;
-
-	this->window.create(sf::VideoMode::getDesktopMode(), "Conquesta", sf::Style::Fullscreen, settings);
-	this->window.setVerticalSyncEnabled(true);
-	this->window.setFramerateLimit(60);
-	this->window.setMouseCursorVisible(false);
 }

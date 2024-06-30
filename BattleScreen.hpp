@@ -17,33 +17,24 @@
  */
 
 
-#include "Game.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
-Game* Game::singletone = nullptr;
+#pragma once
 
 
-void Game::run() {
-	this->initWindow();
-	LoadingScreen::get()->run(this->window);
-	if (PressAnyKeyScreen::get()->run(this->window) != 0) {
-		return;
-	}
-	for (; ;) {
-		if (MenuScreen::get()->run(this->window) != 0) {
-			return;
+class BattleScreen {
+public:
+	static BattleScreen* get() {
+		if (BattleScreen::singletone == nullptr) {
+			BattleScreen::singletone = new BattleScreen();
 		}
-		if (BattleScreen::get()->run(this->window) != 0) {
-			return;
-		}
+		return BattleScreen::singletone;
 	}
-}
-void Game::initWindow() {
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 4;
-
-	this->window.create(sf::VideoMode::getDesktopMode(), "Conquesta", sf::Style::Fullscreen, settings);
-	this->window.setVerticalSyncEnabled(true);
-	this->window.setFramerateLimit(60);
-	this->window.setMouseCursorVisible(false);
-}
+	int32_t run(sf::RenderWindow& window);
+private:
+	BattleScreen() = default;
+	BattleScreen(const BattleScreen& copy) = delete;
+	static BattleScreen* singletone;
+};

@@ -21,6 +21,7 @@
 #include "LoadingScreen.hpp"
 #include "PressAnyKeyScreen.hpp"
 #include "MenuScreen.hpp"
+#include "BattleScreen.hpp"
 
 
 #pragma once

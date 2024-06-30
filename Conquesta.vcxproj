@@ -367,6 +367,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BattleScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
@@ -490,6 +491,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <Library Include="extlibs\lib\x86\vorbisfile.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BattleScreen.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\Export.hpp" />
