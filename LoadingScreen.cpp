@@ -23,15 +23,13 @@
 LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
-void LoadingScreen::run() {
-	this->createWindow();
+void LoadingScreen::run(sf::RenderWindow &window) {
+	this->setScreen(window);
 	this->load();
 }
-void LoadingScreen::createWindow() {
-	this->window.create(sf::VideoMode::getDesktopMode(), "Conquesta. Loading...", sf::Style::Fullscreen);
-	this->window.setVerticalSyncEnabled(true);
-	this->window.setFramerateLimit(60);
-	this->window.setMouseCursorVisible(false);
+void LoadingScreen::setScreen(sf::RenderWindow &window) {
+	window.clear(sf::Color::Blue);
+	window.display();
 }
 void LoadingScreen::load() {
 	

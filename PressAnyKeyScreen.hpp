@@ -18,25 +18,25 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class LoadingScreen {
+class PressAnyKeyScreen {
 public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
+	static PressAnyKeyScreen* get() {
+		if (PressAnyKeyScreen::singletone == nullptr) {
+			PressAnyKeyScreen::singletone = new PressAnyKeyScreen();
 		}
-		return LoadingScreen::singletone;
+		return PressAnyKeyScreen::singletone;
 	}
-	void run(sf::RenderWindow &window);
+	int32_t run(sf::RenderWindow &window);
 private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
+	PressAnyKeyScreen() = default;
+	PressAnyKeyScreen(const PressAnyKeyScreen& copy) = delete;
+	static PressAnyKeyScreen* singletone;
 
-	void setScreen(sf::RenderWindow &window);
-	void load();
+	int32_t wait(sf::RenderWindow &window);
 };

@@ -24,6 +24,9 @@
     <ClCompile Include="LoadingScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PressAnyKeyScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extlibs\bin\x64\sfml-audio-2.dll">
@@ -658,6 +661,9 @@
       <Filter>Libraries</Filter>
     </ClInclude>
     <ClInclude Include="LoadingScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PressAnyKeyScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

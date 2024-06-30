@@ -17,26 +17,28 @@
  */
 
 
-#include <SFML/Graphics.hpp>
+#include "PressAnyKeyScreen.hpp"
 
 
-#pragma once
+PressAnyKeyScreen* PressAnyKeyScreen::singletone = nullptr;
 
 
-class LoadingScreen {
-public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
+int32_t PressAnyKeyScreen::run(sf::RenderWindow &window) {
+	return this->wait(window);
+}
+int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
+	sf::Event event{};
+
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
+				return -1;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				return 0;
+			}
 		}
-		return LoadingScreen::singletone;
+		window.clear(sf::Color::Red);
+		window.display();
 	}
-	void run(sf::RenderWindow &window);
-private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
-
-	void setScreen(sf::RenderWindow &window);
-	void load();
-};
+}

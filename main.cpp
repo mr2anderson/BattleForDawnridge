@@ -18,10 +18,22 @@
 
 
 #include "LoadingScreen.hpp"
+#include "PressAnyKeyScreen.hpp"
 
 
 int main() {
-	LoadingScreen::get()->run();
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 4;
+
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Conquesta", sf::Style::Fullscreen, settings);
+	window.setVerticalSyncEnabled(true);
+	window.setFramerateLimit(60);
+	window.setMouseCursorVisible(false);
+
+	LoadingScreen::get()->run(window);
+	if (PressAnyKeyScreen::get()->run(window) != 0) {
+		return 0;
+	}
 
 	return 0;
 }
