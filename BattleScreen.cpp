@@ -24,31 +24,41 @@ BattleScreen* BattleScreen::singletone = nullptr;
 
 
 int32_t BattleScreen::run(sf::RenderWindow& window) {
+	this->initGameLogick();
+	return this->start(window);
+}
+void BattleScreen::initGameLogick() {
+	this->popUpWindow = nullptr;
+}
+int32_t BattleScreen::start(sf::RenderWindow& window) {
 	sf::Event event{};
 
-	HPBar a(0, 1000, 5, 5);
-	MessageWindow w(1920, 1080, "House was damaged or is not built yet");
-	bool wClosed = false;
+	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, "Workshop is not built yet");
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
 				return -1;
 			}
-			if (event.type == sf::Event::MouseButtonPressed) {
-				auto pos = sf::Mouse::getPosition();
-				if (w.click(pos.x, pos.y) == "close") {
-					wClosed = true;
+			if (this->popUpWindow == nullptr) {
+
+			}
+			else {
+				if (event.type == sf::Event::MouseButtonPressed) {
+					auto pos = sf::Mouse::getPosition();
+					if (this->popUpWindow->click(pos.x, pos.y) == "close") {
+						delete this->popUpWindow;
+						this->popUpWindow = nullptr;
+					}
 				}
 			}
+			
 		}
 		window.clear(BACKGROUND_COLOR);
 		drawCells(window);
-		window.draw(a);
-		if (!wClosed) {
-			window.draw(w);
+		if (this->popUpWindow != nullptr) {
+			window.draw(*this->popUpWindow);
 		}
-		a = a + 1;
 		window.display();
 	}
 }

@@ -39,8 +39,12 @@ private:
 	BattleScreen(const BattleScreen& copy) = delete;
 	static BattleScreen* singletone;
 
+	PopUpWindow *popUpWindow;
+
 	static const uint32_t MAP_SIZE_X = 100;
 	static const uint32_t MAP_SIZE_Y = 100;
 
+	void initGameLogick();
+	int32_t start(sf::RenderWindow &window);
 	void drawCells(sf::RenderWindow &window);
 };
