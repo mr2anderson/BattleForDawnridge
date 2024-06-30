@@ -19,6 +19,7 @@
 
 #include <cstdint>
 #include "ColorTheme.hpp"
+#include "Button.hpp"
 
 
 #pragma once

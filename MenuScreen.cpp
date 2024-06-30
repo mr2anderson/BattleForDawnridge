@@ -27,6 +27,9 @@ int32_t MenuScreen::run(sf::RenderWindow& window) {
 	return this->getConnection(window);
 }
 int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
+	Button start2on1pc(10, 10, 400, 60, "To battle (2 players 1 PC)", 24);
+	Button exit(10, 80, 400, 60, "Exit", 24);
+
 	sf::Event event{};
 
 	for (; ;) {
@@ -34,11 +37,19 @@ int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
 			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
 				return -1;
 			}
-			if (event.type == sf::Event::KeyPressed) {
-				return 0;
+			if (event.type == sf::Event::MouseButtonPressed) {
+				auto pos = sf::Mouse::getPosition();
+				if (start2on1pc.click(pos.x, pos.y)) {
+					return 0;
+				}
+				if (exit.click(pos.x, pos.y)) {
+					return -1;
+				}
 			}
 		}
 		window.clear(BACKGROUND_COLOR);
+		window.draw(start2on1pc);
+		window.draw(exit);
 		window.display();
 	}
 }

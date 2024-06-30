@@ -33,9 +33,4 @@ public:
 private:
 	Label label;
 	Button button;
-
-	static constexpr uint32_t W = 200;
-	static constexpr uint32_t H = 100;
-	static constexpr uint32_t buttonW = 50;
-	static constexpr uint32_t buttonH = 25;
 };
