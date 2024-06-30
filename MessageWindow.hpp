@@ -30,7 +30,7 @@ class MessageWindow : public PopUpWindow {
 public:
 	MessageWindow(uint32_t windowW, uint32_t windowH, const std::string& message);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	std::string click(uint32_t x, uint32_t y) const override;
+	PopUpWindowEvent click(uint32_t x, uint32_t y) const override;
 private:
 	sf::RectangleShape mainRect;
 	sf::RectangleShape button;

@@ -346,6 +346,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -586,11 +587,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="FontStorage.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="GameEvent.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="MenuScreen.hpp" />
     <ClInclude Include="MessageWindow.hpp" />
     <ClInclude Include="PopUpWindow.hpp" />
+    <ClInclude Include="PopUpWindowEvent.hpp" />
     <ClInclude Include="PressAnyKeyScreen.hpp" />
     <ClInclude Include="Root.hpp" />
   </ItemGroup>
@@ -605,12 +608,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="BattleScreen.cpp" />
     <ClCompile Include="FontStorage.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="MessageWindow.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
+    <ClCompile Include="PopUpWindowEvent.cpp" />
     <ClCompile Include="PressAnyKeyScreen.cpp" />
   </ItemGroup>
   <ItemGroup>

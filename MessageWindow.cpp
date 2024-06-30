@@ -72,12 +72,12 @@ void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	target.draw(this->button, states);
 	target.draw(this->buttonText, states);
 }
-std::string MessageWindow::click(uint32_t x, uint32_t y) const {
+PopUpWindowEvent MessageWindow::click(uint32_t x, uint32_t y) const {
 	if (x >= this->button.getPosition().x and
 		y >= this->button.getPosition().y and
 		x < this->button.getPosition().x + this->buttonW and
 		y < this->button.getPosition().y + this->buttonH) {
-		return "close";
+		return PopUpWindowEvent(true);
 	}
-	return "continue";
+	return PopUpWindowEvent(false);
 }

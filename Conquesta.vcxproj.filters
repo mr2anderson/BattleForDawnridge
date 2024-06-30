@@ -688,6 +688,12 @@
     <ClInclude Include="Root.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpWindowEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -729,6 +735,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PressAnyKeyScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpWindowEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

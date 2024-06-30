@@ -17,21 +17,15 @@
  */
 
 
-#include <SFML/Graphics.hpp>
-#include <cstdint>
-#include "PopUpWindowEvent.hpp"
+
+#include "GameEvent.hpp"
 
 
 #pragma once
 
 
-class PopUpWindow : public sf::Drawable {
-public:
-	PopUpWindow(uint32_t windowW, uint32_t windowH);
-	virtual PopUpWindowEvent click(uint32_t x, uint32_t y) const = 0;
-protected:
-	uint32_t getWindowW() const;
-	uint32_t getWindowH() const;
-private:
-	uint32_t windowW, windowH;
+struct PopUpWindowEvent {
+	PopUpWindowEvent(bool close);
+	bool close;
+	GameEvent gameEvent;
 };
