@@ -38,7 +38,7 @@ int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
 				return 0;
 			}
 		}
-		window.clear(sf::Color::Yellow);
+		window.clear(BACKGROUND_COLOR);
 		window.display();
 	}
 }

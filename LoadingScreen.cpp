@@ -28,7 +28,7 @@ void LoadingScreen::run(sf::RenderWindow &window) {
 	this->load();
 }
 void LoadingScreen::setScreen(sf::RenderWindow &window) {
-	window.clear(sf::Color::Blue);
+	window.clear(BACKGROUND_COLOR);
 	window.display();
 }
 void LoadingScreen::load() {

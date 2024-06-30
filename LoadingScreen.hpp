@@ -18,6 +18,7 @@
 
 
 #include "FontStorage.hpp"
+#include "ColorTheme.hpp"
 
 
 #pragma once

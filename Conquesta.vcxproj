@@ -494,6 +494,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleScreen.hpp" />
+    <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\Export.hpp" />

@@ -38,7 +38,7 @@ int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 				return 0;
 			}
 		}
-		window.clear(sf::Color::Red);
+		window.clear(BACKGROUND_COLOR);
 		window.display();
 	}
 }

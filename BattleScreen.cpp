@@ -37,7 +37,7 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 				return 0;
 			}
 		}
-		window.clear(sf::Color::Blue);
+		window.clear(BACKGROUND_COLOR);
 		window.draw(a);
 		a = a + 1;
 		window.display();

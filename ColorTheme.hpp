@@ -17,26 +17,10 @@
  */
 
 
-#include "ColorTheme.hpp"
-#include <cstdint>
+#include <SFML/Graphics.hpp>
 
 
 #pragma once
 
 
-class PressAnyKeyScreen {
-public:
-	static PressAnyKeyScreen* get() {
-		if (PressAnyKeyScreen::singletone == nullptr) {
-			PressAnyKeyScreen::singletone = new PressAnyKeyScreen();
-		}
-		return PressAnyKeyScreen::singletone;
-	}
-	int32_t run(sf::RenderWindow &window);
-private:
-	PressAnyKeyScreen() = default;
-	PressAnyKeyScreen(const PressAnyKeyScreen& copy) = delete;
-	static PressAnyKeyScreen* singletone;
-
-	int32_t wait(sf::RenderWindow &window);
-};
+static const sf::Color BACKGROUND_COLOR = sf::Color(10, 10, 10);

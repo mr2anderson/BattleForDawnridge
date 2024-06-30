@@ -17,7 +17,7 @@
  */
 
 
-#include <SFML/Graphics.hpp>
+#include "ColorTheme.hpp"
 #include <cstdint>
 
 
