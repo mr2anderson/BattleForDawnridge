@@ -27,26 +27,5 @@
 
 struct GameEvent {
 	GameEvent();
-
-	// Это событие создается виртуально внутри класса BattleScreen в режиме строительства
-	// std::optional<Building*> buildBuilding;
-
-	// Используются в меню, возвращаемом при нажатии на мастерскую игроком-владельцем
-	// std::optional<std::tuple<Tank*, Workshop*>> createTank;
-	// std::optional<Workshop*> upgradeWorkshop;
 	
-	// Используются в меню, возвращаемом при нажатии на караван игроком-владельцем
-	// std::optional<std::tuple<Trade, Caravan*>> doTrade;
-	
-	// Используется при нажатии на танк игроком-владельцем
-	// std::optional<Tank*> selectTank;
-	
-	// Это событие создается виртуально внутри класса BattleScreen при нажатии игроком на пустую клетку
-	// std::optional<std::tuple<uint32_t, uint32_t>> moveTo;
-	
-	// Используется при нажатии на танк или здание игроком-противником
-	// std::optional<std::tuple<Unit*>> attack;
-
-	// Используется при нажатии почти на все игровые объекты, а также может создаваться виртуально внутри класса BatlleScreen при нажатии игроком на пустую клетку
-	// std::optional<sf::Sound*> playSound;
 };
