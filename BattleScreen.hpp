@@ -38,4 +38,9 @@ private:
 	BattleScreen() = default;
 	BattleScreen(const BattleScreen& copy) = delete;
 	static BattleScreen* singletone;
+
+	static const uint32_t MAP_SIZE_X = 100;
+	static const uint32_t MAP_SIZE_Y = 100;
+
+	void drawCells(sf::RenderWindow &window);
 };

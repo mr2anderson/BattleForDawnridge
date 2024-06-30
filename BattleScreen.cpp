@@ -43,11 +43,25 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 			}
 		}
 		window.clear(BACKGROUND_COLOR);
+		drawCells(window);
 		window.draw(a);
 		if (!wClosed) {
 			window.draw(w);
 		}
 		a = a + 1;
 		window.display();
+	}
+}
+void BattleScreen::drawCells(sf::RenderWindow &window) {
+	for (uint32_t i = 0; i < MAP_SIZE_X; i = i + 1) {
+		for (uint32_t j = 0; j < MAP_SIZE_Y; j = j + 1) {
+			if ((i + j) % 2 == 0) {
+				sf::RectangleShape rect;
+				rect.setPosition(sf::Vector2f(48 * i, 48 * j));
+				rect.setSize(sf::Vector2f(48, 48));
+				rect.setFillColor(CELL_COLOR);
+				window.draw(rect);
+			}
+		}
 	}
 }

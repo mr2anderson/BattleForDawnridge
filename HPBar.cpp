@@ -28,10 +28,10 @@ HPBar::HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y) {
 	this->y = y;
 }
 void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t size = 32 * this->current / this->max;
+	uint32_t size = 48 * this->current / this->max;
 
-	uint32_t posX = 32 * this->x;
-	uint32_t posY = 32 * this->y;
+	uint32_t posX = 48 * this->x;
+	uint32_t posY = 48 * this->y;
 	
 	uint32_t red = 255 - 255 * this->current / this->max;
 	uint32_t green = 255 * this->current / this->max;
@@ -40,7 +40,7 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect1;
 	rect1.setPosition(posX, posY);
 	rect1.setFillColor(sf::Color::Black);
-	rect1.setSize(sf::Vector2f(32, 2));
+	rect1.setSize(sf::Vector2f(48, 2));
 	target.draw(rect1);
 
 	sf::RectangleShape rect2;
@@ -54,7 +54,7 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	text.setCharacterSize(10);
 	text.setString(std::to_string(this->current));
 	text.setFillColor(sf::Color(red, green, blue));
-	text.setPosition(sf::Vector2f(posX + 32 - text.getLocalBounds().width, posY + rect1.getSize().y + 1));
+	text.setPosition(sf::Vector2f(posX + 48 - text.getLocalBounds().width, posY + rect1.getSize().y + 1));
 	target.draw(text, states);
 }
 HPBar operator+(HPBar a, uint32_t b) {
