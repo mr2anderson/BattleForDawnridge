@@ -17,30 +17,28 @@
  */
 
 
-
-#include "LoadingScreen.hpp"
-#include "PressAnyKeyScreen.hpp"
 #include "MenuScreen.hpp"
 
 
-#pragma once
+MenuScreen* MenuScreen::singletone = nullptr;
 
 
-class Game {
-public:
-	static Game* get() {
-		if (Game::singletone == nullptr) {
-			Game::singletone = new Game();
+int32_t MenuScreen::run(sf::RenderWindow& window) {
+	return this->getConnection(window);
+}
+int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
+	sf::Event event{};
+
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
+				return -1;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				return 0;
+			}
 		}
-		return Game::singletone;
+		window.clear(sf::Color::Yellow);
+		window.display();
 	}
-	void run();
-private:
-	Game() = default;
-	Game(const Game& copy) = delete;
-	static Game* singletone;
-
-	sf::RenderWindow window;
-
-	void initWindow();
-};
+}

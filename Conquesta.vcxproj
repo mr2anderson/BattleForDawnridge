@@ -370,6 +370,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuScreen.cpp" />
+    <ClCompile Include="MenuScreen.hpp" />
     <ClCompile Include="PressAnyKeyScreen.cpp" />
   </ItemGroup>
   <ItemGroup>

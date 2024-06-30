@@ -17,30 +17,26 @@
  */
 
 
-
-#include "LoadingScreen.hpp"
-#include "PressAnyKeyScreen.hpp"
-#include "MenuScreen.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class Game {
+class MenuScreen {
 public:
-	static Game* get() {
-		if (Game::singletone == nullptr) {
-			Game::singletone = new Game();
+	static MenuScreen* get() {
+		if (MenuScreen::singletone == nullptr) {
+			MenuScreen::singletone = new MenuScreen();
 		}
-		return Game::singletone;
+		return MenuScreen::singletone;
 	}
-	void run();
+	int32_t run(sf::RenderWindow& window);
 private:
-	Game() = default;
-	Game(const Game& copy) = delete;
-	static Game* singletone;
+	MenuScreen() = default;
+	MenuScreen(const MenuScreen& copy) = delete;
+	static MenuScreen* singletone;
 
-	sf::RenderWindow window;
-
-	void initWindow();
+	int32_t getConnection(sf::RenderWindow &window);
 };

@@ -29,6 +29,9 @@ void Game::run() {
 	if (PressAnyKeyScreen::get()->run(this->window) != 0) {
 		return;
 	}
+	if (MenuScreen::get()->run(this->window) != 0) {
+		return;
+	}
 }
 void Game::initWindow() {
 	sf::ContextSettings settings;
