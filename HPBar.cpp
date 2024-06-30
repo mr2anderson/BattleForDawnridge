@@ -57,6 +57,22 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	text.setPosition(sf::Vector2f(posX + 48 - text.getLocalBounds().width, posY + rect1.getSize().y + 1));
 	target.draw(text, states);
 }
+uint32_t HPBar::getCurrent() const {
+	return this->current;
+}
+uint32_t HPBar::getMax() const {
+	return this->max;
+}
+uint32_t HPBar::getX() const {
+	return this->x;
+}
+uint32_t HPBar::getY() const {
+	return this->y;
+}
+void HPBar::changeMax(uint32_t newMax) {
+	this->max = newMax;
+	this->current = std::min(this->current, this->max);
+}
 HPBar operator+(HPBar a, uint32_t b) {
 	a.current = std::min(a.current + b, a.max);
 	return a;
