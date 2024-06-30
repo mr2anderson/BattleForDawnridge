@@ -177,12 +177,6 @@
     <None Include="extlibs\bin\x86\openal32.dll">
       <Filter>Libraries</Filter>
     </None>
-    <None Include=".gitignore">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="README.md">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib">
@@ -655,50 +649,50 @@
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp">
       <Filter>Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="BattleScreen.hpp">
+    <ClInclude Include="src\BattleScreen.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ColorTheme.hpp">
+    <ClInclude Include="src\Button.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="FontStorage.hpp">
+    <ClInclude Include="src\ColorTheme.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.hpp">
+    <ClInclude Include="src\FontStorage.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPBar.hpp">
+    <ClInclude Include="src\Game.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="LoadingScreen.hpp">
+    <ClInclude Include="src\GameEvent.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuScreen.hpp">
+    <ClInclude Include="src\HPBar.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MessageWindow.hpp">
+    <ClInclude Include="src\Label.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="PopUpWindow.hpp">
+    <ClInclude Include="src\LoadingScreen.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="PressAnyKeyScreen.hpp">
+    <ClInclude Include="src\MenuScreen.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Root.hpp">
+    <ClInclude Include="src\MessageWindow.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameEvent.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\PopUpWindow.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="PopUpWindowEvent.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\PopUpWindowEvent.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\PressAnyKeyScreen.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Label.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Root.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -710,55 +704,49 @@
     <Font Include="resources\sansation.ttf">
       <Filter>Resource Files</Filter>
     </Font>
-    <Font Include="data\fonts\1.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BattleScreen.cpp">
+    <ClCompile Include="src\BattleScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FontStorage.cpp">
+    <ClCompile Include="src\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="src\FontStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HPBar.cpp">
+    <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LoadingScreen.cpp">
+    <ClCompile Include="src\GameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\HPBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MenuScreen.cpp">
+    <ClCompile Include="src\Label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MessageWindow.cpp">
+    <ClCompile Include="src\LoadingScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpWindow.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PressAnyKeyScreen.cpp">
+    <ClCompile Include="src\MenuScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpWindowEvent.cpp">
+    <ClCompile Include="src\MessageWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
+    <ClCompile Include="src\PopUpWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="src\PopUpWindowEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Label.cpp">
+    <ClCompile Include="src\PressAnyKeyScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="LICENSE.txt">
-      <Filter>Source Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>
