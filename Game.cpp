@@ -20,8 +20,22 @@
 #include "Game.hpp"
 
 
-int main() {
-	Game::get()->run();
+Game* Game::singletone = nullptr;
 
-	return 0;
+
+void Game::run() {
+	this->initWindow();
+	LoadingScreen::get()->run(this->window);
+	if (PressAnyKeyScreen::get()->run(this->window) != 0) {
+		return;
+	}
+}
+void Game::initWindow() {
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 4;
+
+	this->window.create(sf::VideoMode::getDesktopMode(), "Conquesta", sf::Style::Fullscreen, settings);
+	this->window.setVerticalSyncEnabled(true);
+	this->window.setFramerateLimit(60);
+	this->window.setMouseCursorVisible(false);
 }

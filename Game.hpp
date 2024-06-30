@@ -17,11 +17,29 @@
  */
 
 
-#include "Game.hpp"
+
+#include "LoadingScreen.hpp"
+#include "PressAnyKeyScreen.hpp"
 
 
-int main() {
-	Game::get()->run();
+#pragma once
 
-	return 0;
-}
+
+class Game {
+public:
+	static Game* get() {
+		if (Game::singletone == nullptr) {
+			Game::singletone = new Game();
+		}
+		return Game::singletone;
+	}
+	void run();
+private:
+	Game() = default;
+	Game(const Game& copy) = delete;
+	static Game* singletone;
+
+	sf::RenderWindow window;
+
+	void initWindow();
+};

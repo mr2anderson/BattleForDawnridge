@@ -27,6 +27,9 @@
     <ClCompile Include="PressAnyKeyScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extlibs\bin\x64\sfml-audio-2.dll">
@@ -664,6 +667,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PressAnyKeyScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

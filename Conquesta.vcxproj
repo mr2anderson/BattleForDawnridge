@@ -367,6 +367,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PressAnyKeyScreen.cpp" />
@@ -585,6 +586,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
+    <ClInclude Include="Game.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="PressAnyKeyScreen.hpp" />
   </ItemGroup>
