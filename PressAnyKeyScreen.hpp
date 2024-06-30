@@ -17,6 +17,7 @@
  */
 
 
+#include "FontStorage.hpp"
 #include "ColorTheme.hpp"
 #include <cstdint>
 

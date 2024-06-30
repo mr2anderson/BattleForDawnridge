@@ -27,6 +27,15 @@ int32_t PressAnyKeyScreen::run(sf::RenderWindow &window) {
 	return this->wait(window);
 }
 int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
+	sf::Text text;
+	text.setFont(*FontStorage::get()->get("1"));
+	text.setString("Press any key to continue");
+	text.setCharacterSize(32);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(2);
+	text.setPosition((window.getSize().x - text.getLocalBounds().width) / 2, window.getSize().y - text.getLocalBounds().height - 50);
+
 	sf::Event event{};
 
 	for (; ;) {
@@ -39,6 +48,7 @@ int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 			}
 		}
 		window.clear(BACKGROUND_COLOR);
+		window.draw(text);
 		window.display();
 	}
 }
