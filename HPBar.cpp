@@ -69,6 +69,9 @@ uint32_t HPBar::getX() const {
 uint32_t HPBar::getY() const {
 	return this->y;
 }
+void HPBar::changeCurrent(uint32_t newCurrent) {
+	this->current = std::min(this->max, newCurrent);
+}
 void HPBar::changeMax(uint32_t newMax) {
 	this->max = newMax;
 	this->current = std::min(this->current, this->max);
