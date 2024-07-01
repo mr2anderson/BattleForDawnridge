@@ -20,22 +20,33 @@
 #include "SelectWindow.hpp"
 
 
-SelectWindow::SelectWindow(uint32_t windowW, uint32_t windowH, const std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> &data) : PopUpWindow(windowW, windowH) {
-	for (const auto& t : data) {
-		Button button(10, this->getWindowH() - (48 + 10) * (this->data.size() + 1), this->getWindowW() - 20, 48, std::get<std::string>(t), std::get<std::wstring>(t), 16);
-		this->data.emplace_back(button, std::get<bool>(t), std::get<GameEvent>(t));
+SelectWindow::SelectWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> &data) : PopUpWindow(soundName1, soundName2) {
+	this->data = data;
+}
+void SelectWindow::run(uint32_t windowW, uint32_t windowH) {
+	this->playSound1();
+	this->buttons.resize(this->data.size());
+	for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
+		std::string pictureName = std::get<0>(this->data[i]);
+		std::wstring message = std::get<1>(this->data[i]);
+		bool clickable = std::get<2>(this->data[i]);
+		GameEvent event = std::get<3>(this->data[i]);
+
+		Button button(10, windowH - (48 + 10) * (i + 1), windowW - 20, 48, pictureName, message, 16);
+		this->buttons[i] = std::make_tuple(button, clickable, event);
 	}
 }
 void SelectWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
-		target.draw(std::get<Button>(this->data[i]), states);
+	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
+		target.draw(std::get<Button>(this->buttons[i]), states);
 	}
 }
 PopUpWindowEvent SelectWindow::click(uint32_t x, uint32_t y) const {
-	for (const auto& t : data) {
+	for (const auto& t : buttons) {
 		if (std::get<bool>(t) and std::get<Button>(t).click(x, y)) {
 			PopUpWindowEvent popUpWindowEvent(true);
 			popUpWindowEvent.gameEvent = std::get<GameEvent>(t);
+			this->playSound2();
 			return popUpWindowEvent;
 		}
 	}

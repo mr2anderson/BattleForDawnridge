@@ -20,13 +20,20 @@
 #include "PopUpWindow.hpp"
 
 
-PopUpWindow::PopUpWindow(uint32_t windowW, uint32_t windowH) {
-	this->windowW = windowW;
-	this->windowH = windowH;
+PopUpWindow::PopUpWindow(const std::string& soundName1, const std::string& soundName2) {
+	this->soundName1 = soundName1;
+	this->soundName2 = soundName2;
 }
-uint32_t PopUpWindow::getWindowW() const {
-	return this->windowW;
+void PopUpWindow::run(uint32_t windowW, uint32_t windowH) {
+	this->playSound1();
 }
-uint32_t PopUpWindow::getWindowH() const {
-	return this->windowH;
+void PopUpWindow::playSound1() const {
+	if (this->soundName1 != "") {
+		SoundQueue::get()->push(SoundStorage::get()->get(this->soundName1));
+	}
+}
+void PopUpWindow::playSound2() const {
+	if (this->soundName2 != "") {
+		SoundQueue::get()->push(SoundStorage::get()->get(this->soundName2));
+	}
 }

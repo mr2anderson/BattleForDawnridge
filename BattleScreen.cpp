@@ -30,9 +30,16 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 void BattleScreen::initGameLogick() {
 	this->mapWidth = 50;
 	this->mapHeight = 50;
-	this->popUpWindow = nullptr;
+
+	while (!this->popUpWindows.empty()) {
+		PopUpWindow* window = this->popUpWindows.front();
+		delete window;
+		this->popUpWindows.pop();
+	}
+
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
+
 	this->move = 1;
 
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
@@ -73,7 +80,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
-				if (this->popUpWindow == nullptr) {
+				if (this->popUpWindows.empty()) {
 					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
 						this->newMove(window.getSize().x, window.getSize().y);
 					}
@@ -86,14 +93,16 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 								handleGameEvent(response.gameEvent.value());
 							}
 							if (response.popUpWindow.has_value()) {
-								this->popUpWindow = response.popUpWindow.value();
+								PopUpWindow* popUpWindow = response.popUpWindow.value();
+								popUpWindow->run(window.getSize().x, window.getSize().y);
+								this->popUpWindows.push(popUpWindow);
 							}
 						}
 					}
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
-						handlePopUpWindowEvent(this->popUpWindow->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+						handlePopUpWindowEvent(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y), window.getSize().x, window.getSize().y);
 					}
 				}
 			}
@@ -105,8 +114,8 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 		for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 			window.draw(*this->gameObjects[i]);
 		}
-		if (this->popUpWindow != nullptr) {
-			window.draw(*this->popUpWindow);
+		if (!this->popUpWindows.empty()) {
+			window.draw(*this->popUpWindows.front());
 		}
 		window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
 		window.draw(endMove);
@@ -114,7 +123,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 
 		Playlist::get()->update();
 
-		if (this->popUpWindow == nullptr) {
+		if (this->popUpWindows.empty()) {
 			auto pos = sf::Mouse::getPosition();
 			if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				this->viewToWest(window.getSize().x);
@@ -132,17 +141,17 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 	}
 }
 void BattleScreen::handleGameEvent(GameEvent event) {
-	if (event.playSound.has_value()) {
-		SoundQueue::get()->push(SoundStorage::get()->get(event.playSound.value()));
-	}
 	if (event.tryToAttack.has_value()) {
-		std::cout << event.tryToAttack.value()->getX() << " " << event.tryToAttack.value()->getY() << std::endl;
+		std::cout << "tryToAttack " << event.tryToAttack.value()->getX() << " " << event.tryToAttack.value()->getY() << std::endl;
 	}
 }
-void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
+void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event, uint32_t windowW, uint32_t windowH) {
 	if (event.close) {
-		delete this->popUpWindow;
-		this->popUpWindow = nullptr;
+		delete this->popUpWindows.front();
+		this->popUpWindows.pop();
+		if (!this->popUpWindows.empty()) {
+			this->popUpWindows.front()->run(windowW, windowH);
+		}
 	}
 	this->handleGameEvent(event.gameEvent);
 }

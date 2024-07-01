@@ -27,9 +27,11 @@
 
 class SelectWindow : public PopUpWindow {
 public:
-	SelectWindow(uint32_t windowW, uint32_t windowH, const std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data);
+	SelectWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data);
+	void run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	PopUpWindowEvent click(uint32_t x, uint32_t y) const override;
 private:
-	std::vector<std::tuple<Button, bool, GameEvent>> data;
+	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
+	std::vector<std::tuple<Button, bool, GameEvent>> buttons;
 };

@@ -22,18 +22,10 @@
 
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t size) : GameObject(x, y, size, size) {}
 GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
-	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-
-	GameEvent gameEventClickSound;
-	gameEventClickSound.playSound = "click";
-	data.emplace_back("exit", L"Вернуться", true, gameEventClickSound);
-
-	GameEvent gameEventDefault;
-	data.emplace_back(this->getIconName(), this->getDescription(), false, gameEventDefault);
-
 	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().playSound = this->getClickSoundName();
-	response.popUpWindow = new SelectWindow(windowW, windowH, data);
+	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
+	data.emplace_back("exit", L"Вернуться", true, GameEvent());
+	data.emplace_back(this->getIconName(), this->getDescription(), false, GameEvent());
+	response.popUpWindow = new SelectWindow(this->getClickSoundName(), "click", data);
 	return response;
 }

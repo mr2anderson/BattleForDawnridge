@@ -26,10 +26,12 @@
 
 class MessageWindow : public PopUpWindow {
 public:
-	MessageWindow(uint32_t windowW, uint32_t windowH, const std::wstring& message);
+	MessageWindow(const std::string& soundName1, const std::string& soundName2, const std::wstring& message);
+	void run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	PopUpWindowEvent click(uint32_t x, uint32_t y) const override;
 private:
+	std::wstring message;
 	Label label;
 	Button button;
 };

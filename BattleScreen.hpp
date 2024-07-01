@@ -17,7 +17,7 @@
  */
 
 
-#include <array>
+#include <queue>
 #include <iostream>
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
@@ -49,15 +49,15 @@ private:
 
 	uint32_t mapWidth, mapHeight;
 	sf::View view;
-	PopUpWindow *popUpWindow;
-	std::array<Player, 2> players;
+	std::queue<PopUpWindow*> popUpWindows;
+	Player players[2];
 	uint32_t move = 1;
 	std::vector<GameObject*> gameObjects;
 
 	void initGameLogick();
 	int32_t start(sf::RenderWindow &window);
 	void handleGameEvent(GameEvent event);
-	void handlePopUpWindowEvent(PopUpWindowEvent event);
+	void handlePopUpWindowEvent(PopUpWindowEvent event, uint32_t windowW, uint32_t windowH);
 	void newMove(uint32_t windowW, uint32_t windowH);
 	Player* getCurrentPlayer();
 	void drawCells(sf::RenderWindow &window);

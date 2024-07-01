@@ -27,20 +27,10 @@ std::string Fort::getTextureName() const {
 GameObjectResponse Fort::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	if (this->belongTo(&player)) {
 		GameObjectResponse response;
-		response.gameEvent = GameEvent();
-		response.gameEvent.value().playSound = "hooray";
-
 		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-
-		GameEvent gameEventClickSound;
-		gameEventClickSound.playSound = "click";
-		data.emplace_back("exit", L"Покинуть", true, gameEventClickSound);
-
-		GameEvent gameEventDefault;
-		data.emplace_back("fort", L"Замок — сердце города. Разгром замка приведет к поражению. Защищайте его любой ценой.", false, gameEventDefault);
-
-		response.popUpWindow = new SelectWindow(windowW, windowH, data);
-
+		data.emplace_back("exit", L"Покинуть", true, GameEvent());
+		data.emplace_back("fort", L"Замок — сердце города. Разгром замка приведет к поражению. Защищайте его любой ценой.", false, GameEvent());
+		response.popUpWindow = new SelectWindow("hooray", "click", data);
 		return response;
 	}
 

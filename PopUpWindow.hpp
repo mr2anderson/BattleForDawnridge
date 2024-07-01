@@ -19,6 +19,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstdint>
+#include "SoundQueue.hpp"
+#include "SoundStorage.hpp"
 #include "PopUpWindowEvent.hpp"
 
 
@@ -27,11 +29,12 @@
 
 class PopUpWindow : public sf::Drawable {
 public:
-	PopUpWindow(uint32_t windowW, uint32_t windowH);
+	PopUpWindow(const std::string &soundName1, const std::string &soundName2);
+	virtual void run(uint32_t windowW, uint32_t windowH);
 	virtual PopUpWindowEvent click(uint32_t x, uint32_t y) const = 0;
 protected:
-	uint32_t getWindowW() const;
-	uint32_t getWindowH() const;
+	void playSound1() const;
+	void playSound2() const;
 private:
-	uint32_t windowW, windowH;
+	std::string soundName1, soundName2;
 };

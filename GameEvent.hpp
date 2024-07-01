@@ -18,9 +18,6 @@
 
 
 #include <optional>
-#include <tuple>
-#include <string>
-#include <cstdint>
 
 
 #pragma once
@@ -31,7 +28,5 @@ class Unit;
 
 struct GameEvent {
 	GameEvent();
-	
-	std::optional<std::string> playSound;
 	std::optional<Unit*> tryToAttack;
 };
