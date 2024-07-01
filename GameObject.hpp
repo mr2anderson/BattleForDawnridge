@@ -17,30 +17,28 @@
  */
 
 
-
-#include "FontStorage.hpp"
+#include "TextureStorage.hpp"
+#include "GameObjectClickResponse.hpp"
+#include "HPBar.hpp"
 
 
 #pragma once
 
 
-class HPBar : public sf::Drawable {
+class GameObject : public sf::Drawable {
 public:
-	HPBar();
-	HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y);
+	GameObject(uint32_t x, uint32_t y, uint32_t currentHp, uint32_t maxHp);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	uint32_t getCurrent() const;
-	uint32_t getMax() const;
+	void addHp(uint32_t value);
+	void subHp(uint32_t value);
+	void changeMaxHp(uint32_t value);
+	uint32_t getHP() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
-	void changeCurrent(uint32_t newCurrent);
-	void changeMax(uint32_t newMax);
-	friend HPBar operator+(HPBar a, uint32_t b);
-	friend HPBar operator-(HPBar a, uint32_t b);
+	GameObjectClickResponse click(uint32_t mouseX, uint32_t mouseY) const;
+protected:
+	virtual std::string getTextureName() const = 0;
+	virtual GameObjectClickResponse getGOCR() const = 0;
 private:
-	uint32_t current;
-	uint32_t max;
-	uint32_t x;
-	uint32_t y;
+	HPBar bar;
 };

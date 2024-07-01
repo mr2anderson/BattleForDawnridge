@@ -21,6 +21,7 @@
 #include "HPBar.hpp"
 
 
+HPBar::HPBar() = default;
 HPBar::HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y) {
 	this->current = current;
 	this->max = max;
