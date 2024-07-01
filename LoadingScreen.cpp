@@ -90,7 +90,7 @@ void LoadingScreen::loadAll() {
 		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
 	}
 	for (const std::string& a : { "click", "newMove", "leaves", "axe", "quarry", "mine"}) {
-		SoundStorage::get()->add(a, "sounds/" + a + ".wav");
+		SoundStorage::get()->add(a, "sounds/" + a + ".ogg");
 	}
 
 	MusicStorage::get()->add("intro", "music/intro.ogg");
