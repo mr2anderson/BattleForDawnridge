@@ -19,13 +19,13 @@
 
 #include <array>
 #include "Playlist.hpp"
-#include "HPBar.hpp"
-#include "ColorTheme.hpp"
 #include "SoundQueue.hpp"
 #include "SoundStorage.hpp"
 #include "MessageWindow.hpp"
-#include "Player.hpp"
-#include "SelectWindow.hpp"
+#include "Plant.hpp"
+#include "Tree.hpp"
+#include "Mountain.hpp"
+#include "RedMountain.hpp"
 
 
 #pragma once
@@ -50,6 +50,7 @@ private:
 	PopUpWindow *popUpWindow;
 	std::array<Player, 2> players;
 	uint32_t move = 1;
+	std::vector<GameObject*> gameObjects;
 
 	void initGameLogick();
 	int32_t start(sf::RenderWindow &window);

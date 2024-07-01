@@ -67,11 +67,29 @@ void LoadingScreen::loadAll() {
 		TextureStorage::get()->add("logotype" + std::to_string(i), "images/logotype/Plant Wind 1_" + s + ".png");
 	}
 
-	for (const std::string& a : { "food", "wood", "stone", "iron", "gold" }) {
-		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
+	for (uint32_t i = 0; i < Plant::TOTAL_TYPES; i = i + 1) {
+		for (uint32_t j = 0; j < Plant::ANIMATION_N[i]; j = j + 1) {
+			std::string s = std::to_string(j);
+			while (s.size() < 5) {
+				s = ("0" + s);
+			}
+			TextureStorage::get()->add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/gameObjects/resourcePoints/plants/" + std::to_string(i) + "/" + Plant::PLANT_NAMES[i] + "_" + s + ".png");
+		}
+	}
+	for (uint32_t i = 0; i < Tree::TOTAL_TYPES; i = i + 1) {
+		TextureStorage::get()->add("tree" + std::to_string(i), "images/gameObjects/resourcePoints/trees/" + std::to_string(i) + ".png");
+	}
+	for (uint32_t i = 0; i < Mountain::TOTAL_TYPES; i = i + 1) {
+		TextureStorage::get()->add("mountain" + std::to_string(i), "images/gameObjects/resourcePoints/mountains/" + std::to_string(i) + ".png");
+	}
+	for (uint32_t i = 0; i < RedMountain::TOTAL_TYPES; i = i + 1) {
+		TextureStorage::get()->add("redMountain" + std::to_string(i), "images/gameObjects/resourcePoints/redMountains/" + std::to_string(i) + ".png");
 	}
 
-	for (const std::string& a : { "click", "newMove"}) {
+	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit"}) {
+		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
+	}
+	for (const std::string& a : { "click", "newMove", "leaves", "axe", "quarry", "mine"}) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".wav");
 	}
 

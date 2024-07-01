@@ -17,11 +17,12 @@
  */
 
 
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "SoundStorage.hpp"
 #include "MusicStorage.hpp"
-#include "ColorTheme.hpp"
+#include "SoundStorage.hpp"
+#include "Plant.hpp"
+#include "Tree.hpp"
+#include "Mountain.hpp"
+#include "RedMountain.hpp"
 
 
 #pragma once

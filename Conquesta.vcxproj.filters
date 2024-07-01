@@ -727,6 +727,18 @@
     <ClInclude Include="ResourcePoint.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Plant.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mountain.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMountain.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -812,6 +824,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourcePoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mountain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RedMountain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

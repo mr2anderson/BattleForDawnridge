@@ -34,6 +34,21 @@ void BattleScreen::initGameLogick() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
 	this->move = 1;
+
+	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
+		delete this->gameObjects[i];
+	}
+	this->gameObjects.clear();
+	this->gameObjects.push_back(new Plant(4, 4));
+	this->gameObjects.push_back(new Plant(4, 5));
+	this->gameObjects.push_back(new Plant(5, 4));
+	this->gameObjects.push_back(new Plant(5, 5));
+	this->gameObjects.push_back(new Tree(1, 3));
+	this->gameObjects.push_back(new Tree(1, 4));
+	this->gameObjects.push_back(new Mountain(2, 3));
+	this->gameObjects.push_back(new Mountain(2, 4));
+	this->gameObjects.push_back(new RedMountain(3, 3));
+	this->gameObjects.push_back(new RedMountain(3, 4));
 }
 int32_t BattleScreen::start(sf::RenderWindow& window) {
 	sf::Event event{};
@@ -41,20 +56,6 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 	Button endMove(window.getSize().x - 20 - 150, window.getSize().y - 20 - 30, 150, 30, L"Конец хода", 18);
 
 	this->view = window.getDefaultView();
-	
-	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-	data.emplace_back("gold", L"Это рынок. Здесь Вы можете заключать сделки.", false, GameEvent());
-	GameEvent b;
-	b.sound = "click";
-	data.emplace_back("food", L"Вы можете купить еду за золото.", true, b);
-	data.emplace_back("wood", L"Вы можете купить дерево за золото.", true, b);
-	data.emplace_back("stone", L"Вы можете купить камень за золото.", true, b);
-	data.emplace_back("iron", L"Вы можете купить железо за золото.", true, b);
-	data.emplace_back("gold", L"Вы можете продать еду за золото.", true, b);
-	data.emplace_back("gold", L"Вы можете продать дерево за золото.", true, b);
-	data.emplace_back("gold", L"Вы можете продать камень за золото.", true, b);
-	data.emplace_back("gold", L"Вы можете продать железо за золото.", true, b);
-	this->popUpWindow = new SelectWindow(window.getSize().x, window.getSize().y, data);
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
@@ -74,6 +75,19 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
 						this->newMove();
 					}
+					else {
+						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
+						uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - window.getSize().y / 2;
+						for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
+							GameObjectClickResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, window.getSize().x, window.getSize().y);
+							if (response.gameEvent.has_value()) {
+								handleGameEvent(response.gameEvent.value());
+							}
+							if (response.popUpWindow.has_value()) {
+								this->popUpWindow = response.popUpWindow.value();
+							}
+						}
+					}
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
@@ -86,6 +100,9 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 		window.clear(BACKGROUND_COLOR);
 		window.setView(this->view);
 		this->drawCells(window);
+		for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
+			window.draw(*this->gameObjects[i]);
+		}
 		if (this->popUpWindow != nullptr) {
 			window.draw(*this->popUpWindow);
 		}

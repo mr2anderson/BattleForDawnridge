@@ -29,9 +29,9 @@ HPBar::HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y) {
 	this->y = y;
 }
 void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t size = 48 * this->current / this->max;
+	uint32_t size = (48 - 4) * this->current / this->max;
 
-	uint32_t posX = 48 * this->x;
+	uint32_t posX = 48 * this->x + 2;
 	uint32_t posY = 48 * this->y;
 	
 	uint32_t red = 255 - 255 * this->current / this->max;
@@ -39,13 +39,13 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	uint32_t blue = 0;
 
 	sf::RectangleShape rect1;
-	rect1.setPosition(posX, posY);
+	rect1.setPosition(posX + 2, posY);
 	rect1.setFillColor(sf::Color::Black);
-	rect1.setSize(sf::Vector2f(48, 2));
+	rect1.setSize(sf::Vector2f(48 - 4, 2));
 	target.draw(rect1);
 
 	sf::RectangleShape rect2;
-	rect2.setPosition(sf::Vector2f(posX, posY));
+	rect2.setPosition(sf::Vector2f(posX + 2, posY));
 	rect2.setFillColor(sf::Color(red, green, blue));
 	rect2.setSize(sf::Vector2f(size, 2));
 	target.draw(rect2, states);

@@ -20,7 +20,7 @@
 #include "PopUpWindow.hpp"
 
 
-PopUpWindow::PopUpWindow() {
+PopUpWindow::PopUpWindow(uint32_t windowW, uint32_t windowH) {
 	this->windowW = windowW;
 	this->windowH = windowH;
 }

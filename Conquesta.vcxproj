@@ -594,12 +594,15 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="MenuScreen.hpp" />
     <ClInclude Include="MessageWindow.hpp" />
+    <ClInclude Include="Mountain.hpp" />
     <ClInclude Include="MusicStorage.hpp" />
+    <ClInclude Include="Plant.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Playlist.hpp" />
     <ClInclude Include="PopUpWindow.hpp" />
     <ClInclude Include="PopUpWindowEvent.hpp" />
     <ClInclude Include="PressAnyKeyScreen.hpp" />
+    <ClInclude Include="RedMountain.hpp" />
     <ClInclude Include="ResourceBar.hpp" />
     <ClInclude Include="ResourcePoint.hpp" />
     <ClInclude Include="Root.hpp" />
@@ -607,6 +610,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="SoundStorage.hpp" />
     <ClInclude Include="TextureStorage.hpp" />
+    <ClInclude Include="Tree.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav" />
@@ -628,18 +632,22 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="MessageWindow.cpp" />
+    <ClCompile Include="Mountain.cpp" />
     <ClCompile Include="MusicStorage.cpp" />
+    <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="PopUpWindowEvent.cpp" />
     <ClCompile Include="PressAnyKeyScreen.cpp" />
+    <ClCompile Include="RedMountain.cpp" />
     <ClCompile Include="ResourceBar.cpp" />
     <ClCompile Include="ResourcePoint.cpp" />
     <ClCompile Include="SelectWindow.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="SoundStorage.cpp" />
     <ClCompile Include="TextureStorage.cpp" />
+    <ClCompile Include="Tree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

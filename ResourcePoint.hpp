@@ -33,5 +33,5 @@ protected:
 	virtual std::wstring getDescription() const = 0;
 	virtual std::string getClickSoundName() const = 0;
 private:
-	GameObjectClickResponse getGOCR(uint32_t windowW, uint32_t windowH) const override;
+	GameObjectClickResponse getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) const override;
 };
