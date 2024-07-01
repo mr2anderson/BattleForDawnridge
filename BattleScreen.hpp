@@ -25,6 +25,7 @@
 #include "SoundStorage.hpp"
 #include "MessageWindow.hpp"
 #include "Player.hpp"
+#include "SelectWindow.hpp"
 
 
 #pragma once

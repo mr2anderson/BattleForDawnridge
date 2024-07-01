@@ -600,6 +600,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="PressAnyKeyScreen.hpp" />
     <ClInclude Include="ResourceBar.hpp" />
     <ClInclude Include="Root.hpp" />
+    <ClInclude Include="SelectWindow.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="SoundStorage.hpp" />
     <ClInclude Include="TextureStorage.hpp" />
@@ -629,6 +630,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="PopUpWindowEvent.cpp" />
     <ClCompile Include="PressAnyKeyScreen.cpp" />
     <ClCompile Include="ResourceBar.cpp" />
+    <ClCompile Include="SelectWindow.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="SoundStorage.cpp" />
     <ClCompile Include="TextureStorage.cpp" />

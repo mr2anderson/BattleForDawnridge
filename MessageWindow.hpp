@@ -18,7 +18,6 @@
 
 
 #include "PopUpWindow.hpp"
-#include "Label.hpp"
 #include "Button.hpp"
 
 

@@ -17,18 +17,19 @@
  */
 
 
+#include <vector>
+#include "PopUpWindow.hpp"
 #include "Button.hpp"
 
 
-Button::Button() : Label::Label() {}
-Button::Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::wstring& message, uint32_t charSize) : Label(x, y, w, h, message, charSize) {}
-Button::Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string &picture, const std::wstring &message, uint32_t charSize) : Label(x, y, w, h, picture, message, charSize) {}
-bool Button::click(uint32_t x, uint32_t y) const {
-	if (x >= this->getX() and
-		y >= this->getY() and
-		x < this->getX() + this->getW() and
-		y < this->getY() + this->getH()) {
-		return true;
-	}
-	return false;
-}
+#pragma once
+
+
+class SelectWindow : public PopUpWindow {
+public:
+	SelectWindow(uint32_t windowW, uint32_t windowH, const std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	PopUpWindowEvent click(uint32_t x, uint32_t y) const override;
+private:
+	std::vector<std::tuple<Button, bool, GameEvent>> data;
+};

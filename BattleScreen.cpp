@@ -42,7 +42,19 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 
 	this->view = window.getDefaultView();
 	
-	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, L"Мастерская должна иметь хотя-бы 80% прочности, чтобы работать");
+	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
+	data.emplace_back("gold", L"Это рынок. Здесь Вы можете заключать сделки.", false, GameEvent());
+	GameEvent b;
+	b.sound = "click";
+	data.emplace_back("food", L"Вы можете купить еду за золото.", true, b);
+	data.emplace_back("wood", L"Вы можете купить дерево за золото.", true, b);
+	data.emplace_back("stone", L"Вы можете купить камень за золото.", true, b);
+	data.emplace_back("iron", L"Вы можете купить железо за золото.", true, b);
+	data.emplace_back("gold", L"Вы можете продать еду за золото.", true, b);
+	data.emplace_back("gold", L"Вы можете продать дерево за золото.", true, b);
+	data.emplace_back("gold", L"Вы можете продать камень за золото.", true, b);
+	data.emplace_back("gold", L"Вы можете продать железо за золото.", true, b);
+	this->popUpWindow = new SelectWindow(window.getSize().x, window.getSize().y, data);
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
