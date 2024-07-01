@@ -97,16 +97,16 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 
 		if (this->popUpWindow == nullptr) {
 			auto pos = sf::Mouse::getPosition();
-			if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				this->viewToWest(window.getSize().x);
 			}
-			else if (pos.x > window.getSize().x - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			else if (pos.x > window.getSize().x - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 				this->viewToEast(window.getSize().x);
 			}
-			if (pos.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+			if (pos.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 				this->viewToNorth(window.getSize().y);
 			}
-			else if (pos.y > window.getSize().y - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+			else if (pos.y > window.getSize().y - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 				this->viewToSouth(window.getSize().y);
 			}
 		}
@@ -145,18 +145,18 @@ void BattleScreen::drawCells(sf::RenderWindow &window) {
 	}
 }
 void BattleScreen::viewToNorth(uint32_t windowH) {
-	float delta = std::min(5.f, view.getCenter().y - windowH / 2);
+	float delta = std::min(10.f, view.getCenter().y - windowH / 2);
 	view.setCenter(view.getCenter() - sf::Vector2f(0, delta));
 }
 void BattleScreen::viewToSouth(uint32_t windowH) {
-	float delta = std::min(5.f, 48 * this->mapHeight - windowH / 2 - view.getCenter().y);
+	float delta = std::min(10.f, 48 * this->mapHeight - windowH / 2 - view.getCenter().y);
 	view.setCenter(view.getCenter() + sf::Vector2f(0, delta));
 }
 void BattleScreen::viewToWest(uint32_t windowW) {
-	float delta = std::min(5.f, view.getCenter().x - windowW / 2);
+	float delta = std::min(10.f, view.getCenter().x - windowW / 2);
 	view.setCenter(view.getCenter() - sf::Vector2f(delta, 0));
 }
 void BattleScreen::viewToEast(uint32_t windowW) {
-	float delta = std::min(5.f, 48 * this->mapWidth - windowW / 2 - view.getCenter().x);
+	float delta = std::min(10.f, 48 * this->mapWidth - windowW / 2 - view.getCenter().x);
 	view.setCenter(view.getCenter() + sf::Vector2f(delta, 0));
 }
