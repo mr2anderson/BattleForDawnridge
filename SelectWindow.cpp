@@ -22,7 +22,7 @@
 
 SelectWindow::SelectWindow(uint32_t windowW, uint32_t windowH, const std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> &data) : PopUpWindow(windowW, windowH) {
 	for (const auto& t : data) {
-		Button button(10, this->getWindowH() - (64 + 10) * (this->data.size() + 1), this->getWindowW() - 20, 64, std::get<std::string>(t), std::get<std::wstring>(t), 16);
+		Button button(10, this->getWindowH() - (48 + 10) * (this->data.size() + 1), this->getWindowW() - 20, 48, std::get<std::string>(t), std::get<std::wstring>(t), 16);
 		this->data.emplace_back(button, std::get<bool>(t), std::get<GameEvent>(t));
 	}
 }

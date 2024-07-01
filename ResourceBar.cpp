@@ -27,7 +27,7 @@ void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
-	rect.setSize(sf::Vector2f(target.getSize().x - 10, 64));
+	rect.setSize(sf::Vector2f(target.getSize().x - 10, 48));
 	rect.setFillColor(UI_COLOR);
 	rect.setOutlineColor(sf::Color::Black);
 	rect.setOutlineThickness(2);

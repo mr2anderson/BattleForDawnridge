@@ -30,9 +30,8 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 	this->rect.setOutlineColor(sf::Color::Black);
 	this->rect.setOutlineThickness(2);
 
-
 	if (picture != "") {
-		this->sprite.setPosition(this->rect.getPosition() + sf::Vector2f(5, 5));
+		this->sprite.setPosition(this->rect.getPosition());
 		this->sprite.setTexture(*TextureStorage::get()->get(picture));
 	}
 
@@ -51,7 +50,7 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 		prevMessage = currentMessage;
 		currentMessage = currentMessage + word;
 		this->text.setString(currentMessage);
-		if (this->text.getLocalBounds().width > w - 10 - this->sprite.getLocalBounds().width * (picture != "") - 5 * (picture != "")) {
+		if (this->text.getLocalBounds().width > w - 10 - this->sprite.getLocalBounds().width * (picture != "")) {
 			currentMessage = prevMessage + L"\n" + word;
 			this->text.setString(currentMessage);
 		}
