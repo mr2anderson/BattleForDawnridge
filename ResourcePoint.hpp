@@ -17,16 +17,21 @@
  */
 
 
-#include "PopUpWindow.hpp"
+#include "GameObject.hpp"
+#include "SelectWindow.hpp"
 
 
-PopUpWindow::PopUpWindow() {
-	this->windowW = windowW;
-	this->windowH = windowH;
-}
-uint32_t PopUpWindow::getWindowW() const {
-	return this->windowW;
-}
-uint32_t PopUpWindow::getWindowH() const {
-	return this->windowH;
-}
+#pragma once
+
+
+class ResourcePoint : public GameObject {
+public:
+	ResourcePoint(uint32_t x, uint32_t y, uint32_t size);
+	virtual std::string getResourceType() const = 0;
+protected:
+	virtual std::string getIconName() const = 0;
+	virtual std::wstring getDescription() const = 0;
+	virtual std::string getClickSoundName() const = 0;
+private:
+	GameObjectClickResponse getGOCR(uint32_t windowW, uint32_t windowH) const override;
+};

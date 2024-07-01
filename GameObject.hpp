@@ -35,10 +35,10 @@ public:
 	uint32_t getHP() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
-	GameObjectClickResponse click(uint32_t mouseX, uint32_t mouseY) const;
+	GameObjectClickResponse click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) const;
 protected:
 	virtual std::string getTextureName() const = 0;
-	virtual GameObjectClickResponse getGOCR() const = 0;
+	virtual GameObjectClickResponse getGOCR(uint32_t windowW, uint32_t windowH) const = 0;
 private:
 	HPBar bar;
 };
