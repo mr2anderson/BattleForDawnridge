@@ -54,6 +54,7 @@ private:
 	int32_t start(sf::RenderWindow &window);
 	void handleGameEvent(GameEvent event);
 	void handlePopUpWindowEvent(PopUpWindowEvent event);
+	void newMove();
 	Player* getCurrentPlayer();
 	void drawCells(sf::RenderWindow &window);
 	void viewToNorth(uint32_t windowH);

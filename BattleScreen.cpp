@@ -38,6 +38,8 @@ void BattleScreen::initGameLogick() {
 int32_t BattleScreen::start(sf::RenderWindow& window) {
 	sf::Event event{};
 
+	Button endMove(window.getSize().x - 20 - 150, window.getSize().y - 20 - 30, 150, 30, L"Конец хода", 18);
+
 	this->view = window.getDefaultView();
 	
 	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, L"Мастерская должна иметь хотя-бы 80% прочности, чтобы работать");
@@ -57,7 +59,9 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->popUpWindow == nullptr) {
-
+					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
+						this->newMove();
+					}
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
@@ -74,6 +78,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 			window.draw(*this->popUpWindow);
 		}
 		window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
+		window.draw(endMove);
 		window.display();
 
 		Playlist::get()->update();
@@ -106,6 +111,10 @@ void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 		this->popUpWindow = nullptr;
 	}
 	this->handleGameEvent(event.gameEvent);
+}
+void BattleScreen::newMove() {
+	this->move = this->move + 1;
+	SoundQueue::get()->push(SoundStorage::get()->get("newMove"));
 }
 Player* BattleScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];

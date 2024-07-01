@@ -71,7 +71,7 @@ void LoadingScreen::loadAll() {
 		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
 	}
 
-	for (const std::string& a : { "click" }) {
+	for (const std::string& a : { "click", "newMove"}) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".wav");
 	}
 
