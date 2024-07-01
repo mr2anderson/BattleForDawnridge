@@ -17,7 +17,10 @@
  */
 
 
+#include "TextureStorage.hpp"
 #include "FontStorage.hpp"
+#include "SoundStorage.hpp"
+#include "MusicStorage.hpp"
 #include "ColorTheme.hpp"
 
 

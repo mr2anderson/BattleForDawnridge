@@ -17,9 +17,10 @@
  */
 
 
+#include <cstdint>
+#include "TextureStorage.hpp"
 #include "FontStorage.hpp"
 #include "ColorTheme.hpp"
-#include <cstdint>
 
 
 #pragma once

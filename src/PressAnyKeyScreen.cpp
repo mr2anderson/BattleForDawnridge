@@ -28,6 +28,9 @@ int32_t PressAnyKeyScreen::run(sf::RenderWindow &window) {
 }
 int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 	sf::Text text;
+	sf::Sprite sprite;
+	sf::Clock clock;
+
 	text.setFont(*FontStorage::get()->get("1"));
 	text.setString("Press any key to continue");
 	text.setCharacterSize(32);
@@ -35,6 +38,9 @@ int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(2);
 	text.setPosition((window.getSize().x - text.getLocalBounds().width) / 2, window.getSize().y - text.getLocalBounds().height - 50);
+
+	sprite.setTexture(*TextureStorage::get()->get("logotype0"));
+	sprite.setPosition((window.getSize().x - sprite.getLocalBounds().width) / 2, text.getPosition().y - sprite.getLocalBounds().height - 20);
 
 	sf::Event event{};
 
@@ -47,8 +53,12 @@ int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 				return 0;
 			}
 		}
+
 		window.clear(BACKGROUND_COLOR);
 		window.draw(text);
+		window.draw(sprite);
 		window.display();
+
+		sprite.setTexture(*TextureStorage::get()->get("logotype" + std::to_string(clock.getElapsedTime().asMilliseconds() / 30 % 30)));
 	}
 }
