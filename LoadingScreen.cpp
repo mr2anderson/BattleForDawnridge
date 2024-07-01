@@ -90,7 +90,7 @@ void LoadingScreen::loadAll() {
 	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit"}) {
 		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
 	}
-	for (const std::string& a : { "click", "newMove", "leaves", "axe", "quarry", "mine", "hooray"}) {
+	for (const std::string& a : { "click", "newMove", "leaves", "sawmill", "quarry", "mine", "hooray"}) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".ogg");
 	}
 	MusicStorage::get()->add("intro", "music/intro.ogg");
