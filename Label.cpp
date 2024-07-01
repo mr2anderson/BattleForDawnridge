@@ -53,8 +53,11 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::wstring&
 	this->text.setPosition(sf::Vector2f(this->rect.getPosition().x + w / 2 - this->text.getLocalBounds().width / 2, this->rect.getPosition().y + 5));
 }
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	sf::View old = target.getView();
+	target.setView(target.getDefaultView());
 	target.draw(this->rect, states);
 	target.draw(this->text, states);
+	target.setView(old);
 }
 uint32_t Label::getX() const {
 	return this->rect.getPosition().x;

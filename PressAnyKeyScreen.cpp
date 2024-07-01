@@ -48,10 +48,15 @@ int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
+			if (event.type == sf::Event::Closed) {
 				return -1;
 			}
 			if (event.type == sf::Event::KeyPressed) {
+				auto code = event.key.code;
+				if (code == sf::Keyboard::Escape) {
+					return -1;
+				}
+				MusicStorage::get()->get("intro")->stop();
 				return 0;
 			}
 		}

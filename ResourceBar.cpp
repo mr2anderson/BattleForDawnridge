@@ -22,6 +22,9 @@
 
 ResourceBar::ResourceBar() = default;
 void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	sf::View old = target.getView();
+	target.setView(target.getDefaultView());
+
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
 	rect.setSize(sf::Vector2f(target.getSize().x - 10, 64));
@@ -47,6 +50,8 @@ void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 		text.setPosition(sf::Vector2f(sprite.getPosition().x + 10 + sprite.getLocalBounds().width, rect.getPosition().y + (rect.getSize().y - text.getLocalBounds().height) / 2));
 		target.draw(text, states);
 	}
+
+	target.setView(old);
 }
 void ResourceBar::plus(const std::string& id, int32_t value) {
 	this->map[id] += value;

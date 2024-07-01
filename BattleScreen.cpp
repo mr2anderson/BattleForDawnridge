@@ -28,35 +28,47 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 	return this->start(window);
 }
 void BattleScreen::initGameLogick() {
+	this->mapWidth = 50;
+	this->mapHeight = 50;
 	this->popUpWindow = nullptr;
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
 	this->move = 1;
 }
 int32_t BattleScreen::start(sf::RenderWindow& window) {
-	MusicStorage::get()->get("menu")->stop();
-
 	sf::Event event{};
 
+	this->view = window.getDefaultView();
+	
 	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, L"Мастерская должна иметь хотя-бы 80% прочности, чтобы работать");
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
+			if (event.type == sf::Event::Closed) {
 				return -1;
 			}
-			if (this->popUpWindow == nullptr) {
-
-			}
-			else {
-				if (event.type == sf::Event::MouseButtonPressed) {
-					handlePopUpWindowEvent(this->popUpWindow->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+			if (event.type == sf::Event::KeyPressed) {
+				auto code = event.key.code;
+				if (code == sf::Keyboard::Escape) {
+					window.setView(window.getDefaultView());
+					Playlist::get()->restartMusic();
+					return 0;
 				}
 			}
-			
+			else if (event.type == sf::Event::MouseButtonPressed) {
+				if (this->popUpWindow == nullptr) {
+
+				}
+				else {
+					if (event.type == sf::Event::MouseButtonPressed) {
+						handlePopUpWindowEvent(this->popUpWindow->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+					}
+				}
+			}
 		}
 
 		window.clear(BACKGROUND_COLOR);
+		window.setView(this->view);
 		this->drawCells(window);
 		if (this->popUpWindow != nullptr) {
 			window.draw(*this->popUpWindow);
@@ -65,6 +77,22 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 		window.display();
 
 		Playlist::get()->update();
+
+		if (this->popUpWindow == nullptr) {
+			auto pos = sf::Mouse::getPosition();
+			if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				this->viewToWest(window.getSize().x);
+			}
+			else if (pos.x > window.getSize().x - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				this->viewToEast(window.getSize().x);
+			}
+			if (pos.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+				this->viewToNorth(window.getSize().y);
+			}
+			else if (pos.y > window.getSize().y - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				this->viewToSouth(window.getSize().y);
+			}
+		}
 	}
 }
 void BattleScreen::handleGameEvent(GameEvent event) {
@@ -83,8 +111,8 @@ Player* BattleScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];
 }
 void BattleScreen::drawCells(sf::RenderWindow &window) {
-	for (uint32_t i = 0; i < MAP_SIZE_X; i = i + 1) {
-		for (uint32_t j = 0; j < MAP_SIZE_Y; j = j + 1) {
+	for (uint32_t i = 0; i < this->mapWidth; i = i + 1) {
+		for (uint32_t j = 0; j < this->mapHeight; j = j + 1) {
 			if ((i + j) % 2 == 0) {
 				sf::RectangleShape rect;
 				rect.setPosition(sf::Vector2f(48 * i, 48 * j));
@@ -94,4 +122,20 @@ void BattleScreen::drawCells(sf::RenderWindow &window) {
 			}
 		}
 	}
+}
+void BattleScreen::viewToNorth(uint32_t windowH) {
+	float delta = std::min(5.f, view.getCenter().y - windowH / 2);
+	view.setCenter(view.getCenter() - sf::Vector2f(0, delta));
+}
+void BattleScreen::viewToSouth(uint32_t windowH) {
+	float delta = std::min(5.f, 48 * this->mapHeight - windowH / 2 - view.getCenter().y);
+	view.setCenter(view.getCenter() + sf::Vector2f(0, delta));
+}
+void BattleScreen::viewToWest(uint32_t windowW) {
+	float delta = std::min(5.f, view.getCenter().x - windowW / 2);
+	view.setCenter(view.getCenter() - sf::Vector2f(delta, 0));
+}
+void BattleScreen::viewToEast(uint32_t windowW) {
+	float delta = std::min(5.f, 48 * this->mapWidth - windowW / 2 - view.getCenter().x);
+	view.setCenter(view.getCenter() + sf::Vector2f(delta, 0));
 }

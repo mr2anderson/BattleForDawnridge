@@ -44,12 +44,11 @@ private:
 	BattleScreen(const BattleScreen& copy) = delete;
 	static BattleScreen* singletone;
 
+	uint32_t mapWidth, mapHeight;
+	sf::View view;
 	PopUpWindow *popUpWindow;
 	std::array<Player, 2> players;
 	uint32_t move = 1;
-
-	static const uint32_t MAP_SIZE_X = 100;
-	static const uint32_t MAP_SIZE_Y = 100;
 
 	void initGameLogick();
 	int32_t start(sf::RenderWindow &window);
@@ -57,4 +56,8 @@ private:
 	void handlePopUpWindowEvent(PopUpWindowEvent event);
 	Player* getCurrentPlayer();
 	void drawCells(sf::RenderWindow &window);
+	void viewToNorth(uint32_t windowH);
+	void viewToSouth(uint32_t windowH);
+	void viewToWest(uint32_t windowW);
+	void viewToEast(uint32_t windowW);
 };

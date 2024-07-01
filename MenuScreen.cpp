@@ -27,8 +27,6 @@ int32_t MenuScreen::run(sf::RenderWindow& window) {
 	return this->getConnection(window);
 }
 int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
-	MusicStorage::get()->get("intro")->stop();
-	Playlist::get()->restartMusic();
 	MusicStorage::get()->get("menu")->play();
 
 	Label license(10, window.getSize().y - 10 - 250, 500, 250, L"Conquesta\nCopyright (C) 2023 mr2anderson\n\nConquesta is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nhe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\nConquesta is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with Conquesta.  If not, see <http://www.gnu.org/licenses/>.", 14);
@@ -44,13 +42,20 @@ int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed or (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)) {
+			if (event.type == sf::Event::Closed) {
 				return -1;
 			}
-			if (event.type == sf::Event::MouseButtonPressed) {
+			if (event.type == sf::Event::KeyPressed) {
+				auto code = event.key.code;
+				if (code == sf::Keyboard::Escape) {
+					return -1;
+				}
+			}
+			else if (event.type == sf::Event::MouseButtonPressed) {
 				auto pos = sf::Mouse::getPosition();
 				if (start2on1pc.click(pos.x, pos.y)) {
 					SoundQueue::get()->push(SoundStorage::get()->get("click"));
+					MusicStorage::get()->get("menu")->stop();
 					return 0;
 				}
 				if (exit.click(pos.x, pos.y)) {
