@@ -181,7 +181,7 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 			}
 		}
 		else {
-			MessageWindow* window = new MessageWindow("click", "click", L"Не достаточно ресурсов\nВы не можете совершить эту сделку.");
+			MessageWindow* window = new MessageWindow("click", "click", L"Недостаточно ресурсов\nВы не можете совершить эту сделку.");
 			this->popUpWindows.push(window);
 			if (this->popUpWindows.size() == 1) {
 				this->popUpWindows.front()->run(this->windowW, this->windowH);

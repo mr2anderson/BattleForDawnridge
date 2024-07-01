@@ -91,7 +91,7 @@ GameObjectResponse Caravan::getGameObjectResponse(const Player& player, uint32_t
 		data.emplace_back("stone", L"Купить 2k камня за 1k золота (2 хода)", true, gameEventTrade);
 
 		gameEventTrade.tryToTrade = std::make_tuple(this, Trade(Resource("gold", 1000), Resource("iron", 2000), 2));
-		data.emplace_back("iron", L"Купить 2k железа за 10k еды (2 хода)", true, gameEventTrade);
+		data.emplace_back("iron", L"Купить 2k железа за 1k золота (2 хода)", true, gameEventTrade);
 
 		gameEventTrade.tryToTrade = std::make_tuple(this, Trade(Resource("food", 10000), Resource("gold", 1000), 2));
 		data.emplace_back("gold", L"Купить 1000 золота за 10k еды (2 хода)", true, gameEventTrade);
