@@ -43,7 +43,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Sprite sprite;
 
 	text.setFont(*FontStorage::get()->get("1"));
-	text.setString("Please, wait...");
+	text.setString(L"Пожалуйста, подождите");
 	text.setCharacterSize(32);
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);

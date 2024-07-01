@@ -29,7 +29,7 @@
 class Label : public sf::Drawable {
 public:
 	Label();
-	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& message, uint32_t charSize);
+	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::wstring& message, uint32_t charSize);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 protected:
 	uint32_t getX() const;

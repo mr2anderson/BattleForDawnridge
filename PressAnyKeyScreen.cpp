@@ -34,7 +34,7 @@ int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 	sf::Clock clock;
 
 	text.setFont(*FontStorage::get()->get("1"));
-	text.setString("Press any key to continue");
+	text.setString(L"Нажмите на любую клавишу для продолжения...");
 	text.setCharacterSize(32);
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);

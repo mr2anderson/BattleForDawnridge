@@ -20,13 +20,13 @@
 #include "MessageWindow.hpp"
 
 
-MessageWindow::MessageWindow(uint32_t windowW, uint32_t windowH, const std::string& message) : PopUpWindow(windowW, windowH) {
+MessageWindow::MessageWindow(uint32_t windowW, uint32_t windowH, const std::wstring& message) : PopUpWindow(windowW, windowH) {
 	uint32_t w = 200;
 	uint32_t h = 100;
 	uint32_t buttonW = 50;
 	uint32_t buttonH = 25;
-	this->label = Label((this->getWindowW() - w) / 2, (this->getWindowH() - h) / 2, w, h, message, 16);
-	this->button = Button((this->getWindowW() - w) / 2 + (w - buttonW) / 2, (this->getWindowH() - h) / 2 + h - buttonH - 5, buttonW, buttonH, "OK", 18);
+	this->label = Label((this->getWindowW() - w) / 2, (this->getWindowH() - h) / 2, w, h, message, 13);
+	this->button = Button((this->getWindowW() - w) / 2 + (w - buttonW) / 2, (this->getWindowH() - h) / 2 + h - buttonH - 5, buttonW, buttonH, L"OK", 18);
 }
 void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(this->label, states);

@@ -21,7 +21,7 @@
 
 
 Button::Button() : Label::Label() {}
-Button::Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string &message, uint32_t charSize) : Label(x, y, w, h, message, charSize) {}
+Button::Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::wstring &message, uint32_t charSize) : Label(x, y, w, h, message, charSize) {}
 bool Button::click(uint32_t x, uint32_t y) const {
 	if (x >= this->getX() and
 		y >= this->getY() and

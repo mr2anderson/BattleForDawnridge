@@ -38,7 +38,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 
 	sf::Event event{};
 
-	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, "Workshop is not built yet");
+	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, L"Мастерская должна иметь хотя-бы 80% прочности, чтобы работать");
 
 	for (; ;) {
 		while (window.pollEvent(event)) {
@@ -57,7 +57,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 		}
 
 		window.clear(BACKGROUND_COLOR);
-		drawCells(window);
+		this->drawCells(window);
 		if (this->popUpWindow != nullptr) {
 			window.draw(*this->popUpWindow);
 		}

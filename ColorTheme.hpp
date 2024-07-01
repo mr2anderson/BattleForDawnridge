@@ -23,6 +23,6 @@
 #pragma once
 
 
-static const sf::Color BACKGROUND_COLOR = sf::Color(8, 8, 8);
-static const sf::Color UI_COLOR = sf::Color(0, 0, 0, 100);
-static const sf::Color CELL_COLOR = sf::Color(0, 0, 0, 20);
+static const sf::Color BACKGROUND_COLOR = sf::Color(10, 10, 10);
+static const sf::Color UI_COLOR = sf::Color(0, 0, 0, 150);
+static const sf::Color CELL_COLOR = sf::Color(0, 0, 0, 40);

@@ -22,7 +22,7 @@
 
 
 Label::Label() = default;
-Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& message, uint32_t charSize) {
+Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::wstring& message, uint32_t charSize) {
 	this->rect.setSize(sf::Vector2f(w, h));
 	this->rect.setPosition(sf::Vector2f(x, y));
 	this->rect.setFillColor(UI_COLOR);
@@ -35,17 +35,17 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 	this->text.setOutlineThickness(1);
 	this->text.setFont(*FontStorage::get()->get("1"));
 
-	std::stringstream ss(message);
-	std::string prevMessage;
-	std::string currentMessage;
-	std::string word;
-	while (std::getline(ss, word, ' ')) {
-		word = word + " ";
+	std::wstringstream ss(message);
+	std::wstring prevMessage;
+	std::wstring currentMessage;
+	std::wstring word;
+	while (std::getline(ss, word, L' ')) {
+		word = word + L" ";
 		prevMessage = currentMessage;
 		currentMessage = currentMessage + word;
 		this->text.setString(currentMessage);
 		if (this->text.getLocalBounds().width > w - 10) {
-			currentMessage = prevMessage + "\n" + word;
+			currentMessage = prevMessage + L"\n" + word;
 			this->text.setString(currentMessage);
 		}
 	}
