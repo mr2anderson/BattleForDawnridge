@@ -24,24 +24,19 @@ BattleScreen* BattleScreen::singletone = nullptr;
 
 
 int32_t BattleScreen::run(sf::RenderWindow& window) {
-	this->initGameLogick();
+	this->init(window);
 	return this->start(window);
 }
-void BattleScreen::initGameLogick() {
+void BattleScreen::init(sf::RenderWindow& window) {
+	this->initLandscape();
+	this->removeOldPopUpWindows();
+	this->initPlayers();
+	this->initMoveCtr();
+	this->initGraphics(window);
+}
+void BattleScreen::initLandscape() {
 	this->mapWidth = 50;
 	this->mapHeight = 50;
-
-	while (!this->popUpWindows.empty()) {
-		PopUpWindow* window = this->popUpWindows.front();
-		delete window;
-		this->popUpWindows.pop();
-	}
-
-	this->players[0] = Player(1);
-	this->players[1] = Player(2);
-
-	this->move = 1;
-
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
@@ -59,13 +54,28 @@ void BattleScreen::initGameLogick() {
 	this->gameObjects.push_back(new RedMountain(3, 3));
 	this->gameObjects.push_back(new RedMountain(3, 4));
 }
+void BattleScreen::removeOldPopUpWindows() {
+	while (!this->popUpWindows.empty()) {
+		PopUpWindow* window = this->popUpWindows.front();
+		delete window;
+		this->popUpWindows.pop();
+	}
+}
+void BattleScreen::initPlayers() {
+	this->players[0] = Player(1);
+	this->players[1] = Player(2);
+}
+void BattleScreen::initMoveCtr() {
+	this->move = 1;
+}
+void BattleScreen::initGraphics(sf::RenderWindow &window) {
+	this->windowW = window.getSize().x;
+	this->windowH = window.getSize().y;
+	this->view = window.getDefaultView();
+	this->endMove = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, L"Конец хода", 18);
+}
 int32_t BattleScreen::start(sf::RenderWindow& window) {
 	sf::Event event{};
-
-	Button endMove(window.getSize().x - 20 - 150, window.getSize().y - 20 - 30, 150, 30, L"Конец хода", 18);
-
-	this->view = window.getDefaultView();
-
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
@@ -82,7 +92,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->popUpWindows.empty()) {
 					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
-						this->newMove(window.getSize().x, window.getSize().y);
+						this->newMove();
 					}
 					else {
 						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
@@ -105,7 +115,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
-						handlePopUpWindowEvent(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y), window.getSize().x, window.getSize().y);
+						handlePopUpWindowEvent(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
 					}
 				}
 			}
@@ -129,16 +139,16 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 		if (this->popUpWindows.empty()) {
 			auto pos = sf::Mouse::getPosition();
 			if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				this->viewToWest(window.getSize().x);
+				this->viewToWest();
 			}
-			else if (pos.x > window.getSize().x - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				this->viewToEast(window.getSize().x);
+			else if (pos.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				this->viewToEast();
 			}
 			if (pos.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				this->viewToNorth(window.getSize().y);
+				this->viewToNorth();
 			}
-			else if (pos.y > window.getSize().y - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				this->viewToSouth(window.getSize().y);
+			else if (pos.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				this->viewToSouth();
 			}
 		}
 	}
@@ -148,24 +158,24 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 		std::cout << "tryToAttack " << event.tryToAttack.value()->getX() << " " << event.tryToAttack.value()->getY() << std::endl;
 	}
 }
-void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event, uint32_t windowW, uint32_t windowH) {
+void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 	if (event.close) {
 		delete this->popUpWindows.front();
 		this->popUpWindows.pop();
 		if (!this->popUpWindows.empty()) {
-			this->popUpWindows.front()->run(windowW, windowH);
+			this->popUpWindows.front()->run(this->windowW, this->windowH);
 		}
 	}
 	this->handleGameEvent(event.gameEvent);
 }
-void BattleScreen::newMove(uint32_t windowW, uint32_t windowH) {
+void BattleScreen::newMove() {
 	this->move = this->move + 1;
 	SoundQueue::get()->push(SoundStorage::get()->get("newMove"));
 	if (this->getCurrentPlayer()->getId() == 1) {
-		this->view.setCenter(sf::Vector2f(windowW / 2, windowH / 2));
+		this->view.setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
 	}
 	else {
-		this->view.setCenter(sf::Vector2f(48 * this->mapWidth - windowW / 2, 48 * this->mapHeight - windowH / 2));
+		this->view.setCenter(sf::Vector2f(48 * this->mapWidth - this->windowW / 2, 48 * this->mapHeight - this->windowH / 2));
 	}
 }
 Player* BattleScreen::getCurrentPlayer() {
@@ -184,19 +194,19 @@ void BattleScreen::drawCells(sf::RenderWindow &window) {
 		}
 	}
 }
-void BattleScreen::viewToNorth(uint32_t windowH) {
-	float delta = std::min(10.f, view.getCenter().y - windowH / 2);
+void BattleScreen::viewToNorth() {
+	float delta = std::min(10.f, view.getCenter().y - this->windowH / 2);
 	view.setCenter(view.getCenter() - sf::Vector2f(0, delta));
 }
-void BattleScreen::viewToSouth(uint32_t windowH) {
-	float delta = std::min(10.f, 48 * this->mapHeight - windowH / 2 - view.getCenter().y);
+void BattleScreen::viewToSouth() {
+	float delta = std::min(10.f, 48 * this->mapHeight - this->windowH / 2 - view.getCenter().y);
 	view.setCenter(view.getCenter() + sf::Vector2f(0, delta));
 }
-void BattleScreen::viewToWest(uint32_t windowW) {
-	float delta = std::min(10.f, view.getCenter().x - windowW / 2);
+void BattleScreen::viewToWest() {
+	float delta = std::min(10.f, view.getCenter().x - this->windowW / 2);
 	view.setCenter(view.getCenter() - sf::Vector2f(delta, 0));
 }
-void BattleScreen::viewToEast(uint32_t windowW) {
-	float delta = std::min(10.f, 48 * this->mapWidth - windowW / 2 - view.getCenter().x);
+void BattleScreen::viewToEast() {
+	float delta = std::min(10.f, 48 * this->mapWidth - this->windowW / 2 - view.getCenter().x);
 	view.setCenter(view.getCenter() + sf::Vector2f(delta, 0));
 }

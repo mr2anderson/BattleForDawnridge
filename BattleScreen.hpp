@@ -47,21 +47,29 @@ private:
 	static BattleScreen* singletone;
 
 	uint32_t mapWidth, mapHeight;
-	sf::View view;
 	std::queue<PopUpWindow*> popUpWindows;
 	Player players[2];
 	uint32_t move = 1;
 	std::vector<GameObject*> gameObjects;
+	uint32_t windowW, windowH;
+	sf::View view;
+	Button endMove;
 
-	void initGameLogick();
+	void init(sf::RenderWindow &window);
+	void initLandscape();
+	void removeOldPopUpWindows();
+	void initPlayers();
+	void initMoveCtr();
+	void initGraphics(sf::RenderWindow &window);
+
 	int32_t start(sf::RenderWindow &window);
 	void handleGameEvent(GameEvent event);
-	void handlePopUpWindowEvent(PopUpWindowEvent event, uint32_t windowW, uint32_t windowH);
-	void newMove(uint32_t windowW, uint32_t windowH);
+	void handlePopUpWindowEvent(PopUpWindowEvent even);
+	void newMove();
 	Player* getCurrentPlayer();
 	void drawCells(sf::RenderWindow &window);
-	void viewToNorth(uint32_t windowH);
-	void viewToSouth(uint32_t windowH);
-	void viewToWest(uint32_t windowW);
-	void viewToEast(uint32_t windowW);
+	void viewToNorth();
+	void viewToSouth();
+	void viewToWest();
+	void viewToEast();
 };
