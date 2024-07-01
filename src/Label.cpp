@@ -39,7 +39,7 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 	std::string prevMessage;
 	std::string currentMessage;
 	std::string word;
-	while (ss >> word) {
+	while (std::getline(ss, word, ' ')) {
 		word = word + " ";
 		prevMessage = currentMessage;
 		currentMessage = currentMessage + word;

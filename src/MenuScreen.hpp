@@ -17,7 +17,7 @@
  */
 
 
-#include <cstdint>
+#include "TextureStorage.hpp"
 #include "Playlist.hpp"
 #include "ColorTheme.hpp"
 #include "Button.hpp"
