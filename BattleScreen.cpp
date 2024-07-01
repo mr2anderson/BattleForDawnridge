@@ -95,8 +95,8 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 						this->newMove();
 					}
 					else {
-						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
-						uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - window.getSize().y / 2;
+						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - this->windowW / 2;
+						uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - this->windowH / 2;
 						for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 							GameObjectResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, window.getSize().x, window.getSize().y);
 							if (response.gameEvent.has_value()) {
@@ -176,6 +176,20 @@ void BattleScreen::newMove() {
 	}
 	else {
 		this->view.setCenter(sf::Vector2f(48 * this->mapWidth - this->windowW / 2, 48 * this->mapHeight - this->windowH / 2));
+	}
+	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
+		GameObjectResponse response = this->gameObjects[i]->newMove(*this->getCurrentPlayer(), this->windowW, this->windowH);
+		if (response.gameEvent.has_value()) {
+			this->handleGameEvent(response.gameEvent.value());
+		}
+		std::queue<PopUpWindow*> popUpWindows2 = response.popUpWindows;
+		if (!popUpWindows2.empty()) {
+			while (!popUpWindows2.empty()) {
+				this->popUpWindows.push(popUpWindows2.front());
+				popUpWindows2.pop();
+			}
+			this->popUpWindows.front()->run(this->windowW, this->windowH);
+		}
 	}
 }
 Player* BattleScreen::getCurrentPlayer() {

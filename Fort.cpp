@@ -22,6 +22,12 @@
 
 
 Fort::Fort(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 100000, true, playerPtr) {}
+std::wstring Fort::getName() const {
+	return L"замок";
+}
+bool Fort::isHpSensitive() const {
+	return false;
+}
 std::string Fort::getTextureName() const {
 	return "fort";
 }

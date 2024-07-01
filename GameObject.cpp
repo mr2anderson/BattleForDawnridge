@@ -61,3 +61,6 @@ GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouse
 	}
 	return GameObjectResponse();
 }
+GameObjectResponse GameObject::newMove(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY) {
+	return GameObjectResponse();
+}

@@ -38,9 +38,10 @@ public:
 	uint32_t getX() const;
 	uint32_t getY() const;
 	GameObjectResponse click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
+	virtual GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
 protected:
 	virtual std::string getTextureName() const = 0;
-	virtual GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) = 0;
+	virtual GameObjectResponse getGameObjectResponse(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) = 0;
 private:
 	HPBar bar;
 };
