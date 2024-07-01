@@ -611,6 +611,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="SoundStorage.hpp" />
     <ClInclude Include="TextureStorage.hpp" />
     <ClInclude Include="Tree.hpp" />
+    <ClInclude Include="Unit.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav" />
@@ -648,6 +649,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="SoundStorage.cpp" />
     <ClCompile Include="TextureStorage.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
