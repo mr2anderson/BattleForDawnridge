@@ -22,27 +22,25 @@
 
 
 Fort::Fort(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 100000, true, playerPtr) {}
-std::wstring Fort::getName() const {
-	return L"замок";
-}
-bool Fort::isHpSensitive() const {
-	return false;
+GameObjectResponse Fort::newMove(const Player& player, uint32_t windowW, uint32_t windowH) {
+	if (this->belongTo(&player)) {
+		this->addHp(Building::REGENERATION_SPEED);
+	}
+	return GameObjectResponse();
 }
 std::string Fort::getTextureName() const {
 	return "fort";
 }
 GameObjectResponse Fort::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
+	GameObjectResponse response;
 	if (this->belongTo(&player)) {
-		GameObjectResponse response;
 		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 		data.emplace_back("exit", L"Покинуть", true, GameEvent());
 		data.emplace_back("fort", L"Замок — сердце города. Разгром замка приведет к поражению. Защищайте его любой ценой.", false, GameEvent());
 		SelectWindow* window = new SelectWindow("hooray", "click", data);
 		response.popUpWindows.push(window);
-		return response;
 	}
 
-	GameObjectResponse response;
 	response.gameEvent = GameEvent();
 	response.gameEvent.value().tryToAttack = this;
 	return response;

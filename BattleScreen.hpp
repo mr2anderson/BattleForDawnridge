@@ -27,6 +27,7 @@
 #include "Mountain.hpp"
 #include "RedMountain.hpp"
 #include "Fort.hpp"
+#include "Caravan.hpp"
 
 
 #pragma once

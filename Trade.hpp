@@ -17,24 +17,16 @@
  */
 
 
-#include "ResourceBar.hpp"
+
+#include "Resource.hpp"
 
 
 #pragma once
 
 
-class Player {
-public:
-	Player();
-	Player(uint32_t id);
-	uint32_t getId() const;
-	const ResourceBar *getConstResourceBarPtr() const;
-	void addResource(const Resource &resource);
-	void subResource(const Resource &resource);
-	int32_t getResource(const std::string& id) const;
-	friend bool operator==(const Player& a, const Player& b);
-	friend bool operator!=(const Player& a, const Player& b);
-private:
-	uint32_t id;
-	ResourceBar bar;
+struct Trade {
+	Trade();
+	Trade(const Resource& sell, const Resource& buy, uint32_t movesLeft);
+	Resource sell, buy;
+	uint32_t movesLeft;
 };

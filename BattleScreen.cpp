@@ -42,6 +42,9 @@ void BattleScreen::initLandscape() {
 	}
 	this->gameObjects.clear();
 	this->gameObjects.push_back(new Fort(1, 1, &this->players[0]));
+	this->gameObjects.push_back(new Caravan(1, 2, &this->players[0]));
+	this->gameObjects.push_back(new Caravan(2, 1, &this->players[0]));
+	this->gameObjects.push_back(new Caravan(2, 2, &this->players[0]));
 	this->gameObjects.push_back(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
 	this->gameObjects.push_back(new Plant(4, 4));
 	this->gameObjects.push_back(new Plant(4, 5));
@@ -156,6 +159,40 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 void BattleScreen::handleGameEvent(GameEvent event) {
 	if (event.tryToAttack.has_value()) {
 		std::cout << "tryToAttack " << event.tryToAttack.value()->getX() << " " << event.tryToAttack.value()->getY() << std::endl;
+	}
+	if (event.tryToTrade.has_value()) {
+		Caravan* caravan = std::get<Caravan*>(event.tryToTrade.value());
+		Trade trade = std::get<Trade>(event.tryToTrade.value());
+		if (this->getCurrentPlayer()->getResource(trade.sell.type) >= trade.sell.n) {
+			GameObjectResponse response = caravan->doTrade(trade);
+			if (response.gameEvent.has_value()) {
+				this->handleGameEvent(response.gameEvent.value());
+			}
+			std::queue<PopUpWindow*> popUpWindows2 = response.popUpWindows;
+			bool free = this->popUpWindows.empty();
+			if (!popUpWindows2.empty()) {
+				while (!popUpWindows2.empty()) {
+					this->popUpWindows.push(popUpWindows2.front());
+					popUpWindows2.pop();
+				}
+				if (free) {
+					this->popUpWindows.front()->run(this->windowW, this->windowH);
+				}
+			}
+		}
+		else {
+			MessageWindow* window = new MessageWindow("click", "click", L"Не достаточно ресурсов\nВы не можете совершить эту сделку.");
+			this->popUpWindows.push(window);
+			if (this->popUpWindows.size() == 1) {
+				this->popUpWindows.front()->run(this->windowW, this->windowH);
+			}
+		}
+	}
+	if (event.startTrade.has_value()) {
+		this->getCurrentPlayer()->subResource(event.startTrade.value());
+	}
+	if (event.finishTrade.has_value()) {
+		this->getCurrentPlayer()->addResource(event.finishTrade.value());
 	}
 }
 void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {

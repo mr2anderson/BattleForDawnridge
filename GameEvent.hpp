@@ -18,15 +18,21 @@
 
 
 #include <optional>
+#include <tuple>
+#include "Trade.hpp"
 
 
 #pragma once
 
 
 class Unit;
+class Caravan;
 
 
 struct GameEvent {
 	GameEvent();
 	std::optional<Unit*> tryToAttack;
+	std::optional<std::tuple<Caravan*, Trade>> tryToTrade;
+	std::optional<Resource> startTrade;
+	std::optional<Resource> finishTrade;
 };

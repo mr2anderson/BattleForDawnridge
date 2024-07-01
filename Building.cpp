@@ -22,20 +22,6 @@
 
 Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr) : Building(x, y, maxHp, false, playerPtr) {}
 Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, full * maxHp + (!full) * 1, maxHp, playerPtr) {}
-GameObjectResponse Building::newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) {
-	GameObjectResponse response = this->Unit::newMove(currentPlayer, windowW, windowH);
-	if (!this->belongTo(&currentPlayer)) {
-		return response;
-	}
-	bool works1 = this->works();
-	this->addHp(REGENERATION_SPEED);
-	bool works2 = this->works();
-	if (works2 and !works1 and this->isHpSensitive()) {
-		MessageWindow* window = new MessageWindow("hooray", "click", L"Постройка достроена!\nБлагодаря усилиям рабочих, " + this->getName() + L" теперь может работать.");
-		response.popUpWindows.push(window);
-	}
-	return response;
-}
 bool Building::works() const {
 	return (100 * this->getHP() / this->getMaxHP() >= MINIMAL_PERCENT);
 }

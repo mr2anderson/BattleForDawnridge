@@ -27,4 +27,5 @@ public:
 	bool belongTo(const Player* player) const;
 private:
 	const Player* playerPtr;
+
 };

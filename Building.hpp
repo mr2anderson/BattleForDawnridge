@@ -28,12 +28,9 @@ class Building : public Unit {
 public:
 	Building(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr);
 	Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player *playerPtr);
-	GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
-	static constexpr uint32_t MINIMAL_PERCENT = 80;
 protected:
 	bool works() const;
-	virtual std::wstring getName() const = 0;
-	virtual bool isHpSensitive() const = 0;
-private:
+
+	static constexpr uint32_t MINIMAL_PERCENT = 80;
 	static constexpr uint32_t REGENERATION_SPEED = 5000;
 };

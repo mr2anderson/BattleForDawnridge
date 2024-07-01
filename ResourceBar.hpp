@@ -21,6 +21,7 @@
 #include "TextureStorage.hpp"
 #include "FontStorage.hpp"
 #include "ColorTheme.hpp"
+#include "Resource.hpp"
 
 
 #pragma once
@@ -30,8 +31,8 @@ class ResourceBar : public sf::Drawable {
 public:
 	ResourceBar();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void plus(const std::string& id, int32_t value);
-	void minus(const std::string& id, int32_t value);
+	void plus(const Resource &resource);
+	void minus(const Resource &resource);
 	int32_t get(const std::string& id) const;
 private:
 	std::unordered_map<std::string, int32_t> map;

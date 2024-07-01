@@ -17,24 +17,24 @@
  */
 
 
-#include "ResourceBar.hpp"
+#include <cassert>
+#include "Building.hpp"
+#include "Trade.hpp"
+#include "SelectWindow.hpp"
 
 
 #pragma once
 
 
-class Player {
+class Caravan : public Building {
 public:
-	Player();
-	Player(uint32_t id);
-	uint32_t getId() const;
-	const ResourceBar *getConstResourceBarPtr() const;
-	void addResource(const Resource &resource);
-	void subResource(const Resource &resource);
-	int32_t getResource(const std::string& id) const;
-	friend bool operator==(const Player& a, const Player& b);
-	friend bool operator!=(const Player& a, const Player& b);
+	Caravan(uint32_t x, uint32_t y, const Player *playerPtr);
+	GameObjectResponse doTrade(const Trade& trade);
+	GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
 private:
-	uint32_t id;
-	ResourceBar bar;
+	Trade currentTrade;
+
+	std::string getTextureName() const override;
+	bool busy() const;
+	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };
