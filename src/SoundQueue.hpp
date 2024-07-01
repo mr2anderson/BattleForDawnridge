@@ -34,7 +34,7 @@ public:
         return SoundQueue::singletone;
     }
 
-    void push(sf::SoundBuffer *soundbuffer, float dstX, float dstY);
+    void push(sf::SoundBuffer *soundbuffer, float dstX=0, float dstY=0);
     void clear();
 private:
     SoundQueue() = default;

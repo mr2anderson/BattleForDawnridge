@@ -20,6 +20,8 @@
 #include "Playlist.hpp"
 #include "HPBar.hpp"
 #include "ColorTheme.hpp"
+#include "SoundQueue.hpp"
+#include "SoundStorage.hpp"
 #include "MessageWindow.hpp"
 
 

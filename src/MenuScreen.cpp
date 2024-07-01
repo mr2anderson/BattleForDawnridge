@@ -50,6 +50,7 @@ int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
 			if (event.type == sf::Event::MouseButtonPressed) {
 				auto pos = sf::Mouse::getPosition();
 				if (start2on1pc.click(pos.x, pos.y)) {
+					SoundQueue::get()->push(SoundStorage::get()->get("click"));
 					return 0;
 				}
 				if (exit.click(pos.x, pos.y)) {

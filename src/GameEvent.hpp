@@ -19,6 +19,7 @@
 
 #include <optional>
 #include <tuple>
+#include <string>
 #include <cstdint>
 
 
@@ -28,4 +29,5 @@
 struct GameEvent {
 	GameEvent();
 	
+	std::optional<std::string> sound;
 };

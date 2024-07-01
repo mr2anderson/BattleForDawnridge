@@ -33,5 +33,9 @@ void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	target.draw(this->button, states);
 }
 PopUpWindowEvent MessageWindow::click(uint32_t x, uint32_t y) const {
-	return PopUpWindowEvent(this->button.click(x, y));
+	PopUpWindowEvent event(this->button.click(x, y));
+	if (event.close) {
+		event.gameEvent.sound = "click";
+	}
+	return event;
 }

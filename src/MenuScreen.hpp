@@ -19,6 +19,8 @@
 
 #include "TextureStorage.hpp"
 #include "Playlist.hpp"
+#include "SoundQueue.hpp"
+#include "SoundStorage.hpp"
 #include "ColorTheme.hpp"
 #include "Button.hpp"
 

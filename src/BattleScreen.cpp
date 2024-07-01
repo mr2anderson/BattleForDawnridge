@@ -64,7 +64,9 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 	}
 }
 void BattleScreen::handleGameEvent(GameEvent event) {
-
+	if (event.sound.has_value()) {
+		SoundQueue::get()->push(SoundStorage::get()->get(event.sound.value()));
+	}
 }
 void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 	if (event.close) {

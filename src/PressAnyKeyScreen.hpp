@@ -20,6 +20,8 @@
 #include <cstdint>
 #include "TextureStorage.hpp"
 #include "MusicStorage.hpp"
+#include "SoundStorage.hpp"
+#include "SoundQueue.hpp"
 #include "FontStorage.hpp"
 #include "ColorTheme.hpp"
 
