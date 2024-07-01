@@ -21,7 +21,7 @@
 
 
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t size) : GameObject(x, y, size, size) {}
-GameObjectClickResponse ResourcePoint::getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) const {
+GameObjectClickResponse ResourcePoint::getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) {
 	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 
 	GameEvent gameEventClickSound;

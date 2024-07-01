@@ -586,6 +586,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="FontStorage.hpp" />
+    <ClInclude Include="Fort.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameEvent.hpp" />
     <ClInclude Include="GameObject.hpp" />
@@ -625,6 +626,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="FontStorage.cpp" />
+    <ClCompile Include="Fort.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameObject.cpp" />

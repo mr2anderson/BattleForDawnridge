@@ -66,7 +66,6 @@ void LoadingScreen::loadAll() {
 		}
 		TextureStorage::get()->add("logotype" + std::to_string(i), "images/logotype/Plant Wind 1_" + s + ".png");
 	}
-
 	for (uint32_t i = 0; i < Plant::TOTAL_TYPES; i = i + 1) {
 		for (uint32_t j = 0; j < Plant::ANIMATION_N[i]; j = j + 1) {
 			std::string s = std::to_string(j);
@@ -85,14 +84,15 @@ void LoadingScreen::loadAll() {
 	for (uint32_t i = 0; i < RedMountain::TOTAL_TYPES; i = i + 1) {
 		TextureStorage::get()->add("redMountain" + std::to_string(i), "images/gameObjects/resourcePoints/redMountains/" + std::to_string(i) + ".png");
 	}
-
+	for (const std::string& a : { "fort" }) {
+		TextureStorage::get()->add(a, "images/gameObjects/units/buildings/" + a + ".png");
+	}
 	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit"}) {
 		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
 	}
-	for (const std::string& a : { "click", "newMove", "leaves", "axe", "quarry", "mine"}) {
+	for (const std::string& a : { "click", "newMove", "leaves", "axe", "quarry", "mine", "hooray"}) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".ogg");
 	}
-
 	MusicStorage::get()->add("intro", "music/intro.ogg");
 	MusicStorage::get()->add("menu", "music/menu.ogg");
 	for (uint32_t i = 0; i < 10; i = i + 1) {

@@ -39,6 +39,8 @@ void BattleScreen::initGameLogick() {
 		delete this->gameObjects[i];
 	}
 	this->gameObjects.clear();
+	this->gameObjects.push_back(new Fort(1, 1, &this->players[0]));
+	this->gameObjects.push_back(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
 	this->gameObjects.push_back(new Plant(4, 4));
 	this->gameObjects.push_back(new Plant(4, 5));
 	this->gameObjects.push_back(new Plant(5, 4));
@@ -73,7 +75,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->popUpWindow == nullptr) {
 					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
-						this->newMove();
+						this->newMove(window.getSize().x, window.getSize().y);
 					}
 					else {
 						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
@@ -133,6 +135,9 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 	if (event.sound.has_value()) {
 		SoundQueue::get()->push(SoundStorage::get()->get(event.sound.value()));
 	}
+	if (event.attack.has_value()) {
+		std::cout << event.attack.value()->getX() << " " << event.attack.value()->getY() << std::endl;
+	}
 }
 void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 	if (event.close) {
@@ -141,9 +146,15 @@ void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 	}
 	this->handleGameEvent(event.gameEvent);
 }
-void BattleScreen::newMove() {
+void BattleScreen::newMove(uint32_t windowW, uint32_t windowH) {
 	this->move = this->move + 1;
 	SoundQueue::get()->push(SoundStorage::get()->get("newMove"));
+	if (this->getCurrentPlayer()->getId() == 1) {
+		this->view.setCenter(sf::Vector2f(windowW / 2, windowH / 2));
+	}
+	else {
+		this->view.setCenter(sf::Vector2f(48 * this->mapWidth - windowW / 2, 48 * this->mapHeight - windowH / 2));
+	}
 }
 Player* BattleScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];

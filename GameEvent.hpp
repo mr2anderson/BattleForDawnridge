@@ -26,8 +26,12 @@
 #pragma once
 
 
+class Unit;
+
+
 struct GameEvent {
 	GameEvent();
 	
 	std::optional<std::string> sound;
+	std::optional<Unit*> attack;
 };

@@ -18,6 +18,7 @@
 
 
 #include <array>
+#include <iostream>
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
 #include "SoundStorage.hpp"
@@ -26,6 +27,7 @@
 #include "Tree.hpp"
 #include "Mountain.hpp"
 #include "RedMountain.hpp"
+#include "Fort.hpp"
 
 
 #pragma once
@@ -56,7 +58,7 @@ private:
 	int32_t start(sf::RenderWindow &window);
 	void handleGameEvent(GameEvent event);
 	void handlePopUpWindowEvent(PopUpWindowEvent event);
-	void newMove();
+	void newMove(uint32_t windowW, uint32_t windowH);
 	Player* getCurrentPlayer();
 	void drawCells(sf::RenderWindow &window);
 	void viewToNorth(uint32_t windowH);

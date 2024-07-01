@@ -745,6 +745,9 @@
     <ClInclude Include="Building.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Fort.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -848,6 +851,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Building.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

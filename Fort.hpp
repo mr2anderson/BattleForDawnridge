@@ -17,21 +17,17 @@
  */
 
 
-#include "GameObject.hpp"
+#include "Building.hpp"
 #include "SelectWindow.hpp"
 
 
 #pragma once
 
 
-class ResourcePoint : public GameObject {
+class Fort : public Building {
 public:
-	ResourcePoint(uint32_t x, uint32_t y, uint32_t size);
-	virtual std::string getResourceType() const = 0;
-protected:
-	virtual std::string getIconName() const = 0;
-	virtual std::wstring getDescription() const = 0;
-	virtual std::string getClickSoundName() const = 0;
+	Fort(uint32_t x, uint32_t y, const Player* playerPtr);
 private:
+	std::string getTextureName() const override;
 	GameObjectClickResponse getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };
