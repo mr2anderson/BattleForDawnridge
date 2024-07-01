@@ -43,6 +43,9 @@ void GameObject::changeMaxHp(uint32_t value) {
 uint32_t GameObject::getHP() const {
 	return this->bar.getCurrent();
 }
+uint32_t GameObject::getMaxHP() const {
+	return this->bar.getMax();
+}
 uint32_t GameObject::getX() const {
 	return this->bar.getX();
 }
