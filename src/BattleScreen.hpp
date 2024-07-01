@@ -17,6 +17,7 @@
  */
 
 
+#include "Playlist.hpp"
 #include "HPBar.hpp"
 #include "ColorTheme.hpp"
 #include "MessageWindow.hpp"

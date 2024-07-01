@@ -18,6 +18,7 @@
 
 
 #include <cstdint>
+#include "Playlist.hpp"
 #include "ColorTheme.hpp"
 #include "Button.hpp"
 

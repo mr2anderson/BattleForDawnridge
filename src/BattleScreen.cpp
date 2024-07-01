@@ -31,6 +31,8 @@ void BattleScreen::initGameLogick() {
 	this->popUpWindow = nullptr;
 }
 int32_t BattleScreen::start(sf::RenderWindow& window) {
+	MusicStorage::get()->get("menu")->stop();
+
 	sf::Event event{};
 
 	this->popUpWindow = new MessageWindow(window.getSize().x, window.getSize().y, "Workshop is not built yet");
@@ -50,12 +52,15 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 			}
 			
 		}
+
 		window.clear(BACKGROUND_COLOR);
 		drawCells(window);
 		if (this->popUpWindow != nullptr) {
 			window.draw(*this->popUpWindow);
 		}
 		window.display();
+
+		Playlist::get()->update();
 	}
 }
 void BattleScreen::handleGameEvent(GameEvent event) {

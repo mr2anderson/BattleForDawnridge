@@ -19,6 +19,7 @@
 
 #include <cstdint>
 #include "TextureStorage.hpp"
+#include "MusicStorage.hpp"
 #include "FontStorage.hpp"
 #include "ColorTheme.hpp"
 

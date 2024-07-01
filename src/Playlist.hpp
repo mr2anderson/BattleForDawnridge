@@ -36,7 +36,7 @@ public:
     void update();
     void restartMusic();
 
-    static constexpr int32_t SOUNDTRACKS_N = 20;
+    static constexpr int32_t SOUNDTRACKS_N = 10;
 private:
     Playlist() = default;
     Playlist(int32_t number) {

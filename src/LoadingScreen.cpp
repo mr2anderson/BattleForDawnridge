@@ -66,4 +66,10 @@ void LoadingScreen::loadAll() {
 		}
 		TextureStorage::get()->add("logotype" + std::to_string(i), "images/logotype/Plant Wind 1_" + s + ".png");
 	}
+
+	MusicStorage::get()->add("intro", "music/intro.ogg");
+	MusicStorage::get()->add("menu", "music/menu.ogg");
+	for (uint32_t i = 0; i < 10; i = i + 1) {
+		MusicStorage::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
+	}
 }

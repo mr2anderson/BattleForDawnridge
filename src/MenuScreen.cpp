@@ -27,6 +27,10 @@ int32_t MenuScreen::run(sf::RenderWindow& window) {
 	return this->getConnection(window);
 }
 int32_t MenuScreen::getConnection(sf::RenderWindow& window) {
+	MusicStorage::get()->get("intro")->stop();
+	Playlist::get()->restartMusic();
+	MusicStorage::get()->get("menu")->play();
+
 	Button start2on1pc(10, 10, 400, 60, "To battle (2 players 1 PC)", 24);
 	Button exit(10, 80, 400, 60, "Exit", 24);
 
