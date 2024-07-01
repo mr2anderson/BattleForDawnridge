@@ -17,6 +17,7 @@
  */
 
 
+#include <queue>
 #include "PopUpWindow.hpp"
 
 
@@ -26,5 +27,5 @@
 struct GameObjectResponse {
 	GameObjectResponse();
 	std::optional<GameEvent> gameEvent;
-	std::optional<PopUpWindow*> popUpWindow;
+	std::queue<PopUpWindow*> popUpWindows;
 };

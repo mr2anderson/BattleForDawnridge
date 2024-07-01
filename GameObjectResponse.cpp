@@ -22,5 +22,4 @@
 
 GameObjectResponse::GameObjectResponse() {
 	this->gameEvent = std::nullopt;
-	this->popUpWindow = std::nullopt;
 }

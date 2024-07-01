@@ -37,7 +37,9 @@ void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	target.draw(button, states);
 }
 PopUpWindowEvent MessageWindow::click(uint32_t x, uint32_t y) const {
-	this->playSound2();
 	PopUpWindowEvent event(this->button.click(x, y));
+	if (event.close) {
+		this->playSound2();
+	}
 	return event;
 }

@@ -26,6 +26,7 @@ GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player, ui
 	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 	data.emplace_back("exit", L"Вернуться", true, GameEvent());
 	data.emplace_back(this->getIconName(), this->getDescription(), false, GameEvent());
-	response.popUpWindow = new SelectWindow(this->getClickSoundName(), "click", data);
+	SelectWindow* window = new SelectWindow(this->getClickSoundName(), "click", data);
+	response.popUpWindows.push(window);
 	return response;
 }

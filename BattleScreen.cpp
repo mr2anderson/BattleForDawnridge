@@ -92,10 +92,13 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 							if (response.gameEvent.has_value()) {
 								handleGameEvent(response.gameEvent.value());
 							}
-							if (response.popUpWindow.has_value()) {
-								PopUpWindow* popUpWindow = response.popUpWindow.value();
-								popUpWindow->run(window.getSize().x, window.getSize().y);
-								this->popUpWindows.push(popUpWindow);
+							std::queue<PopUpWindow*> popUpWindows2 = response.popUpWindows;
+							if (!popUpWindows2.empty()) {
+								while (!popUpWindows2.empty()) {
+									this->popUpWindows.push(popUpWindows2.front());
+									popUpWindows2.pop();
+								}
+								this->popUpWindows.front()->run(window.getSize().x, window.getSize().y);
 							}
 						}
 					}

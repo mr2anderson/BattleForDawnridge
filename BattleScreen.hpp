@@ -17,7 +17,6 @@
  */
 
 
-#include <queue>
 #include <iostream>
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"

@@ -17,6 +17,7 @@
  */
 
 
+#include "MessageWindow.hpp"
 #include "Fort.hpp"
 
 
@@ -30,7 +31,8 @@ GameObjectResponse Fort::getGameObjectResponse(const Player& player, uint32_t wi
 		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 		data.emplace_back("exit", L"Покинуть", true, GameEvent());
 		data.emplace_back("fort", L"Замок — сердце города. Разгром замка приведет к поражению. Защищайте его любой ценой.", false, GameEvent());
-		response.popUpWindow = new SelectWindow("hooray", "click", data);
+		SelectWindow* window = new SelectWindow("hooray", "click", data);
+		response.popUpWindows.push(window);
 		return response;
 	}
 
