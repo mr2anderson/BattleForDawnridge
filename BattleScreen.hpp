@@ -17,12 +17,14 @@
  */
 
 
+#include <array>
 #include "Playlist.hpp"
 #include "HPBar.hpp"
 #include "ColorTheme.hpp"
 #include "SoundQueue.hpp"
 #include "SoundStorage.hpp"
 #include "MessageWindow.hpp"
+#include "Player.hpp"
 
 
 #pragma once
@@ -43,6 +45,8 @@ private:
 	static BattleScreen* singletone;
 
 	PopUpWindow *popUpWindow;
+	std::array<Player, 2> players;
+	uint32_t move = 1;
 
 	static const uint32_t MAP_SIZE_X = 100;
 	static const uint32_t MAP_SIZE_Y = 100;
@@ -51,5 +55,6 @@ private:
 	int32_t start(sf::RenderWindow &window);
 	void handleGameEvent(GameEvent event);
 	void handlePopUpWindowEvent(PopUpWindowEvent event);
+	Player* getCurrentPlayer();
 	void drawCells(sf::RenderWindow &window);
 };

@@ -649,65 +649,71 @@
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp">
       <Filter>Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="src\BattleScreen.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="GameEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Button.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="BattleScreen.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ColorTheme.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="MenuScreen.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\FontStorage.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="SoundQueue.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="PressAnyKeyScreen.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEvent.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Playlist.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\HPBar.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="LoadingScreen.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Label.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="MusicStorage.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LoadingScreen.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="SoundStorage.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MenuScreen.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="TextureStorage.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MessageWindow.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="PopUpWindowEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PopUpWindow.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="MessageWindow.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PopUpWindowEvent.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Label.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PressAnyKeyScreen.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Button.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Root.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="HPBar.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MusicStorage.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="PopUpWindow.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Playlist.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="ColorTheme.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SoundQueue.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Root.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SoundStorage.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="FontStorage.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextureStorage.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceBar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -721,61 +727,67 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BattleScreen.cpp">
+    <ClCompile Include="BattleScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Button.cpp">
+    <ClCompile Include="MessageWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FontStorage.cpp">
+    <ClCompile Include="GameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="LoadingScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEvent.cpp">
+    <ClCompile Include="PressAnyKeyScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\HPBar.cpp">
+    <ClCompile Include="MenuScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Label.cpp">
+    <ClCompile Include="Label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\LoadingScreen.cpp">
+    <ClCompile Include="Playlist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="MusicStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuScreen.cpp">
+    <ClCompile Include="SoundQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MessageWindow.cpp">
+    <ClCompile Include="SoundStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PopUpWindow.cpp">
+    <ClCompile Include="TextureStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PopUpWindowEvent.cpp">
+    <ClCompile Include="Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PressAnyKeyScreen.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MusicStorage.cpp">
+    <ClCompile Include="HPBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Playlist.cpp">
+    <ClCompile Include="PopUpWindowEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SoundQueue.cpp">
+    <ClCompile Include="PopUpWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SoundStorage.cpp">
+    <ClCompile Include="FontStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureStorage.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

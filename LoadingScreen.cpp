@@ -67,6 +67,10 @@ void LoadingScreen::loadAll() {
 		TextureStorage::get()->add("logotype" + std::to_string(i), "images/logotype/Plant Wind 1_" + s + ".png");
 	}
 
+	for (const std::string& a : { "food", "wood", "stone", "iron", "gold" }) {
+		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
+	}
+
 	for (const std::string& a : { "click" }) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".wav");
 	}

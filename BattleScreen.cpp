@@ -29,6 +29,9 @@ int32_t BattleScreen::run(sf::RenderWindow& window) {
 }
 void BattleScreen::initGameLogick() {
 	this->popUpWindow = nullptr;
+	this->players[0] = Player(1);
+	this->players[1] = Player(2);
+	this->move = 1;
 }
 int32_t BattleScreen::start(sf::RenderWindow& window) {
 	MusicStorage::get()->get("menu")->stop();
@@ -58,6 +61,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 		if (this->popUpWindow != nullptr) {
 			window.draw(*this->popUpWindow);
 		}
+		window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
 		window.display();
 
 		Playlist::get()->update();
@@ -74,6 +78,9 @@ void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 		this->popUpWindow = nullptr;
 	}
 	this->handleGameEvent(event.gameEvent);
+}
+Player* BattleScreen::getCurrentPlayer() {
+	return &this->players[(move - 1) % 2];
 }
 void BattleScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < MAP_SIZE_X; i = i + 1) {
