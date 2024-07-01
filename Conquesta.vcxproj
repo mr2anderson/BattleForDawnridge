@@ -587,6 +587,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="FontStorage.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameEvent.hpp" />
+    <ClInclude Include="GameObjectClickResponse.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
@@ -617,6 +618,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="FontStorage.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEvent.cpp" />
+    <ClCompile Include="GameObjectClickResponse.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
