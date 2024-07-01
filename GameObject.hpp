@@ -18,7 +18,7 @@
 
 
 #include "TextureStorage.hpp"
-#include "GameObjectClickResponse.hpp"
+#include "GameObjectResponse.hpp"
 #include "HPBar.hpp"
 #include "Player.hpp"
 
@@ -37,10 +37,10 @@ public:
 	uint32_t getMaxHP() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
-	GameObjectClickResponse click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
+	GameObjectResponse click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
 protected:
 	virtual std::string getTextureName() const = 0;
-	virtual GameObjectClickResponse getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) = 0;
+	virtual GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) = 0;
 private:
 	HPBar bar;
 };

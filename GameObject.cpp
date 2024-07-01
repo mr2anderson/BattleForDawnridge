@@ -52,12 +52,12 @@ uint32_t GameObject::getX() const {
 uint32_t GameObject::getY() const {
 	return this->bar.getY();
 }
-GameObjectClickResponse GameObject::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
 	if (mouseX >= 48 * this->getX() and
 		mouseY >= 48 * this->getY() and
 		mouseX < 48 * (this->getX() + 1) and
 		mouseY < 48 * (this->getY() + 1)) {
-		return this->getGOCR(currentPlayer, windowW, windowH);
+		return this->getGameObjectResponse(currentPlayer, windowW, windowH);
 	}
-	return GameObjectClickResponse();
+	return GameObjectResponse();
 }

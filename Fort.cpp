@@ -24,16 +24,16 @@ Fort::Fort(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 100
 std::string Fort::getTextureName() const {
 	return "fort";
 }
-GameObjectClickResponse Fort::getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse Fort::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	if (this->belongTo(&player)) {
-		GameObjectClickResponse response;
+		GameObjectResponse response;
 		response.gameEvent = GameEvent();
-		response.gameEvent.value().sound = "hooray";
+		response.gameEvent.value().playSound = "hooray";
 
 		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 
 		GameEvent gameEventClickSound;
-		gameEventClickSound.sound = "click";
+		gameEventClickSound.playSound = "click";
 		data.emplace_back("exit", L"Покинуть", true, gameEventClickSound);
 
 		GameEvent gameEventDefault;
@@ -44,8 +44,8 @@ GameObjectClickResponse Fort::getGOCR(const Player& player, uint32_t windowW, ui
 		return response;
 	}
 
-	GameObjectClickResponse response;
+	GameObjectResponse response;
 	response.gameEvent = GameEvent();
-	response.gameEvent.value().attack = this;
+	response.gameEvent.value().tryToAttack = this;
 	return response;
 }

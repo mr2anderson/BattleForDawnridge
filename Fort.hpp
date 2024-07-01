@@ -29,5 +29,5 @@ public:
 	Fort(uint32_t x, uint32_t y, const Player* playerPtr);
 private:
 	std::string getTextureName() const override;
-	GameObjectClickResponse getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };

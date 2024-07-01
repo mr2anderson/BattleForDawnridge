@@ -81,7 +81,7 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
 						uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - window.getSize().y / 2;
 						for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-							GameObjectClickResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, window.getSize().x, window.getSize().y);
+							GameObjectResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, window.getSize().x, window.getSize().y);
 							if (response.gameEvent.has_value()) {
 								handleGameEvent(response.gameEvent.value());
 							}
@@ -132,11 +132,11 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 	}
 }
 void BattleScreen::handleGameEvent(GameEvent event) {
-	if (event.sound.has_value()) {
-		SoundQueue::get()->push(SoundStorage::get()->get(event.sound.value()));
+	if (event.playSound.has_value()) {
+		SoundQueue::get()->push(SoundStorage::get()->get(event.playSound.value()));
 	}
-	if (event.attack.has_value()) {
-		std::cout << event.attack.value()->getX() << " " << event.attack.value()->getY() << std::endl;
+	if (event.tryToAttack.has_value()) {
+		std::cout << event.tryToAttack.value()->getX() << " " << event.tryToAttack.value()->getY() << std::endl;
 	}
 }
 void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {

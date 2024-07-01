@@ -17,10 +17,14 @@
  */
 
 
-#include "GameObjectClickResponse.hpp"
+#include "PopUpWindow.hpp"
 
 
-GameObjectClickResponse::GameObjectClickResponse() {
-	this->gameEvent = std::nullopt;
-	this->popUpWindow = std::nullopt;
-}
+#pragma once
+
+
+struct GameObjectResponse {
+	GameObjectResponse();
+	std::optional<GameEvent> gameEvent;
+	std::optional<PopUpWindow*> popUpWindow;
+};

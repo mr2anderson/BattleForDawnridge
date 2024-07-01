@@ -21,19 +21,19 @@
 
 
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t size) : GameObject(x, y, size, size) {}
-GameObjectClickResponse ResourcePoint::getGOCR(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 
 	GameEvent gameEventClickSound;
-	gameEventClickSound.sound = "click";
+	gameEventClickSound.playSound = "click";
 	data.emplace_back("exit", L"Вернуться", true, gameEventClickSound);
 
 	GameEvent gameEventDefault;
 	data.emplace_back(this->getIconName(), this->getDescription(), false, gameEventDefault);
 
-	GameObjectClickResponse response;
+	GameObjectResponse response;
 	response.gameEvent = GameEvent();
-	response.gameEvent.value().sound = this->getClickSoundName();
+	response.gameEvent.value().playSound = this->getClickSoundName();
 	response.popUpWindow = new SelectWindow(windowW, windowH, data);
 	return response;
 }

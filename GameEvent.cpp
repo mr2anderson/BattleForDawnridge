@@ -22,5 +22,5 @@
 
 
 GameEvent::GameEvent() {
-	this->sound = std::nullopt;
+	this->playSound = std::nullopt;
 }
