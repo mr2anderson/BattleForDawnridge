@@ -592,10 +592,15 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LoadingScreen.hpp" />
     <ClInclude Include="src\MenuScreen.hpp" />
     <ClInclude Include="src\MessageWindow.hpp" />
+    <ClInclude Include="src\MusicStorage.hpp" />
+    <ClInclude Include="src\Playlist.hpp" />
     <ClInclude Include="src\PopUpWindow.hpp" />
     <ClInclude Include="src\PopUpWindowEvent.hpp" />
     <ClInclude Include="src\PressAnyKeyScreen.hpp" />
     <ClInclude Include="src\Root.hpp" />
+    <ClInclude Include="src\SoundQueue.hpp" />
+    <ClInclude Include="src\SoundStorage.hpp" />
+    <ClInclude Include="src\TextureStorage.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav" />
@@ -615,9 +620,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MenuScreen.cpp" />
     <ClCompile Include="src\MessageWindow.cpp" />
+    <ClCompile Include="src\MusicStorage.cpp" />
+    <ClCompile Include="src\Playlist.cpp" />
     <ClCompile Include="src\PopUpWindow.cpp" />
     <ClCompile Include="src\PopUpWindowEvent.cpp" />
     <ClCompile Include="src\PressAnyKeyScreen.cpp" />
+    <ClCompile Include="src\SoundQueue.cpp" />
+    <ClCompile Include="src\SoundStorage.cpp" />
+    <ClCompile Include="src\TextureStorage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
