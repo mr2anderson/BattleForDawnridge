@@ -41,6 +41,4 @@ private:
 	MenuScreen() = default;
 	MenuScreen(const MenuScreen& copy) = delete;
 	static MenuScreen* singletone;
-
-	int32_t getConnection(sf::RenderWindow &window);
 };

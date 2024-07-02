@@ -24,9 +24,6 @@ PressAnyKeyScreen* PressAnyKeyScreen::singletone = nullptr;
 
 
 int32_t PressAnyKeyScreen::run(sf::RenderWindow &window) {
-	return this->wait(window);
-}
-int32_t PressAnyKeyScreen::wait(sf::RenderWindow &window) {
 	MusicStorage::get()->get("intro")->play();
 
 	sf::Text text;

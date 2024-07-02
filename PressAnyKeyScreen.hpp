@@ -42,6 +42,4 @@ private:
 	PressAnyKeyScreen() = default;
 	PressAnyKeyScreen(const PressAnyKeyScreen& copy) = delete;
 	static PressAnyKeyScreen* singletone;
-
-	int32_t wait(sf::RenderWindow &window);
 };
