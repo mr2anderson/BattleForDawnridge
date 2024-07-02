@@ -18,6 +18,7 @@
 
 
 #include <iostream>
+#include <map>
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
 #include "SoundStorage.hpp"
@@ -28,6 +29,7 @@
 #include "RedMountain.hpp"
 #include "Fort.hpp"
 #include "Caravan.hpp"
+#include "Mine.hpp"
 
 
 #pragma once
@@ -52,6 +54,9 @@ private:
 	Player players[2];
 	uint32_t move = 1;
 	std::vector<GameObject*> gameObjects;
+	std::vector<Unit*> units;
+	std::vector<ResourcePoint*> resourcePoints;
+	std::map<std::tuple<uint32_t, uint32_t>, std::vector<const Unit*>> highlightTable;
 	uint32_t windowW, windowH;
 	sf::View view;
 	Button endMove;
@@ -61,6 +66,7 @@ private:
 	void removeOldPopUpWindows();
 	void initPlayers();
 	void initMoveCtr();
+	void initHighlightTable();
 	void initGraphics(sf::RenderWindow &window);
 
 	int32_t start(sf::RenderWindow &window);
@@ -73,4 +79,6 @@ private:
 	void viewToSouth();
 	void viewToWest();
 	void viewToEast();
+	void pushUnit(Unit* unit);
+	void pushResourcePoint(ResourcePoint* resourcePoint);
 };

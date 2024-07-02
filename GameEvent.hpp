@@ -17,7 +17,7 @@
  */
 
 
-#include <optional>
+#include <vector>
 #include <tuple>
 #include "Trade.hpp"
 
@@ -27,12 +27,15 @@
 
 class Unit;
 class Caravan;
+class ResourcePoint;
 
 
 struct GameEvent {
 	GameEvent();
-	std::optional<Unit*> tryToAttack;
-	std::optional<std::tuple<Caravan*, Trade>> tryToTrade;
-	std::optional<Resource> startTrade;
-	std::optional<Resource> finishTrade;
+	std::vector<Unit*> tryToAttack;
+	std::vector<std::tuple<Caravan*, Trade>> tryToTrade;
+	std::vector<Resource> startTrade;
+	std::vector<Resource> finishTrade;
+	std::vector<std::tuple<const Unit*, uint32_t, uint32_t>> changeHighlight;
+	std::vector<std::tuple<ResourcePoint*, uint32_t>> collect;
 };

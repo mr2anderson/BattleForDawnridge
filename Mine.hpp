@@ -17,16 +17,24 @@
  */
 
 
-#include <queue>
-#include <optional>
-#include "PopUpWindow.hpp"
+#include "ResourceBuilding.hpp"
 
 
 #pragma once
 
 
-struct GameObjectResponse {
-	GameObjectResponse();
-	std::optional<GameEvent> gameEvent;
-	std::queue<PopUpWindow*> popUpWindows;
+class Mine : public ResourceBuilding {
+public:
+	Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
+private:
+	uint32_t getRegenerationSpeed() const override;
+	std::string getTextureName() const override;
+	std::wstring getIsNotBuiltYetStr() const override;
+	std::wstring getBuildingFinishedStr() const override;
+	std::string getNewWindowSoundName() const override;
+	std::string getResourceType() const override;
+	uint32_t getResourceNPerMove() const override;
+	uint32_t getRadius() const override;
+	std::wstring getDescription() const override;
+	std::wstring getResourcesOverStr() const override;
 };

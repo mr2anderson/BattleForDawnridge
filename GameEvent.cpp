@@ -21,9 +21,4 @@
 #include "GameEvent.hpp"
 
 
-GameEvent::GameEvent() {
-	this->tryToAttack = std::nullopt;
-	this->tryToTrade = std::nullopt;
-	this->startTrade = std::nullopt;
-	this->finishTrade = std::nullopt;
-}
+GameEvent::GameEvent() = default;

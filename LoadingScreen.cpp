@@ -84,7 +84,7 @@ void LoadingScreen::loadAll() {
 	for (uint32_t i = 0; i < RedMountain::TOTAL_TYPES; i = i + 1) {
 		TextureStorage::get()->add("redMountain" + std::to_string(i), "images/gameObjects/resourcePoints/redMountains/" + std::to_string(i) + ".png");
 	}
-	for (const std::string& a : { "fort", "caravan"}) {
+	for (const std::string& a : { "fort", "caravan", "mine"}) {
 		TextureStorage::get()->add(a, "images/gameObjects/units/buildings/" + a + ".png");
 	}
 	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit"}) {

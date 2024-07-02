@@ -598,6 +598,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="MenuScreen.hpp" />
     <ClInclude Include="MessageWindow.hpp" />
+    <ClInclude Include="Mine.hpp" />
     <ClInclude Include="Mountain.hpp" />
     <ClInclude Include="MusicStorage.hpp" />
     <ClInclude Include="Plant.hpp" />
@@ -608,6 +609,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="PressAnyKeyScreen.hpp" />
     <ClInclude Include="RedMountain.hpp" />
     <ClInclude Include="ResourceBar.hpp" />
+    <ClInclude Include="ResourceBuilding.hpp" />
     <ClInclude Include="ResourcePoint.hpp" />
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Root.hpp" />
@@ -643,6 +645,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="MessageWindow.cpp" />
+    <ClCompile Include="Mine.cpp" />
     <ClCompile Include="Mountain.cpp" />
     <ClCompile Include="MusicStorage.cpp" />
     <ClCompile Include="Plant.cpp" />
@@ -654,6 +657,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="RedMountain.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceBar.cpp" />
+    <ClCompile Include="ResourceBuilding.cpp" />
     <ClCompile Include="ResourcePoint.cpp" />
     <ClCompile Include="SelectWindow.cpp" />
     <ClCompile Include="SoundQueue.cpp" />

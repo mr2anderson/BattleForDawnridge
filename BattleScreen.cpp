@@ -32,6 +32,7 @@ void BattleScreen::init(sf::RenderWindow& window) {
 	this->removeOldPopUpWindows();
 	this->initPlayers();
 	this->initMoveCtr();
+	this->initHighlightTable();
 	this->initGraphics(window);
 }
 void BattleScreen::initLandscape() {
@@ -41,20 +42,17 @@ void BattleScreen::initLandscape() {
 		delete this->gameObjects[i];
 	}
 	this->gameObjects.clear();
-	this->gameObjects.push_back(new Fort(1, 1, &this->players[0]));
-	this->gameObjects.push_back(new Caravan(1, 2, &this->players[0]));
-	this->gameObjects.push_back(new Caravan(2, 1, &this->players[0]));
-	this->gameObjects.push_back(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
-	this->gameObjects.push_back(new Plant(4, 4));
-	this->gameObjects.push_back(new Plant(4, 5));
-	this->gameObjects.push_back(new Plant(5, 4));
-	this->gameObjects.push_back(new Plant(5, 5));
-	this->gameObjects.push_back(new Tree(1, 3));
-	this->gameObjects.push_back(new Tree(1, 4));
-	this->gameObjects.push_back(new Mountain(2, 3));
-	this->gameObjects.push_back(new Mountain(2, 4));
-	this->gameObjects.push_back(new RedMountain(3, 3));
-	this->gameObjects.push_back(new RedMountain(3, 4));
+	this->units.clear();
+	this->resourcePoints.clear();
+
+	this->pushResourcePoint(new Plant(4, 4));
+	this->pushResourcePoint(new Plant(4, 5));
+	this->pushResourcePoint(new Tree(1, 3));
+	this->pushResourcePoint(new Tree(1, 4));
+	this->pushResourcePoint(new Mountain(2, 3));
+	this->pushResourcePoint(new Mountain(2, 4));
+	this->pushResourcePoint(new RedMountain(3, 3));
+	this->pushResourcePoint(new RedMountain(3, 4));
 }
 void BattleScreen::removeOldPopUpWindows() {
 	while (!this->popUpWindows.empty()) {
@@ -66,9 +64,17 @@ void BattleScreen::removeOldPopUpWindows() {
 void BattleScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
+	this->pushUnit(new Fort(1, 1, &this->players[0]));
+	this->pushUnit(new Caravan(1, 2, &this->players[0]));
+	this->pushUnit(new Caravan(2, 1, &this->players[0]));
+	this->pushUnit(new Mine(2, 2, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
 }
 void BattleScreen::initMoveCtr() {
 	this->move = 1;
+}
+void BattleScreen::initHighlightTable() {
+	this->highlightTable.clear();
 }
 void BattleScreen::initGraphics(sf::RenderWindow &window) {
 	this->windowW = window.getSize().x;
@@ -156,12 +162,12 @@ int32_t BattleScreen::start(sf::RenderWindow& window) {
 	}
 }
 void BattleScreen::handleGameEvent(GameEvent event) {
-	if (event.tryToAttack.has_value()) {
-		std::cout << "tryToAttack " << event.tryToAttack.value()->getX() << " " << event.tryToAttack.value()->getY() << std::endl;
+	for (const auto& a : event.tryToAttack) {
+		std::cout << "tryToAttack " << a->getX() << " " << a->getY() << std::endl;
 	}
-	if (event.tryToTrade.has_value()) {
-		Caravan* caravan = std::get<Caravan*>(event.tryToTrade.value());
-		Trade trade = std::get<Trade>(event.tryToTrade.value());
+	for (const auto& a : event.tryToTrade) {
+		Caravan* caravan = std::get<Caravan*>(a);
+		Trade trade = std::get<Trade>(a);
 		if (this->getCurrentPlayer()->getResource(trade.sell.type) >= trade.sell.n) {
 			GameObjectResponse response = caravan->doTrade(trade);
 			if (response.gameEvent.has_value()) {
@@ -187,11 +193,39 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 			}
 		}
 	}
-	if (event.startTrade.has_value()) {
-		this->getCurrentPlayer()->subResource(event.startTrade.value());
+	for (const auto& a : event.startTrade) {
+		this->getCurrentPlayer()->subResource(a);
 	}
-	if (event.finishTrade.has_value()) {
-		this->getCurrentPlayer()->addResource(event.finishTrade.value());
+	for (const auto& a : event.finishTrade) {
+		this->getCurrentPlayer()->addResource(a);
+	}
+	for (const auto& a : event.changeHighlight) {
+		const Unit* u = std::get<0>(a);
+		uint32_t x = std::get<1>(a);
+		uint32_t y = std::get<2>(a);
+		if (x >= this->mapWidth or y >= this->mapHeight) {
+			continue;
+		}
+		std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);
+		std::vector<const Unit*> v = this->highlightTable[p];
+		bool found = false;
+		for (uint32_t i = 0; i < v.size(); i = i + 1) {
+			if (v[i] == u) {
+				v.erase(v.begin() + i);
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			v.push_back(u);
+		}
+		this->highlightTable[p] = v;
+	}
+	for (const auto& a : event.collect) {
+		ResourcePoint* resourcePoint = std::get<ResourcePoint*>(a);
+		uint32_t n = std::get<uint32_t>(a);
+		this->getCurrentPlayer()->addResource(Resource(resourcePoint->getResourceType(), n));
+		resourcePoint->subHp(n);
 	}
 }
 void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
@@ -213,6 +247,7 @@ void BattleScreen::newMove() {
 	else {
 		this->view.setCenter(sf::Vector2f(64 * this->mapWidth - this->windowW / 2, 64 * this->mapHeight - this->windowH / 2));
 	}
+	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		GameObjectResponse response = this->gameObjects[i]->newMove(*this->getCurrentPlayer(), this->windowW, this->windowH);
 		if (response.gameEvent.has_value()) {
@@ -234,12 +269,23 @@ Player* BattleScreen::getCurrentPlayer() {
 void BattleScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < this->mapWidth; i = i + 1) {
 		for (uint32_t j = 0; j < this->mapHeight; j = j + 1) {
+			sf::RectangleShape rect;
+			rect.setPosition(sf::Vector2f(64 * i, 64 * j));
+			rect.setSize(sf::Vector2f(64, 64));
 			if ((i + j) % 2 == 0) {
-				sf::RectangleShape rect;
-				rect.setPosition(sf::Vector2f(64 * i, 64 * j));
-				rect.setSize(sf::Vector2f(64, 64));
-				rect.setFillColor(CELL_COLOR);
+				if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
+					rect.setFillColor(CELL_COLOR_HIGHLIGHTED_DARK);
+				}
+				else {
+					rect.setFillColor(CELL_COLOR);
+				}
 				window.draw(rect);
+			}
+			else {
+				if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
+					rect.setFillColor(CELL_COLOR_HIGHLIGHTED_LIGHT);
+					window.draw(rect);
+				}
 			}
 		}
 	}
@@ -259,4 +305,12 @@ void BattleScreen::viewToWest() {
 void BattleScreen::viewToEast() {
 	float delta = std::min(10.f, 64 * this->mapWidth - this->windowW / 2 - view.getCenter().x);
 	view.setCenter(view.getCenter() + sf::Vector2f(delta, 0));
+}
+void BattleScreen::pushUnit(Unit* unit) {
+	this->gameObjects.push_back(unit);
+	this->units.push_back(unit);
+}
+void BattleScreen::pushResourcePoint(ResourcePoint* resourcePoint) {
+	this->gameObjects.push_back(resourcePoint);
+	this->resourcePoints.push_back(resourcePoint);
 }

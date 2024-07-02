@@ -29,6 +29,6 @@ bool Unit::belongTo(const Player* player) const {
 GameObjectResponse Unit::getUnitOfEnemyResponse() {
 	GameObjectResponse response;
 	response.gameEvent = GameEvent();
-	response.gameEvent.value().tryToAttack = this;
+	response.gameEvent.value().tryToAttack.push_back(this);
 	return response;
 }

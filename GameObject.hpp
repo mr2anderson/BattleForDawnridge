@@ -37,6 +37,7 @@ public:
 	uint32_t getMaxHP() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
+	bool exist() const;
 	GameObjectResponse click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
 	virtual GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
 protected:

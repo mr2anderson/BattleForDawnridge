@@ -24,6 +24,10 @@ GameObject::GameObject(uint32_t x, uint32_t y, uint32_t currentHp, uint32_t maxH
 	this->bar = HPBar(currentHp, maxHp, x, y);
 }
 void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	if (!this->exist()) {
+		return;
+	}
+
 	sf::Sprite sprite;
 	sprite.setPosition(sf::Vector2f(64 * this->getX(), 64 * this->getY()));
 	sprite.setTexture(*TextureStorage::get()->get(this->getTextureName()));
@@ -51,6 +55,9 @@ uint32_t GameObject::getX() const {
 }
 uint32_t GameObject::getY() const {
 	return this->bar.getY();
+}
+bool GameObject::exist() const {
+	return (this->getHP() > 0);
 }
 GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
 	if (mouseX >= 64 * this->getX() and
