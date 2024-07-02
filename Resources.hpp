@@ -17,26 +17,24 @@
  */
 
 
-#include <array>
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "ColorTheme.hpp"
-#include "Resources.hpp"
+#include <unordered_map>
+#include "Resource.hpp"
 
 
 #pragma once
 
 
-class ResourceBar : public sf::Drawable {
+class Resources {
 public:
-	ResourceBar();
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	Resources();
+	Resources(const std::vector<Resource>& v);
 	void plus(const Resource& resource);
 	void minus(const Resource& resource);
 	void plus(const Resources& resources);
 	void minus(const Resources& resources);
 	int32_t get(const std::string& id) const;
-	Resources getResources() const;
+	std::wstring getReadableInfo() const;
+	friend bool operator>=(const Resources& a, const Resources& b);
 private:
-	Resources resources;
+	std::unordered_map<std::string, int32_t> map;
 };

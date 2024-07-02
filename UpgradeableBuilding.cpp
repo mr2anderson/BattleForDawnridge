@@ -17,26 +17,4 @@
  */
 
 
-#include <array>
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "ColorTheme.hpp"
-#include "Resources.hpp"
-
-
-#pragma once
-
-
-class ResourceBar : public sf::Drawable {
-public:
-	ResourceBar();
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void plus(const Resource& resource);
-	void minus(const Resource& resource);
-	void plus(const Resources& resources);
-	void minus(const Resources& resources);
-	int32_t get(const std::string& id) const;
-	Resources getResources() const;
-private:
-	Resources resources;
-};
+#include "UpgradeableBuilding.hpp"

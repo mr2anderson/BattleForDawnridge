@@ -18,7 +18,6 @@
 
 
 #include "ResourceBuilding.hpp"
-#include <iostream>
 
 
 ResourceBuilding::ResourceBuilding(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : HpSensitiveBuilding(x, y, maxHp, false, playerPtr) {
@@ -26,14 +25,30 @@ ResourceBuilding::ResourceBuilding(uint32_t x, uint32_t y, uint32_t maxHp, const
 	this->resourcesLeft = true;
 }
 GameObjectResponse ResourceBuilding::newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) {
+	GameObjectResponse response;
 	if (this->belongTo(&currentPlayer) and this->exist()) {
-		GameObjectResponse response = this->processRegeneration();
+		response = this->decreaseUpgradeMovesLeft();
+		if (this->upgrading()) {
+			return response;
+		}
+		response = response + this->processRegeneration();
 		if (this->works() and this->resourcesLeft) {
 			response = response + this->collectResources();
 		}
 		return response;
 	}
 	return GameObjectResponse();
+}
+GameObjectResponse ResourceBuilding::upgrade() {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+	response.gameEvent.value().subResources.push_back(this->getUpgradeCost(this->getCurrentLevel() - 1));
+
+	this->Building::upgrade(this->getUpgradeMoves(this->getCurrentLevel() - 1));
+
+	response = response + this->handleUpgradeStart();
+
+	return response;
 }
 GameObjectResponse ResourceBuilding::collectResources() {
 	GameObjectResponse response;
@@ -77,12 +92,18 @@ GameObjectResponse ResourceBuilding::highlightArea() const {
 
 	return response;
 }
-GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightEvent) const {
+GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightEvent) {
 	GameObjectResponse response;
 
 	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 	data.emplace_back("exit", L"Вернуться", true, highlightEvent);
 	data.emplace_back(this->getTextureName(), this->getDescription(), false, GameEvent());
+
+	if (this->getCurrentLevel() < this->getMaxLevel()) {
+		GameEvent gameEventUpgrade = highlightEvent;
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost(this->getCurrentLevel() - 1));
+		data.emplace_back("upgrade", L"Увеличить скорость добычи за " + this->getUpgradeCost(this->getCurrentLevel() - 1).getReadableInfo(), true, gameEventUpgrade);
+	}
 
 	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
 	response.popUpWindows.push(window);
@@ -94,6 +115,9 @@ GameObjectResponse ResourceBuilding::getGameObjectResponse(const Player& player,
 		return GameObjectResponse();
 	}
 	if (this->belongTo(&player)) {
+		if (this->upgrading()) {
+			return this->handleUpgrading();
+		}
 		if (!this->works()) {
 			return this->handleDoesNotWork();
 		}

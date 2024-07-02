@@ -27,7 +27,27 @@
 class Building : public Unit {
 public:
 	Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player *playerPtr);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual GameObjectResponse upgrade() = 0;
+	virtual Resources getCost() const = 0;
 protected:
 	virtual uint32_t getRegenerationSpeed() const = 0;
+	virtual std::string getNewWindowSoundName() const = 0;
+	virtual std::wstring getUpgradeStartDescription() const = 0;
+	virtual std::wstring getUpgradeFinishDescription() const = 0;
+	virtual std::wstring getBusyWithUpgradingDescription() const = 0;
+
 	virtual GameObjectResponse processRegeneration();
+	virtual GameObjectResponse decreaseUpgradeMovesLeft();
+	uint32_t getCurrentLevel() const;
+	bool upgrading() const;
+	GameObjectResponse handleUpgradeStart() const;
+	GameObjectResponse handleUpgrading() const;
+	void upgrade(uint32_t t);
+private:
+	uint32_t currentLevel;
+	uint32_t upgradeMovesLeft;
+
+	void drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const;
+	void drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const;
 };

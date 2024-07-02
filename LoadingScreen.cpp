@@ -87,7 +87,7 @@ void LoadingScreen::loadAll() {
 	for (const std::string& a : { "fort", "caravan", "mine", "quarry", "sawmill", "windmill"}) {
 		TextureStorage::get()->add(a, "images/gameObjects/units/buildings/" + a + ".png");
 	}
-	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit"}) {
+	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit", "upgrade"}) {
 		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
 	}
 	for (const std::string& a : { "click", "newMove", "leaves", "sawmill", "quarry", "mine", "hooray", "horse"}) {

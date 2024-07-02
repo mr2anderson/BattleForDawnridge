@@ -20,10 +20,25 @@
 #include "Caravan.hpp"
 
 
+const Resources Caravan::UPGRADE_COSTS[Caravan::TOTAL_LEVELS - 1] = {
+	Resources({{"wood", 35000}}),
+	Resources({{"wood", 35000}}),
+};
+const uint32_t Caravan::UPGRADE_MOVES[Caravan::TOTAL_LEVELS - 1] = {
+	2,
+	2,
+};
+const uint32_t Caravan::LEVEL_TRADE_TIME[Caravan::TOTAL_LEVELS] = {
+	5,
+	4,
+	3
+};
+
+
 Caravan::Caravan(uint32_t x, uint32_t y, const Player *playerPtr) : HpSensitiveBuilding(x, y, 10000, false, playerPtr) {}
 void Caravan::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Building::draw(target, states);
-	if (this->exist() and this->currentTrade.movesLeft != 0) {
+	if (this->exist() and this->currentTrade.movesLeft != 0 and !this->upgrading()) {
 		this->drawCurrentTradeShortInfo(target, states);
 	}
 }
@@ -32,7 +47,7 @@ GameObjectResponse Caravan::doTrade(const Trade& trade) {
 
 	GameObjectResponse response;
 	response.gameEvent = GameEvent();
-	response.gameEvent.value().startTrade.push_back(trade.sell);
+	response.gameEvent.value().subResource.push_back(trade.sell);
 
 	MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", L"Сделка начата!\nВаши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:\n" + trade.getReadableInfo());
 	response.popUpWindows.push(window);
@@ -44,7 +59,11 @@ GameObjectResponse Caravan::newMove(const Player& currentPlayer, uint32_t window
 	if (!this->belongTo(&currentPlayer) or !this->exist()) {
 		return response;
 	}
-	response = this->processRegeneration();
+	response = this->decreaseUpgradeMovesLeft();
+	if (this->upgrading()) {
+		return response;
+	}
+	response = response + this->processRegeneration();
 	if (!this->works() or !this->busy()) {
 		return response;
 	}
@@ -52,6 +71,22 @@ GameObjectResponse Caravan::newMove(const Player& currentPlayer, uint32_t window
 	response = response + this->currentTradeNewMove();
 
 	return response;
+}
+GameObjectResponse Caravan::upgrade() {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+	response.gameEvent.value().subResources.push_back(UPGRADE_COSTS[this->getCurrentLevel() - 1]);
+
+	this->Building::upgrade(UPGRADE_MOVES[this->getCurrentLevel() - 1]);
+
+	response = response + this->handleUpgradeStart();
+
+	return response;
+}
+Resources Caravan::getCost() const {
+	Resources cost;
+	cost.plus(Resource("wood", 25000));
+	return cost;
 }
 GameObjectResponse Caravan::currentTradeNewMove() {
 	GameObjectResponse response;
@@ -62,7 +97,7 @@ GameObjectResponse Caravan::currentTradeNewMove() {
 		if (!response.gameEvent.has_value()) {
 			response.gameEvent = GameEvent();
 		}
-		response.gameEvent.value().finishTrade.push_back(this->currentTrade.buy);
+		response.gameEvent.value().addResource.push_back(this->currentTrade.buy);
 		MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", L"Сделка окончена!\nРесурсы были получены. Детали сделки:\n" + this->currentTrade.getReadableInfo());
 		response.popUpWindows.push(window);
 	}
@@ -77,42 +112,34 @@ GameObjectResponse Caravan::getSelectWindow() {
 	data.emplace_back("exit", L"Покинуть", true, GameEvent());
 	data.emplace_back("caravan", L"Караваны позволяют обменивать ресурсы.", false, GameEvent());
 
-	GameEvent gameEventTrade;
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("food", 50000), 5));
-	data.emplace_back("food", L"Купить 50000 еды за 100 золота (5 ходов)", true, gameEventTrade);
+	if (this->getCurrentLevel() < TOTAL_LEVELS) {
+		GameEvent gameEventUpgrade;
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, UPGRADE_COSTS[this->getCurrentLevel() - 1]);
+		data.emplace_back("upgrade", L"Увеличить скорость сделок за " + UPGRADE_COSTS[this->getCurrentLevel() - 1].getReadableInfo(), true, gameEventUpgrade);
+	}
 
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("wood", 50000), 5));
-	data.emplace_back("wood", L"Купить 50000 древесины за 100 золота (5 ходов)", true, gameEventTrade);
-
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("stone", 50000), 5));
-	data.emplace_back("stone", L"Купить 50000 камня за 100 золота (5 ходов)", true, gameEventTrade);
-
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("iron", 50000), 5));
-	data.emplace_back("iron", L"Купить 50000 железа за 100 золота (5 ходов)", true, gameEventTrade);
-
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("food", 50000), Resource("gold", 100), 5));
-	data.emplace_back("gold", L"Купить 100 золота за 50000 еды (5 ходов)", true, gameEventTrade);
-
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("wood", 50000), Resource("gold", 100), 5));
-	data.emplace_back("gold", L"Купить 100 золота за 50000 дерева (5 ходов)", true, gameEventTrade);
-
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("stone", 50000), Resource("gold", 100), 5));
-	data.emplace_back("gold", L"Купить 100 золота за 50000 камня (5 ходов)", true, gameEventTrade);
-
-	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("iron", 50000), Resource("gold", 100), 5));
-	data.emplace_back("gold", L"Купить 100 золота за 50000 железа (5 ходов)", true, gameEventTrade);
+	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
+		std::make_tuple("gold", 100, "wood", 50000),
+		std::make_tuple("gold", 100, "stone", 50000),
+		std::make_tuple("gold", 100, "iron", 50000),
+		std::make_tuple("food", 50000, "gold", 100),
+		std::make_tuple("wood", 50000, "gold", 100),
+		std::make_tuple("stone", 50000, "gold", 100),
+		std::make_tuple("iron", 50000, "gold", 100) }) {
+		GameEvent gameEventTrade;
+		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), LEVEL_TRADE_TIME[this->getCurrentLevel() - 1]));
+		this->addTrade(data, gameEventTrade);
+	}
 
 	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
 	GameObjectResponse response;
 	response.popUpWindows.push(window);
 	return response;
+}
+void Caravan::addTrade(std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data, const GameEvent& gameEventTrade) {
+	data.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.type, 
+		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
+		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, gameEventTrade);
 }
 void Caravan::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
@@ -152,6 +179,15 @@ std::wstring Caravan::getIsNotBuiltYetStr() const {
 std::string Caravan::getTextureName() const {
 	return "caravan";
 }
+std::wstring Caravan::getUpgradeStartDescription() const {
+	return L"Начато улучшение каравана\nПодождите, пока оно закончится.";
+}
+std::wstring Caravan::getUpgradeFinishDescription() const {
+	return L"Улучшение каравана завершено!\nТеперь Вы снова можете его использовать.";
+}
+std::wstring Caravan::getBusyWithUpgradingDescription() const {
+	return L"Караван не доступен\nПодождите, пока будет завершено улучшение.";
+}
 GameObjectResponse Caravan::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	if (!this->exist()) {
 		return GameObjectResponse();
@@ -159,6 +195,9 @@ GameObjectResponse Caravan::getGameObjectResponse(const Player& player, uint32_t
 	if (this->belongTo(&player)) {
 		if (!this->works()) {
 			return this->handleDoesNotWork();
+		}
+		if (this->upgrading()) {
+			return this->handleUpgrading();
 		}
 		if (this->busy()) {
 			GameObjectResponse response;

@@ -31,12 +31,21 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	GameObjectResponse doTrade(const Trade& trade);
 	GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
+	GameObjectResponse upgrade() override;
+
+	Resources getCost() const override;
 private:
 	Trade currentTrade;
+
+	static constexpr uint32_t TOTAL_LEVELS = 3;
+	static const Resources UPGRADE_COSTS[];
+	static const uint32_t UPGRADE_MOVES[];
+	static const uint32_t LEVEL_TRADE_TIME[];
 
 	GameObjectResponse currentTradeNewMove();
 	bool busy() const;
 	GameObjectResponse getSelectWindow();
+	void addTrade(std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data, const GameEvent& gameEventTrade);
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	uint32_t getRegenerationSpeed() const override;
@@ -44,6 +53,9 @@ private:
 	std::wstring getBuildingFinishedStr() const override;
 	std::wstring getIsNotBuiltYetStr() const override;
 	std::string getTextureName() const override;
+	std::wstring getUpgradeStartDescription() const override;
+	std::wstring getUpgradeFinishDescription() const override;
+	std::wstring getBusyWithUpgradingDescription() const override;
 
 	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };

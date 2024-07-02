@@ -31,7 +31,6 @@ protected:
 
 	virtual std::wstring getIsNotBuiltYetStr() const = 0;
 	virtual std::wstring getBuildingFinishedStr() const = 0;
-	virtual std::string getNewWindowSoundName() const = 0;
 	GameObjectResponse handleDoesNotWork() const;
 	GameObjectResponse processRegeneration() override;
 };

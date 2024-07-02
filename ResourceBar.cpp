@@ -53,15 +53,21 @@ void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 
 	target.setView(old);
 }
-void ResourceBar::plus(const Resource &resource) {
-	this->map[resource.type] += resource.n;
+void ResourceBar::plus(const Resource& resource) {
+	this->resources.plus(resource);
 }
-void ResourceBar::minus(const Resource &resource) {
-	this->map[resource.type] -= resource.n;
+void ResourceBar::minus(const Resource& resource) {
+	this->resources.minus(resource);
 }
-int32_t ResourceBar::get(const std::string &id) const {
-	if (this->map.find(id) == this->map.end()) {
-		return 0;
-	}
-	return this->map.at(id);
+void ResourceBar::plus(const Resources& resources) {
+	this->resources.plus(resources);
+}
+void ResourceBar::minus(const Resources& resources) {
+	this->resources.minus(resources);
+}
+int32_t ResourceBar::get(const std::string& type) const {
+	return this->resources.get(type);
+}
+Resources ResourceBar::getResources() const {
+	return this->resources;
 }

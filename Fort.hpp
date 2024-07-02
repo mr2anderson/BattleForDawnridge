@@ -28,10 +28,23 @@ class Fort : public Building {
 public:
 	Fort(uint32_t x, uint32_t y, const Player* playerPtr);
 	GameObjectResponse newMove(const Player& player, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse upgrade() override;
+	
+	Resources getCost() const override;
 private:
-	GameObjectResponse getSelectWindow() const;
+	static constexpr uint32_t TOTAL_LEVELS = 3;
+	static const Resources UPGRADE_COSTS[];
+	static const uint32_t UPGRADE_MOVES[];
+	static const uint32_t UPGRADE_HP[];
+
+	GameObjectResponse getSelectWindow();
 
 	uint32_t getRegenerationSpeed() const override;
 	std::string getTextureName() const override;
+	std::string getNewWindowSoundName() const override;
+	std::wstring getUpgradeStartDescription() const override;
+	std::wstring getUpgradeFinishDescription() const override;
+	std::wstring getBusyWithUpgradingDescription() const override;
+	GameObjectResponse decreaseUpgradeMovesLeft() override;
 	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };

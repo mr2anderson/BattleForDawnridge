@@ -488,6 +488,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Caravan.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
+    <ClInclude Include="Resources.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\Export.hpp" />
@@ -635,6 +636,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Caravan.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="FontStorage.cpp" />
     <ClCompile Include="Fort.cpp" />
     <ClCompile Include="Game.cpp" />

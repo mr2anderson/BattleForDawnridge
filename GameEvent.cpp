@@ -26,9 +26,12 @@ GameEvent operator+(const GameEvent &a, const GameEvent& b) {
 	GameEvent c = a;
 	c.tryToAttack.insert(c.tryToAttack.end(), b.tryToAttack.begin(), b.tryToAttack.end());
 	c.tryToTrade.insert(c.tryToTrade.end(), b.tryToTrade.begin(), b.tryToTrade.end());
-	c.startTrade.insert(c.startTrade.end(), b.startTrade.begin(), b.startTrade.end());
-	c.finishTrade.insert(c.finishTrade.end(), b.finishTrade.begin(), b.finishTrade.end());
+	c.subResource.insert(c.subResource.end(), b.subResource.begin(), b.subResource.end());
+	c.addResource.insert(c.addResource.end(), b.addResource.begin(), b.addResource.end());
+	c.subResources.insert(c.subResources.end(), b.subResources.begin(), b.subResources.end());
+	c.addResources.insert(c.addResources.end(), b.addResources.begin(), b.addResources.end());
 	c.changeHighlight.insert(c.changeHighlight.end(), b.changeHighlight.begin(), b.changeHighlight.end());
 	c.collect.insert(c.collect.end(), b.collect.begin(), b.collect.end());
+	c.tryToUpgrade.insert(c.tryToUpgrade.end(), b.tryToUpgrade.begin(), b.tryToUpgrade.end());
 	return c;
 }

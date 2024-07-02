@@ -21,7 +21,27 @@
 #include "Quarry.hpp"
 
 
+const Resources Quarry::UPGRADE_COSTS[Quarry::TOTAL_LEVELS - 1] = {
+	Resources({{"wood", 4000}}),
+	Resources({{"wood", 4000}}),
+};
+const uint32_t Quarry::UPGRADE_MOVES[Quarry::TOTAL_LEVELS - 1] = {
+	2,
+	2,
+};
+const float Quarry::LEVEL_BONUS[Quarry::TOTAL_LEVELS] = {
+	1,
+	1.5,
+	2
+};
+
+
 Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
+Resources Quarry::getCost() const {
+	Resources cost;
+	cost.plus(Resource("wood", 10000));
+	return cost;
+}
 uint32_t Quarry::getRegenerationSpeed() const {
 	return 4000;
 }
@@ -41,7 +61,7 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getResourceNPerMove() const {
-	return 2500;
+	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
 }
 uint32_t Quarry::getRadius() const {
 	return 5;
@@ -51,4 +71,22 @@ std::wstring Quarry::getDescription() const {
 }
 std::wstring Quarry::getResourcesOverStr() const {
 	return L"Камень закончился!\nОдна из Ваших каменеломен прекращает работу.";
+}
+std::wstring Quarry::getUpgradeStartDescription() const {
+	return L"Начато улучшение каменоломни\nСбор камня был приостановлен.";
+}
+std::wstring Quarry::getUpgradeFinishDescription() const {
+	return L"Улучшение каменоломни завершено!\nСбор камня возобновлен.";
+}
+std::wstring Quarry::getBusyWithUpgradingDescription() const {
+	return L"Каменоломня не доступна\nПодождите, пока будет завершено улучшение.";
+}
+uint32_t Quarry::getMaxLevel() const {
+	return TOTAL_LEVELS;
+}
+Resources Quarry::getUpgradeCost(uint32_t i) const {
+	return UPGRADE_COSTS[i];
+}
+uint32_t Quarry::getUpgradeMoves(uint32_t i) const {
+	return UPGRADE_MOVES[i];
 }

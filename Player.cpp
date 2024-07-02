@@ -38,8 +38,17 @@ void Player::addResource(const Resource &resource) {
 void Player::subResource(const Resource &resource) {
 	this->bar.minus(resource);
 }
+void Player::addResources(const Resources& resources) {
+	this->bar.plus(resources);
+}
+void Player::subResources(const Resources& resources) {
+	this->bar.minus(resources);
+}
 int32_t Player::getResource(const std::string& id) const {
 	return this->bar.get(id);
+}
+Resources Player::getResources() const {
+	return this->bar.getResources();
 }
 bool operator==(const Player& a, const Player& b) {
 	if (a.getId() == b.getId()) {

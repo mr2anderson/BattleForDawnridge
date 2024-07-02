@@ -26,6 +26,8 @@
 class Mine : public ResourceBuilding {
 public:
 	Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
+
+	Resources getCost() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
 	std::string getTextureName() const override;
@@ -37,4 +39,15 @@ private:
 	uint32_t getRadius() const override;
 	std::wstring getDescription() const override;
 	std::wstring getResourcesOverStr() const override;
+	std::wstring getUpgradeStartDescription() const override;
+	std::wstring getUpgradeFinishDescription() const override;
+	std::wstring getBusyWithUpgradingDescription() const override;
+	Resources getUpgradeCost(uint32_t i) const override;
+	uint32_t getUpgradeMoves(uint32_t i) const override;
+	uint32_t getMaxLevel() const override;
+
+	static constexpr uint32_t TOTAL_LEVELS = 3;
+	static const Resources UPGRADE_COSTS[];
+	static const uint32_t UPGRADE_MOVES[];
+	static const float LEVEL_BONUS[];
 };

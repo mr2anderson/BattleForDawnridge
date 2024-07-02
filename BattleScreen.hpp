@@ -70,10 +70,13 @@ private:
 	void handleGameEvent(const GameEvent& event);
 	void handleTryToAttackEvent(const GameEvent& event);
 	void handleTryToTradeEvent(const GameEvent& event);
-	void handleStartTradeEvent(const GameEvent& event);
-	void handleFinishTradeEvent(const GameEvent& event);
+	void handleAddResourceEvent(const GameEvent& event);
+	void handleSubResourceEvent(const GameEvent& event);
+	void handleAddResourcesEvent(const GameEvent& event);
+	void handleSubResourcesEvent(const GameEvent& event);
 	void handleChangeHighlightEvent(const GameEvent& event);
 	void handleCollectEvent(const GameEvent& event);
+	void handleTryToUpgradeEvent(const GameEvent& event);
 	void handlePopUpWindowEvent(const PopUpWindowEvent& event);
 
 	void newMove();

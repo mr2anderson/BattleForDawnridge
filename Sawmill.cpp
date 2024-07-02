@@ -21,7 +21,27 @@
 #include "Sawmill.hpp"
 
 
+const Resources Sawmill::UPGRADE_COSTS[Sawmill::TOTAL_LEVELS - 1] = {
+	Resources({{"wood", 4000}}),
+	Resources({{"wood", 4000}}),
+};
+const uint32_t Sawmill::UPGRADE_MOVES[Sawmill::TOTAL_LEVELS - 1] = {
+	2,
+	2,
+};
+const float Sawmill::LEVEL_BONUS[Sawmill::TOTAL_LEVELS] = {
+	1,
+	1.5,
+	2
+};
+
+
 Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
+Resources Sawmill::getCost() const {
+	Resources cost;
+	cost.plus(Resource("wood", 10000));
+	return cost;
+}
 uint32_t Sawmill::getRegenerationSpeed() const {
 	return 4000;
 }
@@ -41,7 +61,7 @@ std::string Sawmill::getResourceType() const {
 	return "wood";
 }
 uint32_t Sawmill::getResourceNPerMove() const {
-	return 2500;
+	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
 }
 uint32_t Sawmill::getRadius() const {
 	return 5;
@@ -51,4 +71,22 @@ std::wstring Sawmill::getDescription() const {
 }
 std::wstring Sawmill::getResourcesOverStr() const {
 	return L"Древесина закончилась!\nОдна из Ваших лесопилок прекращает работу.";
+}
+std::wstring Sawmill::getUpgradeStartDescription() const {
+	return L"Начато улучшение лесопилки\nСбор древесины был приостановлен.";
+}
+std::wstring Sawmill::getUpgradeFinishDescription() const {
+	return L"Улучшение лесопилки завершено!\nСбор древесины возобновлен.";
+}
+std::wstring Sawmill::getBusyWithUpgradingDescription() const {
+	return L"Лесопилка не доступна\nПодождите, пока будет завершено улучшение.";
+}
+uint32_t Sawmill::getMaxLevel() const {
+	return TOTAL_LEVELS;
+}
+Resources Sawmill::getUpgradeCost(uint32_t i) const {
+	return UPGRADE_COSTS[i];
+}
+uint32_t Sawmill::getUpgradeMoves(uint32_t i) const {
+	return UPGRADE_MOVES[i];
 }

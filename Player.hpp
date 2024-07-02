@@ -28,10 +28,13 @@ public:
 	Player();
 	Player(uint32_t id);
 	uint32_t getId() const;
-	const ResourceBar *getConstResourceBarPtr() const;
+	const ResourceBar* getConstResourceBarPtr() const;
 	void addResource(const Resource &resource);
 	void subResource(const Resource &resource);
+	void addResources(const Resources& resources);
+	void subResources(const Resources& resources);
 	int32_t getResource(const std::string& id) const;
+	Resources getResources() const;
 	friend bool operator==(const Player& a, const Player& b);
 	friend bool operator!=(const Player& a, const Player& b);
 private:

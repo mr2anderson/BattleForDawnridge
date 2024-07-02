@@ -122,10 +122,13 @@ void BattleScreen::initGraphics(sf::RenderWindow &window) {
 void BattleScreen::handleGameEvent(const GameEvent &event) {
 	this->handleTryToAttackEvent(event);
 	this->handleTryToTradeEvent(event);
-	this->handleStartTradeEvent(event);
-	this->handleFinishTradeEvent(event);
+	this->handleAddResourceEvent(event);
+	this->handleSubResourceEvent(event);
+	this->handleAddResourcesEvent(event);
+	this->handleSubResourcesEvent(event);
 	this->handleChangeHighlightEvent(event);
 	this->handleCollectEvent(event);
+	this->handleTryToUpgradeEvent(event);
 }
 void BattleScreen::handleTryToAttackEvent(const GameEvent& event) {
 	for (const auto& a : event.tryToAttack) {
@@ -152,14 +155,24 @@ void BattleScreen::handleTryToTradeEvent(const GameEvent& event) {
 		}
 	}
 }
-void BattleScreen::handleStartTradeEvent(const GameEvent& event) {
-	for (const auto& a : event.startTrade) {
+void BattleScreen::handleAddResourceEvent(const GameEvent& event) {
+	for (const auto& a : event.addResource) {
+		this->getCurrentPlayer()->addResource(a);
+	}
+}
+void BattleScreen::handleSubResourceEvent(const GameEvent& event) {
+	for (const auto& a : event.subResource) {
 		this->getCurrentPlayer()->subResource(a);
 	}
 }
-void BattleScreen::handleFinishTradeEvent(const GameEvent& event) {
-	for (const auto& a : event.finishTrade) {
-		this->getCurrentPlayer()->addResource(a);
+void BattleScreen::handleAddResourcesEvent(const GameEvent& event) {
+	for (const auto& a : event.addResources) {
+		this->getCurrentPlayer()->addResources(a);
+	}
+}
+void BattleScreen::handleSubResourcesEvent(const GameEvent& event) {
+	for (const auto& a : event.subResources) {
+		this->getCurrentPlayer()->subResources(a);
 	}
 }
 void BattleScreen::handleChangeHighlightEvent(const GameEvent& event) {
@@ -192,6 +205,24 @@ void BattleScreen::handleCollectEvent(const GameEvent& event) {
 		uint32_t n = std::get<uint32_t>(a);
 		this->getCurrentPlayer()->addResource(Resource(resourcePoint->getResourceType(), n));
 		resourcePoint->subHp(n);
+	}
+}
+void BattleScreen::handleTryToUpgradeEvent(const GameEvent& event) {
+	for (const auto& a : event.tryToUpgrade) {
+		Building* b = std::get<Building*>(a);
+		Resources cost = std::get<Resources>(a);
+		if (this->getCurrentPlayer()->getResources() >= cost) {
+			GameObjectResponse response = b->upgrade();
+			this->handleGameEvent(response.gameEvent.value());
+			this->addPopUpWindows(response.popUpWindows);
+		}
+		else {
+			MessageWindow* window = new MessageWindow("click", "click", L"Недостаточно ресурсов\nВы не можете улучшить это здание.");
+			this->popUpWindows.push(window);
+			if (this->popUpWindows.size() == 1) {
+				this->popUpWindows.front()->run(this->windowW, this->windowH);
+			}
+		}
 	}
 }
 void BattleScreen::handlePopUpWindowEvent(const PopUpWindowEvent &event) {

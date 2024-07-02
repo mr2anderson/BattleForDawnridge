@@ -20,8 +20,90 @@
 #include "Building.hpp"
 
 
-Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, full * maxHp + (!full) * 1, maxHp, playerPtr) {}
+Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, full * maxHp + (!full) * 1, maxHp, playerPtr) {
+	this->currentLevel = 1;
+	this->upgradeMovesLeft = 0;
+}
+void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	this->Unit::draw(target, states);
+	if (this->exist()) {
+		this->drawCurrentLevel(target, states);
+		if (this->upgrading()) {
+			this->drawUpgrading(target, states);
+		}
+	}
+}
 GameObjectResponse Building::processRegeneration() {
 	this->addHp(this->getRegenerationSpeed());
 	return GameObjectResponse();
+}
+GameObjectResponse Building::decreaseUpgradeMovesLeft() {
+	GameObjectResponse response;
+	if (this->upgradeMovesLeft == 0) {
+		return response;
+	}
+
+	this->upgradeMovesLeft = this->upgradeMovesLeft - 1;
+	if (this->upgradeMovesLeft == 0) {
+		this->currentLevel = this->currentLevel + 1;
+		MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", this->getUpgradeFinishDescription());
+		response.popUpWindows.push(window);
+	}
+
+	return response;
+}
+uint32_t Building::getCurrentLevel() const {
+	return this->currentLevel;
+}
+bool Building::upgrading() const {
+	return (this->upgradeMovesLeft > 0);
+}
+GameObjectResponse Building::handleUpgradeStart() const {
+	GameObjectResponse response;
+	MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", this->getUpgradeStartDescription());
+	response.popUpWindows.push(window);
+	return response;
+}
+GameObjectResponse Building::handleUpgrading() const {
+	GameObjectResponse response;
+	MessageWindow *window = new MessageWindow(this->getNewWindowSoundName(), "click", this->getBusyWithUpgradingDescription());
+	response.popUpWindows.push(window);
+	return response;
+}
+void Building::upgrade(uint32_t t) {
+	this->upgradeMovesLeft = t;
+}
+void Building::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {
+	sf::Text text;
+	text.setFont(*FontStorage::get()->get("1"));
+	text.setString("L" + std::to_string(this->getCurrentLevel()));
+	text.setCharacterSize(12);
+	text.setFillColor(sf::Color::Yellow);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(1);
+	text.setPosition(64 * this->getX() + 64 - text.getLocalBounds().width, 64 * this->getY() + 64 / 4);
+	target.draw(text, states);
+}
+void Building::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const {
+	sf::RectangleShape rect;
+	rect.setFillColor(UI_COLOR);
+	rect.setSize(sf::Vector2f(64, 64 / 2));
+	rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	target.draw(rect, states);
+
+	sf::Sprite sprite;
+	sprite.setScale(0.5, 0.5);
+	sprite.setTexture(*TextureStorage::get()->get("upgrade"));
+	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	target.draw(sprite, states);
+
+	sf::Text text;
+	text.setFont(*FontStorage::get()->get("1"));
+	text.setString(std::to_string(this->upgradeMovesLeft));
+	text.setCharacterSize(25);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(1);
+	text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 / 2);
+	target.draw(text, states);
 }
