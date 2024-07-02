@@ -120,14 +120,14 @@ void BattleScreen::initGraphics(sf::RenderWindow &window) {
 	this->endMove = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, L"Конец хода", 18);
 }
 void BattleScreen::handleGameEvent(const GameEvent &event) {
-	this->handleTryToTradeEvent(event);
+	this->handleTryToAttackEvent(event);
 	this->handleTryToTradeEvent(event);
 	this->handleStartTradeEvent(event);
 	this->handleFinishTradeEvent(event);
 	this->handleChangeHighlightEvent(event);
 	this->handleCollectEvent(event);
 }
-void BattleScreen::handleToAttackEvent(const GameEvent& event) {
+void BattleScreen::handleTryToAttackEvent(const GameEvent& event) {
 	for (const auto& a : event.tryToAttack) {
 
 	}

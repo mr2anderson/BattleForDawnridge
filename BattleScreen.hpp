@@ -68,7 +68,7 @@ private:
 	void initGraphics(sf::RenderWindow &window);
 
 	void handleGameEvent(const GameEvent& event);
-	void handleToAttackEvent(const GameEvent& event);
+	void handleTryToAttackEvent(const GameEvent& event);
 	void handleTryToTradeEvent(const GameEvent& event);
 	void handleStartTradeEvent(const GameEvent& event);
 	void handleFinishTradeEvent(const GameEvent& event);
