@@ -24,7 +24,7 @@ ResourceBuilding::ResourceBuilding(uint32_t x, uint32_t y, uint32_t maxHp, const
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }
-GameObjectResponse ResourceBuilding::newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse ResourceBuilding::newMove(const Player& currentPlayer) {
 	GameObjectResponse response;
 	if (this->belongTo(&currentPlayer) and this->exist()) {
 		response = this->decreaseUpgradeMovesLeft();
@@ -110,7 +110,7 @@ GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightE
 
 	return response;
 }
-GameObjectResponse ResourceBuilding::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse ResourceBuilding::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
 		return GameObjectResponse();
 	}

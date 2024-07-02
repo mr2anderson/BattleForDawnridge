@@ -54,7 +54,7 @@ GameObjectResponse Caravan::doTrade(const Trade& trade) {
 
 	return response;
 }
-GameObjectResponse Caravan::newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse Caravan::newMove(const Player& currentPlayer) {
 	GameObjectResponse response;
 	if (!this->belongTo(&currentPlayer) or !this->exist()) {
 		return response;
@@ -188,7 +188,7 @@ std::wstring Caravan::getUpgradeFinishDescription() const {
 std::wstring Caravan::getBusyWithUpgradingDescription() const {
 	return L"Караван не доступен\nПодождите, пока будет завершено улучшение.";
 }
-GameObjectResponse Caravan::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse Caravan::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
 		return GameObjectResponse();
 	}

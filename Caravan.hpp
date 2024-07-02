@@ -30,7 +30,7 @@ public:
 	Caravan(uint32_t x, uint32_t y, const Player *playerPtr);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	GameObjectResponse doTrade(const Trade& trade);
-	GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
+	GameObjectResponse newMove(const Player& currentPlayer);
 	GameObjectResponse upgrade() override;
 
 	Resources getCost() const override;
@@ -57,5 +57,5 @@ private:
 	std::wstring getUpgradeFinishDescription() const override;
 	std::wstring getBusyWithUpgradingDescription() const override;
 
-	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse getGameObjectResponse(const Player& player) override;
 };

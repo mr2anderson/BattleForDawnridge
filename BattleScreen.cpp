@@ -241,7 +241,7 @@ void BattleScreen::newMove() {
 	this->changePlayerPOV();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-		GameObjectResponse response = this->gameObjects[i]->newMove(*this->getCurrentPlayer(), this->windowW, this->windowH);
+		GameObjectResponse response = this->gameObjects[i]->newMove(*this->getCurrentPlayer());
 		if (response.gameEvent.has_value()) {
 			this->handleGameEvent(response.gameEvent.value());
 		}
@@ -256,7 +256,7 @@ void BattleScreen::handleGameObjectClick() {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - this->windowW / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - this->windowH / 2;
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-		GameObjectResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, this->windowW, this->windowH);
+		GameObjectResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY);
 		if (response.gameEvent.has_value()) {
 			this->handleGameEvent(response.gameEvent.value());
 		}

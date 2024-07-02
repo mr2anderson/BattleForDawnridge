@@ -27,7 +27,7 @@
 class ResourceBuilding : public HpSensitiveBuilding {
 public:
 	ResourceBuilding(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
-	GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse newMove(const Player& currentPlayer) override;
 	GameObjectResponse upgrade() override;
 protected:
 	virtual std::string getResourceType() const = 0;
@@ -46,6 +46,6 @@ private:
 	GameObjectResponse highlightArea() const;
 	GameObjectResponse getSelectWindow(const GameEvent& highlightEvent);
 
-	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse getGameObjectResponse(const Player& player) override;
 	bool inRadius(ResourcePoint* rp) const;
 };

@@ -59,15 +59,15 @@ uint32_t GameObject::getY() const {
 bool GameObject::exist() const {
 	return (this->getHP() > 0);
 }
-GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 64 * this->getX() and
 		mouseY >= 64 * this->getY() and
 		mouseX < 64 * (this->getX() + 1) and
 		mouseY < 64 * (this->getY() + 1)) {
-		return this->getGameObjectResponse(currentPlayer, windowW, windowH);
+		return this->getGameObjectResponse(currentPlayer);
 	}
 	return GameObjectResponse();
 }
-GameObjectResponse GameObject::newMove(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY) {
+GameObjectResponse GameObject::newMove(const Player& currentPlayer) {
 	return GameObjectResponse();
 }

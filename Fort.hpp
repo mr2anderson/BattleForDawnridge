@@ -27,7 +27,7 @@
 class Fort : public Building {
 public:
 	Fort(uint32_t x, uint32_t y, const Player* playerPtr);
-	GameObjectResponse newMove(const Player& player, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse newMove(const Player& player) override;
 	GameObjectResponse upgrade() override;
 	
 	Resources getCost() const override;
@@ -46,5 +46,5 @@ private:
 	std::wstring getUpgradeFinishDescription() const override;
 	std::wstring getBusyWithUpgradingDescription() const override;
 	GameObjectResponse decreaseUpgradeMovesLeft() override;
-	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
+	GameObjectResponse getGameObjectResponse(const Player& player) override;
 };

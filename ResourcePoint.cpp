@@ -21,7 +21,7 @@
 
 
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t size) : GameObject(x, y, size, size) {}
-GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player) {
 	GameObjectResponse response;
 	if (!this->exist()) {
 		return response;

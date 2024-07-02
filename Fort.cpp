@@ -36,7 +36,7 @@ const uint32_t Fort::UPGRADE_HP[Fort::TOTAL_LEVELS - 1] = {
 
 
 Fort::Fort(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 100000, true, playerPtr) {}
-GameObjectResponse Fort::newMove(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse Fort::newMove(const Player& player) {
 	GameObjectResponse response;
 	if (this->belongTo(&player) and this->exist()) {
 		response = this->decreaseUpgradeMovesLeft();
@@ -106,7 +106,7 @@ GameObjectResponse Fort::decreaseUpgradeMovesLeft() {
 	}
 	return response;
 }
-GameObjectResponse Fort::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
+GameObjectResponse Fort::getGameObjectResponse(const Player& player) {
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
 			return this->handleUpgrading();
