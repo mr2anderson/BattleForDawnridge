@@ -25,11 +25,11 @@ MessageWindow::MessageWindow(const std::string &soundName1, const std::string &s
 }
 void MessageWindow::run(uint32_t windowW, uint32_t windowH) {
 	this->PopUpWindow::run(windowW, windowH);
-	uint32_t w = 200;
-	uint32_t h = 100;
+	uint32_t w = 400;
+	uint32_t h = 225;
 	uint32_t buttonW = 50;
-	uint32_t buttonH = 25;
-	this->label = Label((windowW - w) / 2, (windowH - h) / 2, w, h, message, 13);
+	uint32_t buttonH = 28;
+	this->label = Label((windowW - w) / 2, (windowH - h) / 2, w, h, message, 16);
 	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 5, buttonW, buttonH, L"OK", 18);
 }
 void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {

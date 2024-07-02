@@ -36,7 +36,7 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 }
 void LoadingScreen::loadBase() {
 	TextureStorage::get()->add("logotype0", "images/logotype/Plant Wind 1_00000.png");
-	FontStorage::get()->add("1", "/fonts/1.otf");
+	FontStorage::get()->add("1", "/fonts/1.ttf");
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Text text;
@@ -72,7 +72,7 @@ void LoadingScreen::loadAll() {
 			while (s.size() < 5) {
 				s = ("0" + s);
 			}
-			TextureStorage::get()->add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/gameObjects/resourcePoints/plants/" + std::to_string(i) + "/" + Plant::PLANT_NAMES[i] + "_" + s + ".png");
+			TextureStorage::get()->add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/gameObjects/resourcePoints/plants/" + Plant::PLANT_NAMES[i] + "_" + s + ".png");
 		}
 	}
 	for (uint32_t i = 0; i < Tree::TOTAL_TYPES; i = i + 1) {

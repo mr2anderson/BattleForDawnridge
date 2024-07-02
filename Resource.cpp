@@ -25,3 +25,26 @@ Resource::Resource(const std::string& type, uint32_t n) {
 	this->type = type;
 	this->n = n;
 }
+std::wstring Resource::getReadableInfo() const {
+	std::wstring result;
+	if (this->n == 0) {
+		return result;
+	}
+	if (this->type == "food") {
+		result = L"еда (";
+	}
+	else if (this->type == "wood") {
+		result = L"древесина (";
+	}
+	else if (this->type == "stone") {
+		result = L"камень (";
+	}
+	else if (this->type == "iron") {
+		result = L"железо (";
+	}
+	else if (this->type == "gold") {
+		result = L"золото (";
+	}
+	result = result + std::to_wstring(this->n) + L")";
+	return result;
+}

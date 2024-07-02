@@ -26,3 +26,9 @@ Unit::Unit(uint32_t x, uint32_t y, uint32_t currentHp, uint32_t maxHp, const Pla
 bool Unit::belongTo(const Player* player) const {
 	return (*this->playerPtr == *player);
 }
+GameObjectResponse Unit::getUnitOfEnemyResponse() {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+	response.gameEvent.value().tryToAttack = this;
+	return response;
+}

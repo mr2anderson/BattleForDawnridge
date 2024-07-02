@@ -757,6 +757,9 @@
     <ClInclude Include="Resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HpSensitiveBuilding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -872,6 +875,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Trade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HpSensitiveBuilding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

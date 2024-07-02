@@ -18,7 +18,7 @@
 
 
 #include <cassert>
-#include "Building.hpp"
+#include "HpSensitiveBuilding.hpp"
 #include "Trade.hpp"
 #include "SelectWindow.hpp"
 
@@ -26,14 +26,19 @@
 #pragma once
 
 
-class Caravan : public Building {
+class Caravan : public HpSensitiveBuilding {
 public:
 	Caravan(uint32_t x, uint32_t y, const Player *playerPtr);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	GameObjectResponse doTrade(const Trade& trade);
 	GameObjectResponse newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH);
 private:
 	Trade currentTrade;
 
+	uint32_t getRegenerationSpeed() const override;
+	std::string getNewWindowSoundName() const override;
+	std::wstring getBuildingFinishedStr() const override;
+	std::wstring getIsNotBuiltYetStr() const override;
 	std::string getTextureName() const override;
 	bool busy() const;
 	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;

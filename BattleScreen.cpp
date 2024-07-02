@@ -35,8 +35,8 @@ void BattleScreen::init(sf::RenderWindow& window) {
 	this->initGraphics(window);
 }
 void BattleScreen::initLandscape() {
-	this->mapWidth = 50;
-	this->mapHeight = 50;
+	this->mapWidth = 30;
+	this->mapHeight = 20;
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
@@ -44,7 +44,6 @@ void BattleScreen::initLandscape() {
 	this->gameObjects.push_back(new Fort(1, 1, &this->players[0]));
 	this->gameObjects.push_back(new Caravan(1, 2, &this->players[0]));
 	this->gameObjects.push_back(new Caravan(2, 1, &this->players[0]));
-	this->gameObjects.push_back(new Caravan(2, 2, &this->players[0]));
 	this->gameObjects.push_back(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
 	this->gameObjects.push_back(new Plant(4, 4));
 	this->gameObjects.push_back(new Plant(4, 5));
@@ -212,7 +211,7 @@ void BattleScreen::newMove() {
 		this->view.setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
 	}
 	else {
-		this->view.setCenter(sf::Vector2f(48 * this->mapWidth - this->windowW / 2, 48 * this->mapHeight - this->windowH / 2));
+		this->view.setCenter(sf::Vector2f(64 * this->mapWidth - this->windowW / 2, 64 * this->mapHeight - this->windowH / 2));
 	}
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		GameObjectResponse response = this->gameObjects[i]->newMove(*this->getCurrentPlayer(), this->windowW, this->windowH);
@@ -237,8 +236,8 @@ void BattleScreen::drawCells(sf::RenderWindow &window) {
 		for (uint32_t j = 0; j < this->mapHeight; j = j + 1) {
 			if ((i + j) % 2 == 0) {
 				sf::RectangleShape rect;
-				rect.setPosition(sf::Vector2f(48 * i, 48 * j));
-				rect.setSize(sf::Vector2f(48, 48));
+				rect.setPosition(sf::Vector2f(64 * i, 64 * j));
+				rect.setSize(sf::Vector2f(64, 64));
 				rect.setFillColor(CELL_COLOR);
 				window.draw(rect);
 			}
@@ -250,7 +249,7 @@ void BattleScreen::viewToNorth() {
 	view.setCenter(view.getCenter() - sf::Vector2f(0, delta));
 }
 void BattleScreen::viewToSouth() {
-	float delta = std::min(10.f, 48 * this->mapHeight - this->windowH / 2 - view.getCenter().y);
+	float delta = std::min(10.f, 64 * this->mapHeight - this->windowH / 2 - view.getCenter().y);
 	view.setCenter(view.getCenter() + sf::Vector2f(0, delta));
 }
 void BattleScreen::viewToWest() {
@@ -258,6 +257,6 @@ void BattleScreen::viewToWest() {
 	view.setCenter(view.getCenter() - sf::Vector2f(delta, 0));
 }
 void BattleScreen::viewToEast() {
-	float delta = std::min(10.f, 48 * this->mapWidth - this->windowW / 2 - view.getCenter().x);
+	float delta = std::min(10.f, 64 * this->mapWidth - this->windowW / 2 - view.getCenter().x);
 	view.setCenter(view.getCenter() + sf::Vector2f(delta, 0));
 }

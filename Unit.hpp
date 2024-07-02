@@ -25,7 +25,8 @@ class Unit : public GameObject {
 public:
 	Unit(uint32_t x, uint32_t y, uint32_t currentHp, uint32_t maxHp, const Player *playerPtr);
 	bool belongTo(const Player* player) const;
+protected:
+	GameObjectResponse getUnitOfEnemyResponse();
 private:
 	const Player* playerPtr;
-
 };

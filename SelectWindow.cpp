@@ -32,7 +32,7 @@ void SelectWindow::run(uint32_t windowW, uint32_t windowH) {
 		bool clickable = std::get<2>(this->data[i]);
 		GameEvent event = std::get<3>(this->data[i]);
 
-		Button button(10, windowH - (48 + 10) * (i + 1), windowW - 20, 48, pictureName, message, 16);
+		Button button(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message, 16);
 		this->buttons[i] = std::make_tuple(button, clickable, event);
 	}
 }

@@ -26,11 +26,8 @@
 
 class Building : public Unit {
 public:
-	Building(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr);
 	Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player *playerPtr);
 protected:
-	bool works() const;
-
-	static constexpr uint32_t MINIMAL_PERCENT = 80;
-	static constexpr uint32_t REGENERATION_SPEED = 5000;
+	virtual uint32_t getRegenerationSpeed() const = 0;
+	virtual GameObjectResponse processRegeneration();
 };

@@ -27,6 +27,7 @@
 struct Trade {
 	Trade();
 	Trade(const Resource& sell, const Resource& buy, uint32_t movesLeft);
+	std::wstring getReadableInfo() const;
 	Resource sell, buy;
 	uint32_t movesLeft;
 };

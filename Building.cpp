@@ -20,8 +20,8 @@
 #include "Building.hpp"
 
 
-Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr) : Building(x, y, maxHp, false, playerPtr) {}
 Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, full * maxHp + (!full) * 1, maxHp, playerPtr) {}
-bool Building::works() const {
-	return (100 * this->getHP() / this->getMaxHP() >= MINIMAL_PERCENT);
+GameObjectResponse Building::processRegeneration() {
+	this->addHp(this->getRegenerationSpeed());
+	return GameObjectResponse();
 }

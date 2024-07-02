@@ -29,6 +29,7 @@ public:
 	Fort(uint32_t x, uint32_t y, const Player* playerPtr);
 	GameObjectResponse newMove(const Player& player, uint32_t windowW, uint32_t windowH) override;
 private:
+	uint32_t getRegenerationSpeed() const override;
 	std::string getTextureName() const override;
 	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };
