@@ -21,9 +21,9 @@
 #include "Quarry.hpp"
 
 
-Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 10000, playerPtr, resourcePointsPtr) {}
+Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
 uint32_t Quarry::getRegenerationSpeed() const {
-	return 2000;
+	return 4000;
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";
@@ -41,7 +41,7 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getResourceNPerMove() const {
-	return 1500;
+	return 2500;
 }
 uint32_t Quarry::getRadius() const {
 	return 5;

@@ -23,9 +23,8 @@
 Player::Player() = default;
 Player::Player(uint32_t id) {
 	this->id = id;
-	this->bar.plus(Resource("food", 10000));
-	this->bar.plus(Resource("wood", 10000));
-	this->bar.plus(Resource("gold", 1000));
+	this->bar.plus(Resource("food", 20000));
+	this->bar.plus(Resource("wood", 20000));
 }
 uint32_t Player::getId() const {
 	return this->id;

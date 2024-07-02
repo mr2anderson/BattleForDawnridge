@@ -21,9 +21,9 @@
 #include "Mine.hpp"
 
 
-Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 10000, playerPtr, resourcePointsPtr) {}
+Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
 uint32_t Mine::getRegenerationSpeed() const {
-	return 2000;
+	return 4000;
 }
 std::string Mine::getTextureName() const {
 	return "mine";
@@ -41,7 +41,7 @@ std::string Mine::getResourceType() const {
 	return "iron";
 }
 uint32_t Mine::getResourceNPerMove() const {
-	return 1500;
+	return 2500;
 }
 uint32_t Mine::getRadius() const {
 	return 5;

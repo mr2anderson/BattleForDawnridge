@@ -30,6 +30,7 @@ std::wstring Resource::getReadableInfo() const {
 	if (this->n == 0) {
 		return result;
 	}
+
 	if (this->type == "food") {
 		result = L"еда (";
 	}

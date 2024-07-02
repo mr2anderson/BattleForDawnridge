@@ -20,7 +20,7 @@
 #include "Mountain.hpp"
 
 
-Mountain::Mountain(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2000) {
+Mountain::Mountain(uint32_t x, uint32_t y) : ResourcePoint(x, y, 10000) {
 	std::random_device rd;
 	std::mt19937 mersenne(rd());
 	this->type = mersenne() % TOTAL_TYPES;

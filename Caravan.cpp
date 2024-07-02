@@ -78,36 +78,36 @@ GameObjectResponse Caravan::getSelectWindow() {
 	data.emplace_back("caravan", L"Караваны позволяют обменивать ресурсы.", false, GameEvent());
 
 	GameEvent gameEventTrade;
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("food", 100000), 5));
-	data.emplace_back("food", L"Купить 100k еды за 1k золота (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("food", 50000), 5));
+	data.emplace_back("food", L"Купить 50000 еды за 100 золота (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("wood", 100000), 5));
-	data.emplace_back("wood", L"Купить 100k древесины за 1k золота (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("wood", 50000), 5));
+	data.emplace_back("wood", L"Купить 50000 древесины за 100 золота (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("stone", 20000), 5));
-	data.emplace_back("stone", L"Купить 20k камня за 1k золота (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("stone", 50000), 5));
+	data.emplace_back("stone", L"Купить 50000 камня за 100 золота (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("iron", 20000), 5));
-	data.emplace_back("iron", L"Купить 20k железа за 1k золота (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 100), Resource("iron", 50000), 5));
+	data.emplace_back("iron", L"Купить 50000 железа за 100 золота (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("food", 100000), Resource("gold", 1000), 5));
-	data.emplace_back("gold", L"Купить 1000 золота за 100k еды (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("food", 50000), Resource("gold", 100), 5));
+	data.emplace_back("gold", L"Купить 100 золота за 50000 еды (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("wood", 100000), Resource("gold", 1000), 5));
-	data.emplace_back("gold", L"Купить 1000 золота за 100k дерева (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("wood", 50000), Resource("gold", 100), 5));
+	data.emplace_back("gold", L"Купить 100 золота за 50000 дерева (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("stone", 20000), Resource("gold", 1000), 5));
-	data.emplace_back("gold", L"Купить 1000 золота за 20k камня (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("stone", 50000), Resource("gold", 100), 5));
+	data.emplace_back("gold", L"Купить 100 золота за 50000 камня (5 ходов)", true, gameEventTrade);
 
 	gameEventTrade = GameEvent();
-	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("iron", 20000), Resource("gold", 1000), 5));
-	data.emplace_back("gold", L"Купить 1000 золота за 20k железа (5 ходов)", true, gameEventTrade);
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("iron", 50000), Resource("gold", 100), 5));
+	data.emplace_back("gold", L"Купить 100 золота за 50000 железа (5 ходов)", true, gameEventTrade);
 
 	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
 	GameObjectResponse response;

@@ -21,9 +21,9 @@
 #include "Sawmill.hpp"
 
 
-Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 10000, playerPtr, resourcePointsPtr) {}
+Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return 2000;
+	return 4000;
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";
@@ -41,7 +41,7 @@ std::string Sawmill::getResourceType() const {
 	return "wood";
 }
 uint32_t Sawmill::getResourceNPerMove() const {
-	return 7500;
+	return 2500;
 }
 uint32_t Sawmill::getRadius() const {
 	return 5;

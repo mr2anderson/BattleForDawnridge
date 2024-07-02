@@ -21,9 +21,9 @@
 #include "Windmill.hpp"
 
 
-Windmill::Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 10000, playerPtr, resourcePointsPtr) {}
+Windmill::Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
 uint32_t Windmill::getRegenerationSpeed() const {
-	return 2000;
+	return 4000;
 }
 std::string Windmill::getTextureName() const {
 	return "windmill";
@@ -41,7 +41,7 @@ std::string Windmill::getResourceType() const {
 	return "food";
 }
 uint32_t Windmill::getResourceNPerMove() const {
-	return 7500;
+	return 2500;
 }
 uint32_t Windmill::getRadius() const {
 	return 5;
