@@ -25,7 +25,41 @@ BattleScreen* BattleScreen::singletone = nullptr;
 
 int32_t BattleScreen::run(sf::RenderWindow& window) {
 	this->init(window);
-	return this->start(window);
+	sf::Event event{};
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				return -1;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				auto code = event.key.code;
+				if (code == sf::Keyboard::Escape) {
+					this->prepareReturnToMenu(window);
+					return 0;
+				}
+			}
+			else if (event.type == sf::Event::MouseButtonPressed) {
+				if (this->popUpWindows.empty()) {
+					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
+						this->newMove();
+					}
+					else {
+						this->handleGameObjectClick();
+					}
+				}
+				else {
+					if (event.type == sf::Event::MouseButtonPressed) {
+						this->handlePopUpWindowEvent(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+					}
+				}
+			}
+		}
+		this->drawEverything(window);
+		Playlist::get()->update();
+		if (this->popUpWindows.empty()) {
+			this->handleViewMovement();
+		}
+	}
 }
 void BattleScreen::init(sf::RenderWindow& window) {
 	this->initLandscape();
@@ -82,89 +116,20 @@ void BattleScreen::initGraphics(sf::RenderWindow &window) {
 	this->view = window.getDefaultView();
 	this->endMove = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, L"Конец хода", 18);
 }
-int32_t BattleScreen::start(sf::RenderWindow& window) {
-	sf::Event event{};
-	for (; ;) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				return -1;
-			}
-			if (event.type == sf::Event::KeyPressed) {
-				auto code = event.key.code;
-				if (code == sf::Keyboard::Escape) {
-					window.setView(window.getDefaultView());
-					Playlist::get()->restartMusic();
-					return 0;
-				}
-			}
-			else if (event.type == sf::Event::MouseButtonPressed) {
-				if (this->popUpWindows.empty()) {
-					if (endMove.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
-						this->newMove();
-					}
-					else {
-						uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - this->windowW / 2;
-						uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - this->windowH / 2;
-						for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-							GameObjectResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, window.getSize().x, window.getSize().y);
-							if (response.gameEvent.has_value()) {
-								handleGameEvent(response.gameEvent.value());
-							}
-							std::queue<PopUpWindow*> popUpWindows2 = response.popUpWindows;
-							if (!popUpWindows2.empty()) {
-								while (!popUpWindows2.empty()) {
-									this->popUpWindows.push(popUpWindows2.front());
-									popUpWindows2.pop();
-								}
-								this->popUpWindows.front()->run(window.getSize().x, window.getSize().y);
-							}
-						}
-					}
-				}
-				else {
-					if (event.type == sf::Event::MouseButtonPressed) {
-						handlePopUpWindowEvent(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
-					}
-				}
-			}
-		}
+void BattleScreen::handleGameEvent(const GameEvent &event) {
+	this->handleTryToTradeEvent(event);
+	this->handleTryToTradeEvent(event);
+	this->handleStartTradeEvent(event);
+	this->handleFinishTradeEvent(event);
+	this->handleChangeHighlightEvent(event);
+	this->handleCollectEvent(event);
+}
+void BattleScreen::handleToAttackEvent(const GameEvent& event) {
+	for (const auto& a : event.tryToAttack) {
 
-		window.clear(BACKGROUND_COLOR);
-		window.setView(this->view);
-		this->drawCells(window);
-		for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-			window.draw(*this->gameObjects[i]);
-		}
-		if (!this->popUpWindows.empty()) {
-			window.draw(*this->popUpWindows.front());
-		}
-		window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
-		window.draw(endMove);
-		window.display();
-
-		Playlist::get()->update();
-
-		if (this->popUpWindows.empty()) {
-			auto pos = sf::Mouse::getPosition();
-			if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				this->viewToWest();
-			}
-			else if (pos.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				this->viewToEast();
-			}
-			if (pos.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				this->viewToNorth();
-			}
-			else if (pos.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				this->viewToSouth();
-			}
-		}
 	}
 }
-void BattleScreen::handleGameEvent(GameEvent event) {
-	for (const auto& a : event.tryToAttack) {
-		std::cout << "tryToAttack " << a->getX() << " " << a->getY() << std::endl;
-	}
+void BattleScreen::handleTryToTradeEvent(const GameEvent& event) {
 	for (const auto& a : event.tryToTrade) {
 		Caravan* caravan = std::get<Caravan*>(a);
 		Trade trade = std::get<Trade>(a);
@@ -173,17 +138,7 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 			if (response.gameEvent.has_value()) {
 				this->handleGameEvent(response.gameEvent.value());
 			}
-			std::queue<PopUpWindow*> popUpWindows2 = response.popUpWindows;
-			bool free = this->popUpWindows.empty();
-			if (!popUpWindows2.empty()) {
-				while (!popUpWindows2.empty()) {
-					this->popUpWindows.push(popUpWindows2.front());
-					popUpWindows2.pop();
-				}
-				if (free) {
-					this->popUpWindows.front()->run(this->windowW, this->windowH);
-				}
-			}
+			this->addPopUpWindows(response.popUpWindows);
 		}
 		else {
 			MessageWindow* window = new MessageWindow("click", "click", L"Недостаточно ресурсов\nВы не можете совершить эту сделку.");
@@ -193,12 +148,18 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 			}
 		}
 	}
+}
+void BattleScreen::handleStartTradeEvent(const GameEvent& event) {
 	for (const auto& a : event.startTrade) {
 		this->getCurrentPlayer()->subResource(a);
 	}
+}
+void BattleScreen::handleFinishTradeEvent(const GameEvent& event) {
 	for (const auto& a : event.finishTrade) {
 		this->getCurrentPlayer()->addResource(a);
 	}
+}
+void BattleScreen::handleChangeHighlightEvent(const GameEvent& event) {
 	for (const auto& a : event.changeHighlight) {
 		const Unit* u = std::get<0>(a);
 		uint32_t x = std::get<1>(a);
@@ -221,6 +182,8 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 		}
 		this->highlightTable[p] = v;
 	}
+}
+void BattleScreen::handleCollectEvent(const GameEvent& event) {
 	for (const auto& a : event.collect) {
 		ResourcePoint* resourcePoint = std::get<ResourcePoint*>(a);
 		uint32_t n = std::get<uint32_t>(a);
@@ -228,7 +191,7 @@ void BattleScreen::handleGameEvent(GameEvent event) {
 		resourcePoint->subHp(n);
 	}
 }
-void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
+void BattleScreen::handlePopUpWindowEvent(const PopUpWindowEvent &event) {
 	if (event.close) {
 		delete this->popUpWindows.front();
 		this->popUpWindows.pop();
@@ -241,30 +204,60 @@ void BattleScreen::handlePopUpWindowEvent(PopUpWindowEvent event) {
 void BattleScreen::newMove() {
 	this->move = this->move + 1;
 	SoundQueue::get()->push(SoundStorage::get()->get("newMove"));
-	if (this->getCurrentPlayer()->getId() == 1) {
-		this->view.setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
-	}
-	else {
-		this->view.setCenter(sf::Vector2f(64 * this->mapWidth - this->windowW / 2, 64 * this->mapHeight - this->windowH / 2));
-	}
+	this->changePlayerPOV();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		GameObjectResponse response = this->gameObjects[i]->newMove(*this->getCurrentPlayer(), this->windowW, this->windowH);
 		if (response.gameEvent.has_value()) {
 			this->handleGameEvent(response.gameEvent.value());
 		}
+		this->addPopUpWindows(response.popUpWindows);
 		std::queue<PopUpWindow*> popUpWindows2 = response.popUpWindows;
-		if (!popUpWindows2.empty()) {
-			while (!popUpWindows2.empty()) {
-				this->popUpWindows.push(popUpWindows2.front());
-				popUpWindows2.pop();
-			}
-			this->popUpWindows.front()->run(this->windowW, this->windowH);
-		}
 	}
 }
 Player* BattleScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];
+}
+void BattleScreen::handleGameObjectClick() {
+	uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - this->windowW / 2;
+	uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - this->windowH / 2;
+	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
+		GameObjectResponse response = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY, this->windowW, this->windowH);
+		if (response.gameEvent.has_value()) {
+			this->handleGameEvent(response.gameEvent.value());
+		}
+		this->addPopUpWindows(response.popUpWindows);
+	}
+}
+void BattleScreen::addPopUpWindows(std::queue<PopUpWindow*> windows) {
+	bool popUpWindowsExist = !this->popUpWindows.empty();
+	if (!windows.empty()) {
+		while (!windows.empty()) {
+			this->popUpWindows.push(windows.front());
+			windows.pop();
+		}
+		if (!popUpWindowsExist) {
+			this->popUpWindows.front()->run(this->windowW, this->windowH);
+		}
+	}
+}
+void BattleScreen::prepareReturnToMenu(sf::RenderWindow &window) {
+	window.setView(window.getDefaultView());
+	Playlist::get()->restartMusic();
+}
+void BattleScreen::drawEverything(sf::RenderWindow& window) {
+	window.clear(BACKGROUND_COLOR);
+	window.setView(this->view);
+	this->drawCells(window);
+	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
+		window.draw(*this->gameObjects[i]);
+	}
+	if (!this->popUpWindows.empty()) {
+		window.draw(*this->popUpWindows.front());
+	}
+	window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
+	window.draw(endMove);
+	window.display();
 }
 void BattleScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < this->mapWidth; i = i + 1) {
@@ -288,6 +281,29 @@ void BattleScreen::drawCells(sf::RenderWindow &window) {
 				}
 			}
 		}
+	}
+}
+void BattleScreen::handleViewMovement() {
+	auto pos = sf::Mouse::getPosition();
+	if (pos.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		this->viewToWest();
+	}
+	else if (pos.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		this->viewToEast();
+	}
+	if (pos.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		this->viewToNorth();
+	}
+	else if (pos.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		this->viewToSouth();
+	}
+}
+void BattleScreen::changePlayerPOV() {
+	if (this->getCurrentPlayer()->getId() == 1) {
+		this->view.setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
+	}
+	else {
+		this->view.setCenter(sf::Vector2f(64 * this->mapWidth - this->windowW / 2, 64 * this->mapHeight - this->windowH / 2));
 	}
 }
 void BattleScreen::viewToNorth() {

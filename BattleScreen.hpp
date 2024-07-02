@@ -17,12 +17,7 @@
  */
 
 
-#include <iostream>
-#include <map>
 #include "Playlist.hpp"
-#include "SoundQueue.hpp"
-#include "SoundStorage.hpp"
-#include "MessageWindow.hpp"
 #include "Plant.hpp"
 #include "Tree.hpp"
 #include "Mountain.hpp"
@@ -69,16 +64,30 @@ private:
 	void initHighlightTable();
 	void initGraphics(sf::RenderWindow &window);
 
-	int32_t start(sf::RenderWindow &window);
-	void handleGameEvent(GameEvent event);
-	void handlePopUpWindowEvent(PopUpWindowEvent even);
+	void handleGameEvent(const GameEvent& event);
+	void handleToAttackEvent(const GameEvent& event);
+	void handleTryToTradeEvent(const GameEvent& event);
+	void handleStartTradeEvent(const GameEvent& event);
+	void handleFinishTradeEvent(const GameEvent& event);
+	void handleChangeHighlightEvent(const GameEvent& event);
+	void handleCollectEvent(const GameEvent& event);
+	void handlePopUpWindowEvent(const PopUpWindowEvent& event);
+
 	void newMove();
 	Player* getCurrentPlayer();
+	void handleGameObjectClick();
+	void addPopUpWindows(std::queue<PopUpWindow*> windows);
+	void prepareReturnToMenu(sf::RenderWindow &window);
+	void drawEverything(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);
+	void handleViewMovement();
+	void changePlayerPOV();
+
 	void viewToNorth();
 	void viewToSouth();
 	void viewToWest();
 	void viewToEast();
+
 	void pushUnit(Unit* unit);
 	void pushResourcePoint(ResourcePoint* resourcePoint);
 };
