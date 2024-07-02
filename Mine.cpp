@@ -22,8 +22,8 @@
 
 
 const Resources Mine::UPGRADE_COSTS[Mine::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 4000}}),
-	Resources({{"wood", 4000}}),
+	Resources({{"wood", 5000}}),
+	Resources({{"wood", 5000}}),
 };
 const uint32_t Mine::UPGRADE_MOVES[Mine::TOTAL_LEVELS - 1] = {
 	2,
@@ -32,6 +32,11 @@ const uint32_t Mine::UPGRADE_MOVES[Mine::TOTAL_LEVELS - 1] = {
 const float Mine::LEVEL_BONUS[Mine::TOTAL_LEVELS] = {
 	1,
 	1.5,
+	2
+};
+const uint32_t Mine::LEVEL_RADIUS_BONUS[Mine::TOTAL_LEVELS]{
+	0,
+	1,
 	2
 };
 
@@ -49,10 +54,10 @@ std::string Mine::getTextureName() const {
 	return "mine";
 }
 std::wstring Mine::getIsNotBuiltYetStr() const {
-	return L"Шахта еще не построена\nДождитесь конца строительства.";
+	return L"ШАХТА ЕЩЕ НЕ ПОСТРОЕНА\nДождитесь конца строительства.";
 }
 std::wstring Mine::getBuildingFinishedStr() const {
-	return L"Шахта построена!\nБлагодаря Вашим рабочим, шахта уже начинает добывать первое железо.";
+	return L"ШАХТА ПОСТРОЕНА\nБлагодаря Вашим рабочим, шахта уже начинает добывать первое железо.";
 }
 std::string Mine::getNewWindowSoundName() const {
 	return "mine";
@@ -64,22 +69,22 @@ uint32_t Mine::getResourceNPerMove() const {
 	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
 }
 uint32_t Mine::getRadius() const {
-	return 5;
+	return 5 + LEVEL_RADIUS_BONUS[this->getCurrentLevel() - 1];
 }
 std::wstring Mine::getDescription() const {
-	return L"Шахты обеспечивают Ваш город железом — основой сильной армии.";
+	return L"Шахты обеспечивают Ваш город железом — основой сильной армии. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
 }
 std::wstring Mine::getResourcesOverStr() const {
-	return L"Залежи истощены!\nОдна из Ваших шахт прекращает работу.";
+	return L"ЗАЛЕЖИ ИСТОЩЕНЫ\nОдна из Ваших шахт прекращает работу.";
 }
 std::wstring Mine::getUpgradeStartDescription() const {
-	return L"Начато улучшение шахты\nСбор железа был приостановлен.";
+	return L"НАЧАТО УЛУЧШЕНИЕ ШАХТЫ\nСбор железа был приостановлен.";
 }
 std::wstring Mine::getUpgradeFinishDescription() const {
-	return L"Улучшение шахты завершено!\nСбор железа возобновлен.";
+	return L"УЛУЧШЕНИЕ ШАХТЫ ЗАВЕРШЕНО\nСбор железа возобновлен.";
 }
 std::wstring Mine::getBusyWithUpgradingDescription() const {
-	return L"Шахта не доступна\nПодождите, пока будет завершено улучшение.";
+	return L"ШАХТА НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
 }
 uint32_t Mine::getMaxLevel() const {
 	return TOTAL_LEVELS;

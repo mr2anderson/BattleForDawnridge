@@ -17,32 +17,20 @@
  */
 
 
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "MusicStorage.hpp"
-#include "SoundStorage.hpp"
-#include "ColorTheme.hpp"
+#include "ResourcePoint.hpp"
 
 
 #pragma once
 
 
-class LoadingScreen {
+class Stone : public ResourcePoint {
 public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
-		}
-		return LoadingScreen::singletone;
-	}
-	void run(sf::RenderWindow &window);
-private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
+	Stone(uint32_t x, uint32_t y);
+	std::string getResourceType() const override;
 
-	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
-	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
+	static constexpr uint32_t TOTAL_TYPES = 7;
+private:
+	std::string getTextureName() const override;
+	std::wstring getDescription() const override;
+	std::string getClickSoundName() const override;
 };

@@ -17,32 +17,19 @@
  */
 
 
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "MusicStorage.hpp"
-#include "SoundStorage.hpp"
-#include "ColorTheme.hpp"
+#include "Stone.hpp"
 
 
-#pragma once
-
-
-class LoadingScreen {
-public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
-		}
-		return LoadingScreen::singletone;
-	}
-	void run(sf::RenderWindow &window);
-private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
-	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
-};
+Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y, 10000) {}
+std::string Stone::getResourceType() const {
+	return "stone";
+}
+std::string Stone::getTextureName() const {
+	return "stone";
+}
+std::wstring Stone::getDescription() const {
+	return L"Этот камень содержит еще " + std::to_wstring(this->getHP()) + L" ед. камня. Постройте рядом каменоломню, чтобы начать добычу.";
+}
+std::string Stone::getClickSoundName() const {
+	return "quarry";
+}

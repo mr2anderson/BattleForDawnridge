@@ -28,7 +28,7 @@
 
 class Unit;
 class Building;
-class Caravan;
+class Market;
 class ResourcePoint;
 
 
@@ -36,7 +36,7 @@ struct GameEvent {
 	GameEvent();
 	friend GameEvent operator+(const GameEvent &a, const GameEvent& b);
 	std::vector<Unit*> tryToAttack;
-	std::vector<std::tuple<Caravan*, Trade>> tryToTrade;
+	std::vector<std::tuple<Market*, Trade>> tryToTrade;
 	std::vector<Resource> subResource;
 	std::vector<Resource> addResource;
 	std::vector<Resources> subResources;

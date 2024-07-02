@@ -17,38 +17,34 @@
  */
 
 
-#include "ResourceBuilding.hpp"
+#include "Building.hpp"
+#include "SelectWindow.hpp"
 
 
 #pragma once
 
 
-class Mine : public ResourceBuilding {
+class Castle : public Building {
 public:
-	Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
-
+	Castle(uint32_t x, uint32_t y, const Player* playerPtr);
+	GameObjectResponse newMove(const Player& player) override;
+	GameObjectResponse upgrade() override;
+	
 	Resources getCost() const override;
 private:
-	uint32_t getRegenerationSpeed() const override;
-	std::string getTextureName() const override;
-	std::wstring getIsNotBuiltYetStr() const override;
-	std::wstring getBuildingFinishedStr() const override;
-	std::string getNewWindowSoundName() const override;
-	std::string getResourceType() const override;
-	uint32_t getResourceNPerMove() const override;
-	uint32_t getRadius() const override;
-	std::wstring getDescription() const override;
-	std::wstring getResourcesOverStr() const override;
-	std::wstring getUpgradeStartDescription() const override;
-	std::wstring getUpgradeFinishDescription() const override;
-	std::wstring getBusyWithUpgradingDescription() const override;
-	Resources getUpgradeCost(uint32_t i) const override;
-	uint32_t getUpgradeMoves(uint32_t i) const override;
-	uint32_t getMaxLevel() const override;
-
 	static constexpr uint32_t TOTAL_LEVELS = 3;
 	static const Resources UPGRADE_COSTS[];
 	static const uint32_t UPGRADE_MOVES[];
-	static const float LEVEL_BONUS[];
-	static const uint32_t LEVEL_RADIUS_BONUS[];
+	static const uint32_t UPGRADE_HP[];
+
+	GameObjectResponse getSelectWindow();
+
+	uint32_t getRegenerationSpeed() const override;
+	std::string getTextureName() const override;
+	std::string getNewWindowSoundName() const override;
+	std::wstring getUpgradeStartDescription() const override;
+	std::wstring getUpgradeFinishDescription() const override;
+	std::wstring getBusyWithUpgradingDescription() const override;
+	GameObjectResponse decreaseUpgradeMovesLeft() override;
+	GameObjectResponse getGameObjectResponse(const Player& player) override;
 };

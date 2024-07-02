@@ -58,7 +58,7 @@ int32_t PressAnyKeyScreen::run(sf::RenderWindow &window) {
 			}
 		}
 
-		window.clear(BACKGROUND_COLOR);
+		window.clear(UI_COLOR);
 		window.draw(text);
 		window.draw(sprite);
 		window.display();

@@ -22,8 +22,8 @@
 
 
 const Resources Quarry::UPGRADE_COSTS[Quarry::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 4000}}),
-	Resources({{"wood", 4000}}),
+	Resources({{"wood", 5000}}),
+	Resources({{"wood", 5000}}),
 };
 const uint32_t Quarry::UPGRADE_MOVES[Quarry::TOTAL_LEVELS - 1] = {
 	2,
@@ -32,6 +32,11 @@ const uint32_t Quarry::UPGRADE_MOVES[Quarry::TOTAL_LEVELS - 1] = {
 const float Quarry::LEVEL_BONUS[Quarry::TOTAL_LEVELS] = {
 	1,
 	1.5,
+	2
+};
+const uint32_t Quarry::LEVEL_RADIUS_BONUS[Quarry::TOTAL_LEVELS]{
+	0,
+	1,
 	2
 };
 
@@ -49,10 +54,10 @@ std::string Quarry::getTextureName() const {
 	return "quarry";
 }
 std::wstring Quarry::getIsNotBuiltYetStr() const {
-	return L"Каменоломня еще не построена\nДождитесь конца строительства.";
+	return L"КАМЕНОЛОМНЯ ЕЩЕ НЕ ПОСТРОЕНА\nДождитесь конца строительства.";
 }
 std::wstring Quarry::getBuildingFinishedStr() const {
-	return L"Каменоломня построена!\nБлагодаря Вашим рабочим, каменоломня уже начинает добывать первый камень.";
+	return L"КАМЕНОЛОМНЯ ПОСТРОЕНА\nБлагодаря Вашим рабочим, каменоломня уже начинает добывать первый камень.";
 }
 std::string Quarry::getNewWindowSoundName() const {
 	return "quarry";
@@ -64,22 +69,22 @@ uint32_t Quarry::getResourceNPerMove() const {
 	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
 }
 uint32_t Quarry::getRadius() const {
-	return 5;
+	return 5 + LEVEL_RADIUS_BONUS[this->getCurrentLevel() - 1];
 }
 std::wstring Quarry::getDescription() const {
-	return L"Каменоломни обеспечивают Ваш город камнем — основным материалом строительства оборонительных сооружений.";
+	return L"Каменоломни обеспечивают Ваш город камнем — основным материалом строительства оборонительных сооружений. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
 }
 std::wstring Quarry::getResourcesOverStr() const {
-	return L"Камень закончился!\nОдна из Ваших каменеломен прекращает работу.";
+	return L"КАМЕНЬ ЗАКОНЧИЛСЯ\nОдна из Ваших каменеломен прекращает работу.";
 }
 std::wstring Quarry::getUpgradeStartDescription() const {
-	return L"Начато улучшение каменоломни\nСбор камня был приостановлен.";
+	return L"НАЧАТО УЛУЧШЕНИЕ КАМЕНОЛОМНИ\nСбор камня был приостановлен.";
 }
 std::wstring Quarry::getUpgradeFinishDescription() const {
-	return L"Улучшение каменоломни завершено!\nСбор камня возобновлен.";
+	return L"УЛУЧШЕНИЕ КАМЕНОЛОМНИ ЗАВЕРШЕНО\nСбор камня возобновлен.";
 }
 std::wstring Quarry::getBusyWithUpgradingDescription() const {
-	return L"Каменоломня не доступна\nПодождите, пока будет завершено улучшение.";
+	return L"КАМЕНОЛОМНЯ НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
 }
 uint32_t Quarry::getMaxLevel() const {
 	return TOTAL_LEVELS;

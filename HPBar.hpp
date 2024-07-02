@@ -18,7 +18,7 @@
 
 
 
-#include "FontStorage.hpp"
+#include <SFML/Graphics.hpp>
 
 
 #pragma once

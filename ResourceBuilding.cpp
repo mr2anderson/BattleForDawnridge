@@ -96,13 +96,13 @@ GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightE
 	GameObjectResponse response;
 
 	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-	data.emplace_back("exit", L"Вернуться", true, highlightEvent);
+	data.emplace_back("exit_icon", L"Покинуть", true, highlightEvent);
 	data.emplace_back(this->getTextureName(), this->getDescription(), false, GameEvent());
 
 	if (this->getCurrentLevel() < this->getMaxLevel()) {
 		GameEvent gameEventUpgrade = highlightEvent;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost(this->getCurrentLevel() - 1));
-		data.emplace_back("upgrade", L"Увеличить скорость добычи за " + this->getUpgradeCost(this->getCurrentLevel() - 1).getReadableInfo(), true, gameEventUpgrade);
+		data.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost(this->getCurrentLevel() - 1).getReadableInfo() + L". Улучшение повысит скорость и радиус добычи.", true, gameEventUpgrade);
 	}
 
 	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);

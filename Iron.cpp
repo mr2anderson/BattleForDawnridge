@@ -17,32 +17,19 @@
  */
 
 
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "MusicStorage.hpp"
-#include "SoundStorage.hpp"
-#include "ColorTheme.hpp"
+#include "Iron.hpp"
 
 
-#pragma once
-
-
-class LoadingScreen {
-public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
-		}
-		return LoadingScreen::singletone;
-	}
-	void run(sf::RenderWindow &window);
-private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
-	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
-};
+Iron::Iron(uint32_t x, uint32_t y) : ResourcePoint(x, y, 10000) {}
+std::string Iron::getResourceType() const {
+	return "iron";
+}
+std::string Iron::getTextureName() const {
+	return "iron";
+}
+std::wstring Iron::getDescription() const {
+	return L"Ёти залежи содержат еще " + std::to_wstring(this->getHP()) + L" ед. железа. ѕостройте р€дом шахту, чтобы начать добычу.";
+}
+std::string Iron::getClickSoundName() const {
+	return "mine";
+}

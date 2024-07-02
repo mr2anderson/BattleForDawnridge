@@ -50,4 +50,5 @@ private:
 	static const Resources UPGRADE_COSTS[];
 	static const uint32_t UPGRADE_MOVES[];
 	static const float LEVEL_BONUS[];
+	static const uint32_t LEVEL_RADIUS_BONUS[];
 };

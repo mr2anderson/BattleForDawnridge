@@ -17,32 +17,19 @@
  */
 
 
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "MusicStorage.hpp"
-#include "SoundStorage.hpp"
-#include "ColorTheme.hpp"
+#include "Forest.hpp"
 
 
-#pragma once
-
-
-class LoadingScreen {
-public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
-		}
-		return LoadingScreen::singletone;
-	}
-	void run(sf::RenderWindow &window);
-private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
-	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
-};
+Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y, 10000) {}
+std::string Forest::getResourceType() const {
+	return "wood";
+}
+std::string Forest::getTextureName() const {
+	return "forest";
+}
+std::wstring Forest::getDescription() const {
+	return L"Это лес содержит еще " + std::to_wstring(this->getHP()) + L" ед. древесины. Постройте лесопилку поблизости, чтобы начать добычу.";
+}
+std::string Forest::getClickSoundName() const {
+	return "sawmill";
+}

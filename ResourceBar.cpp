@@ -36,7 +36,7 @@ void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 	std::array<std::string, 5> res = { "food", "wood", "stone", "iron", "gold" };
 	for (uint32_t i = 0; i < 5; i = i + 1) {
 		sf::Sprite sprite;
-		sprite.setTexture(*TextureStorage::get()->get(res[i]));
+		sprite.setTexture(*TextureStorage::get()->get(res[i] + "_icon"));
 		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 5, rect.getPosition().y));
 		target.draw(sprite, states);
 

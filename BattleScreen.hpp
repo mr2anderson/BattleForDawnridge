@@ -18,12 +18,11 @@
 
 
 #include "Playlist.hpp"
-#include "Plant.hpp"
-#include "Tree.hpp"
-#include "Mountain.hpp"
-#include "RedMountain.hpp"
-#include "Fort.hpp"
-#include "Caravan.hpp"
+#include "Forest.hpp"
+#include "Stone.hpp"
+#include "Iron.hpp"
+#include "Castle.hpp"
+#include "Market.hpp"
 #include "Windmill.hpp"
 #include "Sawmill.hpp"
 #include "Quarry.hpp"

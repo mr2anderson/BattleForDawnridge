@@ -30,7 +30,7 @@ void MessageWindow::run(uint32_t windowW, uint32_t windowH) {
 	uint32_t buttonW = 50;
 	uint32_t buttonH = 28;
 	this->label = Label((windowW - w) / 2, (windowH - h) / 2, w, h, message, 16);
-	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 5, buttonW, buttonH, L"OK", 18);
+	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 10, buttonW, buttonH, L"OK", 16);
 }
 void MessageWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);

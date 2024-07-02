@@ -74,14 +74,19 @@ void Building::upgrade(uint32_t t) {
 	this->upgradeMovesLeft = t;
 }
 void Building::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {
+	std::string s;
+	while (s.size() < this->getCurrentLevel()) {
+		s = s + "#";
+	}
+
 	sf::Text text;
 	text.setFont(*FontStorage::get()->get("1"));
-	text.setString("L" + std::to_string(this->getCurrentLevel()));
+	text.setString(s);
 	text.setCharacterSize(12);
-	text.setFillColor(sf::Color::Yellow);
+	text.setFillColor(sf::Color(75, 0, 130));
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(64 * this->getX() + 64 - text.getLocalBounds().width, 64 * this->getY() + 64 / 4);
+	text.setPosition(64 * this->getX(), 64 * this->getY());
 	target.draw(text, states);
 }
 void Building::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -93,7 +98,7 @@ void Building::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) 
 
 	sf::Sprite sprite;
 	sprite.setScale(0.5, 0.5);
-	sprite.setTexture(*TextureStorage::get()->get("upgrade"));
+	sprite.setTexture(*TextureStorage::get()->get("upgrade_icon"));
 	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
 	target.draw(sprite, states);
 

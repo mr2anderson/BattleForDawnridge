@@ -23,8 +23,5 @@
 #pragma once
 
 
-static const sf::Color BACKGROUND_COLOR = sf::Color(10, 10, 10);
-static const sf::Color UI_COLOR = sf::Color(0, 0, 0, 150);
-static const sf::Color CELL_COLOR = sf::Color(0, 0, 0, 50);
-static const sf::Color CELL_COLOR_HIGHLIGHTED_LIGHT = sf::Color(64, 16, 56);
-static const sf::Color CELL_COLOR_HIGHLIGHTED_DARK = sf::Color(51, 12, 44);
+static const sf::Color UI_COLOR = sf::Color(10, 10, 10);
+static const sf::Color CELL_COLOR_HIGHLIGHTED = sf::Color(0, 0, 0, 120);

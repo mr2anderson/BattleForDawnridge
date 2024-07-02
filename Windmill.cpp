@@ -22,8 +22,8 @@
 
 
 const Resources Windmill::UPGRADE_COSTS[Windmill::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 4000}}),
-	Resources({{"wood", 4000}}),
+	Resources({{"wood", 5000}}),
+	Resources({{"wood", 5000}}),
 };
 const uint32_t Windmill::UPGRADE_MOVES[Windmill::TOTAL_LEVELS - 1] = {
 	2,
@@ -32,6 +32,11 @@ const uint32_t Windmill::UPGRADE_MOVES[Windmill::TOTAL_LEVELS - 1] = {
 const float Windmill::LEVEL_BONUS[Windmill::TOTAL_LEVELS] = {
 	1,
 	1.5,
+	2
+};
+const uint32_t Windmill::LEVEL_RADIUS_BONUS[Windmill::TOTAL_LEVELS]{
+	0,
+	1,
 	2
 };
 
@@ -49,10 +54,10 @@ std::string Windmill::getTextureName() const {
 	return "windmill";
 }
 std::wstring Windmill::getIsNotBuiltYetStr() const {
-	return L"Мельница еще не построена\nДождитесь конца строительства.";
+	return L"МЕЛЬНИЦА ЕЩЕ НЕ ПОСТРОЕНА\nДождитесь конца строительства.";
 }
 std::wstring Windmill::getBuildingFinishedStr() const {
-	return L"Мельница построена!\nБлагодаря Вашим рабочим, мельница уже начинает добывать первую еду.";
+	return L"МЕЛЬНИЦА ПОСТРОЕНА\nБлагодаря Вашим рабочим, мельница уже начинает добывать первую еду.";
 }
 std::string Windmill::getNewWindowSoundName() const {
 	return "leaves";
@@ -64,22 +69,22 @@ uint32_t Windmill::getResourceNPerMove() const {
 	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
 }
 uint32_t Windmill::getRadius() const {
-	return 5;
+	return 5 + LEVEL_RADIUS_BONUS[this->getCurrentLevel() - 1];
 }
 std::wstring Windmill::getDescription() const {
-	return L"Мельницы обеспечивают Ваш город едой, необходимой для содержания солдат.";
+	return L"Мельницы обеспечивают Ваш город едой, необходимой для содержания солдат. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
 }
 std::wstring Windmill::getResourcesOverStr() const {
-	return L"Растения закончились!\nОдна из Ваших мельниц прекращает работу.";
+	return L"РАСТЕНИЯ ЗАКОНЧИЛИСЬ\nОдна из Ваших мельниц прекращает работу.";
 }
 std::wstring Windmill::getUpgradeStartDescription() const {
-	return L"Начато улучшение мельницы\nСбор еды был приостановлен.";
+	return L"НАЧАТО УЛУЧШЕНИЕ МЕЛЬНИЦЫ\nСбор еды был приостановлен.";
 }
 std::wstring Windmill::getUpgradeFinishDescription() const {
-	return L"Улучшение мельницы завершено!\nСбор еды возобновлен.";
+	return L"УЛУЧШЕНИЕ МЕЛЬНИЦЫ ЗАВЕРШЕНО\nСбор еды возобновлен.";
 }
 std::wstring Windmill::getBusyWithUpgradingDescription() const {
-	return L"Мельница не доступна\nПодождите, пока будет завершено улучшение.";
+	return L"МЕЛЬНИЦА НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
 }
 uint32_t Windmill::getMaxLevel() const {
 	return TOTAL_LEVELS;

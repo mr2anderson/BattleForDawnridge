@@ -31,16 +31,14 @@ void LoadingScreen::run(sf::RenderWindow &window) {
 	this->loadAll();
 }
 void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
-	window.clear(BACKGROUND_COLOR);
+	window.clear(UI_COLOR);
 	window.display();
 }
 void LoadingScreen::loadBase() {
-	TextureStorage::get()->add("logotype0", "images/logotype/Plant Wind 1_00000.png");
 	FontStorage::get()->add("1", "/fonts/1.ttf");
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Text text;
-	sf::Sprite sprite;
 
 	text.setFont(*FontStorage::get()->get("1"));
 	text.setString(L"Пожалуйста, подождите");
@@ -50,45 +48,16 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	text.setOutlineThickness(2);
 	text.setPosition((window.getSize().x - text.getLocalBounds().width) / 2, window.getSize().y - text.getLocalBounds().height - 50);
 
-	sprite.setTexture(*TextureStorage::get()->get("logotype0"));
-	sprite.setPosition((window.getSize().x - sprite.getLocalBounds().width) / 2, text.getPosition().y - sprite.getLocalBounds().height - 20);
-
-	window.clear(BACKGROUND_COLOR);
+	window.clear(UI_COLOR);
 	window.draw(text);
-	window.draw(sprite);
 	window.display();
 }
 void LoadingScreen::loadAll() {
-	for (uint32_t i = 1; i < 30; i = i + 1) {
-		std::string s = std::to_string(i);
-		while (s.size() < 5) {
-			s = ("0" + s);
-		}
-		TextureStorage::get()->add("logotype" + std::to_string(i), "images/logotype/Plant Wind 1_" + s + ".png");
-	}
-	for (uint32_t i = 0; i < Plant::TOTAL_TYPES; i = i + 1) {
-		for (uint32_t j = 0; j < Plant::ANIMATION_N[i]; j = j + 1) {
-			std::string s = std::to_string(j);
-			while (s.size() < 5) {
-				s = ("0" + s);
-			}
-			TextureStorage::get()->add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/gameObjects/resourcePoints/plants/" + Plant::PLANT_NAMES[i] + "_" + s + ".png");
-		}
-	}
-	for (uint32_t i = 0; i < Tree::TOTAL_TYPES; i = i + 1) {
-		TextureStorage::get()->add("tree" + std::to_string(i), "images/gameObjects/resourcePoints/trees/" + std::to_string(i) + ".png");
-	}
-	for (uint32_t i = 0; i < Mountain::TOTAL_TYPES; i = i + 1) {
-		TextureStorage::get()->add("mountain" + std::to_string(i), "images/gameObjects/resourcePoints/mountains/" + std::to_string(i) + ".png");
-	}
-	for (uint32_t i = 0; i < RedMountain::TOTAL_TYPES; i = i + 1) {
-		TextureStorage::get()->add("redMountain" + std::to_string(i), "images/gameObjects/resourcePoints/redMountains/" + std::to_string(i) + ".png");
-	}
-	for (const std::string& a : { "fort", "caravan", "mine", "quarry", "sawmill", "windmill"}) {
-		TextureStorage::get()->add(a, "images/gameObjects/units/buildings/" + a + ".png");
-	}
-	for (const std::string& a : { "food", "wood", "stone", "iron", "gold", "exit", "upgrade"}) {
-		TextureStorage::get()->add(a, "images/icons/" + a + ".png");
+	for (const std::string& a : { 
+		"castle", "cell", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
+		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
+		"windmill", "wood_icon", "iron_icon"}) {
+		TextureStorage::get()->add(a, "images/" + a + ".png");
 	}
 	for (const std::string& a : { "click", "newMove", "leaves", "sawmill", "quarry", "mine", "hooray", "horse"}) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".ogg");

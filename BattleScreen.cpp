@@ -79,14 +79,12 @@ void BattleScreen::initLandscape() {
 	this->units.clear();
 	this->resourcePoints.clear();
 
-	this->pushResourcePoint(new Plant(4, 4));
-	this->pushResourcePoint(new Plant(4, 5));
-	this->pushResourcePoint(new Tree(1, 3));
-	this->pushResourcePoint(new Tree(1, 4));
-	this->pushResourcePoint(new Mountain(2, 3));
-	this->pushResourcePoint(new Mountain(2, 4));
-	this->pushResourcePoint(new RedMountain(3, 3));
-	this->pushResourcePoint(new RedMountain(3, 4));
+	this->pushResourcePoint(new Forest(1, 3));
+	this->pushResourcePoint(new Forest(1, 4));
+	this->pushResourcePoint(new Stone(2, 3));
+	this->pushResourcePoint(new Stone(2, 4));
+	this->pushResourcePoint(new Iron(3, 3));
+	this->pushResourcePoint(new Iron(3, 4));
 }
 void BattleScreen::removeOldPopUpWindows() {
 	while (!this->popUpWindows.empty()) {
@@ -98,14 +96,13 @@ void BattleScreen::removeOldPopUpWindows() {
 void BattleScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
-	this->pushUnit(new Fort(1, 1, &this->players[0]));
-	this->pushUnit(new Caravan(1, 2, &this->players[0]));
-	this->pushUnit(new Caravan(2, 1, &this->players[0]));
+	this->pushUnit(new Castle(1, 1, &this->players[0]));
+	this->pushUnit(new Market(1, 2, &this->players[0]));
 	this->pushUnit(new Windmill(2, 2, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Sawmill(3, 2, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Quarry(4, 2, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Mine(5, 2, &this->players[0], &this->resourcePoints));
-	this->pushUnit(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
+	this->pushUnit(new Castle(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
 }
 void BattleScreen::initMoveCtr() {
 	this->move = 1;
@@ -137,7 +134,7 @@ void BattleScreen::handleTryToAttackEvent(const GameEvent& event) {
 }
 void BattleScreen::handleTryToTradeEvent(const GameEvent& event) {
 	for (const auto& a : event.tryToTrade) {
-		Caravan* caravan = std::get<Caravan*>(a);
+		Market* caravan = std::get<Market*>(a);
 		Trade trade = std::get<Trade>(a);
 		if (this->getCurrentPlayer()->getResource(trade.sell.type) >= trade.sell.n) {
 			GameObjectResponse response = caravan->doTrade(trade);
@@ -147,7 +144,7 @@ void BattleScreen::handleTryToTradeEvent(const GameEvent& event) {
 			this->addPopUpWindows(response.popUpWindows);
 		}
 		else {
-			MessageWindow* window = new MessageWindow("click", "click", L"Недостаточно ресурсов\nВы не можете совершить эту сделку.");
+			MessageWindow* window = new MessageWindow("click", "click", L"НЕДОСТАТОЧНО РЕСУРСОВ\nВы не можете совершить эту сделку.");
 			this->popUpWindows.push(window);
 			if (this->popUpWindows.size() == 1) {
 				this->popUpWindows.front()->run(this->windowW, this->windowH);
@@ -217,7 +214,7 @@ void BattleScreen::handleTryToUpgradeEvent(const GameEvent& event) {
 			this->addPopUpWindows(response.popUpWindows);
 		}
 		else {
-			MessageWindow* window = new MessageWindow("click", "click", L"Недостаточно ресурсов\nВы не можете улучшить это здание.");
+			MessageWindow* window = new MessageWindow("click", "click", L"НЕДОСТАТОЧНО РЕСУРСОВ\nВы не можете улучшить это здание.");
 			this->popUpWindows.push(window);
 			if (this->popUpWindows.size() == 1) {
 				this->popUpWindows.front()->run(this->windowW, this->windowH);
@@ -280,7 +277,7 @@ void BattleScreen::prepareReturnToMenu(sf::RenderWindow &window) {
 	Playlist::get()->restartMusic();
 }
 void BattleScreen::drawEverything(sf::RenderWindow& window) {
-	window.clear(BACKGROUND_COLOR);
+	window.clear();
 	window.setView(this->view);
 	this->drawCells(window);
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
@@ -296,23 +293,16 @@ void BattleScreen::drawEverything(sf::RenderWindow& window) {
 void BattleScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < this->mapWidth; i = i + 1) {
 		for (uint32_t j = 0; j < this->mapHeight; j = j + 1) {
-			sf::RectangleShape rect;
-			rect.setPosition(sf::Vector2f(64 * i, 64 * j));
-			rect.setSize(sf::Vector2f(64, 64));
-			if ((i + j) % 2 == 0) {
-				if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
-					rect.setFillColor(CELL_COLOR_HIGHLIGHTED_DARK);
-				}
-				else {
-					rect.setFillColor(CELL_COLOR);
-				}
+			sf::Sprite sprite;
+			sprite.setTexture(*TextureStorage::get()->get("cell"));
+			sprite.setPosition(64 * i, 64 * j);
+			window.draw(sprite);
+			if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
+				sf::RectangleShape rect;
+				rect.setPosition(sprite.getPosition());
+				rect.setSize(sf::Vector2f(64, 64));
+				rect.setFillColor(CELL_COLOR_HIGHLIGHTED);
 				window.draw(rect);
-			}
-			else {
-				if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
-					rect.setFillColor(CELL_COLOR_HIGHLIGHTED_LIGHT);
-					window.draw(rect);
-				}
 			}
 		}
 	}

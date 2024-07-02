@@ -724,16 +724,13 @@
     <ClInclude Include="ResourcePoint.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Plant.hpp">
+    <ClInclude Include="Forest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tree.hpp">
+    <ClInclude Include="Stone.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mountain.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RedMountain.hpp">
+    <ClInclude Include="Iron.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Unit.hpp">
@@ -742,13 +739,13 @@
     <ClInclude Include="Building.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Fort.hpp">
+    <ClInclude Include="Castle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Caravan.hpp">
+    <ClInclude Include="Market.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Trade.hpp">
@@ -773,6 +770,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sawmill.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -859,16 +859,13 @@
     <ClCompile Include="ResourcePoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Plant.cpp">
+    <ClCompile Include="Forest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp">
+    <ClCompile Include="Stone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mountain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RedMountain.cpp">
+    <ClCompile Include="Iron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
@@ -877,13 +874,13 @@
     <ClCompile Include="Building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Fort.cpp">
+    <ClCompile Include="Castle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Caravan.cpp">
+    <ClCompile Include="Market.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource.cpp">
@@ -908,6 +905,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sawmill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
