@@ -101,7 +101,10 @@ void BattleScreen::initPlayers() {
 	this->pushUnit(new Fort(1, 1, &this->players[0]));
 	this->pushUnit(new Caravan(1, 2, &this->players[0]));
 	this->pushUnit(new Caravan(2, 1, &this->players[0]));
-	this->pushUnit(new Mine(2, 2, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Windmill(2, 2, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Sawmill(3, 2, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Quarry(4, 2, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Mine(5, 2, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Fort(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
 }
 void BattleScreen::initMoveCtr() {

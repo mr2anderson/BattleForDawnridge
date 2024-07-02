@@ -24,6 +24,9 @@
 #include "RedMountain.hpp"
 #include "Fort.hpp"
 #include "Caravan.hpp"
+#include "Windmill.hpp"
+#include "Sawmill.hpp"
+#include "Quarry.hpp"
 #include "Mine.hpp"
 
 

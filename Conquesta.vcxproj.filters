@@ -766,6 +766,15 @@
     <ClInclude Include="Mine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Windmill.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Quarry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sawmill.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -890,6 +899,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Windmill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Quarry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sawmill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
