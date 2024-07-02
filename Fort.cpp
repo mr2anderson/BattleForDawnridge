@@ -28,6 +28,18 @@ GameObjectResponse Fort::newMove(const Player& player, uint32_t windowW, uint32_
 	}
 	return GameObjectResponse();
 }
+GameObjectResponse Fort::getSelectWindow() const {
+	GameObjectResponse response;
+
+	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
+	data.emplace_back("exit", L"Покинуть", true, GameEvent());
+	data.emplace_back("fort", L"Замок — сердце города. Разгром замка приведет к поражению. Защищайте его любой ценой.", false, GameEvent());
+
+	SelectWindow* window = new SelectWindow("hooray", "click", data);
+	response.popUpWindows.push(window);
+
+	return response;
+}
 uint32_t Fort::getRegenerationSpeed() const {
 	return 10000;
 }
@@ -36,13 +48,7 @@ std::string Fort::getTextureName() const {
 }
 GameObjectResponse Fort::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	if (this->belongTo(&player)) {
-		GameObjectResponse response;
-		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-		data.emplace_back("exit", L"Покинуть", true, GameEvent());
-		data.emplace_back("fort", L"Замок — сердце города. Разгром замка приведет к поражению. Защищайте его любой ценой.", false, GameEvent());
-		SelectWindow* window = new SelectWindow("hooray", "click", data);
-		response.popUpWindows.push(window);
-		return response;
+		return this->getSelectWindow();
 	}
 	return this->getUnitOfEnemyResponse();
 }

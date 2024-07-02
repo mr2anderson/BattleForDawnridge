@@ -23,3 +23,20 @@
 GameObjectResponse::GameObjectResponse() {
 	this->gameEvent = std::nullopt;
 }
+GameObjectResponse operator+(const GameObjectResponse& a, const GameObjectResponse& b) {
+	GameObjectResponse c = a;
+	if (b.gameEvent.has_value()) {
+		if (c.gameEvent.has_value()) {
+			c.gameEvent = c.gameEvent.value() + b.gameEvent.value();
+		}
+		else {
+			c.gameEvent = b.gameEvent.value();
+		}
+	}
+	std::queue<PopUpWindow*> windows = b.popUpWindows;
+	while (!windows.empty()) {
+		c.popUpWindows.push(windows.front());
+		windows.pop();
+	}
+	return c;
+}

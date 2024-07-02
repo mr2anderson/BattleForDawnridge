@@ -24,37 +24,19 @@ Caravan::Caravan(uint32_t x, uint32_t y, const Player *playerPtr) : HpSensitiveB
 void Caravan::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Building::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
-		sf::RectangleShape rect;
-		rect.setFillColor(UI_COLOR);
-		rect.setSize(sf::Vector2f(64, 64 / 2));
-		rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
-		target.draw(rect, states);
-
-		sf::Sprite sprite;
-		sprite.setScale(0.5, 0.5);
-		sprite.setTexture(*TextureStorage::get()->get(this->currentTrade.buy.type));
-		sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
-		target.draw(sprite, states);
-
-		sf::Text text;
-		text.setFont(*FontStorage::get()->get("1"));
-		text.setString(std::to_string(this->currentTrade.movesLeft));
-		text.setCharacterSize(25);
-		text.setFillColor(sf::Color::White);
-		text.setOutlineColor(sf::Color::Black);
-		text.setOutlineThickness(1);
-		text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 / 2);
-		target.draw(text, states);
+		this->drawCurrentTradeShortInfo(target, states);
 	}
 }
 GameObjectResponse Caravan::doTrade(const Trade& trade) {
-	assert(this->works() and !this->busy() and this->exist());
 	this->currentTrade = trade;
+
 	GameObjectResponse response;
 	response.gameEvent = GameEvent();
 	response.gameEvent.value().startTrade.push_back(trade.sell);
+
 	MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", L"Сделка начата!\nВаши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:\n" + trade.getReadableInfo());
 	response.popUpWindows.push(window);
+
 	return response;
 }
 GameObjectResponse Caravan::newMove(const Player& currentPlayer, uint32_t windowW, uint32_t windowH) {
@@ -66,6 +48,15 @@ GameObjectResponse Caravan::newMove(const Player& currentPlayer, uint32_t window
 	if (!this->works() or !this->busy()) {
 		return response;
 	}
+
+	response = response + this->currentTradeNewMove();
+
+	return response;
+}
+GameObjectResponse Caravan::currentTradeNewMove() {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 	if (this->currentTrade.movesLeft == 0) {
 		if (!response.gameEvent.has_value()) {
@@ -75,7 +66,70 @@ GameObjectResponse Caravan::newMove(const Player& currentPlayer, uint32_t window
 		MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", L"Сделка окончена!\nРесурсы были получены. Детали сделки:\n" + this->currentTrade.getReadableInfo());
 		response.popUpWindows.push(window);
 	}
+
 	return response;
+}
+bool Caravan::busy() const {
+	return this->currentTrade.movesLeft != 0;
+}
+GameObjectResponse Caravan::getSelectWindow() {
+	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
+	data.emplace_back("exit", L"Покинуть", true, GameEvent());
+	data.emplace_back("caravan", L"Караваны позволяют обменивать ресурсы.", false, GameEvent());
+
+	GameEvent gameEventTrade;
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("food", 100000), 5));
+	data.emplace_back("food", L"Купить 100k еды за 1k золота (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("wood", 100000), 5));
+	data.emplace_back("wood", L"Купить 100k древесины за 1k золота (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("stone", 20000), 5));
+	data.emplace_back("stone", L"Купить 20k камня за 1k золота (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("iron", 20000), 5));
+	data.emplace_back("iron", L"Купить 20k железа за 1k золота (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("food", 100000), Resource("gold", 1000), 5));
+	data.emplace_back("gold", L"Купить 1000 золота за 100k еды (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("wood", 100000), Resource("gold", 1000), 5));
+	data.emplace_back("gold", L"Купить 1000 золота за 100k дерева (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("stone", 20000), Resource("gold", 1000), 5));
+	data.emplace_back("gold", L"Купить 1000 золота за 20k камня (5 ходов)", true, gameEventTrade);
+
+	gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("iron", 20000), Resource("gold", 1000), 5));
+	data.emplace_back("gold", L"Купить 1000 золота за 20k железа (5 ходов)", true, gameEventTrade);
+
+	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
+	GameObjectResponse response;
+	response.popUpWindows.push(window);
+	return response;
+}
+void Caravan::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
+	sf::RectangleShape rect;
+	rect.setFillColor(UI_COLOR);
+	rect.setSize(sf::Vector2f(64, 64 / 2));
+	rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	target.draw(rect, states);
+
+	sf::Sprite sprite;
+	sprite.setScale(0.5, 0.5);
+	sprite.setTexture(*TextureStorage::get()->get(this->currentTrade.buy.type));
+	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	target.draw(sprite, states);
+
+	sf::Text text;
+	text.setFont(*FontStorage::get()->get("1"));
+	text.setString(std::to_string(this->currentTrade.movesLeft));
+	text.setCharacterSize(25);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(1);
+	text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 / 2);
+	target.draw(text, states);
 }
 uint32_t Caravan::getRegenerationSpeed() const {
 	return 2000;
@@ -92,9 +146,6 @@ std::wstring Caravan::getIsNotBuiltYetStr() const {
 std::string Caravan::getTextureName() const {
 	return "caravan";
 }
-bool Caravan::busy() const {
-	return this->currentTrade.movesLeft != 0;
-}
 GameObjectResponse Caravan::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	if (!this->exist()) {
 		return GameObjectResponse();
@@ -109,39 +160,7 @@ GameObjectResponse Caravan::getGameObjectResponse(const Player& player, uint32_t
 			response.popUpWindows.push(window);
 			return response;
 		}
-		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-		data.emplace_back("exit", L"Покинуть", true, GameEvent());
-		data.emplace_back("caravan", L"Караваны позволяют обменивать ресурсы.", false, GameEvent());
-		GameEvent gameEventTrade;
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("food", 100000), 5));
-		data.emplace_back("food", L"Купить 100k еды за 1k золота (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("wood", 100000), 5));
-		data.emplace_back("wood", L"Купить 100k древесины за 1k золота (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("stone", 20000), 5));
-		data.emplace_back("stone", L"Купить 20k камня за 1k золота (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("gold", 1000), Resource("iron", 20000), 5));
-		data.emplace_back("iron", L"Купить 20k железа за 1k золота (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("food", 100000), Resource("gold", 1000), 5));
-		data.emplace_back("gold", L"Купить 1000 золота за 100k еды (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("wood", 100000), Resource("gold", 1000), 5));
-		data.emplace_back("gold", L"Купить 1000 золота за 100k дерева (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("stone", 20000), Resource("gold", 1000), 5));
-		data.emplace_back("gold", L"Купить 1000 золота за 20k камня (5 ходов)", true, gameEventTrade);
-
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource("iron", 20000), Resource("gold", 1000), 5));
-		data.emplace_back("gold", L"Купить 1000 золота за 20k железа (5 ходов)", true, gameEventTrade);
-
-		SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
-		GameObjectResponse response;
-		response.popUpWindows.push(window);
-		return response;
+		return this->getSelectWindow();
 	}
 	return this->getUnitOfEnemyResponse();
 }

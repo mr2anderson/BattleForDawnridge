@@ -17,7 +17,6 @@
  */
 
 
-#include <cassert>
 #include "HpSensitiveBuilding.hpp"
 #include "Trade.hpp"
 #include "SelectWindow.hpp"
@@ -35,11 +34,16 @@ public:
 private:
 	Trade currentTrade;
 
+	GameObjectResponse currentTradeNewMove();
+	bool busy() const;
+	GameObjectResponse getSelectWindow();
+	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
+
 	uint32_t getRegenerationSpeed() const override;
 	std::string getNewWindowSoundName() const override;
 	std::wstring getBuildingFinishedStr() const override;
 	std::wstring getIsNotBuiltYetStr() const override;
 	std::string getTextureName() const override;
-	bool busy() const;
+
 	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 };

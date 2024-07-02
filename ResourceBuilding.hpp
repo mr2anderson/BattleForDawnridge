@@ -38,6 +38,10 @@ private:
 	const std::vector<ResourcePoint*>* resourcePointsPtr;
 	bool resourcesLeft;
 
+	GameObjectResponse collectResources();
+	GameObjectResponse highlightArea() const;
+	GameObjectResponse getSelectWindow(const GameEvent& highlightEvent) const;
+
 	GameObjectResponse getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) override;
 	bool inRadius(ResourcePoint* rp) const;
 };

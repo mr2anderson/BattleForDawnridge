@@ -29,25 +29,65 @@ GameObjectResponse ResourceBuilding::newMove(const Player& currentPlayer, uint32
 	if (this->belongTo(&currentPlayer) and this->exist()) {
 		GameObjectResponse response = this->processRegeneration();
 		if (this->works() and this->resourcesLeft) {
-			response.gameEvent = GameEvent();
-			uint32_t left = this->getResourceNPerMove();
-			for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
-				ResourcePoint* rp = this->resourcePointsPtr->at(i);
-				if (rp->getResourceType() == this->getResourceType() and this->inRadius(rp)) {
-					uint32_t got = std::min(left, rp->getHP());
-					left = left - got;
-					response.gameEvent.value().collect.emplace_back(rp, got);
-				}
-			}
-			if (left > 0) {
-				this->resourcesLeft = false;
-				MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", this->getResourcesOverStr());
-				response.popUpWindows.push(window);
-			}
+			response = response + this->collectResources();
 		}
 		return response;
 	}
 	return GameObjectResponse();
+}
+GameObjectResponse ResourceBuilding::collectResources() {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+	uint32_t left = this->getResourceNPerMove();
+	for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
+		ResourcePoint* rp = this->resourcePointsPtr->at(i);
+		if (rp->getResourceType() == this->getResourceType() and this->inRadius(rp)) {
+			uint32_t got = std::min(left, rp->getHP());
+			left = left - got;
+			response.gameEvent.value().collect.emplace_back(rp, got);
+		}
+	}
+	if (left > 0) {
+		this->resourcesLeft = false;
+		MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", this->getResourcesOverStr());
+		response.popUpWindows.push(window);
+	}
+	return response;
+}
+GameObjectResponse ResourceBuilding::highlightArea() const {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+
+	uint32_t x1 = this->getX() + this->getRadius();
+	uint32_t y1 = this->getY() + this->getRadius();
+	uint32_t x2 = 0;
+	uint32_t y2 = 0;
+	if (this->getX() > this->getRadius()) {
+		x2 = this->getX() - this->getRadius();
+	}
+	if (this->getY() > this->getRadius()) {
+		y2 = this->getY() - this->getRadius();
+	}
+
+	for (uint32_t x = x2; x <= x1; x = x + 1) {
+		for (uint32_t y = y2; y <= y1; y = y + 1) {
+			response.gameEvent.value().changeHighlight.emplace_back(this, x, y);
+		}
+	}
+
+	return response;
+}
+GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightEvent) const {
+	GameObjectResponse response;
+
+	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
+	data.emplace_back("exit", L"Вернуться", true, highlightEvent);
+	data.emplace_back(this->getTextureName(), this->getDescription(), false, GameEvent());
+
+	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
+	response.popUpWindows.push(window);
+
+	return response;
 }
 GameObjectResponse ResourceBuilding::getGameObjectResponse(const Player& player, uint32_t windowW, uint32_t windowH) {
 	if (!this->exist()) {
@@ -57,31 +97,8 @@ GameObjectResponse ResourceBuilding::getGameObjectResponse(const Player& player,
 		if (!this->works()) {
 			return this->handleDoesNotWork();
 		}
-		GameObjectResponse response;
-		
-		response.gameEvent = GameEvent();
-		uint32_t x1 = this->getX() + this->getRadius();
-		uint32_t y1 = this->getY() + this->getRadius();
-		uint32_t x2 = 0;
-		uint32_t y2 = 0;
-		if (this->getX() > this->getRadius()) {
-			x2 = this->getX() - this->getRadius();
-		}
-		if (this->getY() > this->getRadius()) {
-			y2 = this->getY() - this->getRadius();
-		}
-		for (uint32_t x = x2; x <= x1; x = x + 1) {
-			for (uint32_t y = y2; y <= y1; y = y + 1) {
-				response.gameEvent.value().changeHighlight.emplace_back(this, x, y);
-			}
-		}
-
-		std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-		data.emplace_back("exit", L"Вернуться", true, response.gameEvent.value());
-		data.emplace_back(this->getTextureName(), this->getDescription(), false, GameEvent());
-		SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
-		response.popUpWindows.push(window);
-
+		GameObjectResponse response = this->highlightArea();
+		response = response + this->getSelectWindow(response.gameEvent.value());
 		return response;
 	}
 	return this->getUnitOfEnemyResponse();

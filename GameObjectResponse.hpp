@@ -27,6 +27,7 @@
 
 struct GameObjectResponse {
 	GameObjectResponse();
+	friend GameObjectResponse operator+(const GameObjectResponse& a, const GameObjectResponse& b);
 	std::optional<GameEvent> gameEvent;
 	std::queue<PopUpWindow*> popUpWindows;
 };
