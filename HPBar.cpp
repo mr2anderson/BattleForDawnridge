@@ -52,7 +52,7 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 	sf::Text text;
 	text.setFont(*FontStorage::get()->get("1"));
-	text.setCharacterSize(10);
+	text.setCharacterSize(12);
 	text.setString(std::to_string(this->current));
 	text.setFillColor(sf::Color(red, green, blue));
 	text.setPosition(sf::Vector2f(posX + 64 - text.getLocalBounds().width, posY + rect1.getSize().y + 1));
