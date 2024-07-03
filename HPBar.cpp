@@ -22,16 +22,18 @@
 
 
 HPBar::HPBar() = default;
-HPBar::HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y) {
+HPBar::HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->current = current;
 	this->max = max;
 	this->x = x;
 	this->y = y;
+	this->sx = sx;
+	this->sy = sy;
 }
 void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t size = (64 - 8) * this->current / this->max;
+	uint32_t size = (64 / 4 * this->sy - 8) * this->current / this->max;
 
-	uint32_t posX = 64 * this->x + 64 - 4 - 2;
+	uint32_t posX = 64 * this->x + 4;
 	uint32_t posY = 64 * this->y + 4;
 	
 	uint32_t red = 255 - 255 * this->current / this->max;
@@ -43,11 +45,11 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	rect1.setFillColor(sf::Color::Black);
 	rect1.setOutlineColor(sf::Color::Black);
 	rect1.setOutlineThickness(1);
-	rect1.setSize(sf::Vector2f(2, 64 - 8));
+	rect1.setSize(sf::Vector2f(2, 64 / 4 * this->sy - 8));
 	target.draw(rect1);
 
 	sf::RectangleShape rect2;
-	rect2.setPosition(sf::Vector2f(posX, posY) + sf::Vector2f(0, 64 - 8 - size));
+	rect2.setPosition(sf::Vector2f(posX, posY) + sf::Vector2f(0, 64 / 4 * this->sy - 8 - size));
 	rect2.setFillColor(sf::Color(red, green, blue));
 	rect2.setSize(sf::Vector2f(2, size));
 	target.draw(rect2, states);
@@ -63,6 +65,12 @@ uint32_t HPBar::getX() const {
 }
 uint32_t HPBar::getY() const {
 	return this->y;
+}
+uint32_t HPBar::getSX() const {
+	return this->sx;
+}
+uint32_t HPBar::getSY() const {
+	return this->sy;
 }
 void HPBar::changeCurrent(uint32_t newCurrent) {
 	this->current = std::min(this->max, newCurrent);

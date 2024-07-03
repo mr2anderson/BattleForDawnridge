@@ -20,7 +20,7 @@
 #include "ResourceBuilding.hpp"
 
 
-ResourceBuilding::ResourceBuilding(uint32_t x, uint32_t y, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : HpSensitiveBuilding(x, y, maxHp, false, playerPtr) {
+ResourceBuilding::ResourceBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : HpSensitiveBuilding(x, y, sx, sy, maxHp, false, playerPtr) {
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }
@@ -73,15 +73,26 @@ GameObjectResponse ResourceBuilding::highlightArea() const {
 	GameObjectResponse response;
 	response.gameEvent = GameEvent();
 
-	uint32_t x1 = this->getX() + this->getRadius();
-	uint32_t y1 = this->getY() + this->getRadius();
-	uint32_t x2 = 0;
-	uint32_t y2 = 0;
+	uint32_t x1, y1;
+	uint32_t x2, y2;
+	std::tie(x1, y1) = this->getCenter();
+	std::tie(x2, y2) = std::make_tuple(x1, y1);
+
+	x1 = x1 + this->getRadius();
+	y1 = y1 + this->getRadius();
+	
 	if (this->getX() > this->getRadius()) {
 		x2 = this->getX() - this->getRadius();
 	}
+	else {
+		x2 = 0;
+	}
+
 	if (this->getY() > this->getRadius()) {
 		y2 = this->getY() - this->getRadius();
+	}
+	else {
+		y2 = 0;
 	}
 
 	for (uint32_t x = x2; x <= x1; x = x + 1) {
@@ -128,14 +139,28 @@ GameObjectResponse ResourceBuilding::getGameObjectResponse(const Player& player)
 	return this->getUnitOfEnemyResponse();
 }
 bool ResourceBuilding::inRadius(ResourcePoint* rp) const {
-	uint32_t x1 = this->getX();
-	uint32_t y1 = this->getY();
+	uint32_t x1, y1;
+	std::tie(x1, y1) = this->getCenter();
 
-	uint32_t x2 = rp->getX();
-	uint32_t y2 = rp->getY();
+	uint32_t x2_1 = rp->getX();
+	uint32_t y2_1 = rp->getY();
 
-	uint32_t dx = std::max(x1, x2) - std::min(x1, x2);
-	uint32_t dy = std::max(y1, y2) - std::min(y1, y2);
+	uint32_t x2_2 = rp->getX() + rp->getSX() - 1;
+	uint32_t y2_2 = rp->getY() + rp->getSY() - 1;
+
+	uint32_t dx_1 = std::max(x1, x2_1) - std::min(x1, x2_1);
+	uint32_t dy_1 = std::max(y1, y2_1) - std::min(y1, y2_1);
+
+	uint32_t dx_2 = std::max(x1, x2_2) - std::min(x1, x2_2);
+	uint32_t dy_2 = std::max(y1, y2_2) - std::min(y1, y2_2);
+
+	uint32_t dx = std::max(dx_1, dx_2);
+	uint32_t dy = std::max(dy_1, dy_2);
 
 	return (dx <= this->getRadius() and dy <= this->getRadius());
+}
+std::tuple<uint32_t, uint32_t> ResourceBuilding::getCenter() const {
+	uint32_t x1 = this->getX() + (this->getSX() - 1) / 2;
+	uint32_t y1 = this->getY() + (this->getSY() - 1) / 2;
+	return std::make_tuple(x1, y1);
 }

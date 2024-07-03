@@ -41,7 +41,7 @@ const uint32_t Quarry::LEVEL_RADIUS_BONUS[Quarry::TOTAL_LEVELS]{
 };
 
 
-Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
+Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Quarry::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

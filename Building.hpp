@@ -26,7 +26,7 @@
 
 class Building : public Unit {
 public:
-	Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player *playerPtr);
+	Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player *playerPtr);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	virtual GameObjectResponse upgrade() = 0;
 	virtual Resources getCost() const = 0;

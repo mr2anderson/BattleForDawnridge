@@ -79,12 +79,17 @@ void BattleScreen::initLandscape() {
 	this->units.clear();
 	this->resourcePoints.clear();
 
-	this->pushResourcePoint(new Forest(1, 3));
-	this->pushResourcePoint(new Forest(1, 4));
-	this->pushResourcePoint(new Stone(2, 3));
-	this->pushResourcePoint(new Stone(2, 4));
-	this->pushResourcePoint(new Iron(3, 3));
-	this->pushResourcePoint(new Iron(3, 4));
+	this->pushResourcePoint(new Forest(6, 2));
+	this->pushResourcePoint(new Forest(7, 2));
+	this->pushResourcePoint(new Forest(6, 3));
+	this->pushResourcePoint(new Forest(9, 4));
+	this->pushResourcePoint(new Stone(9, 1));
+	this->pushResourcePoint(new Stone(10, 1));
+	this->pushResourcePoint(new Stone(9, 2));
+	this->pushResourcePoint(new Stone(12, 3));
+	this->pushResourcePoint(new Iron(5, 13));
+	this->pushResourcePoint(new Iron(5, 12));
+	this->pushResourcePoint(new Iron(6, 13));
 }
 void BattleScreen::removeOldPopUpWindows() {
 	while (!this->popUpWindows.empty()) {
@@ -97,12 +102,12 @@ void BattleScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
 	this->pushUnit(new Castle(1, 1, &this->players[0]));
-	this->pushUnit(new Market(1, 2, &this->players[0]));
-	this->pushUnit(new Windmill(2, 2, &this->players[0], &this->resourcePoints));
-	this->pushUnit(new Sawmill(3, 2, &this->players[0], &this->resourcePoints));
-	this->pushUnit(new Quarry(4, 2, &this->players[0], &this->resourcePoints));
-	this->pushUnit(new Mine(5, 2, &this->players[0], &this->resourcePoints));
-	this->pushUnit(new Castle(this->mapWidth - 2, this->mapHeight - 2, &this->players[1]));
+	this->pushUnit(new Market(3, 1, &this->players[0]));
+	this->pushUnit(new Windmill(4, 4, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Sawmill(7, 3, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Quarry(10, 2, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Mine(3, 11, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Castle(this->mapWidth - 3, this->mapHeight - 3, &this->players[1]));
 }
 void BattleScreen::initMoveCtr() {
 	this->move = 1;

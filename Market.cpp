@@ -35,7 +35,7 @@ const uint32_t Market::LEVEL_TRADE_TIME[Market::TOTAL_LEVELS] = {
 };
 
 
-Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : HpSensitiveBuilding(x, y, 20000, false, playerPtr) {}
+Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : HpSensitiveBuilding(x, y, 2, 2, 20000, false, playerPtr) {}
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Building::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
@@ -145,13 +145,13 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	sf::RectangleShape rect;
 	rect.setFillColor(UI_COLOR);
 	rect.setSize(sf::Vector2f(64, 64 / 2));
-	rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(rect, states);
 
 	sf::Sprite sprite;
 	sprite.setScale(0.5, 0.5);
 	sprite.setTexture(*TextureStorage::get()->get(this->currentTrade.buy.type));
-	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(sprite, states);
 
 	sf::Text text;
@@ -161,7 +161,7 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 / 2);
+	text.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(text, states);
 }
 uint32_t Market::getRegenerationSpeed() const {

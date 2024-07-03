@@ -33,6 +33,10 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 	if (picture != "") {
 		this->sprite.setPosition(this->rect.getPosition());
 		this->sprite.setTexture(*TextureStorage::get()->get(picture));
+		float scaleX = w / (float)this->sprite.getTexture()->getSize().x;
+		float scaleY = h / (float)this->sprite.getTexture()->getSize().y;
+		float scale = std::min(scaleX, scaleY);
+		this->sprite.setScale(scale, scale);
 	}
 
 	this->text.setCharacterSize(charSize);
@@ -84,7 +88,7 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 		this->text.setPosition(sf::Vector2f(sf::Vector2f(this->rect.getPosition().x + w / 2 - this->text.getLocalBounds().width / 2, this->text.getPosition().y)));
 	}
 	else {
-		this->text.setPosition(sf::Vector2f(this->sprite.getPosition().x + this->sprite.getLocalBounds().width + 5, this->text.getPosition().y));
+		this->text.setPosition(sf::Vector2f(this->sprite.getPosition().x + this->sprite.getLocalBounds().width * this->sprite.getScale().x + 5, this->text.getPosition().y));
 	}
 }
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {

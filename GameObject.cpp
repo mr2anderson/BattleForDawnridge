@@ -20,8 +20,8 @@
 #include "GameObject.hpp"
 
 
-GameObject::GameObject(uint32_t x, uint32_t y, uint32_t currentHp, uint32_t maxHp) {
-	this->bar = HPBar(currentHp, maxHp, x, y);
+GameObject::GameObject(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp) {
+	this->bar = HPBar(currentHp, maxHp, x, y, sx, sy);
 }
 void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!this->exist()) {
@@ -56,14 +56,20 @@ uint32_t GameObject::getX() const {
 uint32_t GameObject::getY() const {
 	return this->bar.getY();
 }
+uint32_t GameObject::getSX() const {
+	return this->bar.getSX();
+}
+uint32_t GameObject::getSY() const {
+	return this->bar.getSY();
+}
 bool GameObject::exist() const {
 	return (this->getHP() > 0);
 }
 GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 64 * this->getX() and
 		mouseY >= 64 * this->getY() and
-		mouseX < 64 * (this->getX() + 1) and
-		mouseY < 64 * (this->getY() + 1)) {
+		mouseX < 64 * (this->getX() + this->getSX()) and
+		mouseY < 64 * (this->getY() + this->getSY())) {
 		return this->getGameObjectResponse(currentPlayer);
 	}
 	return GameObjectResponse();

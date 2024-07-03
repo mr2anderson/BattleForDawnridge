@@ -41,7 +41,7 @@ const uint32_t Mine::LEVEL_RADIUS_BONUS[Mine::TOTAL_LEVELS]{
 };
 
 
-Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
+Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Mine::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

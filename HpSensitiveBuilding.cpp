@@ -20,7 +20,7 @@
 #include "HpSensitiveBuilding.hpp"
 
 
-HpSensitiveBuilding::HpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player* playerPtr) : Building(x, y, maxHp, full, playerPtr) {}
+HpSensitiveBuilding::HpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr) : Building(x, y, sx, sy, maxHp, full, playerPtr) {}
 bool HpSensitiveBuilding::works() const {
 	return (this->getHP() == this->getMaxHP());
 }

@@ -41,7 +41,7 @@ const uint32_t Sawmill::LEVEL_RADIUS_BONUS[Sawmill::TOTAL_LEVELS]{
 };
 
 
-Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
+Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Sawmill::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

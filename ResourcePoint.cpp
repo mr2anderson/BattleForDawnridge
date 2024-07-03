@@ -20,7 +20,7 @@
 #include "ResourcePoint.hpp"
 
 
-ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t size) : GameObject(x, y, size, size) {}
+ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : GameObject(x, y, sx, sy, size, size) {}
 GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player) {
 	GameObjectResponse response;
 	if (!this->exist()) {

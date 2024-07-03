@@ -34,7 +34,7 @@ const uint32_t Castle::UPGRADE_HP[Castle::TOTAL_LEVELS - 1] = {
 };
 
 
-Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 100000, true, playerPtr) {}
+Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 2, 2, 100000, true, playerPtr) {}
 GameObjectResponse Castle::newMove(const Player& player) {
 	GameObjectResponse response;
 	if (this->belongTo(&player) and this->exist()) {

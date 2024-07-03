@@ -28,7 +28,7 @@
 
 class GameObject : public sf::Drawable {
 public:
-	GameObject(uint32_t x, uint32_t y, uint32_t currentHp, uint32_t maxHp);
+	GameObject(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void addHp(uint32_t value);
 	void subHp(uint32_t value);
@@ -37,6 +37,8 @@ public:
 	uint32_t getMaxHP() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
+	uint32_t getSX() const;
+	uint32_t getSY() const;
 	bool exist() const;
 	GameObjectResponse click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY);
 	virtual GameObjectResponse newMove(const Player& currentPlayer);

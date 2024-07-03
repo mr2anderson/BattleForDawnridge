@@ -41,7 +41,7 @@ const uint32_t Windmill::LEVEL_RADIUS_BONUS[Windmill::TOTAL_LEVELS]{
 };
 
 
-Windmill::Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 20000, playerPtr, resourcePointsPtr) {}
+Windmill::Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Windmill::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

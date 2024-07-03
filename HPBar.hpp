@@ -27,13 +27,15 @@
 class HPBar : public sf::Drawable {
 public:
 	HPBar();
-	HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y);
+	HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	uint32_t getCurrent() const;
 	uint32_t getMax() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
+	uint32_t getSX() const;
+	uint32_t getSY() const;
 	void changeCurrent(uint32_t newCurrent);
 	void changeMax(uint32_t newMax);
 	friend HPBar operator+(HPBar a, uint32_t b);
@@ -43,4 +45,6 @@ private:
 	uint32_t max;
 	uint32_t x;
 	uint32_t y;
+	uint32_t sx;
+	uint32_t sy;
 };

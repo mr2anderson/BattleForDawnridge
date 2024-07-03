@@ -20,7 +20,7 @@
 #include "Building.hpp"
 
 
-Building::Building(uint32_t x, uint32_t y, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, full * maxHp + (!full) * 1, maxHp, playerPtr) {
+Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, sx, sy, full * maxHp + (!full) * 1, maxHp, playerPtr) {
 	this->currentLevel = 1;
 	this->upgradeMovesLeft = 0;
 }
@@ -93,13 +93,13 @@ void Building::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) 
 	sf::RectangleShape rect;
 	rect.setFillColor(UI_COLOR);
 	rect.setSize(sf::Vector2f(64, 64 / 2));
-	rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	rect.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(rect, states);
 
 	sf::Sprite sprite;
 	sprite.setScale(0.5, 0.5);
 	sprite.setTexture(*TextureStorage::get()->get("upgrade_icon"));
-	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 / 2);
+	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(sprite, states);
 
 	sf::Text text;
@@ -109,6 +109,6 @@ void Building::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) 
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 / 2);
+	text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(text, states);
 }
