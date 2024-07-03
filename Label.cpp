@@ -60,29 +60,31 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& 
 		}
 	}
 
-	ss = std::wstringstream(currentMessage);
-	uint32_t maxSize = 0;
-	while (std::getline(ss, word, L'\n')) {
-		this->text.setString(word);
-		maxSize = std::max(maxSize, (uint32_t)this->text.getLocalBounds().width);
+	if (picture == "") {
+		ss = std::wstringstream(currentMessage);
+		uint32_t maxSize = 0;
+		while (std::getline(ss, word, L'\n')) {
+			this->text.setString(word);
+			maxSize = std::max(maxSize, (uint32_t)this->text.getLocalBounds().width);
+		}
+
+		ss = std::wstringstream(currentMessage);
+		std::wstring prevWord;
+		std::wstring finalMessage;
+		while (std::getline(ss, word, L'\n')) {
+			for (; ;) {
+				prevWord = word;
+				word = (L' ' + word + L' ');
+				this->text.setString(word);
+				if (this->text.getLocalBounds().width > maxSize) {
+					break;
+				}
+			}
+			finalMessage = finalMessage + prevWord + L'\n';
+		}
+		this->text.setString(finalMessage);
 	}
 	
-	ss = std::wstringstream(currentMessage);
-	std::wstring prevWord;
-	std::wstring finalMessage;
-	while (std::getline(ss, word, L'\n')) {
-		for (; ;) {
-			prevWord = word;
-			word = (L' ' + word + L' ');
-			this->text.setString(word);
-			if (this->text.getLocalBounds().width > maxSize) {
-				break;
-			}
-		}
-		finalMessage = finalMessage + prevWord + L'\n';
-	}
-	this->text.setString(finalMessage);
-
 	this->text.setPosition(0, this->rect.getPosition().y + 5);
 	if (picture == "") {
 		this->text.setPosition(sf::Vector2f(sf::Vector2f(this->rect.getPosition().x + w / 2 - this->text.getLocalBounds().width / 2, this->text.getPosition().y)));

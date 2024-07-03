@@ -82,6 +82,9 @@ void HPBar::changeMax(uint32_t newMax) {
 void HPBar::setMax() {
 	this->current = this->max;
 }
+std::wstring HPBar::getReadableInfo() const {
+	return L"Защита: " + std::to_wstring(this->getCurrent()) + L" / " + std::to_wstring(this->getMax());
+}
 HPBar operator+(HPBar a, uint32_t b) {
 	a.current = std::min(a.current + b, a.max);
 	return a;

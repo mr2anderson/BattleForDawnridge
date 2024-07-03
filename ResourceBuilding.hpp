@@ -31,8 +31,10 @@ public:
 	GameObjectResponse newMove(const Player& currentPlayer) override;
 protected:
 	virtual std::string getResourceType() const = 0;
-	virtual uint32_t getResourceNPerMove() const = 0;
-	virtual uint32_t getRadius() const = 0;
+	uint32_t getResourceNPerMove() const;
+	uint32_t getRadius() const;
+	virtual uint32_t getResourceNPerMove(uint32_t level) const = 0;
+	virtual uint32_t getRadius(uint32_t level) const = 0;
 	virtual std::wstring getDescription() const = 0;
 	virtual std::wstring getResourcesOverStr() const = 0;
 private:

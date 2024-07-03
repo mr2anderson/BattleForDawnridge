@@ -42,6 +42,12 @@ GameObjectResponse ResourceBuilding::newMove(const Player& currentPlayer) {
 	}
 	return GameObjectResponse();
 }
+uint32_t ResourceBuilding::getResourceNPerMove() const {
+	return this->getResourceNPerMove(this->getCurrentLevel() - 1);
+}
+uint32_t ResourceBuilding::getRadius() const {
+	return this->getRadius(this->getCurrentLevel() - 1);
+}
 GameObjectResponse ResourceBuilding::collectResources() {
 	GameObjectResponse response;
 	response.gameEvent = GameEvent();
@@ -105,7 +111,9 @@ GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightE
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GameEvent gameEventUpgrade = highlightEvent;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
-		data.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L". Улучшение повысит скорость и радиус добычи.", true, gameEventUpgrade);
+		data.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
+			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getResourceNPerMove()) + L" до " + std::to_wstring(this->getResourceNPerMove(this->getCurrentLevel())) + 
+			L" и радиус добычи с " + std::to_wstring(this->getRadius()) + L" до " + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
 	}
 
 	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);

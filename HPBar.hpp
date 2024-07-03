@@ -39,6 +39,7 @@ public:
 	void changeCurrent(uint32_t newCurrent);
 	void changeMax(uint32_t newMax);
 	void setMax();
+	std::wstring getReadableInfo() const;
 	friend HPBar operator+(HPBar a, uint32_t b);
 	friend HPBar operator-(HPBar a, uint32_t b);
 private:

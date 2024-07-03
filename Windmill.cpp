@@ -37,10 +37,16 @@ std::string Windmill::getTextureName() const {
 	return "windmill";
 }
 std::wstring Windmill::getIsNotBuiltYetStr() const {
-	return L"ÌÅËÜÍÈÖÀ ÅÙÅ ÍÅ ÏÎÑÒÐÎÅÍÀ\nÄîæäèòåñü êîíöà ñòðîèòåëüñòâà.";
+	return
+		L"ÌÅËÜÍÈÖÀ ÅÙÅ ÍÅ ÏÎÑÒÐÎÅÍÀ\n"
+		"Äîæäèòåñü êîíöà ñòðîèòåëüñòâà.\n"
+		+ this->getReadableHpInfo() + L"\n"
+		+ this->getReadableRegenerationSpeed();
 }
 std::wstring Windmill::getBuildingFinishedStr() const {
-	return L"ÌÅËÜÍÈÖÀ ÏÎÑÒÐÎÅÍÀ\nÁëàãîäàðÿ Âàøèì ðàáî÷èì, ìåëüíèöà óæå íà÷èíàåò äîáûâàòü ïåðâóþ åäó.";
+	return 
+		L"ÌÅËÜÍÈÖÀ ÏÎÑÒÐÎÅÍÀ\n"
+		"Áëàãîäàðÿ Âàøèì ðàáî÷èì, ìåëüíèöà óæå íà÷èíàåò äîáûâàòü ïåðâóþ åäó.";
 }
 std::string Windmill::getNewWindowSoundName() const {
 	return "leaves";
@@ -48,36 +54,47 @@ std::string Windmill::getNewWindowSoundName() const {
 std::string Windmill::getResourceType() const {
 	return "food";
 }
-uint32_t Windmill::getResourceNPerMove() const {
+uint32_t Windmill::getResourceNPerMove(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
 		6
 	};
-	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
+	return 2500 * levelCollectionSpeedBonus[level];
 }
-uint32_t Windmill::getRadius() const {
+uint32_t Windmill::getRadius(uint32_t level) const {
 	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
 		0,
 		2,
 		3
 	};
-	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
+	return 5 + levelRadiusBonus[level];
 }
 std::wstring Windmill::getDescription() const {
-	return L"Ìåëüíèöû îáåñïå÷èâàþò Âàø ãîðîä åäîé, íåîáõîäèìîé äëÿ ñîäåðæàíèÿ ñîëäàò. Çàùèòà: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
+	return
+		L"Ìåëüíèöû îáåñïå÷èâàþò Âàø ãîðîä åäîé, íåîáõîäèìîé äëÿ ñîäåðæàíèÿ àðìèè.\n"
+		+ this->getReadableHpInfo();
 }
 std::wstring Windmill::getResourcesOverStr() const {
-	return L"ÐÀÑÒÅÍÈß ÇÀÊÎÍ×ÈËÈÑÜ\nÎäíà èç Âàøèõ ìåëüíèö ïðåêðàùàåò ðàáîòó.";
+	return 
+		L"ÐÀÑÒÅÍÈß ÇÀÊÎÍ×ÈËÈÑÜ\n"
+		"Îäíà èç Âàøèõ ìåëüíèö ïðåêðàùàåò ðàáîòó.";
 }
 std::wstring Windmill::getUpgradeStartDescription() const {
-	return L"ÍÀ×ÀÒÎ ÓËÓ×ØÅÍÈÅ ÌÅËÜÍÈÖÛ\nÑáîð åäû áûë ïðèîñòàíîâëåí.";
+	return
+		L"ÍÀ×ÀÒÎ ÓËÓ×ØÅÍÈÅ ÌÅËÜÍÈÖÛ\n"
+		"Ñáîð åäû áûë ïðèîñòàíîâëåí.\n"
+		"×èñëî õîäîâ äî êîíöà óëó÷øåíèÿ: " + std::to_wstring(this->getUpgradeMoves());
 }
 std::wstring Windmill::getUpgradeFinishDescription() const {
-	return L"ÓËÓ×ØÅÍÈÅ ÌÅËÜÍÈÖÛ ÇÀÂÅÐØÅÍÎ\nÑáîð åäû âîçîáíîâëåí.";
+	return 
+		L"ÓËÓ×ØÅÍÈÅ ÌÅËÜÍÈÖÛ ÇÀÂÅÐØÅÍÎ\n"
+		"Ñáîð åäû âîçîáíîâëåí.";
 }
 std::wstring Windmill::getBusyWithUpgradingDescription() const {
-	return L"ÌÅËÜÍÈÖÀ ÍÅÄÎÑÒÓÏÍÀ\nÏîäîæäèòå, ïîêà áóäåò çàâåðøåíî óëó÷øåíèå.";
+	return L"ÌÅËÜÍÈÖÀ ÍÅÄÎÑÒÓÏÍÀ\n"
+		"Ïîäîæäèòå, ïîêà áóäåò çàâåðøåíî óëó÷øåíèå.\n"
+		"×èñëî õîäîâ äî êîíöà óëó÷øåíèÿ: " + std::to_wstring(this->getUpgradeMoves());
 }
 Resources Windmill::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

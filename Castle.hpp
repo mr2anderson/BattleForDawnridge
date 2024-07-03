@@ -36,6 +36,7 @@ private:
 
 	GameObjectResponse getSelectWindow();
 
+	static uint32_t GET_REGENERATION_SPEED(uint32_t level);
 	uint32_t getRegenerationSpeed() const override;
 	std::string getTextureName() const override;
 	std::string getNewWindowSoundName() const override;

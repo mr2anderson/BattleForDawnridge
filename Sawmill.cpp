@@ -37,10 +37,16 @@ std::string Sawmill::getTextureName() const {
 	return "sawmill";
 }
 std::wstring Sawmill::getIsNotBuiltYetStr() const {
-	return L"ЛЕСОПИЛКА ЕЩЕ НЕ ПОСТРОЕНА\nДождитесь конца строительства.";
+	return
+		L"ЛЕСОПИЛКА ЕЩЕ НЕ ПОСТРОЕНА\n"
+		"Дождитесь конца строительства.\n"
+		+ this->getReadableHpInfo() + L"\n"
+		+ this->getReadableRegenerationSpeed();
 }
 std::wstring Sawmill::getBuildingFinishedStr() const {
-	return L"ЛЕСОПИЛКА ПОСТРОЕНА\nБлагодаря Вашим рабочим, лесопилка уже начинает добывать первую древесину.";
+	return
+		L"ЛЕСОПИЛКА ПОСТРОЕНА\n"
+		"Благодаря Вашим рабочим, лесопилка уже начинает добывать первую древесину.";
 }
 std::string Sawmill::getNewWindowSoundName() const {
 	return "sawmill";
@@ -48,36 +54,47 @@ std::string Sawmill::getNewWindowSoundName() const {
 std::string Sawmill::getResourceType() const {
 	return "wood";
 }
-uint32_t Sawmill::getResourceNPerMove() const {
+uint32_t Sawmill::getResourceNPerMove(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
 		6
 	};
-	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
+	return 2500 * levelCollectionSpeedBonus[level];
 }
-uint32_t Sawmill::getRadius() const {
+uint32_t Sawmill::getRadius(uint32_t level) const {
 	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
 		0,
 		2,
 		3
 	};
-	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
+	return 5 + levelRadiusBonus[level];
 }
 std::wstring Sawmill::getDescription() const {
-	return L"Лесопилки обеспечивают Ваш город древесиной — основным материалом строительства гражданских сооружений. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
+	return
+		L"Лесопилки обеспечивают Ваш город древесиной, необходимой для строительства большинства зданий.\n"
+		+ this->getReadableHpInfo();
 }
 std::wstring Sawmill::getResourcesOverStr() const {
-	return L"ЛЕСА ЗАКОНЧИЛИСЬ\nОдна из Ваших лесопилок прекращает работу.";
+	return
+		L"ЛЕСА ВЫРУБЛЕНЫ\n"
+		"Одна из Ваших лесопилок прекращает работу.";
 }
 std::wstring Sawmill::getUpgradeStartDescription() const {
-	return L"НАЧАТО УЛУЧШЕНИЕ ЛЕСОПИЛКИ\nСбор древесины был приостановлен.";
+	return
+		L"НАЧАТО УЛУЧШЕНИЕ ЛЕСОПИЛКИ\n"
+		"Сбор древесины был приостановлен.\n"
+		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
 }
 std::wstring Sawmill::getUpgradeFinishDescription() const {
-	return L"УЛУЧШЕНИЕ ЛЕСОПИЛКИ ЗАВЕРШЕНО\nСбор древесины возобновлен.";
+	return
+		L"УЛУЧШЕНИЕ ЛЕСОПИЛКИ ЗАВЕРШЕНО\n"
+		"Сбор древесины возобновлен.";
 }
 std::wstring Sawmill::getBusyWithUpgradingDescription() const {
-	return L"ЛЕСОПИЛКА НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
+	return L"ЛЕСОПИЛКА НЕДОСТУПНА\n"
+		"Подождите, пока будет завершено улучшение.\n"
+		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
 }
 Resources Sawmill::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

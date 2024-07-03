@@ -36,8 +36,8 @@ private:
 	std::wstring getBuildingFinishedStr() const override;
 	std::string getNewWindowSoundName() const override;
 	std::string getResourceType() const override;
-	uint32_t getResourceNPerMove() const override;
-	uint32_t getRadius() const override;
+	uint32_t getResourceNPerMove(uint32_t level) const override;
+	uint32_t getRadius(uint32_t level) const override;
 	std::wstring getDescription() const override;
 	std::wstring getResourcesOverStr() const override;
 	std::wstring getUpgradeStartDescription() const override;

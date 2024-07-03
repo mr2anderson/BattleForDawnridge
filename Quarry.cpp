@@ -37,10 +37,16 @@ std::string Quarry::getTextureName() const {
 	return "quarry";
 }
 std::wstring Quarry::getIsNotBuiltYetStr() const {
-	return L"ÊÀÌÅÍÎËÎÌÍß ÅÙÅ ÍÅ ÏÎÑÒÐÎÅÍÀ\nÄîæäèòåñü êîíöà ñòðîèòåëüñòâà.";
+	return
+		L"ÊÀÌÅÍÎËÎÌÍß ÅÙÅ ÍÅ ÏÎÑÒÐÎÅÍÀ\n"
+		"Äîæäèòåñü êîíöà ñòðîèòåëüñòâà.\n"
+		+ this->getReadableHpInfo() + L"\n"
+		+ this->getReadableRegenerationSpeed();
 }
 std::wstring Quarry::getBuildingFinishedStr() const {
-	return L"ÊÀÌÅÍÎËÎÌÍß ÏÎÑÒÐÎÅÍÀ\nÁëàãîäàðÿ Âàøèì ðàáî÷èì, êàìåíîëîìíÿ óæå íà÷èíàåò äîáûâàòü ïåðâûé êàìåíü.";
+	return
+		L"ÊÀÌÅÍÎËÎÌÍß ÏÎÑÒÐÎÅÍÀ\n"
+		"Áëàãîäàðÿ Âàøèì ðàáî÷èì, êàìåíîëîìíÿ óæå íà÷èíàåò äîáûâàòü ïåðâûé êàìåíü.";
 }
 std::string Quarry::getNewWindowSoundName() const {
 	return "quarry";
@@ -48,36 +54,47 @@ std::string Quarry::getNewWindowSoundName() const {
 std::string Quarry::getResourceType() const {
 	return "stone";
 }
-uint32_t Quarry::getResourceNPerMove() const {
+uint32_t Quarry::getResourceNPerMove(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
 		6
 	};
-	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
+	return 2500 * levelCollectionSpeedBonus[level];
 }
-uint32_t Quarry::getRadius() const {
+uint32_t Quarry::getRadius(uint32_t level) const {
 	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
 		0,
 		2,
 		3
 	};
-	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
+	return 5 + levelRadiusBonus[level];
 }
 std::wstring Quarry::getDescription() const {
-	return L"Êàìåíîëîìíè îáåñïå÷èâàþò Âàø ãîðîä êàìíåì — îñíîâíûì ìàòåðèàëîì ñòðîèòåëüñòâà îáîðîíèòåëüíûõ ñîîðóæåíèé. Çàùèòà: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
+	return
+		L"Êàìåíîëîìíè îáåñïå÷èâàþò Âàø ãîðîä êàìíåì, íåîáõîäèìûì äëÿ ñòðîèòåëüñòâà îáîðîíû.\n"
+		+ this->getReadableHpInfo();
 }
 std::wstring Quarry::getResourcesOverStr() const {
-	return L"ÊÀÌÅÍÜ ÇÀÊÎÍ×ÈËÑß\nÎäíà èç Âàøèõ êàìåíåëîìåí ïðåêðàùàåò ðàáîòó.";
+	return
+		L"ÊÀÌÅÍÜ ÇÀÊÎÍ×ÈËÑß\n"
+		"Îäíà èç Âàøèõ êàìåíîëîìåí ïðåêðàùàåò ðàáîòó.";
 }
 std::wstring Quarry::getUpgradeStartDescription() const {
-	return L"ÍÀ×ÀÒÎ ÓËÓ×ØÅÍÈÅ ÊÀÌÅÍÎËÎÌÍÈ\nÑáîð êàìíÿ áûë ïðèîñòàíîâëåí.";
+	return
+		L"ÍÀ×ÀÒÎ ÓËÓ×ØÅÍÈÅ ÊÀÌÅÍÎËÎÌÍÈ\n"
+		"Ñáîð êàìíÿ áûë ïðèîñòàíîâëåí.\n"
+		"×èñëî õîäîâ äî êîíöà óëó÷øåíèÿ: " + std::to_wstring(this->getUpgradeMoves());
 }
 std::wstring Quarry::getUpgradeFinishDescription() const {
-	return L"ÓËÓ×ØÅÍÈÅ ÊÀÌÅÍÎËÎÌÍÈ ÇÀÂÅÐØÅÍÎ\nÑáîð êàìíÿ âîçîáíîâëåí.";
+	return
+		L"ÓËÓ×ØÅÍÈÅ ÊÀÌÅÍÎËÎÌÍÈ ÇÀÂÅÐØÅÍÎ\n"
+		"Ñáîð êàìíÿ âîçîáíîâëåí.";
 }
 std::wstring Quarry::getBusyWithUpgradingDescription() const {
-	return L"ÊÀÌÅÍÎËÎÌÍß ÍÅÄÎÑÒÓÏÍÀ\nÏîäîæäèòå, ïîêà áóäåò çàâåðøåíî óëó÷øåíèå.";
+	return L"ÊÀÌÅÍÎËÎÌÍß ÍÅÄÎÑÒÓÏÍÀ\n"
+		"Ïîäîæäèòå, ïîêà áóäåò çàâåðøåíî óëó÷øåíèå.\n"
+		"×èñëî õîäîâ äî êîíöà óëó÷øåíèÿ: " + std::to_wstring(this->getUpgradeMoves());
 }
 Resources Quarry::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

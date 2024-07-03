@@ -52,12 +52,17 @@ GameObjectResponse Castle::getSelectWindow() {
 
 	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
 	data.emplace_back("exit_icon", L"Покинуть", true, GameEvent());
-	data.emplace_back("castle", L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".", false, GameEvent());
+	data.emplace_back("castle", 
+		L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.\n"
+		+ this->getReadableHpInfo(), false, GameEvent());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
 		GameEvent gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
-		data.emplace_back("upgrade_icon", L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L". Улучшение увеличит защиту и скорость ремонта.", true, gameEventUpgrade);
+		data.emplace_back("upgrade_icon", 
+			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
+			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) + 
+			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
 	}
 
 	SelectWindow* window = new SelectWindow("hooray", "click", data);
@@ -65,8 +70,11 @@ GameObjectResponse Castle::getSelectWindow() {
 
 	return response;
 }
+uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
+	return LEVEL_HP[level] / 4;
+}
 uint32_t Castle::getRegenerationSpeed() const {
-	return LEVEL_HP[this->getCurrentLevel() - 1] / 4;
+	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
 }
 std::string Castle::getTextureName() const {
 	return "castle";
@@ -75,13 +83,19 @@ std::string Castle::getNewWindowSoundName() const {
 	return "hooray";
 }
 std::wstring Castle::getUpgradeStartDescription() const {
-	return L"НАЧАТО УЛУЧШЕНИЕ ЗАМКА\nПодождите, пока оно закончится.";
+	return 
+		L"НАЧАТО УЛУЧШЕНИЕ ЗАМКА\n"
+		"Подождите, пока оно закончится."
+		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves()) + L".";
 }
 std::wstring Castle::getUpgradeFinishDescription() const {
 	return L"УЛУЧШЕНИЕ ЗАМКА ЗАВЕРШЕНО";
 }
 std::wstring Castle::getBusyWithUpgradingDescription() const {
-	return L"ЗАМОК НЕДОСТУПЕН\nПодождите, пока будет завершено улучшение.";
+	return
+		L"ЗАМОК НЕДОСТУПЕН\n"
+		"Подождите, пока будет завершено улучшение."
+		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves()) + L".";
 }
 Resources Castle::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

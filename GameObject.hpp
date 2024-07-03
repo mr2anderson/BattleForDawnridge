@@ -47,6 +47,8 @@ public:
 protected:
 	virtual std::string getTextureName() const = 0;
 	virtual GameObjectResponse getGameObjectResponse(const Player& currentPlayer) = 0;
+
+	std::wstring getReadableHpInfo() const;
 private:
 	HPBar bar;
 };

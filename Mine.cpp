@@ -37,10 +37,16 @@ std::string Mine::getTextureName() const {
 	return "mine";
 }
 std::wstring Mine::getIsNotBuiltYetStr() const {
-	return L"ØÀÕÒÀ ÅÙÅ ÍÅ ÏÎÑÒÐÎÅÍÀ\nÄîæäèòåñü êîíöà ñòðîèòåëüñòâà.";
+	return
+		L"ØÀÕÒÀ ÅÙÅ ÍÅ ÏÎÑÒÐÎÅÍÀ\n"
+		"Äîæäèòåñü êîíöà ñòðîèòåëüñòâà.\n"
+		+ this->getReadableHpInfo() + L"\n"
+		+ this->getReadableRegenerationSpeed();
 }
 std::wstring Mine::getBuildingFinishedStr() const {
-	return L"ØÀÕÒÀ ÏÎÑÒÐÎÅÍÀ\nÁëàãîäàðÿ Âàøèì ðàáî÷èì, øàõòà óæå íà÷èíàåò äîáûâàòü ïåðâîå æåëåçî.";
+	return
+		L"ØÀÕÒÀ ÏÎÑÒÐÎÅÍÀ\n"
+		"Áëàãîäàðÿ Âàøèì ðàáî÷èì, øàõòà óæå íà÷èíàåò äîáûâàòü ïåðâîå æåëåçî.";
 }
 std::string Mine::getNewWindowSoundName() const {
 	return "mine";
@@ -48,36 +54,47 @@ std::string Mine::getNewWindowSoundName() const {
 std::string Mine::getResourceType() const {
 	return "iron";
 }
-uint32_t Mine::getResourceNPerMove() const {
+uint32_t Mine::getResourceNPerMove(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
 		6
 	};
-	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
+	return 2500 * levelCollectionSpeedBonus[level];
 }
-uint32_t Mine::getRadius() const {
+uint32_t Mine::getRadius(uint32_t level) const {
 	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
 		0,
 		2,
 		3
 	};
-	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
+	return 5 + levelRadiusBonus[level];
 }
 std::wstring Mine::getDescription() const {
-	return L"Øàõòû îáåñïå÷èâàþò Âàø ãîðîä æåëåçîì — îñíîâîé ñèëüíîé àðìèè. Çàùèòà: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
+	return
+		L"Øàõòû îáåñïå÷èâàþò Âàø ãîðîä æåëåçîì, íåîáõîäèìûì äëÿ ñîçäàíèÿ àðìèè.\n"
+		+ this->getReadableHpInfo();
 }
 std::wstring Mine::getResourcesOverStr() const {
-	return L"ÇÀËÅÆÈ ÈÑÒÎÙÅÍÛ\nÎäíà èç Âàøèõ øàõò ïðåêðàùàåò ðàáîòó.";
+	return
+		L"ÇÀËÅÆÈ ÈÑ×ÅÐÏÀÍÛ\n"
+		"Îäíà èç Âàøèõ øàõò ïðåêðàùàåò ðàáîòó.";
 }
 std::wstring Mine::getUpgradeStartDescription() const {
-	return L"ÍÀ×ÀÒÎ ÓËÓ×ØÅÍÈÅ ØÀÕÒÛ\nÑáîð æåëåçà áûë ïðèîñòàíîâëåí.";
+	return
+		L"ÍÀ×ÀÒÎ ÓËÓ×ØÅÍÈÅ ØÀÕÒÛ\n"
+		"Ñáîð æåëåçà áûë ïðèîñòàíîâëåí.\n"
+		"×èñëî õîäîâ äî êîíöà óëó÷øåíèÿ: " + std::to_wstring(this->getUpgradeMoves());
 }
 std::wstring Mine::getUpgradeFinishDescription() const {
-	return L"ÓËÓ×ØÅÍÈÅ ØÀÕÒÛ ÇÀÂÅÐØÅÍÎ\nÑáîð æåëåçà âîçîáíîâëåí.";
+	return
+		L"ÓËÓ×ØÅÍÈÅ ØÀÕÒÛ ÇÀÂÅÐØÅÍÎ\n"
+		"Ñáîð æåëåçà âîçîáíîâëåí.";
 }
 std::wstring Mine::getBusyWithUpgradingDescription() const {
-	return L"ØÀÕÒÀ ÍÅÄÎÑÒÓÏÍÀ\nÏîäîæäèòå, ïîêà áóäåò çàâåðøåíî óëó÷øåíèå.";
+	return L"ØÀÕÒÀ ÍÅÄÎÑÒÓÏÍÀ\n"
+		"Ïîäîæäèòå, ïîêà áóäåò çàâåðøåíî óëó÷øåíèå.\n"
+		"×èñëî õîäîâ äî êîíöà óëó÷øåíèÿ: " + std::to_wstring(this->getUpgradeMoves());
 }
 Resources Mine::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

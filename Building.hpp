@@ -33,4 +33,5 @@ protected:
 	virtual std::string getNewWindowSoundName() const = 0;
 
 	virtual GameObjectResponse processRegeneration();
+	std::wstring getReadableRegenerationSpeed() const;
 };

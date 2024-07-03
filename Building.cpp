@@ -26,3 +26,6 @@ GameObjectResponse Building::processRegeneration() {
 	this->addHp(this->getRegenerationSpeed());
 	return GameObjectResponse();
 }
+std::wstring Building::getReadableRegenerationSpeed() const {
+	return L"Скорость строительства: " + std::to_wstring(this->getRegenerationSpeed()) + L" ед. / ход";
+}

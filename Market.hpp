@@ -41,6 +41,7 @@ private:
 	bool busy() const;
 	GameObjectResponse getSelectWindow();
 	void addTrade(std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data, const GameEvent& gameEventTrade);
+	static uint32_t GET_TRADE_START_TIME(uint32_t level);
 	uint32_t getTradeStartTime() const;
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 

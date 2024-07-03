@@ -81,3 +81,6 @@ GameObjectResponse GameObject::click(const Player &currentPlayer, uint32_t mouse
 GameObjectResponse GameObject::newMove(const Player& currentPlayer) {
 	return GameObjectResponse();
 }
+std::wstring GameObject::getReadableHpInfo() const {
+	return this->bar.getReadableInfo();
+}
