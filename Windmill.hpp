@@ -25,6 +25,7 @@
 
 class Windmill : public ResourceBuilding {
 public:
+	Windmill();
 	Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
 
 	Resources getCost() const override;

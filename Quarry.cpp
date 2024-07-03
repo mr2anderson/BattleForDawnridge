@@ -21,7 +21,10 @@
 #include "Quarry.hpp"
 
 
-Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
+Quarry::Quarry() = default;
+Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
+	ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
+	Building(x, y, 2, 2, 20000, false, playerPtr) {}
 Resources Quarry::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

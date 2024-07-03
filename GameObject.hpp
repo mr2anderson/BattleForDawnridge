@@ -28,6 +28,7 @@
 
 class GameObject : public sf::Drawable {
 public:
+	GameObject();
 	GameObject(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void addHp(uint32_t value);

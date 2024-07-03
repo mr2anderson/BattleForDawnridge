@@ -18,6 +18,7 @@
 
 
 #include "BattleScreen.hpp"
+#include <iostream>
 
 
 BattleScreen* BattleScreen::singletone = nullptr;
@@ -211,7 +212,7 @@ void BattleScreen::handleCollectEvent(const GameEvent& event) {
 }
 void BattleScreen::handleTryToUpgradeEvent(const GameEvent& event) {
 	for (const auto& a : event.tryToUpgrade) {
-		Building* b = std::get<Building*>(a);
+		UpgradeableBuilding* b = std::get<UpgradeableBuilding*>(a);
 		Resources cost = std::get<Resources>(a);
 		if (this->getCurrentPlayer()->getResources() >= cost) {
 			GameObjectResponse response = b->upgrade();

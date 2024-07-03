@@ -23,8 +23,9 @@
 #pragma once
 
 
-class HpSensitiveBuilding : public Building {
+class HpSensitiveBuilding : virtual public Building {
 public:
+	HpSensitiveBuilding();
 	HpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr);
 protected:
 	bool works() const;

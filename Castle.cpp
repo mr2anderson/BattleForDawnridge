@@ -27,7 +27,10 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 };
 
 
-Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 2, 2, LEVEL_HP[0], true, playerPtr) {}
+Castle::Castle() = default;
+Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
+	UpgradeableBuilding(x, y, 2, 2, LEVEL_HP[0], true, playerPtr),
+	Building(x, y, 2, 2, LEVEL_HP[0], true, playerPtr) {}
 GameObjectResponse Castle::newMove(const Player& player) {
 	GameObjectResponse response;
 	if (this->belongTo(&player) and this->exist()) {
@@ -95,7 +98,7 @@ uint32_t Castle::getUpgradeMoves() const {
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 GameObjectResponse Castle::decreaseUpgradeMovesLeft() {
-	GameObjectResponse response = this->Building::decreaseUpgradeMovesLeft();
+	GameObjectResponse response = this->UpgradeableBuilding::decreaseUpgradeMovesLeft();
 	if (!response.popUpWindows.empty()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 	}

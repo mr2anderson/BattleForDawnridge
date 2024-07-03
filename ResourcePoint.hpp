@@ -26,7 +26,9 @@
 
 class ResourcePoint : public GameObject {
 public:
+	ResourcePoint();
 	ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size);
+
 	virtual std::string getResourceType() const = 0;
 protected:
 	virtual std::wstring getDescription() const = 0;

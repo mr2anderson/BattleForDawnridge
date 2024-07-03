@@ -20,6 +20,7 @@
 #include "Iron.hpp"
 
 
+Iron::Iron() = default;
 Iron::Iron(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 10000) {}
 std::string Iron::getResourceType() const {
 	return "iron";

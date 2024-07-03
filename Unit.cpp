@@ -20,6 +20,7 @@
 #include "Unit.hpp"
 
 
+Unit::Unit() = default;
 Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player* playerPtr) : GameObject(x, y, sx, sy, currentHp, maxHp) {
 	this->playerPtr = playerPtr;
 }

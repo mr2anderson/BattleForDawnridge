@@ -622,6 +622,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="Forest.hpp" />
     <ClInclude Include="Unit.hpp" />
+    <ClInclude Include="UpgradeableBuilding.hpp" />
     <ClInclude Include="Windmill.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -671,6 +672,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UpgradeableBuilding.cpp" />
     <ClCompile Include="Windmill.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

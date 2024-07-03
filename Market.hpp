@@ -18,6 +18,7 @@
 
 
 #include "HpSensitiveBuilding.hpp"
+#include "UpgradeableBuilding.hpp"
 #include "Trade.hpp"
 #include "SelectWindow.hpp"
 
@@ -25,8 +26,9 @@
 #pragma once
 
 
-class Market : public HpSensitiveBuilding {
+class Market : public UpgradeableBuilding, public HpSensitiveBuilding {
 public:
+	Market();
 	Market(uint32_t x, uint32_t y, const Player *playerPtr);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	GameObjectResponse doTrade(const Trade& trade);
@@ -35,11 +37,6 @@ public:
 	Resources getCost() const override;
 private:
 	Trade currentTrade;
-
-	static constexpr uint32_t TOTAL_LEVELS = 3;
-	static const Resources UPGRADE_COSTS[];
-	static const uint32_t UPGRADE_MOVES[];
-	static const uint32_t LEVEL_TRADE_TIME[];
 
 	GameObjectResponse currentTradeNewMove();
 	bool busy() const;

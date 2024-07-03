@@ -21,7 +21,10 @@
 #include "Mine.hpp"
 
 
-Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
+Mine::Mine() = default;
+Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
+	ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
+	Building(x, y, 2, 2, 20000, false, playerPtr) {}
 Resources Mine::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

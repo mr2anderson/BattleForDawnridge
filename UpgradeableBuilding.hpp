@@ -23,6 +23,30 @@
 #pragma once
 
 
-class UpgradeableBuilding : public Building {
+class UpgradeableBuilding : virtual public Building {
+public:
+	UpgradeableBuilding();
+	UpgradeableBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	GameObjectResponse upgrade();
+protected:
+	static constexpr uint32_t TOTAL_LEVELS = 3;
 
+	virtual std::wstring getUpgradeStartDescription() const = 0;
+	virtual std::wstring getUpgradeFinishDescription() const = 0;
+	virtual std::wstring getBusyWithUpgradingDescription() const = 0;
+	virtual Resources getUpgradeCost() const = 0;
+	virtual uint32_t getUpgradeMoves() const = 0;
+
+	virtual GameObjectResponse decreaseUpgradeMovesLeft();
+	uint32_t getCurrentLevel() const;
+	bool upgrading() const;
+	GameObjectResponse handleUpgradeStart() const;
+	GameObjectResponse handleUpgrading() const;
+private:
+	uint32_t currentLevel;
+	uint32_t upgradeMovesLeft;
+
+	void drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const;
+	void drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const;
 };

@@ -25,6 +25,7 @@
 
 class Stone : public ResourcePoint {
 public:
+	Stone();
 	Stone(uint32_t x, uint32_t y);
 	std::string getResourceType() const override;
 

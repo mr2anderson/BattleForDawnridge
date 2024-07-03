@@ -20,6 +20,7 @@
 #include "GameObject.hpp"
 
 
+GameObject::GameObject() = default;
 GameObject::GameObject(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp) {
 	this->bar = HPBar(currentHp, maxHp, x, y, sx, sy);
 }

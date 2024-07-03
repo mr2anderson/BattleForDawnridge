@@ -27,7 +27,7 @@
 
 
 class Unit;
-class Building;
+class UpgradeableBuilding;
 class Market;
 class ResourcePoint;
 
@@ -43,5 +43,5 @@ struct GameEvent {
 	std::vector<Resources> addResources;
 	std::vector<std::tuple<const Unit*, uint32_t, uint32_t>> changeHighlight;
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> collect;
-	std::vector<std::tuple<Building*, Resources>> tryToUpgrade;
+	std::vector<std::tuple<UpgradeableBuilding*, Resources>> tryToUpgrade;
 };

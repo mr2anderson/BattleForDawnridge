@@ -17,15 +17,16 @@
  */
 
 
-#include "Building.hpp"
+#include "UpgradeableBuilding.hpp"
 #include "SelectWindow.hpp"
 
 
 #pragma once
 
 
-class Castle : public Building {
+class Castle : public UpgradeableBuilding {
 public:
+	Castle();
 	Castle(uint32_t x, uint32_t y, const Player* playerPtr);
 	GameObjectResponse newMove(const Player& player) override;
 	

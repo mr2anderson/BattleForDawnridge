@@ -25,6 +25,7 @@
 
 class Quarry : public ResourceBuilding {
 public:
+	Quarry();
 	Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
 
 	Resources getCost() const override;
