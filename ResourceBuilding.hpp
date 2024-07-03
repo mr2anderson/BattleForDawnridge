@@ -28,6 +28,7 @@ class ResourceBuilding : public UpgradeableHpSensitiveBuilding {
 public:
 	ResourceBuilding();
 	ResourceBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
+
 	GameObjectResponse newMove(const Player& currentPlayer) override;
 protected:
 	virtual std::string getResourceType() const = 0;

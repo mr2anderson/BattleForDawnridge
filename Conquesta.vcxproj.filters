@@ -763,7 +763,7 @@
     <ClInclude Include="Mine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Windmill.hpp">
+    <ClInclude Include="Farm.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Quarry.hpp">
@@ -904,7 +904,7 @@
     <ClCompile Include="Mine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Windmill.cpp">
+    <ClCompile Include="Farm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Quarry.cpp">

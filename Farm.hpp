@@ -17,17 +17,19 @@
  */
 
 
-#include "ResourceBuilding.hpp"
+#include "UpgradeableHpSensitiveBuilding.hpp"
+#include "SelectWindow.hpp"
 
 
 #pragma once
 
 
-class Windmill : public ResourceBuilding {
+class Farm : public UpgradeableHpSensitiveBuilding {
 public:
-	Windmill();
-	Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
+	Farm();
+	Farm(uint32_t x, uint32_t y, const Player* playerPtr);
 
+	GameObjectResponse newMove(const Player& currentPlayer) override;
 	Resources getCost() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
@@ -35,14 +37,15 @@ private:
 	std::wstring getIsNotBuiltYetStr() const override;
 	std::wstring getBuildingFinishedStr() const override;
 	std::string getNewWindowSoundName() const override;
-	std::string getResourceType() const override;
-	uint32_t getResourceNPerMove(uint32_t level) const override;
-	uint32_t getRadius(uint32_t level) const override;
-	std::wstring getDescription() const override;
-	std::wstring getResourcesOverStr() const override;
 	std::wstring getUpgradeStartDescription() const override;
 	std::wstring getUpgradeFinishDescription() const override;
 	std::wstring getBusyWithUpgradingDescription() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeMoves() const override;
+
+	GameObjectResponse getGameObjectResponse(const Player& player) override;
+	GameObjectResponse getSelectWindow();
+	static uint32_t GET_COLLECTION_SPEED(uint32_t level);
+	uint32_t getCollectionSpeed() const;
+	GameObjectResponse collectFood() const;
 };

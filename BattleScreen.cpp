@@ -104,7 +104,7 @@ void BattleScreen::initPlayers() {
 	this->players[1] = Player(2);
 	this->pushUnit(new Castle(2, 2, &this->players[0]));
 	this->pushUnit(new Market(2, 4, &this->players[0]));
-	this->pushUnit(new Windmill(4, 4, &this->players[0], &this->resourcePoints));
+	this->pushUnit(new Farm(4, 4, &this->players[0]));
 	this->pushUnit(new Sawmill(7, 3, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Quarry(10, 2, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Mine(3, 11, &this->players[0], &this->resourcePoints));

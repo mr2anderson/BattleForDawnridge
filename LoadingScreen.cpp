@@ -54,9 +54,9 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 }
 void LoadingScreen::loadAll() {
 	for (const std::string& a : { 
-		"castle", "cell", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
+		"castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
 		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
-		"windmill", "wood_icon", "iron_icon"}) {
+		"farm", "wood_icon", "iron_icon"}) {
 		TextureStorage::get()->add(a, "images/" + a + ".png");
 	}
 	for (uint32_t i = 1; i <= BattleScreen::TOTAL_PLAINS; i = i + 1) {

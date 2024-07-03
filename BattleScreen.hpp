@@ -23,7 +23,7 @@
 #include "Iron.hpp"
 #include "Castle.hpp"
 #include "Market.hpp"
-#include "Windmill.hpp"
+#include "Farm.hpp"
 #include "Sawmill.hpp"
 #include "Quarry.hpp"
 #include "Mine.hpp"
