@@ -17,34 +17,30 @@
  */
 
 
-#include "UpgradeableBuilding.hpp"
-#include "SelectWindow.hpp"
+#include "UpgradeableB.hpp"
+#include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class Castle : public UpgradeableBuilding {
+class Castle : public UpgradeableB {
 public:
 	Castle();
 	Castle(uint32_t x, uint32_t y, const Player* playerPtr);
-	GameObjectResponse newMove(const Player& player) override;
+	GOR newMove(const Player& player) override;
 	
 	Resources getCost() const override;
 private:
 	static const uint32_t LEVEL_HP[];
 
-	GameObjectResponse getSelectWindow();
-
 	static uint32_t GET_REGENERATION_SPEED(uint32_t level);
 	uint32_t getRegenerationSpeed() const override;
 	std::string getTextureName() const override;
 	std::string getNewWindowSoundName() const override;
-	std::wstring getUpgradeStartDescription() const override;
-	std::wstring getUpgradeFinishDescription() const override;
-	std::wstring getBusyWithUpgradingDescription() const override;
-	GameObjectResponse decreaseUpgradeMovesLeft() override;
-	GameObjectResponse getGameObjectResponse(const Player& player) override;
+	std::wstring getReadableName() const override;
 	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeMoves() const override;
+	uint32_t getUpgradeTime() const override;
+	GOR getSelectionW();
+	GOR getGameObjectResponse(const Player& player) override;
 };

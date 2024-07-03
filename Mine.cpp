@@ -23,7 +23,7 @@
 
 Mine::Mine() = default;
 Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
-	ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
+	ResourceB(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 2, 2, 20000, playerPtr) {}
 Resources Mine::getCost() const {
 	Resources cost;
@@ -36,25 +36,13 @@ uint32_t Mine::getRegenerationSpeed() const {
 std::string Mine::getTextureName() const {
 	return "mine";
 }
-std::wstring Mine::getIsNotBuiltYetStr() const {
-	return
-		L"ШАХТА ЕЩЕ НЕ ПОСТРОЕНА\n"
-		"Дождитесь конца строительства.\n"
-		+ this->getReadableHpInfo() + L"\n"
-		+ this->getReadableRegenerationSpeed();
-}
-std::wstring Mine::getBuildingFinishedStr() const {
-	return
-		L"ШАХТА ПОСТРОЕНА\n"
-		"Благодаря Вашим рабочим, шахта уже начинает добывать первое железо.";
-}
 std::string Mine::getNewWindowSoundName() const {
 	return "mine";
 }
 std::string Mine::getResourceType() const {
 	return "iron";
 }
-uint32_t Mine::getResourceNPerMove(uint32_t level) const {
+uint32_t Mine::getCollectionSpeed(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
@@ -80,22 +68,6 @@ std::wstring Mine::getResourcesOverStr() const {
 		L"ЗАЛЕЖИ ИСЧЕРПАНЫ\n"
 		"Одна из Ваших шахт прекращает работу.";
 }
-std::wstring Mine::getUpgradeStartDescription() const {
-	return
-		L"НАЧАТО УЛУЧШЕНИЕ ШАХТЫ\n"
-		"Сбор железа был приостановлен.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
-std::wstring Mine::getUpgradeFinishDescription() const {
-	return
-		L"УЛУЧШЕНИЕ ШАХТЫ ЗАВЕРШЕНО\n"
-		"Сбор железа возобновлен.";
-}
-std::wstring Mine::getBusyWithUpgradingDescription() const {
-	return L"ШАХТА НЕДОСТУПНА\n"
-		"Подождите, пока будет завершено улучшение.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
 Resources Mine::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 20000}}),
@@ -103,10 +75,13 @@ Resources Mine::getUpgradeCost() const {
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-uint32_t Mine::getUpgradeMoves() const {
+uint32_t Mine::getUpgradeTime() const {
 	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
 		2,
 		3
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
+}
+std::wstring Mine::getReadableName() const {
+	return L"шахта";
 }

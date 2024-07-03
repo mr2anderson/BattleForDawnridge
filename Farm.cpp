@@ -23,17 +23,17 @@
 
 Farm::Farm() = default;
 Farm::Farm(uint32_t x, uint32_t y, const Player* playerPtr) : 
-	UpgradeableHpSensitiveBuilding(x, y, 2, 2, 10000, playerPtr),
+	UpgradeableHpSensitiveB(x, y, 2, 2, 10000, playerPtr),
 	Building(x, y, 2, 2, 10000, playerPtr){}
-GameObjectResponse Farm::newMove(const Player& player) {	
+GOR Farm::newMove(const Player& player) {	
 	if (this->belongTo(&player) and this->exist()) {
-		GameObjectResponse response = this->decreaseUpgradeMovesLeft();
+		GOR response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
 			return response;
 		}
-		return response + this->processRegeneration() + this->collectFood();
+		return response + this->regenerate() + this->collectFood();
 	}
-	return GameObjectResponse();
+	return GOR();
 }
 Resources Farm::getCost() const {
 	Resources cost;
@@ -46,72 +46,11 @@ uint32_t Farm::getRegenerationSpeed() const {
 std::string Farm::getTextureName() const {
 	return "farm";
 }
-std::wstring Farm::getIsNotBuiltYetStr() const {
-	return
-		L"ФЕРМА ЕЩЕ НЕ ПОСТРОЕНА\n"
-		"Дождитесь конца строительства.\n"
-		+ this->getReadableHpInfo() + L"\n"
-		+ this->getReadableRegenerationSpeed();
-}
-std::wstring Farm::getBuildingFinishedStr() const {
-	return 
-		L"ФЕРМА ПОСТРОЕНА\n"
-		"Благодаря Вашим рабочим, ферма уже начинает добывать первую еду.";
-}
 std::string Farm::getNewWindowSoundName() const {
 	return "leaves";
 }
-GameObjectResponse Farm::getGameObjectResponse(const Player& player) {
-	if (!this->exist()) {
-		return GameObjectResponse();
-	}
-	if (this->belongTo(&player)) {
-		if (this->upgrading()) {
-			return this->handleUpgrading();
-		}
-		if (!this->works()) {
-			return this->handleDoesNotWork();
-		}
-		return this->getSelectWindow();
-	}
-	return this->getUnitOfEnemyResponse();
-}
-GameObjectResponse Farm::getSelectWindow() {
-	GameObjectResponse response;
-
-	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-	data.emplace_back("exit_icon", L"Покинуть", true, GameEvent());
-	data.emplace_back(this->getTextureName(), 
-		L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.\n"
-		+ this->getReadableHpInfo(), false, GameEvent());
-
-	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		GameEvent gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
-		data.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())), true, gameEventUpgrade);
-	}
-
-	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
-	response.popUpWindows.push(window);
-
-	return response;
-}
-std::wstring Farm::getUpgradeStartDescription() const {
-	return
-		L"НАЧАТО УЛУЧШЕНИЕ ФЕРМЫ\n"
-		"Сбор еды был приостановлен.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
-std::wstring Farm::getUpgradeFinishDescription() const {
-	return 
-		L"УЛУЧШЕНИЕ ФЕРМЫ ЗАВЕРШЕНО\n"
-		"Сбор еды возобновлен.";
-}
-std::wstring Farm::getBusyWithUpgradingDescription() const {
-	return L"ФЕРМА НЕДОСТУПНА\n"
-		"Подождите, пока будет завершено улучшение.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
+std::wstring Farm::getReadableName() const {
+	return L"ферма";
 }
 Resources Farm::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -120,7 +59,7 @@ Resources Farm::getUpgradeCost() const {
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-uint32_t Farm::getUpgradeMoves() const {
+uint32_t Farm::getUpgradeTime() const {
 	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
 		2,
 		3
@@ -138,9 +77,45 @@ uint32_t Farm::GET_COLLECTION_SPEED(uint32_t level) {
 uint32_t Farm::getCollectionSpeed() const {
 	return GET_COLLECTION_SPEED(this->getCurrentLevel() - 1);
 }
-GameObjectResponse Farm::collectFood() const {
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().addResource.push_back(Resource("food", this->getCollectionSpeed()));
+GOR Farm::collectFood() const {
+	GOR response;
+	response.gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
+	return response;
+}
+GOR Farm::getGameObjectResponse(const Player& player) {
+	if (!this->exist()) {
+		return GOR();
+	}
+	if (this->belongTo(&player)) {
+		if (this->upgrading()) {
+			return this->handleBusyWithUpgrading();
+		}
+		if (!this->works()) {
+			return this->handleDoesNotWork();
+		}
+		return this->getSelectionW();
+	}
+	return this->getUnitOfEnemyResponse();
+}
+GOR Farm::getSelectionW() {
+	GOR response;
+
+	std::vector<SelectionWComponent> components;
+	components.emplace_back("exit_icon", L"Покинуть", true, GEvent());
+	components.emplace_back(this->getTextureName(),
+		L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.\n"
+		+ this->getReadableHpInfo(), false, GEvent());
+
+	if (this->getCurrentLevel() < TOTAL_LEVELS) {
+		GEvent gameEventUpgrade;
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		components.emplace_back("upgrade_icon", 
+			L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
+			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
+	}
+
+	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	response.popUpWindows.push(window);
+
 	return response;
 }

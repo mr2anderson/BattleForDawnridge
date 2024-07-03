@@ -35,21 +35,20 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.display();
 }
 void LoadingScreen::loadBase() {
-	FontStorage::get()->add("1", "/fonts/1.ttf");
+	Fonts::get()->add("1", "/fonts/1.ttf");
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
-	sf::Text text;
-
-	text.setFont(*FontStorage::get()->get("1"));
-	text.setString(L"Пожалуйста, подождите");
-	text.setCharacterSize(32);
-	text.setFillColor(sf::Color::White);
-	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(2);
-	text.setPosition((window.getSize().x - text.getLocalBounds().width) / 2, window.getSize().y - text.getLocalBounds().height - 50);
+	sf::Text t;
+	t.setFont(*Fonts::get()->get("1"));
+	t.setString(L"Пожалуйста, подождите");
+	t.setCharacterSize(32);
+	t.setFillColor(sf::Color::White);
+	t.setOutlineColor(sf::Color::Black);
+	t.setOutlineThickness(2);
+	t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 50);
 
 	window.clear(UI_COLOR);
-	window.draw(text);
+	window.draw(t);
 	window.display();
 }
 void LoadingScreen::loadAll() {
@@ -57,17 +56,17 @@ void LoadingScreen::loadAll() {
 		"castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
 		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
 		"farm", "wood_icon", "iron_icon"}) {
-		TextureStorage::get()->add(a, "images/" + a + ".png");
+		Textures::get()->add(a, "images/" + a + ".png");
 	}
-	for (uint32_t i = 1; i <= BattleScreen::TOTAL_PLAINS; i = i + 1) {
-		TextureStorage::get()->add("dark_plains_" + std::to_string(i), "images/dark_plains_" + std::to_string(i) + ".png");
+	for (uint32_t i = 1; i <= MainScreen::TOTAL_PLAINS; i = i + 1) {
+		Textures::get()->add("dark_plains_" + std::to_string(i), "images/dark_plains_" + std::to_string(i) + ".png");
 	}
-	for (const std::string& a : { "click", "newMove", "leaves", "sawmill", "quarry", "mine", "hooray", "horse"}) {
-		SoundStorage::get()->add(a, "sounds/" + a + ".ogg");
+	for (const std::string& a : { "click", "new_move", "leaves", "sawmill", "quarry", "mine", "hooray", "horse"}) {
+		Sounds::get()->add(a, "sounds/" + a + ".ogg");
 	}
-	MusicStorage::get()->add("intro", "music/intro.ogg");
-	MusicStorage::get()->add("menu", "music/menu.ogg");
+	Music::get()->add("intro", "music/intro.ogg");
+	Music::get()->add("menu", "music/menu.ogg");
 	for (uint32_t i = 0; i < 10; i = i + 1) {
-		MusicStorage::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
+		Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
 	}
 }

@@ -21,16 +21,25 @@
 
 
 ResourcePoint::ResourcePoint() = default;
-ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : GameObject(x, y, sx, sy, size, size) {}
-GameObjectResponse ResourcePoint::getGameObjectResponse(const Player& player) {
-	GameObjectResponse response;
+ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : GO(x, y, sx, sy, size, size) {}
+GOR ResourcePoint::newMove(const Player& player) {
+	return GOR();
+}
+GOR ResourcePoint::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return response;
+		return GOR();
 	}
-	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-	data.emplace_back("exit_icon", L"Вернуться", true, GameEvent());
-	data.emplace_back(this->getTextureName(), this->getDescription(), false, GameEvent());
-	SelectWindow* window = new SelectWindow(this->getClickSoundName(), "click", data);
+	return this->getSelectionWindow();
+}
+GOR ResourcePoint::getSelectionWindow() {
+	GOR response;
+
+	std::vector<SelectionWComponent> components;
+	components.emplace_back("exit_icon", L"Вернуться", true, GEvent());
+	components.emplace_back(this->getTextureName(), this->getDescription(), false, GEvent());
+
+	SelectionW* window = new SelectionW(this->getClickSoundName(), "click", components);
 	response.popUpWindows.push(window);
+
 	return response;
 }

@@ -23,7 +23,7 @@
 
 Sawmill::Sawmill() = default;
 Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
-	ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
+	ResourceB(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 2, 2, 20000, playerPtr) {}
 Resources Sawmill::getCost() const {
 	Resources cost;
@@ -36,25 +36,13 @@ uint32_t Sawmill::getRegenerationSpeed() const {
 std::string Sawmill::getTextureName() const {
 	return "sawmill";
 }
-std::wstring Sawmill::getIsNotBuiltYetStr() const {
-	return
-		L"ЛЕСОПИЛКА ЕЩЕ НЕ ПОСТРОЕНА\n"
-		"Дождитесь конца строительства.\n"
-		+ this->getReadableHpInfo() + L"\n"
-		+ this->getReadableRegenerationSpeed();
-}
-std::wstring Sawmill::getBuildingFinishedStr() const {
-	return
-		L"ЛЕСОПИЛКА ПОСТРОЕНА\n"
-		"Благодаря Вашим рабочим, лесопилка уже начинает добывать первую древесину.";
-}
 std::string Sawmill::getNewWindowSoundName() const {
 	return "sawmill";
 }
 std::string Sawmill::getResourceType() const {
 	return "wood";
 }
-uint32_t Sawmill::getResourceNPerMove(uint32_t level) const {
+uint32_t Sawmill::getCollectionSpeed(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
@@ -80,22 +68,6 @@ std::wstring Sawmill::getResourcesOverStr() const {
 		L"ЛЕСА ВЫРУБЛЕНЫ\n"
 		"Одна из Ваших лесопилок прекращает работу.";
 }
-std::wstring Sawmill::getUpgradeStartDescription() const {
-	return
-		L"НАЧАТО УЛУЧШЕНИЕ ЛЕСОПИЛКИ\n"
-		"Сбор древесины был приостановлен.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
-std::wstring Sawmill::getUpgradeFinishDescription() const {
-	return
-		L"УЛУЧШЕНИЕ ЛЕСОПИЛКИ ЗАВЕРШЕНО\n"
-		"Сбор древесины возобновлен.";
-}
-std::wstring Sawmill::getBusyWithUpgradingDescription() const {
-	return L"ЛЕСОПИЛКА НЕДОСТУПНА\n"
-		"Подождите, пока будет завершено улучшение.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
 Resources Sawmill::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 20000}}),
@@ -103,10 +75,13 @@ Resources Sawmill::getUpgradeCost() const {
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-uint32_t Sawmill::getUpgradeMoves() const {
+uint32_t Sawmill::getUpgradeTime() const {
 	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
 		2,
 		3
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
+}
+std::wstring Sawmill::getReadableName() const {
+	return L"лесопилка";
 }

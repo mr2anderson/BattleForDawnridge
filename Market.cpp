@@ -22,22 +22,23 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : 
-	UpgradeableHpSensitiveBuilding(x, y, 2, 2, 30000, playerPtr),
-	Building(x, y, 2, 2, 30000, playerPtr){}
+	UpgradeableHpSensitiveB(x, y, 2, 2, 30000, playerPtr),
+	Building(x, y, 2, 2, 30000, playerPtr) {
+
+}
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Building::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
 		this->drawCurrentTradeShortInfo(target, states);
 	}
 }
-GameObjectResponse Market::doTrade(const Trade& trade) {
+GOR Market::doTrade(const Trade& trade) {
 	this->currentTrade = trade;
 
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().subResource.push_back(trade.sell);
+	GOR response;
+	response.gEvent.subResource.push_back(trade.sell);
 
-	MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", 
+	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", 
 		L"СДЕЛКА НАЧАТА\n"
 		"Ваши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:\n" + 
 		trade.getReadableInfo());
@@ -45,88 +46,53 @@ GameObjectResponse Market::doTrade(const Trade& trade) {
 
 	return response;
 }
-GameObjectResponse Market::newMove(const Player& currentPlayer) {
-	GameObjectResponse response;
+GOR Market::newMove(const Player& currentPlayer) {
 	if (!this->belongTo(&currentPlayer) or !this->exist()) {
-		return response;
+		return GOR();
 	}
-	response = this->decreaseUpgradeMovesLeft();
+	GOR response = this->handleCurrentUpgrade();
 	if (this->upgrading()) {
 		return response;
 	}
-	response = response + this->processRegeneration();
-	if (!this->works() or !this->busy()) {
+	response = response + this->regenerate();
+	if (!this->works()) {
 		return response;
 	}
-
-	response = response + this->currentTradeNewMove();
-
-	return response;
+	return response + this->handleCurrentTrade();
 }
 Resources Market::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 30000));
 	return cost;
 }
-GameObjectResponse Market::currentTradeNewMove() {
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-
-	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
-	if (this->currentTrade.movesLeft == 0) {
-		if (!response.gameEvent.has_value()) {
-			response.gameEvent = GameEvent();
-		}
-		response.gameEvent.value().addResource.push_back(this->currentTrade.buy);
-		MessageWindow* window = new MessageWindow(this->getNewWindowSoundName(), "click", 
-			L"СДЕЛКА ЗАВЕРШЕНА\n"
-			"Ресурсы были получены. Детали сделки:\n"
-			+ this->currentTrade.getReadableInfo());
-		response.popUpWindows.push(window);
-	}
-
-	return response;
+uint32_t Market::getRegenerationSpeed() const {
+	return 10000;
+}
+std::string Market::getNewWindowSoundName() const {
+	return "horse";
+}
+std::string Market::getTextureName() const {
+	return "market";
+}
+Resources Market::getUpgradeCost() const {
+	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
+		Resources({{"wood", 60000}}),
+		Resources({{"wood", 120000}})
+	};
+	return upgradeCosts[this->getCurrentLevel() - 1];
+}
+uint32_t Market::getUpgradeTime() const {
+	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
+		3,
+		6
+	};
+	return upgradeMoves[this->getCurrentLevel() - 1];
+}
+std::wstring Market::getReadableName() const {
+	return L"рынок";
 }
 bool Market::busy() const {
 	return this->currentTrade.movesLeft != 0;
-}
-GameObjectResponse Market::getSelectWindow() {
-	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-	data.emplace_back("exit_icon", L"Покинуть", true, GameEvent());
-	data.emplace_back("market", 
-		L"Рынки позволяют обменивать ресурсы.\n" +
-		this->getReadableHpInfo(), false, GameEvent());
-
-	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		GameEvent gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
-		data.emplace_back("upgrade_icon", 
-			L"Улучшить рынок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение уменьшит число ходов для одной сделки с " + std::to_wstring(this->getTradeStartTime()) + L" до " + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
-	}
-
-	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
-		std::make_tuple("gold", 100, "wood", 50000),
-		std::make_tuple("gold", 100, "stone", 50000),
-		std::make_tuple("gold", 100, "iron", 50000),
-		std::make_tuple("food", 50000, "gold", 100),
-		std::make_tuple("wood", 50000, "gold", 100),
-		std::make_tuple("stone", 50000, "gold", 100),
-		std::make_tuple("iron", 50000, "gold", 100) }) {
-		GameEvent gameEventTrade;
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
-		this->addTrade(data, gameEventTrade);
-	}
-
-	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);
-	GameObjectResponse response;
-	response.popUpWindows.push(window);
-	return response;
-}
-void Market::addTrade(std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data, const GameEvent& gameEventTrade) {
-	data.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.type + "_icon",
-		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
-		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, gameEventTrade);
 }
 uint32_t Market::GET_TRADE_START_TIME(uint32_t level) {
 	uint32_t levelTradeStartTime[TOTAL_LEVELS] = {
@@ -148,12 +114,12 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 
 	sf::Sprite sprite;
 	sprite.setScale(0.5, 0.5);
-	sprite.setTexture(*TextureStorage::get()->get(this->currentTrade.buy.type));
+	sprite.setTexture(*Textures::get()->get(this->currentTrade.buy.type));
 	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(sprite, states);
 
 	sf::Text text;
-	text.setFont(*FontStorage::get()->get("1"));
+	text.setFont(*Fonts::get()->get("1"));
 	text.setString(std::to_string(this->currentTrade.movesLeft));
 	text.setCharacterSize(25);
 	text.setFillColor(sf::Color::White);
@@ -162,79 +128,85 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	text.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(text, states);
 }
-uint32_t Market::getRegenerationSpeed() const {
-	return 10000;
+GOR Market::handleCurrentTrade() {
+	if (!this->busy()) {
+		return GOR();
+	}
+	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
+	if (this->currentTrade.movesLeft == 0) {
+		GOR response;
+		response.gEvent.addResource.push_back(this->currentTrade.buy);
+		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", 
+			L"СДЕЛКА ЗАВЕРШЕНА\n"
+			"Ресурсы были получены. Детали сделки:\n"
+			+ this->currentTrade.getReadableInfo());
+		response.popUpWindows.push(window);
+		return response;
+	}
+	return GOR();
 }
-std::string Market::getNewWindowSoundName() const {
-	return "horse";
+GOR Market::getSelectionW() {
+	std::vector<SelectionWComponent> components;
+	components.emplace_back("exit_icon", L"Покинуть", true, GEvent());
+	components.emplace_back("market", 
+		L"Рынки позволяют обменивать ресурсы.\n" +
+		this->getReadableHpInfo(), false, GEvent());
+
+	if (this->getCurrentLevel() < TOTAL_LEVELS) {
+		GEvent gameEventUpgrade;
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		components.emplace_back("upgrade_icon", 
+			L"Улучшить рынок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
+			"Улучшение уменьшит число ходов для одной сделки с " + std::to_wstring(this->getTradeStartTime()) + L" до " + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
+	}
+
+	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
+		std::make_tuple("gold", 100, "wood", 50000),
+		std::make_tuple("gold", 100, "stone", 50000),
+		std::make_tuple("gold", 100, "iron", 50000),
+		std::make_tuple("food", 50000, "gold", 100),
+		std::make_tuple("wood", 50000, "gold", 100),
+		std::make_tuple("stone", 50000, "gold", 100),
+		std::make_tuple("iron", 50000, "gold", 100) }) {
+		GEvent gameEventTrade;
+		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
+		this->addTrade(components, gameEventTrade);
+	}
+
+	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	GOR response;
+	response.popUpWindows.push(window);
+	return response;
 }
-std::wstring Market::getBuildingFinishedStr() const {
-	return 
-		L"РЫНОК ПОСТРОЕН\n"
-		"Благодаря Вашим рабочим, рынок готов к торговле.";
+void Market::addTrade(std::vector<SelectionWComponent>& components, const GEvent& gameEventTrade) {
+	components.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.type + "_icon",
+		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
+		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, gameEventTrade);
 }
-std::wstring Market::getIsNotBuiltYetStr() const {
-	return 
-		L"РЫНОК ЕЩЕ НЕ ПОСТРОЕН\n"
-		"Дождитесь конца строительства.\n"
-		+ this->getReadableHpInfo() + L"\n"
-		+ this->getReadableRegenerationSpeed();
+GOR Market::handleBusyWithTrade() const {
+	GOR response;
+	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
+		L"РЫНОК ЗАНЯТ\n"
+		"Детали сделки:\n" +
+		this->currentTrade.getReadableInfo());
+	response.popUpWindows.push(window);
+	return response;
 }
-std::string Market::getTextureName() const {
-	return "market";
-}
-std::wstring Market::getUpgradeStartDescription() const {
-	return
-		L"НАЧАТО УЛУЧШЕНИЕ РЫНКА\n"
-		"Подождите, пока оно закончится.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
-std::wstring Market::getUpgradeFinishDescription() const {
-	return 
-		L"УЛУЧШЕНИЕ РЫНКА ЗАВЕРШЕНО\n"
-		"Теперь Вы снова можете его использовать.";
-}
-std::wstring Market::getBusyWithUpgradingDescription() const {
-	return 
-		L"РЫНОК НЕДОСТУПЕН\n"
-		"Подождите, пока будет завершено улучшение.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
-Resources Market::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 60000}}),
-		Resources({{"wood", 120000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Market::getUpgradeMoves() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		3,
-		6
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
-}
-GameObjectResponse Market::getGameObjectResponse(const Player& player) {
+GOR Market::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return GameObjectResponse();
+		return GOR();
 	}
 	if (this->belongTo(&player)) {
 		if (!this->works()) {
 			return this->handleDoesNotWork();
 		}
 		if (this->upgrading()) {
-			return this->handleUpgrading();
+			return this->handleBusyWithUpgrading();
 		}
 		if (this->busy()) {
-			GameObjectResponse response;
-			MessageWindow* window = new MessageWindow("horse", "click", 
-				L"РЫНОК ЗАНЯТ\n"
-				"Детали сделки:\n" + 
-				this->currentTrade.getReadableInfo());
-			response.popUpWindows.push(window);
-			return response;
+			return this->handleBusyWithTrade();
 		}
-		return this->getSelectWindow();
+		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
 }

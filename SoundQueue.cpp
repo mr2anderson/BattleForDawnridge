@@ -23,16 +23,10 @@
 SoundQueue *SoundQueue::singletone = nullptr;
 
 
-void SoundQueue::push(sf::SoundBuffer *soundbuffer, float dstX, float dstY) {
-    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
-        this->data.erase(this->data.begin());
-    }
-
-    float dst = std::sqrt(dstX * dstX + dstY * dstY);
-
+void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
+    this->removeOldSounds();
     this->data.emplace_back();
     this->data.back().setBuffer(*soundbuffer);
-    this->data.back().setVolume(std::max(0.f, 100 - dst / 1000 * 33));
     this->data.back().play();
 }
 void SoundQueue::clear() {
@@ -40,4 +34,9 @@ void SoundQueue::clear() {
         sound.stop();
     }
     this->data.clear();
+}
+void SoundQueue::removeOldSounds() {
+    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
+        this->data.erase(this->data.begin());
+    }
 }

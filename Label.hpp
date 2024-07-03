@@ -19,9 +19,11 @@
 
 
 #include <sstream>
+#include <optional>
+#include "Textures.hpp"
+#include "Fonts.hpp"
+#include "Sounds.hpp"
 #include "ColorTheme.hpp"
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
 
 
 #pragma once
@@ -30,8 +32,8 @@
 class Label : public sf::Drawable {
 public:
 	Label();
-	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::wstring& message, uint32_t charSize);
-	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::string& picture, const std::wstring& message, uint32_t charSize);
+	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional<std::string>& picture, std::wstring message);
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 protected:
 	uint32_t getX() const;
@@ -42,4 +44,12 @@ private:
 	sf::RectangleShape rect;
 	sf::Sprite sprite;
 	sf::Text text;
+
+	void setRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+	void setPicture(uint32_t w, uint32_t h, const std::string& picture);
+	void initText();
+	std::wstring putNLs(const std::wstring& message, uint32_t w, bool picture);
+	std::wstring centerLines(const std::wstring& message);
+	uint32_t getLongestLineWidth(const std::wstring& message);
+	std::wstring centerLines(const std::wstring& message, uint32_t maxWidth);
 };

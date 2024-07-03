@@ -29,6 +29,15 @@ Player::Player(uint32_t id) {
 uint32_t Player::getId() const {
 	return this->id;
 }
+bool operator==(const Player& a, const Player& b) {
+	if (a.getId() == b.getId()) {
+		return true;
+	}
+	return false;
+}
+bool operator!=(const Player& a, const Player& b) {
+	return !(a == b);
+}
 const ResourceBar* Player::getConstResourceBarPtr() const {
 	return &this->bar;
 }
@@ -49,13 +58,4 @@ int32_t Player::getResource(const std::string& id) const {
 }
 Resources Player::getResources() const {
 	return this->bar.getResources();
-}
-bool operator==(const Player& a, const Player& b) {
-	if (a.getId() == b.getId()) {
-		return true;
-	}
-	return false;
-}
-bool operator!=(const Player& a, const Player& b) {
-	return !(a == b);
 }

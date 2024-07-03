@@ -18,7 +18,7 @@
 
 
 #include <ctime>
-#include "MusicStorage.hpp"
+#include "Music.hpp"
 
 
 #pragma once
@@ -36,16 +36,18 @@ public:
     void update();
     void restartMusic();
 
-    static constexpr int32_t SOUNDTRACKS_N = 10;
+    static constexpr uint32_t SOUNDTRACKS_N = 10;
 private:
     Playlist() = default;
-    Playlist(int32_t number) {
+    Playlist(uint32_t number) {
         this->number = number;
         this->index = (int32_t)(time(nullptr) % this->number);
     }
     Playlist(const Playlist& copy);
     static Playlist *singletone;
 
-    int32_t number;
-    int32_t index;
+    uint32_t number;
+    uint32_t index;
+
+    static constexpr uint32_t MUSIC_VOLUME = 40;
 };

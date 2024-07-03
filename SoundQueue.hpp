@@ -18,7 +18,6 @@
 
 
 #include <list>
-#include <cmath>
 #include <SFML/Audio.hpp>
 
 
@@ -34,7 +33,7 @@ public:
         return SoundQueue::singletone;
     }
 
-    void push(sf::SoundBuffer *soundbuffer, float dstX=0, float dstY=0);
+    void push(sf::SoundBuffer *soundbuffer);
     void clear();
 private:
     SoundQueue() = default;
@@ -42,4 +41,6 @@ private:
     static SoundQueue *singletone;
 
     std::list<sf::Sound> data;
+
+    void removeOldSounds();
 };

@@ -17,9 +17,8 @@
  */
 
 
-#include <array>
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
+#include "Textures.hpp"
+#include "Fonts.hpp"
 #include "ColorTheme.hpp"
 #include "Resources.hpp"
 
@@ -30,6 +29,7 @@
 class ResourceBar : public sf::Drawable {
 public:
 	ResourceBar();
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void plus(const Resource& resource);
 	void minus(const Resource& resource);
@@ -39,4 +39,6 @@ public:
 	Resources getResources() const;
 private:
 	Resources resources;
+
+	void drawEverything(sf::RenderTarget& target, sf::RenderStates states) const;
 };

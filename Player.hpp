@@ -27,7 +27,10 @@ class Player {
 public:
 	Player();
 	Player(uint32_t id);
+
 	uint32_t getId() const;
+	friend bool operator==(const Player& a, const Player& b);
+	friend bool operator!=(const Player& a, const Player& b);
 	const ResourceBar* getConstResourceBarPtr() const;
 	void addResource(const Resource &resource);
 	void subResource(const Resource &resource);
@@ -35,8 +38,6 @@ public:
 	void subResources(const Resources& resources);
 	int32_t getResource(const std::string& id) const;
 	Resources getResources() const;
-	friend bool operator==(const Player& a, const Player& b);
-	friend bool operator!=(const Player& a, const Player& b);
 private:
 	uint32_t id;
 	ResourceBar bar;

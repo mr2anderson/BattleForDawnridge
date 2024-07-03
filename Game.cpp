@@ -26,14 +26,14 @@ Game* Game::singletone = nullptr;
 void Game::run() {
 	this->initWindow();
 	LoadingScreen::get()->run(this->window);
-	if (PressAnyKeyScreen::get()->run(this->window) != 0) {
+	if (PAKScreen::get()->run(this->window) != 0) {
 		return;
 	}
 	for (; ;) {
-		if (MenuScreen::get()->run(this->window) != 0) {
+		if (Menu::get()->run(this->window) != 0) {
 			return;
 		}
-		if (BattleScreen::get()->run(this->window) != 0) {
+		if (MainScreen::get()->run(this->window) != 0) {
 			return;
 		}
 	}

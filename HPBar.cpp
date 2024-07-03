@@ -60,18 +60,6 @@ uint32_t HPBar::getCurrent() const {
 uint32_t HPBar::getMax() const {
 	return this->max;
 }
-uint32_t HPBar::getX() const {
-	return this->x;
-}
-uint32_t HPBar::getY() const {
-	return this->y;
-}
-uint32_t HPBar::getSX() const {
-	return this->sx;
-}
-uint32_t HPBar::getSY() const {
-	return this->sy;
-}
 void HPBar::changeCurrent(uint32_t newCurrent) {
 	this->current = std::min(this->max, newCurrent);
 }
@@ -81,9 +69,6 @@ void HPBar::changeMax(uint32_t newMax) {
 }
 void HPBar::setMax() {
 	this->current = this->max;
-}
-std::wstring HPBar::getReadableInfo() const {
-	return L"Защита: " + std::to_wstring(this->getCurrent()) + L" / " + std::to_wstring(this->getMax());
 }
 HPBar operator+(HPBar a, uint32_t b) {
 	a.current = std::min(a.current + b, a.max);
@@ -97,4 +82,19 @@ HPBar operator-(HPBar a, uint32_t b) {
 		a.current = a.current - b;
 	}
 	return a;
+}
+std::wstring HPBar::getReadableInfo() const {
+	return L"Защита: " + std::to_wstring(this->getCurrent()) + L" / " + std::to_wstring(this->getMax());
+}
+uint32_t HPBar::getX() const {
+	return this->x;
+}
+uint32_t HPBar::getY() const {
+	return this->y;
+}
+uint32_t HPBar::getSX() const {
+	return this->sx;
+}
+uint32_t HPBar::getSY() const {
+	return this->sy;
 }

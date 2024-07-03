@@ -23,7 +23,7 @@
 
 Quarry::Quarry() = default;
 Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
-	ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
+	ResourceB(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 2, 2, 20000, playerPtr) {}
 Resources Quarry::getCost() const {
 	Resources cost;
@@ -36,25 +36,13 @@ uint32_t Quarry::getRegenerationSpeed() const {
 std::string Quarry::getTextureName() const {
 	return "quarry";
 }
-std::wstring Quarry::getIsNotBuiltYetStr() const {
-	return
-		L"КАМЕНОЛОМНЯ ЕЩЕ НЕ ПОСТРОЕНА\n"
-		"Дождитесь конца строительства.\n"
-		+ this->getReadableHpInfo() + L"\n"
-		+ this->getReadableRegenerationSpeed();
-}
-std::wstring Quarry::getBuildingFinishedStr() const {
-	return
-		L"КАМЕНОЛОМНЯ ПОСТРОЕНА\n"
-		"Благодаря Вашим рабочим, каменоломня уже начинает добывать первый камень.";
-}
 std::string Quarry::getNewWindowSoundName() const {
 	return "quarry";
 }
 std::string Quarry::getResourceType() const {
 	return "stone";
 }
-uint32_t Quarry::getResourceNPerMove(uint32_t level) const {
+uint32_t Quarry::getCollectionSpeed(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
@@ -80,22 +68,6 @@ std::wstring Quarry::getResourcesOverStr() const {
 		L"КАМЕНЬ ЗАКОНЧИЛСЯ\n"
 		"Одна из Ваших каменоломен прекращает работу.";
 }
-std::wstring Quarry::getUpgradeStartDescription() const {
-	return
-		L"НАЧАТО УЛУЧШЕНИЕ КАМЕНОЛОМНИ\n"
-		"Сбор камня был приостановлен.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
-std::wstring Quarry::getUpgradeFinishDescription() const {
-	return
-		L"УЛУЧШЕНИЕ КАМЕНОЛОМНИ ЗАВЕРШЕНО\n"
-		"Сбор камня возобновлен.";
-}
-std::wstring Quarry::getBusyWithUpgradingDescription() const {
-	return L"КАМЕНОЛОМНЯ НЕДОСТУПНА\n"
-		"Подождите, пока будет завершено улучшение.\n"
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves());
-}
 Resources Quarry::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 20000}}),
@@ -103,10 +75,13 @@ Resources Quarry::getUpgradeCost() const {
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-uint32_t Quarry::getUpgradeMoves() const {
+uint32_t Quarry::getUpgradeTime() const {
 	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
 		2,
 		3
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
+}
+std::wstring Quarry::getReadableName() const {
+	return L"каменоломня";
 }

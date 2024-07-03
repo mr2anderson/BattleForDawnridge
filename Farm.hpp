@@ -17,35 +17,30 @@
  */
 
 
-#include "UpgradeableHpSensitiveBuilding.hpp"
-#include "SelectWindow.hpp"
+#include "UpgradeableHpSensitiveB.hpp"
+#include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class Farm : public UpgradeableHpSensitiveBuilding {
+class Farm : public UpgradeableHpSensitiveB {
 public:
 	Farm();
 	Farm(uint32_t x, uint32_t y, const Player* playerPtr);
 
-	GameObjectResponse newMove(const Player& currentPlayer) override;
+	GOR newMove(const Player& currentPlayer) override;
 	Resources getCost() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
 	std::string getTextureName() const override;
-	std::wstring getIsNotBuiltYetStr() const override;
-	std::wstring getBuildingFinishedStr() const override;
 	std::string getNewWindowSoundName() const override;
-	std::wstring getUpgradeStartDescription() const override;
-	std::wstring getUpgradeFinishDescription() const override;
-	std::wstring getBusyWithUpgradingDescription() const override;
+	std::wstring getReadableName() const override;
 	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeMoves() const override;
-
-	GameObjectResponse getGameObjectResponse(const Player& player) override;
-	GameObjectResponse getSelectWindow();
+	uint32_t getUpgradeTime() const override;
 	static uint32_t GET_COLLECTION_SPEED(uint32_t level);
 	uint32_t getCollectionSpeed() const;
-	GameObjectResponse collectFood() const;
+	GOR collectFood() const;
+	GOR getGameObjectResponse(const Player& player) override;
+	GOR getSelectionW();
 };

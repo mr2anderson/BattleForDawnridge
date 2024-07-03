@@ -24,15 +24,15 @@ Playlist *Playlist::singletone = nullptr;
 
 
 void Playlist::update() {
-    if (MusicStorage::get()->get(std::to_string(this->index))->getStatus() == sf::Music::Status::Playing) {
+    if (Music::get()->get(std::to_string(this->index))->getStatus() == sf::Music::Status::Playing) {
         return;
     }
     this->index = (this->index + 1) % this->number;
-    MusicStorage::get()->get(std::to_string(this->index))->play();
-    MusicStorage::get()->get(std::to_string(this->index))->setVolume(60);
+    Music::get()->get(std::to_string(this->index))->play();
+    Music::get()->get(std::to_string(this->index))->setVolume(MUSIC_VOLUME);
 }
 void Playlist::restartMusic() {
-    for (int32_t i = 0; i < this->number; i = i + 1) {
-        MusicStorage::get()->get(std::to_string(this->index))->stop();
+    for (uint32_t i = 0; i < this->number; i = i + 1) {
+        Music::get()->get(std::to_string(this->index))->stop();
     }
 }

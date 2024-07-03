@@ -21,15 +21,15 @@
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player* playerPtr) : GameObject(x, y, sx, sy, currentHp, maxHp) {
+Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player* playerPtr) : 
+	GO(x, y, sx, sy, currentHp, maxHp) {
 	this->playerPtr = playerPtr;
 }
 bool Unit::belongTo(const Player* player) const {
 	return (*this->playerPtr == *player);
 }
-GameObjectResponse Unit::getUnitOfEnemyResponse() {
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().tryToAttack.push_back(this);
+GOR Unit::getUnitOfEnemyResponse() {
+	GOR response;
+	response.gEvent.tryToAttack.push_back(this);
 	return response;
 }

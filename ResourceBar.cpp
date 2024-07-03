@@ -24,33 +24,7 @@ ResourceBar::ResourceBar() = default;
 void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::View old = target.getView();
 	target.setView(target.getDefaultView());
-
-	sf::RectangleShape rect;
-	rect.setPosition(sf::Vector2f(5, 5));
-	rect.setSize(sf::Vector2f(target.getSize().x - 10, 64));
-	rect.setFillColor(UI_COLOR);
-	rect.setOutlineColor(sf::Color::Black);
-	rect.setOutlineThickness(2);
-	target.draw(rect, states);
-
-	std::array<std::string, 5> res = { "food", "wood", "stone", "iron", "gold" };
-	for (uint32_t i = 0; i < 5; i = i + 1) {
-		sf::Sprite sprite;
-		sprite.setTexture(*TextureStorage::get()->get(res[i] + "_icon"));
-		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 5, rect.getPosition().y));
-		target.draw(sprite, states);
-
-		sf::Text text;
-		text.setFont(*FontStorage::get()->get("1"));
-		text.setString(std::to_string(this->get(res[i])));
-		text.setCharacterSize(16);
-		text.setFillColor(sf::Color::White);
-		text.setOutlineColor(sf::Color::Black);
-		text.setOutlineThickness(1);
-		text.setPosition(sf::Vector2f(sprite.getPosition().x + 10 + sprite.getLocalBounds().width, rect.getPosition().y + (rect.getSize().y - text.getLocalBounds().height) / 2));
-		target.draw(text, states);
-	}
-
+	this->drawEverything(target, states);
 	target.setView(old);
 }
 void ResourceBar::plus(const Resource& resource) {
@@ -70,4 +44,31 @@ int32_t ResourceBar::get(const std::string& type) const {
 }
 Resources ResourceBar::getResources() const {
 	return this->resources;
+}
+void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates states) const {
+	sf::RectangleShape rect;
+	rect.setPosition(sf::Vector2f(5, 5));
+	rect.setSize(sf::Vector2f(target.getSize().x - 10, 64));
+	rect.setFillColor(UI_COLOR);
+	rect.setOutlineColor(sf::Color::Black);
+	rect.setOutlineThickness(2);
+	target.draw(rect, states);
+
+	std::string res[5] = { "food", "wood", "stone", "iron", "gold" };
+	for (uint32_t i = 0; i < 5; i = i + 1) {
+		sf::Sprite sprite;
+		sprite.setTexture(*Textures::get()->get(res[i] + "_icon"));
+		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 5, rect.getPosition().y));
+		target.draw(sprite, states);
+
+		sf::Text text;
+		text.setFont(*Fonts::get()->get("1"));
+		text.setString(std::to_string(this->get(res[i])));
+		text.setCharacterSize(16);
+		text.setFillColor(sf::Color::White);
+		text.setOutlineColor(sf::Color::Black);
+		text.setOutlineThickness(1);
+		text.setPosition(sf::Vector2f(sprite.getPosition().x + 10 + sprite.getLocalBounds().width, rect.getPosition().y + (rect.getSize().y - text.getLocalBounds().height) / 2));
+		target.draw(text, states);
+	}
 }

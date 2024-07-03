@@ -17,7 +17,7 @@
  */
 
 
-#include "BattleScreen.hpp"
+#include "MainScreen.hpp"
 
 
 #pragma once
@@ -31,6 +31,7 @@ public:
 		}
 		return LoadingScreen::singletone;
 	}
+
 	void run(sf::RenderWindow &window);
 private:
 	LoadingScreen() = default;

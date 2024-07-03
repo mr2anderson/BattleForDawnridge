@@ -29,16 +29,19 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
-	UpgradeableBuilding(x, y, 2, 2, LEVEL_HP[0], playerPtr),
-	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {}
-GameObjectResponse Castle::newMove(const Player& player) {
-	GameObjectResponse response;
+	UpgradeableB(x, y, 2, 2, LEVEL_HP[0], playerPtr),
+	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
+
+}
+GOR Castle::newMove(const Player& player) {
+	GOR response;
 	if (this->belongTo(&player) and this->exist()) {
-		response = this->decreaseUpgradeMovesLeft();
+		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
+		response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
 			return response;
 		}
-		return response + this->processRegeneration();
+		return response + this->regenerate();
 	}
 	return response;
 }
@@ -46,29 +49,6 @@ Resources Castle::getCost() const {
 	Resources cost;
 	cost.plus(Resource("stone", 100000));
 	return cost;
-}
-GameObjectResponse Castle::getSelectWindow() {
-	GameObjectResponse response;
-
-	std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>> data;
-	data.emplace_back("exit_icon", L"Покинуть", true, GameEvent());
-	data.emplace_back("castle", 
-		L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.\n"
-		+ this->getReadableHpInfo(), false, GameEvent());
-
-	if (this->getCurrentLevel() != TOTAL_LEVELS) {
-		GameEvent gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
-		data.emplace_back("upgrade_icon", 
-			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) + 
-			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
-	}
-
-	SelectWindow* window = new SelectWindow("hooray", "click", data);
-	response.popUpWindows.push(window);
-
-	return response;
 }
 uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
 	return LEVEL_HP[level] / 4;
@@ -82,20 +62,8 @@ std::string Castle::getTextureName() const {
 std::string Castle::getNewWindowSoundName() const {
 	return "hooray";
 }
-std::wstring Castle::getUpgradeStartDescription() const {
-	return 
-		L"НАЧАТО УЛУЧШЕНИЕ ЗАМКА\n"
-		"Подождите, пока оно закончится."
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves()) + L".";
-}
-std::wstring Castle::getUpgradeFinishDescription() const {
-	return L"УЛУЧШЕНИЕ ЗАМКА ЗАВЕРШЕНО";
-}
-std::wstring Castle::getBusyWithUpgradingDescription() const {
-	return
-		L"ЗАМОК НЕДОСТУПЕН\n"
-		"Подождите, пока будет завершено улучшение."
-		"Число ходов до конца улучшения: " + std::to_wstring(this->getUpgradeMoves()) + L".";
+std::wstring Castle::getReadableName() const {
+	return L"замок";
 }
 Resources Castle::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -104,26 +72,42 @@ Resources Castle::getUpgradeCost() const {
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-uint32_t Castle::getUpgradeMoves() const {
+uint32_t Castle::getUpgradeTime() const {
 	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
 		4,
 		8
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-GameObjectResponse Castle::decreaseUpgradeMovesLeft() {
-	GameObjectResponse response = this->UpgradeableBuilding::decreaseUpgradeMovesLeft();
-	if (!response.popUpWindows.empty()) {
-		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
+GOR Castle::getSelectionW() {
+	GOR response;
+
+	std::vector<SelectionWComponent> components;
+	components.emplace_back("exit_icon", L"Покинуть", true, GEvent());
+	components.emplace_back("castle",
+		L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.\n"
+		+ this->getReadableHpInfo(), false, GEvent());
+
+	if (this->getCurrentLevel() != TOTAL_LEVELS) {
+		GEvent gameEventUpgrade;
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		components.emplace_back("upgrade_icon",
+			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
+			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
+			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
 	}
+
+	SelectionW* window = new SelectionW("hooray", "click", components);
+	response.popUpWindows.push(window);
+
 	return response;
 }
-GameObjectResponse Castle::getGameObjectResponse(const Player& player) {
+GOR Castle::getGameObjectResponse(const Player& player) {
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
-			return this->handleUpgrading();
+			return this->handleBusyWithUpgrading();
 		}
-		return this->getSelectWindow();
+		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
 }

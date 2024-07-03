@@ -47,5 +47,6 @@ std::wstring Resource::getReadableInfo() const {
 		result = L"золото (";
 	}
 	result = result + std::to_wstring(this->n) + L")";
+
 	return result;
 }

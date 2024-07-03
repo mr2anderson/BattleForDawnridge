@@ -17,44 +17,40 @@
  */
 
 
-#include "UpgradeableHpSensitiveBuilding.hpp"
+#include "UpgradeableHpSensitiveB.hpp"
 #include "Trade.hpp"
-#include "SelectWindow.hpp"
+#include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class Market : public UpgradeableHpSensitiveBuilding {
+class Market : public UpgradeableHpSensitiveB {
 public:
 	Market();
 	Market(uint32_t x, uint32_t y, const Player *playerPtr);
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	GameObjectResponse doTrade(const Trade& trade);
-	GameObjectResponse newMove(const Player& currentPlayer);
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	GOR doTrade(const Trade& trade);
+	GOR newMove(const Player& currentPlayer);
 	Resources getCost() const override;
 private:
 	Trade currentTrade;
 
-	GameObjectResponse currentTradeNewMove();
+	uint32_t getRegenerationSpeed() const override;
+	std::string getNewWindowSoundName() const override;
+	std::string getTextureName() const override;
+	Resources getUpgradeCost() const override;
+	uint32_t getUpgradeTime() const override;
+	std::wstring getReadableName() const override;
 	bool busy() const;
-	GameObjectResponse getSelectWindow();
-	void addTrade(std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data, const GameEvent& gameEventTrade);
 	static uint32_t GET_TRADE_START_TIME(uint32_t level);
 	uint32_t getTradeStartTime() const;
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
-
-	uint32_t getRegenerationSpeed() const override;
-	std::string getNewWindowSoundName() const override;
-	std::wstring getBuildingFinishedStr() const override;
-	std::wstring getIsNotBuiltYetStr() const override;
-	std::string getTextureName() const override;
-	std::wstring getUpgradeStartDescription() const override;
-	std::wstring getUpgradeFinishDescription() const override;
-	std::wstring getBusyWithUpgradingDescription() const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeMoves() const override;
-
-	GameObjectResponse getGameObjectResponse(const Player& player) override;
+	GOR handleCurrentTrade();
+	GOR getSelectionW();
+	void addTrade(std::vector<SelectionWComponent>& components, const GEvent& gameEventTrade);
+	GOR handleBusyWithTrade() const;
+	GOR getGameObjectResponse(const Player& player) override;
 };

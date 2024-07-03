@@ -18,7 +18,7 @@
 
 
 #include "Unit.hpp"
-#include "MessageWindow.hpp"
+#include "MessageW.hpp"
 
 
 #pragma once
@@ -29,9 +29,11 @@ public:
 	Building();
 	Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player *playerPtr);
 protected:
+	virtual std::wstring getReadableName() const = 0;
 	virtual uint32_t getRegenerationSpeed() const = 0;
 	virtual std::string getNewWindowSoundName() const = 0;
 
-	virtual GameObjectResponse processRegeneration();
+	std::wstring getUpperCaseReadableName() const;
+	virtual GOR regenerate();
 	std::wstring getReadableRegenerationSpeed() const;
 };

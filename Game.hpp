@@ -19,9 +19,9 @@
 
 
 #include "LoadingScreen.hpp"
-#include "PressAnyKeyScreen.hpp"
-#include "MenuScreen.hpp"
-#include "BattleScreen.hpp"
+#include "PAKScreen.hpp"
+#include "Menu.hpp"
+#include "MainScreen.hpp"
 
 
 #pragma once
@@ -35,6 +35,7 @@ public:
 		}
 		return Game::singletone;
 	}
+
 	void run();
 private:
 	Game() = default;

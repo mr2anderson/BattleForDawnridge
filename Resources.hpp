@@ -28,6 +28,7 @@ class Resources {
 public:
 	Resources();
 	Resources(const std::vector<Resource>& v);
+
 	void plus(const Resource& resource);
 	void minus(const Resource& resource);
 	void plus(const Resources& resources);

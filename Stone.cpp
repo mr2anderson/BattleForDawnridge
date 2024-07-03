@@ -21,7 +21,9 @@
 
 
 Stone::Stone() = default;
-Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 10000) {}
+Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 10000) {
+
+}
 std::string Stone::getResourceType() const {
 	return "stone";
 }

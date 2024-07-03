@@ -18,18 +18,19 @@
 
 
 
-#include "GameObject.hpp"
+#include "GO.hpp"
 
 
-class Unit : public GameObject {
+class Unit : public GO {
 public:
 	Unit();
 	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player *playerPtr);
+
 	bool belongTo(const Player* player) const;
 
 	virtual Resources getCost() const = 0;
 protected:
-	GameObjectResponse getUnitOfEnemyResponse();
+	GOR getUnitOfEnemyResponse();
 private:
 	const Player* playerPtr;
 };
