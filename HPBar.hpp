@@ -38,6 +38,7 @@ public:
 	uint32_t getSY() const;
 	void changeCurrent(uint32_t newCurrent);
 	void changeMax(uint32_t newMax);
+	void setMax();
 	friend HPBar operator+(HPBar a, uint32_t b);
 	friend HPBar operator-(HPBar a, uint32_t b);
 private:

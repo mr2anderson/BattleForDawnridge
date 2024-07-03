@@ -27,5 +27,5 @@
 class UpgradeableHpSensitiveBuilding : public UpgradeableBuilding, public HpSensitiveBuilding {
 public:
 	UpgradeableHpSensitiveBuilding();
-	UpgradeableHpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr);
+	UpgradeableHpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr);
 };

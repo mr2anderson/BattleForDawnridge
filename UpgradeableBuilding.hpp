@@ -26,7 +26,7 @@
 class UpgradeableBuilding : virtual public Building {
 public:
 	UpgradeableBuilding();
-	UpgradeableBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr);
+	UpgradeableBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	GameObjectResponse upgrade();
 protected:

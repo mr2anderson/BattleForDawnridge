@@ -21,7 +21,7 @@
 
 
 Building::Building() = default;
-Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr) : Unit(x, y, sx, sy, full * maxHp + (!full) * 1, maxHp, playerPtr) {}
+Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr) : Unit(x, y, sx, sy, 1, maxHp, playerPtr) {}
 GameObjectResponse Building::processRegeneration() {
 	this->addHp(this->getRegenerationSpeed());
 	return GameObjectResponse();

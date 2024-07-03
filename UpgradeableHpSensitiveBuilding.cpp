@@ -21,7 +21,7 @@
 
 
 UpgradeableHpSensitiveBuilding::UpgradeableHpSensitiveBuilding() = default;
-UpgradeableHpSensitiveBuilding::UpgradeableHpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr) :
-	UpgradeableBuilding(x, y, sx, sy, maxHp, full, playerPtr),
-	HpSensitiveBuilding(x, y, sx, sy, maxHp, full, playerPtr),
-	Building(x, y, sx, sy, maxHp, full, playerPtr){}
+UpgradeableHpSensitiveBuilding::UpgradeableHpSensitiveBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr) :
+	UpgradeableBuilding(x, y, sx, sy, maxHp, playerPtr),
+	HpSensitiveBuilding(x, y, sx, sy, maxHp, playerPtr),
+	Building(x, y, sx, sy, maxHp, playerPtr){}

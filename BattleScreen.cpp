@@ -102,13 +102,13 @@ void BattleScreen::removeOldPopUpWindows() {
 void BattleScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
-	this->pushUnit(new Castle(1, 1, &this->players[0]));
-	this->pushUnit(new Market(3, 1, &this->players[0]));
+	this->pushUnit(new Castle(2, 2, &this->players[0]));
+	this->pushUnit(new Market(2, 4, &this->players[0]));
 	this->pushUnit(new Windmill(4, 4, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Sawmill(7, 3, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Quarry(10, 2, &this->players[0], &this->resourcePoints));
 	this->pushUnit(new Mine(3, 11, &this->players[0], &this->resourcePoints));
-	this->pushUnit(new Castle(this->mapWidth - 3, this->mapHeight - 3, &this->players[1]));
+	this->pushUnit(new Castle(this->mapWidth - 4, this->mapHeight - 4, &this->players[1]));
 }
 void BattleScreen::initMoveCtr() {
 	this->move = 1;

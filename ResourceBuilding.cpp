@@ -22,8 +22,8 @@
 
 ResourceBuilding::ResourceBuilding() = default;
 ResourceBuilding::ResourceBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
-	UpgradeableHpSensitiveBuilding(x, y, sx, sy, maxHp, false, playerPtr),
-	Building(x, y, sx, sy, maxHp, false, playerPtr) {
+	UpgradeableHpSensitiveBuilding(x, y, sx, sy, maxHp, playerPtr),
+	Building(x, y, sx, sy, maxHp, playerPtr) {
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }

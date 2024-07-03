@@ -21,7 +21,7 @@
 
 
 UpgradeableBuilding::UpgradeableBuilding() = default;
-UpgradeableBuilding::UpgradeableBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, bool full, const Player* playerPtr) : Building(x, y, sx, sy, full* maxHp + (!full) * 1, maxHp, playerPtr) {
+UpgradeableBuilding::UpgradeableBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr) : Building(x, y, sx, sy, maxHp, playerPtr) {
 	this->currentLevel = 1;
 	this->upgradeMovesLeft = 0;
 }

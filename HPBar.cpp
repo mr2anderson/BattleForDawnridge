@@ -79,6 +79,9 @@ void HPBar::changeMax(uint32_t newMax) {
 	this->max = newMax;
 	this->current = std::min(this->current, this->max);
 }
+void HPBar::setMax() {
+	this->current = this->max;
+}
 HPBar operator+(HPBar a, uint32_t b) {
 	a.current = std::min(a.current + b, a.max);
 	return a;

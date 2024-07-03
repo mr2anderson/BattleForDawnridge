@@ -42,6 +42,9 @@ void GameObject::addHp(uint32_t value) {
 void GameObject::subHp(uint32_t value) {
 	this->bar = this->bar - value;
 }
+void GameObject::setMaxHp() {
+	this->bar.setMax();
+}
 void GameObject::changeMaxHp(uint32_t value) {
 	this->bar.changeMax(value);
 }

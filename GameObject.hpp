@@ -33,6 +33,7 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void addHp(uint32_t value);
 	void subHp(uint32_t value);
+	void setMaxHp();
 	void changeMaxHp(uint32_t value);
 	uint32_t getHP() const;
 	uint32_t getMaxHP() const;

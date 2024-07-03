@@ -29,8 +29,8 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
-	UpgradeableBuilding(x, y, 2, 2, LEVEL_HP[0], true, playerPtr),
-	Building(x, y, 2, 2, LEVEL_HP[0], true, playerPtr) {}
+	UpgradeableBuilding(x, y, 2, 2, LEVEL_HP[0], playerPtr),
+	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {}
 GameObjectResponse Castle::newMove(const Player& player) {
 	GameObjectResponse response;
 	if (this->belongTo(&player) and this->exist()) {
@@ -66,7 +66,7 @@ GameObjectResponse Castle::getSelectWindow() {
 	return response;
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return LEVEL_HP[this->getCurrentLevel()] / 4;
+	return LEVEL_HP[this->getCurrentLevel() - 1] / 4;
 }
 std::string Castle::getTextureName() const {
 	return "castle";
