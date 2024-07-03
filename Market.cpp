@@ -22,8 +22,7 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : 
-	HpSensitiveBuilding(x, y, 2, 2, 30000, false, playerPtr),
-	UpgradeableBuilding(x, y, 2, 2, 30000, false, playerPtr),
+	UpgradeableHpSensitiveBuilding(x, y, 2, 2, 30000, false, playerPtr),
 	Building(x, y, 2, 2, 30000, false, playerPtr){}
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Building::draw(target, states);

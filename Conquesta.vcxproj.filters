@@ -778,6 +778,9 @@
     <ClInclude Include="UpgradeableBuilding.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UpgradeableHpSensitiveBuilding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -914,6 +917,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeableBuilding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeableHpSensitiveBuilding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

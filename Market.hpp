@@ -17,8 +17,7 @@
  */
 
 
-#include "HpSensitiveBuilding.hpp"
-#include "UpgradeableBuilding.hpp"
+#include "UpgradeableHpSensitiveBuilding.hpp"
 #include "Trade.hpp"
 #include "SelectWindow.hpp"
 
@@ -26,7 +25,7 @@
 #pragma once
 
 
-class Market : public UpgradeableBuilding, public HpSensitiveBuilding {
+class Market : public UpgradeableHpSensitiveBuilding {
 public:
 	Market();
 	Market(uint32_t x, uint32_t y, const Player *playerPtr);
