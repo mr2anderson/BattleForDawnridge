@@ -21,26 +21,6 @@
 #include "Windmill.hpp"
 
 
-const Resources Windmill::UPGRADE_COSTS[Windmill::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 5000}}),
-	Resources({{"wood", 5000}}),
-};
-const uint32_t Windmill::UPGRADE_MOVES[Windmill::TOTAL_LEVELS - 1] = {
-	2,
-	2,
-};
-const float Windmill::LEVEL_BONUS[Windmill::TOTAL_LEVELS] = {
-	1,
-	1.5,
-	2
-};
-const uint32_t Windmill::LEVEL_RADIUS_BONUS[Windmill::TOTAL_LEVELS]{
-	0,
-	1,
-	2
-};
-
-
 Windmill::Windmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Windmill::getCost() const {
 	Resources cost;
@@ -48,7 +28,7 @@ Resources Windmill::getCost() const {
 	return cost;
 }
 uint32_t Windmill::getRegenerationSpeed() const {
-	return 4000;
+	return 10000;
 }
 std::string Windmill::getTextureName() const {
 	return "windmill";
@@ -66,10 +46,20 @@ std::string Windmill::getResourceType() const {
 	return "food";
 }
 uint32_t Windmill::getResourceNPerMove() const {
-	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
+	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
+		1,
+		3,
+		6
+	};
+	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
 }
 uint32_t Windmill::getRadius() const {
-	return 5 + LEVEL_RADIUS_BONUS[this->getCurrentLevel() - 1];
+	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
+		0,
+		2,
+		3
+	};
+	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
 }
 std::wstring Windmill::getDescription() const {
 	return L"Мельницы обеспечивают Ваш город едой, необходимой для содержания солдат. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
@@ -86,12 +76,17 @@ std::wstring Windmill::getUpgradeFinishDescription() const {
 std::wstring Windmill::getBusyWithUpgradingDescription() const {
 	return L"МЕЛЬНИЦА НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
 }
-uint32_t Windmill::getMaxLevel() const {
-	return TOTAL_LEVELS;
+Resources Windmill::getUpgradeCost() const {
+	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
+		Resources({{"wood", 20000}}),
+		Resources({{"wood", 40000}})
+	};
+	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-Resources Windmill::getUpgradeCost(uint32_t i) const {
-	return UPGRADE_COSTS[i];
-}
-uint32_t Windmill::getUpgradeMoves(uint32_t i) const {
-	return UPGRADE_MOVES[i];
+uint32_t Windmill::getUpgradeMoves() const {
+	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
+		2,
+		3
+	};
+	return upgradeMoves[this->getCurrentLevel() - 1];
 }

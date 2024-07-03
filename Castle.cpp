@@ -20,21 +20,14 @@
 #include "Castle.hpp"
 
 
-const Resources Castle::UPGRADE_COSTS[Castle::TOTAL_LEVELS - 1] = {
-	Resources({{"stone", 75000}}),
-	Resources({{"stone", 75000}}),
-};
-const uint32_t Castle::UPGRADE_MOVES[Castle::TOTAL_LEVELS - 1] = {
-	2,
-	2,
-};
-const uint32_t Castle::UPGRADE_HP[Castle::TOTAL_LEVELS - 1] = {
-	200000,
-	300000
+const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
+	100000,
+	400000,
+	1000000
 };
 
 
-Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 2, 2, 100000, true, playerPtr) {}
+Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : Building(x, y, 2, 2, LEVEL_HP[0], true, playerPtr) {}
 GameObjectResponse Castle::newMove(const Player& player) {
 	GameObjectResponse response;
 	if (this->belongTo(&player) and this->exist()) {
@@ -46,20 +39,9 @@ GameObjectResponse Castle::newMove(const Player& player) {
 	}
 	return response;
 }
-GameObjectResponse Castle::upgrade() {
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().subResources.push_back(UPGRADE_COSTS[this->getCurrentLevel() - 1]);
-
-	this->Building::upgrade(UPGRADE_MOVES[this->getCurrentLevel() - 1]);
-
-	response = response + this->handleUpgradeStart();
-
-	return response;
-}
 Resources Castle::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 200000));
+	cost.plus(Resource("stone", 100000));
 	return cost;
 }
 GameObjectResponse Castle::getSelectWindow() {
@@ -71,8 +53,8 @@ GameObjectResponse Castle::getSelectWindow() {
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
 		GameEvent gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, UPGRADE_COSTS[this->getCurrentLevel() - 1]);
-		data.emplace_back("upgrade_icon", L"Улучшить замок за " + UPGRADE_COSTS[this->getCurrentLevel() - 1].getReadableInfo() + L". Улучшение увеличит защиту замка.", true, gameEventUpgrade);
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		data.emplace_back("upgrade_icon", L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L". Улучшение увеличит защиту и скорость ремонта.", true, gameEventUpgrade);
 	}
 
 	SelectWindow* window = new SelectWindow("hooray", "click", data);
@@ -81,7 +63,7 @@ GameObjectResponse Castle::getSelectWindow() {
 	return response;
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return 10000;
+	return LEVEL_HP[this->getCurrentLevel()] / 4;
 }
 std::string Castle::getTextureName() const {
 	return "castle";
@@ -98,10 +80,24 @@ std::wstring Castle::getUpgradeFinishDescription() const {
 std::wstring Castle::getBusyWithUpgradingDescription() const {
 	return L"ЗАМОК НЕДОСТУПЕН\nПодождите, пока будет завершено улучшение.";
 }
+Resources Castle::getUpgradeCost() const {
+	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
+		Resources({{"stone", 200000}}),
+		Resources({{"stone", 400000}})
+	};
+	return upgradeCosts[this->getCurrentLevel() - 1];
+}
+uint32_t Castle::getUpgradeMoves() const {
+	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
+		4,
+		8
+	};
+	return upgradeMoves[this->getCurrentLevel() - 1];
+}
 GameObjectResponse Castle::decreaseUpgradeMovesLeft() {
 	GameObjectResponse response = this->Building::decreaseUpgradeMovesLeft();
 	if (!response.popUpWindows.empty()) {
-		this->changeMaxHp(UPGRADE_HP[this->getCurrentLevel() - 1 - 1]);
+		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 	}
 	return response;
 }

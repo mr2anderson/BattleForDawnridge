@@ -33,6 +33,17 @@ void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		}
 	}
 }
+GameObjectResponse Building::upgrade() {
+	GameObjectResponse response;
+	response.gameEvent = GameEvent();
+	response.gameEvent.value().subResources.push_back(this->getUpgradeCost());
+
+	this->upgradeMovesLeft = this->getUpgradeMoves();
+
+	response = response + this->handleUpgradeStart();
+
+	return response;
+}
 GameObjectResponse Building::processRegeneration() {
 	this->addHp(this->getRegenerationSpeed());
 	return GameObjectResponse();

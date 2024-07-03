@@ -39,17 +39,6 @@ GameObjectResponse ResourceBuilding::newMove(const Player& currentPlayer) {
 	}
 	return GameObjectResponse();
 }
-GameObjectResponse ResourceBuilding::upgrade() {
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().subResources.push_back(this->getUpgradeCost(this->getCurrentLevel() - 1));
-
-	this->Building::upgrade(this->getUpgradeMoves(this->getCurrentLevel() - 1));
-
-	response = response + this->handleUpgradeStart();
-
-	return response;
-}
 GameObjectResponse ResourceBuilding::collectResources() {
 	GameObjectResponse response;
 	response.gameEvent = GameEvent();
@@ -110,10 +99,10 @@ GameObjectResponse ResourceBuilding::getSelectWindow(const GameEvent& highlightE
 	data.emplace_back("exit_icon", L"Покинуть", true, highlightEvent);
 	data.emplace_back(this->getTextureName(), this->getDescription(), false, GameEvent());
 
-	if (this->getCurrentLevel() < this->getMaxLevel()) {
+	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GameEvent gameEventUpgrade = highlightEvent;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost(this->getCurrentLevel() - 1));
-		data.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost(this->getCurrentLevel() - 1).getReadableInfo() + L". Улучшение повысит скорость и радиус добычи.", true, gameEventUpgrade);
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		data.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L". Улучшение повысит скорость и радиус добычи.", true, gameEventUpgrade);
 	}
 
 	SelectWindow* window = new SelectWindow(this->getNewWindowSoundName(), "click", data);

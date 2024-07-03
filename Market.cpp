@@ -20,22 +20,7 @@
 #include "Market.hpp"
 
 
-const Resources Market::UPGRADE_COSTS[Market::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 35000}}),
-	Resources({{"wood", 35000}}),
-};
-const uint32_t Market::UPGRADE_MOVES[Market::TOTAL_LEVELS - 1] = {
-	2,
-	2,
-};
-const uint32_t Market::LEVEL_TRADE_TIME[Market::TOTAL_LEVELS] = {
-	5,
-	4,
-	3
-};
-
-
-Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : HpSensitiveBuilding(x, y, 2, 2, 20000, false, playerPtr) {}
+Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : HpSensitiveBuilding(x, y, 2, 2, 30000, false, playerPtr) {}
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Building::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
@@ -72,20 +57,9 @@ GameObjectResponse Market::newMove(const Player& currentPlayer) {
 
 	return response;
 }
-GameObjectResponse Market::upgrade() {
-	GameObjectResponse response;
-	response.gameEvent = GameEvent();
-	response.gameEvent.value().subResources.push_back(UPGRADE_COSTS[this->getCurrentLevel() - 1]);
-
-	this->Building::upgrade(UPGRADE_MOVES[this->getCurrentLevel() - 1]);
-
-	response = response + this->handleUpgradeStart();
-
-	return response;
-}
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 25000));
+	cost.plus(Resource("wood", 30000));
 	return cost;
 }
 GameObjectResponse Market::currentTradeNewMove() {
@@ -114,8 +88,8 @@ GameObjectResponse Market::getSelectWindow() {
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GameEvent gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, UPGRADE_COSTS[this->getCurrentLevel() - 1]);
-		data.emplace_back("upgrade_icon", L"Улучшить рынок за " + UPGRADE_COSTS[this->getCurrentLevel() - 1].getReadableInfo() + L". Улучшение ускорит ход сделок.", true, gameEventUpgrade);
+		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		data.emplace_back("upgrade_icon", L"Улучшить рынок за " + this->getUpgradeCost().getReadableInfo() + L". Улучшение ускорит ход сделок.", true, gameEventUpgrade);
 	}
 
 	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
@@ -127,7 +101,7 @@ GameObjectResponse Market::getSelectWindow() {
 		std::make_tuple("stone", 50000, "gold", 100),
 		std::make_tuple("iron", 50000, "gold", 100) }) {
 		GameEvent gameEventTrade;
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), LEVEL_TRADE_TIME[this->getCurrentLevel() - 1]));
+		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
 		this->addTrade(data, gameEventTrade);
 	}
 
@@ -140,6 +114,14 @@ void Market::addTrade(std::vector<std::tuple<std::string, std::wstring, bool, Ga
 	data.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.type + "_icon",
 		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
 		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, gameEventTrade);
+}
+uint32_t Market::getTradeStartTime() const {
+	uint32_t levelTradeStartTime[TOTAL_LEVELS] = {
+		6,
+		4,
+		1
+	};
+	return levelTradeStartTime[this->getCurrentLevel() - 1];
 }
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
@@ -165,7 +147,7 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	target.draw(text, states);
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return 4000;
+	return 10000;
 }
 std::string Market::getNewWindowSoundName() const {
 	return "horse";
@@ -187,6 +169,20 @@ std::wstring Market::getUpgradeFinishDescription() const {
 }
 std::wstring Market::getBusyWithUpgradingDescription() const {
 	return L"РЫНОК НЕДОСТУПЕН\nПодождите, пока будет завершено улучшение.";
+}
+Resources Market::getUpgradeCost() const {
+	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
+		Resources({{"wood", 60000}}),
+		Resources({{"wood", 120000}})
+	};
+	return upgradeCosts[this->getCurrentLevel() - 1];
+}
+uint32_t Market::getUpgradeMoves() const {
+	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
+		3,
+		6
+	};
+	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 GameObjectResponse Market::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {

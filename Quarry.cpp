@@ -21,26 +21,6 @@
 #include "Quarry.hpp"
 
 
-const Resources Quarry::UPGRADE_COSTS[Quarry::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 5000}}),
-	Resources({{"wood", 5000}}),
-};
-const uint32_t Quarry::UPGRADE_MOVES[Quarry::TOTAL_LEVELS - 1] = {
-	2,
-	2,
-};
-const float Quarry::LEVEL_BONUS[Quarry::TOTAL_LEVELS] = {
-	1,
-	1.5,
-	2
-};
-const uint32_t Quarry::LEVEL_RADIUS_BONUS[Quarry::TOTAL_LEVELS]{
-	0,
-	1,
-	2
-};
-
-
 Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Quarry::getCost() const {
 	Resources cost;
@@ -48,7 +28,7 @@ Resources Quarry::getCost() const {
 	return cost;
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return 4000;
+	return 10000;
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";
@@ -66,10 +46,20 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getResourceNPerMove() const {
-	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
+	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
+		1,
+		3,
+		6
+	};
+	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
 }
 uint32_t Quarry::getRadius() const {
-	return 5 + LEVEL_RADIUS_BONUS[this->getCurrentLevel() - 1];
+	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
+		0,
+		2,
+		3
+	};
+	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
 }
 std::wstring Quarry::getDescription() const {
 	return L"Каменоломни обеспечивают Ваш город камнем — основным материалом строительства оборонительных сооружений. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
@@ -86,12 +76,17 @@ std::wstring Quarry::getUpgradeFinishDescription() const {
 std::wstring Quarry::getBusyWithUpgradingDescription() const {
 	return L"КАМЕНОЛОМНЯ НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
 }
-uint32_t Quarry::getMaxLevel() const {
-	return TOTAL_LEVELS;
+Resources Quarry::getUpgradeCost() const {
+	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
+		Resources({{"wood", 20000}}),
+		Resources({{"wood", 40000}})
+	};
+	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-Resources Quarry::getUpgradeCost(uint32_t i) const {
-	return UPGRADE_COSTS[i];
-}
-uint32_t Quarry::getUpgradeMoves(uint32_t i) const {
-	return UPGRADE_MOVES[i];
+uint32_t Quarry::getUpgradeMoves() const {
+	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
+		2,
+		3
+	};
+	return upgradeMoves[this->getCurrentLevel() - 1];
 }

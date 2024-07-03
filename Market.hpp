@@ -31,7 +31,6 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	GameObjectResponse doTrade(const Trade& trade);
 	GameObjectResponse newMove(const Player& currentPlayer);
-	GameObjectResponse upgrade() override;
 
 	Resources getCost() const override;
 private:
@@ -46,6 +45,7 @@ private:
 	bool busy() const;
 	GameObjectResponse getSelectWindow();
 	void addTrade(std::vector<std::tuple<std::string, std::wstring, bool, GameEvent>>& data, const GameEvent& gameEventTrade);
+	uint32_t getTradeStartTime() const;
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	uint32_t getRegenerationSpeed() const override;
@@ -56,6 +56,8 @@ private:
 	std::wstring getUpgradeStartDescription() const override;
 	std::wstring getUpgradeFinishDescription() const override;
 	std::wstring getBusyWithUpgradingDescription() const override;
+	Resources getUpgradeCost() const override;
+	uint32_t getUpgradeMoves() const override;
 
 	GameObjectResponse getGameObjectResponse(const Player& player) override;
 };

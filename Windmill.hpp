@@ -42,13 +42,6 @@ private:
 	std::wstring getUpgradeStartDescription() const override;
 	std::wstring getUpgradeFinishDescription() const override;
 	std::wstring getBusyWithUpgradingDescription() const override;
-	Resources getUpgradeCost(uint32_t i) const override;
-	uint32_t getUpgradeMoves(uint32_t i) const override;
-	uint32_t getMaxLevel() const override;
-
-	static constexpr uint32_t TOTAL_LEVELS = 3;
-	static const Resources UPGRADE_COSTS[];
-	static const uint32_t UPGRADE_MOVES[];
-	static const float LEVEL_BONUS[];
-	static const uint32_t LEVEL_RADIUS_BONUS[];
+	Resources getUpgradeCost() const override;
+	uint32_t getUpgradeMoves() const override;
 };

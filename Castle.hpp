@@ -28,14 +28,10 @@ class Castle : public Building {
 public:
 	Castle(uint32_t x, uint32_t y, const Player* playerPtr);
 	GameObjectResponse newMove(const Player& player) override;
-	GameObjectResponse upgrade() override;
 	
 	Resources getCost() const override;
 private:
-	static constexpr uint32_t TOTAL_LEVELS = 3;
-	static const Resources UPGRADE_COSTS[];
-	static const uint32_t UPGRADE_MOVES[];
-	static const uint32_t UPGRADE_HP[];
+	static const uint32_t LEVEL_HP[];
 
 	GameObjectResponse getSelectWindow();
 
@@ -47,4 +43,6 @@ private:
 	std::wstring getBusyWithUpgradingDescription() const override;
 	GameObjectResponse decreaseUpgradeMovesLeft() override;
 	GameObjectResponse getGameObjectResponse(const Player& player) override;
+	Resources getUpgradeCost() const override;
+	uint32_t getUpgradeMoves() const override;
 };

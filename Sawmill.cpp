@@ -21,26 +21,6 @@
 #include "Sawmill.hpp"
 
 
-const Resources Sawmill::UPGRADE_COSTS[Sawmill::TOTAL_LEVELS - 1] = {
-	Resources({{"wood", 5000}}),
-	Resources({{"wood", 5000}}),
-};
-const uint32_t Sawmill::UPGRADE_MOVES[Sawmill::TOTAL_LEVELS - 1] = {
-	2,
-	2,
-};
-const float Sawmill::LEVEL_BONUS[Sawmill::TOTAL_LEVELS] = {
-	1,
-	1.5,
-	2
-};
-const uint32_t Sawmill::LEVEL_RADIUS_BONUS[Sawmill::TOTAL_LEVELS]{
-	0,
-	1,
-	2
-};
-
-
 Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : ResourceBuilding(x, y, 2, 2, 20000, playerPtr, resourcePointsPtr) {}
 Resources Sawmill::getCost() const {
 	Resources cost;
@@ -48,7 +28,7 @@ Resources Sawmill::getCost() const {
 	return cost;
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return 4000;
+	return 10000;
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";
@@ -66,10 +46,20 @@ std::string Sawmill::getResourceType() const {
 	return "wood";
 }
 uint32_t Sawmill::getResourceNPerMove() const {
-	return 2500 * LEVEL_BONUS[this->getCurrentLevel() - 1];
+	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
+		1,
+		3,
+		6
+	};
+	return 2500 * levelCollectionSpeedBonus[this->getCurrentLevel() - 1];
 }
 uint32_t Sawmill::getRadius() const {
-	return 5 + LEVEL_RADIUS_BONUS[this->getCurrentLevel() - 1];
+	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
+		0,
+		2,
+		3
+	};
+	return 5 + levelRadiusBonus[this->getCurrentLevel() - 1];
 }
 std::wstring Sawmill::getDescription() const {
 	return L"Лесопилки обеспечивают Ваш город древесиной — основным материалом строительства гражданских сооружений. Защита: " + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L".";
@@ -86,12 +76,17 @@ std::wstring Sawmill::getUpgradeFinishDescription() const {
 std::wstring Sawmill::getBusyWithUpgradingDescription() const {
 	return L"ЛЕСОПИЛКА НЕДОСТУПНА\nПодождите, пока будет завершено улучшение.";
 }
-uint32_t Sawmill::getMaxLevel() const {
-	return TOTAL_LEVELS;
+Resources Sawmill::getUpgradeCost() const {
+	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
+		Resources({{"wood", 20000}}),
+		Resources({{"wood", 40000}})
+	};
+	return upgradeCosts[this->getCurrentLevel() - 1];
 }
-Resources Sawmill::getUpgradeCost(uint32_t i) const {
-	return UPGRADE_COSTS[i];
-}
-uint32_t Sawmill::getUpgradeMoves(uint32_t i) const {
-	return UPGRADE_MOVES[i];
+uint32_t Sawmill::getUpgradeMoves() const {
+	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
+		2,
+		3
+	};
+	return upgradeMoves[this->getCurrentLevel() - 1];
 }
