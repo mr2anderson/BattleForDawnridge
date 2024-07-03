@@ -41,6 +41,8 @@ public:
 		return BattleScreen::singletone;
 	}
 	int32_t run(sf::RenderWindow& window);
+
+	static constexpr uint32_t TOTAL_PLAINS = 5;
 private:
 	BattleScreen() = default;
 	BattleScreen(const BattleScreen& copy) = delete;

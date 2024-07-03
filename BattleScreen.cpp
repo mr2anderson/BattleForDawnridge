@@ -300,7 +300,7 @@ void BattleScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < this->mapWidth; i = i + 1) {
 		for (uint32_t j = 0; j < this->mapHeight; j = j + 1) {
 			sf::Sprite sprite;
-			sprite.setTexture(*TextureStorage::get()->get("cell"));
+			sprite.setTexture(*TextureStorage::get()->get("dark_plains_" + std::to_string((i + j) % TOTAL_PLAINS + 1)));
 			sprite.setPosition(64 * i, 64 * j);
 			window.draw(sprite);
 			if (!this->highlightTable[std::make_tuple(i, j)].empty()) {

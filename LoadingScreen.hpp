@@ -17,11 +17,7 @@
  */
 
 
-#include "TextureStorage.hpp"
-#include "FontStorage.hpp"
-#include "MusicStorage.hpp"
-#include "SoundStorage.hpp"
-#include "ColorTheme.hpp"
+#include "BattleScreen.hpp"
 
 
 #pragma once

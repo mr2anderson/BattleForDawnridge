@@ -59,6 +59,9 @@ void LoadingScreen::loadAll() {
 		"windmill", "wood_icon", "iron_icon"}) {
 		TextureStorage::get()->add(a, "images/" + a + ".png");
 	}
+	for (uint32_t i = 1; i <= BattleScreen::TOTAL_PLAINS; i = i + 1) {
+		TextureStorage::get()->add("dark_plains_" + std::to_string(i), "images/dark_plains_" + std::to_string(i) + ".png");
+	}
 	for (const std::string& a : { "click", "newMove", "leaves", "sawmill", "quarry", "mine", "hooray", "horse"}) {
 		SoundStorage::get()->add(a, "sounds/" + a + ".ogg");
 	}
