@@ -37,7 +37,6 @@ private:
 	uint32_t getCollectionSpeed(uint32_t level) const override;
 	uint32_t getRadius(uint32_t level) const override;
 	std::wstring getDescription() const override;
-	std::wstring getResourcesOverStr() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	std::wstring getReadableName() const override;

@@ -35,7 +35,7 @@ void UpgradeableB::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		}
 	}
 }
-GOR UpgradeableB::upgrade() {
+GOR UpgradeableB::startUpgrade() {
 	GOR response;
 	GEvent gEvent;
 	gEvent.subResources.push_back(this->getUpgradeCost());
@@ -43,6 +43,12 @@ GOR UpgradeableB::upgrade() {
 	this->upgradeMovesLeft = this->getUpgradeTime();
 	response = response + this->handleUpgradeStart();
 	return response;
+}
+void UpgradeableB::decreaseUpgradeMovesLeft() {
+	this->upgradeMovesLeft = this->upgradeMovesLeft - 1;
+}
+void UpgradeableB::increaseLevel() {
+	this->currentLevel = this->currentLevel + 1;
 }
 uint32_t UpgradeableB::getCurrentLevel() const {
 	return this->currentLevel;
@@ -54,11 +60,16 @@ GOR UpgradeableB::handleCurrentUpgrade() {
 	if (this->upgradeMovesLeft == 0) {
 		return GOR();
 	}
-	this->upgradeMovesLeft = this->upgradeMovesLeft - 1;
-	if (this->upgradeMovesLeft == 0) {
-		return this->handleUpgradeEnd();
+	GOR response;
+	FlyingE* element = new FlyingE("upgrade_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
+	response.elements.push(element);
+	GEvent event;
+	event.decreaseUpgradeMovesLeft.push_back(this);
+	element->addOnStartGEvent(event);
+	if (this->upgradeMovesLeft == 1) {
+		response = response + this->handleUpgradeEnd();
 	}
-	return GOR();
+	return response;
 }
 GOR UpgradeableB::handleBusyWithUpgrading() const {
 	GOR response;
@@ -79,12 +90,12 @@ GOR UpgradeableB::handleUpgradeStart() const {
 	return response;
 }
 GOR UpgradeableB::handleUpgradeEnd() {
-	this->currentLevel = this->currentLevel + 1;
 	GOR response;
-	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
-		this->getUpperCaseReadableName() + L": ÓËÓ×ØÅÍÈÅ ÇÀÂÅÐØÅÍÎ\n"
-		"Òåïåðü Âû ñíîâà ìîæåòå èñïîëüçîâàòü ýòî çäàíèå.");
-	response.elements.push(window);
+	GEvent event;
+	event.increaseLevel.emplace_back(this);
+	FlyingE* element = new FlyingE("upgrade_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	element->addOnStartGEvent(event);
+	response.elements.push(element);
 	return response;
 }
 void UpgradeableB::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {

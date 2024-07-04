@@ -40,7 +40,7 @@ protected:
 	virtual uint32_t getCollectionSpeed(uint32_t level) const = 0;
 	virtual uint32_t getRadius(uint32_t level) const = 0;
 	virtual std::wstring getDescription() const = 0;
-	virtual std::wstring getResourcesOverStr() const = 0;
+
 private:
 	const std::vector<ResourcePoint*>* resourcePointsPtr;
 	bool resourcesLeft;

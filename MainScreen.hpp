@@ -53,7 +53,7 @@ private:
 	uint32_t mapW, mapH;
 	std::queue<PopUpElement*> elements;
 	Player players[2];
-	uint32_t move = 1;
+	uint32_t move = 0;
 	std::vector<GO*> gameObjects;
 	std::vector<Unit*> units;
 	std::vector<ResourcePoint*> resourcePoints;
@@ -83,9 +83,14 @@ private:
 	void handleChangeHighlightEvent(const GEvent& e);
 	void handleCollectEvent(const GEvent& e);
 	void handleTryToUpgradeEvent(const GEvent& e);
+	void handleAddHpEvent(const GEvent& e);
+	void handleDecreaseUpgradeMovesLeftEvent(const GEvent& e);
+	void handleIncreaseLevelEvent(const GEvent& e);
+	void handleDecreaseCurrentTradeMovesLeft(const GEvent& e);
 	
 	void handleUIEvent(const UIEvent& e);
 	void handlePlaySoundEvent(const UIEvent& e);
+	void handleChangeViewCenter(const UIEvent& e);
 
 	void handleGOR(const GOR& responce);
 

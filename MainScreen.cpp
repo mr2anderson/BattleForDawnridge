@@ -57,8 +57,12 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 		this->drawEverything(window);
 		Playlist::get()->update();
 		this->removeFinishedElements();
+		this->moveView();
 		if (this->elements.empty()) {
 			this->moveView();
+		}
+		else {
+			this->elements.front()->update();
 		}
 	}
 }
@@ -69,6 +73,7 @@ void MainScreen::init(sf::RenderWindow& window) {
 	this->initMoveCtr();
 	this->initHighlightTable();
 	this->initGraphics(window);
+	this->changeMove();
 }
 void MainScreen::initLandscape() {
 	this->mapW = 30;
@@ -110,7 +115,7 @@ void MainScreen::initPlayers() {
 	this->addUnit(new Castle(this->mapW - 4, this->mapH - 4, &this->players[1]));
 }
 void MainScreen::initMoveCtr() {
-	this->move = 1;
+	this->move = 0;
 }
 void MainScreen::initHighlightTable() {
 	this->highlightTable.clear();
@@ -135,6 +140,10 @@ void MainScreen::handleGameEvent(const GEvent &e) {
 	this->handleChangeHighlightEvent(e);
 	this->handleCollectEvent(e);
 	this->handleTryToUpgradeEvent(e);
+	this->handleAddHpEvent(e);
+	this->handleDecreaseUpgradeMovesLeftEvent(e);
+	this->handleIncreaseLevelEvent(e);
+	this->handleDecreaseCurrentTradeMovesLeft(e);
 }
 void MainScreen::handleTryToAttackEvent(const GEvent& e) {
 	for (const auto& a : e.tryToAttack) {
@@ -213,7 +222,7 @@ void MainScreen::handleTryToUpgradeEvent(const GEvent& e) {
 		UpgradeableB* b = std::get<UpgradeableB*>(a);
 		Resources cost = std::get<Resources>(a);
 		if (this->getCurrentPlayer()->getResources() >= cost) {
-			this->handleGOR(b->upgrade());
+			this->handleGOR(b->startUpgrade());
 		}
 		else {
 			MessageW* w = new MessageW("click", "click", 
@@ -223,12 +232,49 @@ void MainScreen::handleTryToUpgradeEvent(const GEvent& e) {
 		}
 	}
 }
+void MainScreen::handleAddHpEvent(const GEvent& e) {
+	for (const auto& a : e.addHp) {
+		GO* go = std::get<GO*>(a);
+		uint32_t n = std::get<uint32_t>(a);
+		go->addHp(n);
+	}
+}
+void MainScreen::handleDecreaseUpgradeMovesLeftEvent(const GEvent& e) {
+	for (const auto& a : e.decreaseUpgradeMovesLeft) {
+		a->decreaseUpgradeMovesLeft();
+	}
+}
+void MainScreen::handleIncreaseLevelEvent(const GEvent& e) {
+	for (const auto& a : e.increaseLevel) {
+		a->increaseLevel();
+	}
+}
+void MainScreen::handleDecreaseCurrentTradeMovesLeft(const GEvent& e) {
+	for (const auto& a : e.decreaseCurrentTradeMovesLeft) {
+		a->decreaseCurrentTradeMovesLeft();
+	}
+}
 void MainScreen::handleUIEvent(const UIEvent& e) {
 	this->handlePlaySoundEvent(e);
+	this->handleChangeViewCenter(e);
 }
 void MainScreen::handlePlaySoundEvent(const UIEvent& e) {
 	for (const auto& a : e.playSound) {
 		SoundQueue::get()->push(Sounds::get()->get(a));
+	}
+}
+void MainScreen::handleChangeViewCenter(const UIEvent& e) {
+	for (const auto& a : e.changeViewCenter) {
+		uint32_t x, y;
+		uint32_t sx, sy;
+		std::tie(x, y, sx, sy) = a;
+		uint32_t pX = 64 * x + 64 * sx / 2;
+		uint32_t pY = 64 * y + 64 * sy / 2;
+		pX = std::max(pX, this->windowW / 2);
+		pY = std::max(pY, this->windowH / 2);
+		pX = std::min(pX, 64 * this->mapW - this->windowW / 2);
+		pY = std::min(pY, 64 * this->mapH - this->windowH / 2);
+		this->view.setCenter(pX, pY);
 	}
 }
 void MainScreen::handleGOR(const GOR& responce) {

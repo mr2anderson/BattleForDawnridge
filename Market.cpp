@@ -48,6 +48,9 @@ GOR Market::doTrade(const Trade& trade) {
 	responce.elements.push(window);
 	return responce;
 }
+void Market::decreaseCurrentTradeMovesLeft() {
+	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
+}
 GOR Market::newMove(const Player& currentPlayer) {
 	if (!this->belongTo(&currentPlayer) or !this->exist()) {
 		return GOR();
@@ -116,7 +119,7 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 
 	sf::Sprite sprite;
 	sprite.setScale(0.5, 0.5);
-	sprite.setTexture(*Textures::get()->get(this->currentTrade.buy.type));
+	sprite.setTexture(*Textures::get()->get(this->currentTrade.buy.type + "_icon"));
 	sprite.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(sprite, states);
 
@@ -127,27 +130,27 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(64 * this->getX(), 64 * this->getY() + 64 * this->getSY() - 64 / 2);
+	text.setPosition(64 * this->getX() + 64 / 2, 64 * this->getY() + 64 * this->getSY() - 64 / 2);
 	target.draw(text, states);
 }
 GOR Market::handleCurrentTrade() {
 	if (!this->busy()) {
 		return GOR();
 	}
-	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
-	if (this->currentTrade.movesLeft == 0) {
+	GOR responce;
+	GEvent decreaseEvent;
+	decreaseEvent.decreaseCurrentTradeMovesLeft.push_back(this);
+	FlyingE* element = new FlyingE("trade_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	responce.elements.push(element);
+	element->addOnStartGEvent(decreaseEvent);
+	if (this->currentTrade.movesLeft == 1) {
 		GEvent gEvent;
 		gEvent.addResource.push_back(this->currentTrade.buy);
-		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", 
-			L"ÑÄÅËÊÀ ÇÀÂÅÐØÅÍÀ\n"
-			"Ðåñóðñû áûëè ïîëó÷åíû. Äåòàëè ñäåëêè:\n"
-			+ this->currentTrade.getReadableInfo());
-		window->addOnStartGEvent(gEvent);
-		GOR responce;
-		responce.elements.push(window);
-		return responce;
+		element = new FlyingE(this->currentTrade.buy.type + "_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		element->addOnStartGEvent(gEvent);
+		responce.elements.push(element);
 	}
-	return GOR();
+	return responce;
 }
 GOR Market::getSelectionW() {
 	std::vector<SelectionWComponent> components;

@@ -30,6 +30,7 @@ class Unit;
 class UpgradeableB;
 class Market;
 class ResourcePoint;
+class GO;
 
 
 struct GEvent {
@@ -46,4 +47,8 @@ struct GEvent {
 	std::vector<std::tuple<const Unit*, uint32_t, uint32_t>> changeHighlight;
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> collect;
 	std::vector<std::tuple<UpgradeableB*, Resources>> tryToUpgrade;
+	std::vector<std::tuple<GO*, uint32_t>> addHp;
+	std::vector<UpgradeableB*> decreaseUpgradeMovesLeft;
+	std::vector<UpgradeableB*> increaseLevel;
+	std::vector<Market*> decreaseCurrentTradeMovesLeft;
 };

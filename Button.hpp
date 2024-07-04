@@ -19,6 +19,7 @@
 
 
 #include "Label.hpp"
+#include "FlyingE.hpp"
 
 
 #pragma once

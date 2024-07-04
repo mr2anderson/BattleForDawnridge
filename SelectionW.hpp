@@ -32,6 +32,7 @@ public:
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click(uint32_t x, uint32_t y) override;
+	void update() override;
 private:
 	std::string soundName1;
 	std::string soundName2;

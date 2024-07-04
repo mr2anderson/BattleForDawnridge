@@ -53,3 +53,6 @@ Events MessageW::click(uint32_t x, uint32_t y) {
 	}
 	return Events();
 }
+void MessageW::update() {
+
+}

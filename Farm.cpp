@@ -31,7 +31,11 @@ GOR Farm::newMove(const Player& player) {
 		if (this->upgrading()) {
 			return response;
 		}
-		return response + this->regenerate() + this->collectFood();
+		response = response + this->regenerate();
+		if (this->works()) {
+			response = response + this->collectFood();
+		}
+		return response;
 	}
 	return GOR();
 }
@@ -80,8 +84,10 @@ uint32_t Farm::getCollectionSpeed() const {
 GOR Farm::collectFood() const {
 	GEvent gEvent;
 	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
+	PopUpElement* element = new FlyingE("food_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	GOR responce;
 	responce.events.push_back(gEvent);
+	responce.elements.push(element);
 	return responce;
 }
 GOR Farm::getGameObjectResponse(const Player& player) {

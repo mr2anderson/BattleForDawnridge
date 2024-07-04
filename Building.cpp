@@ -69,8 +69,15 @@ std::wstring Building::getUpperCaseReadableName() const {
 	return n;
 }
 GOR Building::regenerate() {
-	this->addHp(this->getRegenerationSpeed());
-	return GOR();
+	GOR responce;
+	if (this->getHP() < this->getMaxHP()) {
+		GEvent gEvent;
+		gEvent.addHp.emplace_back(this, this->getRegenerationSpeed());
+		FlyingE* element = new FlyingE("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
+		element->addOnStartGEvent(gEvent);
+		responce.elements.push(element);
+	}
+	return responce;
 }
 std::wstring Building::getReadableRegenerationSpeed() const {
 	return L"Скорость строительства: " + std::to_wstring(this->getRegenerationSpeed()) + L" ед. / ход";

@@ -76,26 +76,34 @@ std::tuple<uint32_t, uint32_t> ResourceB::getCenter() const {
 }
 GOR ResourceB::collectResources() {
 	uint32_t left = this->getCollectionSpeed();
-	GEvent gEvent;
+	std::vector<std::tuple<ResourcePoint*, uint32_t>> srcs;
 	for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
 		ResourcePoint* rp = this->resourcePointsPtr->at(i);
 		if (rp->getResourceType() == this->getResourceType() and this->inRadius(rp)) {
 			uint32_t got = std::min(left, rp->getHP());
 			left = left - got;
-			gEvent.collect.emplace_back(rp, got);
+			if (got != 0) {
+				srcs.emplace_back(rp, got);
+			}
 		}
 	}
 
 	GOR responce;
-	if (left > 0) {
+	if (left == this->getCollectionSpeed()) {
 		this->resourcesLeft = false;
-		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", this->getResourcesOverStr());
-		window->addOnStartGEvent(gEvent);
-		responce.elements.push(window);
 	}
 	else {
-		responce.events.push_back(gEvent);
+		for (const auto& src : srcs) {
+			ResourcePoint* rp = std::get<ResourcePoint*>(src);
+			uint32_t n = std::get<uint32_t>(src);
+			FlyingE* element = new FlyingE(this->getResourceType() + "_icon", this->getNewWindowSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
+			GEvent gEvent;
+			gEvent.collect.emplace_back(rp, n);
+			element->addOnStartGEvent(gEvent);
+			responce.elements.push(element);
+		}
 	}
+	
 	return responce;
 }
 GOR ResourceB::highlightArea() const {

@@ -63,11 +63,6 @@ std::wstring Quarry::getDescription() const {
 		L"Каменоломни обеспечивают Ваш город камнем, необходимым для строительства обороны.\n"
 		+ this->getReadableHpInfo();
 }
-std::wstring Quarry::getResourcesOverStr() const {
-	return
-		L"КАМЕНЬ ЗАКОНЧИЛСЯ\n"
-		"Одна из Ваших каменоломен прекращает работу.";
-}
 Resources Quarry::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 20000}}),

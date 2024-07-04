@@ -33,6 +33,7 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	GOR doTrade(const Trade& trade);
+	void decreaseCurrentTradeMovesLeft();
 	GOR newMove(const Player& currentPlayer);
 	Resources getCost() const override;
 private:

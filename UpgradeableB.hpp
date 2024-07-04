@@ -31,7 +31,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	GOR upgrade();
+	GOR startUpgrade();
+	void decreaseUpgradeMovesLeft();
+	void increaseLevel();
 protected:
 	static constexpr uint32_t TOTAL_LEVELS = 3;
 

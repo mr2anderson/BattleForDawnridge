@@ -63,11 +63,6 @@ std::wstring Sawmill::getDescription() const {
 		L"Лесопилки обеспечивают Ваш город древесиной, необходимой для строительства большинства зданий.\n"
 		+ this->getReadableHpInfo();
 }
-std::wstring Sawmill::getResourcesOverStr() const {
-	return
-		L"ЛЕСА ВЫРУБЛЕНЫ\n"
-		"Одна из Ваших лесопилок прекращает работу.";
-}
 Resources Sawmill::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 20000}}),

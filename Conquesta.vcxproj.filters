@@ -787,6 +787,9 @@
     <ClInclude Include="Events.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FlyingE.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -932,6 +935,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Events.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

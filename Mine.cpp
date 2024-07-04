@@ -63,11 +63,6 @@ std::wstring Mine::getDescription() const {
 		L"Шахты обеспечивают Ваш город железом, необходимым для создания армии.\n"
 		+ this->getReadableHpInfo();
 }
-std::wstring Mine::getResourcesOverStr() const {
-	return
-		L"ЗАЛЕЖИ ИСЧЕРПАНЫ\n"
-		"Одна из Ваших шахт прекращает работу.";
-}
 Resources Mine::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 20000}}),

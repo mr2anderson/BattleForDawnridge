@@ -17,18 +17,33 @@
  */
 
 
-#include <vector>
-#include <tuple>
+#include <cmath>
+#include "PopUpElement.hpp"
+#include "Textures.hpp"
 
 
 #pragma once
 
 
-struct UIEvent {
-	UIEvent();
+class FlyingE : public PopUpElement {
+public:
+	FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
-	friend UIEvent operator+(const UIEvent& a, const UIEvent& b);
+	Events run(uint32_t windowW, uint32_t windowH) override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	Events click(uint32_t x, uint32_t y) override;
+	void update() override;
+private:
+	std::string picture;
+	std::string sound;
+	uint32_t x, y;
+	uint32_t sx, sy;
+	sf::Clock clock;
+	float dst;
 
-	std::vector<std::string> playSound;
-	std::vector<std::tuple<uint32_t, uint32_t, uint32_t, uint32_t>> changeViewCenter;
+	static constexpr float TIME = 0.75;
+	static constexpr float V0 = 80;
+
+	sf::Color getTransparencyLevel(float t) const;
+	sf::Vector2f getPosition(float t) const;
 };

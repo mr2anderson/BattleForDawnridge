@@ -30,6 +30,7 @@ public:
 
 	void addOnStartGEvent(const GEvent& event);
 	bool finished() const;
+	virtual void update() = 0;
 
 	virtual Events run(uint32_t windowW, uint32_t windowH);
 	virtual Events click(uint32_t x, uint32_t y) = 0;

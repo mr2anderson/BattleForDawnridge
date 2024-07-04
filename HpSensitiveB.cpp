@@ -42,10 +42,8 @@ GOR HpSensitiveB::regenerate() {
 	GOR response = this->Building::regenerate();
 	bool works2 = this->works();
 	if (works2 and !works1) {
-		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
-			this->getUpperCaseReadableName() + L": ÑÒÐÎÈÒÅËÜÑÒÂÎ ÇÀÂÅÐØÅÍÎ\n"
-			"Òåïåðü Âû ìîæåòå èñïîëüçîâàòü ýòî çäàíèå.");
-		response.elements.push(window);
+		FlyingE* element = new FlyingE("hammer_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		response.elements.push(element);
 	}
 	return response;
 }

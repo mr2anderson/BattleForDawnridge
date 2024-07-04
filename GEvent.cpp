@@ -34,6 +34,10 @@ GEvent operator+(const GEvent &a, const GEvent& b) {
 	c.changeHighlight.insert(c.changeHighlight.end(), b.changeHighlight.begin(), b.changeHighlight.end());
 	c.collect.insert(c.collect.end(), b.collect.begin(), b.collect.end());
 	c.tryToUpgrade.insert(c.tryToUpgrade.end(), b.tryToUpgrade.begin(), b.tryToUpgrade.end());
+	c.addHp.insert(c.addHp.end(), b.addHp.begin(), b.addHp.end());
+	c.decreaseUpgradeMovesLeft.insert(c.decreaseUpgradeMovesLeft.end(), b.decreaseUpgradeMovesLeft.begin(), b.decreaseUpgradeMovesLeft.end());
+	c.increaseLevel.insert(c.increaseLevel.end(), b.increaseLevel.begin(), b.increaseLevel.end());
+	c.decreaseCurrentTradeMovesLeft.insert(c.decreaseCurrentTradeMovesLeft.end(), b.decreaseCurrentTradeMovesLeft.begin(), b.decreaseCurrentTradeMovesLeft.end());
 
 	return c;
 }

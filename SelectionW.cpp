@@ -51,6 +51,9 @@ Events SelectionW::click(uint32_t x, uint32_t y) {
 	}
 	return Events();
 }
+void SelectionW::update() {
+
+}
 void SelectionW::makeButtons(uint32_t windowW, uint32_t windowH) {
 	this->buttons.resize(this->components.size());
 	for (uint32_t i = 0; i < this->components.size(); i = i + 1) {
