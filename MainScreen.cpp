@@ -77,16 +77,19 @@ void MainScreen::init(sf::RenderWindow& window) {
 }
 void MainScreen::initLandscape() {
 	this->mapW = 60;
-	this->mapH = 40;
+	this->mapH = 34;
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
 	this->gameObjects.clear();
 	this->units.clear();
 	this->resourcePoints.clear();
-	this->addResourcePoint(new Forest(16, 8));
-	this->addResourcePoint(new Stone(20, 8));
-	this->addResourcePoint(new Iron(25, 8));
+	this->addResourcePoint(new Forest(13, 7));
+	this->addResourcePoint(new Forest(15, 7));
+	this->addResourcePoint(new Stone(17, 7));
+	this->addResourcePoint(new Stone(19, 7));
+	this->addResourcePoint(new Iron(21, 7));
+	this->addResourcePoint(new Iron(23, 7));
 }
 void MainScreen::removeOldPopUpWindows() {
 	while (!this->elements.empty()) {
@@ -99,12 +102,12 @@ void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
 	this->addUnit(new Castle(4, 4, &this->players[0]));
-	this->addUnit(new Market(8, 4, &this->players[0]));
-	this->addUnit(new Farm(12, 4, &this->players[0]));
-	this->addUnit(new Sawmill(16, 4, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Quarry(20, 4, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Mine(25, 4, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Castle(this->mapW - 8, this->mapH - 8, &this->players[1]));
+	this->addUnit(new Market(7, 4, &this->players[0]));
+	this->addUnit(new Farm(10, 4, &this->players[0]));
+	this->addUnit(new Sawmill(13, 4, &this->players[0], &this->resourcePoints));
+	this->addUnit(new Quarry(16, 4, &this->players[0], &this->resourcePoints));
+	this->addUnit(new Mine(19, 4, &this->players[0], &this->resourcePoints));
+	this->addUnit(new Castle(this->mapW - 7, this->mapH - 7, &this->players[1]));
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;

@@ -111,20 +111,20 @@ void UpgradeableB::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates s
 	text.setFillColor(sf::Color(75, 0, 130));
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(32 * this->getX(), 32 * this->getY());
+	text.setPosition(32 * this->getX() + 32 * this->getSX() - text.getLocalBounds().width, 32 * this->getY());
 	target.draw(text, states);
 }
 void UpgradeableB::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
 	rect.setFillColor(UI_COLOR);
-	rect.setSize(sf::Vector2f(32, 32 / 2));
-	rect.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() - 32 / 2);
+	rect.setSize(sf::Vector2f(32 * this->getSX(), 32 * this->getSY() / 2));
+	rect.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() / 2);
 	target.draw(rect, states);
 
 	sf::Sprite sprite;
-	sprite.setScale(0.5, 0.5);
 	sprite.setTexture(*Textures::get()->get("upgrade_icon"));
-	sprite.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() - 32 / 2);
+	sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
+	sprite.setPosition(rect.getPosition());
 	target.draw(sprite, states);
 
 	sf::Text text;
@@ -134,6 +134,6 @@ void UpgradeableB::drawUpgrading(sf::RenderTarget& target, sf::RenderStates stat
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(32 * this->getX() + 32 / 2, 32 * this->getY() + 32 * this->getSY() - 32 / 2);
+	text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2, 0));
 	target.draw(text, states);
 }

@@ -41,7 +41,7 @@ void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	float t = this->clock.getElapsedTime().asSeconds();
 
 	sf::Sprite sprite;
-	sprite.setScale(0.75, 0.75);
+	sprite.setScale(0.5, 0.5);
 	sprite.setTexture(*Textures::get()->get(this->picture));
 	sprite.setColor(this->getTransparencyLevel(t));
 	sprite.setPosition(this->getPosition(t));
@@ -63,8 +63,8 @@ sf::Color FlyingE::getTransparencyLevel(float t) const {
 sf::Vector2f FlyingE::getPosition(float t) const {
 	float a = 2 * (this->dst - V0 * TIME) / std::pow(TIME, 2);
 
-	float startX = 32 * this->x + 32 * this->sx / 2 - 64 * 3 / 4 / 2;
-	float startY = 32 * this->y + 32 * this->sy / 2 - 64 * 3 / 4 / 2;
+	float startX = 32 * this->x + 32 * this->sx / 2 - 64 / 2 / 2;
+	float startY = 32 * this->y + 32 * this->sy / 2 - 64 / 2 / 2;
 	
 	float currentX = startX;
 	float currentY = startY - V0 * t - a * std::pow(t, 2) / 2;

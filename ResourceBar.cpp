@@ -48,10 +48,10 @@ Resources ResourceBar::getResources() const {
 void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
-	rect.setSize(sf::Vector2f(target.getSize().x - 10, 64));
+	rect.setSize(sf::Vector2f(target.getSize().x - 10, 26));
 	rect.setFillColor(UI_COLOR);
 	rect.setOutlineColor(sf::Color::Black);
-	rect.setOutlineThickness(2);
+	rect.setOutlineThickness(4);
 	target.draw(rect, states);
 
 	std::string res[5] = { "food", "wood", "stone", "iron", "gold" };
@@ -59,6 +59,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 		sf::Sprite sprite;
 		sprite.setTexture(*Textures::get()->get(res[i] + "_icon"));
 		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 5, rect.getPosition().y));
+		sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
 		target.draw(sprite, states);
 
 		sf::Text text;

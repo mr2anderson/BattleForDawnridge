@@ -22,12 +22,12 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : 
-	UpgradeableHpSensitiveB(x, y, 4, 4, 30000, playerPtr),
-	Building(x, y, 4, 4, 30000, playerPtr) {
+	UpgradeableHpSensitiveB(x, y, 3, 3, 30000, playerPtr),
+	Building(x, y, 3, 3, 30000, playerPtr) {
 
 }
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	this->Building::draw(target, states);
+	this->UpgradeableHpSensitiveB::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
 		this->drawCurrentTradeShortInfo(target, states);
 	}
@@ -113,14 +113,14 @@ uint32_t Market::getTradeStartTime() const {
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
 	rect.setFillColor(UI_COLOR);
-	rect.setSize(sf::Vector2f(32, 32 / 2));
-	rect.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() - 32 / 2);
+	rect.setSize(sf::Vector2f(32 * this->getSX(), 32 * this->getSY() / 2));
+	rect.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() / 2);
 	target.draw(rect, states);
 
 	sf::Sprite sprite;
-	sprite.setScale(0.5, 0.5);
 	sprite.setTexture(*Textures::get()->get(this->currentTrade.buy.type + "_icon"));
-	sprite.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() - 32 / 2);
+	sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
+	sprite.setPosition(rect.getPosition());
 	target.draw(sprite, states);
 
 	sf::Text text;
@@ -130,7 +130,7 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
-	text.setPosition(32 * this->getX() + 32 / 2, 32 * this->getY() + 32 * this->getSY() - 32 / 2);
+	text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2, 0));
 	target.draw(text, states);
 }
 GOR Market::handleCurrentTrade() {
