@@ -67,7 +67,7 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::init(sf::RenderWindow& window) {
-	this->initLandscape();
+	this->initLandscape("ridge");
 	this->removeOldPopUpWindows();
 	this->initPlayers();
 	this->initMoveCtr();
@@ -75,20 +75,54 @@ void MainScreen::init(sf::RenderWindow& window) {
 	this->initGraphics(window);
 	this->changeMove();
 }
-void MainScreen::initLandscape() {
-	this->plains = PlainsGeneration(60, 34);
+void MainScreen::initLandscape(const std::string& name) {
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
 	this->gameObjects.clear();
 	this->units.clear();
 	this->resourcePoints.clear();
-	this->addResourcePoint(new Forest(13, 7));
-	this->addResourcePoint(new Forest(15, 7));
-	this->addResourcePoint(new Stone(17, 7));
-	this->addResourcePoint(new Stone(19, 7));
-	this->addResourcePoint(new Iron(21, 7));
-	this->addResourcePoint(new Iron(23, 7));
+
+	std::ifstream file(std::string(ROOT) + "/levels/" + name + ".tmx");
+	std::string line;
+	bool read = false;
+	uint32_t y = 0;
+	uint32_t x;
+	uint32_t currentPlayerId = 0;
+	while (std::getline(file, line)) {
+		if (line == "  <data encoding=\"csv\">") {
+			read = true;
+		}
+		else if (line == "</data>") {
+			break;
+		}
+		if (!read) {
+			continue;
+		}
+		std::stringstream ss(line);
+		std::string word;
+		x = 0;
+		while (std::getline(ss, word, ',')) {
+			if (word == "10") {
+				this->addResourcePoint(new Forest(x, y));
+			}
+			else if (word == "1") {
+				this->addUnit(new Castle(x, y, &this->players[currentPlayerId]));
+				currentPlayerId = currentPlayerId + 1;
+			}
+			else if (word == "18") {
+				this->addResourcePoint(new Iron(x, y));
+			}
+			else if (word == "14") {
+				this->addResourcePoint(new Stone(x, y));
+			}
+			x = x + 1;
+		}
+		y = y + 1;
+	}
+	file.close();
+
+	this->plains = PlainsGeneration(x + 1, y + 1);
 }
 void MainScreen::removeOldPopUpWindows() {
 	while (!this->elements.empty()) {
@@ -100,6 +134,7 @@ void MainScreen::removeOldPopUpWindows() {
 void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
+	return;
 	this->addUnit(new Castle(4, 4, &this->players[0]));
 	this->addUnit(new Market(7, 4, &this->players[0]));
 	this->addUnit(new Farm(10, 4, &this->players[0]));

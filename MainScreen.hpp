@@ -17,6 +17,7 @@
  */
 
 
+#include <fstream>
 #include "Playlist.hpp"
 #include "Forest.hpp"
 #include "Stone.hpp"
@@ -65,7 +66,7 @@ private:
 	Button endMoveButton;
 
 	void init(sf::RenderWindow &window);
-	void initLandscape();
+	void initLandscape(const std::string &name);
 	void removeOldPopUpWindows();
 	void initPlayers();
 	void initMoveCtr();
