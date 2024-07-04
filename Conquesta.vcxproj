@@ -604,6 +604,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="MessageW.hpp" />
     <ClInclude Include="Mine.hpp" />
+    <ClInclude Include="Road.hpp" />
     <ClInclude Include="SelectionWComponent.hpp" />
     <ClInclude Include="Stone.hpp" />
     <ClInclude Include="Music.hpp" />
@@ -662,6 +663,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MessageW.cpp" />
     <ClCompile Include="Mine.cpp" />
+    <ClCompile Include="Road.cpp" />
     <ClCompile Include="SelectionWComponent.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Music.cpp" />

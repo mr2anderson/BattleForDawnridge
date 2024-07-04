@@ -108,6 +108,7 @@ void MainScreen::initMap(const std::string& name) {
 			}
 			else if (word == "1") {
 				this->addUnit(new Castle(x, y, &this->players[currentPlayerId]));
+				this->units.back()->setMaxHp();
 				currentPlayerId = currentPlayerId + 1;
 			}
 			else if (word == "18") {
@@ -134,6 +135,21 @@ void MainScreen::removeOldPopUpWindows() {
 void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
+	this->addUnit(new Road(6, 6, &this->players[0]));
+	this->addUnit(new Road(6, 7, &this->players[0]));
+	this->addUnit(new Road(6, 8, &this->players[0]));
+	this->addUnit(new Road(6, 9, &this->players[0]));
+	this->addUnit(new Road(6, 10, &this->players[0]));
+	this->addUnit(new Road(6, 11, &this->players[0]));
+	this->addUnit(new Road(6, 12, &this->players[0]));
+	this->addUnit(new Road(6, 13, &this->players[0]));
+	this->addUnit(new Road(7, 13, &this->players[0]));
+	this->addUnit(new Road(8, 13, &this->players[0]));
+	this->addUnit(new Road(9, 13, &this->players[0]));
+	this->addUnit(new Road(10, 13, &this->players[0]));
+	this->addUnit(new Road(11, 13, &this->players[0]));
+	this->addUnit(new Road(12, 13, &this->players[0]));
+	return;
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;

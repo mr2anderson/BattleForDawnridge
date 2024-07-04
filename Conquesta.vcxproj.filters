@@ -799,6 +799,9 @@
     <ClInclude Include="Wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Road.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -956,6 +959,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Road.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

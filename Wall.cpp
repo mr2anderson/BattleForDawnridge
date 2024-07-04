@@ -47,7 +47,7 @@ GOR Wall::newMove(const Player& player) {
 }
 Resources Wall::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 3000));
+	cost.plus(Resource("stone", 6000));
 	return cost;
 }
 uint32_t Wall::GET_REGENERATION_SPEED(uint32_t level) {
@@ -67,8 +67,8 @@ std::wstring Wall::getReadableName() const {
 }
 Resources Wall::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"stone", 6000}}),
-		Resources({{"stone", 12000}})
+		Resources({{"stone", 12000}}),
+		Resources({{"stone", 24000}})
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }

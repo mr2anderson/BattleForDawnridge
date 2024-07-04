@@ -29,6 +29,7 @@
 #include "Quarry.hpp"
 #include "Mine.hpp"
 #include "Wall.hpp"
+#include "Road.hpp"
 #include "SoundQueue.hpp"
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"
