@@ -34,5 +34,5 @@ std::wstring Stone::getDescription() const {
 	return L"Этот камень содержит еще " + std::to_wstring(this->getHP()) + L" ед. камня. Постройте рядом каменоломню, чтобы начать добычу.";
 }
 std::string Stone::getClickSoundName() const {
-	return "quarry";
+	return "stone";
 }
