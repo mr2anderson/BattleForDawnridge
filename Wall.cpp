@@ -85,7 +85,7 @@ GOR Wall::getSelectionW() {
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back("wall",
-		L"Обезопасьте свой город этими мощными городскими стенами от неожиданного нападения.\n"
+		L"Защитите свой город этими мощными городскими стенами от неожиданного нападения.\n"
 		+ this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
