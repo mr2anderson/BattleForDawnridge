@@ -28,6 +28,7 @@
 #include "Quarry.hpp"
 #include "Mine.hpp"
 #include "SoundQueue.hpp"
+#include "HighlightTable.hpp"
 
 
 #pragma once
@@ -57,7 +58,7 @@ private:
 	std::vector<GO*> gameObjects;
 	std::vector<Unit*> units;
 	std::vector<ResourcePoint*> resourcePoints;
-	std::map<std::tuple<uint32_t, uint32_t>, std::vector<const Unit*>> highlightTable;
+	HighlightTable highlightTable;
 
 	uint32_t windowW, windowH;
 	sf::View view;

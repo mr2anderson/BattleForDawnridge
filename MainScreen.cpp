@@ -188,20 +188,7 @@ void MainScreen::handleChangeHighlightEvent(const GEvent& e) {
 		if (x >= this->mapW or y >= this->mapH) {
 			continue;
 		}
-		std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);
-		std::vector<const Unit*> v = this->highlightTable[p];
-		bool found = false;
-		for (uint32_t i = 0; i < v.size(); i = i + 1) {
-			if (v[i] == u) {
-				v.erase(v.begin() + i);
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			v.push_back(u);
-		}
-		this->highlightTable[p] = v;
+		this->highlightTable.mark(x, y, u);
 	}
 }
 void MainScreen::handleCollectEvent(const GEvent& e) {
@@ -333,7 +320,7 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 			s.setTexture(*Textures::get()->get(std::to_string((i + j) % TOTAL_PLAINS + 1)));
 			s.setPosition(32 * i, 32 * j);
 			window.draw(s);
-			if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
+			if (this->highlightTable.highlighted(i, j)) {
 				sf::RectangleShape r;
 				r.setPosition(s.getPosition());
 				r.setSize(sf::Vector2f(32, 32));

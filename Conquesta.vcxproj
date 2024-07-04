@@ -485,6 +485,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   <ItemGroup>
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="FlyingE.hpp" />
+    <ClInclude Include="HighlightTable.hpp" />
     <ClInclude Include="MainScreen.hpp" />
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="Button.hpp" />
@@ -638,6 +639,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   <ItemGroup>
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FlyingE.cpp" />
+    <ClCompile Include="HighlightTable.cpp" />
     <ClCompile Include="MainScreen.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Button.cpp" />

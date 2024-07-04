@@ -17,23 +17,20 @@
  */
 
 
-
-#include "GO.hpp"
+#include <map>
+#include "Unit.hpp"
 
 
 #pragma once
 
 
-class Unit : public GO {
+class HighlightTable {
 public:
-	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player *playerPtr);
+	HighlightTable();
 
-	bool belongTo(const Player* player) const;
-
-	virtual Resources getCost() const = 0;
-protected:
-	GOR getUnitOfEnemyResponse();
+	void clear();
+	void mark(uint32_t x, uint32_t y, const Unit* unitPtr);
+	bool highlighted(uint32_t x, uint32_t y) const;
 private:
-	const Player* playerPtr;
+	std::map<std::tuple<uint32_t, uint32_t>, std::vector<const Unit*>> data;
 };
