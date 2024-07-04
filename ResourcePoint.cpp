@@ -39,7 +39,7 @@ GOR ResourcePoint::getSelectionWindow() {
 	components.emplace_back(this->getTextureName(), this->getDescription(), false, GEvent());
 
 	SelectionW* window = new SelectionW(this->getClickSoundName(), "click", components);
-	response.popUpWindows.push(window);
+	response.windows.push(window);
 
 	return response;
 }

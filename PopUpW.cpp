@@ -20,20 +20,10 @@
 #include "PopUpW.hpp"
 
 
-PopUpW::PopUpW(const std::string& soundName1, const std::string& soundName2) {
-	this->soundName1 = soundName1;
-	this->soundName2 = soundName2;
+PopUpW::PopUpW() = default;
+void PopUpW::addOnStartGEvent(const GEvent& gEvent) {
+	this->onStart = this->onStart + gEvent;
 }
-void PopUpW::run(uint32_t windowW, uint32_t windowH) {
-	this->playSound1();
-}
-void PopUpW::playSound1() const {
-	if (this->soundName1 != "") {
-		SoundQueue::get()->push(Sounds::get()->get(this->soundName1));
-	}
-}
-void PopUpW::playSound2() const {
-	if (this->soundName2 != "") {
-		SoundQueue::get()->push(Sounds::get()->get(this->soundName2));
-	}
+GEvent PopUpW::getOnStartGEvent() const {
+	return this->onStart;
 }

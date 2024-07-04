@@ -98,7 +98,7 @@ GOR Castle::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW("hooray", "click", components);
-	response.popUpWindows.push(window);
+	response.windows.push(window);
 
 	return response;
 }

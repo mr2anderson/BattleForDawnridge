@@ -17,19 +17,17 @@
  */
 
 
-#include "GOR.hpp"
+#include <vector>
 
 
-GOR::GOR() = default;
-GOR operator+(const GOR& a, const GOR& b) {
-	GOR c = a;
+#pragma once
 
-	std::queue<PopUpW*> windows = b.windows;
-	while (!windows.empty()) {
-		c.windows.push(windows.front());
-		windows.pop();
-	}
-	c.events.insert(c.events.end(), b.events.begin(), b.events.end());
 
-	return c;
-}
+struct UIEvent {
+	UIEvent();
+
+	friend UIEvent operator+(const UIEvent& a, const UIEvent& b);
+
+	std::vector<std::string> playSound;
+	uint32_t closePopUpWindows;
+};

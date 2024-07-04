@@ -17,9 +17,19 @@
  */
 
 
-#include "PopUpWEvent.hpp"
+#include "Events.hpp"
 
 
-PopUpWEvent::PopUpWEvent(bool close) {
-	this->close = close;
+Events::Events() = default;
+Events::Events(const GEvent& gEvent, const UIEvent& uiEvent) {
+	this->gEvent = gEvent;
+	this->uiEvent = uiEvent;
+}
+Events operator +(const Events& a, const Events& b) {
+	Events c = a;
+
+	c.gEvent = c.gEvent + b.gEvent;
+	c.uiEvent = c.uiEvent + b.uiEvent;
+
+	return c;
 }

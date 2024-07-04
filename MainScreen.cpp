@@ -49,7 +49,7 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
-						this->handlePopUpWindowEvent(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+						this->handleEvents(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
 					}
 				}
 			}
@@ -120,6 +120,10 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->view = window.getDefaultView();
 	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, L"Êîíåö õîäà");
 }
+void MainScreen::handleEvents(const Events& e) {
+	this->handleGameEvent(e.gEvent);
+	this->handleUIEvent(e.uiEvent);
+}
 void MainScreen::handleGameEvent(const GEvent &e) {
 	this->handleTryToAttackEvent(e);
 	this->handleTryToTradeEvent(e);
@@ -141,18 +145,13 @@ void MainScreen::handleTryToTradeEvent(const GEvent& e) {
 		Market* m = std::get<Market*>(a);
 		Trade t = std::get<Trade>(a);
 		if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
-			GOR r = m->doTrade(t);
-			this->handleGameEvent(r.gEvent);
-			this->addPopUpWindows(r.popUpWindows);
+			this->handleGOR(m->doTrade(t));
 		}
 		else {
 			MessageW* w = new MessageW("click", "click", 
 				L"ÍÅÄÎÑÒÀÒÎ×ÍÎ ÐÅÑÓÐÑÎÂ\n"
 				"Âû íå ìîæåòå ñîâåðøèòü ýòó ñäåëêó.");
-			this->popUpWindows.push(w);
-			if (this->popUpWindows.size() == 1) {
-				this->popUpWindows.front()->run(this->windowW, this->windowH);
-			}
+			this->addPopUpWindow(w);
 		}
 	}
 }
@@ -213,30 +212,42 @@ void MainScreen::handleTryToUpgradeEvent(const GEvent& e) {
 		UpgradeableB* b = std::get<UpgradeableB*>(a);
 		Resources cost = std::get<Resources>(a);
 		if (this->getCurrentPlayer()->getResources() >= cost) {
-			GOR response = b->upgrade();
-			this->handleGameEvent(response.gEvent);
-			this->addPopUpWindows(response.popUpWindows);
+			this->handleGOR(b->upgrade());
 		}
 		else {
 			MessageW* w = new MessageW("click", "click", 
 				L"ÍÅÄÎÑÒÀÒÎ×ÍÎ ÐÅÑÓÐÑÎÂ\n"
 				"Âû íå ìîæåòå óëó÷øèòü ýòî çäàíèå.");
-			this->popUpWindows.push(w);
-			if (this->popUpWindows.size() == 1) {
-				this->popUpWindows.front()->run(this->windowW, this->windowH);
-			}
+			this->addPopUpWindow(w);
 		}
 	}
 }
-void MainScreen::handlePopUpWindowEvent(const PopUpWEvent &e) {
-	if (e.close) {
+void MainScreen::handleUIEvent(const UIEvent& e) {
+	this->handlePlaySoundEvent(e);
+	this->handleClosePopUpWindowsEvent(e);
+}
+void MainScreen::handlePlaySoundEvent(const UIEvent& e) {
+	for (const auto& a : e.playSound) {
+		SoundQueue::get()->push(Sounds::get()->get(a));
+	}
+}
+void MainScreen::handleClosePopUpWindowsEvent(const UIEvent& e) {
+	for (uint32_t i = 0; i < e.closePopUpWindows; i = i + 1) {
+		if (this->popUpWindows.empty()) {
+			break;
+		}
 		delete this->popUpWindows.front();
 		this->popUpWindows.pop();
 		if (!this->popUpWindows.empty()) {
-			this->popUpWindows.front()->run(this->windowW, this->windowH);
+			this->handleEvents(this->popUpWindows.front()->run(this->windowW, this->windowH));
 		}
 	}
-	this->handleGameEvent(e.gEvent);
+}
+void MainScreen::handleGOR(const GOR& responce) {
+	this->addPopUpWindows(responce.windows);
+	for (const auto& gEvent : responce.events) {
+		this->handleGameEvent(gEvent);
+	}
 }
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
@@ -244,9 +255,7 @@ void MainScreen::changeMove() {
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-		GOR r = this->gameObjects[i]->newMove(*this->getCurrentPlayer());
-		this->handleGameEvent(r.gEvent);
-		this->addPopUpWindows(r.popUpWindows);
+		this->handleGOR(this->gameObjects[i]->newMove(*this->getCurrentPlayer()));
 	}
 }
 Player* MainScreen::getCurrentPlayer() {
@@ -256,21 +265,19 @@ void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - this->windowW / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - this->windowH / 2;
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
-		GOR r = this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY);
-		this->handleGameEvent(r.gEvent);
-		this->addPopUpWindows(r.popUpWindows);
+		this->handleGOR(this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
 void MainScreen::addPopUpWindows(std::queue<PopUpW*> q) {
-	bool popUpWindowsExist = !this->popUpWindows.empty();
-	if (!q.empty()) {
-		while (!q.empty()) {
-			this->popUpWindows.push(q.front());
-			q.pop();
-		}
-		if (!popUpWindowsExist) {
-			this->popUpWindows.front()->run(this->windowW, this->windowH);
-		}
+	while (!q.empty()) {
+		this->addPopUpWindow(q.front());
+		q.pop();
+	}
+}
+void MainScreen::addPopUpWindow(PopUpW* w) {
+	this->popUpWindows.push(w);
+	if (this->popUpWindows.size() == 1) {
+		this->handleEvents(w->run(this->windowW, this->windowH));
 	}
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {

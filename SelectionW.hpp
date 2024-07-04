@@ -29,12 +29,14 @@ class SelectionW : public PopUpW {
 public:
 	SelectionW(const std::string &soundName1, const std::string &soundName2, const std::vector<SelectionWComponent>& components);
 
-	void run(uint32_t windowW, uint32_t windowH) override;
+	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	PopUpWEvent click(uint32_t x, uint32_t y) const override;
+	Events click(uint32_t x, uint32_t y) const override;
 private:
+	std::string soundName1;
+	std::string soundName2;
 	std::vector<SelectionWComponent> components;
-	std::vector<std::tuple<Button, bool, GEvent>> buttons;
+	std::vector<std::tuple<Button, Events>> buttons;
 
 	void makeButtons(uint32_t windowW, uint32_t windowH);
 };

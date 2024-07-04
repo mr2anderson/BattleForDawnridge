@@ -649,40 +649,13 @@
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp">
       <Filter>Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="GameEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleScreen.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuScreen.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SoundQueue.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PressAnyKeyScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Playlist.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LoadingScreen.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MusicStorage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundStorage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureStorage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PopUpWindowEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Label.hpp">
@@ -694,16 +667,10 @@
     <ClInclude Include="HPBar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PopUpWindow.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ColorTheme.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Root.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FontStorage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.hpp">
@@ -713,12 +680,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectWindow.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResourcePoint.hpp">
@@ -742,9 +703,6 @@
     <ClInclude Include="Castle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectResponse.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Market.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -752,12 +710,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HpSensitiveBuilding.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceBuilding.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mine.hpp">
@@ -775,10 +727,64 @@
     <ClInclude Include="Resources.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UpgradeableBuilding.hpp">
+    <ClInclude Include="MainScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UpgradeableHpSensitiveBuilding.hpp">
+    <ClInclude Include="Fonts.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GO.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GOR.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HpSensitiveB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageW.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionWComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Music.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpW.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PAKScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionW.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sounds.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeableB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeableHpSensitiveB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -793,22 +799,7 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BattleScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MessageWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LoadingScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PressAnyKeyScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Label.cpp">
@@ -817,16 +808,7 @@
     <ClCompile Include="Playlist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MusicStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SoundQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
@@ -838,15 +820,6 @@
     <ClCompile Include="HPBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpWindowEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PopUpWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FontStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -854,12 +827,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourcePoint.cpp">
@@ -883,9 +850,6 @@
     <ClCompile Include="Castle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Market.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -893,12 +857,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Trade.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HpSensitiveBuilding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceBuilding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mine.cpp">
@@ -916,10 +874,64 @@
     <ClCompile Include="Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UpgradeableBuilding.cpp">
+    <ClCompile Include="MainScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UpgradeableHpSensitiveBuilding.cpp">
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GOR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HpSensitiveB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageW.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionWComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Music.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpW.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PAKScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionW.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeableB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeableHpSensitiveB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

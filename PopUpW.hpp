@@ -18,9 +18,7 @@
 
 
 #include <SFML/Graphics.hpp>
-#include "SoundQueue.hpp"
-#include "Sounds.hpp"
-#include "PopUpWEvent.hpp"
+#include "Events.hpp"
 
 
 #pragma once
@@ -28,13 +26,14 @@
 
 class PopUpW : public sf::Drawable {
 public:
-	PopUpW(const std::string &soundName1, const std::string &soundName2);
+	PopUpW();
 
-	virtual void run(uint32_t windowW, uint32_t windowH);
-	virtual PopUpWEvent click(uint32_t x, uint32_t y) const = 0;
+	void addOnStartGEvent(const GEvent& event);
+
+	virtual Events run(uint32_t windowW, uint32_t windowH) = 0;
+	virtual Events click(uint32_t x, uint32_t y) const = 0;
 protected:
-	void playSound1() const;
-	void playSound2() const;
+	GEvent getOnStartGEvent() const;
 private:
-	std::string soundName1, soundName2;
+	GEvent onStart;
 };

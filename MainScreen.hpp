@@ -27,6 +27,7 @@
 #include "Sawmill.hpp"
 #include "Quarry.hpp"
 #include "Mine.hpp"
+#include "SoundQueue.hpp"
 
 
 #pragma once
@@ -70,6 +71,8 @@ private:
 	void initHighlightTable();
 	void initGraphics(sf::RenderWindow &window);
 
+	void handleEvents(const Events& e);
+
 	void handleGameEvent(const GEvent& e);
 	void handleTryToAttackEvent(const GEvent& e);
 	void handleTryToTradeEvent(const GEvent& e);
@@ -80,12 +83,18 @@ private:
 	void handleChangeHighlightEvent(const GEvent& e);
 	void handleCollectEvent(const GEvent& e);
 	void handleTryToUpgradeEvent(const GEvent& e);
-	void handlePopUpWindowEvent(const PopUpWEvent& e);
+	
+	void handleUIEvent(const UIEvent& e);
+	void handlePlaySoundEvent(const UIEvent& e);
+	void handleClosePopUpWindowsEvent(const UIEvent& e);
+
+	void handleGOR(const GOR& responce);
 
 	void changeMove();
 	Player* getCurrentPlayer();
 	void handleGameObjectClick();
 	void addPopUpWindows(std::queue<PopUpW*> q);
+	void addPopUpWindow(PopUpW* w);
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);

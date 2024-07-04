@@ -78,9 +78,11 @@ uint32_t Farm::getCollectionSpeed() const {
 	return GET_COLLECTION_SPEED(this->getCurrentLevel() - 1);
 }
 GOR Farm::collectFood() const {
-	GOR response;
-	response.gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
-	return response;
+	GEvent gEvent;
+	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
+	GOR responce;
+	responce.events.push_back(gEvent);
+	return responce;
 }
 GOR Farm::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
@@ -115,7 +117,7 @@ GOR Farm::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
-	response.popUpWindows.push(window);
+	response.windows.push(window);
 
 	return response;
 }

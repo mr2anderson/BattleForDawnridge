@@ -483,6 +483,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <Library Include="extlibs\lib\x86\vorbisfile.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Events.hpp" />
     <ClInclude Include="MainScreen.hpp" />
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="Button.hpp" />
@@ -606,7 +607,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Playlist.hpp" />
     <ClInclude Include="PopUpW.hpp" />
-    <ClInclude Include="PopUpWEvent.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
     <ClInclude Include="Quarry.hpp" />
     <ClInclude Include="Iron.hpp" />
@@ -622,6 +622,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="Forest.hpp" />
+    <ClInclude Include="UIEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UpgradeableB.hpp" />
     <ClInclude Include="UpgradeableHpSensitiveB.hpp" />
@@ -634,6 +635,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <Font Include="resources\sansation.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Events.cpp" />
     <ClCompile Include="MainScreen.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -659,7 +661,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="PopUpW.cpp" />
-    <ClCompile Include="PopUpWEvent.cpp" />
     <ClCompile Include="PAKScreen.cpp" />
     <ClCompile Include="Quarry.cpp" />
     <ClCompile Include="Iron.cpp" />
@@ -674,6 +675,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="Forest.cpp" />
+    <ClCompile Include="UIEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UpgradeableB.cpp" />
     <ClCompile Include="UpgradeableHpSensitiveB.cpp" />

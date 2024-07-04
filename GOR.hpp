@@ -29,6 +29,6 @@ struct GOR {
 
 	friend GOR operator+(const GOR& a, const GOR& b);
 
-	GEvent gEvent;
-	std::queue<PopUpW*> popUpWindows;
+	std::queue<PopUpW*> windows;
+	std::vector<GEvent> events;
 };

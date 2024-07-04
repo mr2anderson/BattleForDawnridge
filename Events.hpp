@@ -17,16 +17,19 @@
  */
 
 
-
 #include "GEvent.hpp"
+#include "UIEvent.hpp"
 
 
 #pragma once
 
 
-struct PopUpWEvent {
-	PopUpWEvent(bool close);
+struct Events {
+	Events();
+	Events(const GEvent& gEvent, const UIEvent& uiEvent);
 
-	bool close;
+	friend Events operator +(const Events& a, const Events& b);
+
 	GEvent gEvent;
+	UIEvent uiEvent;
 };

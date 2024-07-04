@@ -29,7 +29,9 @@ bool Unit::belongTo(const Player* player) const {
 	return (*this->playerPtr == *player);
 }
 GOR Unit::getUnitOfEnemyResponse() {
+	GEvent gEvent;
+	gEvent.tryToAttack.push_back(this);
 	GOR response;
-	response.gEvent.tryToAttack.push_back(this);
+	response.events.push_back(gEvent);
 	return response;
 }

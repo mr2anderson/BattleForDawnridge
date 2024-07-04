@@ -18,31 +18,35 @@
 
 
 #include "SelectionW.hpp"
+#include <iostream>
 
 
 SelectionW::SelectionW(const std::string &soundName1, const std::string &soundName2, const std::vector<SelectionWComponent> &components) : 
-	PopUpW(soundName1, soundName2) {
+	PopUpW() {
+	this->soundName1 = soundName1;
+	this->soundName2 = soundName2;
 	this->components = components;
 }
-void SelectionW::run(uint32_t windowW, uint32_t windowH) {
-	this->playSound1();
+Events SelectionW::run(uint32_t windowW, uint32_t windowH) {
 	this->makeButtons(windowW, windowH);
+
+	UIEvent soundEvent;
+	soundEvent.playSound.push_back(this->soundName1);
+
+	return Events(this->getOnStartGEvent(), soundEvent);
 }
 void SelectionW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
 		target.draw(std::get<Button>(this->buttons[i]), states);
 	}
 }
-PopUpWEvent SelectionW::click(uint32_t x, uint32_t y) const {
+Events SelectionW::click(uint32_t x, uint32_t y) const {
 	for (const auto& t : buttons) {
-		if (std::get<bool>(t) and std::get<Button>(t).click(x, y)) {
-			PopUpWEvent event(true);
-			event.gEvent = std::get<GEvent>(t);
-			this->playSound2();
-			return event;
+		if (std::get<Button>(t).click(x, y)) {
+			return std::get<Events>(t);
 		}
 	}
-	return PopUpWEvent(false);
+	return Events();
 }
 void SelectionW::makeButtons(uint32_t windowW, uint32_t windowH) {
 	this->buttons.resize(this->components.size());
@@ -50,9 +54,15 @@ void SelectionW::makeButtons(uint32_t windowW, uint32_t windowH) {
 		std::string pictureName = this->components[i].pictureName;
 		std::wstring message = this->components[i].message;
 		bool clickable = this->components[i].clickable;
-		GEvent event = this->components[i].gEvent;
+		GEvent gEvent = this->components[i].gEvent;
+
+		UIEvent uiEvent;
+		if (clickable) {
+			uiEvent.playSound.push_back(this->soundName2);
+			uiEvent.closePopUpWindows = uiEvent.closePopUpWindows + 1;
+		}
 
 		Button button(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message);
-		this->buttons[i] = std::make_tuple(button, clickable, event);
+		this->buttons[i] = std::make_tuple(button, Events(gEvent, uiEvent));
 	}
 }

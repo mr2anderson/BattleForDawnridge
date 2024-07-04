@@ -75,29 +75,31 @@ std::tuple<uint32_t, uint32_t> ResourceB::getCenter() const {
 	return std::make_tuple(x1, y1);
 }
 GOR ResourceB::collectResources() {
-	GOR response;
-
 	uint32_t left = this->getCollectionSpeed();
+	GEvent gEvent;
 	for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
 		ResourcePoint* rp = this->resourcePointsPtr->at(i);
 		if (rp->getResourceType() == this->getResourceType() and this->inRadius(rp)) {
 			uint32_t got = std::min(left, rp->getHP());
 			left = left - got;
-			response.gEvent.collect.emplace_back(rp, got);
+			gEvent.collect.emplace_back(rp, got);
 		}
 	}
 
+	GOR responce;
 	if (left > 0) {
 		this->resourcesLeft = false;
 		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", this->getResourcesOverStr());
-		response.popUpWindows.push(window);
+		window->addOnStartGEvent(gEvent);
+		responce.windows.push(window);
 	}
-
-	return response;
+	else {
+		responce.events.push_back(gEvent);
+	}
+	return responce;
 }
 GOR ResourceB::highlightArea() const {
-	GOR response;
-	response.gEvent = GEvent();
+	GEvent gEvent;
 
 	uint32_t x1, y1;
 	uint32_t x2, y2;
@@ -123,11 +125,13 @@ GOR ResourceB::highlightArea() const {
 
 	for (uint32_t x = x2; x <= x1; x = x + 1) {
 		for (uint32_t y = y2; y <= y1; y = y + 1) {
-			response.gEvent.changeHighlight.emplace_back(this, x, y);
+			gEvent.changeHighlight.emplace_back(this, x, y);
 		}
 	}
 
-	return response;
+	GOR responce;
+	responce.events.push_back(gEvent);
+	return responce;
 }
 GOR ResourceB::getSelectionW(const GEvent& highlightEvent) {
 	GOR response;
@@ -145,7 +149,7 @@ GOR ResourceB::getSelectionW(const GEvent& highlightEvent) {
 	}
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
-	response.popUpWindows.push(window);
+	response.windows.push(window);
 
 	return response;
 }
@@ -161,7 +165,7 @@ GOR ResourceB::getGameObjectResponse(const Player& player) {
 			return this->handleDoesNotWork();
 		}
 		GOR response = this->highlightArea();
-		return response + this->getSelectionW(response.gEvent);
+		return response + this->getSelectionW(response.events.back());
 	}
 	return this->getUnitOfEnemyResponse();
 }

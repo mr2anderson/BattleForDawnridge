@@ -17,19 +17,18 @@
  */
 
 
-#include "GOR.hpp"
+#include "UIEvent.hpp"
 
 
-GOR::GOR() = default;
-GOR operator+(const GOR& a, const GOR& b) {
-	GOR c = a;
 
-	std::queue<PopUpW*> windows = b.windows;
-	while (!windows.empty()) {
-		c.windows.push(windows.front());
-		windows.pop();
-	}
-	c.events.insert(c.events.end(), b.events.begin(), b.events.end());
+UIEvent::UIEvent() {
+	this->closePopUpWindows = 0;
+}
+UIEvent operator+(const UIEvent& a, const UIEvent& b) {
+	UIEvent c = a;
+
+	c.playSound.insert(c.playSound.end(), b.playSound.begin(), b.playSound.end());
+	c.closePopUpWindows = c.closePopUpWindows + b.closePopUpWindows;
 
 	return c;
 }

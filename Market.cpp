@@ -35,16 +35,18 @@ void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 GOR Market::doTrade(const Trade& trade) {
 	this->currentTrade = trade;
 
-	GOR response;
-	response.gEvent.subResource.push_back(trade.sell);
+	GEvent gEvent;
+	gEvent.subResource.push_back(trade.sell);
 
 	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", 
 		L"СДЕЛКА НАЧАТА\n"
 		"Ваши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:\n" + 
 		trade.getReadableInfo());
-	response.popUpWindows.push(window);
-
-	return response;
+	
+	window->addOnStartGEvent(gEvent);
+	GOR responce;
+	responce.windows.push(window);
+	return responce;
 }
 GOR Market::newMove(const Player& currentPlayer) {
 	if (!this->belongTo(&currentPlayer) or !this->exist()) {
@@ -134,14 +136,16 @@ GOR Market::handleCurrentTrade() {
 	}
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 	if (this->currentTrade.movesLeft == 0) {
-		GOR response;
-		response.gEvent.addResource.push_back(this->currentTrade.buy);
+		GEvent gEvent;
+		gEvent.addResource.push_back(this->currentTrade.buy);
 		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", 
 			L"СДЕЛКА ЗАВЕРШЕНА\n"
 			"Ресурсы были получены. Детали сделки:\n"
 			+ this->currentTrade.getReadableInfo());
-		response.popUpWindows.push(window);
-		return response;
+		window->addOnStartGEvent(gEvent);
+		GOR responce;
+		responce.windows.push(window);
+		return responce;
 	}
 	return GOR();
 }
@@ -175,7 +179,7 @@ GOR Market::getSelectionW() {
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
 	GOR response;
-	response.popUpWindows.push(window);
+	response.windows.push(window);
 	return response;
 }
 void Market::addTrade(std::vector<SelectionWComponent>& components, const GEvent& gameEventTrade) {
@@ -189,7 +193,7 @@ GOR Market::handleBusyWithTrade() const {
 		L"РЫНОК ЗАНЯТ\n"
 		"Детали сделки:\n" +
 		this->currentTrade.getReadableInfo());
-	response.popUpWindows.push(window);
+	response.windows.push(window);
 	return response;
 }
 GOR Market::getGameObjectResponse(const Player& player) {
