@@ -85,8 +85,8 @@ GOR Farm::collectFood() const {
 	GEvent gEvent;
 	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
 	PopUpElement* element = new FlyingE("food_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	element->addOnStartGEvent(gEvent);
 	GOR responce;
-	responce.events.push_back(gEvent);
 	responce.elements.push(element);
 	return responce;
 }
