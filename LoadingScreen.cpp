@@ -59,7 +59,7 @@ void LoadingScreen::loadAll() {
 		Textures::get()->add(a, "images/" + a + ".png");
 	}
 	for (uint32_t i = 1; i <= MainScreen::TOTAL_PLAINS; i = i + 1) {
-		Textures::get()->add("dark_plains_" + std::to_string(i), "images/dark_plains_" + std::to_string(i) + ".png");
+		Textures::get()->add(std::to_string(i), "images/" + std::to_string(i) + ".png");
 	}
 	for (const std::string& a : { "click", "food", "gold", "hooray", "iron", 
 		"regeneration", "stone", "wood"}) {

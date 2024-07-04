@@ -23,8 +23,8 @@
 
 Farm::Farm() = default;
 Farm::Farm(uint32_t x, uint32_t y, const Player* playerPtr) : 
-	UpgradeableHpSensitiveB(x, y, 2, 2, 10000, playerPtr),
-	Building(x, y, 2, 2, 10000, playerPtr){}
+	UpgradeableHpSensitiveB(x, y, 4, 4, 10000, playerPtr),
+	Building(x, y, 4, 4, 10000, playerPtr){}
 GOR Farm::newMove(const Player& player) {	
 	if (this->belongTo(&player) and this->exist()) {
 		GOR response = this->handleCurrentUpgrade();

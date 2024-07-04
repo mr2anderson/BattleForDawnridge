@@ -63,8 +63,8 @@ sf::Color FlyingE::getTransparencyLevel(float t) const {
 sf::Vector2f FlyingE::getPosition(float t) const {
 	float a = 2 * (this->dst - V0 * TIME) / std::pow(TIME, 2);
 
-	float startX = 64 * this->x + 64 * this->sx / 2 - 64 * 3 / 4 / 2;
-	float startY = 64 * this->y + 64 * this->sy / 2 - 64 * 3 / 4 / 2;
+	float startX = 32 * this->x + 32 * this->sx / 2 - 32 * 3 / 4 / 2;
+	float startY = 32 * this->y + 32 * this->sy / 2 - 32 * 3 / 4 / 2;
 	
 	float currentX = startX;
 	float currentY = startY - V0 * t - a * std::pow(t, 2) / 2;

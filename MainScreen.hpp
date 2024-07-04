@@ -44,7 +44,7 @@ public:
 
 	int32_t run(sf::RenderWindow& window);
 
-	static constexpr uint32_t TOTAL_PLAINS = 5;
+	static constexpr uint32_t TOTAL_PLAINS = 20;
 private:
 	MainScreen() = default;
 	MainScreen(const MainScreen& copy) = delete;

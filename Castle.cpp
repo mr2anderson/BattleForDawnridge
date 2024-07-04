@@ -29,8 +29,8 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
-	UpgradeableB(x, y, 2, 2, LEVEL_HP[0], playerPtr),
-	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
+	UpgradeableB(x, y, 4, 4, LEVEL_HP[0], playerPtr),
+	Building(x, y, 4, 4, LEVEL_HP[0], playerPtr) {
 
 }
 GOR Castle::newMove(const Player& player) {

@@ -76,25 +76,17 @@ void MainScreen::init(sf::RenderWindow& window) {
 	this->changeMove();
 }
 void MainScreen::initLandscape() {
-	this->mapW = 30;
-	this->mapH = 20;
+	this->mapW = 60;
+	this->mapH = 40;
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
 	this->gameObjects.clear();
 	this->units.clear();
 	this->resourcePoints.clear();
-	this->addResourcePoint(new Forest(6, 2));
-	this->addResourcePoint(new Forest(7, 2));
-	this->addResourcePoint(new Forest(6, 3));
-	this->addResourcePoint(new Forest(9, 4));
-	this->addResourcePoint(new Stone(9, 1));
-	this->addResourcePoint(new Stone(10, 1));
-	this->addResourcePoint(new Stone(9, 2));
-	this->addResourcePoint(new Stone(12, 3));
-	this->addResourcePoint(new Iron(5, 13));
-	this->addResourcePoint(new Iron(5, 12));
-	this->addResourcePoint(new Iron(6, 13));
+	this->addResourcePoint(new Forest(16, 8));
+	this->addResourcePoint(new Stone(20, 8));
+	this->addResourcePoint(new Iron(25, 8));
 }
 void MainScreen::removeOldPopUpWindows() {
 	while (!this->elements.empty()) {
@@ -106,13 +98,13 @@ void MainScreen::removeOldPopUpWindows() {
 void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
-	this->addUnit(new Castle(2, 2, &this->players[0]));
-	this->addUnit(new Market(2, 4, &this->players[0]));
-	this->addUnit(new Farm(4, 4, &this->players[0]));
-	this->addUnit(new Sawmill(7, 3, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Quarry(10, 2, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Mine(3, 11, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Castle(this->mapW - 4, this->mapH - 4, &this->players[1]));
+	this->addUnit(new Castle(4, 4, &this->players[0]));
+	this->addUnit(new Market(8, 4, &this->players[0]));
+	this->addUnit(new Farm(12, 4, &this->players[0]));
+	this->addUnit(new Sawmill(16, 4, &this->players[0], &this->resourcePoints));
+	this->addUnit(new Quarry(20, 4, &this->players[0], &this->resourcePoints));
+	this->addUnit(new Mine(25, 4, &this->players[0], &this->resourcePoints));
+	this->addUnit(new Castle(this->mapW - 8, this->mapH - 8, &this->players[1]));
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;
@@ -335,13 +327,13 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < this->mapW; i = i + 1) {
 		for (uint32_t j = 0; j < this->mapH; j = j + 1) {
 			sf::Sprite s;
-			s.setTexture(*Textures::get()->get("dark_plains_" + std::to_string((i + j) % TOTAL_PLAINS + 1)));
-			s.setPosition(64 * i, 64 * j);
+			s.setTexture(*Textures::get()->get(std::to_string((i + j) % TOTAL_PLAINS + 1)));
+			s.setPosition(32 * i, 32 * j);
 			window.draw(s);
 			if (!this->highlightTable[std::make_tuple(i, j)].empty()) {
 				sf::RectangleShape r;
 				r.setPosition(s.getPosition());
-				r.setSize(sf::Vector2f(64, 64));
+				r.setSize(sf::Vector2f(32, 32));
 				r.setFillColor(CELL_COLOR_HIGHLIGHTED);
 				window.draw(r);
 			}
@@ -368,7 +360,7 @@ void MainScreen::updatePlayerViewPoint() {
 		this->view.setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
 	}
 	else {
-		this->view.setCenter(sf::Vector2f(64 * this->mapW - this->windowW / 2, 64 * this->mapH - this->windowH / 2));
+		this->view.setCenter(sf::Vector2f(32 * this->mapW - this->windowW / 2, 32 * this->mapH - this->windowH / 2));
 	}
 }
 void MainScreen::moveViewToNorth() {
@@ -376,7 +368,7 @@ void MainScreen::moveViewToNorth() {
 	view.setCenter(view.getCenter() - sf::Vector2f(0, d));
 }
 void MainScreen::moveViewToSouth() {
-	float d = std::min(10.f, 64 * this->mapH - this->windowH / 2 - view.getCenter().y);
+	float d = std::min(10.f, 32 * this->mapH - this->windowH / 2 - view.getCenter().y);
 	view.setCenter(view.getCenter() + sf::Vector2f(0, d));
 }
 void MainScreen::moveViewToWest() {
@@ -384,7 +376,7 @@ void MainScreen::moveViewToWest() {
 	view.setCenter(view.getCenter() - sf::Vector2f(d, 0));
 }
 void MainScreen::moveViewToEast() {
-	float d = std::min(10.f, 64 * this->mapW - this->windowW / 2 - view.getCenter().x);
+	float d = std::min(10.f, 32 * this->mapW - this->windowW / 2 - view.getCenter().x);
 	view.setCenter(view.getCenter() + sf::Vector2f(d, 0));
 }
 void MainScreen::addUnit(Unit* u) {
