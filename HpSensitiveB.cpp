@@ -38,10 +38,8 @@ GOR HpSensitiveB::handleDoesNotWork() const {
 	return response;
 }
 GOR HpSensitiveB::regenerate() {
-	bool works1 = this->works();
 	GOR response = this->Building::regenerate();
-	bool works2 = this->works();
-	if (works2 and !works1) {
+	if (this->getHP() != this->getMaxHP() and this->getHP() + this->getRegenerationSpeed() >= this->getMaxHP()) {
 		FlyingE* element = new FlyingE("hammer_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 		response.elements.push(element);
 	}
