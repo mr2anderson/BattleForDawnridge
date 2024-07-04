@@ -47,10 +47,11 @@ public:
 	GOR click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY);
 
 	virtual GOR newMove(const Player& currentPlayer) = 0;
+	virtual std::string getTextureName() const = 0;
+	virtual std::wstring getDescription() const = 0;
 protected:
 	std::wstring getReadableHpInfo() const;
 
-	virtual std::string getTextureName() const = 0;
 	virtual GOR getGameObjectResponse(const Player& currentPlayer) = 0;
 private:
 	HPBar bar;

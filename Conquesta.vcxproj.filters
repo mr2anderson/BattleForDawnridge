@@ -778,9 +778,6 @@
     <ClInclude Include="UpgradeableB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UpgradeableHpSensitiveB.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UIEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -800,6 +797,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Road.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -940,9 +943,6 @@
     <ClCompile Include="UpgradeableB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UpgradeableHpSensitiveB.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UIEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -962,6 +962,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Road.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

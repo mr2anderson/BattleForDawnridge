@@ -22,12 +22,13 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : 
-	UpgradeableHpSensitiveB(x, y, 3, 3, 30000, playerPtr),
+	UpgradeableB(x, y, 3, 3, 30000, playerPtr),
+	HpSensitiveB(x, y, 3, 3, 30000, playerPtr),
 	Building(x, y, 3, 3, 30000, playerPtr) {
 
 }
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	this->UpgradeableHpSensitiveB::draw(target, states);
+	this->UpgradeableB::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
 		this->drawCurrentTradeShortInfo(target, states);
 	}
@@ -70,14 +71,17 @@ Resources Market::getCost() const {
 	cost.plus(Resource("wood", 30000));
 	return cost;
 }
+std::string Market::getTextureName() const {
+	return "market";
+}
+std::wstring Market::getDescription() const {
+	return L"–ынки позвол€ют обменивать ресурсы.";
+}
 uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
 }
 std::string Market::getNewWindowSoundName() const {
 	return "gold";
-}
-std::string Market::getTextureName() const {
-	return "market";
 }
 Resources Market::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -156,7 +160,7 @@ GOR Market::getSelectionW() {
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"ѕокинуть", true, true, GEvent());
 	components.emplace_back("market", 
-		L"–ынки позвол€ют обменивать ресурсы.\n" +
+		this->getDescription() + L"\n" +
 		this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {

@@ -17,27 +17,21 @@
  */
 
 
-#include "ResourceB.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Sawmill : public ResourceB {
+class AreaB : virtual public Building {
 public:
-	Sawmill();
-	Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
+	AreaB();
+	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player);
 
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
-private:
-	uint32_t getRegenerationSpeed() const override;
-	std::string getNewWindowSoundName() const override;
-	std::string getResourceType() const override;
-	uint32_t getCollectionSpeed(uint32_t level) const override;
-	uint32_t getRadius(uint32_t level) const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeTime() const override;
-	std::wstring getReadableName() const override;
+	bool inRadius(GO* go) const;
+	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
+protected:
+	GEvent getHighlightEvent() const;
+
+	virtual uint32_t getRadius() const = 0;
 };

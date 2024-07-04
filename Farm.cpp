@@ -23,7 +23,8 @@
 
 Farm::Farm() = default;
 Farm::Farm(uint32_t x, uint32_t y, const Player* playerPtr) : 
-	UpgradeableHpSensitiveB(x, y, 3, 3, 10000, playerPtr),
+	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
+	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
 	Building(x, y, 3, 3, 10000, playerPtr){}
 GOR Farm::newMove(const Player& player) {	
 	if (this->belongTo(&player) and this->exist()) {
@@ -44,11 +45,14 @@ Resources Farm::getCost() const {
 	cost.plus(Resource("wood", 5000));
 	return cost;
 }
-uint32_t Farm::getRegenerationSpeed() const {
-	return 5000;
-}
 std::string Farm::getTextureName() const {
 	return "farm";
+}
+std::wstring Farm::getDescription() const {
+	return L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.";
+}
+uint32_t Farm::getRegenerationSpeed() const {
+	return 5000;
 }
 std::string Farm::getNewWindowSoundName() const {
 	return "food";
@@ -111,7 +115,7 @@ GOR Farm::getSelectionW() {
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back(this->getTextureName(),
-		L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.\n"
+		this->getDescription() + L"\n"
 		+ this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {

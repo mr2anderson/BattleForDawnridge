@@ -17,14 +17,16 @@
  */
 
 
-#include "UpgradeableHpSensitiveB.hpp"
+#include "UpgradeableB.hpp"
+#include "HpSensitiveB.hpp"
+#include "AreaB.hpp"
 #include "ResourcePoint.hpp"
 
 
 #pragma once
 
 
-class ResourceB : public UpgradeableHpSensitiveB {
+class ResourceB : public UpgradeableB, public HpSensitiveB, public AreaB {
 public:
 	ResourceB();
 	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
@@ -32,9 +34,7 @@ public:
 	GOR newMove(const Player& currentPlayer) override;
 protected:
 	uint32_t getCollectionSpeed() const;
-	uint32_t getRadius() const;
-	bool inRadius(ResourcePoint* rp) const;
-	std::tuple<uint32_t, uint32_t> getCenter() const;
+	uint32_t getRadius() const override;
 
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed(uint32_t level) const = 0;
@@ -46,7 +46,6 @@ private:
 	bool resourcesLeft;
 
 	GOR collectResources();
-	GOR highlightArea() const;
 	GOR getSelectionW(const GEvent& highlightEvent);
 	GOR getGameObjectResponse(const Player& player) override;
 };

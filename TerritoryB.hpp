@@ -17,15 +17,16 @@
  */
 
 
-#include "UpgradeableB.hpp"
-#include "HpSensitiveB.hpp"
+#include "AreaB.hpp"
 
 
 #pragma once
 
 
-class UpgradeableHpSensitiveB : public UpgradeableB, public HpSensitiveB {
+class TerritoryB : public AreaB {
 public:
-	UpgradeableHpSensitiveB();
-	UpgradeableHpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr);
+	TerritoryB();
+	TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player);
+
+	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
 };

@@ -65,6 +65,7 @@ private:
 	uint32_t windowW, windowH;
 	sf::View view;
 	Button endMoveButton;
+	Button buildButton;
 
 	void init(sf::RenderWindow &window);
 	void initMap(const std::string &name);
@@ -90,6 +91,7 @@ private:
 	void handleDecreaseUpgradeMovesLeftEvent(const GEvent& e);
 	void handleIncreaseLevelEvent(const GEvent& e);
 	void handleDecreaseCurrentTradeMovesLeft(const GEvent& e);
+	void handleTryToBuild(const GEvent& e);
 	
 	void handleUIEvent(const UIEvent& e);
 	void handlePlaySoundEvent(const UIEvent& e);
@@ -98,6 +100,9 @@ private:
 
 	void removeFinishedElements();
 	void changeMove();
+	void createBuildMenu();
+	template<typename T> static void ADD_BUILD_COMPONENT(std::vector<SelectionWComponent>& components);
+	static std::wstring GET_BUILD_DESCRIPTION(Building* b);
 	Player* getCurrentPlayer();
 	void handleGameObjectClick();
 	void addPopUpWindows(std::queue<PopUpElement*> q);

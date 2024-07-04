@@ -30,6 +30,7 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
 	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
+	TerritoryB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 
 }
@@ -50,14 +51,17 @@ Resources Castle::getCost() const {
 	cost.plus(Resource("stone", 100000));
 	return cost;
 }
+std::string Castle::getTextureName() const {
+	return "castle";
+}
+std::wstring Castle::getDescription() const {
+	return L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.";
+}
 uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
 	return LEVEL_HP[level] / 4;
 }
 uint32_t Castle::getRegenerationSpeed() const {
 	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
-}
-std::string Castle::getTextureName() const {
-	return "castle";
 }
 std::string Castle::getNewWindowSoundName() const {
 	return "hooray";
@@ -79,13 +83,16 @@ uint32_t Castle::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
+uint32_t Castle::getRadius() const {
+	return 3;
+}
 GOR Castle::getSelectionW() {
 	GOR response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
 	components.emplace_back("castle",
-		L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.\n"
+		this->getDescription() + L"\n"
 		+ this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
@@ -94,7 +101,7 @@ GOR Castle::getSelectionW() {
 		components.emplace_back("upgrade_icon",
 			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
 			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
+			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade + this->getHighlightEvent());
 	}
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
@@ -107,7 +114,9 @@ GOR Castle::getGameObjectResponse(const Player& player) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}
-		return this->getSelectionW();
+		GOR responce;
+		responce.events.push_back(this->getHighlightEvent());
+		return responce + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
 }

@@ -17,25 +17,27 @@
  */
 
 
-#include "Building.hpp"
+#include "TerritoryB.hpp"
 #include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class Road : public Building {
+class Road : public TerritoryB {
 public:
 	Road();
 	Road(uint32_t x, uint32_t y, const Player* playerPtr);
 	GOR newMove(const Player& player) override;
 
 	Resources getCost() const override;
+	std::string getTextureName() const override;
+	std::wstring getDescription() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
-	std::string getTextureName() const override;
 	std::string getNewWindowSoundName() const override;
 	std::wstring getReadableName() const override;
+	uint32_t getRadius() const override;
 	GOR getSelectionW();
 	GOR getGameObjectResponse(const Player& player) override;
 };

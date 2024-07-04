@@ -43,6 +43,9 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 					if (endMoveButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
 						this->changeMove();
 					}
+					else if (buildButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
+						this->createBuildMenu();
+					}
 					else {
 						this->handleGameObjectClick();
 					}
@@ -58,10 +61,7 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 		Playlist::get()->update();
 		this->removeFinishedElements();
 		this->moveView();
-		if (this->elements.empty()) {
-			this->moveView();
-		}
-		else {
+		if (!this->elements.empty()) {
 			this->elements.front()->update();
 		}
 	}
@@ -135,20 +135,6 @@ void MainScreen::removeOldPopUpWindows() {
 void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
-	this->addUnit(new Road(6, 6, &this->players[0]));
-	this->addUnit(new Road(6, 7, &this->players[0]));
-	this->addUnit(new Road(6, 8, &this->players[0]));
-	this->addUnit(new Road(6, 9, &this->players[0]));
-	this->addUnit(new Road(6, 10, &this->players[0]));
-	this->addUnit(new Road(6, 11, &this->players[0]));
-	this->addUnit(new Road(6, 12, &this->players[0]));
-	this->addUnit(new Road(6, 13, &this->players[0]));
-	this->addUnit(new Road(7, 13, &this->players[0]));
-	this->addUnit(new Road(8, 13, &this->players[0]));
-	this->addUnit(new Road(9, 13, &this->players[0]));
-	this->addUnit(new Road(10, 13, &this->players[0]));
-	this->addUnit(new Road(11, 13, &this->players[0]));
-	this->addUnit(new Road(12, 13, &this->players[0]));
 	return;
 }
 void MainScreen::initMoveCtr() {
@@ -162,6 +148,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->windowH = window.getSize().y;
 	this->view = window.getDefaultView();
 	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, L"Конец хода");
+	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", L"");
 }
 void MainScreen::handleEvents(const Events& e) {
 	this->handleGameEvent(e.gEvent);
@@ -181,6 +168,7 @@ void MainScreen::handleGameEvent(const GEvent &e) {
 	this->handleDecreaseUpgradeMovesLeftEvent(e);
 	this->handleIncreaseLevelEvent(e);
 	this->handleDecreaseCurrentTradeMovesLeft(e);
+	this->handleTryToBuild(e);
 }
 void MainScreen::handleTryToAttackEvent(const GEvent& e) {
 	for (const auto& a : e.tryToAttack) {
@@ -278,6 +266,9 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(const GEvent& e) {
 		a->decreaseCurrentTradeMovesLeft();
 	}
 }
+void MainScreen::handleTryToBuild(const GEvent& e) {
+	
+}
 void MainScreen::handleUIEvent(const UIEvent& e) {
 	this->handlePlaySoundEvent(e);
 }
@@ -314,6 +305,30 @@ void MainScreen::changeMove() {
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		this->handleGOR(this->gameObjects[i]->newMove(*this->getCurrentPlayer()));
 	}
+}
+void MainScreen::createBuildMenu() {
+	std::vector<SelectionWComponent> components;
+	components.emplace_back("hammer_icon", L"Выйти", true, true, GEvent());
+	ADD_BUILD_COMPONENT<Road>(components);
+	ADD_BUILD_COMPONENT<Farm>(components);
+	ADD_BUILD_COMPONENT<Sawmill>(components);
+	ADD_BUILD_COMPONENT<Quarry>(components);
+	ADD_BUILD_COMPONENT<Mine>(components);
+	ADD_BUILD_COMPONENT<Market>(components);
+	ADD_BUILD_COMPONENT<Wall>(components);
+	ADD_BUILD_COMPONENT<Castle>(components);
+	SelectionW* w = new SelectionW("click", "", components);
+	this->addPopUpWindow(w);
+}
+template<typename T> void MainScreen::ADD_BUILD_COMPONENT(std::vector<SelectionWComponent>& components) {
+	GEvent buildEvent;
+	buildEvent.tryToBuild.push_back(new T());
+	components.emplace_back(T().getTextureName(), GET_BUILD_DESCRIPTION(new T()), true, true, buildEvent);
+}
+std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
+	return
+		b->getDescription() + L"\n" +
+		L"Стоимость: " + b->getCost().getReadableInfo();
 }
 Player* MainScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];
@@ -353,6 +368,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	}
 	window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
 	window.draw(endMoveButton);
+	window.draw(buildButton);
 	window.display();
 }
 void MainScreen::drawCells(sf::RenderWindow &window) {

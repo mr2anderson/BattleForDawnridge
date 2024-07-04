@@ -31,12 +31,13 @@ public:
 	GOR newMove(const Player& player) override;
 
 	Resources getCost() const override;
+	std::string getTextureName() const override;
+	std::wstring getDescription() const override;
 private:
 	static const uint32_t LEVEL_HP[];
 
 	static uint32_t GET_REGENERATION_SPEED(uint32_t level);
 	uint32_t getRegenerationSpeed() const override;
-	std::string getTextureName() const override;
 	std::string getNewWindowSoundName() const override;
 	std::wstring getReadableName() const override;
 	Resources getUpgradeCost() const override;

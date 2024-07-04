@@ -59,6 +59,9 @@ uint32_t Wall::getRegenerationSpeed() const {
 std::string Wall::getTextureName() const {
 	return "wall" + std::to_string(this->getCurrentLevel());
 }
+std::wstring Wall::getDescription() const {
+	return L"Защитите свой город этими мощными городскими стенами от неожиданного нападения.";
+}
 std::string Wall::getNewWindowSoundName() const {
 	return "stone";
 }
@@ -85,7 +88,7 @@ GOR Wall::getSelectionW() {
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back("wall" + std::to_string(this->getCurrentLevel() + 1),
-		L"Защитите свой город этими мощными городскими стенами от неожиданного нападения.\n"
+		this->getDescription() + L"\n"
 		+ this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {

@@ -17,11 +17,18 @@
  */
 
 
-#include "UpgradeableHpSensitiveB.hpp"
+#include "TerritoryB.hpp"
 
 
-UpgradeableHpSensitiveB::UpgradeableHpSensitiveB() = default;
-UpgradeableHpSensitiveB::UpgradeableHpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr) :
-	UpgradeableB(x, y, sx, sy, maxHp, playerPtr),
-	HpSensitiveB(x, y, sx, sy, maxHp, playerPtr),
-	Building(x, y, sx, sy, maxHp, playerPtr){}
+#pragma once
+
+
+TerritoryB::TerritoryB() = default;
+TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player *player) : 
+	AreaB(x, y, sx, sy, maxHp, player),
+	Building(x, y, sx, sy, maxHp, player) {
+
+}
+bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
+	return this->inRadius(x, y, sx, sy);
+}

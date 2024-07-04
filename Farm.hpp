@@ -17,23 +17,25 @@
  */
 
 
-#include "UpgradeableHpSensitiveB.hpp"
+#include "UpgradeableB.hpp"
+#include "HpSensitiveB.hpp"
 #include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class Farm : public UpgradeableHpSensitiveB {
+class Farm : public UpgradeableB, public HpSensitiveB {
 public:
 	Farm();
 	Farm(uint32_t x, uint32_t y, const Player* playerPtr);
 
 	GOR newMove(const Player& currentPlayer) override;
 	Resources getCost() const override;
+	std::string getTextureName() const override;
+	std::wstring getDescription() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
-	std::string getTextureName() const override;
 	std::string getNewWindowSoundName() const override;
 	std::wstring getReadableName() const override;
 	Resources getUpgradeCost() const override;

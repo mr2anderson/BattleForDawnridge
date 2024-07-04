@@ -29,14 +29,14 @@ public:
 	Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
 
 	Resources getCost() const override;
+	std::string getTextureName() const override;
+	std::wstring getDescription() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
-	std::string getTextureName() const override;
 	std::string getNewWindowSoundName() const override;
 	std::string getResourceType() const override;
 	uint32_t getCollectionSpeed(uint32_t level) const override;
 	uint32_t getRadius(uint32_t level) const override;
-	std::wstring getDescription() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	std::wstring getReadableName() const override;

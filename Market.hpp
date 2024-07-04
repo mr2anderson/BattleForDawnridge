@@ -17,7 +17,8 @@
  */
 
 
-#include "UpgradeableHpSensitiveB.hpp"
+#include "UpgradeableB.hpp"
+#include "HpSensitiveB.hpp"
 #include "Trade.hpp"
 #include "SelectionW.hpp"
 
@@ -25,7 +26,7 @@
 #pragma once
 
 
-class Market : public UpgradeableHpSensitiveB {
+class Market : public UpgradeableB, public HpSensitiveB {
 public:
 	Market();
 	Market(uint32_t x, uint32_t y, const Player *playerPtr);
@@ -36,12 +37,13 @@ public:
 	void decreaseCurrentTradeMovesLeft();
 	GOR newMove(const Player& currentPlayer);
 	Resources getCost() const override;
+	std::string getTextureName() const override;
+	std::wstring getDescription() const override;
 private:
 	Trade currentTrade;
 
 	uint32_t getRegenerationSpeed() const override;
 	std::string getNewWindowSoundName() const override;
-	std::string getTextureName() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	std::wstring getReadableName() const override;

@@ -31,6 +31,7 @@ class UpgradeableB;
 class Market;
 class ResourcePoint;
 class GO;
+class Building;
 
 
 struct GEvent {
@@ -51,4 +52,5 @@ struct GEvent {
 	std::vector<UpgradeableB*> decreaseUpgradeMovesLeft;
 	std::vector<UpgradeableB*> increaseLevel;
 	std::vector<Market*> decreaseCurrentTradeMovesLeft;
+	std::vector<Building*> tryToBuild;
 };
