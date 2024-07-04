@@ -23,5 +23,5 @@
 #pragma once
 
 
-static const sf::Color UI_COLOR = sf::Color(10, 10, 10);
+static const sf::Color UI_COLOR = sf::Color(20, 20, 20);
 static const sf::Color CELL_COLOR_HIGHLIGHTED = sf::Color(0, 0, 0, 120);

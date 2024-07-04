@@ -51,7 +51,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	rect.setSize(sf::Vector2f(target.getSize().x - 10, 26));
 	rect.setFillColor(UI_COLOR);
 	rect.setOutlineColor(sf::Color::Black);
-	rect.setOutlineThickness(4);
+	rect.setOutlineThickness(2);
 	target.draw(rect, states);
 
 	std::string res[5] = { "food", "wood", "stone", "iron", "gold" };
