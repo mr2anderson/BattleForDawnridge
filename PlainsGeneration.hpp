@@ -17,34 +17,24 @@
  */
 
 
-#include "Textures.hpp"
-#include "Fonts.hpp"
-#include "Sounds.hpp"
-#include "Music.hpp"
-#include "ColorTheme.hpp"
-#include "PlainsGeneration.hpp"
+#include <random>
+#include <vector>
+#include <cstdint>
 
 
 #pragma once
 
 
-class LoadingScreen {
+class PlainsGeneration {
 public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
-		}
-		return LoadingScreen::singletone;
-	}
+	PlainsGeneration();
+	PlainsGeneration(uint32_t w, uint32_t h);
 
-	void run(sf::RenderWindow &window);
+	uint32_t getType(uint32_t i, uint32_t j) const;
+	uint32_t getW() const;
+	uint32_t getH() const;
+
+	static constexpr uint32_t TOTAL_PLAINS = 20;
 private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
-	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
+	std::vector<std::vector<uint32_t>> data;
 };

@@ -29,6 +29,7 @@
 #include "Mine.hpp"
 #include "SoundQueue.hpp"
 #include "HighlightTable.hpp"
+#include "PlainsGeneration.hpp"
 
 
 #pragma once
@@ -44,14 +45,11 @@ public:
 	}
 
 	int32_t run(sf::RenderWindow& window);
-
-	static constexpr uint32_t TOTAL_PLAINS = 20;
 private:
 	MainScreen() = default;
 	MainScreen(const MainScreen& copy) = delete;
 	static MainScreen* singletone;
 
-	uint32_t mapW, mapH;
 	std::queue<PopUpElement*> elements;
 	Player players[2];
 	uint32_t move = 0;
@@ -59,6 +57,7 @@ private:
 	std::vector<Unit*> units;
 	std::vector<ResourcePoint*> resourcePoints;
 	HighlightTable highlightTable;
+	PlainsGeneration plains;
 
 	uint32_t windowW, windowH;
 	sf::View view;

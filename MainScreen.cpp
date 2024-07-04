@@ -76,8 +76,7 @@ void MainScreen::init(sf::RenderWindow& window) {
 	this->changeMove();
 }
 void MainScreen::initLandscape() {
-	this->mapW = 60;
-	this->mapH = 34;
+	this->plains = PlainsGeneration(60, 34);
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
@@ -107,7 +106,7 @@ void MainScreen::initPlayers() {
 	this->addUnit(new Sawmill(13, 4, &this->players[0], &this->resourcePoints));
 	this->addUnit(new Quarry(16, 4, &this->players[0], &this->resourcePoints));
 	this->addUnit(new Mine(19, 4, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Castle(this->mapW - 7, this->mapH - 7, &this->players[1]));
+	this->addUnit(new Castle(this->plains.getW() - 7, this->plains.getH() - 7, &this->players[1]));
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;
@@ -185,7 +184,7 @@ void MainScreen::handleChangeHighlightEvent(const GEvent& e) {
 		const Unit* u = std::get<0>(a);
 		uint32_t x = std::get<1>(a);
 		uint32_t y = std::get<2>(a);
-		if (x >= this->mapW or y >= this->mapH) {
+		if (x >= this->plains.getW() or y >= this->plains.getH()) {
 			continue;
 		}
 		this->highlightTable.mark(x, y, u);
@@ -314,10 +313,10 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.display();
 }
 void MainScreen::drawCells(sf::RenderWindow &window) {
-	for (uint32_t i = 0; i < this->mapW; i = i + 1) {
-		for (uint32_t j = 0; j < this->mapH; j = j + 1) {
+	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
+		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
 			sf::Sprite s;
-			s.setTexture(*Textures::get()->get(std::to_string((i + j) % TOTAL_PLAINS + 1)));
+			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
 			s.setPosition(32 * i, 32 * j);
 			window.draw(s);
 			if (this->highlightTable.highlighted(i, j)) {
@@ -350,7 +349,7 @@ void MainScreen::updatePlayerViewPoint() {
 		this->view.setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
 	}
 	else {
-		this->view.setCenter(sf::Vector2f(32 * this->mapW - this->windowW / 2, 32 * this->mapH - this->windowH / 2));
+		this->view.setCenter(sf::Vector2f(32 * this->plains.getW() - this->windowW / 2, 32 * this->plains.getH() - this->windowH / 2));
 	}
 }
 void MainScreen::moveViewToNorth() {
@@ -358,7 +357,7 @@ void MainScreen::moveViewToNorth() {
 	view.setCenter(view.getCenter() - sf::Vector2f(0, d));
 }
 void MainScreen::moveViewToSouth() {
-	float d = std::min(10.f, 32 * this->mapH - this->windowH / 2 - view.getCenter().y);
+	float d = std::min(10.f, 32 * this->plains.getH() - this->windowH / 2 - view.getCenter().y);
 	view.setCenter(view.getCenter() + sf::Vector2f(0, d));
 }
 void MainScreen::moveViewToWest() {
@@ -366,7 +365,7 @@ void MainScreen::moveViewToWest() {
 	view.setCenter(view.getCenter() - sf::Vector2f(d, 0));
 }
 void MainScreen::moveViewToEast() {
-	float d = std::min(10.f, 32 * this->mapW - this->windowW / 2 - view.getCenter().x);
+	float d = std::min(10.f, 32 * this->plains.getW() - this->windowW / 2 - view.getCenter().x);
 	view.setCenter(view.getCenter() + sf::Vector2f(d, 0));
 }
 void MainScreen::addUnit(Unit* u) {

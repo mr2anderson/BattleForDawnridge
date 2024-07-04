@@ -17,34 +17,27 @@
  */
 
 
-#include "Textures.hpp"
-#include "Fonts.hpp"
-#include "Sounds.hpp"
-#include "Music.hpp"
-#include "ColorTheme.hpp"
 #include "PlainsGeneration.hpp"
 
 
-#pragma once
-
-
-class LoadingScreen {
-public:
-	static LoadingScreen* get() {
-		if (LoadingScreen::singletone == nullptr) {
-			LoadingScreen::singletone = new LoadingScreen();
+PlainsGeneration::PlainsGeneration() = default;
+PlainsGeneration::PlainsGeneration(uint32_t w, uint32_t h) {
+	std::random_device rd;
+	std::mt19937 mersenne(rd());
+	this->data.resize(w);
+	for (uint32_t i = 0; i < w; i = i + 1) {
+		this->data[i].resize(h);
+		for (uint32_t j = 0; j < h; j = j + 1) {
+			this->data[i][j] = mersenne() % TOTAL_PLAINS;
 		}
-		return LoadingScreen::singletone;
 	}
-
-	void run(sf::RenderWindow &window);
-private:
-	LoadingScreen() = default;
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	static LoadingScreen* singletone;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
-	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
-};
+}
+uint32_t PlainsGeneration::getType(uint32_t i, uint32_t j) const {
+	return this->data[i][j];
+}
+uint32_t PlainsGeneration::getW() const {
+	return this->data.size();
+}
+uint32_t PlainsGeneration::getH() const {
+	return this->data[0].size();
+}
