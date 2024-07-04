@@ -106,6 +106,15 @@ void MainScreen::initPlayers() {
 	this->addUnit(new Sawmill(13, 4, &this->players[0], &this->resourcePoints));
 	this->addUnit(new Quarry(16, 4, &this->players[0], &this->resourcePoints));
 	this->addUnit(new Mine(19, 4, &this->players[0], &this->resourcePoints));
+	for (uint32_t i = 0; i <= 30; i = i + 2) {
+		this->addUnit(new Wall(i, 16, &this->players[0]));
+	}
+	for (uint32_t i = 0; i < 16; i = i + 2) {
+		if (i == 10) {
+			continue;
+		}
+		this->addUnit(new Wall(30, i, &this->players[0]));
+	}
 	this->addUnit(new Castle(this->plains.getW() - 7, this->plains.getH() - 7, &this->players[1]));
 }
 void MainScreen::initMoveCtr() {

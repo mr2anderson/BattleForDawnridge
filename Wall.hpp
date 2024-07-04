@@ -17,33 +17,30 @@
  */
 
 
-#include <cmath>
-#include "PopUpElement.hpp"
-#include "Textures.hpp"
+#include "UpgradeableB.hpp"
+#include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class FlyingE : public PopUpElement {
+class Wall : public UpgradeableB {
 public:
-	FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	Wall();
+	Wall(uint32_t x, uint32_t y, const Player* playerPtr);
+	GOR newMove(const Player& player) override;
 
-	Events run(uint32_t windowW, uint32_t windowH) override;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click(uint32_t x, uint32_t y) override;
-	void update() override;
+	Resources getCost() const override;
 private:
-	std::string picture;
-	std::string sound;
-	uint32_t x, y;
-	uint32_t sx, sy;
-	sf::Clock clock;
-	float dst;
+	static const uint32_t LEVEL_HP[];
 
-	static constexpr float TIME = 0.5;
-	static constexpr float V0 = 64;
-
-	sf::Color getTransparencyLevel(float t) const;
-	sf::Vector2f getPosition(float t) const;
+	static uint32_t GET_REGENERATION_SPEED(uint32_t level);
+	uint32_t getRegenerationSpeed() const override;
+	std::string getTextureName() const override;
+	std::string getNewWindowSoundName() const override;
+	std::wstring getReadableName() const override;
+	Resources getUpgradeCost() const override;
+	uint32_t getUpgradeTime() const override;
+	GOR getSelectionW();
+	GOR getGameObjectResponse(const Player& player) override;
 };
