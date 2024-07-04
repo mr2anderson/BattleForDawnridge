@@ -39,7 +39,7 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
-				if (this->popUpWindows.empty()) {
+				if (this->elements.empty()) {
 					if (endMoveButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
 						this->changeMove();
 					}
@@ -49,14 +49,15 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
-						this->handleEvents(this->popUpWindows.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+						this->handleEvents(this->elements.front()->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
 					}
 				}
 			}
 		}
 		this->drawEverything(window);
 		Playlist::get()->update();
-		if (this->popUpWindows.empty()) {
+		this->removeFinishedElements();
+		if (this->elements.empty()) {
 			this->moveView();
 		}
 	}
@@ -91,10 +92,10 @@ void MainScreen::initLandscape() {
 	this->addResourcePoint(new Iron(6, 13));
 }
 void MainScreen::removeOldPopUpWindows() {
-	while (!this->popUpWindows.empty()) {
-		PopUpW* w = this->popUpWindows.front();
+	while (!this->elements.empty()) {
+		PopUpElement* w = this->elements.front();
 		delete w;
-		this->popUpWindows.pop();
+		this->elements.pop();
 	}
 }
 void MainScreen::initPlayers() {
@@ -224,29 +225,30 @@ void MainScreen::handleTryToUpgradeEvent(const GEvent& e) {
 }
 void MainScreen::handleUIEvent(const UIEvent& e) {
 	this->handlePlaySoundEvent(e);
-	this->handleClosePopUpWindowsEvent(e);
 }
 void MainScreen::handlePlaySoundEvent(const UIEvent& e) {
 	for (const auto& a : e.playSound) {
 		SoundQueue::get()->push(Sounds::get()->get(a));
 	}
 }
-void MainScreen::handleClosePopUpWindowsEvent(const UIEvent& e) {
-	for (uint32_t i = 0; i < e.closePopUpWindows; i = i + 1) {
-		if (this->popUpWindows.empty()) {
-			break;
-		}
-		delete this->popUpWindows.front();
-		this->popUpWindows.pop();
-		if (!this->popUpWindows.empty()) {
-			this->handleEvents(this->popUpWindows.front()->run(this->windowW, this->windowH));
-		}
-	}
-}
 void MainScreen::handleGOR(const GOR& responce) {
-	this->addPopUpWindows(responce.windows);
+	this->addPopUpWindows(responce.elements);
 	for (const auto& gEvent : responce.events) {
 		this->handleGameEvent(gEvent);
+	}
+}
+void MainScreen::removeFinishedElements() {
+	bool remove = false;
+	while (!this->elements.empty()) {
+		if (!this->elements.front()->finished()) {
+			break;
+		}
+		delete this->elements.front();
+		this->elements.pop();
+		remove = true;
+	}
+	if (remove and !this->elements.empty()) {
+		this->handleEvents(this->elements.front()->run(this->windowW, this->windowH));
 	}
 }
 void MainScreen::changeMove() {
@@ -268,15 +270,15 @@ void MainScreen::handleGameObjectClick() {
 		this->handleGOR(this->gameObjects[i]->click(*this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
-void MainScreen::addPopUpWindows(std::queue<PopUpW*> q) {
+void MainScreen::addPopUpWindows(std::queue<PopUpElement*> q) {
 	while (!q.empty()) {
 		this->addPopUpWindow(q.front());
 		q.pop();
 	}
 }
-void MainScreen::addPopUpWindow(PopUpW* w) {
-	this->popUpWindows.push(w);
-	if (this->popUpWindows.size() == 1) {
+void MainScreen::addPopUpWindow(PopUpElement* w) {
+	this->elements.push(w);
+	if (this->elements.size() == 1) {
 		this->handleEvents(w->run(this->windowW, this->windowH));
 	}
 }
@@ -291,8 +293,8 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		window.draw(*this->gameObjects[i]);
 	}
-	if (!this->popUpWindows.empty()) {
-		window.draw(*this->popUpWindows.front());
+	if (!this->elements.empty()) {
+		window.draw(*this->elements.front());
 	}
 	window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
 	window.draw(endMoveButton);

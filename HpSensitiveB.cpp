@@ -34,7 +34,7 @@ GOR HpSensitiveB::handleDoesNotWork() const {
 		"Дождитесь конца строительства.\n"
 		+ this->getReadableHpInfo() + L"\n"
 		+ this->getReadableRegenerationSpeed());
-	response.windows.push(window);
+	response.elements.push(window);
 	return response;
 }
 GOR HpSensitiveB::regenerate() {
@@ -45,7 +45,7 @@ GOR HpSensitiveB::regenerate() {
 		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
 			this->getUpperCaseReadableName() + L": СТРОИТЕЛЬСТВО ЗАВЕРШЕНО\n"
 			"Теперь Вы можете использовать это здание.");
-		response.windows.push(window);
+		response.elements.push(window);
 	}
 	return response;
 }

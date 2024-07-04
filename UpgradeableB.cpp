@@ -66,7 +66,7 @@ GOR UpgradeableB::handleBusyWithUpgrading() const {
 		this->getUpperCaseReadableName() + L": ИДЕТ УЛУЧШЕНИЕ\n"
 		"Подождите, пока оно не закончится\n"
 		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
-	response.windows.push(window);
+	response.elements.push(window);
 	return response;
 }
 GOR UpgradeableB::handleUpgradeStart() const {
@@ -75,7 +75,7 @@ GOR UpgradeableB::handleUpgradeStart() const {
 		this->getUpperCaseReadableName() + L": НАЧАТО УЛУЧШЕНИЕ\n"
 		"Подождите, пока оно не закончится\n"
 		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
-	response.windows.push(window);
+	response.elements.push(window);
 	return response;
 }
 GOR UpgradeableB::handleUpgradeEnd() {
@@ -84,7 +84,7 @@ GOR UpgradeableB::handleUpgradeEnd() {
 	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
 		this->getUpperCaseReadableName() + L": УЛУЧШЕНИЕ ЗАВЕРШЕНО\n"
 		"Теперь Вы снова можете использовать это здание.");
-	response.windows.push(window);
+	response.elements.push(window);
 	return response;
 }
 void UpgradeableB::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {

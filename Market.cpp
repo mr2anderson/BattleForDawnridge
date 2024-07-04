@@ -45,7 +45,7 @@ GOR Market::doTrade(const Trade& trade) {
 	
 	window->addOnStartGEvent(gEvent);
 	GOR responce;
-	responce.windows.push(window);
+	responce.elements.push(window);
 	return responce;
 }
 GOR Market::newMove(const Player& currentPlayer) {
@@ -144,24 +144,24 @@ GOR Market::handleCurrentTrade() {
 			+ this->currentTrade.getReadableInfo());
 		window->addOnStartGEvent(gEvent);
 		GOR responce;
-		responce.windows.push(window);
+		responce.elements.push(window);
 		return responce;
 	}
 	return GOR();
 }
 GOR Market::getSelectionW() {
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back("market", 
 		L"Рынки позволяют обменивать ресурсы.\n" +
-		this->getReadableHpInfo(), false, GEvent());
+		this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GEvent gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", 
 			L"Улучшить рынок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение уменьшит число ходов для одной сделки с " + std::to_wstring(this->getTradeStartTime()) + L" до " + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
+			"Улучшение уменьшит число ходов для одной сделки с " + std::to_wstring(this->getTradeStartTime()) + L" до " + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
 	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
@@ -179,13 +179,13 @@ GOR Market::getSelectionW() {
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
 	GOR response;
-	response.windows.push(window);
+	response.elements.push(window);
 	return response;
 }
 void Market::addTrade(std::vector<SelectionWComponent>& components, const GEvent& gameEventTrade) {
 	components.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.type + "_icon",
 		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
-		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, gameEventTrade);
+		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, false, gameEventTrade);
 }
 GOR Market::handleBusyWithTrade() const {
 	GOR response;
@@ -193,7 +193,7 @@ GOR Market::handleBusyWithTrade() const {
 		L"РЫНОК ЗАНЯТ\n"
 		"Детали сделки:\n" +
 		this->currentTrade.getReadableInfo());
-	response.windows.push(window);
+	response.elements.push(window);
 	return response;
 }
 GOR Market::getGameObjectResponse(const Player& player) {

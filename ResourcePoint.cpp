@@ -35,11 +35,11 @@ GOR ResourcePoint::getSelectionWindow() {
 	GOR response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Вернуться", true, GEvent());
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, GEvent());
+	components.emplace_back("exit_icon", L"Вернуться", true, true, GEvent());
+	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, GEvent());
 
 	SelectionW* window = new SelectionW(this->getClickSoundName(), "click", components);
-	response.windows.push(window);
+	response.elements.push(window);
 
 	return response;
 }

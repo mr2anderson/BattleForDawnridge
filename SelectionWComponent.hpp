@@ -24,10 +24,11 @@
 
 
 struct SelectionWComponent {
-	SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, GEvent gEvent);
+	SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, GEvent gEvent);
 
 	std::string pictureName;
 	std::wstring message;
 	bool clickable;
+	bool sound;
 	GEvent gEvent;
 };

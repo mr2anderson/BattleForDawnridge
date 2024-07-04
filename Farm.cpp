@@ -103,21 +103,21 @@ GOR Farm::getSelectionW() {
 	GOR response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back(this->getTextureName(),
 		L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.\n"
-		+ this->getReadableHpInfo(), false, GEvent());
+		+ this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GEvent gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", 
 			L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
+			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
-	response.windows.push(window);
+	response.elements.push(window);
 
 	return response;
 }

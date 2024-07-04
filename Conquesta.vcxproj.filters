@@ -757,7 +757,7 @@
     <ClInclude Include="Music.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PopUpW.hpp">
+    <ClInclude Include="PopUpElement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PAKScreen.hpp">
@@ -904,7 +904,7 @@
     <ClCompile Include="Music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpW.cpp">
+    <ClCompile Include="PopUpElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PAKScreen.cpp">

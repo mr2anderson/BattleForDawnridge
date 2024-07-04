@@ -17,20 +17,20 @@
  */
 
 
-#include "PopUpW.hpp"
+#include "PopUpElement.hpp"
 #include "Button.hpp"
 
 
 #pragma once
 
 
-class MessageW : public PopUpW {
+class MessageW : public PopUpElement {
 public:
 	MessageW(const std::string& soundName1, const std::string& soundName2, const std::wstring& message);
 
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click(uint32_t x, uint32_t y) const override;
+	Events click(uint32_t x, uint32_t y) override;
 private:
 	std::string soundName1;
 	std::string soundName2;

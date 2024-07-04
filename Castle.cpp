@@ -83,10 +83,10 @@ GOR Castle::getSelectionW() {
 	GOR response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back("castle",
 		L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.\n"
-		+ this->getReadableHpInfo(), false, GEvent());
+		+ this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
 		GEvent gameEventUpgrade;
@@ -94,11 +94,11 @@ GOR Castle::getSelectionW() {
 		components.emplace_back("upgrade_icon",
 			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
 			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
+			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
 	SelectionW* window = new SelectionW("hooray", "click", components);
-	response.windows.push(window);
+	response.elements.push(window);
 
 	return response;
 }

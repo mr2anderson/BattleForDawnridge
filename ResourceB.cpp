@@ -91,7 +91,7 @@ GOR ResourceB::collectResources() {
 		this->resourcesLeft = false;
 		MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", this->getResourcesOverStr());
 		window->addOnStartGEvent(gEvent);
-		responce.windows.push(window);
+		responce.elements.push(window);
 	}
 	else {
 		responce.events.push_back(gEvent);
@@ -137,19 +137,19 @@ GOR ResourceB::getSelectionW(const GEvent& highlightEvent) {
 	GOR response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, highlightEvent);
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, highlightEvent);
+	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, GEvent());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GEvent gameEventUpgrade = highlightEvent;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
 			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) + 
-			L" и радиус добычи с " + std::to_wstring(this->getRadius()) + L" до " + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L".", true, gameEventUpgrade);
+			L" и радиус добычи с " + std::to_wstring(this->getRadius()) + L" до " + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
 	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
-	response.windows.push(window);
+	response.elements.push(window);
 
 	return response;
 }

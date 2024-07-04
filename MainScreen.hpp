@@ -51,7 +51,7 @@ private:
 	static MainScreen* singletone;
 
 	uint32_t mapW, mapH;
-	std::queue<PopUpW*> popUpWindows;
+	std::queue<PopUpElement*> elements;
 	Player players[2];
 	uint32_t move = 1;
 	std::vector<GO*> gameObjects;
@@ -86,15 +86,15 @@ private:
 	
 	void handleUIEvent(const UIEvent& e);
 	void handlePlaySoundEvent(const UIEvent& e);
-	void handleClosePopUpWindowsEvent(const UIEvent& e);
 
 	void handleGOR(const GOR& responce);
 
+	void removeFinishedElements();
 	void changeMove();
 	Player* getCurrentPlayer();
 	void handleGameObjectClick();
-	void addPopUpWindows(std::queue<PopUpW*> q);
-	void addPopUpWindow(PopUpW* w);
+	void addPopUpWindows(std::queue<PopUpElement*> q);
+	void addPopUpWindow(PopUpElement* w);
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);

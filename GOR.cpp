@@ -24,10 +24,10 @@ GOR::GOR() = default;
 GOR operator+(const GOR& a, const GOR& b) {
 	GOR c = a;
 
-	std::queue<PopUpW*> windows = b.windows;
-	while (!windows.empty()) {
-		c.windows.push(windows.front());
-		windows.pop();
+	std::queue<PopUpElement*> elements = b.elements;
+	while (!elements.empty()) {
+		c.elements.push(elements.front());
+		elements.pop();
 	}
 	c.events.insert(c.events.end(), b.events.begin(), b.events.end());
 

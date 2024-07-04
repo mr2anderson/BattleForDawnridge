@@ -18,7 +18,7 @@
 
 
 #include <queue>
-#include "PopUpW.hpp"
+#include "PopUpElement.hpp"
 
 
 #pragma once
@@ -29,6 +29,6 @@ struct GOR {
 
 	friend GOR operator+(const GOR& a, const GOR& b);
 
-	std::queue<PopUpW*> windows;
+	std::queue<PopUpElement*> elements;
 	std::vector<GEvent> events;
 };

@@ -21,7 +21,7 @@
 
 
 MessageW::MessageW(const std::string &soundName1, const std::string &soundName2, const std::wstring& message) : 
-	PopUpW() {
+	PopUpElement() {
 	this->soundName1 = soundName1;
 	this->soundName2 = soundName2;
 	this->message = message;
@@ -38,17 +38,17 @@ Events MessageW::run(uint32_t windowW, uint32_t windowH) {
 	UIEvent soundEvent;
 	soundEvent.playSound.push_back(this->soundName1);
 
-	return Events(this->getOnStartGEvent(), soundEvent);
+	return this->PopUpElement::run(windowW, windowH) + Events(GEvent(), soundEvent);
 }
 void MessageW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);
 	target.draw(button, states);
 }
-Events MessageW::click(uint32_t x, uint32_t y) const {
+Events MessageW::click(uint32_t x, uint32_t y) {
 	if (this->button.click(x, y)) {
+		this->finish();
 		UIEvent event;
 		event.playSound.push_back(this->soundName2);
-		event.closePopUpWindows = 1;
 		return Events(GEvent(), event);
 	}
 	return Events();

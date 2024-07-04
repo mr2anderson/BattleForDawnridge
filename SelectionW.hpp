@@ -17,7 +17,7 @@
  */
 
 
-#include "PopUpW.hpp"
+#include "PopUpElement.hpp"
 #include "Button.hpp"
 #include "SelectionWComponent.hpp"
 
@@ -25,18 +25,18 @@
 #pragma once
 
 
-class SelectionW : public PopUpW {
+class SelectionW : public PopUpElement {
 public:
 	SelectionW(const std::string &soundName1, const std::string &soundName2, const std::vector<SelectionWComponent>& components);
 
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click(uint32_t x, uint32_t y) const override;
+	Events click(uint32_t x, uint32_t y) override;
 private:
 	std::string soundName1;
 	std::string soundName2;
 	std::vector<SelectionWComponent> components;
-	std::vector<std::tuple<Button, Events>> buttons;
+	std::vector<std::tuple<Button, bool, Events>> buttons;
 
 	void makeButtons(uint32_t windowW, uint32_t windowH);
 };

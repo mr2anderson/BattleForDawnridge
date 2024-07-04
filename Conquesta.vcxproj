@@ -339,7 +339,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Dynamic|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -606,7 +606,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Music.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Playlist.hpp" />
-    <ClInclude Include="PopUpW.hpp" />
+    <ClInclude Include="PopUpElement.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
     <ClInclude Include="Quarry.hpp" />
     <ClInclude Include="Iron.hpp" />
@@ -660,7 +660,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Playlist.cpp" />
-    <ClCompile Include="PopUpW.cpp" />
+    <ClCompile Include="PopUpElement.cpp" />
     <ClCompile Include="PAKScreen.cpp" />
     <ClCompile Include="Quarry.cpp" />
     <ClCompile Include="Iron.cpp" />

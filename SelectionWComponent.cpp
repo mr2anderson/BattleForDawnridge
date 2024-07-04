@@ -20,9 +20,10 @@
 #include "SelectionWComponent.hpp"
 
 
-SelectionWComponent::SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, GEvent gEvent) {
+SelectionWComponent::SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, GEvent gEvent) {
 	this->pictureName = pictureName;
 	this->message = message;
 	this->clickable = clickable;
+	this->sound = sound;
 	this->gEvent = gEvent;
 }

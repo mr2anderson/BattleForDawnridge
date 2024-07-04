@@ -17,13 +17,25 @@
  */
 
 
-#include "PopUpW.hpp"
+#include <SFML/Graphics.hpp>
+#include "Events.hpp"
 
 
-PopUpW::PopUpW() = default;
-void PopUpW::addOnStartGEvent(const GEvent& gEvent) {
-	this->onStart = this->onStart + gEvent;
-}
-GEvent PopUpW::getOnStartGEvent() const {
-	return this->onStart;
-}
+#pragma once
+
+
+class PopUpElement : public sf::Drawable {
+public:
+	PopUpElement();
+
+	void addOnStartGEvent(const GEvent& event);
+	bool finished() const;
+
+	virtual Events run(uint32_t windowW, uint32_t windowH);
+	virtual Events click(uint32_t x, uint32_t y) = 0;
+protected:
+	void finish();
+private:
+	GEvent onStart;
+	bool _finished;
+};

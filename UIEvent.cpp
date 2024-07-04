@@ -21,14 +21,11 @@
 
 
 
-UIEvent::UIEvent() {
-	this->closePopUpWindows = 0;
-}
+UIEvent::UIEvent() = default;
 UIEvent operator+(const UIEvent& a, const UIEvent& b) {
 	UIEvent c = a;
 
 	c.playSound.insert(c.playSound.end(), b.playSound.begin(), b.playSound.end());
-	c.closePopUpWindows = c.closePopUpWindows + b.closePopUpWindows;
 
 	return c;
 }
