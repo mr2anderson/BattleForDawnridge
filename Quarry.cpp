@@ -37,7 +37,7 @@ std::string Quarry::getTextureName() const {
 	return "quarry";
 }
 std::string Quarry::getNewWindowSoundName() const {
-	return "quarry";
+	return "stone";
 }
 std::string Quarry::getResourceType() const {
 	return "stone";

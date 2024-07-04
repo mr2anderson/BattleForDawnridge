@@ -51,7 +51,7 @@ std::string Farm::getTextureName() const {
 	return "farm";
 }
 std::string Farm::getNewWindowSoundName() const {
-	return "leaves";
+	return "food";
 }
 std::wstring Farm::getReadableName() const {
 	return L"ферма";

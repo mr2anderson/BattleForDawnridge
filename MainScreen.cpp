@@ -299,7 +299,7 @@ void MainScreen::removeFinishedElements() {
 }
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
-	SoundQueue::get()->push(Sounds::get()->get("new_move"));
+	SoundQueue::get()->push(Sounds::get()->get("click"));
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {

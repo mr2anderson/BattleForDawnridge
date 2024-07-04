@@ -37,7 +37,7 @@ std::string Mine::getTextureName() const {
 	return "mine";
 }
 std::string Mine::getNewWindowSoundName() const {
-	return "mine";
+	return "iron";
 }
 std::string Mine::getResourceType() const {
 	return "iron";

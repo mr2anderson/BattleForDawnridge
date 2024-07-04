@@ -74,7 +74,7 @@ uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
 }
 std::string Market::getNewWindowSoundName() const {
-	return "horse";
+	return "gold";
 }
 std::string Market::getTextureName() const {
 	return "market";

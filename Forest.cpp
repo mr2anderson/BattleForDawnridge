@@ -34,5 +34,5 @@ std::wstring Forest::getDescription() const {
 	return L"Это лес содержит еще " + std::to_wstring(this->getHP()) + L" ед. древесины. Постройте лесопилку поблизости, чтобы начать добычу.";
 }
 std::string Forest::getClickSoundName() const {
-	return "sawmill";
+	return "wood";
 }

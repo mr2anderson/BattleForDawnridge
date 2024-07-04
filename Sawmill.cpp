@@ -37,7 +37,7 @@ std::string Sawmill::getTextureName() const {
 	return "sawmill";
 }
 std::string Sawmill::getNewWindowSoundName() const {
-	return "sawmill";
+	return "wood";
 }
 std::string Sawmill::getResourceType() const {
 	return "wood";
