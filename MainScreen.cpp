@@ -256,25 +256,10 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(const GEvent& e) {
 }
 void MainScreen::handleUIEvent(const UIEvent& e) {
 	this->handlePlaySoundEvent(e);
-	this->handleChangeViewCenter(e);
 }
 void MainScreen::handlePlaySoundEvent(const UIEvent& e) {
 	for (const auto& a : e.playSound) {
 		SoundQueue::get()->push(Sounds::get()->get(a));
-	}
-}
-void MainScreen::handleChangeViewCenter(const UIEvent& e) {
-	for (const auto& a : e.changeViewCenter) {
-		uint32_t x, y;
-		uint32_t sx, sy;
-		std::tie(x, y, sx, sy) = a;
-		uint32_t pX = 64 * x + 64 * sx / 2;
-		uint32_t pY = 64 * y + 64 * sy / 2;
-		pX = std::max(pX, this->windowW / 2);
-		pY = std::max(pY, this->windowH / 2);
-		pX = std::min(pX, 64 * this->mapW - this->windowW / 2);
-		pY = std::min(pY, 64 * this->mapH - this->windowH / 2);
-		this->view.setCenter(pX, pY);
 	}
 }
 void MainScreen::handleGOR(const GOR& responce) {

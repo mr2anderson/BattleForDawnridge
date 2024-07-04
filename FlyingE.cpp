@@ -34,7 +34,6 @@ Events FlyingE::run(uint32_t windowW, uint32_t windowH) {
 
 	UIEvent uiEvent;
 	uiEvent.playSound.push_back(this->sound);
-	uiEvent.changeViewCenter.push_back(std::make_tuple(this->x, this->y, this->sx, this->sy));
 
 	return this->PopUpElement::run(windowW, windowH) + Events(GEvent(), uiEvent);
 }

@@ -90,7 +90,6 @@ private:
 	
 	void handleUIEvent(const UIEvent& e);
 	void handlePlaySoundEvent(const UIEvent& e);
-	void handleChangeViewCenter(const UIEvent& e);
 
 	void handleGOR(const GOR& responce);
 

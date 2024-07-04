@@ -30,5 +30,4 @@ struct UIEvent {
 	friend UIEvent operator+(const UIEvent& a, const UIEvent& b);
 
 	std::vector<std::string> playSound;
-	std::vector<std::tuple<uint32_t, uint32_t, uint32_t, uint32_t>> changeViewCenter;
 };
