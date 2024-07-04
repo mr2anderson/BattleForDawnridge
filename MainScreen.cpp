@@ -67,7 +67,7 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::init(sf::RenderWindow& window) {
-	this->initLandscape("ridge");
+	this->initMap("ridge");
 	this->removeOldPopUpWindows();
 	this->initPlayers();
 	this->initMoveCtr();
@@ -75,7 +75,7 @@ void MainScreen::init(sf::RenderWindow& window) {
 	this->initGraphics(window);
 	this->changeMove();
 }
-void MainScreen::initLandscape(const std::string& name) {
+void MainScreen::initMap(const std::string& name) {
 	for (uint32_t i = 0; i < this->gameObjects.size(); i = i + 1) {
 		delete this->gameObjects[i];
 	}
@@ -134,23 +134,6 @@ void MainScreen::removeOldPopUpWindows() {
 void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
-	return;
-	this->addUnit(new Castle(4, 4, &this->players[0]));
-	this->addUnit(new Market(7, 4, &this->players[0]));
-	this->addUnit(new Farm(10, 4, &this->players[0]));
-	this->addUnit(new Sawmill(13, 4, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Quarry(16, 4, &this->players[0], &this->resourcePoints));
-	this->addUnit(new Mine(19, 4, &this->players[0], &this->resourcePoints));
-	for (uint32_t i = 0; i <= 30; i = i + 2) {
-		this->addUnit(new Wall(i, 16, &this->players[0]));
-	}
-	for (uint32_t i = 0; i < 16; i = i + 2) {
-		if (i == 10) {
-			continue;
-		}
-		this->addUnit(new Wall(30, i, &this->players[0]));
-	}
-	this->addUnit(new Castle(this->plains.getW() - 7, this->plains.getH() - 7, &this->players[1]));
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;

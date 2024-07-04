@@ -66,7 +66,7 @@ private:
 	Button endMoveButton;
 
 	void init(sf::RenderWindow &window);
-	void initLandscape(const std::string &name);
+	void initMap(const std::string &name);
 	void removeOldPopUpWindows();
 	void initPlayers();
 	void initMoveCtr();

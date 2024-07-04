@@ -56,7 +56,7 @@ void LoadingScreen::loadAll() {
 		"castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
 		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
 		"farm", "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-		"wall"}) {
+		"wall1", "wall2", "wall3"}) {
 		Textures::get()->add(a, "images/" + a + ".png");
 	}
 	for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
