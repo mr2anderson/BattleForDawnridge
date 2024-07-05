@@ -61,6 +61,12 @@ uint32_t GO::getSX() const {
 uint32_t GO::getSY() const {
 	return this->bar.getSY();
 }
+void GO::setX(uint32_t newX) {
+	this->bar.setX(newX);
+}
+void GO::setY(uint32_t newY) {
+	this->bar.setY(newY);
+}
 bool GO::exist() const {
 	return (this->getHP() > 0);
 }

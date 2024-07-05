@@ -53,6 +53,9 @@ void UpgradeableB::decreaseUpgradeMovesLeft() {
 void UpgradeableB::increaseLevel() {
 	this->currentLevel = this->currentLevel + 1;
 }
+bool UpgradeableB::works() const {
+	return this->Building::works() and !this->upgrading();
+}
 uint32_t UpgradeableB::getCurrentLevel() const {
 	return this->currentLevel;
 }
@@ -76,7 +79,7 @@ GOR UpgradeableB::handleCurrentUpgrade() {
 }
 GOR UpgradeableB::handleBusyWithUpgrading() const {
 	GOR response;
-	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
+	MessageW* window = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L": ИДЕТ УЛУЧШЕНИЕ\n"
 		"Подождите, пока оно не закончится\n"
 		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
@@ -85,7 +88,7 @@ GOR UpgradeableB::handleBusyWithUpgrading() const {
 }
 GOR UpgradeableB::handleUpgradeStart() const {
 	GOR response;
-	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
+	MessageW* window = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L": НАЧАТО УЛУЧШЕНИЕ\n"
 		"Подождите, пока оно не закончится\n"
 		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
@@ -96,7 +99,7 @@ GOR UpgradeableB::handleUpgradeEnd() {
 	GOR response;
 	GEvent event;
 	event.increaseLevel.emplace_back(this);
-	FlyingE* element = new FlyingE("upgrade_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	FlyingE* element = new FlyingE("upgrade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(event);
 	response.elements.push(element);
 	return response;

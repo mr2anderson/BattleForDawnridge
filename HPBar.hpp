@@ -43,6 +43,8 @@ public:
 	uint32_t getY() const;
 	uint32_t getSX() const;
 	uint32_t getSY() const;
+	void setX(uint32_t newX);
+	void setY(uint32_t newY);
 private:
 	uint32_t current, max;
 	uint32_t x, y;

@@ -25,11 +25,14 @@ HpSensitiveB::HpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uin
 	Building(x, y, sx, sy, maxHp, playerPtr) {
 }
 bool HpSensitiveB::works() const {
-	return (this->getHP() == this->getMaxHP());
+	return this->Building::works() and !this->repairing();
 }
-GOR HpSensitiveB::handleDoesNotWork() const {
+bool HpSensitiveB::repairing() const {
+	return (this->getHP() < this->getMaxHP());
+}
+GOR HpSensitiveB::handleRepairing() const {
 	GOR response;
-	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
+	MessageW* window = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L": ÈÄÅÒ ÑÒÐÎÈÒÅËÜÑÒÂÎ\n"
 		"Äîæäèòåñü êîíöà ñòðîèòåëüñòâà.\n"
 		+ this->getReadableHpInfo() + L"\n"
@@ -40,7 +43,7 @@ GOR HpSensitiveB::handleDoesNotWork() const {
 GOR HpSensitiveB::regenerate() {
 	GOR response = this->Building::regenerate();
 	if (this->getHP() != this->getMaxHP() and this->getHP() + this->getRegenerationSpeed() >= this->getMaxHP()) {
-		FlyingE* element = new FlyingE("hammer_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		FlyingE* element = new FlyingE("hammer_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 		response.elements.push(element);
 	}
 	return response;

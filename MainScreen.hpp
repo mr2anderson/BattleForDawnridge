@@ -33,6 +33,7 @@
 #include "SoundQueue.hpp"
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"
+#include "BuildingMode.hpp"
 
 
 #pragma once
@@ -56,14 +57,18 @@ private:
 	std::queue<PopUpElement*> elements;
 	Player players[2];
 	uint32_t move = 0;
-	std::vector<GO*> gameObjects;
-	std::vector<Unit*> units;
-	std::vector<ResourcePoint*> resourcePoints;
+	std::vector<GO*> *gameObjects;
+	std::vector<Unit*> *units;
+	std::vector<ResourcePoint*> *resourcePoints;
+	std::vector<TerritoryB*> *territoryBuildings;
+	std::vector<TerritoryOriginB*> *territoryOrigins;
+	std::vector<TerritoryConductorB*> *territoryConductors;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
 
 	uint32_t windowW, windowH;
-	sf::View view;
+	uint32_t *mouseX, *mouseY;
+	sf::View *view;
 	Button endMoveButton;
 	Button buildButton;
 
@@ -92,16 +97,17 @@ private:
 	void handleIncreaseLevelEvent(const GEvent& e);
 	void handleDecreaseCurrentTradeMovesLeft(const GEvent& e);
 	void handleTryToBuild(const GEvent& e);
+	void handleBuild(const GEvent& e);
 	
 	void handleUIEvent(const UIEvent& e);
 	void handlePlaySoundEvent(const UIEvent& e);
+	void handleCreatePopUpElementEvent(const UIEvent& e);
 
 	void handleGOR(const GOR& responce);
 
 	void removeFinishedElements();
 	void changeMove();
 	void createBuildMenu();
-	template<typename T> static void ADD_BUILD_COMPONENT(std::vector<SelectionWComponent>& components);
 	static std::wstring GET_BUILD_DESCRIPTION(Building* b);
 	Player* getCurrentPlayer();
 	void handleGameObjectClick();
@@ -110,6 +116,7 @@ private:
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);
+	void updateMousePosition();
 	void moveView();
 	void updatePlayerViewPoint();
 
@@ -118,6 +125,5 @@ private:
 	void moveViewToWest();
 	void moveViewToEast();
 
-	void addUnit(Unit* u);
-	void addResourcePoint(ResourcePoint* rp);
+	void add(GO* go);
 };

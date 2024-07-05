@@ -38,7 +38,7 @@ GOR ResourcePoint::getSelectionWindow() {
 	components.emplace_back("exit_icon", L"Вернуться", true, true, GEvent());
 	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, GEvent());
 
-	SelectionW* window = new SelectionW(this->getClickSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	response.elements.push(window);
 
 	return response;

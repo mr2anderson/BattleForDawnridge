@@ -39,6 +39,7 @@ GEvent operator+(const GEvent &a, const GEvent& b) {
 	c.increaseLevel.insert(c.increaseLevel.end(), b.increaseLevel.begin(), b.increaseLevel.end());
 	c.decreaseCurrentTradeMovesLeft.insert(c.decreaseCurrentTradeMovesLeft.end(), b.decreaseCurrentTradeMovesLeft.begin(), b.decreaseCurrentTradeMovesLeft.end());
 	c.tryToBuild.insert(c.tryToBuild.end(), b.tryToBuild.begin(), b.tryToBuild.end());
+	c.build.insert(c.build.end(), b.build.begin(), b.build.end());
 
 	return c;
 }

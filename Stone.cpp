@@ -27,12 +27,12 @@ Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2, 2, 10000) {
 std::string Stone::getResourceType() const {
 	return "stone";
 }
+std::string Stone::getSoundName() const {
+	return "stone";
+}
 std::string Stone::getTextureName() const {
 	return "stone";
 }
 std::wstring Stone::getDescription() const {
 	return L"Этот камень содержит еще " + std::to_wstring(this->getHP()) + L" ед. камня. Постройте рядом каменоломню, чтобы начать добычу.";
-}
-std::string Stone::getClickSoundName() const {
-	return "stone";
 }

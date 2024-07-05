@@ -24,10 +24,14 @@
 #pragma once
 
 
+class PopUpElement;
+
+
 struct UIEvent {
 	UIEvent();
 
 	friend UIEvent operator+(const UIEvent& a, const UIEvent& b);
 
 	std::vector<std::string> playSound;
+	std::vector<PopUpElement*> createPopUpElement;
 };

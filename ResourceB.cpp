@@ -21,7 +21,7 @@
 
 
 ResourceB::ResourceB() = default;
-ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
+ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
 	UpgradeableB(x, y, sx, sy, maxHp, playerPtr),
 	HpSensitiveB(x, y, sx, sy, maxHp, playerPtr),
 	AreaB(x, y, sx, sy, maxHp, playerPtr),
@@ -37,12 +37,15 @@ GOR ResourceB::newMove(const Player& currentPlayer) {
 			return response;
 		}
 		response = response + this->regenerate();
-		if (this->works() and this->resourcesLeft) {
+		if (!this->repairing() and this->resourcesLeft) {
 			response = response + this->collectResources();
 		}
 		return response;
 	}
 	return GOR();
+}
+bool ResourceB::works() const {
+	return this->UpgradeableB::works() and this->HpSensitiveB::works() and this->AreaB::works();
 }
 uint32_t ResourceB::getCollectionSpeed() const {
 	return this->getCollectionSpeed(this->getCurrentLevel() - 1);
@@ -72,7 +75,7 @@ GOR ResourceB::collectResources() {
 		for (const auto& src : srcs) {
 			ResourcePoint* rp = std::get<ResourcePoint*>(src);
 			uint32_t n = std::get<uint32_t>(src);
-			FlyingE* element = new FlyingE(this->getResourceType() + "_icon", this->getNewWindowSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
+			FlyingE* element = new FlyingE(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
 			GEvent gEvent;
 			gEvent.collect.emplace_back(rp, n);
 			element->addOnStartGEvent(gEvent);
@@ -97,7 +100,7 @@ GOR ResourceB::getSelectionW(const GEvent& highlightEvent) {
 			L" и радиус добычи с " + std::to_wstring(this->getRadius()) + L" до " + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	response.elements.push(window);
 
 	return response;
@@ -110,8 +113,8 @@ GOR ResourceB::getGameObjectResponse(const Player& player) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}
-		if (!this->works()) {
-			return this->handleDoesNotWork();
+		if (this->repairing()) {
+			return this->handleRepairing();
 		}
 		GOR response;
 		response.events.push_back(this->getHighlightEvent());

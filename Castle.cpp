@@ -29,8 +29,8 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
+	TerritoryOriginB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
-	TerritoryB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 
 }
@@ -46,6 +46,9 @@ GOR Castle::newMove(const Player& player) {
 	}
 	return response;
 }
+bool Castle::works() const {
+	return this->TerritoryOriginB::works() and this->UpgradeableB::works();
+}
 Resources Castle::getCost() const {
 	Resources cost;
 	cost.plus(Resource("stone", 100000));
@@ -53,6 +56,9 @@ Resources Castle::getCost() const {
 }
 std::string Castle::getTextureName() const {
 	return "castle";
+}
+std::string Castle::getSoundName() const {
+	return "hooray";
 }
 std::wstring Castle::getDescription() const {
 	return L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.";
@@ -62,9 +68,6 @@ uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
 }
 uint32_t Castle::getRegenerationSpeed() const {
 	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
-}
-std::string Castle::getNewWindowSoundName() const {
-	return "hooray";
 }
 std::wstring Castle::getReadableName() const {
 	return L"замок";
@@ -104,12 +107,15 @@ GOR Castle::getSelectionW() {
 			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade + this->getHighlightEvent());
 	}
 
-	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	response.elements.push(window);
 
 	return response;
 }
 GOR Castle::getGameObjectResponse(const Player& player) {
+	if (!this->exist()) {
+		return GOR();
+	}
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();

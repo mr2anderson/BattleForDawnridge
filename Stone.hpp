@@ -29,9 +29,10 @@ public:
 	Stone(uint32_t x, uint32_t y);
 	std::string getResourceType() const override;
 
+	std::string getSoundName() const override;
+
 	static constexpr uint32_t TOTAL_TYPES = 7;
 private:
 	std::string getTextureName() const override;
 	std::wstring getDescription() const override;
-	std::string getClickSoundName() const override;
 };

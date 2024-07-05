@@ -29,38 +29,25 @@ bool AreaB::inRadius(GO *go) const {
 	return this->inRadius(go->getX(), go->getY(), go->getSX(), go->getSY());
 }
 bool AreaB::inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
-	bool ok2 = true;
-	for (uint32_t x2 = x; x2 <= x + sx; x2 = x2 + sx) {
-		for (uint32_t y2 = y; y2 <= y + sy; y2 = y2 + sy) {
-
-			bool ok1 = false;
-			for (uint32_t x1 = this->getX(); x1 <= this->getX() + this->getSX(); x1 = x1 + this->getSX()) {
-				for (uint32_t y1 = this->getY(); y1 <= this->getY() + this->getSY(); y1 = y1 + this->getSY()) {
-					uint32_t dx = std::max(x1, x2) - std::min(x1, x2);
-					uint32_t dy = std::max(y1, y1) - std::min(y1, y2);
-					if (dx < this->getRadius() and dy < this->getRadius()) {
-						ok1 = true;
-						break;
-					}
-				}
-				if (ok1) {
-					break;
-				}
+	sf::IntRect rect2;
+	rect2.left = (int32_t)this->getX() - (int32_t)this->getRadius();
+	rect2.top = (int32_t)this->getY() - (int32_t)this->getRadius();
+	rect2.width = this->getSX() + 2 * this->getRadius() + 1;
+	rect2.height = this->getSY() + 2 * this->getRadius() + 1 ;
+	for (uint32_t i = x; i <= x + sx; i = i + sx) {
+		for (uint32_t j = y; j <= y + sy; j = j + sy) {
+			if (!rect2.contains(i, j)) {
+				return false;
 			}
-
-			if (!ok1) {
-				ok2 = false;
-				break;
-			}
-		}
-		if (!ok2) {
-			break;
 		}
 	}
-	return ok2;
+	return true;
 }
 GEvent AreaB::getHighlightEvent() const {
 	GEvent gEvent;
+	if (!this->exist()) {
+		return gEvent;
+	}
 
 	uint32_t x1, y1;
 	uint32_t x2, y2;

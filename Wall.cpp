@@ -59,11 +59,11 @@ uint32_t Wall::getRegenerationSpeed() const {
 std::string Wall::getTextureName() const {
 	return "wall" + std::to_string(this->getCurrentLevel());
 }
+std::string Wall::getSoundName() const {
+	return "stone";
+}
 std::wstring Wall::getDescription() const {
 	return L"Защитите свой город этими мощными городскими стенами от неожиданного нападения.";
-}
-std::string Wall::getNewWindowSoundName() const {
-	return "stone";
 }
 std::wstring Wall::getReadableName() const {
 	return L"стена";
@@ -100,7 +100,7 @@ GOR Wall::getSelectionW() {
 			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	response.elements.push(window);
 
 	return response;

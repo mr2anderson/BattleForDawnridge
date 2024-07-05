@@ -21,10 +21,10 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, const Player* playerPtr) :
-	TerritoryB(x, y, 1, 1, 1000, playerPtr),
+Road::Road(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<TerritoryOriginB*>* originsPtr, std::vector<TerritoryConductorB*>* conductorsPtr) :
+	TerritoryConductorB(x, y, 1, 1, 1000, playerPtr, originsPtr, conductorsPtr),
 	Building(x, y, 1, 1, 1000, playerPtr) {
-
+	
 }
 GOR Road::newMove(const Player& player) {
 	if (this->belongTo(&player) and this->exist()) {
@@ -43,11 +43,11 @@ uint32_t Road::getRegenerationSpeed() const {
 std::string Road::getTextureName() const {
 	return "road";
 }
+std::string Road::getSoundName() const {
+	return "road";
+}
 std::wstring Road::getDescription() const {
 	return L"Дороги — вены цивилизации. Постройте дорогу, чтобы иметь возможность возводить здания в новых местах.";
-}
-std::string Road::getNewWindowSoundName() const {
-	return "road";
 }
 std::wstring Road::getReadableName() const {
 	return L"дорога";
@@ -64,13 +64,22 @@ GOR Road::getSelectionW() {
 		L"\n"
 		+ this->getReadableHpInfo(), false, false, GEvent());
 
-	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	response.elements.push(window);
 
 	return response;
 }
 GOR Road::getGameObjectResponse(const Player& player) {
+	if (!this->exist()) {
+		return GOR();
+	}
 	if (this->belongTo(&player)) {
+		if (this->repairing()) {
+			return this->handleRepairing();
+		}
+		if (!this->conducted()) {
+			return this->getNotConductedResponce();
+		}
 		GOR responce;
 		responce.events.push_back(this->getHighlightEvent());
 		return responce + this->getSelectionW();

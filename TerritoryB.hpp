@@ -18,15 +18,17 @@
 
 
 #include "AreaB.hpp"
+#include "HpSensitiveB.hpp"
 
 
 #pragma once
 
 
-class TerritoryB : public AreaB {
+class TerritoryB : virtual public AreaB, virtual public HpSensitiveB {
 public:
 	TerritoryB();
 	TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player);
 
-	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
+	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const Player& player) const;
+	GEvent getHighlightEvent() const override;
 };

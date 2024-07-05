@@ -805,6 +805,18 @@
     <ClInclude Include="TerritoryB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TerritoryOriginB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryConductorB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingMode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConductionGraph.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\ball.wav">
@@ -968,6 +980,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TerritoryB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryOriginB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryConductorB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConductionGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

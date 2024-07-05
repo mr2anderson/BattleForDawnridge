@@ -28,12 +28,14 @@ class Building : public Unit {
 public:
 	Building();
 	Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player *playerPtr);
+
+	virtual bool works() const;
 protected:
 	virtual std::wstring getReadableName() const = 0;
 	virtual uint32_t getRegenerationSpeed() const = 0;
-	virtual std::string getNewWindowSoundName() const = 0;
 
 	std::wstring getUpperCaseReadableName() const;
+	static wchar_t TO_UPPER(wchar_t a);
 	virtual GOR regenerate();
 	std::wstring getReadableRegenerationSpeed() const;
 };

@@ -17,21 +17,24 @@
  */
 
 
-
-#include "ResourcePoint.hpp"
+#include "TerritoryOriginB.hpp"
+#include "ConductionGraph.hpp"
 
 
 #pragma once
 
 
-class Iron : public ResourcePoint {
+class TerritoryConductorB : public TerritoryB {
 public:
-	Iron();
-	Iron(uint32_t x, uint32_t y);
-
-	std::string getResourceType() const override;
-	std::string getSoundName() const override;
+	TerritoryConductorB();
+	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
+	
+	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const Player& player) const override;
+	GEvent getHighlightEvent() const override;
+protected:
+	bool conducted() const;
+	GOR getNotConductedResponce() const;
 private:
-	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
+	std::vector<TerritoryOriginB*>* originsPtr;
+	std::vector<TerritoryConductorB*>* conductorsPtr;
 };

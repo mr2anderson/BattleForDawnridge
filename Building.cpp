@@ -25,48 +25,54 @@ Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t ma
 	Unit(x, y, sx, sy, 1, maxHp, playerPtr) {
 
 }
+bool Building::works() const {
+	return this->exist();
+}
 std::wstring Building::getUpperCaseReadableName() const {
 	std::wstring s = this->getReadableName();
 	std::wstring n;
 	for (auto c : s) {
-		switch (c) {
-		case L'é': { n += L'É'; break; }
-		case L'ö': { n += L'Ö'; break; }
-		case L'ó': { n += L'Ó'; break; }
-		case L'ê': { n += L'Ê'; break; }
-		case L'å': { n += L'Å'; break; }
-		case L'í': { n += L'Í'; break; }
-		case L'ã': { n += L'Ã'; break; }
-		case L'ø': { n += L'Ø'; break; }
-		case L'ù': { n += L'Ù'; break; }
-		case L'ç': { n += L'Ç'; break; }
-		case L'õ': { n += L'Õ'; break; }
-		case L'ú': { n += L'Ú'; break; }
-		case L'ô': { n += L'Ô'; break; }
-		case L'û': { n += L'Û'; break; }
-		case L'â': { n += L'Â'; break; }
-		case L'à': { n += L'À'; break; }
-		case L'ï': { n += L'Ï'; break; }
-		case L'ð': { n += L'Ð'; break; }
-		case L'î': { n += L'Î'; break; }
-		case L'ë': { n += L'Ë'; break; }
-		case L'ä': { n += L'Ä'; break; }
-		case L'æ': { n += L'Æ'; break; }
-		case L'ý': { n += L'Ý'; break; }
-		case L'ÿ': { n += L'ß'; break; }
-		case L'÷': { n += L'×'; break; }
-		case L'ñ': { n += L'Ñ'; break; }
-		case L'ì': { n += L'Ì'; break; }
-		case L'è': { n += L'È'; break; }
-		case L'ò': { n += L'Ò'; break; }
-		case L'ü': { n += L'Ü'; break; }
-		case L'á': { n += L'Á'; break; }
-		case L'þ': { n += L'Þ'; break; }
-		case L'¸': { n += L'¨'; break; }
-		default: { n += c; break; }
-		}
+		n += TO_UPPER(c);
 	}
 	return n;
+}
+wchar_t Building::TO_UPPER(wchar_t a) {
+	switch (a) {
+	case L'é': { return L'É';}
+	case L'ö': {return L'Ö';}
+	case L'ó': {return L'Ó';}
+	case L'ê': {return L'Ê';}
+	case L'å': {return L'Å';}
+	case L'í': {return L'Í';}
+	case L'ã': {return L'Ã';}
+	case L'ø': {return L'Ø';}
+	case L'ù': {return L'Ù';}
+	case L'ç': {return L'Ç'; }
+	case L'õ': {return L'Õ';}
+	case L'ú': {return L'Ú';}
+	case L'ô': {return L'Ô';}
+	case L'û': {return L'Û';}
+	case L'â': {return L'Â';}
+	case L'à': {return L'À';}
+	case L'ï': {return L'Ï';}
+	case L'ð': {return L'Ð';}
+	case L'î': {return L'Î';}
+	case L'ë': {return L'Ë';}
+	case L'ä': {return L'Ä';}
+	case L'æ': {return L'Æ';}
+	case L'ý': {return L'Ý';}
+	case L'ÿ': {return L'ß';}
+	case L'÷': {return L'×';}
+	case L'ñ': {return L'Ñ';}
+	case L'ì': {return L'Ì';}
+	case L'è': {return L'È';}
+	case L'ò': {return L'Ò';}
+	case L'ü': {return L'Ü';}
+	case L'á': {return L'Á';}
+	case L'þ': {return L'Þ';}
+	case L'¸': {return L'¨';}
+	default: {return a;}
+	}
 }
 GOR Building::regenerate() {
 	GOR responce;

@@ -39,7 +39,7 @@ GOR Market::doTrade(const Trade& trade) {
 	GEvent gEvent;
 	gEvent.subResource.push_back(trade.sell);
 
-	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click", 
+	MessageW* window = new MessageW(this->getSoundName(), "click", 
 		L"СДЕЛКА НАЧАТА\n"
 		"Ваши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:\n" + 
 		trade.getReadableInfo());
@@ -61,10 +61,13 @@ GOR Market::newMove(const Player& currentPlayer) {
 		return response;
 	}
 	response = response + this->regenerate();
-	if (!this->works()) {
+	if (this->repairing()) {
 		return response;
 	}
 	return response + this->handleCurrentTrade();
+}
+bool Market::works() const {
+	return this->HpSensitiveB::works() and this->UpgradeableB::works();
 }
 Resources Market::getCost() const {
 	Resources cost;
@@ -74,14 +77,14 @@ Resources Market::getCost() const {
 std::string Market::getTextureName() const {
 	return "market";
 }
+std::string Market::getSoundName() const {
+	return "gold";
+}
 std::wstring Market::getDescription() const {
 	return L"Рынки позволяют обменивать ресурсы.";
 }
 uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
-}
-std::string Market::getNewWindowSoundName() const {
-	return "gold";
 }
 Resources Market::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -144,13 +147,13 @@ GOR Market::handleCurrentTrade() {
 	GOR responce;
 	GEvent decreaseEvent;
 	decreaseEvent.decreaseCurrentTradeMovesLeft.push_back(this);
-	FlyingE* element = new FlyingE("trade_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	FlyingE* element = new FlyingE("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	responce.elements.push(element);
 	element->addOnStartGEvent(decreaseEvent);
 	if (this->currentTrade.movesLeft == 1) {
 		GEvent gEvent;
 		gEvent.addResource.push_back(this->currentTrade.buy);
-		element = new FlyingE(this->currentTrade.buy.type + "_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		element = new FlyingE(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
 		responce.elements.push(element);
 	}
@@ -184,7 +187,7 @@ GOR Market::getSelectionW() {
 		this->addTrade(components, gameEventTrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	GOR response;
 	response.elements.push(window);
 	return response;
@@ -196,7 +199,7 @@ void Market::addTrade(std::vector<SelectionWComponent>& components, const GEvent
 }
 GOR Market::handleBusyWithTrade() const {
 	GOR response;
-	MessageW* window = new MessageW(this->getNewWindowSoundName(), "click",
+	MessageW* window = new MessageW(this->getSoundName(), "click",
 		L"РЫНОК ЗАНЯТ\n"
 		"Детали сделки:\n" +
 		this->currentTrade.getReadableInfo());
@@ -208,8 +211,8 @@ GOR Market::getGameObjectResponse(const Player& player) {
 		return GOR();
 	}
 	if (this->belongTo(&player)) {
-		if (!this->works()) {
-			return this->handleDoesNotWork();
+		if (this->repairing()) {
+			return this->handleRepairing();
 		}
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();

@@ -17,21 +17,12 @@
  */
 
 
-
-#include "ResourcePoint.hpp"
-
-
-#pragma once
+#include "TerritoryOriginB.hpp"
 
 
-class Iron : public ResourcePoint {
-public:
-	Iron();
-	Iron(uint32_t x, uint32_t y);
+TerritoryOriginB::TerritoryOriginB() = default;
+TerritoryOriginB::TerritoryOriginB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player) :
+	TerritoryB(x, y, sx, sy, maxHp, player),
+	Building(x, y, sx, sy, maxHp, player) {
 
-	std::string getResourceType() const override;
-	std::string getSoundName() const override;
-private:
-	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
-};
+}

@@ -31,12 +31,13 @@ public:
 	Farm(uint32_t x, uint32_t y, const Player* playerPtr);
 
 	GOR newMove(const Player& currentPlayer) override;
+	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
+	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
-	std::string getNewWindowSoundName() const override;
 	std::wstring getReadableName() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;

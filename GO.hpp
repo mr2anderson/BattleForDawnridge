@@ -43,11 +43,14 @@ public:
 	uint32_t getY() const;
 	uint32_t getSX() const;
 	uint32_t getSY() const;
+	void setX(uint32_t newX);
+	void setY(uint32_t newY);
 	bool exist() const;
 	GOR click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY);
 
 	virtual GOR newMove(const Player& currentPlayer) = 0;
 	virtual std::string getTextureName() const = 0;
+	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:
 	std::wstring getReadableHpInfo() const;

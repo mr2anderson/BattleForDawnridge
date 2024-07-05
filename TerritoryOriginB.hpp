@@ -17,21 +17,14 @@
  */
 
 
-
-#include "ResourcePoint.hpp"
+#include "TerritoryB.hpp"
 
 
 #pragma once
 
 
-class Iron : public ResourcePoint {
+class TerritoryOriginB : public TerritoryB {
 public:
-	Iron();
-	Iron(uint32_t x, uint32_t y);
-
-	std::string getResourceType() const override;
-	std::string getSoundName() const override;
-private:
-	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
+	TerritoryOriginB();
+	TerritoryOriginB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player);
 };

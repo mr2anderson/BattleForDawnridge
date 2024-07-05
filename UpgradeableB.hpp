@@ -17,7 +17,6 @@
  */
 
 
-#include <wctype.h>
 #include "Building.hpp"
 
 
@@ -34,6 +33,7 @@ public:
 	GOR startUpgrade();
 	void decreaseUpgradeMovesLeft();
 	void increaseLevel();
+	bool works() const override;
 protected:
 	static constexpr uint32_t TOTAL_LEVELS = 3;
 

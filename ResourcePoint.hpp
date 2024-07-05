@@ -33,7 +33,6 @@ public:
 	virtual std::string getResourceType() const = 0;
 protected:
 	virtual std::wstring getDescription() const = 0;
-	virtual std::string getClickSoundName() const = 0;
 private:
 	GOR getGameObjectResponse(const Player& player) override;
 	GOR getSelectionWindow();

@@ -27,12 +27,12 @@ Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2, 2, 10000) {
 std::string Forest::getResourceType() const {
 	return "wood";
 }
+std::string Forest::getSoundName() const {
+	return "wood";
+}
 std::string Forest::getTextureName() const {
 	return "forest";
 }
 std::wstring Forest::getDescription() const {
 	return L"Это лес содержит еще " + std::to_wstring(this->getHP()) + L" ед. древесины. Постройте лесопилку поблизости, чтобы начать добычу.";
-}
-std::string Forest::getClickSoundName() const {
-	return "wood";
 }

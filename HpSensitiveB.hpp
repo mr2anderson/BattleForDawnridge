@@ -27,8 +27,10 @@ class HpSensitiveB : virtual public Building {
 public:
 	HpSensitiveB();
 	HpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr);
+
+	bool works() const override;
 protected:
-	bool works() const;
-	GOR handleDoesNotWork() const;
+	bool repairing() const;
+	GOR handleRepairing() const;
 	GOR regenerate() override;
 };

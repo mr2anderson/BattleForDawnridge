@@ -294,6 +294,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -484,6 +485,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AreaB.hpp" />
+    <ClInclude Include="BuildingMode.hpp" />
+    <ClInclude Include="ConductionGraph.hpp" />
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
@@ -625,6 +628,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
     <ClInclude Include="TerritoryB.hpp" />
+    <ClInclude Include="TerritoryConductorB.hpp" />
+    <ClInclude Include="TerritoryOriginB.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="Forest.hpp" />
@@ -642,6 +647,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AreaB.cpp" />
+    <ClCompile Include="BuildingMode.cpp" />
+    <ClCompile Include="ConductionGraph.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FlyingE.cpp" />
     <ClCompile Include="HighlightTable.cpp" />
@@ -684,6 +691,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="TerritoryB.cpp" />
+    <ClCompile Include="TerritoryConductorB.cpp" />
+    <ClCompile Include="TerritoryOriginB.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="Forest.cpp" />

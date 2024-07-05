@@ -53,4 +53,5 @@ struct GEvent {
 	std::vector<UpgradeableB*> increaseLevel;
 	std::vector<Market*> decreaseCurrentTradeMovesLeft;
 	std::vector<Building*> tryToBuild;
+	std::vector<Building*> build;
 };

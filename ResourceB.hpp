@@ -29,9 +29,10 @@
 class ResourceB : public UpgradeableB, public HpSensitiveB, public AreaB {
 public:
 	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr);
+	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
 
 	GOR newMove(const Player& currentPlayer) override;
+	bool works() const override;
 protected:
 	uint32_t getCollectionSpeed() const;
 	uint32_t getRadius() const override;
@@ -42,7 +43,7 @@ protected:
 	virtual std::wstring getDescription() const = 0;
 
 private:
-	const std::vector<ResourcePoint*>* resourcePointsPtr;
+	std::vector<ResourcePoint*>* resourcePointsPtr;
 	bool resourcesLeft;
 
 	GOR collectResources();

@@ -33,12 +33,15 @@ GOR Farm::newMove(const Player& player) {
 			return response;
 		}
 		response = response + this->regenerate();
-		if (this->works()) {
+		if (!this->repairing()) {
 			response = response + this->collectFood();
 		}
 		return response;
 	}
 	return GOR();
+}
+bool Farm::works() const {
+	return this->HpSensitiveB::works() and this->UpgradeableB::works();
 }
 Resources Farm::getCost() const {
 	Resources cost;
@@ -48,14 +51,14 @@ Resources Farm::getCost() const {
 std::string Farm::getTextureName() const {
 	return "farm";
 }
+std::string Farm::getSoundName() const {
+	return "food";
+}
 std::wstring Farm::getDescription() const {
 	return L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.";
 }
 uint32_t Farm::getRegenerationSpeed() const {
 	return 5000;
-}
-std::string Farm::getNewWindowSoundName() const {
-	return "food";
 }
 std::wstring Farm::getReadableName() const {
 	return L"ферма";
@@ -88,7 +91,7 @@ uint32_t Farm::getCollectionSpeed() const {
 GOR Farm::collectFood() const {
 	GEvent gEvent;
 	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
-	PopUpElement* element = new FlyingE("food_icon", this->getNewWindowSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	PopUpElement* element = new FlyingE("food_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(gEvent);
 	GOR responce;
 	responce.elements.push(element);
@@ -102,8 +105,8 @@ GOR Farm::getGameObjectResponse(const Player& player) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}
-		if (!this->works()) {
-			return this->handleDoesNotWork();
+		if (this->repairing()) {
+			return this->handleRepairing();
 		}
 		return this->getSelectionW();
 	}
@@ -126,7 +129,7 @@ GOR Farm::getSelectionW() {
 			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getNewWindowSoundName(), "click", components);
+	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
 	response.elements.push(window);
 
 	return response;

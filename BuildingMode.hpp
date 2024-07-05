@@ -17,21 +17,32 @@
  */
 
 
-
-#include "ResourcePoint.hpp"
+#include "PopUpElement.hpp"
+#include "TerritoryB.hpp"
 
 
 #pragma once
 
 
-class Iron : public ResourcePoint {
+class BuildingMode : public PopUpElement {
 public:
-	Iron();
-	Iron(uint32_t x, uint32_t y);
+	BuildingMode(Building *b, uint32_t *mouseX, uint32_t *mouseY, sf::View *view, std::vector<GO*> *go, std::vector<TerritoryB*> *tb, Player *player);
 
-	std::string getResourceType() const override;
-	std::string getSoundName() const override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	Events run(uint32_t windowW, uint32_t windowH) override;
+	void update() override;
+	Events click(uint32_t x, uint32_t y) override;
 private:
-	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
+	Building* b;
+	uint32_t* mouseX, *mouseY;
+	sf::View* view;
+	uint32_t windowW, windowH;
+	std::vector<GO*> *go;
+	std::vector<TerritoryB*> *tb;
+	Player* player;
+
+	bool empty() const;
+	bool controlled() const;
+	GEvent getHighlightEvent() const;
 };

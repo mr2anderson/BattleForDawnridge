@@ -30,8 +30,8 @@ public:
 
 	bool inRadius(GO* go) const;
 	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
+	virtual GEvent getHighlightEvent() const;
 protected:
-	GEvent getHighlightEvent() const;
 
 	virtual uint32_t getRadius() const = 0;
 };

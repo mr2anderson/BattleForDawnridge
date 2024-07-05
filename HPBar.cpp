@@ -98,3 +98,9 @@ uint32_t HPBar::getSX() const {
 uint32_t HPBar::getSY() const {
 	return this->sy;
 }
+void HPBar::setX(uint32_t newX) {
+	this->x = newX;
+}
+void HPBar::setY(uint32_t newY) {
+	this->y = newY;
+}

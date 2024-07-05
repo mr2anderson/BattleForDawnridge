@@ -22,7 +22,7 @@
 
 
 Quarry::Quarry() = default;
-Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
+Quarry::Quarry(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
 	ResourceB(x, y, 3, 3, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 3, 3, 20000, playerPtr) {}
 Resources Quarry::getCost() const {
@@ -36,7 +36,7 @@ uint32_t Quarry::getRegenerationSpeed() const {
 std::string Quarry::getTextureName() const {
 	return "quarry";
 }
-std::string Quarry::getNewWindowSoundName() const {
+std::string Quarry::getSoundName() const {
 	return "stone";
 }
 std::string Quarry::getResourceType() const {

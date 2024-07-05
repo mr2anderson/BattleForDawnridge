@@ -35,3 +35,6 @@ GOR Unit::getUnitOfEnemyResponse() {
 	response.events.push_back(gEvent);
 	return response;
 }
+const Player* Unit::getPlayer() const {
+	return this->playerPtr;
+}

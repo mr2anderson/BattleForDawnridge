@@ -22,7 +22,7 @@
 
 
 Mine::Mine() = default;
-Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
+Mine::Mine(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
 	ResourceB(x, y, 3, 3, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 3, 3, 20000, playerPtr) {}
 Resources Mine::getCost() const {
@@ -36,7 +36,7 @@ uint32_t Mine::getRegenerationSpeed() const {
 std::string Mine::getTextureName() const {
 	return "mine";
 }
-std::string Mine::getNewWindowSoundName() const {
+std::string Mine::getSoundName() const {
 	return "iron";
 }
 std::string Mine::getResourceType() const {

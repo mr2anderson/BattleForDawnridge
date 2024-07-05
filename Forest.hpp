@@ -30,8 +30,8 @@ public:
 	Forest(uint32_t x, uint32_t y);
 
 	std::string getResourceType() const override;
+	std::string getSoundName() const override;
 private:
 	std::string getTextureName() const override;
 	std::wstring getDescription() const override;
-	std::string getClickSoundName() const override;
 };

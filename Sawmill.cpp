@@ -22,7 +22,7 @@
 
 
 Sawmill::Sawmill() = default;
-Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, const std::vector<ResourcePoint*>* resourcePointsPtr) : 
+Sawmill::Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
 	ResourceB(x, y, 3, 3, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 3, 3, 20000, playerPtr) {}
 Resources Sawmill::getCost() const {
@@ -36,7 +36,7 @@ uint32_t Sawmill::getRegenerationSpeed() const {
 std::string Sawmill::getTextureName() const {
 	return "sawmill";
 }
-std::string Sawmill::getNewWindowSoundName() const {
+std::string Sawmill::getSoundName() const {
 	return "wood";
 }
 std::string Sawmill::getResourceType() const {

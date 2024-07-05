@@ -17,25 +17,25 @@
  */
 
 
-#include "TerritoryB.hpp"
+#include "TerritoryConductorB.hpp"
 #include "SelectionW.hpp"
 
 
 #pragma once
 
 
-class Road : public TerritoryB {
+class Road : public TerritoryConductorB {
 public:
 	Road();
-	Road(uint32_t x, uint32_t y, const Player* playerPtr);
+	Road(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
 	GOR newMove(const Player& player) override;
 
 	Resources getCost() const override;
 	std::string getTextureName() const override;
+	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
-	std::string getNewWindowSoundName() const override;
 	std::wstring getReadableName() const override;
 	uint32_t getRadius() const override;
 	GOR getSelectionW();

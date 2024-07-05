@@ -36,14 +36,15 @@ public:
 	GOR doTrade(const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
 	GOR newMove(const Player& currentPlayer);
+	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
+	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 private:
 	Trade currentTrade;
 
 	uint32_t getRegenerationSpeed() const override;
-	std::string getNewWindowSoundName() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	std::wstring getReadableName() const override;
