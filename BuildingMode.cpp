@@ -73,6 +73,9 @@ bool BuildingMode::empty() const {
 	rect1.height = this->b->getSY();
 
 	for (uint32_t i = 0; i < go->size(); i = i + 1) {
+		if (!go->at(i)->exist()) {
+			continue;
+		}
 		sf::IntRect rect2;
 		rect2.left = go->at(i)->getX();
 		rect2.top = go->at(i)->getY();
