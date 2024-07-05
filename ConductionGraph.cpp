@@ -18,7 +18,6 @@
 
 
 #include "ConductionGraph.hpp"
-#include <iostream>
 
 
 ConductionGraph::ConductionGraph() = default;
@@ -33,8 +32,8 @@ bool ConductionGraph::connectedToOrigin(uint32_t x, uint32_t y) const {
 	return this->bfs(std::make_tuple(x, y), visited);
 }
 void ConductionGraph::add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool origin) {
-	for (uint32_t i = 0; i <= sx; i = i + 1) {
-		for (uint32_t j = 0; j <= sy; j = j + 1) {
+	for (uint32_t i = 0; i < sx; i = i + 1) {
+		for (uint32_t j = 0; j < sy; j = j + 1) {
 			auto p = std::make_tuple(x + i, y + j);
 			this->isOrigin[p] = origin;
 			this->addPossiblePaths(p);
