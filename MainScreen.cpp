@@ -84,7 +84,7 @@ void MainScreen::initMap(const std::string& name) {
 	this->territoryOrigins = new std::vector<TerritoryOriginB*>;
 	this->territoryConductors = new std::vector<TerritoryConductorB*>;
 
-	std::ifstream file(std::string(ROOT) + "/levels/" + name + ".tmx");
+	std::ifstream file(std::string(ROOT) + "/" + name + ".tmx");
 	std::string line;
 	bool read = false;
 	uint32_t y = 0;

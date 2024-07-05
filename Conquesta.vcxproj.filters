@@ -974,9 +974,6 @@
     <ClCompile Include="Forest.cpp">
       <Filter>Source Files\gameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\screens</Filter>
-    </ClCompile>
     <ClCompile Include="GO.cpp">
       <Filter>Source Files\gameObjects</Filter>
     </ClCompile>
@@ -991,9 +988,6 @@
     </ClCompile>
     <ClCompile Include="LoadingScreen.cpp">
       <Filter>Source Files\screens</Filter>
-    </ClCompile>
-    <ClCompile Include="MainScreen.cpp">
-      <Filter>Source Files\interface</Filter>
     </ClCompile>
     <ClCompile Include="Market.cpp">
       <Filter>Source Files\gameObjects</Filter>
@@ -1060,6 +1054,12 @@
     </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScreen.cpp">
+      <Filter>Source Files\screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

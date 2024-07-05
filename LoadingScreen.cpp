@@ -35,7 +35,7 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.display();
 }
 void LoadingScreen::loadBase() {
-	Fonts::get()->add("1", "/fonts/1.ttf");
+	Fonts::get()->add("1", "1.ttf");
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Text t;
@@ -57,18 +57,18 @@ void LoadingScreen::loadAll() {
 		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
 		"farm", "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
 		"wall1", "wall2", "wall3", "road"}) {
-		Textures::get()->add(a, "images/" + a + ".png");
+		Textures::get()->add(a, a + ".png");
 	}
 	for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
-		Textures::get()->add(std::to_string(i), "images/" + std::to_string(i) + ".png");
+		Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
 	}
 	for (const std::string& a : { "click", "food", "gold", "hooray", "iron", 
 		"regeneration", "stone", "wood", "road"}) {
-		Sounds::get()->add(a, "sounds/" + a + ".ogg");
+		Sounds::get()->add(a, a + ".ogg");
 	}
-	Music::get()->add("intro", "music/intro.ogg");
-	Music::get()->add("menu", "music/menu.ogg");
+	Music::get()->add("intro", "intro.ogg");
+	Music::get()->add("menu", "menu.ogg");
 	for (uint32_t i = 0; i < 10; i = i + 1) {
-		Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
+		Music::get()->add(std::to_string(i), "ingame_0" + std::to_string(i) + ".ogg");
 	}
 }

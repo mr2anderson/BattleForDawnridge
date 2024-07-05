@@ -20,4 +20,4 @@
 #pragma once
 
 
-#define ROOT "data"
+#define ROOT "resources"
