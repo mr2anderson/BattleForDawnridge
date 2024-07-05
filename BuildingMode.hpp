@@ -27,7 +27,6 @@
 class BuildingMode : public PopUpElement {
 public:
 	BuildingMode(Building *b, sf::View *view, std::vector<GO*> *go, std::vector<TerritoryB*> *tb, Player *player);
-	~BuildingMode();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

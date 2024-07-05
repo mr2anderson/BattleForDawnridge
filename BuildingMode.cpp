@@ -27,9 +27,6 @@ BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, st
 	this->tb = tb;
 	this->player = player;
 }
-BuildingMode::~BuildingMode() {
-	delete this->b;
-}
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
 }
