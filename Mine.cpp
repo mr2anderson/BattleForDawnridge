@@ -59,9 +59,7 @@ uint32_t Mine::getRadius(uint32_t level) const {
 	return 5 + levelRadiusBonus[level];
 }
 std::wstring Mine::getDescription() const {
-	return
-		L"Шахты обеспечивают Ваш город железом, необходимым для создания армии.\n"
-		+ this->getReadableHpInfo();
+	return L"Шахты обеспечивают Ваш город железом, необходимым для создания армии.\n";
 }
 Resources Mine::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

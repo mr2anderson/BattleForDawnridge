@@ -90,7 +90,9 @@ GOR ResourceB::getSelectionW(const GEvent& highlightEvent) {
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, highlightEvent);
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, GEvent());
+	components.emplace_back(this->getTextureName(), 
+		this->getDescription() + L"\n" +
+		this->getReadableHpInfo(), false, false, GEvent());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		GEvent gameEventUpgrade = highlightEvent;
