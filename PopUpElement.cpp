@@ -23,6 +23,7 @@
 PopUpElement::PopUpElement() {
 	this->_finished = false;
 }
+PopUpElement::~PopUpElement() = default;
 void PopUpElement::addOnStartGEvent(const Event& gEvent) {
 	this->onStart = this->onStart + gEvent;
 }

@@ -75,7 +75,6 @@ private:
 
 	void init(sf::RenderWindow &window);
 	void initMap(const std::string &name);
-	void removeOldPopUpWindows();
 	void initPlayers();
 	void initMoveCtr();
 	void initHighlightTable();

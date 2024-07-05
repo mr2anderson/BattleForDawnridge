@@ -27,6 +27,7 @@
 class PopUpElement : public sf::Drawable {
 public:
 	PopUpElement();
+	virtual ~PopUpElement();
 
 	void addOnStartGEvent(const Event& event);
 	bool finished() const;

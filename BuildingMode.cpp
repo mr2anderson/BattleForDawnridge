@@ -27,6 +27,9 @@ BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, st
 	this->tb = tb;
 	this->player = player;
 }
+BuildingMode::~BuildingMode() {
+	delete this->b;
+}
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
 }
@@ -50,6 +53,7 @@ Event BuildingMode::click() {
 			"Указанное место занято.");
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
+		delete this->b;
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
@@ -58,6 +62,7 @@ Event BuildingMode::click() {
 			"Указанное место слишком далеко от дорог.");
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
+		delete this->b;
 		return this->getHighlightEvent() + uiEvent;
 	}
 	Event gEvent = this->getHighlightEvent();

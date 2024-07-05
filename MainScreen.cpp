@@ -68,7 +68,6 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 }
 void MainScreen::init(sf::RenderWindow& window) {
 	this->initMap("ridge");
-	this->removeOldPopUpWindows();
 	this->initPlayers();
 	this->initMoveCtr();
 	this->initHighlightTable();
@@ -129,13 +128,6 @@ void MainScreen::initMap(const std::string& name) {
 
 	this->plains = PlainsGeneration(x + 1, y + 1);
 }
-void MainScreen::removeOldPopUpWindows() {
-	while (!this->elements.empty()) {
-		PopUpElement* w = this->elements.front();
-		delete w;
-		this->elements.pop();
-	}
-}
 void MainScreen::initPlayers() {
 	this->players[0] = Player(1);
 	this->players[1] = Player(2);
@@ -153,6 +145,11 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->view = new sf::View(window.getDefaultView());
 	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, L"Êîíåö õîäà");
 	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", L"");
+	while (!this->elements.empty()) {
+		PopUpElement* w = this->elements.front();
+		delete w;
+		this->elements.pop();
+	}
 }
 void MainScreen::handleEvent(const Event &e) {
 	this->handleTryToAttackEvent(e);
@@ -279,6 +276,7 @@ void MainScreen::handleTryToBuild(const Event& e) {
 				L"ÍÅÄÎÑÒÀÒÎ×ÍÎ ÐÅÑÓÐÑÎÂ\n"
 				"Âû íå ìîæåòå ïîñòðîèòü ýòî çäàíèå");
 			this->addPopUpWindow(w);
+			delete a;
 		}
 	}
 }
@@ -360,9 +358,11 @@ void MainScreen::createBuildMenu() {
 	this->addPopUpWindow(w);
 }
 std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
-	return
-		b->getDescription() + L"\n" +
+	std::wstring description = b->getDescription() + L"\n" +
 		L"Ñòîèìîñòü: " + b->getCost().getReadableInfo();
+	delete b;
+	return description;
+		
 }
 Player* MainScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];
