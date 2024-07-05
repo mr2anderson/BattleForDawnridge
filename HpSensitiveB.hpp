@@ -31,6 +31,6 @@ public:
 	bool works() const override;
 protected:
 	bool repairing() const;
-	GOR handleRepairing() const;
-	GOR regenerate() override;
+	Events handleRepairing() const;
+	Events regenerate() override;
 };

@@ -33,8 +33,8 @@ Wall::Wall(uint32_t x, uint32_t y, const Player* playerPtr) :
 	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
 
 }
-GOR Wall::newMove(const Player& player) {
-	GOR response;
+Events Wall::newMove(const Player& player) {
+	Events response;
 	if (this->belongTo(&player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
@@ -82,8 +82,8 @@ uint32_t Wall::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-GOR Wall::getSelectionW() {
-	GOR response;
+Events Wall::getSelectionW() {
+	Events response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
@@ -101,11 +101,11 @@ GOR Wall::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.elements.push(window);
+	response.uiEvent.createE.push_back(window);
 
 	return response;
 }
-GOR Wall::getGameObjectResponse(const Player& player) {
+Events Wall::getGameObjectResponse(const Player& player) {
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();

@@ -739,9 +739,6 @@
     <ClInclude Include="GO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GOR.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HpSensitiveB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -914,9 +911,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HpSensitiveB.cpp">

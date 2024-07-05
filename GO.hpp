@@ -18,7 +18,7 @@
 
 
 #include "Textures.hpp"
-#include "GOR.hpp"
+#include "Events.hpp"
 #include "HPBar.hpp"
 #include "Player.hpp"
 
@@ -46,16 +46,16 @@ public:
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
 	bool exist() const;
-	GOR click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY);
+	Events click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY);
 
-	virtual GOR newMove(const Player& currentPlayer) = 0;
+	virtual Events newMove(const Player& currentPlayer) = 0;
 	virtual std::string getTextureName() const = 0;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:
 	std::wstring getReadableHpInfo() const;
 
-	virtual GOR getGameObjectResponse(const Player& currentPlayer) = 0;
+	virtual Events getGameObjectResponse(const Player& currentPlayer) = 0;
 private:
 	HPBar bar;
 

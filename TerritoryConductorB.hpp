@@ -33,7 +33,7 @@ public:
 	GEvent getHighlightEvent() const override;
 protected:
 	bool conducted() const;
-	GOR getNotConductedResponce() const;
+	Events getNotConductedResponce() const;
 private:
 	std::vector<TerritoryOriginB*>* originsPtr;
 	std::vector<TerritoryConductorB*>* conductorsPtr;

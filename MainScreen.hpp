@@ -18,6 +18,7 @@
 
 
 #include <fstream>
+#include <queue>
 #include "Playlist.hpp"
 #include "Forest.hpp"
 #include "Stone.hpp"
@@ -102,8 +103,6 @@ private:
 	void handleUIEvent(const UIEvent& e);
 	void handlePlaySoundEvent(const UIEvent& e);
 	void handleCreatePopUpElementEvent(const UIEvent& e);
-
-	void handleGOR(const GOR& responce);
 
 	void removeFinishedElements();
 	void changeMove();

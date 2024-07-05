@@ -74,16 +74,16 @@ wchar_t Building::TO_UPPER(wchar_t a) {
 	default: {return a;}
 	}
 }
-GOR Building::regenerate() {
-	GOR responce;
+Events Building::regenerate() {
+	Events events;
 	if (this->getHP() < this->getMaxHP()) {
 		GEvent gEvent;
 		gEvent.addHp.emplace_back(this, this->getRegenerationSpeed());
 		FlyingE* element = new FlyingE("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
-		responce.elements.push(element);
+		events.uiEvent.createE.push_back(element);
 	}
-	return responce;
+	return events;
 }
 std::wstring Building::getReadableRegenerationSpeed() const {
 	return L"Скорость строительства: " + std::to_wstring(this->getRegenerationSpeed()) + L" ед. / ход";

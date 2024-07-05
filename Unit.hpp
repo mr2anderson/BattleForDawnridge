@@ -33,7 +33,7 @@ public:
 
 	virtual Resources getCost() const = 0;
 protected:
-	GOR getUnitOfEnemyResponse();
+	Events getUnitOfEnemyResponse();
 	const Player* getPlayer() const;
 private:
 	const Player* playerPtr;

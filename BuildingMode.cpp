@@ -48,7 +48,7 @@ Events BuildingMode::click(uint32_t x, uint32_t y) {
 			L"ÍÅ ÓÄÀËÎÑÜ ÐÀÇÌÅÑÒÈÒÜ\n"
 			"Óêàçàííîå ìåñòî çàíÿòî.");
 		UIEvent uiEvent;
-		uiEvent.createPopUpElement.push_back(w);
+		uiEvent.createE.push_back(w);
 		return Events(this->getHighlightEvent(), uiEvent);
 	}
 	if (!this->controlled()) {
@@ -56,7 +56,7 @@ Events BuildingMode::click(uint32_t x, uint32_t y) {
 			L"ÍÅ ÓÄÀËÎÑÜ ÐÀÇÌÅÑÒÈÒÜ\n"
 			"Óêàçàííîå ìåñòî ñëèøêîì äàëåêî îò äîðîã.");
 		UIEvent uiEvent;
-		uiEvent.createPopUpElement.push_back(w);
+		uiEvent.createE.push_back(w);
 		return Events(this->getHighlightEvent(), uiEvent);
 	}
 	GEvent gEvent = this->getHighlightEvent();

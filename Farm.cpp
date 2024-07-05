@@ -26,9 +26,9 @@ Farm::Farm(uint32_t x, uint32_t y, const Player* playerPtr) :
 	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
 	Building(x, y, 3, 3, 10000, playerPtr){}
-GOR Farm::newMove(const Player& player) {	
+Events Farm::newMove(const Player& player) {	
 	if (this->belongTo(&player) and this->exist()) {
-		GOR response = this->handleCurrentUpgrade();
+		Events response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
 			return response;
 		}
@@ -38,7 +38,7 @@ GOR Farm::newMove(const Player& player) {
 		}
 		return response;
 	}
-	return GOR();
+	return Events();
 }
 bool Farm::works() const {
 	return this->HpSensitiveB::works() and this->UpgradeableB::works();
@@ -88,18 +88,18 @@ uint32_t Farm::GET_COLLECTION_SPEED(uint32_t level) {
 uint32_t Farm::getCollectionSpeed() const {
 	return GET_COLLECTION_SPEED(this->getCurrentLevel() - 1);
 }
-GOR Farm::collectFood() const {
+Events Farm::collectFood() const {
 	GEvent gEvent;
 	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
 	PopUpElement* element = new FlyingE("food_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(gEvent);
-	GOR responce;
-	responce.elements.push(element);
+	Events responce;
+	responce.uiEvent.createE.push_back(element);
 	return responce;
 }
-GOR Farm::getGameObjectResponse(const Player& player) {
+Events Farm::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return GOR();
+		return Events();
 	}
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
@@ -112,8 +112,8 @@ GOR Farm::getGameObjectResponse(const Player& player) {
 	}
 	return this->getUnitOfEnemyResponse();
 }
-GOR Farm::getSelectionW() {
-	GOR response;
+Events Farm::getSelectionW() {
+	Events response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
@@ -130,7 +130,7 @@ GOR Farm::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.elements.push(window);
+	response.uiEvent.createE.push_back(window);
 
 	return response;
 }

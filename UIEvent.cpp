@@ -26,7 +26,7 @@ UIEvent operator+(const UIEvent& a, const UIEvent& b) {
 	UIEvent c = a;
 
 	c.playSound.insert(c.playSound.end(), b.playSound.begin(), b.playSound.end());
-	c.createPopUpElement.insert(c.createPopUpElement.end(), b.createPopUpElement.begin(), b.createPopUpElement.end());
+	c.createE.insert(c.createE.end(), b.createE.begin(), b.createE.end());
 
 	return c;
 }

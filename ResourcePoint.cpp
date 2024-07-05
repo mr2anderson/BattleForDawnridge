@@ -22,24 +22,24 @@
 
 ResourcePoint::ResourcePoint() = default;
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : GO(x, y, sx, sy, size, size) {}
-GOR ResourcePoint::newMove(const Player& player) {
-	return GOR();
+Events ResourcePoint::newMove(const Player& player) {
+	return Events();
 }
-GOR ResourcePoint::getGameObjectResponse(const Player& player) {
+Events ResourcePoint::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return GOR();
+		return Events();
 	}
 	return this->getSelectionWindow();
 }
-GOR ResourcePoint::getSelectionWindow() {
-	GOR response;
+Events ResourcePoint::getSelectionWindow() {
+	Events response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Вернуться", true, true, GEvent());
 	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, GEvent());
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.elements.push(window);
+	response.uiEvent.createE.push_back(window);
 
 	return response;
 }

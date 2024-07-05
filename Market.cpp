@@ -33,7 +33,7 @@ void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		this->drawCurrentTradeShortInfo(target, states);
 	}
 }
-GOR Market::doTrade(const Trade& trade) {
+Events Market::doTrade(const Trade& trade) {
 	this->currentTrade = trade;
 
 	GEvent gEvent;
@@ -45,18 +45,18 @@ GOR Market::doTrade(const Trade& trade) {
 		trade.getReadableInfo());
 	
 	window->addOnStartGEvent(gEvent);
-	GOR responce;
-	responce.elements.push(window);
+	Events responce;
+	responce.uiEvent.createE.push_back(window);
 	return responce;
 }
 void Market::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 }
-GOR Market::newMove(const Player& currentPlayer) {
+Events Market::newMove(const Player& currentPlayer) {
 	if (!this->belongTo(&currentPlayer) or !this->exist()) {
-		return GOR();
+		return Events();
 	}
-	GOR response = this->handleCurrentUpgrade();
+	Events response = this->handleCurrentUpgrade();
 	if (this->upgrading()) {
 		return response;
 	}
@@ -140,26 +140,26 @@ void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderState
 	text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2, 0));
 	target.draw(text, states);
 }
-GOR Market::handleCurrentTrade() {
+Events Market::handleCurrentTrade() {
 	if (!this->busy()) {
-		return GOR();
+		return Events();
 	}
-	GOR responce;
+	Events responce;
 	GEvent decreaseEvent;
 	decreaseEvent.decreaseCurrentTradeMovesLeft.push_back(this);
 	FlyingE* element = new FlyingE("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-	responce.elements.push(element);
+	responce.uiEvent.createE.push_back(element);
 	element->addOnStartGEvent(decreaseEvent);
 	if (this->currentTrade.movesLeft == 1) {
 		GEvent gEvent;
 		gEvent.addResource.push_back(this->currentTrade.buy);
 		element = new FlyingE(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
-		responce.elements.push(element);
+		responce.uiEvent.createE.push_back(element);
 	}
 	return responce;
 }
-GOR Market::getSelectionW() {
+Events Market::getSelectionW() {
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
 	components.emplace_back("market", 
@@ -188,8 +188,8 @@ GOR Market::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	GOR response;
-	response.elements.push(window);
+	Events response;
+	response.uiEvent.createE.push_back(window);
 	return response;
 }
 void Market::addTrade(std::vector<SelectionWComponent>& components, const GEvent& gameEventTrade) {
@@ -197,18 +197,18 @@ void Market::addTrade(std::vector<SelectionWComponent>& components, const GEvent
 		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
 		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, false, gameEventTrade);
 }
-GOR Market::handleBusyWithTrade() const {
-	GOR response;
+Events Market::handleBusyWithTrade() const {
+	Events response;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
 		L"РЫНОК ЗАНЯТ\n"
 		"Детали сделки:\n" +
 		this->currentTrade.getReadableInfo());
-	response.elements.push(window);
+	response.uiEvent.createE.push_back(window);
 	return response;
 }
-GOR Market::getGameObjectResponse(const Player& player) {
+Events Market::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return GOR();
+		return Events();
 	}
 	if (this->belongTo(&player)) {
 		if (this->repairing()) {

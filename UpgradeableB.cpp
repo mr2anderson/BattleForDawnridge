@@ -38,14 +38,12 @@ void UpgradeableB::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		}
 	}
 }
-GOR UpgradeableB::startUpgrade() {
-	GOR response;
-	GEvent gEvent;
-	gEvent.subResources.push_back(this->getUpgradeCost());
-	response.events.push_back(gEvent);
+Events UpgradeableB::startUpgrade() {
+	Events events;
+	events.gEvent.subResources.push_back(this->getUpgradeCost());
 	this->upgradeMovesLeft = this->getUpgradeTime();
-	response = response + this->handleUpgradeStart();
-	return response;
+	events = events + this->handleUpgradeStart();
+	return events;
 }
 void UpgradeableB::decreaseUpgradeMovesLeft() {
 	this->upgradeMovesLeft = this->upgradeMovesLeft - 1;
@@ -62,47 +60,47 @@ uint32_t UpgradeableB::getCurrentLevel() const {
 bool UpgradeableB::upgrading() const {
 	return (this->upgradeMovesLeft > 0);
 }
-GOR UpgradeableB::handleCurrentUpgrade() {
+Events UpgradeableB::handleCurrentUpgrade() {
 	if (this->upgradeMovesLeft == 0) {
-		return GOR();
+		return Events();
 	}
-	GOR response;
+	Events events;
 	FlyingE* element = new FlyingE("upgrade_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
-	response.elements.push(element);
+	events.uiEvent.createE.push_back(element);
 	GEvent event;
 	event.decreaseUpgradeMovesLeft.push_back(this);
 	element->addOnStartGEvent(event);
 	if (this->upgradeMovesLeft == 1) {
-		response = response + this->handleUpgradeEnd();
+		events = events + this->handleUpgradeEnd();
 	}
-	return response;
+	return events;
 }
-GOR UpgradeableB::handleBusyWithUpgrading() const {
-	GOR response;
+Events UpgradeableB::handleBusyWithUpgrading() const {
+	Events events;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L": ИДЕТ УЛУЧШЕНИЕ\n"
 		"Подождите, пока оно не закончится\n"
 		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
-	response.elements.push(window);
-	return response;
+	events.uiEvent.createE.push_back(window);
+	return events;
 }
-GOR UpgradeableB::handleUpgradeStart() const {
-	GOR response;
+Events UpgradeableB::handleUpgradeStart() const {
+	Events events;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L": НАЧАТО УЛУЧШЕНИЕ\n"
 		"Подождите, пока оно не закончится\n"
 		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
-	response.elements.push(window);
-	return response;
+	events.uiEvent.createE.push_back(window);
+	return events;
 }
-GOR UpgradeableB::handleUpgradeEnd() {
-	GOR response;
+Events UpgradeableB::handleUpgradeEnd() {
+	Events events;
 	GEvent event;
 	event.increaseLevel.emplace_back(this);
 	FlyingE* element = new FlyingE("upgrade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(event);
-	response.elements.push(element);
-	return response;
+	events.uiEvent.createE.push_back(element);
+	return events;
 }
 void UpgradeableB::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {
 	std::string s;

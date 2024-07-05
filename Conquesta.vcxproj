@@ -600,7 +600,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GEvent.hpp" />
     <ClInclude Include="GO.hpp" />
-    <ClInclude Include="GOR.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="HpSensitiveB.hpp" />
     <ClInclude Include="Label.hpp" />
@@ -663,7 +662,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GEvent.cpp" />
     <ClCompile Include="GO.cpp" />
-    <ClCompile Include="GOR.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="HpSensitiveB.cpp" />
     <ClCompile Include="Label.cpp" />

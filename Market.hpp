@@ -33,9 +33,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	GOR doTrade(const Trade& trade);
+	Events doTrade(const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
-	GOR newMove(const Player& currentPlayer);
+	Events newMove(const Player& currentPlayer);
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -52,9 +52,9 @@ private:
 	static uint32_t GET_TRADE_START_TIME(uint32_t level);
 	uint32_t getTradeStartTime() const;
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
-	GOR handleCurrentTrade();
-	GOR getSelectionW();
+	Events handleCurrentTrade();
+	Events getSelectionW();
 	void addTrade(std::vector<SelectionWComponent>& components, const GEvent& gameEventTrade);
-	GOR handleBusyWithTrade() const;
-	GOR getGameObjectResponse(const Player& player) override;
+	Events handleBusyWithTrade() const;
+	Events getGameObjectResponse(const Player& player) override;
 };

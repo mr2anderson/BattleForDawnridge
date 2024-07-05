@@ -184,7 +184,7 @@ void MainScreen::handleTryToTradeEvent(const GEvent& e) {
 		Market* m = std::get<Market*>(a);
 		Trade t = std::get<Trade>(a);
 		if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
-			this->handleGOR(m->doTrade(t));
+			this->handleEvents(m->doTrade(t));
 		}
 		else {
 			MessageW* w = new MessageW("click", "click", 
@@ -238,7 +238,7 @@ void MainScreen::handleTryToUpgradeEvent(const GEvent& e) {
 		UpgradeableB* b = std::get<UpgradeableB*>(a);
 		Resources cost = std::get<Resources>(a);
 		if (this->getCurrentPlayer()->getResources() >= cost) {
-			this->handleGOR(b->startUpgrade());
+			this->handleEvents(b->startUpgrade());
 		}
 		else {
 			MessageW* w = new MessageW("click", "click", 
@@ -298,14 +298,8 @@ void MainScreen::handlePlaySoundEvent(const UIEvent& e) {
 	}
 }
 void MainScreen::handleCreatePopUpElementEvent(const UIEvent& e) {
-	for (const auto& a : e.createPopUpElement) {
+	for (const auto& a : e.createE) {
 		this->addPopUpWindow(a);
-	}
-}
-void MainScreen::handleGOR(const GOR& responce) {
-	this->addPopUpWindows(responce.elements);
-	for (const auto& gEvent : responce.events) {
-		this->handleGameEvent(gEvent);
 	}
 }
 void MainScreen::removeFinishedElements() {
@@ -328,7 +322,7 @@ void MainScreen::changeMove() {
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		this->handleGOR(this->gameObjects->at(i)->newMove(*this->getCurrentPlayer()));
+		this->handleEvents(this->gameObjects->at(i)->newMove(*this->getCurrentPlayer()));
 	}
 }
 void MainScreen::createBuildMenu() {
@@ -382,7 +376,7 @@ void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX = *this->mouseX + this->view->getCenter().x - this->windowW / 2;
 	uint32_t mouseY = *this->mouseY + this->view->getCenter().y - this->windowH / 2;
 	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		this->handleGOR(this->gameObjects->at(i)->click(*this->getCurrentPlayer(), mouseX, mouseY));
+		this->handleEvents(this->gameObjects->at(i)->click(*this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
 void MainScreen::addPopUpWindows(std::queue<PopUpElement*> q) {

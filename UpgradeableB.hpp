@@ -30,7 +30,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	GOR startUpgrade();
+	Events startUpgrade();
 	void decreaseUpgradeMovesLeft();
 	void increaseLevel();
 	bool works() const override;
@@ -42,14 +42,14 @@ protected:
 
 	uint32_t getCurrentLevel() const;
 	bool upgrading() const;
-	GOR handleCurrentUpgrade();
-	GOR handleBusyWithUpgrading() const;
+	Events handleCurrentUpgrade();
+	Events handleBusyWithUpgrading() const;
 private:
 	uint32_t currentLevel;
 	uint32_t upgradeMovesLeft;
 
-	GOR handleUpgradeStart() const;
-	GOR handleUpgradeEnd();
+	Events handleUpgradeStart() const;
+	Events handleUpgradeEnd();
 	void drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const;
 	void drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const;
 };

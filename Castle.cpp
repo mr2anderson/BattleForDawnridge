@@ -34,8 +34,8 @@ Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) :
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 
 }
-GOR Castle::newMove(const Player& player) {
-	GOR response;
+Events Castle::newMove(const Player& player) {
+	Events response;
 	if (this->belongTo(&player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
@@ -89,8 +89,8 @@ uint32_t Castle::getUpgradeTime() const {
 uint32_t Castle::getRadius() const {
 	return 3;
 }
-GOR Castle::getSelectionW() {
-	GOR response;
+Events Castle::getSelectionW() {
+	Events response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
@@ -108,20 +108,20 @@ GOR Castle::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.elements.push(window);
+	response.uiEvent.createE.push_back(window);
 
 	return response;
 }
-GOR Castle::getGameObjectResponse(const Player& player) {
+Events Castle::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return GOR();
+		return Events();
 	}
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}
-		GOR responce;
-		responce.events.push_back(this->getHighlightEvent());
+		Events responce;
+		responce.gEvent = this->getHighlightEvent();
 		return responce + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

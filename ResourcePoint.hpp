@@ -29,11 +29,11 @@ public:
 	ResourcePoint();
 	ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size);
 
-	GOR newMove(const Player& player) override;
+	Events newMove(const Player& player) override;
 	virtual std::string getResourceType() const = 0;
 protected:
 	virtual std::wstring getDescription() const = 0;
 private:
-	GOR getGameObjectResponse(const Player& player) override;
-	GOR getSelectionWindow();
+	Events getGameObjectResponse(const Player& player) override;
+	Events getSelectionWindow();
 };

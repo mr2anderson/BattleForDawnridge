@@ -28,7 +28,7 @@ class Wall : public UpgradeableB {
 public:
 	Wall();
 	Wall(uint32_t x, uint32_t y, const Player* playerPtr);
-	GOR newMove(const Player& player) override;
+	Events newMove(const Player& player) override;
 
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -42,6 +42,6 @@ private:
 	std::wstring getReadableName() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
-	GOR getSelectionW();
-	GOR getGameObjectResponse(const Player& player) override;
+	Events getSelectionW();
+	Events getGameObjectResponse(const Player& player) override;
 };

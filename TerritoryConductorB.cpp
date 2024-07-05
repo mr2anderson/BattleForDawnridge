@@ -59,10 +59,10 @@ bool TerritoryConductorB::conducted() const {
 	}
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
-GOR TerritoryConductorB::getNotConductedResponce() const {
+Events TerritoryConductorB::getNotConductedResponce() const {
 	MessageW* w = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L" ме бедер мх й ндмнлс цнпндяйнлс жемрпс\n");
-	GOR responce;
-	responce.elements.push(w);
-	return responce;
+	Events events;
+	events.uiEvent.createE.push_back(w);
+	return events;
 }
