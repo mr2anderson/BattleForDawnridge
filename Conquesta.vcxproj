@@ -422,6 +422,28 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <None Include="extlibs\lib\x86\sfml-system-s-d.pdb" />
     <None Include="extlibs\lib\x86\sfml-window-d.pdb" />
     <None Include="extlibs\lib\x86\sfml-window-s-d.pdb" />
+    <None Include="resources\click.ogg" />
+    <None Include="resources\food.ogg" />
+    <None Include="resources\gold.ogg" />
+    <None Include="resources\hooray.ogg" />
+    <None Include="resources\ingame_00.ogg" />
+    <None Include="resources\ingame_01.ogg" />
+    <None Include="resources\ingame_02.ogg" />
+    <None Include="resources\ingame_03.ogg" />
+    <None Include="resources\ingame_04.ogg" />
+    <None Include="resources\ingame_05.ogg" />
+    <None Include="resources\ingame_06.ogg" />
+    <None Include="resources\ingame_07.ogg" />
+    <None Include="resources\ingame_08.ogg" />
+    <None Include="resources\ingame_09.ogg" />
+    <None Include="resources\intro.ogg" />
+    <None Include="resources\iron.ogg" />
+    <None Include="resources\menu.ogg" />
+    <None Include="resources\regeneration.ogg" />
+    <None Include="resources\ridge.tmx" />
+    <None Include="resources\road.ogg" />
+    <None Include="resources\stone.ogg" />
+    <None Include="resources\wood.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib" />
@@ -637,10 +659,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Wall.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="resources\ball.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="resources\sansation.ttf" />
+    <Font Include="resources\fonts\1.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AreaB.cpp" />
@@ -695,6 +714,51 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UpgradeableB.cpp" />
     <ClCompile Include="Farm.cpp" />
     <ClCompile Include="Wall.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\1.png" />
+    <Image Include="resources\10.png" />
+    <Image Include="resources\11.png" />
+    <Image Include="resources\12.png" />
+    <Image Include="resources\13.png" />
+    <Image Include="resources\14.png" />
+    <Image Include="resources\15.png" />
+    <Image Include="resources\16.png" />
+    <Image Include="resources\17.png" />
+    <Image Include="resources\18.png" />
+    <Image Include="resources\19.png" />
+    <Image Include="resources\2.png" />
+    <Image Include="resources\20.png" />
+    <Image Include="resources\3.png" />
+    <Image Include="resources\4.png" />
+    <Image Include="resources\5.png" />
+    <Image Include="resources\6.png" />
+    <Image Include="resources\7.png" />
+    <Image Include="resources\8.png" />
+    <Image Include="resources\9.png" />
+    <Image Include="resources\castle.png" />
+    <Image Include="resources\exit_icon.png" />
+    <Image Include="resources\farm.png" />
+    <Image Include="resources\food_icon.png" />
+    <Image Include="resources\forest.png" />
+    <Image Include="resources\gold_icon.png" />
+    <Image Include="resources\hammer_icon.png" />
+    <Image Include="resources\iron.png" />
+    <Image Include="resources\iron_icon.png" />
+    <Image Include="resources\market.png" />
+    <Image Include="resources\mine.png" />
+    <Image Include="resources\quarry.png" />
+    <Image Include="resources\road.png" />
+    <Image Include="resources\sawmill.png" />
+    <Image Include="resources\shield_icon.png" />
+    <Image Include="resources\stone.png" />
+    <Image Include="resources\stone_icon.png" />
+    <Image Include="resources\trade_icon.png" />
+    <Image Include="resources\upgrade_icon.png" />
+    <Image Include="resources\wall1.png" />
+    <Image Include="resources\wall2.png" />
+    <Image Include="resources\wall3.png" />
+    <Image Include="resources\wood_icon.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
