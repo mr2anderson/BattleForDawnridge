@@ -33,7 +33,7 @@ public:
 	virtual void update() = 0;
 
 	virtual Event run(uint32_t windowW, uint32_t windowH);
-	virtual Event click(uint32_t x, uint32_t y) = 0;
+	virtual Event click() = 0;
 protected:
 	void finish();
 private:

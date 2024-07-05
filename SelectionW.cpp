@@ -40,7 +40,9 @@ void SelectionW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		target.draw(std::get<Button>(this->buttons[i]), states);
 	}
 }
-Event SelectionW::click(uint32_t x, uint32_t y) {
+Event SelectionW::click() {
+	uint32_t x = sf::Mouse::getPosition().x;
+	uint32_t y = sf::Mouse::getPosition().y;
 	for (const auto& t : buttons) {
 		if (std::get<Button>(t).click(x, y)) {
 			if (std::get<bool>(t)) {

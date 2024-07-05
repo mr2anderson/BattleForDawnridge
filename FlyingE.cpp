@@ -47,7 +47,7 @@ void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sprite.setPosition(this->getPosition(t));
 	target.draw(sprite, states);
 }
-Event FlyingE::click(uint32_t x, uint32_t y) {
+Event FlyingE::click() {
 	return Event();
 }
 void FlyingE::update() {

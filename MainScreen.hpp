@@ -69,7 +69,6 @@ private:
 	PlainsGeneration plains;
 
 	uint32_t windowW, windowH;
-	uint32_t *mouseX, *mouseY;
 	sf::View *view;
 	Button endMoveButton;
 	Button buildButton;
@@ -112,7 +111,6 @@ private:
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);
-	void updateMousePosition();
 	void moveView();
 	void updatePlayerViewPoint();
 

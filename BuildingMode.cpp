@@ -20,10 +20,8 @@
 #include "BuildingMode.hpp"
 
 
-BuildingMode::BuildingMode(Building* b, uint32_t* mouseX, uint32_t* mouseY, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) {
+BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) {
 	this->b = b;
-	this->mouseX = mouseX;
-	this->mouseY = mouseY;
 	this->view = view;
 	this->go = go;
 	this->tb = tb;
@@ -38,10 +36,13 @@ Event BuildingMode::run(uint32_t windowW, uint32_t windowH) {
 	return this->getHighlightEvent() + this->PopUpElement::run(windowW, windowH);
 }
 void BuildingMode::update() {
-	this->b->setX((*this->mouseX + this->view->getCenter().x - this->windowW / 2) / 32);
-	this->b->setY((*this->mouseY + this->view->getCenter().y - this->windowH / 2) / 32);
+	uint32_t mouseX = sf::Mouse::getPosition().x;
+	uint32_t mouseY = sf::Mouse::getPosition().y;
+
+	this->b->setX((mouseX + this->view->getCenter().x - this->windowW / 2) / 32);
+	this->b->setY((mouseY + this->view->getCenter().y - this->windowH / 2) / 32);
 }
-Event BuildingMode::click(uint32_t x, uint32_t y) {
+Event BuildingMode::click() {
 	this->finish();
 	if (!this->empty()) {
 		MessageW* w = new MessageW("click", "click",

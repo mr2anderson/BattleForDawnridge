@@ -26,16 +26,15 @@
 
 class BuildingMode : public PopUpElement {
 public:
-	BuildingMode(Building *b, uint32_t *mouseX, uint32_t *mouseY, sf::View *view, std::vector<GO*> *go, std::vector<TerritoryB*> *tb, Player *player);
+	BuildingMode(Building *b, sf::View *view, std::vector<GO*> *go, std::vector<TerritoryB*> *tb, Player *player);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	Event run(uint32_t windowW, uint32_t windowH) override;
 	void update() override;
-	Event click(uint32_t x, uint32_t y) override;
+	Event click() override;
 private:
 	Building* b;
-	uint32_t* mouseX, *mouseY;
 	sf::View* view;
 	uint32_t windowW, windowH;
 	std::vector<GO*> *go;

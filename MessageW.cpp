@@ -44,7 +44,9 @@ void MessageW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);
 	target.draw(button, states);
 }
-Event MessageW::click(uint32_t x, uint32_t y) {
+Event MessageW::click() {
+	uint32_t x = sf::Mouse::getPosition().x;
+	uint32_t y = sf::Mouse::getPosition().y;
 	if (this->button.click(x, y)) {
 		this->finish();
 		Event event;

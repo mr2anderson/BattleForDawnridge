@@ -40,10 +40,10 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->elements.empty()) {
-					if (endMoveButton.click(*this->mouseX, *this->mouseY)) {
+					if (endMoveButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
 						this->changeMove();
 					}
-					else if (buildButton.click(*this->mouseX, *this->mouseY)) {
+					else if (buildButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
 						this->createBuildMenu();
 					}
 					else {
@@ -52,13 +52,12 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
-						this->handleEvent(this->elements.front()->click(*this->mouseX, *this->mouseY));
+						this->handleEvent(this->elements.front()->click());
 					}
 				}
 			}
 		}
 		this->drawEverything(window);
-		this->updateMousePosition();
 		Playlist::get()->update();
 		this->removeFinishedElements();
 		this->moveView();
@@ -154,8 +153,6 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->view = new sf::View(window.getDefaultView());
 	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, L"Конец хода");
 	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", L"");
-	this->mouseX = new uint32_t;
-	this->mouseY = new uint32_t;
 }
 void MainScreen::handleEvent(const Event &e) {
 	this->handleTryToAttackEvent(e);
@@ -275,7 +272,7 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(const Event& e) {
 void MainScreen::handleTryToBuild(const Event& e) {
 	for (const auto& a : e.tryToBuild) {
 		if (this->getCurrentPlayer()->getResources() >= a->getCost()) {
-			this->addPopUpWindow(new BuildingMode(a, this->mouseX, this->mouseY, this->view, this->gameObjects, this->territoryBuildings, this->getCurrentPlayer()));
+			this->addPopUpWindow(new BuildingMode(a, this->view, this->gameObjects, this->territoryBuildings, this->getCurrentPlayer()));
 		}
 		else {
 			MessageW* w = new MessageW("", "click",
@@ -371,8 +368,8 @@ Player* MainScreen::getCurrentPlayer() {
 	return &this->players[(move - 1) % 2];
 }
 void MainScreen::handleGameObjectClick() {
-	uint32_t mouseX = *this->mouseX + this->view->getCenter().x - this->windowW / 2;
-	uint32_t mouseY = *this->mouseY + this->view->getCenter().y - this->windowH / 2;
+	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
+	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
 	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
 		this->handleEvent(this->gameObjects->at(i)->click(*this->getCurrentPlayer(), mouseX, mouseY));
 	}
@@ -424,10 +421,6 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 			}
 		}
 	}
-}
-void MainScreen::updateMousePosition() {
-	*this->mouseX = sf::Mouse::getPosition().x;
-	*this->mouseY = sf::Mouse::getPosition().y;
 }
 void MainScreen::moveView() {
 	auto p = sf::Mouse::getPosition();
