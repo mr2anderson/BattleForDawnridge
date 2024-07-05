@@ -512,11 +512,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Event.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
+    <ClInclude Include="HPGO.hpp" />
     <ClInclude Include="MainScreen.hpp" />
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Market.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
+    <ClInclude Include="Mountains.hpp" />
     <ClInclude Include="PlainsGeneration.hpp" />
     <ClInclude Include="Resources.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
@@ -668,10 +670,12 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="FlyingE.cpp" />
     <ClCompile Include="HighlightTable.cpp" />
+    <ClCompile Include="HPGO.cpp" />
     <ClCompile Include="MainScreen.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Market.cpp" />
+    <ClCompile Include="Mountains.cpp" />
     <ClCompile Include="PlainsGeneration.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Fonts.cpp" />

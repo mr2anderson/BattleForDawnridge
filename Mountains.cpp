@@ -17,21 +17,30 @@
  */
 
 
-#include "ResourcePoint.hpp"
+#include "Mountains.hpp"
 
 
-ResourcePoint::ResourcePoint() = default;
-ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : HPGO(x, y, sx, sy, size, size) {}
-Event ResourcePoint::newMove(const Player& player) {
+Mountains::Mountains() = default;
+Mountains::Mountains(uint32_t x, uint32_t y) :
+	GO(x, y, 2, 2) {
+
+}
+Event Mountains::newMove(const Player& currentPlayer) {
 	return Event();
 }
-Event ResourcePoint::getGameObjectResponse(const Player& player) {
-	if (!this->exist()) {
-		return Event();
-	}
-	return this->getSelectionWindow();
+std::string Mountains::getTextureName() const {
+	return "mountains";
 }
-Event ResourcePoint::getSelectionWindow() {
+std::string Mountains::getSoundName() const {
+	return "wind";
+}
+std::wstring Mountains::getDescription() const {
+	return L"Горы столь высоки, что не видно вершин. Их не пройдет любая армия.";
+}
+bool Mountains::exist() const {
+	return true;
+}
+Event Mountains::getGameObjectResponse(const Player& currentPlayer) {
 	Event response;
 
 	std::vector<SelectionWComponent> components;

@@ -108,8 +108,9 @@ void MainScreen::initMap(const std::string& name) {
 				this->add(new Forest(x, y));
 			}
 			else if (word == "1") {
-				this->add(new Castle(x, y, &this->players[currentPlayerId]));
-				this->gameObjects->back()->setMaxHp();
+				Castle* c = new Castle(x, y, &this->players[currentPlayerId]);
+				c->setMaxHp();
+				this->add(c);
 				currentPlayerId = currentPlayerId + 1;
 			}
 			else if (word == "18") {
@@ -117,6 +118,9 @@ void MainScreen::initMap(const std::string& name) {
 			}
 			else if (word == "14") {
 				this->add(new Stone(x, y));
+			}
+			else if (word == "22") {
+				this->add(new Mountains(x, y));
 			}
 			x = x + 1;
 		}
@@ -248,7 +252,7 @@ void MainScreen::handleTryToUpgradeEvent(const Event& e) {
 }
 void MainScreen::handleAddHpEvent(const Event& e) {
 	for (const auto& a : e.addHp) {
-		GO* go = std::get<GO*>(a);
+		HPGO* go = std::get<HPGO*>(a);
 		uint32_t n = std::get<uint32_t>(a);
 		go->addHp(n);
 	}

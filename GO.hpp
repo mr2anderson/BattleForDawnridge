@@ -19,7 +19,6 @@
 
 #include "Textures.hpp"
 #include "Event.hpp"
-#include "HPBar.hpp"
 #include "Player.hpp"
 
 
@@ -29,23 +28,17 @@
 class GO : public sf::Drawable {
 public:
 	GO();
-	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp);
+	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	void addHp(uint32_t value);
-	void subHp(uint32_t value);
-	void setMaxHp();
-	void changeMaxHp(uint32_t value);
-	uint32_t getHP() const;
-	uint32_t getMaxHP() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
 	uint32_t getSX() const;
 	uint32_t getSY() const;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
-	bool exist() const;
+	virtual bool exist() const = 0;
 	Event click(const Player& currentPlayer, uint32_t mouseX, uint32_t mouseY);
 
 	virtual Event newMove(const Player& currentPlayer) = 0;
@@ -53,11 +46,10 @@ public:
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:
-	std::wstring getReadableHpInfo() const;
-
 	virtual Event getGameObjectResponse(const Player& currentPlayer) = 0;
 private:
-	HPBar bar;
+	uint32_t x, y;
+	uint32_t sx, sy;
 
 	void drawTexture(sf::RenderTarget& target, sf::RenderStates states) const;
 };

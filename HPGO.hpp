@@ -17,11 +17,30 @@
  */
 
 
-#include "TerritoryOriginB.hpp"
+#include "GO.hpp"
 
 
-TerritoryOriginB::TerritoryOriginB() = default;
-TerritoryOriginB::TerritoryOriginB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player) :
-	TerritoryB(x, y, sx, sy, maxHp, player),
-	Building(x, y, sx, sy, maxHp, player) {
-}
+#pragma once
+
+
+class HPGO : public GO {
+public:
+	HPGO();
+	HPGO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp);
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	void addHp(uint32_t n);
+	void subHp(uint32_t n);
+	uint32_t getHP() const;
+	uint32_t getMaxHP() const;
+	void changeCurrentHp(uint32_t newCurrentHp);
+	void changeMaxHp(uint32_t newMaxHp);
+	void setMaxHp();
+	std::wstring getReadableHpInfo() const;
+	bool exist() const override;
+private:
+	uint32_t currentHp, maxHp;
+
+	void drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const;
+};

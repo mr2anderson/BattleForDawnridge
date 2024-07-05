@@ -18,13 +18,13 @@
 
 
 
-#include "GO.hpp"
+#include "HPGO.hpp"
 
 
 #pragma once
 
 
-class Unit : public GO {
+class Unit : public HPGO {
 public:
 	Unit();
 	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player *playerPtr);

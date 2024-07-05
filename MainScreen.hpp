@@ -31,6 +31,7 @@
 #include "Mine.hpp"
 #include "Wall.hpp"
 #include "Road.hpp"
+#include "Mountains.hpp"
 #include "SoundQueue.hpp"
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"

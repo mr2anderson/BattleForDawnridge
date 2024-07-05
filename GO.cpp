@@ -21,54 +21,35 @@
 
 
 GO::GO() = default;
-GO::GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp) {
-	this->bar = HPBar(currentHp, maxHp, x, y, sx, sy);
+GO::GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+	this->x = x;
+	this->y = y;
+	this->sx = sx;
+	this->sy = sy;
 }
 void GO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!this->exist()) {
 		return;
 	}
 	this->drawTexture(target, states);
-	target.draw(this->bar, states);
-}
-void GO::addHp(uint32_t value) {
-	this->bar = this->bar + value;
-}
-void GO::subHp(uint32_t value) {
-	this->bar = this->bar - value;
-}
-void GO::setMaxHp() {
-	this->bar.setMax();
-}
-void GO::changeMaxHp(uint32_t value) {
-	this->bar.changeMax(value);
-}
-uint32_t GO::getHP() const {
-	return this->bar.getCurrent();
-}
-uint32_t GO::getMaxHP() const {
-	return this->bar.getMax();
 }
 uint32_t GO::getX() const {
-	return this->bar.getX();
+	return this->x;
 }
 uint32_t GO::getY() const {
-	return this->bar.getY();
+	return this->y;
 }
 uint32_t GO::getSX() const {
-	return this->bar.getSX();
+	return this->sx;
 }
 uint32_t GO::getSY() const {
-	return this->bar.getSY();
+	return this->sy;
 }
 void GO::setX(uint32_t newX) {
-	this->bar.setX(newX);
+	this->x = newX;
 }
 void GO::setY(uint32_t newY) {
-	this->bar.setY(newY);
-}
-bool GO::exist() const {
-	return (this->getHP() > 0);
+	this->y = newY;
 }
 Event GO::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 32 * this->getX() and
@@ -78,9 +59,6 @@ Event GO::click(const Player &currentPlayer, uint32_t mouseX, uint32_t mouseY) {
 		return this->getGameObjectResponse(currentPlayer);
 	}
 	return Event();
-}
-std::wstring GO::getReadableHpInfo() const {
-	return this->bar.getReadableInfo();
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;

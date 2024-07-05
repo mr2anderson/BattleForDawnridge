@@ -54,22 +54,7 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	rect2.setSize(sf::Vector2f(2, size));
 	target.draw(rect2, states);
 }
-uint32_t HPBar::getCurrent() const {
-	return this->current;
-}
-uint32_t HPBar::getMax() const {
-	return this->max;
-}
-void HPBar::changeCurrent(uint32_t newCurrent) {
-	this->current = std::min(this->max, newCurrent);
-}
-void HPBar::changeMax(uint32_t newMax) {
-	this->max = newMax;
-	this->current = std::min(this->current, this->max);
-}
-void HPBar::setMax() {
-	this->current = this->max;
-}
+
 HPBar operator+(HPBar a, uint32_t b) {
 	a.current = std::min(a.current + b, a.max);
 	return a;
@@ -83,9 +68,7 @@ HPBar operator-(HPBar a, uint32_t b) {
 	}
 	return a;
 }
-std::wstring HPBar::getReadableInfo() const {
-	return L"Защита: " + std::to_wstring(this->getCurrent()) + L" / " + std::to_wstring(this->getMax());
-}
+
 uint32_t HPBar::getX() const {
 	return this->x;
 }

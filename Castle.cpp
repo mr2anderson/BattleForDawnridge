@@ -32,7 +32,6 @@ Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) :
 	TerritoryOriginB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
-
 }
 Event Castle::newMove(const Player& player) {
 	Event response;

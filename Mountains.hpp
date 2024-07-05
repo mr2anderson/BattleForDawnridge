@@ -17,11 +17,23 @@
  */
 
 
-#include "TerritoryOriginB.hpp"
+#include "GO.hpp"
+#include "SelectionW.hpp"
 
 
-TerritoryOriginB::TerritoryOriginB() = default;
-TerritoryOriginB::TerritoryOriginB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player) :
-	TerritoryB(x, y, sx, sy, maxHp, player),
-	Building(x, y, sx, sy, maxHp, player) {
-}
+#pragma once
+
+
+class Mountains : public GO {
+public:
+	Mountains();
+	Mountains(uint32_t x, uint32_t y);
+
+	Event newMove(const Player& currentPlayer) override;
+	std::string getTextureName() const override;
+	std::string getSoundName() const override;
+	std::wstring getDescription() const override;
+	bool exist() const override;
+private:
+	Event getGameObjectResponse(const Player& currentPlayer) override;
+};

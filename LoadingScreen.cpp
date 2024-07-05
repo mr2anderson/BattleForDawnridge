@@ -56,14 +56,14 @@ void LoadingScreen::loadAll() {
 		"castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
 		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
 		"farm", "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-		"wall1", "wall2", "wall3", "road"}) {
+		"wall1", "wall2", "wall3", "road", "mountains"}) {
 		Textures::get()->add(a, a + ".png");
 	}
 	for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
 		Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
 	}
 	for (const std::string& a : { "click", "food", "gold", "hooray", "iron", 
-		"regeneration", "stone", "wood", "road"}) {
+		"regeneration", "stone", "wood", "road", "wind"}) {
 		Sounds::get()->add(a, a + ".ogg");
 	}
 	Music::get()->add("intro", "intro.ogg");
