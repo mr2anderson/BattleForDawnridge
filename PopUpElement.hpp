@@ -18,7 +18,7 @@
 
 
 #include <SFML/Graphics.hpp>
-#include "Events.hpp"
+#include "Event.hpp"
 
 
 #pragma once
@@ -28,15 +28,15 @@ class PopUpElement : public sf::Drawable {
 public:
 	PopUpElement();
 
-	void addOnStartGEvent(const GEvent& event);
+	void addOnStartGEvent(const Event& event);
 	bool finished() const;
 	virtual void update() = 0;
 
-	virtual Events run(uint32_t windowW, uint32_t windowH);
-	virtual Events click(uint32_t x, uint32_t y) = 0;
+	virtual Event run(uint32_t windowW, uint32_t windowH);
+	virtual Event click(uint32_t x, uint32_t y) = 0;
 protected:
 	void finish();
 private:
-	GEvent onStart;
+	Event onStart;
 	bool _finished;
 };

@@ -27,29 +27,29 @@ SelectionW::SelectionW(const std::string &soundName1, const std::string &soundNa
 	this->soundName2 = soundName2;
 	this->components = components;
 }
-Events SelectionW::run(uint32_t windowW, uint32_t windowH) {
+Event SelectionW::run(uint32_t windowW, uint32_t windowH) {
 	this->makeButtons(windowW, windowH);
 
-	UIEvent soundEvent;
+	Event soundEvent;
 	soundEvent.playSound.push_back(this->soundName1);
 
-	return this->PopUpElement::run(windowW, windowH) + Events(GEvent(), soundEvent);
+	return this->PopUpElement::run(windowW, windowH) + soundEvent;
 }
 void SelectionW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
 		target.draw(std::get<Button>(this->buttons[i]), states);
 	}
 }
-Events SelectionW::click(uint32_t x, uint32_t y) {
+Event SelectionW::click(uint32_t x, uint32_t y) {
 	for (const auto& t : buttons) {
 		if (std::get<Button>(t).click(x, y)) {
 			if (std::get<bool>(t)) {
 				this->finish();
 			}
-			return std::get<Events>(t);
+			return std::get<Event>(t);
 		}
 	}
-	return Events();
+	return Event();
 }
 void SelectionW::update() {
 
@@ -61,14 +61,12 @@ void SelectionW::makeButtons(uint32_t windowW, uint32_t windowH) {
 		std::wstring message = this->components[i].message;
 		bool clickable = this->components[i].clickable;
 		bool sound = this->components[i].sound;
-		GEvent gEvent = this->components[i].gEvent;
-
-		UIEvent uiEvent;
+		Event gEvent = this->components[i].gEvent;
 		if (sound) {
-			uiEvent.playSound.push_back(this->soundName2);
+			gEvent.playSound.push_back(this->soundName2);
 		}
 
 		Button button(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message);
-		this->buttons[i] = std::make_tuple(button, clickable, Events(gEvent, uiEvent));
+		this->buttons[i] = std::make_tuple(button, clickable, gEvent);
 	}
 }

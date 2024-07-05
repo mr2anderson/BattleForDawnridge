@@ -74,14 +74,14 @@ wchar_t Building::TO_UPPER(wchar_t a) {
 	default: {return a;}
 	}
 }
-Events Building::regenerate() {
-	Events events;
+Event Building::regenerate() {
+	Event events;
 	if (this->getHP() < this->getMaxHP()) {
-		GEvent gEvent;
+		Event gEvent;
 		gEvent.addHp.emplace_back(this, this->getRegenerationSpeed());
 		FlyingE* element = new FlyingE("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
-		events.uiEvent.createE.push_back(element);
+		events.createE.push_back(element);
 	}
 	return events;
 }

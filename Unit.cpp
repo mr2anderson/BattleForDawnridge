@@ -28,10 +28,10 @@ Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp,
 bool Unit::belongTo(const Player* player) const {
 	return (*this->playerPtr == *player);
 }
-Events Unit::getUnitOfEnemyResponse() {
-	GEvent gEvent;
+Event Unit::getUnitOfEnemyResponse() {
+	Event gEvent;
 	gEvent.tryToAttack.push_back(this);
-	return Events(gEvent, UIEvent());
+	return gEvent;
 }
 const Player* Unit::getPlayer() const {
 	return this->playerPtr;

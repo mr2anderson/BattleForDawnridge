@@ -30,9 +30,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Events run(uint32_t windowW, uint32_t windowH) override;
+	Event run(uint32_t windowW, uint32_t windowH) override;
 	void update() override;
-	Events click(uint32_t x, uint32_t y) override;
+	Event click(uint32_t x, uint32_t y) override;
 private:
 	Building* b;
 	uint32_t* mouseX, *mouseY;
@@ -44,5 +44,5 @@ private:
 
 	bool empty() const;
 	bool controlled() const;
-	GEvent getHighlightEvent() const;
+	Event getHighlightEvent() const;
 };

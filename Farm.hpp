@@ -30,7 +30,7 @@ public:
 	Farm();
 	Farm(uint32_t x, uint32_t y, const Player* playerPtr);
 
-	Events newMove(const Player& currentPlayer) override;
+	Event newMove(const Player& currentPlayer) override;
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -43,7 +43,7 @@ private:
 	uint32_t getUpgradeTime() const override;
 	static uint32_t GET_COLLECTION_SPEED(uint32_t level);
 	uint32_t getCollectionSpeed() const;
-	Events collectFood() const;
-	Events getGameObjectResponse(const Player& player) override;
-	Events getSelectionW();
+	Event collectFood() const;
+	Event getGameObjectResponse(const Player& player) override;
+	Event getSelectionW();
 };

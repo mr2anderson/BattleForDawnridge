@@ -32,12 +32,13 @@ class Market;
 class ResourcePoint;
 class GO;
 class Building;
+class PopUpElement;
 
 
-struct GEvent {
-	GEvent();
+struct Event {
+	Event();
 
-	friend GEvent operator+(const GEvent &a, const GEvent& b);
+	friend Event operator+(const Event &a, const Event& b);
 
 	std::vector<Unit*> tryToAttack;
 	std::vector<std::tuple<Market*, Trade>> tryToTrade;
@@ -54,4 +55,6 @@ struct GEvent {
 	std::vector<Market*> decreaseCurrentTradeMovesLeft;
 	std::vector<Building*> tryToBuild;
 	std::vector<Building*> build;
+	std::vector<std::string> playSound;
+	std::vector<PopUpElement*> createE;
 };

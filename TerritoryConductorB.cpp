@@ -34,9 +34,9 @@ bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uin
 	}
 	return this->TerritoryB::allowBuilding(x, y, sx, sy, player);
 }
-GEvent TerritoryConductorB::getHighlightEvent() const {
+Event TerritoryConductorB::getHighlightEvent() const {
 	if (!this->conducted()) {
-		return GEvent();
+		return Event();
 	}
 	return this->TerritoryB::getHighlightEvent();
 }
@@ -59,10 +59,10 @@ bool TerritoryConductorB::conducted() const {
 	}
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
-Events TerritoryConductorB::getNotConductedResponce() const {
+Event TerritoryConductorB::getNotConductedResponce() const {
 	MessageW* w = new MessageW(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + L" ме бедер мх й ндмнлс цнпндяйнлс жемрпс\n");
-	Events events;
-	events.uiEvent.createE.push_back(w);
+	Event events;
+	events.createE.push_back(w);
 	return events;
 }

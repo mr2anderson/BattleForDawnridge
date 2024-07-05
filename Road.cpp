@@ -26,11 +26,11 @@ Road::Road(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<Territor
 	Building(x, y, 1, 1, 1000, playerPtr) {
 	
 }
-Events Road::newMove(const Player& player) {
+Event Road::newMove(const Player& player) {
 	if (this->belongTo(&player) and this->exist()) {
 		return this->regenerate();
 	}
-	return Events();
+	return Event();
 }
 Resources Road::getCost() const {
 	Resources cost;
@@ -55,23 +55,23 @@ std::wstring Road::getReadableName() const {
 uint32_t Road::getRadius() const {
 	return 3;
 }
-Events Road::getSelectionW() {
-	Events response;
+Event Road::getSelectionW() {
+	Event response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
 	components.emplace_back("road",
 		this->getDescription() + L"\n"
-		+ this->getReadableHpInfo(), false, false, GEvent());
+		+ this->getReadableHpInfo(), false, false, Event());
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.uiEvent.createE.push_back(window);
+	response.createE.push_back(window);
 
 	return response;
 }
-Events Road::getGameObjectResponse(const Player& player) {
+Event Road::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return Events();
+		return Event();
 	}
 	if (this->belongTo(&player)) {
 		if (this->repairing()) {
@@ -80,8 +80,8 @@ Events Road::getGameObjectResponse(const Player& player) {
 		if (!this->conducted()) {
 			return this->getNotConductedResponce();
 		}
-		Events responce;
-		responce.gEvent = this->getHighlightEvent();
+		Event responce;
+		responce = this->getHighlightEvent();
 		return responce + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

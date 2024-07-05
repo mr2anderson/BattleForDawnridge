@@ -29,7 +29,7 @@ class Castle : public TerritoryOriginB, public UpgradeableB {
 public:
 	Castle();
 	Castle(uint32_t x, uint32_t y, const Player* playerPtr);
-	Events newMove(const Player& player) override;
+	Event newMove(const Player& player) override;
 
 	bool works() const override;
 	Resources getCost() const override;
@@ -45,6 +45,6 @@ private:
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	uint32_t getRadius() const override;
-	Events getSelectionW();
-	Events getGameObjectResponse(const Player& player) override;
+	Event getSelectionW();
+	Event getGameObjectResponse(const Player& player) override;
 };

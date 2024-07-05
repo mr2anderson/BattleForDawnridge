@@ -36,6 +36,6 @@ protected:
 
 	std::wstring getUpperCaseReadableName() const;
 	static wchar_t TO_UPPER(wchar_t a);
-	virtual Events regenerate();
+	virtual Event regenerate();
 	std::wstring getReadableRegenerationSpeed() const;
 };

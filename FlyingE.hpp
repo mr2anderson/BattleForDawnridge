@@ -29,9 +29,9 @@ class FlyingE : public PopUpElement {
 public:
 	FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
-	Events run(uint32_t windowW, uint32_t windowH) override;
+	Event run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click(uint32_t x, uint32_t y) override;
+	Event click(uint32_t x, uint32_t y) override;
 	void update() override;
 private:
 	std::string picture;

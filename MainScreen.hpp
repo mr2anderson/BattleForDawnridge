@@ -81,28 +81,24 @@ private:
 	void initHighlightTable();
 	void initGraphics(sf::RenderWindow &window);
 
-	void handleEvents(const Events& e);
-
-	void handleGameEvent(const GEvent& e);
-	void handleTryToAttackEvent(const GEvent& e);
-	void handleTryToTradeEvent(const GEvent& e);
-	void handleAddResourceEvent(const GEvent& e);
-	void handleSubResourceEvent(const GEvent& e);
-	void handleAddResourcesEvent(const GEvent& e);
-	void handleSubResourcesEvent(const GEvent& e);
-	void handleChangeHighlightEvent(const GEvent& e);
-	void handleCollectEvent(const GEvent& e);
-	void handleTryToUpgradeEvent(const GEvent& e);
-	void handleAddHpEvent(const GEvent& e);
-	void handleDecreaseUpgradeMovesLeftEvent(const GEvent& e);
-	void handleIncreaseLevelEvent(const GEvent& e);
-	void handleDecreaseCurrentTradeMovesLeft(const GEvent& e);
-	void handleTryToBuild(const GEvent& e);
-	void handleBuild(const GEvent& e);
-	
-	void handleUIEvent(const UIEvent& e);
-	void handlePlaySoundEvent(const UIEvent& e);
-	void handleCreatePopUpElementEvent(const UIEvent& e);
+	void handleEvent(const Event& e);
+	void handleTryToAttackEvent(const Event& e);
+	void handleTryToTradeEvent(const Event& e);
+	void handleAddResourceEvent(const Event& e);
+	void handleSubResourceEvent(const Event& e);
+	void handleAddResourcesEvent(const Event& e);
+	void handleSubResourcesEvent(const Event& e);
+	void handleChangeHighlightEvent(const Event& e);
+	void handleCollectEvent(const Event& e);
+	void handleTryToUpgradeEvent(const Event& e);
+	void handleAddHpEvent(const Event& e);
+	void handleDecreaseUpgradeMovesLeftEvent(const Event& e);
+	void handleIncreaseLevelEvent(const Event& e);
+	void handleDecreaseCurrentTradeMovesLeft(const Event& e);
+	void handleTryToBuild(const Event& e);
+	void handleBuild(const Event& e);
+	void handlePlaySoundEvent(const Event& e);
+	void handleCreatePopUpElementEvent(const Event& e);
 
 	void removeFinishedElements();
 	void changeMove();

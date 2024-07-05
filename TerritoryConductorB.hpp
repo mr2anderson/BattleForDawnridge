@@ -30,10 +30,10 @@ public:
 	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
 	
 	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const Player& player) const override;
-	GEvent getHighlightEvent() const override;
+	Event getHighlightEvent() const override;
 protected:
 	bool conducted() const;
-	Events getNotConductedResponce() const;
+	Event getNotConductedResponce() const;
 private:
 	std::vector<TerritoryOriginB*>* originsPtr;
 	std::vector<TerritoryConductorB*>* conductorsPtr;

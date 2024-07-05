@@ -28,14 +28,14 @@ FlyingE::FlyingE(const std::string& picture, const std::string& sound, uint32_t 
 	this->sx = sx;
 	this->sy = sy;
 }
-Events FlyingE::run(uint32_t windowW, uint32_t windowH) {
+Event FlyingE::run(uint32_t windowW, uint32_t windowH) {
 	this->clock.restart();
 	this->dst = windowH / 4;
 
-	UIEvent uiEvent;
+	Event uiEvent;
 	uiEvent.playSound.push_back(this->sound);
 
-	return this->PopUpElement::run(windowW, windowH) + Events(GEvent(), uiEvent);
+	return this->PopUpElement::run(windowW, windowH) + uiEvent;
 }
 void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	float t = this->clock.getElapsedTime().asSeconds();
@@ -47,8 +47,8 @@ void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sprite.setPosition(this->getPosition(t));
 	target.draw(sprite, states);
 }
-Events FlyingE::click(uint32_t x, uint32_t y) {
-	return Events();
+Event FlyingE::click(uint32_t x, uint32_t y) {
+	return Event();
 }
 void FlyingE::update() {
 	if (this->clock.getElapsedTime().asSeconds() >= TIME) {

@@ -487,7 +487,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AreaB.hpp" />
     <ClInclude Include="BuildingMode.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
-    <ClInclude Include="Events.hpp" />
+    <ClInclude Include="Event.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
     <ClInclude Include="MainScreen.hpp" />
@@ -598,7 +598,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Fonts.hpp" />
     <ClInclude Include="Castle.hpp" />
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="GEvent.hpp" />
     <ClInclude Include="GO.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="HpSensitiveB.hpp" />
@@ -632,7 +631,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="Forest.hpp" />
-    <ClInclude Include="UIEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UpgradeableB.hpp" />
     <ClInclude Include="Farm.hpp" />
@@ -648,7 +646,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AreaB.cpp" />
     <ClCompile Include="BuildingMode.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />
-    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="Event.cpp" />
     <ClCompile Include="FlyingE.cpp" />
     <ClCompile Include="HighlightTable.cpp" />
     <ClCompile Include="MainScreen.cpp" />
@@ -660,7 +658,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Castle.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GEvent.cpp" />
     <ClCompile Include="GO.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="HpSensitiveB.cpp" />
@@ -694,7 +691,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="Forest.cpp" />
-    <ClCompile Include="UIEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UpgradeableB.cpp" />
     <ClCompile Include="Farm.cpp" />

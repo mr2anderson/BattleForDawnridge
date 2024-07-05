@@ -17,18 +17,18 @@
  */
 
 
-#include "GEvent.hpp"
+#include "Event.hpp"
 
 
 #pragma once
 
 
 struct SelectionWComponent {
-	SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, GEvent gEvent);
+	SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Event gEvent);
 
 	std::string pictureName;
 	std::wstring message;
 	bool clickable;
 	bool sound;
-	GEvent gEvent;
+	Event gEvent;
 };

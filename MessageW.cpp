@@ -26,7 +26,7 @@ MessageW::MessageW(const std::string &soundName1, const std::string &soundName2,
 	this->soundName2 = soundName2;
 	this->message = message;
 }
-Events MessageW::run(uint32_t windowW, uint32_t windowH) {
+Event MessageW::run(uint32_t windowW, uint32_t windowH) {
 	uint32_t w = 400;
 	uint32_t h = 225;
 	uint32_t buttonW = 50;
@@ -35,23 +35,23 @@ Events MessageW::run(uint32_t windowW, uint32_t windowH) {
 	this->label = Label((windowW - w) / 2, (windowH - h) / 2, w, h, std::nullopt, message);
 	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 10, buttonW, buttonH, std::nullopt, L"OK");
 
-	UIEvent soundEvent;
+	Event soundEvent;
 	soundEvent.playSound.push_back(this->soundName1);
 
-	return this->PopUpElement::run(windowW, windowH) + Events(GEvent(), soundEvent);
+	return this->PopUpElement::run(windowW, windowH) + soundEvent;
 }
 void MessageW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);
 	target.draw(button, states);
 }
-Events MessageW::click(uint32_t x, uint32_t y) {
+Event MessageW::click(uint32_t x, uint32_t y) {
 	if (this->button.click(x, y)) {
 		this->finish();
-		UIEvent event;
+		Event event;
 		event.playSound.push_back(this->soundName2);
-		return Events(GEvent(), event);
+		return event;
 	}
-	return Events();
+	return Event();
 }
 void MessageW::update() {
 

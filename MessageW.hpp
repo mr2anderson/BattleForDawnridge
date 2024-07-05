@@ -28,9 +28,9 @@ class MessageW : public PopUpElement {
 public:
 	MessageW(const std::string& soundName1, const std::string& soundName2, const std::wstring& message);
 
-	Events run(uint32_t windowW, uint32_t windowH) override;
+	Event run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click(uint32_t x, uint32_t y) override;
+	Event click(uint32_t x, uint32_t y) override;
 	void update() override;
 private:
 	std::string soundName1;

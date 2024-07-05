@@ -26,9 +26,9 @@ Farm::Farm(uint32_t x, uint32_t y, const Player* playerPtr) :
 	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
 	Building(x, y, 3, 3, 10000, playerPtr){}
-Events Farm::newMove(const Player& player) {	
+Event Farm::newMove(const Player& player) {	
 	if (this->belongTo(&player) and this->exist()) {
-		Events response = this->handleCurrentUpgrade();
+		Event response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
 			return response;
 		}
@@ -38,7 +38,7 @@ Events Farm::newMove(const Player& player) {
 		}
 		return response;
 	}
-	return Events();
+	return Event();
 }
 bool Farm::works() const {
 	return this->HpSensitiveB::works() and this->UpgradeableB::works();
@@ -88,18 +88,18 @@ uint32_t Farm::GET_COLLECTION_SPEED(uint32_t level) {
 uint32_t Farm::getCollectionSpeed() const {
 	return GET_COLLECTION_SPEED(this->getCurrentLevel() - 1);
 }
-Events Farm::collectFood() const {
-	GEvent gEvent;
+Event Farm::collectFood() const {
+	Event gEvent;
 	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
 	PopUpElement* element = new FlyingE("food_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(gEvent);
-	Events responce;
-	responce.uiEvent.createE.push_back(element);
+	Event responce;
+	responce.createE.push_back(element);
 	return responce;
 }
-Events Farm::getGameObjectResponse(const Player& player) {
+Event Farm::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return Events();
+		return Event();
 	}
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
@@ -112,17 +112,17 @@ Events Farm::getGameObjectResponse(const Player& player) {
 	}
 	return this->getUnitOfEnemyResponse();
 }
-Events Farm::getSelectionW() {
-	Events response;
+Event Farm::getSelectionW() {
+	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, Event());
 	components.emplace_back(this->getTextureName(),
 		this->getDescription() + L"\n"
-		+ this->getReadableHpInfo(), false, false, GEvent());
+		+ this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		GEvent gameEventUpgrade;
+		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", 
 			L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
@@ -130,7 +130,7 @@ Events Farm::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.uiEvent.createE.push_back(window);
+	response.createE.push_back(window);
 
 	return response;
 }

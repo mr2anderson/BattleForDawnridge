@@ -18,12 +18,12 @@
 
 
 
-#include "GEvent.hpp"
+#include "Event.hpp"
 
 
-GEvent::GEvent() = default;
-GEvent operator+(const GEvent &a, const GEvent& b) {
-	GEvent c = a;
+Event::Event() = default;
+Event operator+(const Event &a, const Event& b) {
+	Event c = a;
 
 	c.tryToAttack.insert(c.tryToAttack.end(), b.tryToAttack.begin(), b.tryToAttack.end());
 	c.tryToTrade.insert(c.tryToTrade.end(), b.tryToTrade.begin(), b.tryToTrade.end());
@@ -40,6 +40,8 @@ GEvent operator+(const GEvent &a, const GEvent& b) {
 	c.decreaseCurrentTradeMovesLeft.insert(c.decreaseCurrentTradeMovesLeft.end(), b.decreaseCurrentTradeMovesLeft.begin(), b.decreaseCurrentTradeMovesLeft.end());
 	c.tryToBuild.insert(c.tryToBuild.end(), b.tryToBuild.begin(), b.tryToBuild.end());
 	c.build.insert(c.build.end(), b.build.begin(), b.build.end());
+	c.playSound.insert(c.playSound.end(), b.playSound.begin(), b.playSound.end());
+	c.createE.insert(c.createE.end(), b.createE.begin(), b.createE.end());
 
 	return c;
 }

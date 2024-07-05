@@ -32,39 +32,38 @@ BuildingMode::BuildingMode(Building* b, uint32_t* mouseX, uint32_t* mouseY, sf::
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
 }
-Events BuildingMode::run(uint32_t windowW, uint32_t windowH) {
+Event BuildingMode::run(uint32_t windowW, uint32_t windowH) {
 	this->windowW = windowW;
 	this->windowH = windowH;
-	return Events(this->getHighlightEvent(), UIEvent()) + this->PopUpElement::run(windowW, windowH);
+	return this->getHighlightEvent() + this->PopUpElement::run(windowW, windowH);
 }
 void BuildingMode::update() {
 	this->b->setX((*this->mouseX + this->view->getCenter().x - this->windowW / 2) / 32);
 	this->b->setY((*this->mouseY + this->view->getCenter().y - this->windowH / 2) / 32);
 }
-Events BuildingMode::click(uint32_t x, uint32_t y) {
+Event BuildingMode::click(uint32_t x, uint32_t y) {
 	this->finish();
 	if (!this->empty()) {
 		MessageW* w = new MessageW("click", "click",
 			L"ÍÅ ÓÄÀËÎÑÜ ÐÀÇÌÅÑÒÈÒÜ\n"
 			"Óêàçàííîå ìåñòî çàíÿòî.");
-		UIEvent uiEvent;
+		Event uiEvent;
 		uiEvent.createE.push_back(w);
-		return Events(this->getHighlightEvent(), uiEvent);
+		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
 		MessageW* w = new MessageW("click", "click",
 			L"ÍÅ ÓÄÀËÎÑÜ ÐÀÇÌÅÑÒÈÒÜ\n"
 			"Óêàçàííîå ìåñòî ñëèøêîì äàëåêî îò äîðîã.");
-		UIEvent uiEvent;
+		Event uiEvent;
 		uiEvent.createE.push_back(w);
-		return Events(this->getHighlightEvent(), uiEvent);
+		return this->getHighlightEvent() + uiEvent;
 	}
-	GEvent gEvent = this->getHighlightEvent();
+	Event gEvent = this->getHighlightEvent();
 	gEvent.build.push_back(this->b);
 	gEvent.subResources.push_back(this->b->getCost());
-	UIEvent uiEvent;
-	uiEvent.playSound.push_back(this->b->getSoundName());
-	return Events(gEvent, uiEvent);
+	gEvent.playSound.push_back(this->b->getSoundName());
+	return gEvent;
 }
 bool BuildingMode::empty() const {
 	sf::IntRect rect1;
@@ -100,8 +99,8 @@ bool BuildingMode::controlled() const {
 
 	return false;
 }
-GEvent BuildingMode::getHighlightEvent() const {
-	GEvent result;
+Event BuildingMode::getHighlightEvent() const {
+	Event result;
 	for (uint32_t i = 0; i < tb->size(); i = i + 1) {
 		result = result + tb->at(i)->getHighlightEvent();
 	}

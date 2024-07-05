@@ -34,8 +34,8 @@ Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) :
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 
 }
-Events Castle::newMove(const Player& player) {
-	Events response;
+Event Castle::newMove(const Player& player) {
+	Event response;
 	if (this->belongTo(&player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
@@ -89,17 +89,17 @@ uint32_t Castle::getUpgradeTime() const {
 uint32_t Castle::getRadius() const {
 	return 3;
 }
-Events Castle::getSelectionW() {
-	Events response;
+Event Castle::getSelectionW() {
+	Event response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
 	components.emplace_back("castle",
 		this->getDescription() + L"\n"
-		+ this->getReadableHpInfo(), false, false, GEvent());
+		+ this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
-		GEvent gameEventUpgrade;
+		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon",
 			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
@@ -108,20 +108,20 @@ Events Castle::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.uiEvent.createE.push_back(window);
+	response.createE.push_back(window);
 
 	return response;
 }
-Events Castle::getGameObjectResponse(const Player& player) {
+Event Castle::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return Events();
+		return Event();
 	}
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}
-		Events responce;
-		responce.gEvent = this->getHighlightEvent();
+		Event responce;
+		responce = this->getHighlightEvent();
 		return responce + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

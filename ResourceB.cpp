@@ -29,8 +29,8 @@ ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t 
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }
-Events ResourceB::newMove(const Player& currentPlayer) {
-	Events response;
+Event ResourceB::newMove(const Player& currentPlayer) {
+	Event response;
 	if (this->belongTo(&currentPlayer) and this->exist()) {
 		response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
@@ -42,7 +42,7 @@ Events ResourceB::newMove(const Player& currentPlayer) {
 		}
 		return response;
 	}
-	return Events();
+	return Event();
 }
 bool ResourceB::works() const {
 	return this->UpgradeableB::works() and this->HpSensitiveB::works() and this->AreaB::works();
@@ -53,7 +53,7 @@ uint32_t ResourceB::getCollectionSpeed() const {
 uint32_t ResourceB::getRadius() const {
 	return this->getRadius(this->getCurrentLevel() - 1);
 }
-Events ResourceB::collectResources() {
+Event ResourceB::collectResources() {
 	uint32_t left = this->getCollectionSpeed();
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> srcs;
 	for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
@@ -67,7 +67,7 @@ Events ResourceB::collectResources() {
 		}
 	}
 
-	Events responce;
+	Event responce;
 	if (left == this->getCollectionSpeed()) {
 		this->resourcesLeft = false;
 	}
@@ -76,26 +76,26 @@ Events ResourceB::collectResources() {
 			ResourcePoint* rp = std::get<ResourcePoint*>(src);
 			uint32_t n = std::get<uint32_t>(src);
 			FlyingE* element = new FlyingE(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
-			GEvent gEvent;
+			Event gEvent;
 			gEvent.collect.emplace_back(rp, n);
 			element->addOnStartGEvent(gEvent);
-			responce.uiEvent.createE.push_back(element);
+			responce.createE.push_back(element);
 		}
 	}
 
 	return responce;
 }
-Events ResourceB::getSelectionW() {
-	Events response;
+Event ResourceB::getSelectionW() {
+	Event response;
 
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
 	components.emplace_back(this->getTextureName(), 
 		this->getDescription() + L"\n" +
-		this->getReadableHpInfo(), false, false, GEvent());
+		this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		GEvent gameEventUpgrade = this->getHighlightEvent();
+		Event gameEventUpgrade = this->getHighlightEvent();
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
 			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) + 
@@ -103,13 +103,13 @@ Events ResourceB::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.uiEvent.createE.push_back(window);
+	response.createE.push_back(window);
 
 	return response;
 }
-Events ResourceB::getGameObjectResponse(const Player& player) {
+Event ResourceB::getGameObjectResponse(const Player& player) {
 	if (!this->exist()) {
-		return Events();
+		return Event();
 	}
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
@@ -118,8 +118,8 @@ Events ResourceB::getGameObjectResponse(const Player& player) {
 		if (this->repairing()) {
 			return this->handleRepairing();
 		}
-		Events response;
-		response.gEvent = this->getHighlightEvent();
+		Event response;
+		response = this->getHighlightEvent();
 		return response + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

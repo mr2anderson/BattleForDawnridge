@@ -33,8 +33,8 @@ Wall::Wall(uint32_t x, uint32_t y, const Player* playerPtr) :
 	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
 
 }
-Events Wall::newMove(const Player& player) {
-	Events response;
+Event Wall::newMove(const Player& player) {
+	Event response;
 	if (this->belongTo(&player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
@@ -82,17 +82,17 @@ uint32_t Wall::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-Events Wall::getSelectionW() {
-	Events response;
+Event Wall::getSelectionW() {
+	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, GEvent());
+	components.emplace_back("exit_icon", L"Покинуть", true, true, Event());
 	components.emplace_back("wall" + std::to_string(this->getCurrentLevel() + 1),
 		this->getDescription() + L"\n"
-		+ this->getReadableHpInfo(), false, false, GEvent());
+		+ this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
-		GEvent gameEventUpgrade;
+		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon",
 			L"Улучшить стену за " + this->getUpgradeCost().getReadableInfo() + L"\n"
@@ -101,11 +101,11 @@ Events Wall::getSelectionW() {
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
-	response.uiEvent.createE.push_back(window);
+	response.createE.push_back(window);
 
 	return response;
 }
-Events Wall::getGameObjectResponse(const Player& player) {
+Event Wall::getGameObjectResponse(const Player& player) {
 	if (this->belongTo(&player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();

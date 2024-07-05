@@ -30,5 +30,5 @@ public:
 	TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player);
 
 	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const Player& player) const;
-	GEvent getHighlightEvent() const override;
+	Event getHighlightEvent() const override;
 };

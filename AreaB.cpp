@@ -43,8 +43,8 @@ bool AreaB::inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
 	}
 	return true;
 }
-GEvent AreaB::getHighlightEvent() const {
-	GEvent gEvent;
+Event AreaB::getHighlightEvent() const {
+	Event gEvent;
 	if (!this->exist()) {
 		return gEvent;
 	}

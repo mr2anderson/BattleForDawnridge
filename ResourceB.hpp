@@ -31,7 +31,7 @@ public:
 	ResourceB();
 	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
 
-	Events newMove(const Player& currentPlayer) override;
+	Event newMove(const Player& currentPlayer) override;
 	bool works() const override;
 protected:
 	uint32_t getCollectionSpeed() const;
@@ -45,7 +45,7 @@ private:
 	std::vector<ResourcePoint*>* resourcePointsPtr;
 	bool resourcesLeft;
 
-	Events collectResources();
-	Events getSelectionW();
-	Events getGameObjectResponse(const Player& player) override;
+	Event collectResources();
+	Event getSelectionW();
+	Event getGameObjectResponse(const Player& player) override;
 };
