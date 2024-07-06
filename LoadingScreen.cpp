@@ -124,7 +124,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     return true;
 }
 void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
-    SimpleWindow element = SimpleWindow("", "", UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
+    WindowButton element = WindowButton(UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {

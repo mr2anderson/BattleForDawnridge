@@ -33,6 +33,8 @@
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"
 #include "BuildingMode.hpp"
+#include "Sounds.hpp"
+#include "WindowButtonEndingSound.hpp"
 
 
 #pragma once

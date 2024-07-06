@@ -21,7 +21,8 @@
 #include "SoundQueue.hpp"
 #include "Playlist.hpp"
 #include "ColorTheme.hpp"
-#include "SimpleWindow.hpp"
+#include "WindowButton.hpp"
+#include "Sounds.hpp"
 
 
 #pragma once

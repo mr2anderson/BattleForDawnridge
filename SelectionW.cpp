@@ -68,7 +68,7 @@ void SelectionW::makeButtons(uint32_t windowW, uint32_t windowH) {
 			gEvent.playSound.push_back(this->soundName2);
 		}
 
-		Button button(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message);
+		Button button(std::make_shared<LabelWithImage>(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message));
 		this->buttons[i] = std::make_tuple(button, clickable, gEvent);
 	}
 }

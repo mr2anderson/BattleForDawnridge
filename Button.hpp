@@ -18,17 +18,22 @@
 
 
 
-#include "Label.hpp"
+#include <memory>
+#include "RectangularUIElement.hpp"
 #include "FlyingE.hpp"
 
 
 #pragma once
 
 
-class Button : public Label {
+class Button : public sf::Drawable {
 public:
 	Button();
-	Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional<std::string> &picture, const std::wstring& message);
+	Button(std::shared_ptr<RectangularUiElement> element);
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	bool click() const;
+private:
+    std::shared_ptr<RectangularUiElement> element;
 };

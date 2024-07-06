@@ -17,21 +17,18 @@
  */
 
 
-#include "Button.hpp"
+#include "WindowButton.hpp"
 
 
-Button::Button() = default;
-Button::Button(std::shared_ptr<RectangularUiElement> element) {
-    this->element = element;
-}
-void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(*this->element, states);
-}
-bool Button::click() const {
-    uint32_t x = sf::Mouse::getPosition().x;
-    uint32_t y = sf::Mouse::getPosition().y;
-	return (x >= this->element->getX() and
-		y >= this->element->getY() and
-		x < this->element->getX() + this->element->getW() and
-		y < this->element->getY() + this->element->getH());
-}
+#pragma once
+
+
+class WindowButtonStartSound : virtual public WindowButton {
+public:
+    WindowButtonStartSound(const std::string& soundName, const std::wstring& message, const std::wstring &buttonText);
+    WindowButtonStartSound(const std::string& soundName, const std::wstring& message, const std::wstring &buttonText, uint32_t windowW, uint32_t windowH);
+
+    Event run(uint32_t windowW, uint32_t windowH) override;
+private:
+    std::string soundName;
+};

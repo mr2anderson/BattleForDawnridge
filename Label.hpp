@@ -17,39 +17,25 @@
  */
 
 
-
 #include <sstream>
-#include <optional>
-#include "Textures.hpp"
+#include "RectangularUIElement.hpp"
 #include "Fonts.hpp"
-#include "Sounds.hpp"
-#include "Texts.hpp"
-#include "ColorTheme.hpp"
 
 
 #pragma once
 
 
-class Label : public sf::Drawable {
+class Label : public RectangularUiElement {
 public:
 	Label();
-	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional<std::string>& picture, std::wstring message);
+	Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, std::wstring message, bool center = true);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-protected:
-	uint32_t getX() const;
-	uint32_t getY() const;
-	uint32_t getW() const;
-	uint32_t getH() const;
 private:
-	sf::RectangleShape rect;
-	sf::Sprite sprite;
 	sf::Text text;
 
-	void setRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-	void setPicture(uint32_t w, uint32_t h, const std::string& picture);
 	void initText();
-	std::wstring putNLs(const std::wstring& message, uint32_t w, bool picture);
+	std::wstring putNLs(const std::wstring& message, uint32_t w);
 	std::wstring centerLines(const std::wstring& message);
 	uint32_t getLongestLineWidth(const std::wstring& message);
 	std::wstring centerLines(const std::wstring& message, uint32_t maxWidth);

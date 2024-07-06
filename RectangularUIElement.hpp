@@ -17,21 +17,26 @@
  */
 
 
-#include "Button.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
+#include "ColorTheme.hpp"
 
 
-Button::Button() = default;
-Button::Button(std::shared_ptr<RectangularUiElement> element) {
-    this->element = element;
-}
-void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(*this->element, states);
-}
-bool Button::click() const {
-    uint32_t x = sf::Mouse::getPosition().x;
-    uint32_t y = sf::Mouse::getPosition().y;
-	return (x >= this->element->getX() and
-		y >= this->element->getY() and
-		x < this->element->getX() + this->element->getW() and
-		y < this->element->getY() + this->element->getH());
-}
+#pragma once
+
+
+class RectangularUiElement : public sf::Drawable {
+public:
+    RectangularUiElement();
+    RectangularUiElement(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    uint32_t getX() const;
+    uint32_t getY() const;
+    uint32_t getW() const;
+    uint32_t getH() const;
+private:
+    uint32_t x, y;
+    uint32_t w, h;
+};

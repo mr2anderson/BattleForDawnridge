@@ -20,6 +20,7 @@
 #include "PopUpElement.hpp"
 #include "Button.hpp"
 #include "SelectionWComponent.hpp"
+#include "LabelWithImage.hpp"
 
 
 #pragma once

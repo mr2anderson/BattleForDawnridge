@@ -22,61 +22,30 @@
 
 
 Label::Label() = default;
-Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional<std::string>& picture, std::wstring message) {
-	this->setRect(x, y, w, h);
-	if (picture.has_value()) {
-		this->setPicture(w, h, picture.value());
-	}
+Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, std::wstring message, bool center) : RectangularUiElement(x, y, w, h) {
 	this->initText();
-	message = this->putNLs(message, w, picture.has_value());
-	if (picture.has_value()) {
-		this->text.setString(message);
-		this->text.setPosition(
-			x + this->sprite.getLocalBounds().width * this->sprite.getScale().x + 5, 
-			y + h / 2 - this->text.getLocalBounds().height / 2);
-	}
-	else {
-		message = this->centerLines(message);
-		this->text.setString(message);
-		this->text.setPosition(
-			x + w / 2 - this->text.getLocalBounds().width / 2,
-			y + 5);
-	}
+	message = this->putNLs(message, w);
+    if (center) {
+        message = this->centerLines(message);
+    }
+    this->text.setString(message);
+    if (center) {
+        this->text.setPosition(
+                x + w / 2 - this->text.getLocalBounds().width / 2,
+                y + 5);
+    }
+    else {
+        this->text.setPosition(
+                x,
+                y + 5);
+    }
 }
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    this->RectangularUiElement::draw(target, states);
 	sf::View old = target.getView();
 	target.setView(target.getDefaultView());
-	target.draw(this->rect, states);
-	target.draw(this->sprite);
 	target.draw(this->text, states);
 	target.setView(old);
-}
-uint32_t Label::getX() const {
-	return this->rect.getPosition().x;
-}
-uint32_t Label::getY() const {
-	return this->rect.getPosition().y;
-}
-uint32_t Label::getW() const {
-	return this->rect.getSize().x;
-}
-uint32_t Label::getH() const {
-	return this->rect.getSize().y;
-}
-void Label::setRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
-	this->rect.setSize(sf::Vector2f(w, h));
-	this->rect.setPosition(sf::Vector2f(x, y));
-	this->rect.setFillColor(UI_COLOR);
-	this->rect.setOutlineColor(sf::Color::Black);
-	this->rect.setOutlineThickness(2);
-}
-void Label::setPicture(uint32_t w, uint32_t h, const std::string& picture) {
-	this->sprite.setPosition(this->rect.getPosition());
-	this->sprite.setTexture(*Textures::get()->get(picture));
-	float scaleX = w / (float)this->sprite.getTexture()->getSize().x;
-	float scaleY = h / (float)this->sprite.getTexture()->getSize().y;
-	float scale = std::min(scaleX, scaleY);
-	this->sprite.setScale(scale, scale);
 }
 void Label::initText() {
 	this->text.setCharacterSize(14);
@@ -85,7 +54,7 @@ void Label::initText() {
 	this->text.setOutlineThickness(1);
 	this->text.setFont(*Fonts::get()->get("1"));
 }
-std::wstring Label::putNLs(const std::wstring& message, uint32_t w, bool picture) {
+std::wstring Label::putNLs(const std::wstring& message, uint32_t w) {
 	std::wstringstream ss(message);
 	std::wstring prevMessage;
 	std::wstring currentMessage;
@@ -95,7 +64,7 @@ std::wstring Label::putNLs(const std::wstring& message, uint32_t w, bool picture
 		prevMessage = currentMessage;
 		currentMessage = currentMessage + word;
 		this->text.setString(currentMessage);
-		if (this->text.getLocalBounds().width > w - 10 - this->sprite.getLocalBounds().width * picture) {
+		if (this->text.getLocalBounds().width > w - 10) {
 			currentMessage = prevMessage + L'\n' + word;
 			this->text.setString(currentMessage);
 		}

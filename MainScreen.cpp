@@ -91,8 +91,8 @@ void MainScreen::resetGraphics(sf::RenderWindow &window) {
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
 	this->view = new sf::View(window.getDefaultView());
-	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, *Texts::get()->get("new_move"));
-	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", std::wstring());
+	this->endMoveButton = Button(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")));
+	this->buildButton = Button(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"));
 	while (!this->elements.empty()) {
 		PopUpElement* w = this->elements.front();
 		delete w;
@@ -131,7 +131,7 @@ void MainScreen::handleTryToTradeEvent(const Event& e) {
 			this->handleEvent(m->doTrade(t));
 		}
 		else {
-			SimpleWindow* w = new SimpleWindow("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
+			WindowButton* w = new WindowButtonSounds("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -183,7 +183,7 @@ void MainScreen::handleTryToUpgradeEvent(const Event& e) {
 			this->handleEvent(b->startUpgrade());
 		}
 		else {
-			SimpleWindow* w = new SimpleWindow("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
+			WindowButton* w = new WindowButtonSounds("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -216,7 +216,7 @@ void MainScreen::handleTryToBuild(const Event& e) {
 			this->addPopUpWindow(new BuildingMode(a, this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()));
 		}
 		else {
-			SimpleWindow* w = new SimpleWindow("", "click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
+			WindowButton* w = new WindowButtonEndingSound("click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 			delete a;
 		}

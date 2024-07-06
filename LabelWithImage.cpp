@@ -17,21 +17,15 @@
  */
 
 
-#include "Button.hpp"
+#include "LabelWithImage.hpp"
 
 
-Button::Button() = default;
-Button::Button(std::shared_ptr<RectangularUiElement> element) {
-    this->element = element;
+LabelWithImage::LabelWithImage() = default;
+LabelWithImage::LabelWithImage(uint32_t x, uint32_t y, uint32_t sumW, uint32_t h, const std::string &imageName, const std::wstring &message) : RectangularUiElement(x, y, sumW, h) {
+    this->image = Image(x, y, h, imageName);
+    this->label = Label(x + this->image.getW() + 5, y, sumW - this->image.getW() - 5, h, message, false);
 }
-void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(*this->element, states);
-}
-bool Button::click() const {
-    uint32_t x = sf::Mouse::getPosition().x;
-    uint32_t y = sf::Mouse::getPosition().y;
-	return (x >= this->element->getX() and
-		y >= this->element->getY() and
-		x < this->element->getX() + this->element->getW() and
-		y < this->element->getY() + this->element->getH());
+void LabelWithImage::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    target.draw(this->image, states);
+    target.draw(this->label, states);
 }

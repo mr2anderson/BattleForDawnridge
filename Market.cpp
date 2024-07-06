@@ -39,7 +39,7 @@ Event Market::doTrade(const Trade& trade) {
 	Event gEvent;
 	gEvent.subResource.push_back(trade.sell);
 
-	SimpleWindow* window = new SimpleWindow(this->getSoundName(), "click",
+	WindowButton* window = new WindowButtonSounds(this->getSoundName(), "click",
 		*Texts::get()->get("trade_started") + L'\n' +
 		trade.getReadableInfo(), *Texts::get()->get("OK"));
 	
@@ -198,7 +198,7 @@ void Market::addTrade(std::vector<SelectionWComponent>& components, const Event&
 }
 Event Market::handleBusyWithTrade() const {
 	Event response;
-	SimpleWindow* window = new SimpleWindow(this->getSoundName(), "click",
+	WindowButton* window = new WindowButtonSounds(this->getSoundName(), "click",
 		*Texts::get()->get("market_is_busy") + L'\n' +
 		this->currentTrade.getReadableInfo(), *Texts::get()->get("OK"));
 	response.createE.push_back(window);

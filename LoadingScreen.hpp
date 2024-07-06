@@ -26,7 +26,7 @@
 #include "Maps.hpp"
 #include "ColorTheme.hpp"
 #include "PlainsGeneration.hpp"
-#include "SimpleWindow.hpp"
+#include "WindowButton.hpp"
 
 
 #pragma once
