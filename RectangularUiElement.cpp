@@ -32,7 +32,7 @@ void RectangularUiElement::draw(sf::RenderTarget& target, sf::RenderStates state
     sf::RectangleShape rect;
     rect.setSize(sf::Vector2f(w, h));
     rect.setPosition(sf::Vector2f(x, y));
-    rect.setFillColor(UI_COLOR);
+    rect.setFillColor(COLOR_THEME::UI_COLOR);
     rect.setOutlineColor(sf::Color::Black);
     rect.setOutlineThickness(2);
     sf::View view = target.getView();

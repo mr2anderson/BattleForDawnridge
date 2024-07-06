@@ -23,5 +23,7 @@
 #pragma once
 
 
-extern const sf::Color UI_COLOR;
-extern const sf::Color CELL_COLOR_HIGHLIGHTED;
+namespace COLOR_THEME {
+    extern const sf::Color UI_COLOR;
+    extern const sf::Color CELL_COLOR_HIGHLIGHTED;
+}

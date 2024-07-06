@@ -20,5 +20,5 @@
 #include "ColorTheme.hpp"
 
 
-const sf::Color UI_COLOR = sf::Color(20, 20, 20);
-const sf::Color CELL_COLOR_HIGHLIGHTED = sf::Color(0, 0, 0, 120);
+const sf::Color COLOR_THEME::UI_COLOR = sf::Color(20, 20, 20);
+const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED = sf::Color(0, 0, 0, 120);

@@ -56,7 +56,7 @@ void PAKScreen::initGraphics(uint32_t windowW, uint32_t windowH) {
 
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
-	window.clear(UI_COLOR);
+	window.clear(COLOR_THEME::UI_COLOR);
 	window.draw(this->t);
 	window.display();
 }

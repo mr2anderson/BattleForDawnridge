@@ -33,10 +33,10 @@ void ResourceBar::plus(const Resource& resource) {
 void ResourceBar::minus(const Resource& resource) {
 	this->resources.minus(resource);
 }
-void ResourceBar::plus(const Resources& resources) {
+void ResourceBar::plus(const Resources& resources2) {
 	this->resources.plus(resources);
 }
-void ResourceBar::minus(const Resources& resources) {
+void ResourceBar::minus(const Resources& resources2) {
 	this->resources.minus(resources);
 }
 int32_t ResourceBar::get(const std::string& type) const {
@@ -49,7 +49,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
 	rect.setSize(sf::Vector2f(target.getSize().x - 10, 26));
-	rect.setFillColor(UI_COLOR);
+	rect.setFillColor(COLOR_THEME::UI_COLOR);
 	rect.setOutlineColor(sf::Color::Black);
 	rect.setOutlineThickness(2);
 	target.draw(rect, states);

@@ -358,7 +358,7 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 				sf::RectangleShape r;
 				r.setPosition(s.getPosition());
 				r.setSize(sf::Vector2f(32, 32));
-				r.setFillColor(CELL_COLOR_HIGHLIGHTED);
+				r.setFillColor(COLOR_THEME::CELL_COLOR_HIGHLIGHTED);
 				window.draw(r);
 			}
 		}

@@ -33,8 +33,8 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void plus(const Resource& resource);
 	void minus(const Resource& resource);
-	void plus(const Resources& resources);
-	void minus(const Resources& resources);
+	void plus(const Resources& resources2);
+	void minus(const Resources& resources2);
 	int32_t get(const std::string& id) const;
 	Resources getResources() const;
 private:

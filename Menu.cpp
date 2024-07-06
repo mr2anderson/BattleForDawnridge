@@ -99,7 +99,7 @@ void Menu::initGraphics(uint32_t windowW, uint32_t windowH) {
 	this->title.setPosition(windowW - 40 - title.getLocalBounds().width, windowH - 40 - title.getLocalBounds().height);
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
-	window.clear(UI_COLOR);
+	window.clear(COLOR_THEME::UI_COLOR);
 	window.draw(this->start2on1pcButton);
     window.draw(this->supportButton);
     window.draw(this->creditsButton);

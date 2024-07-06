@@ -118,7 +118,7 @@ uint32_t Market::getTradeStartTime() const {
 }
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
-	rect.setFillColor(UI_COLOR);
+	rect.setFillColor(COLOR_THEME::UI_COLOR);
 	rect.setSize(sf::Vector2f(32 * this->getSX(), 32 * this->getSY() / 2));
 	rect.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() / 2);
 	target.draw(rect, states);
