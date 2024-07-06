@@ -30,5 +30,5 @@ public:
 	Button();
 	Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional<std::string> &picture, const std::wstring& message);
 
-	bool click(uint32_t x, uint32_t y) const;
+	bool click() const;
 };

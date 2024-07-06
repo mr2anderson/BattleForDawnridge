@@ -46,9 +46,7 @@ void SimpleWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(button, states);
 }
 Event SimpleWindow::click() {
-	uint32_t x = sf::Mouse::getPosition().x;
-	uint32_t y = sf::Mouse::getPosition().y;
-	if (this->button.click(x, y)) {
+	if (this->button.click()) {
 		this->finish();
 		Event event;
 		event.playSound.push_back(this->soundName2);

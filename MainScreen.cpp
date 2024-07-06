@@ -41,10 +41,10 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->elements.empty()) {
-					if (endMoveButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
+					if (endMoveButton.click()) {
 						this->changeMove();
 					}
-					else if (buildButton.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
+					else if (buildButton.click()) {
 						this->createBuildMenu();
 					}
 					else {

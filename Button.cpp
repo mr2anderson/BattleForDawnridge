@@ -24,7 +24,9 @@ Button::Button() : Label::Label() {}
 Button::Button(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional<std::string> &picture, const std::wstring &message) : Label(x, y, w, h, picture, message) {
 
 }
-bool Button::click(uint32_t x, uint32_t y) const {
+bool Button::click() const {
+    uint32_t x = sf::Mouse::getPosition().x;
+    uint32_t y = sf::Mouse::getPosition().y;
 	return (x >= this->getX() and
 		y >= this->getY() and
 		x < this->getX() + this->getW() and

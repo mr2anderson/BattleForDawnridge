@@ -41,9 +41,8 @@ Map* Menu::run(sf::RenderWindow& window) {
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
-				auto pos = sf::Mouse::getPosition();
                 if (this->element == nullptr) {
-                    if (this->start2on1pcButton.click(pos.x, pos.y)) {
+                    if (this->start2on1pcButton.click()) {
                         try {
                             Map *map = Maps::get()->load("ridge");
                             Music::get()->get("menu")->stop();
@@ -53,16 +52,16 @@ Map* Menu::run(sf::RenderWindow& window) {
                             this->element = new SimpleWindow("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK"));
                         }
                     }
-                    if (this->supportButton.click(pos.x, pos.y)) {
+                    if (this->supportButton.click()) {
                         this->element = new SimpleWindow("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
                     }
-                    if (this->creditsButton.click(pos.x, pos.y)) {
+                    if (this->creditsButton.click()) {
                         this->element = new SimpleWindow("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
                     }
-                    if (this->licenseButton.click(pos.x, pos.y)) {
+                    if (this->licenseButton.click()) {
                         this->element = new SimpleWindow("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 375);
                     }
-                    if (this->exitButton.click(pos.x, pos.y)) {
+                    if (this->exitButton.click()) {
                         return nullptr;
                     }
                     if (this->element != nullptr) {

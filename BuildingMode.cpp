@@ -36,9 +36,9 @@ BuildingMode::~BuildingMode() {
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
 }
-Event BuildingMode::run(uint32_t windowW, uint32_t windowH) {
-	this->windowW = windowW;
-	this->windowH = windowH;
+Event BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
+	this->windowW = windowW2;
+	this->windowH = windowH2;
 	return this->getHighlightEvent() + this->PopUpElement::run(windowW, windowH);
 }
 void BuildingMode::update() {

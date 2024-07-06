@@ -31,7 +31,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Event run(uint32_t windowW, uint32_t windowH) override;
+	Event run(uint32_t windowW2, uint32_t windowH2) override;
 	void update() override;
 	Event click() override;
 private:

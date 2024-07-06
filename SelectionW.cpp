@@ -44,7 +44,7 @@ Event SelectionW::click() {
 	uint32_t x = sf::Mouse::getPosition().x;
 	uint32_t y = sf::Mouse::getPosition().y;
 	for (const auto& t : buttons) {
-		if (std::get<Button>(t).click(x, y)) {
+		if (std::get<Button>(t).click()) {
 			if (std::get<bool>(t)) {
 				this->finish();
 			}
