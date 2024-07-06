@@ -24,8 +24,15 @@ Textures *Textures::singletone = nullptr;
 
 
 void Textures::add(const std::string& name, const std::string& path) {
+    if (this->textures.find(name) != this->textures.end()) {
+        std::cerr << "Textures: warning: id '" << name << "' already exists. Redefinition" << std::endl;
+    }
     this->textures[name].loadFromFile(std::string(ROOT) + "/" + path);
 }
 sf::Texture *Textures::get(const std::string& name) {
-    return &this->textures[name];
+    auto it = this->textures.find(name);
+    if (it == this->textures.end()) {
+        std::cerr << "Textures: warning: couldn't find " << name << std::endl;
+    }
+    return &it->second;
 }

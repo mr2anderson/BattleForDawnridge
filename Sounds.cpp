@@ -23,8 +23,15 @@ Sounds *Sounds::singletone = nullptr;
 
 
 void Sounds::add(const std::string& name, const std::string& path) {
+    if (this->sounds.find(name) != this->sounds.end()) {
+        std::cerr << "Sounds: warning: id '" << name << "' already exists. Redefinition" << std::endl;
+    }
     this->sounds[name].loadFromFile(std::string(ROOT) + "/" + path);
 }
 sf::SoundBuffer *Sounds::get(const std::string& name) {
-    return &this->sounds[name];
+    auto it = this->sounds.find(name);
+    if (it == this->sounds.end()) {
+        std::cerr << "Sounds: warning: couldn't find " << name << std::endl;
+    }
+    return &it->second;
 }

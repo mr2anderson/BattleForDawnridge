@@ -28,8 +28,7 @@ Texts* Texts::singletone = nullptr;
 void Texts::load(const std::string &path) {
     std::ifstream file(std::string(ROOT) + "/" + path);
     if (!file.is_open()) {
-        std::cerr << "Invalid file" << std::endl;
-        return;
+        std::cerr << "Texts : warning: invalid file" << std::endl;
     }
 
     std::string current;
@@ -63,7 +62,7 @@ void Texts::load(const std::string &path) {
                 currentData.pop_back();
             }
             if (this->texts.find(currentId) != this->texts.end()) {
-                std::cerr << "Texts: warning: id '" << currentId << "' already exist. Redefinition\n";
+                std::cerr << "Texts: warning: id '" << currentId << "' already exists. Redefinition" << std::endl;
             }
             this->texts[currentId] = currentData;
             
@@ -82,7 +81,7 @@ void Texts::load(const std::string &path) {
 }
 std::wstring* Texts::get(const std::string& name) {
     if (this->texts.find(name) == this->texts.end()) {
-        std::cerr << "Texts: id '" << name << "' does not exit\n";
+        std::cerr << "Texts: error: id '" << name << "' does not exit" << std::endl;
     }
     return &this->texts[name];
 }
