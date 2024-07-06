@@ -23,7 +23,7 @@
 Menu* Menu::singletone = nullptr;
 
 
-std::string Menu::run(sf::RenderWindow& window) {
+Map* Menu::run(sf::RenderWindow& window) {
 	Music::get()->get("menu")->play();
 	if (!this->graphicsInited) {
 		this->initGraphics(window.getSize().x, window.getSize().y);
@@ -32,20 +32,26 @@ std::string Menu::run(sf::RenderWindow& window) {
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
-				return "";
+				return nullptr;
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				auto code = event.key.code;
 				if (code == sf::Keyboard::Escape) {
-					return "";
+					return nullptr;
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				auto pos = sf::Mouse::getPosition();
                 if (this->element == nullptr) {
                     if (this->start2on1pcButton.click(pos.x, pos.y)) {
-                        Music::get()->get("menu")->stop();
-                        return "ridge";
+                        try {
+                            Map *map = Maps::get()->load("ridge");
+                            Music::get()->get("menu")->stop();
+                            return map;
+                        }
+                        catch (CouldntOpenMap &e) {
+                            this->element = new SimpleWindow("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK"));
+                        }
                     }
                     if (this->supportButton.click(pos.x, pos.y)) {
                         this->element = new SimpleWindow("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
@@ -57,7 +63,7 @@ std::string Menu::run(sf::RenderWindow& window) {
                         this->element = new SimpleWindow("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 375);
                     }
                     if (this->exitButton.click(pos.x, pos.y)) {
-                        return "";
+                        return nullptr;
                     }
                     if (this->element != nullptr) {
                         this->handleEvent(this->element->run(window.getSize().x, window.getSize().y));

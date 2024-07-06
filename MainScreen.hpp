@@ -47,7 +47,7 @@ public:
 		return MainScreen::singletone;
 	}
 
-	bool run(const std::string &mapName, sf::RenderWindow& window);
+	bool run(Map *mapPtr, sf::RenderWindow& window);
 private:
 	MainScreen() = default;
 	MainScreen(const MainScreen& copy) = delete;
@@ -64,8 +64,8 @@ private:
 	Button endMoveButton;
 	Button buildButton;
 
-	void reset(const std::string& mapName, sf::RenderWindow &window);
-	void resetMap(const std::string &mapName);
+	void reset(Map *mapPtr, sf::RenderWindow &window);
+	void resetMap(Map *mapPtr);
 	void resetMoveCtr();
 	void resetHighlightTable();
     void resetPlains();

@@ -32,11 +32,11 @@ void Game::run() {
 		return;
 	}
 	for (; ;) {
-        std::string mapName = Menu::get()->run(this->window);
-		if (mapName.empty()) {
+        Map *map = Menu::get()->run(this->window);
+		if (map == nullptr) {
             return;
         }
-		if (!MainScreen::get()->run(mapName, this->window)) {
+		if (!MainScreen::get()->run(map, this->window)) {
 			return;
 		}
 	}

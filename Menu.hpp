@@ -17,8 +17,7 @@
  */
 
 
-#include "Textures.hpp"
-#include "Sounds.hpp"
+#include "Maps.hpp"
 #include "SoundQueue.hpp"
 #include "Playlist.hpp"
 #include "ColorTheme.hpp"
@@ -37,7 +36,7 @@ public:
 		return Menu::singletone;
 	}
 
-	std::string run(sf::RenderWindow& window);
+	Map* run(sf::RenderWindow& window);
 private:
 	Menu() {
 		this->graphicsInited = false;

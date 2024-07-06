@@ -24,8 +24,8 @@
 MainScreen* MainScreen::singletone = nullptr;
 
 
-bool MainScreen::run(const std::string &mapName, sf::RenderWindow& window) {
-	this->reset(mapName, window);
+bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
+	this->reset(mapPtr, window);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
@@ -67,16 +67,16 @@ bool MainScreen::run(const std::string &mapName, sf::RenderWindow& window) {
 		}
 	}
 }
-void MainScreen::reset(const std::string& mapName, sf::RenderWindow& window) {
-	this->resetMap(mapName);
+void MainScreen::reset(Map *mapPtr, sf::RenderWindow& window) {
+	this->resetMap(mapPtr);
 	this->resetMoveCtr();
 	this->resetHighlightTable();
     this->resetPlains();
 	this->resetGraphics(window);
 	this->changeMove();
 }
-void MainScreen::resetMap(const std::string& name) {
-    this->map = Maps::get()->load(name);
+void MainScreen::resetMap(Map *mapPtr) {
+    this->map = mapPtr;
 }
 void MainScreen::resetMoveCtr() {
 	this->move = 0;
