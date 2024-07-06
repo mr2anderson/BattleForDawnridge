@@ -56,7 +56,6 @@ Event BuildingMode::click() {
 			"Указанное место занято.");
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
-		delete this->b;
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
@@ -65,7 +64,6 @@ Event BuildingMode::click() {
 			"Указанное место слишком далеко от дорог.");
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
-		delete this->b;
 		return this->getHighlightEvent() + uiEvent;
 	}
 	Event gEvent = this->getHighlightEvent();
