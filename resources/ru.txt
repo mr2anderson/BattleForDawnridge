@@ -433,14 +433,14 @@ does_not_lead_to_city_center
 <\DATA>
 
 <ID>
-sell
+sell_noun
 <\ID>
 <DATA>
 Продажа: 
 <\DATA>
 
 <ID>
-buy
+buy_noun
 <\ID>
 <DATA>
 Покупка: 

@@ -20,4 +20,4 @@
 #pragma once
 
 
-#define ROOT "resources"
+#define ROOT "../resources"

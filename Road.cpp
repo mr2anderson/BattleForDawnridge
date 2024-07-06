@@ -61,7 +61,7 @@ Event Road::getSelectionW() {
 	std::vector<SelectionWComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("road",
-		this->getDescription() + L'\n'
+		this->getReadableName() + this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
