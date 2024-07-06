@@ -59,7 +59,7 @@ uint32_t Quarry::getRadius(uint32_t level) const {
 	return 5 + levelRadiusBonus[level];
 }
 std::wstring Quarry::getDescription() const {
-	return L"Каменоломни обеспечивают Ваш город камнем, необходимым для строительства обороны.";
+	return *Texts::get()->get("quarry_description");
 }
 Resources Quarry::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -76,5 +76,5 @@ uint32_t Quarry::getUpgradeTime() const {
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 std::wstring Quarry::getReadableName() const {
-	return L"каменоломня";
+	return *Texts::get()->get("quarry_readable_name");
 }

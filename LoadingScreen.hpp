@@ -21,6 +21,7 @@
 #include "Fonts.hpp"
 #include "Sounds.hpp"
 #include "Music.hpp"
+#include "Texts.hpp"
 #include "ColorTheme.hpp"
 #include "PlainsGeneration.hpp"
 

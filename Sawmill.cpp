@@ -59,7 +59,7 @@ uint32_t Sawmill::getRadius(uint32_t level) const {
 	return 5 + levelRadiusBonus[level];
 }
 std::wstring Sawmill::getDescription() const {
-	return L"Лесопилки обеспечивают Ваш город древесиной, необходимой для строительства большинства зданий.";
+	return *Texts::get()->get("sawmill_description");
 }
 Resources Sawmill::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -76,5 +76,5 @@ uint32_t Sawmill::getUpgradeTime() const {
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 std::wstring Sawmill::getReadableName() const {
-	return L"лесопилка";
+	return *Texts::get()->get("sawmill_readable_name");
 }

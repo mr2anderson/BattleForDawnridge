@@ -89,17 +89,17 @@ Event ResourceB::getSelectionW() {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back(this->getTextureName(), 
-		this->getDescription() + L"\n" +
+		this->getDescription() + L'\n' +
 		this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		Event gameEventUpgrade = this->getHighlightEvent();
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
-		components.emplace_back("upgrade_icon", L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) + 
-			L" и радиус добычи с " + std::to_wstring(this->getRadius()) + L" до " + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
+		components.emplace_back("upgrade_icon", *Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) +
+			*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

@@ -55,13 +55,13 @@ std::string Farm::getSoundName() const {
 	return "food";
 }
 std::wstring Farm::getDescription() const {
-	return L"Фермы обеспечивают Ваш город едой, необходимой для содержания армии.";
+	return *Texts::get()->get("farm_description");
 }
 uint32_t Farm::getRegenerationSpeed() const {
 	return 5000;
 }
 std::wstring Farm::getReadableName() const {
-	return L"ферма";
+	return *Texts::get()->get("farm_readable_name");
 }
 Resources Farm::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -116,17 +116,17 @@ Event Farm::getSelectionW() {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back(this->getTextureName(),
-		this->getDescription() + L"\n"
+		this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", 
-			L"Улучшить за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение повысит скорость добычи с " + std::to_wstring(this->getCollectionSpeed()) + L" до " + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
+			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

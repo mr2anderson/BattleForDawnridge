@@ -47,19 +47,16 @@ int32_t PAKScreen::run(sf::RenderWindow &window) {
 }
 void PAKScreen::initGraphics(uint32_t windowW, uint32_t windowH) {
 	this->t.setFont(*Fonts::get()->get("1"));
-	this->t.setString(L"Нажмите на любую клавишу для продолжения...");
+	this->t.setString(*Texts::get()->get("press_any_key"));
 	this->t.setCharacterSize(32);
 	this->t.setFillColor(sf::Color::White);
 	this->t.setOutlineColor(sf::Color::Black);
 	this->t.setOutlineThickness(2);
 	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 50);
 
-	this->s.setTexture(*Textures::get()->get("logotype0"));
-	this->s.setPosition((windowW - s.getLocalBounds().width) / 2, t.getPosition().y - s.getLocalBounds().height - 20);
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(UI_COLOR);
 	window.draw(this->t);
-	window.draw(this->s);
 	window.display();
 }

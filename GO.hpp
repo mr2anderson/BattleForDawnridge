@@ -18,6 +18,7 @@
 
 
 #include "Textures.hpp"
+#include "Texts.hpp"
 #include "Event.hpp"
 #include "Player.hpp"
 

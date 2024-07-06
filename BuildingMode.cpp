@@ -51,17 +51,13 @@ void BuildingMode::update() {
 Event BuildingMode::click() {
 	this->finish();
 	if (!this->empty()) {
-		MessageW* w = new MessageW("click", "click",
-			L"ÍÅ ÓÄÀËÎÑÜ ÐÀÇÌÅÑÒÈÒÜ\n"
-			"Óêàçàííîå ìåñòî çàíÿòî.");
+		MessageW* w = new MessageW("click", "click", *Texts::get()->get("place_occupied"));
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
-		MessageW* w = new MessageW("click", "click",
-			L"ÍÅ ÓÄÀËÎÑÜ ÐÀÇÌÅÑÒÈÒÜ\n"
-			"Óêàçàííîå ìåñòî ñëèøêîì äàëåêî îò äîðîã.");
+		MessageW* w = new MessageW("click", "click", *Texts::get()->get("too_far_from_roads"));
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
 		return this->getHighlightEvent() + uiEvent;

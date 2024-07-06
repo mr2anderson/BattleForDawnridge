@@ -633,6 +633,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TerritoryB.hpp" />
     <ClInclude Include="TerritoryConductorB.hpp" />
     <ClInclude Include="TerritoryOriginB.hpp" />
+    <ClInclude Include="Texts.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="Unit.hpp" />
@@ -691,6 +692,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TerritoryB.cpp" />
     <ClCompile Include="TerritoryConductorB.cpp" />
     <ClCompile Include="TerritoryOriginB.cpp" />
+    <ClCompile Include="Texts.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="Unit.cpp" />

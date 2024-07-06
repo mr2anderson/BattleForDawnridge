@@ -52,7 +52,7 @@ std::wstring Resources::getReadableInfo() const {
 	std::wstring result;
 	for (const auto& a : this->map) {
 		Resource r(a.first, a.second);
-		result = result + r.getReadableInfo() + L" ";
+		result = result + r.getReadableInfo() + L' ';
 	}
 	if (!result.empty()) {
 		result.pop_back();

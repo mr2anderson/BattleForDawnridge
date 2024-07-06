@@ -40,8 +40,7 @@ Event Market::doTrade(const Trade& trade) {
 	gEvent.subResource.push_back(trade.sell);
 
 	MessageW* window = new MessageW(this->getSoundName(), "click", 
-		L"СДЕЛКА НАЧАТА\n"
-		"Ваши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:\n" + 
+		*Texts::get()->get("trade_started") + L'\n' +
 		trade.getReadableInfo());
 	
 	window->addOnStartGEvent(gEvent);
@@ -81,7 +80,7 @@ std::string Market::getSoundName() const {
 	return "gold";
 }
 std::wstring Market::getDescription() const {
-	return L"Рынки позволяют обменивать ресурсы.";
+	return *Texts::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
@@ -101,7 +100,7 @@ uint32_t Market::getUpgradeTime() const {
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 std::wstring Market::getReadableName() const {
-	return L"рынок";
+	return *Texts::get()->get("market_readable_name");
 }
 bool Market::busy() const {
 	return this->currentTrade.movesLeft != 0;
@@ -161,17 +160,17 @@ Event Market::handleCurrentTrade() {
 }
 Event Market::getSelectionW() {
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back("market", 
-		this->getDescription() + L"\n" +
+		this->getDescription() + L'\n' +
 		this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon", 
-			L"Улучшить рынок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение уменьшит число ходов для одной сделки с " + std::to_wstring(this->getTradeStartTime()) + L" до " + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
+			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+			*Texts::get()->get("upgrade_will_increase_move_number_for_one_trade_from") + std::to_wstring(this->getTradeStartTime()) + *Texts::get()->get("to") + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
 	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
@@ -194,14 +193,13 @@ Event Market::getSelectionW() {
 }
 void Market::addTrade(std::vector<SelectionWComponent>& components, const Event& gameEventTrade) {
 	components.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.type + "_icon",
-		L"Купить " + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
-		L" за " + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, false, gameEventTrade);
+		*Texts::get()->get("buy") + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
+		*Texts::get()->get("for") + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, false, gameEventTrade);
 }
 Event Market::handleBusyWithTrade() const {
 	Event response;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
-		L"РЫНОК ЗАНЯТ\n"
-		"Детали сделки:\n" +
+		*Texts::get()->get("market_is_busy") + L'\n' +
 		this->currentTrade.getReadableInfo());
 	response.createE.push_back(window);
 	return response;

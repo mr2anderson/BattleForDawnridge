@@ -56,27 +56,12 @@ int32_t Menu::run(sf::RenderWindow& window) {
 }
 void Menu::initGraphics(uint32_t windowW, uint32_t windowH) {
 	this->graphicsInited = true;
-	this->license = Label(10, windowH - 10 - 330, 500, 330, std::nullopt,
-		L"Battle for Dawnridge\n"
-		"Copyright (C) 2024 mr2anderson\n\n"
-		"Battle for Dawnridge is free software: you can redistribute it and/or modify\n"
-		"it under the terms of the GNU General Public License as published by\n"
-		"he Free Software Foundation, either version 3 of the License, or\n"
-		"(at your option) any later version.\n"
-		"Battle for Dawnridge is distributed in the hope that it will be useful,\n"
-		"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-		"GNU General Public License for more details.\n\n"
-		"You should have received a copy of the GNU General Public License\n"
-		"along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.\n\n"
-		"Если Вам нравится Battle for Dawnridge, то Вы можете поддержать\n"
-		"разработчиков, отправив небольшую сумму на этот BTC кошелек:\n"
-		"bc1ql9np8zlq487lmxv60v9ukrp83gtjthvxupwexs");
-	this->start2on1pc = Button(10, 10, 400, 60, std::nullopt, L"Начать (2 игрока 1 ПК)");
-	this->exit = Button(10, 80, 400, 60, std::nullopt, L"Завершить");
+	this->license = Label(10, windowH - 10 - 280, 500, 280, std::nullopt, *Texts::get()->get("license"));
+	this->start2on1pc = Button(10, 10, 400, 60, std::nullopt, *Texts::get()->get("start_game_2p_1pc"));
+	this->exit = Button(10, 80, 400, 60, std::nullopt, *Texts::get()->get("exit"));
 
 	this->title.setFont(*Fonts::get()->get("1"));
-	this->title.setString("Battle for Dawnridge");
+	this->title.setString(*Texts::get()->get("title"));
 	this->title.setCharacterSize(60);
 	this->title.setFillColor(sf::Color::White);
 	this->title.setPosition(windowW - 40 - title.getLocalBounds().width, windowH - 40 - title.getLocalBounds().height);

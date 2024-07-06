@@ -162,8 +162,8 @@ void MainScreen::resetGraphics(sf::RenderWindow &window) {
 		delete this->view;
 	}
 	this->view = new sf::View(window.getDefaultView());
-	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, L"Êîíåö õîäà");
-	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", L"");
+	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, *Texts::get()->get("new_move"));
+	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", std::wstring());
 	while (!this->elements.empty()) {
 		PopUpElement* w = this->elements.front();
 		delete w;
@@ -202,9 +202,7 @@ void MainScreen::handleTryToTradeEvent(const Event& e) {
 			this->handleEvent(m->doTrade(t));
 		}
 		else {
-			MessageW* w = new MessageW("click", "click", 
-				L"ÍÅÄÎÑÒÀÒÎ×ÍÎ ÐÅÑÓÐÑÎÂ\n"
-				"Âû íå ìîæåòå ñîâåðøèòü ýòó ñäåëêó.");
+			MessageW* w = new MessageW("click", "click", *Texts::get()->get("no_resources_for_trade"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -256,9 +254,7 @@ void MainScreen::handleTryToUpgradeEvent(const Event& e) {
 			this->handleEvent(b->startUpgrade());
 		}
 		else {
-			MessageW* w = new MessageW("click", "click", 
-				L"ÍÅÄÎÑÒÀÒÎ×ÍÎ ÐÅÑÓÐÑÎÂ\n"
-				"Âû íå ìîæåòå óëó÷øèòü ýòî çäàíèå.");
+			MessageW* w = new MessageW("click", "click", *Texts::get()->get("no_resources_for_upgrade"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -291,9 +287,7 @@ void MainScreen::handleTryToBuild(const Event& e) {
 			this->addPopUpWindow(new BuildingMode(a, this->view, this->gameObjects, this->territoryBuildings, this->getCurrentPlayer()));
 		}
 		else {
-			MessageW* w = new MessageW("", "click",
-				L"ÍÅÄÎÑÒÀÒÎ×ÍÎ ÐÅÑÓÐÑÎÂ\n"
-				"Âû íå ìîæåòå ïîñòðîèòü ýòî çäàíèå");
+			MessageW* w = new MessageW("", "click", *Texts::get()->get("no_resources_for_building"));
 			this->addPopUpWindow(w);
 			delete a;
 		}
@@ -339,7 +333,7 @@ void MainScreen::changeMove() {
 }
 void MainScreen::createBuildMenu() {
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("hammer_icon", L"Âûéòè", true, true, Event());
+	components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
 
 	Event buildEvent;
 	buildEvent.tryToBuild.push_back(new Road(0, 0, this->getCurrentPlayer(), this->territoryOrigins, this->territoryConductors));
@@ -377,8 +371,8 @@ void MainScreen::createBuildMenu() {
 	this->addPopUpWindow(w);
 }
 std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
-	std::wstring description = b->getDescription() + L"\n" +
-		L"Ñòîèìîñòü: " + b->getCost().getReadableInfo();
+	std::wstring description = b->getDescription() + L'\n' +
+		*Texts::get()->get("cost") + b->getCost().getReadableInfo();
 	delete b;
 	return description;
 		

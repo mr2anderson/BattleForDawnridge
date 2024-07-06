@@ -23,6 +23,7 @@
 #include "Textures.hpp"
 #include "Fonts.hpp"
 #include "Sounds.hpp"
+#include "Texts.hpp"
 #include "ColorTheme.hpp"
 
 

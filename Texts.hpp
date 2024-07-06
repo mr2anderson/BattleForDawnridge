@@ -17,22 +17,36 @@
  */
 
 
-#include "Stone.hpp"
+
+#include <unordered_map>
+#include <cstdint>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <iostream>
+#include "Root.hpp"
 
 
-Stone::Stone() = default;
-Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2, 2, 10000) {
+#pragma once
 
-}
-std::string Stone::getResourceType() const {
-	return "stone";
-}
-std::string Stone::getSoundName() const {
-	return "stone";
-}
-std::string Stone::getTextureName() const {
-	return "stone";
-}
-std::wstring Stone::getDescription() const {
-	return *Texts::get()->get("stone_description_1") + std::to_wstring(this->getHP()) + *Texts::get()->get("stone_description_2");
-}
+
+class Texts {
+public:
+    static Texts* get() {
+        if (Texts::singletone == nullptr) {
+            Texts::singletone = new Texts();
+        }
+        return Texts::singletone;
+    }
+
+    void load(const std::string& path);
+    [[nodiscard]] std::wstring* get(const std::string& name);
+private:
+    Texts() = default;
+    Texts(const Texts& copy);
+    static Texts* singletone;
+
+    std::unordered_map<std::string, std::wstring> texts;
+
+    static std::wstring UTF8_TO_UTF16(const std::string& utf8);
+};

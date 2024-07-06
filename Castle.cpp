@@ -60,7 +60,7 @@ std::string Castle::getSoundName() const {
 	return "hooray";
 }
 std::wstring Castle::getDescription() const {
-	return L"Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.";
+	return *Texts::get()->get("castle_description");
 }
 uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
 	return LEVEL_HP[level] / 4;
@@ -69,7 +69,7 @@ uint32_t Castle::getRegenerationSpeed() const {
 	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
 }
 std::wstring Castle::getReadableName() const {
-	return L"замок";
+	return *Texts::get()->get("castle_readable_name");
 }
 Resources Castle::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -92,18 +92,18 @@ Event Castle::getSelectionW() {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, this->getHighlightEvent());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("castle",
-		this->getDescription() + L"\n"
-		+ this->getReadableHpInfo(), false, false, Event());
+		this->getDescription() + L'\n' +
+		this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
 		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("upgrade_icon",
-			L"Улучшить замок за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade + this->getHighlightEvent());
+			*Texts::get()->get("upgrade_castle_for") + this->getUpgradeCost().getReadableInfo() + L'\n' + 
+			*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
+			*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade + this->getHighlightEvent());
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

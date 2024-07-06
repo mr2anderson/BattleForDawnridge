@@ -63,10 +63,10 @@ std::string Wall::getSoundName() const {
 	return "stone";
 }
 std::wstring Wall::getDescription() const {
-	return L"Защитите свой город этими мощными городскими стенами от неожиданного нападения.";
+	return *Texts::get()->get("wall_description");
 }
 std::wstring Wall::getReadableName() const {
-	return L"стена";
+	return *Texts::get()->get("wall_readable_name");
 }
 Resources Wall::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
@@ -86,18 +86,18 @@ Event Wall::getSelectionW() {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Покинуть", true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back("wall" + std::to_string(this->getCurrentLevel()),
-		this->getDescription() + L"\n"
+		this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
 		Event gameEventUpgrade;
 		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
 		components.emplace_back("wall" + std::to_string(this->getCurrentLevel() + 1),
-			L"Улучшить стену за " + this->getUpgradeCost().getReadableInfo() + L"\n"
-			"Улучшение увеличит защиту с " + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + L" до " + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-			L" и скорость ремонта с " + std::to_wstring(this->getRegenerationSpeed()) + L" до " + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L".", true, false, gameEventUpgrade);
+			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+			*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
+			*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

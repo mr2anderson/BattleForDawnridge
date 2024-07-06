@@ -36,11 +36,12 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 }
 void LoadingScreen::loadBase() {
 	Fonts::get()->add("1", "1.ttf");
+	Texts::get()->load("ru.txt");
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
-	t.setString(L"Пожалуйста, подождите");
+	t.setString(*Texts::get()->get("please_wait"));
 	t.setCharacterSize(32);
 	t.setFillColor(sf::Color::White);
 	t.setOutlineColor(sf::Color::Black);

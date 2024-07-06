@@ -78,18 +78,14 @@ Event UpgradeableB::handleCurrentUpgrade() {
 Event UpgradeableB::handleBusyWithUpgrading() const {
 	Event events;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + L": ИДЕТ УЛУЧШЕНИЕ\n"
-		"Подождите, пока оно не закончится\n"
-		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
+		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_in_progress") + std::to_wstring(this->upgradeMovesLeft));
 	events.createE.push_back(window);
 	return events;
 }
 Event UpgradeableB::handleUpgradeStart() const {
 	Event events;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + L": НАЧАТО УЛУЧШЕНИЕ\n"
-		"Подождите, пока оно не закончится\n"
-		L"Число ходов до конца улучшения: " + std::to_wstring(this->upgradeMovesLeft));
+		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_started") + std::to_wstring(this->upgradeMovesLeft));
 	events.createE.push_back(window);
 	return events;
 }

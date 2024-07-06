@@ -1,0 +1,523 @@
+<ID>
+please_wait
+<\ID>
+<DATA>
+Пожалуйста, подождите...
+<\DATA>
+
+<ID>
+building_speed
+<\ID>
+<DATA>
+Скорость строительства: 
+<\DATA>
+
+<ID>
+p_per_move
+<\ID>
+<DATA>
+ ед. / ход
+<\DATA>
+
+<ID>
+place_occupied
+<\ID>
+<DATA>
+НЕ УДАЛОСЬ РАЗМЕСТИТЬ
+Указанное место занято
+<\DATA>
+
+<ID>
+too_far_from_roads
+<\ID>
+<DATA>
+НЕ УДАЛОСЬ РАЗМЕСТИТЬ
+Указанное место слишком далеко от дорог
+<\DATA>
+
+<ID>
+castle_description
+<\ID>
+<DATA>
+Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.
+<\DATA>
+
+<ID>
+castle_readable_name
+<\ID>
+<DATA>
+замок
+<\DATA>
+
+<ID>
+leave
+<\ID>
+<DATA>
+Покинуть
+<\DATA>
+
+<ID>
+upgrade_castle_for
+<\ID>
+<DATA>
+Улучшить замок за 
+<\DATA>
+
+<ID>
+upgrade_will_increase_hp_from
+<\ID>
+<DATA>
+Улучшение увеличит защиту с 
+<\DATA>
+
+<ID>
+to
+<\ID>
+<DATA>
+ до 
+<\DATA>
+
+<ID>
+and_repair_speed_from
+<\ID>
+<DATA>
+ и скорость ремонта с 
+<\DATA>
+
+<ID>
+farm_description
+<\ID>
+<DATA>
+Фермы обеспечивают Ваш город едой, необходимой для содержания армии.
+<\DATA>
+
+<ID>
+farm_readable_name
+<\ID>
+<DATA>
+ферма
+<\DATA>
+
+<ID>
+upgrade_will_decrease_move_number_for_one_trade_from
+<\ID>
+<DATA>
+Улучшение уменьшит число ходов для одной сделки с 
+<\DATA>
+
+<ID>
+buy
+<\ID>
+<DATA>
+Купить 
+<\DATA>
+
+<ID>
+for
+<\ID>
+<DATA>
+ за 
+<\DATA>
+
+<ID>
+trade_started
+<\ID>
+<DATA>
+СДЕЛКА НАЧАТА
+Ваши ресурсы забрал караван, обмен будет выполнен через несколько ходов. Детали сделки:
+<\DATA>
+
+<ID>
+market_description
+<\ID>
+<DATA>
+Рынки позволяют обменивать ресурсы.
+<\DATA>
+
+<ID>
+market_readable_name
+<\ID>
+<DATA>
+рынок
+<\DATA>
+
+<ID>
+market_is_busy
+<\ID>
+<DATA>
+РЫНОК ЗАНЯТ
+Детали сделки
+<\DATA>
+
+<ID>
+forest_description_1
+<\ID>
+<DATA>
+Это лес содержит еще 
+<\DATA>
+
+<ID>
+forest_description_2
+<\ID>
+<DATA>
+ ед. древесины. Постройте лесопилку поблизости, чтобы начать добычу.
+<\DATA>
+
+<ID>
+hp
+<\ID>
+<DATA>
+Защита: 
+<\DATA>
+
+<ID>
+slash
+<\ID>
+<DATA>
+ / 
+<\DATA>
+
+<ID>
+building_in_progress
+<\ID>
+<DATA>
+: ИДЕТ СТРОИТЕЛЬСТВО
+Дождитесь конца строительства.
+<\DATA>
+
+<ID>
+iron_description_1
+<\ID>
+<DATA>
+Эти залежи содержат еще 
+<\DATA>
+
+<ID>
+iron_description_2
+<\ID>
+<DATA>
+ ед. железа. Постройте рядом шахту, чтобы начать добычу.
+<\DATA>
+
+<ID>
+no_resources_for_trade
+<\ID>
+<DATA>
+НЕДОСТАТОЧНО РЕСУРСОВ
+Вы не можете совершить эту сделку
+<\DATA>
+
+<ID>
+no_resources_for_upgrade
+<\ID>
+<DATA>
+НЕДОСТАТОЧНО РЕСУРСОВ
+Вы не можете улучшить это здание
+<\DATA>
+
+<ID>
+no_resources_for_building
+<\ID>
+<DATA>
+НЕДОСТАТОЧНО РЕСУРСОВ
+Вы не можете построить это здание
+<\DATA>
+
+<ID>
+new_move
+<\ID>
+<DATA>
+Конец хода
+<\DATA>
+
+<ID>
+cost
+<\ID>
+<DATA>
+Стоимость: 
+<\DATA>
+
+<ID>
+license
+<\ID>
+<DATA>
+Battle for Dawnridge
+Copyright (C) 2024 mr2anderson
+
+Battle for Dawnridge is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+he Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Battle for Dawnridge is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
+<\DATA>
+
+<ID>
+start_game_2p_1pc
+<\ID>
+<DATA>
+Начать (2 игрока 1 ПК)
+<\DATA>
+
+<ID>
+exit
+<\ID>
+<DATA>
+Выйти
+<\DATA>
+
+<ID>
+title
+<\ID>
+<DATA>
+Battle for Dawnridge
+<\DATA>
+
+<ID>
+OK
+<\ID>
+<DATA>
+ОК
+<\DATA>
+
+<ID>
+mine_description
+<\ID>
+<DATA>
+Шахты обеспечивают Ваш город железом, необходимым для создания армии.
+<\DATA>
+
+<ID>
+mine_readable_name
+<\ID>
+<DATA>
+шахта
+<\DATA>
+
+<ID>
+mountains_description
+<\ID>
+<DATA>
+Горы столь высоки, что не видно вершин. Их не пройдет любая армия.
+<\DATA>
+
+<ID>
+press_any_key_to_continue
+<\ID>
+<DATA>
+Нажмите на любую клавишу для продолжения...
+<\DATA>
+
+<ID>
+quarry_description
+<\ID>
+<DATA>
+Каменоломни обеспечивают Ваш город камнем, необходимым для строительства обороны
+<\DATA>
+
+<ID>
+quarry_readable_name
+<\ID>
+<DATA>
+каменоломня
+<\DATA>
+
+<ID>
+food_number
+<\ID>
+<DATA>
+еда (
+<\DATA>
+
+<ID>
+wood_number
+<\ID>
+<DATA>
+древесина (
+<\DATA>
+
+<ID>
+stone_number
+<\ID>
+<DATA>
+камень (
+<\DATA>
+
+<ID>
+iron_number
+<\ID>
+<DATA>
+железо (
+<\DATA>
+
+<ID>
+gold_number
+<\ID>
+<DATA>
+золото (
+<\DATA>
+
+<ID>
+bracket_right
+<\ID>
+<DATA>
+)
+<\DATA>
+
+<ID>
+upgrade_will_increase_collection_speed_from
+<\ID>
+<DATA>
+Улучшение повысит скорость добычи с 
+<\DATA>
+
+<ID>
+and_collection_radius_from
+<\ID>
+<DATA>
+ и радиус добычи с 
+<\DATA>
+
+<ID>
+road_description
+<\ID>
+<DATA>
+Дороги — вены цивилизации. Постройте дорогу, чтобы иметь возможность возводить здания в новых местах.
+<\DATA>
+
+<ID>
+road_readable_name
+<\ID>
+<DATA>
+<\DATA>
+
+<ID>
+sawmill_description
+<\ID>
+<DATA>
+Лесопилки обеспечивают Ваш город древесиной, необходимой для строительства большинства зданий.
+<\DATA>
+
+<ID>
+sawmill_readable_name
+<\ID>
+<DATA>
+лесопилка
+<\DATA>
+
+<ID>
+stone_description_1
+<\ID>
+<DATA>
+Этот камень содержит еще 
+<\DATA>
+
+<ID>
+stone_description_2
+<\ID>
+<DATA>
+ ед. камня. Постройте рядом каменоломню, чтобы начать добычу.
+<\DATA>
+
+<ID>
+does_not_lead_to_city_center
+<\ID>
+<DATA>
+ НЕ ВЕДЕТ НИ К ОДНОМУ ГОРОДСКОМУ ЦЕНТРУ
+<\DATA>
+
+<ID>
+sell
+<\ID>
+<DATA>
+Продажа: 
+<\DATA>
+
+<ID>
+buy
+<\ID>
+<DATA>
+Покупка: 
+<\DATA>
+
+<ID>
+moves_number
+<\ID>
+<DATA>
+Число ходов: 
+<\DATA>
+
+<ID>
+upgrade_in_progress
+<\ID>
+<DATA>
+: ИДЕТ УЛУЧШЕНИЕ
+Подождите, пока оно не закончится
+Число ходов до конца улучшения: 
+<\DATA>
+
+<ID>
+upgrade_started
+<\ID>
+<DATA>
+: НАЧАТО УЛУЧШЕНИЕ
+Подождите, пока оно не закончится
+Число ходов до конца улучшения: 
+<\DATA>
+
+<ID>
+wall_description
+<\ID>
+<DATA>
+Защитите свой город этими мощными городскими стенами от неожиданного нападения.
+<\DATA>
+
+<ID>
+wall_readable_name
+<\ID>
+<DATA>
+стена
+<\DATA>
+
+<ID>
+press_any_key
+<\ID>
+<DATA>
+Нажмите любую клавишу, чтобы продолжить...
+<\DATA>
+
+<ID>
+<\ID>
+<DATA>
+<\DATA>
+
+<ID>
+<\ID>
+<DATA>
+<\DATA>
+
+<ID>
+<\ID>
+<DATA>
+<\DATA>
+
+<ID>
+<\ID>
+<DATA>
+<\DATA>
+
+<ID>
+<\ID>
+<DATA>
+<\DATA>
+
+<ID>
+<\ID>
+<DATA>
+<\DATA>

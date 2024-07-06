@@ -31,22 +31,8 @@ std::wstring Resource::getReadableInfo() const {
 		return result;
 	}
 
-	if (this->type == "food") {
-		result = L"еда (";
-	}
-	else if (this->type == "wood") {
-		result = L"древесина (";
-	}
-	else if (this->type == "stone") {
-		result = L"камень (";
-	}
-	else if (this->type == "iron") {
-		result = L"железо (";
-	}
-	else if (this->type == "gold") {
-		result = L"золото (";
-	}
-	result = result + std::to_wstring(this->n) + L")";
+	result = result + *Texts::get()->get(this->type + "_number");
+	result = result + std::to_wstring(this->n) + *Texts::get()->get("bracket_right");
 
 	return result;
 }

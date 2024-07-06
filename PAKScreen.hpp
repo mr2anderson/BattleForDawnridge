@@ -21,6 +21,7 @@
 #include "Fonts.hpp"
 #include "Sounds.hpp"
 #include "Music.hpp"
+#include "Texts.hpp"
 #include "SoundQueue.hpp"
 #include "ColorTheme.hpp"
 
@@ -44,7 +45,6 @@ private:
 	static PAKScreen* singletone;
 
 	sf::Text t;
-	sf::Sprite s;
 
 	void initGraphics(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);

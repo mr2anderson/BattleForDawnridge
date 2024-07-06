@@ -35,7 +35,7 @@ std::string Mountains::getSoundName() const {
 	return "wind";
 }
 std::wstring Mountains::getDescription() const {
-	return L"Горы столь высоки, что не видно вершин. Их не пройдет любая армия.";
+	return *Texts::get()->get("mountains_description");
 }
 bool Mountains::exist() const {
 	return true;
@@ -44,7 +44,7 @@ Event Mountains::getGameObjectResponse(Player* currentPlayer) {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Вернуться", true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Event());
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

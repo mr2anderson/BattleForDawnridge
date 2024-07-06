@@ -35,7 +35,7 @@ Event ResourcePoint::getSelectionWindow() {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"Вернуться", true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Event());
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

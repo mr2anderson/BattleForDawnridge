@@ -33,9 +33,8 @@ bool HpSensitiveB::repairing() const {
 Event HpSensitiveB::handleRepairing() const {
 	Event events;
 	MessageW* window = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + L": ÈÄÅÒ ÑÒĞÎÈÒÅËÜÑÒÂÎ\n"
-		"Äîæäèòåñü êîíöà ñòğîèòåëüñòâà.\n"
-		+ this->getReadableHpInfo() + L"\n"
+		this->getUpperCaseReadableName() + *Texts::get()->get("building_in_progress") + L'\n'
+		+ this->getReadableHpInfo() + L'\n'
 		+ this->getReadableRegenerationSpeed());
 	events.createE.push_back(window);
 	return events;

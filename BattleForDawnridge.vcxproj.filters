@@ -820,6 +820,9 @@
     <ClInclude Include="AreaB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texts.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Wall.cpp">
@@ -988,6 +991,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

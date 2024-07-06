@@ -17,8 +17,7 @@
  */
 
 
-#include <string>
-#include <cstdint>
+#include "Texts.hpp"
 
 
 #pragma once

@@ -47,10 +47,10 @@ std::string Road::getSoundName() const {
 	return "road";
 }
 std::wstring Road::getDescription() const {
-	return L"ƒороги Ч вены цивилизации. ѕостройте дорогу, чтобы иметь возможность возводить здани€ в новых местах.";
+	return *Texts::get()->get("road_description");
 }
 std::wstring Road::getReadableName() const {
-	return L"дорога";
+	return *Texts::get()->get("road_readable_name");
 }
 uint32_t Road::getRadius() const {
 	return 3;
@@ -59,9 +59,9 @@ Event Road::getSelectionW() {
 	Event response;
 
 	std::vector<SelectionWComponent> components;
-	components.emplace_back("exit_icon", L"ѕокинуть", true, true, this->getHighlightEvent());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("road",
-		this->getDescription() + L"\n"
+		this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
 	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);

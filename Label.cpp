@@ -91,12 +91,12 @@ std::wstring Label::putNLs(const std::wstring& message, uint32_t w, bool picture
 	std::wstring currentMessage;
 	std::wstring word;
 	while (std::getline(ss, word, L' ')) {
-		word = word + L" ";
+		word = word + L' ';
 		prevMessage = currentMessage;
 		currentMessage = currentMessage + word;
 		this->text.setString(currentMessage);
 		if (this->text.getLocalBounds().width > w - 10 - this->sprite.getLocalBounds().width * picture) {
-			currentMessage = prevMessage + L"\n" + word;
+			currentMessage = prevMessage + L'\n' + word;
 			this->text.setString(currentMessage);
 		}
 	}

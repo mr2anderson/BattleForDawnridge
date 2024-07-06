@@ -34,5 +34,5 @@ std::string Iron::getSoundName() const {
 	return "iron";
 }
 std::wstring Iron::getDescription() const {
-	return L"Ёти залежи содержат еще " + std::to_wstring(this->getHP()) + L" ед. железа. ѕостройте р€дом шахту, чтобы начать добычу.";
+	return *Texts::get()->get("iron_description_1") + std::to_wstring(this->getHP()) + *Texts::get()->get("iron_description_2");
 }

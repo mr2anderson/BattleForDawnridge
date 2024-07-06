@@ -33,7 +33,7 @@ Event MessageW::run(uint32_t windowW, uint32_t windowH) {
 	uint32_t buttonH = 28;
 
 	this->label = Label((windowW - w) / 2, (windowH - h) / 2, w, h, std::nullopt, message);
-	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 10, buttonW, buttonH, std::nullopt, L"OK");
+	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 10, buttonW, buttonH, std::nullopt, *Texts::get()->get("OK"));
 
 	Event soundEvent;
 	soundEvent.playSound.push_back(this->soundName1);

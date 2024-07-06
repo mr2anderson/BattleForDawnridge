@@ -61,7 +61,7 @@ bool TerritoryConductorB::conducted() const {
 }
 Event TerritoryConductorB::getNotConductedResponce() const {
 	MessageW* w = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + L" ÍÅ ÂÅÄÅÒ ÍÈ Ê ÎÄÍÎÌÓ ÃÎĞÎÄÑÊÎÌÓ ÖÅÍÒĞÓ\n");
+		this->getUpperCaseReadableName() + *Texts::get()->get("does_not_lead_to_city_center"));
 	Event events;
 	events.createE.push_back(w);
 	return events;

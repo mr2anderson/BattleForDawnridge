@@ -36,42 +36,7 @@ std::wstring Building::getUpperCaseReadableName() const {
 	return n;
 }
 wchar_t Building::TO_UPPER(wchar_t a) {
-	switch (a) {
-	case L'й': { return L'Й';}
-	case L'ц': {return L'Ц';}
-	case L'у': {return L'У';}
-	case L'к': {return L'К';}
-	case L'е': {return L'Е';}
-	case L'н': {return L'Н';}
-	case L'г': {return L'Г';}
-	case L'ш': {return L'Ш';}
-	case L'щ': {return L'Щ';}
-	case L'з': {return L'З'; }
-	case L'х': {return L'Х';}
-	case L'ъ': {return L'Ъ';}
-	case L'ф': {return L'Ф';}
-	case L'ы': {return L'Ы';}
-	case L'в': {return L'В';}
-	case L'а': {return L'А';}
-	case L'п': {return L'П';}
-	case L'р': {return L'Р';}
-	case L'о': {return L'О';}
-	case L'л': {return L'Л';}
-	case L'д': {return L'Д';}
-	case L'ж': {return L'Ж';}
-	case L'э': {return L'Э';}
-	case L'я': {return L'Я';}
-	case L'ч': {return L'Ч';}
-	case L'с': {return L'С';}
-	case L'м': {return L'М';}
-	case L'и': {return L'И';}
-	case L'т': {return L'Т';}
-	case L'ь': {return L'Ь';}
-	case L'б': {return L'Б';}
-	case L'ю': {return L'Ю';}
-	case L'ё': {return L'Ё';}
-	default: {return a;}
-	}
+	return a;
 }
 Event Building::regenerate() {
 	Event events;
@@ -85,5 +50,5 @@ Event Building::regenerate() {
 	return events;
 }
 std::wstring Building::getReadableRegenerationSpeed() const {
-	return L"Скорость строительства: " + std::to_wstring(this->getRegenerationSpeed()) + L" ед. / ход";
+	return *Texts::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("p_per_move");
 }
