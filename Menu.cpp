@@ -49,17 +49,17 @@ Map* Menu::run(sf::RenderWindow& window) {
                             return map;
                         }
                         catch (CouldntOpenMap &e) {
-                            this->element = new WindowButtonSounds("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK"));
+                            this->element = new WindowButton("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK"));
                         }
                     }
                     if (this->supportButton.click()) {
-                        this->element = new WindowButtonSounds("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
+                        this->element = new WindowButton("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
                     }
                     if (this->creditsButton.click()) {
-                        this->element = new WindowButtonSounds("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
+                        this->element = new WindowButton("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
                     }
                     if (this->licenseButton.click()) {
-                        this->element = new WindowButtonSounds("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 375);
+                        this->element = new WindowButton("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 375);
                     }
                     if (this->exitButton.click()) {
                         return nullptr;

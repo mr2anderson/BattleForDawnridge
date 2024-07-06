@@ -32,7 +32,7 @@ bool HpSensitiveB::repairing() const {
 }
 Event HpSensitiveB::handleRepairing() const {
 	Event events;
-	WindowButton* window = new WindowButtonSounds(this->getSoundName(), "click",
+	WindowButton* window = new WindowButton(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("building_in_progress") + L'\n'
 		+ this->getReadableHpInfo() + L'\n'
 		+ this->getReadableRegenerationSpeed(), *Texts::get()->get("OK"));

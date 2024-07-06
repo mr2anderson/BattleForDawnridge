@@ -20,10 +20,12 @@
 #include "WindowButton.hpp"
 
 
-WindowButton::WindowButton(const std::wstring& message, const std::wstring &buttonText, uint32_t w, uint32_t h) :
+WindowButton::WindowButton(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w, uint32_t h) :
 	PopUpElement() {
     this->w = w;
     this->h = h;
+    this->soundName1 = soundName1;
+    this->soundName2 = soundName2;
 	this->message = message;
     this->buttonText = buttonText;
 }
@@ -34,17 +36,23 @@ Event WindowButton::run(uint32_t windowW, uint32_t windowH) {
 	this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
 	this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText));
 
-	return this->PopUpElement::run(windowW, windowH);
+	Event event = this->PopUpElement::run(windowW, windowH);
+    event.playSound.push_back(this->soundName1);
+    return event;
 }
 void WindowButton::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);
 	target.draw(button, states);
 }
 Event WindowButton::click() {
+    Event event;
 	if (this->button.click()) {
+        if (!this->soundName2.empty()) {
+            event.playSound.push_back(this->soundName1);
+        }
 		this->finish();
 	}
-	return Event();
+	return event;
 }
 void WindowButton::update() {
 

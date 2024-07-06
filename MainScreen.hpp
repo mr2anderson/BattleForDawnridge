@@ -34,7 +34,7 @@
 #include "PlainsGeneration.hpp"
 #include "BuildingMode.hpp"
 #include "Sounds.hpp"
-#include "WindowButtonEndingSound.hpp"
+#include "WindowButton.hpp"
 
 
 #pragma once

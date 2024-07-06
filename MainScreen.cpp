@@ -131,7 +131,7 @@ void MainScreen::handleTryToTradeEvent(const Event& e) {
 			this->handleEvent(m->doTrade(t));
 		}
 		else {
-			WindowButton* w = new WindowButtonSounds("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
+			WindowButton* w = new WindowButton("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -183,7 +183,7 @@ void MainScreen::handleTryToUpgradeEvent(const Event& e) {
 			this->handleEvent(b->startUpgrade());
 		}
 		else {
-			WindowButton* w = new WindowButtonSounds("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
+			WindowButton* w = new WindowButton("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -216,7 +216,7 @@ void MainScreen::handleTryToBuild(const Event& e) {
 			this->addPopUpWindow(new BuildingMode(a, this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()));
 		}
 		else {
-			WindowButton* w = new WindowButtonEndingSound("click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
+			WindowButton* w = new WindowButton("", "click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 			delete a;
 		}
