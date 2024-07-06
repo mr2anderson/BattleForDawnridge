@@ -29,11 +29,11 @@ public:
 	Mountains();
 	Mountains(uint32_t x, uint32_t y);
 
-	Event newMove(const Player& currentPlayer) override;
+	Event newMove(Player* currentPlayer) override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 	bool exist() const override;
 private:
-	Event getGameObjectResponse(const Player& currentPlayer) override;
+	Event getGameObjectResponse(Player* currentPlayer) override;
 };

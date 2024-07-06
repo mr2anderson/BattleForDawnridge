@@ -29,9 +29,9 @@
 class ResourceB : public UpgradeableB, public HpSensitiveB, public AreaB {
 public:
 	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
+	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
 
-	Event newMove(const Player& currentPlayer) override;
+	Event newMove(Player* currentPlayer) override;
 	bool works() const override;
 protected:
 	uint32_t getCollectionSpeed() const;
@@ -47,5 +47,5 @@ private:
 
 	Event collectResources();
 	Event getSelectionW();
-	Event getGameObjectResponse(const Player& player) override;
+	Event getGameObjectResponse(Player* player) override;
 };

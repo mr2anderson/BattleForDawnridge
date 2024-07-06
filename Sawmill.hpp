@@ -26,7 +26,7 @@
 class Sawmill : public ResourceB {
 public:
 	Sawmill();
-	Sawmill(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
+	Sawmill(uint32_t x, uint32_t y, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
 
 	Resources getCost() const override;
 	std::string getTextureName() const override;

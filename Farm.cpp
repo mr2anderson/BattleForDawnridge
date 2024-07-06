@@ -22,12 +22,12 @@
 
 
 Farm::Farm() = default;
-Farm::Farm(uint32_t x, uint32_t y, const Player* playerPtr) : 
+Farm::Farm(uint32_t x, uint32_t y, Player* playerPtr) : 
 	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
 	Building(x, y, 3, 3, 10000, playerPtr){}
-Event Farm::newMove(const Player& player) {	
-	if (this->belongTo(&player) and this->exist()) {
+Event Farm::newMove(Player* player) {	
+	if (this->belongTo(player) and this->exist()) {
 		Event response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
 			return response;
@@ -97,11 +97,11 @@ Event Farm::collectFood() const {
 	responce.createE.push_back(element);
 	return responce;
 }
-Event Farm::getGameObjectResponse(const Player& player) {
+Event Farm::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
 		return Event();
 	}
-	if (this->belongTo(&player)) {
+	if (this->belongTo(player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}

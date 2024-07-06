@@ -21,7 +21,7 @@
 
 
 Building::Building() = default;
-Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* playerPtr) : 
+Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* playerPtr) : 
 	Unit(x, y, sx, sy, 1, maxHp, playerPtr) {
 }
 bool Building::works() const {

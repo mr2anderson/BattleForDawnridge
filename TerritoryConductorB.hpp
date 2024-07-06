@@ -27,9 +27,9 @@
 class TerritoryConductorB : public TerritoryB {
 public:
 	TerritoryConductorB();
-	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
+	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* player, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
 	
-	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const Player& player) const override;
+	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, Player* player) const override;
 	Event getHighlightEvent() const override;
 protected:
 	bool conducted() const;

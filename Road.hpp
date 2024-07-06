@@ -27,8 +27,8 @@
 class Road : public TerritoryConductorB {
 public:
 	Road();
-	Road(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
-	Event newMove(const Player& player) override;
+	Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
+	Event newMove(Player* player) override;
 
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -39,5 +39,5 @@ private:
 	std::wstring getReadableName() const override;
 	uint32_t getRadius() const override;
 	Event getSelectionW();
-	Event getGameObjectResponse(const Player& player) override;
+	Event getGameObjectResponse(Player* player) override;
 };

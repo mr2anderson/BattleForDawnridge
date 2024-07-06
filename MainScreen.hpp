@@ -57,7 +57,7 @@ private:
 	static MainScreen* singletone;
 
 	std::queue<PopUpElement*> elements;
-	Player players[2];
+	Player* players[2];
 	uint32_t move = 0;
 	std::vector<GO*> *gameObjects;
 	std::vector<Unit*> *units;
@@ -73,12 +73,12 @@ private:
 	Button endMoveButton;
 	Button buildButton;
 
-	void init(sf::RenderWindow &window);
-	void initMap(const std::string &name);
-	void initPlayers();
-	void initMoveCtr();
-	void initHighlightTable();
-	void initGraphics(sf::RenderWindow &window);
+	void reset(sf::RenderWindow &window);
+	void resetPlayers();
+	void resetMap(const std::string &name);
+	void resetMoveCtr();
+	void resetHighlightTable();
+	void resetGraphics(sf::RenderWindow &window);
 
 	void handleEvent(const Event& e);
 	void handleTryToAttackEvent(const Event& e);

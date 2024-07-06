@@ -21,7 +21,7 @@
 
 
 TerritoryOriginB::TerritoryOriginB() = default;
-TerritoryOriginB::TerritoryOriginB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player* player) :
+TerritoryOriginB::TerritoryOriginB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* player) :
 	TerritoryB(x, y, sx, sy, maxHp, player),
 	Building(x, y, sx, sy, maxHp, player) {
 }

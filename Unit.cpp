@@ -20,13 +20,14 @@
 #include "Unit.hpp"
 
 
+
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player* playerPtr) : 
+Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, Player* playerPtr) : 
 	HPGO(x, y, sx, sy, currentHp, maxHp) {
 	this->playerPtr = playerPtr;
 
 }
-bool Unit::belongTo(const Player* player) const {
+bool Unit::belongTo(Player* player) const {
 	return (*this->playerPtr == *player);
 }
 Event Unit::getUnitOfEnemyResponse() {
@@ -34,6 +35,6 @@ Event Unit::getUnitOfEnemyResponse() {
 	gEvent.tryToAttack.push_back(this);
 	return gEvent;
 }
-const Player* Unit::getPlayer() const {
+Player* Unit::getPlayer() const {
 	return this->playerPtr;
 }

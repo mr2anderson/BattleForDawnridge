@@ -27,14 +27,14 @@
 class Unit : public HPGO {
 public:
 	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, const Player *playerPtr);
+	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, Player *playerPtr);
 
-	bool belongTo(const Player* player) const;
+	bool belongTo(Player* player) const;
 
 	virtual Resources getCost() const = 0;
 protected:
 	Event getUnitOfEnemyResponse();
-	const Player* getPlayer() const;
+	Player* getPlayer() const;
 private:
-	const Player* playerPtr;
+	Player* playerPtr;
 };

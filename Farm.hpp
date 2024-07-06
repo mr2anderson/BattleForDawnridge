@@ -28,9 +28,9 @@
 class Farm : public UpgradeableB, public HpSensitiveB {
 public:
 	Farm();
-	Farm(uint32_t x, uint32_t y, const Player* playerPtr);
+	Farm(uint32_t x, uint32_t y, Player* playerPtr);
 
-	Event newMove(const Player& currentPlayer) override;
+	Event newMove(Player* currentPlayer) override;
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -44,6 +44,6 @@ private:
 	static uint32_t GET_COLLECTION_SPEED(uint32_t level);
 	uint32_t getCollectionSpeed() const;
 	Event collectFood() const;
-	Event getGameObjectResponse(const Player& player) override;
+	Event getGameObjectResponse(Player* player) override;
 	Event getSelectionW();
 };

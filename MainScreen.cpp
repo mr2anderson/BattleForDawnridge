@@ -20,11 +20,12 @@
 #include "MainScreen.hpp"
 
 
+
 MainScreen* MainScreen::singletone = nullptr;
 
 
 int32_t MainScreen::run(sf::RenderWindow& window) {
-	this->init(window);
+	this->reset(window);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
@@ -66,21 +67,41 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 		}
 	}
 }
-void MainScreen::init(sf::RenderWindow& window) {
-	this->initMap("ridge");
-	this->initPlayers();
-	this->initMoveCtr();
-	this->initHighlightTable();
-	this->initGraphics(window);
+void MainScreen::reset(sf::RenderWindow& window) {
+	this->resetPlayers();
+	this->resetMap("ridge");
+	this->resetMoveCtr();
+	this->resetHighlightTable();
+	this->resetGraphics(window);
 	this->changeMove();
 }
-void MainScreen::initMap(const std::string& name) {
-	this->gameObjects = new std::vector<GO*>;
-	this->units = new std::vector<Unit*>;
-	this->resourcePoints = new std::vector<ResourcePoint*>;
-	this->territoryBuildings = new std::vector<TerritoryB*>;
-	this->territoryOrigins = new std::vector<TerritoryOriginB*>;
-	this->territoryConductors = new std::vector<TerritoryConductorB*>;
+void MainScreen::resetPlayers() {
+	if (this->players[0] != nullptr) {
+		delete this->players[0];
+		delete this->players[1];
+	}
+	this->players[0] = new Player(1);
+	this->players[1] = new Player(2);
+}
+void MainScreen::resetMap(const std::string& name) {
+	if (this->gameObjects != nullptr) {
+		for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
+			delete this->gameObjects->at(i);
+		}
+		delete this->gameObjects;
+		delete this->units;
+		delete this->resourcePoints;
+		delete this->territoryBuildings;
+		delete this->territoryOrigins;
+		delete this->territoryConductors;
+	}
+	
+	this->gameObjects = new std::vector<GO*>();
+	this->units = new std::vector<Unit*>();
+	this->resourcePoints = new std::vector<ResourcePoint*>();
+	this->territoryBuildings = new std::vector<TerritoryB*>();
+	this->territoryOrigins = new std::vector<TerritoryOriginB*>();
+	this->territoryConductors = new std::vector<TerritoryConductorB*>();
 
 	std::ifstream file(std::string(ROOT) + "/" + name + ".tmx");
 	std::string line;
@@ -106,7 +127,7 @@ void MainScreen::initMap(const std::string& name) {
 				this->add(new Forest(x, y));
 			}
 			else if (word == "1") {
-				Castle* c = new Castle(x, y, &this->players[currentPlayerId]);
+				Castle* c = new Castle(x, y, this->players[currentPlayerId]);
 				c->setMaxHp();
 				this->add(c);
 				currentPlayerId = currentPlayerId + 1;
@@ -128,20 +149,18 @@ void MainScreen::initMap(const std::string& name) {
 
 	this->plains = PlainsGeneration(x + 1, y + 1);
 }
-void MainScreen::initPlayers() {
-	this->players[0] = Player(1);
-	this->players[1] = Player(2);
-	return;
-}
-void MainScreen::initMoveCtr() {
+void MainScreen::resetMoveCtr() {
 	this->move = 0;
 }
-void MainScreen::initHighlightTable() {
+void MainScreen::resetHighlightTable() {
 	this->highlightTable.clear();
 }
-void MainScreen::initGraphics(sf::RenderWindow &window) {
+void MainScreen::resetGraphics(sf::RenderWindow &window) {
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
+	if (this->view != nullptr) {
+		delete this->view;
+	}
 	this->view = new sf::View(window.getDefaultView());
 	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, L"Конец хода");
 	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", L"");
@@ -315,7 +334,7 @@ void MainScreen::changeMove() {
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		this->handleEvent(this->gameObjects->at(i)->newMove(*this->getCurrentPlayer()));
+		this->handleEvent(this->gameObjects->at(i)->newMove(this->getCurrentPlayer()));
 	}
 }
 void MainScreen::createBuildMenu() {
@@ -365,13 +384,13 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
 		
 }
 Player* MainScreen::getCurrentPlayer() {
-	return &this->players[(move - 1) % 2];
+	return this->players[(move - 1) % 2];
 }
 void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
 	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		this->handleEvent(this->gameObjects->at(i)->click(*this->getCurrentPlayer(), mouseX, mouseY));
+		this->handleEvent(this->gameObjects->at(i)->click(this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
 void MainScreen::addPopUpWindows(std::queue<PopUpElement*> q) {

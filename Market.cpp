@@ -21,7 +21,7 @@
 
 
 Market::Market() = default;
-Market::Market(uint32_t x, uint32_t y, const Player *playerPtr) : 
+Market::Market(uint32_t x, uint32_t y, Player *playerPtr) : 
 	UpgradeableB(x, y, 3, 3, 30000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 30000, playerPtr),
 	Building(x, y, 3, 3, 30000, playerPtr) {
@@ -52,8 +52,8 @@ Event Market::doTrade(const Trade& trade) {
 void Market::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 }
-Event Market::newMove(const Player& currentPlayer) {
-	if (!this->belongTo(&currentPlayer) or !this->exist()) {
+Event Market::newMove(Player* currentPlayer) {
+	if (!this->belongTo(currentPlayer) or !this->exist()) {
 		return Event();
 	}
 	Event response = this->handleCurrentUpgrade();
@@ -206,11 +206,11 @@ Event Market::handleBusyWithTrade() const {
 	response.createE.push_back(window);
 	return response;
 }
-Event Market::getGameObjectResponse(const Player& player) {
+Event Market::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
 		return Event();
 	}
-	if (this->belongTo(&player)) {
+	if (this->belongTo(player)) {
 		if (this->repairing()) {
 			return this->handleRepairing();
 		}

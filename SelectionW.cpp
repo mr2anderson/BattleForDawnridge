@@ -18,7 +18,7 @@
 
 
 #include "SelectionW.hpp"
-#include <iostream>
+
 
 
 SelectionW::SelectionW(const std::string &soundName1, const std::string &soundName2, const std::vector<SelectionWComponent> &components) : 

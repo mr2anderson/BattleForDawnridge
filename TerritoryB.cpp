@@ -24,14 +24,14 @@
 
 
 TerritoryB::TerritoryB() = default;
-TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, const Player *player) : 
+TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player *player) : 
 	AreaB(x, y, sx, sy, maxHp, player),
 	HpSensitiveB(x, y, sx, sy, maxHp, player),
 	Building(x, y, sx, sy, maxHp, player) {
 
 }
-bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const Player& player) const {
-	if (!this->works() or !this->belongTo(&player)) {
+bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, Player* player) const {
+	if (!this->works() or !this->belongTo(player)) {
 		return false;
 	}
 	return this->inRadius(x, y, sx, sy);

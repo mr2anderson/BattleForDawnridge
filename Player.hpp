@@ -29,8 +29,8 @@ public:
 	Player(uint32_t id);
 
 	uint32_t getId() const;
-	friend bool operator==(const Player& a, const Player& b);
-	friend bool operator!=(const Player& a, const Player& b);
+	friend bool operator==(Player a, Player b);
+	friend bool operator!=(Player a, Player b);
 	const ResourceBar* getConstResourceBarPtr() const;
 	void addResource(const Resource &resource);
 	void subResource(const Resource &resource);

@@ -26,6 +26,12 @@ BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, st
 	this->go = go;
 	this->tb = tb;
 	this->player = player;
+	this->returnedPtr = false;
+}
+BuildingMode::~BuildingMode() {
+	if (!this->returnedPtr) {
+		delete this->b;
+	}
 }
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
@@ -66,6 +72,7 @@ Event BuildingMode::click() {
 	gEvent.build.push_back(this->b);
 	gEvent.subResources.push_back(this->b->getCost());
 	gEvent.playSound.push_back(this->b->getSoundName());
+	this->returnedPtr = true;
 	return gEvent;
 }
 bool BuildingMode::empty() const {
@@ -98,7 +105,7 @@ bool BuildingMode::controlled() const {
 	uint32_t sy = this->b->getSY();
 
 	for (uint32_t i = 0; i < tb->size(); i = i + 1) {
-		if (tb->at(i)->allowBuilding(x, y, sx, sy, *this->player)) {
+		if (tb->at(i)->allowBuilding(x, y, sx, sy, this->player)) {
 			return true;
 		}
 	}

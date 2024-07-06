@@ -28,14 +28,14 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, const Player* playerPtr) : 
+Castle::Castle(uint32_t x, uint32_t y, Player* playerPtr) : 
 	TerritoryOriginB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 }
-Event Castle::newMove(const Player& player) {
+Event Castle::newMove(Player* player) {
 	Event response;
-	if (this->belongTo(&player) and this->exist()) {
+	if (this->belongTo(player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
@@ -111,11 +111,11 @@ Event Castle::getSelectionW() {
 
 	return response;
 }
-Event Castle::getGameObjectResponse(const Player& player) {
+Event Castle::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
 		return Event();
 	}
-	if (this->belongTo(&player)) {
+	if (this->belongTo(player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}

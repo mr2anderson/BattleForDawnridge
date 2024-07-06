@@ -28,14 +28,14 @@ const uint32_t Wall::LEVEL_HP[Wall::TOTAL_LEVELS] = {
 
 
 Wall::Wall() = default;
-Wall::Wall(uint32_t x, uint32_t y, const Player* playerPtr) :
+Wall::Wall(uint32_t x, uint32_t y, Player* playerPtr) :
 	UpgradeableB(x, y, 2, 2, LEVEL_HP[0], playerPtr),
 	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
 
 }
-Event Wall::newMove(const Player& player) {
+Event Wall::newMove(Player* player) {
 	Event response;
-	if (this->belongTo(&player) and this->exist()) {
+	if (this->belongTo(player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
@@ -105,8 +105,8 @@ Event Wall::getSelectionW() {
 
 	return response;
 }
-Event Wall::getGameObjectResponse(const Player& player) {
-	if (this->belongTo(&player)) {
+Event Wall::getGameObjectResponse(Player* player) {
+	if (this->belongTo(player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}

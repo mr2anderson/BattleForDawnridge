@@ -21,13 +21,13 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, const Player* playerPtr, std::vector<TerritoryOriginB*>* originsPtr, std::vector<TerritoryConductorB*>* conductorsPtr) :
+Road::Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOriginB*>* originsPtr, std::vector<TerritoryConductorB*>* conductorsPtr) :
 	TerritoryConductorB(x, y, 1, 1, 1000, playerPtr, originsPtr, conductorsPtr),
 	Building(x, y, 1, 1, 1000, playerPtr) {
 	
 }
-Event Road::newMove(const Player& player) {
-	if (this->belongTo(&player) and this->exist()) {
+Event Road::newMove(Player* player) {
+	if (this->belongTo(player) and this->exist()) {
 		return this->regenerate();
 	}
 	return Event();
@@ -69,11 +69,11 @@ Event Road::getSelectionW() {
 
 	return response;
 }
-Event Road::getGameObjectResponse(const Player& player) {
+Event Road::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
 		return Event();
 	}
-	if (this->belongTo(&player)) {
+	if (this->belongTo(player)) {
 		if (this->repairing()) {
 			return this->handleRepairing();
 		}
