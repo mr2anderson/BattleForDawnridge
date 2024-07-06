@@ -23,7 +23,7 @@
 PAKScreen* PAKScreen::singletone = nullptr;
 
 
-int32_t PAKScreen::run(sf::RenderWindow &window) {
+bool PAKScreen::run(sf::RenderWindow &window) {
 	Music::get()->get("intro")->play();
 	this->initGraphics(window.getSize().x, window.getSize().y);
 	sf::Clock clock;
@@ -31,15 +31,15 @@ int32_t PAKScreen::run(sf::RenderWindow &window) {
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
-				return -1;
+				return false;
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				auto code = event.key.code;
 				if (code == sf::Keyboard::Escape) {
-					return -1;
+					return false;
 				}
 				Music::get()->get("intro")->stop();
-				return 0;
+				return true;
 			}
 		}
 		this->drawEverything(window);

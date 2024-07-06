@@ -17,25 +17,16 @@
  */
 
 
-#include "PopUpElement.hpp"
-#include "Button.hpp"
+#include "Maps.hpp"
 
 
-#pragma once
+Maps* Maps::singletone = nullptr;
 
 
-class MessageW : public PopUpElement {
-public:
-	MessageW(const std::string& soundName1, const std::string& soundName2, const std::wstring& message);
-
-	Event run(uint32_t windowW, uint32_t windowH) override;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Event click() override;
-	void update() override;
-private:
-	std::string soundName1;
-	std::string soundName2;
-	std::wstring message;
-	Label label;
-	Button button;
-};
+void Maps::addPath(const std::string &name, const std::string &path) {
+    this->data[name] = path;
+}
+Map* Maps::load(const std::string& name) {
+    Map* map = new Map(this->data[name]);
+    return map;
+}

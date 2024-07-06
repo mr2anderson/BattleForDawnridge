@@ -17,34 +17,35 @@
  */
 
 
-#include "MessageW.hpp"
+#include "SimpleWindow.hpp"
 
 
-MessageW::MessageW(const std::string &soundName1, const std::string &soundName2, const std::wstring& message) : 
+SimpleWindow::SimpleWindow(const std::string &soundName1, const std::string &soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w, uint32_t h) :
 	PopUpElement() {
+    this->w = w;
+    this->h = h;
 	this->soundName1 = soundName1;
 	this->soundName2 = soundName2;
 	this->message = message;
+    this->buttonText = buttonText;
 }
-Event MessageW::run(uint32_t windowW, uint32_t windowH) {
-	uint32_t w = 400;
-	uint32_t h = 225;
-	uint32_t buttonW = 50;
-	uint32_t buttonH = 28;
+Event SimpleWindow::run(uint32_t windowW, uint32_t windowH) {
+	uint32_t buttonW = 75;
+	uint32_t buttonH = 30;
 
-	this->label = Label((windowW - w) / 2, (windowH - h) / 2, w, h, std::nullopt, message);
-	this->button = Button((windowW - w) / 2 + (w - buttonW) / 2, (windowH - h) / 2 + h - buttonH - 10, buttonW, buttonH, std::nullopt, *Texts::get()->get("OK"));
+	this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, std::nullopt, message);
+	this->button = Button((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, std::nullopt, buttonText);
 
 	Event soundEvent;
 	soundEvent.playSound.push_back(this->soundName1);
 
 	return this->PopUpElement::run(windowW, windowH) + soundEvent;
 }
-void MessageW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void SimpleWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);
 	target.draw(button, states);
 }
-Event MessageW::click() {
+Event SimpleWindow::click() {
 	uint32_t x = sf::Mouse::getPosition().x;
 	uint32_t y = sf::Mouse::getPosition().y;
 	if (this->button.click(x, y)) {
@@ -55,6 +56,6 @@ Event MessageW::click() {
 	}
 	return Event();
 }
-void MessageW::update() {
+void SimpleWindow::update() {
 
 }

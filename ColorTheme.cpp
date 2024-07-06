@@ -17,10 +17,8 @@
  */
 
 
-#include <string>
+#include "ColorTheme.hpp"
 
 
-#pragma once
-
-
-extern const std::string ROOT;
+const sf::Color UI_COLOR = sf::Color(20, 20, 20);
+const sf::Color CELL_COLOR_HIGHLIGHTED = sf::Color(0, 0, 0, 120);

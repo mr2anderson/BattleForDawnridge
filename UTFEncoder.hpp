@@ -18,9 +18,25 @@
 
 
 #include <string>
+#include <vector>
+#include <stdexcept>
 
 
 #pragma once
 
 
-extern const std::string ROOT;
+class UTFEncoder {
+public:
+    static UTFEncoder *get() {
+        if (UTFEncoder::singletone == nullptr) {
+            UTFEncoder::singletone = new UTFEncoder();
+        }
+        return UTFEncoder::singletone;
+    }
+
+    std::wstring utf8ToUtf16(const std::string& utf8);
+private:
+    UTFEncoder() = default;
+    UTFEncoder(const UTFEncoder& copy);
+    static UTFEncoder *singletone;
+};

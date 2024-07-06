@@ -17,10 +17,12 @@
  */
 
 
-#include <string>
+#include "CouldntOpenMap.hpp"
 
 
-#pragma once
+CouldntOpenMap::CouldntOpenMap(const std::string &path) : CouldntOpen(path) {
 
-
-extern const std::string ROOT;
+}
+std::string CouldntOpenMap::getUpperCaseResourceReadableName() const {
+    return "MAP";
+}

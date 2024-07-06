@@ -22,7 +22,7 @@
 #include "SoundQueue.hpp"
 #include "Playlist.hpp"
 #include "ColorTheme.hpp"
-#include "Button.hpp"
+#include "SimpleWindow.hpp"
 
 
 #pragma once
@@ -37,7 +37,7 @@ public:
 		return Menu::singletone;
 	}
 
-	int32_t run(sf::RenderWindow& window);
+	std::string run(sf::RenderWindow& window);
 private:
 	Menu() {
 		this->graphicsInited = false;
@@ -46,11 +46,18 @@ private:
 	static Menu* singletone;
 
 	bool graphicsInited;
-	Label license;
-	Button start2on1pc;
-	Button exit;
+    PopUpElement *element;
+	Button start2on1pcButton;
+    Button supportButton;
+    Button creditsButton;
+    Button licenseButton;
+	Button exitButton;
 	sf::Text title;
 
 	void initGraphics(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
+
+    void handleEvent(const Event &e);
+
+    void handleSoundEvent(const Event &e);
 };

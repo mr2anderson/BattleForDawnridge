@@ -17,10 +17,7 @@
  */
 
 
-#include <string>
+#include "Root.hpp"
 
 
-#pragma once
-
-
-extern const std::string ROOT;
+const std::string ROOT = "../resources";

@@ -24,15 +24,11 @@ Music *Music::singletone = nullptr;
 
 
 void Music::add(const std::string& name, const std::string& path) {
-    if (this->music.find(name) != this->music.end()) {
-        std::cerr << "Music: warning: id '" << name << "' already exists. Redefinition" << std::endl;
+    if (!this->music[name].openFromFile(std::string(ROOT) + "/" + path)) {
+        throw CouldntOpenMusic(path);
     }
-    this->music[name].openFromFile(std::string(ROOT) + "/" + path);
 }
 sf::Music *Music::get(const std::string& name) {
     auto it = this->music.find(name);
-    if (it == this->music.end()) {
-        std::cerr << "Music: warning: couldn't find " << name << std::endl;
-    }
     return &it->second;
 }

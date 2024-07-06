@@ -17,10 +17,12 @@
  */
 
 
-#include <string>
+#include "LoadingError.hpp"
 
 
-#pragma once
-
-
-extern const std::string ROOT;
+LoadingError::LoadingError(const std::string &path) {
+    this->path = path;
+}
+std::string LoadingError::getPath() const {
+    return this->path;
+}

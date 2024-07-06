@@ -32,10 +32,10 @@ bool HpSensitiveB::repairing() const {
 }
 Event HpSensitiveB::handleRepairing() const {
 	Event events;
-	MessageW* window = new MessageW(this->getSoundName(), "click",
+	SimpleWindow* window = new SimpleWindow(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("building_in_progress") + L'\n'
 		+ this->getReadableHpInfo() + L'\n'
-		+ this->getReadableRegenerationSpeed());
+		+ this->getReadableRegenerationSpeed(), *Texts::get()->get("OK"));
 	events.createE.push_back(window);
 	return events;
 }

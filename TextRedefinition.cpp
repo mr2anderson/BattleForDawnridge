@@ -17,10 +17,14 @@
  */
 
 
-#include <string>
+#include "TextRedefinition.hpp"
 
 
-#pragma once
-
-
-extern const std::string ROOT;
+TextRedefinition::TextRedefinition(const std::string &path, const std::string &id) : LoadingError(path) {
+    this->id = id;
+}
+std::string TextRedefinition::msg() const {
+    return
+        "COULDN'T LOAD TEXT\n"
+        "Multiple definition of id '" + this->id + "' in " + this->getPath() + ".";
+}

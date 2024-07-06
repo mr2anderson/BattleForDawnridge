@@ -19,7 +19,6 @@
 
 
 #include "Texts.hpp"
-#include <iostream>
 
 
 Texts* Texts::singletone = nullptr;
@@ -28,7 +27,7 @@ Texts* Texts::singletone = nullptr;
 void Texts::load(const std::string &path) {
     std::ifstream file(std::string(ROOT) + "/" + path);
     if (!file.is_open()) {
-        std::cerr << "Texts : warning: invalid file" << std::endl;
+        throw CouldntOpenText(path);
     }
 
     std::string current;
@@ -62,7 +61,7 @@ void Texts::load(const std::string &path) {
                 currentData.pop_back();
             }
             if (this->texts.find(currentId) != this->texts.end()) {
-                std::cerr << "Texts: warning: id '" << currentId << "' already exists. Redefinition" << std::endl;
+                throw TextRedefinition(path, currentId);
             }
             this->texts[currentId] = currentData;
             
@@ -73,86 +72,12 @@ void Texts::load(const std::string &path) {
             currentId = currentId + current + '\n';
         }
         else if (gettingData) {
-            currentData = currentData + UTF8_TO_UTF16(current + '\n');
+            currentData = currentData + UTFEncoder::get()->utf8ToUtf16(current + '\n');
         }
     }
 
     file.close();
 }
 std::wstring* Texts::get(const std::string& name) {
-    if (this->texts.find(name) == this->texts.end()) {
-        std::cerr << "Texts: error: id '" << name << "' does not exit" << std::endl;
-    }
     return &this->texts[name];
-}
-std::wstring Texts::UTF8_TO_UTF16(const std::string& utf8)
-{
-    std::vector<unsigned long> unicode;
-    size_t i = 0;
-    while (i < utf8.size())
-    {
-        unsigned long uni;
-        size_t todo;
-        bool error = false;
-        unsigned char ch = utf8[i++];
-        if (ch <= 0x7F)
-        {
-            uni = ch;
-            todo = 0;
-        }
-        else if (ch <= 0xBF)
-        {
-            throw std::logic_error("not a UTF-8 string");
-        }
-        else if (ch <= 0xDF)
-        {
-            uni = ch & 0x1F;
-            todo = 1;
-        }
-        else if (ch <= 0xEF)
-        {
-            uni = ch & 0x0F;
-            todo = 2;
-        }
-        else if (ch <= 0xF7)
-        {
-            uni = ch & 0x07;
-            todo = 3;
-        }
-        else
-        {
-            throw std::logic_error("not a UTF-8 string");
-        }
-        for (size_t j = 0; j < todo; ++j)
-        {
-            if (i == utf8.size())
-                throw std::logic_error("not a UTF-8 string");
-            unsigned char ch = utf8[i++];
-            if (ch < 0x80 || ch > 0xBF)
-                throw std::logic_error("not a UTF-8 string");
-            uni <<= 6;
-            uni += ch & 0x3F;
-        }
-        if (uni >= 0xD800 && uni <= 0xDFFF)
-            throw std::logic_error("not a UTF-8 string");
-        if (uni > 0x10FFFF)
-            throw std::logic_error("not a UTF-8 string");
-        unicode.push_back(uni);
-    }
-    std::wstring utf16;
-    for (size_t i = 0; i < unicode.size(); ++i)
-    {
-        unsigned long uni = unicode[i];
-        if (uni <= 0xFFFF)
-        {
-            utf16 += (wchar_t)uni;
-        }
-        else
-        {
-            uni -= 0x10000;
-            utf16 += (wchar_t)((uni >> 10) + 0xD800);
-            utf16 += (wchar_t)((uni & 0x3FF) + 0xDC00);
-        }
-    }
-    return utf16;
 }

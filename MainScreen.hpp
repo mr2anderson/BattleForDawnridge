@@ -20,9 +20,6 @@
 #include <fstream>
 #include <queue>
 #include "Playlist.hpp"
-#include "Forest.hpp"
-#include "Stone.hpp"
-#include "Iron.hpp"
 #include "Castle.hpp"
 #include "Market.hpp"
 #include "Farm.hpp"
@@ -31,7 +28,7 @@
 #include "Mine.hpp"
 #include "Wall.hpp"
 #include "Road.hpp"
-#include "Mountains.hpp"
+#include "Maps.hpp"
 #include "SoundQueue.hpp"
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"
@@ -50,21 +47,15 @@ public:
 		return MainScreen::singletone;
 	}
 
-	int32_t run(sf::RenderWindow& window);
+	bool run(const std::string &mapName, sf::RenderWindow& window);
 private:
 	MainScreen() = default;
 	MainScreen(const MainScreen& copy) = delete;
 	static MainScreen* singletone;
 
+    Map *map;
 	std::queue<PopUpElement*> elements;
-	Player* players[2];
 	uint32_t move = 0;
-	std::vector<GO*> *gameObjects;
-	std::vector<Unit*> *units;
-	std::vector<ResourcePoint*> *resourcePoints;
-	std::vector<TerritoryB*> *territoryBuildings;
-	std::vector<TerritoryOriginB*> *territoryOrigins;
-	std::vector<TerritoryConductorB*> *territoryConductors;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
 
@@ -73,11 +64,11 @@ private:
 	Button endMoveButton;
 	Button buildButton;
 
-	void reset(sf::RenderWindow &window);
-	void resetPlayers();
-	void resetMap(const std::string &name);
+	void reset(const std::string& mapName, sf::RenderWindow &window);
+	void resetMap(const std::string &mapName);
 	void resetMoveCtr();
 	void resetHighlightTable();
+    void resetPlains();
 	void resetGraphics(sf::RenderWindow &window);
 
 	void handleEvent(const Event& e);
@@ -117,6 +108,4 @@ private:
 	void moveViewToSouth();
 	void moveViewToWest();
 	void moveViewToEast();
-
-	void add(GO* go);
 };

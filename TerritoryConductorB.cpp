@@ -60,8 +60,8 @@ bool TerritoryConductorB::conducted() const {
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
 Event TerritoryConductorB::getNotConductedResponce() const {
-	MessageW* w = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + *Texts::get()->get("does_not_lead_to_city_center"));
+	SimpleWindow* w = new SimpleWindow(this->getSoundName(), "click",
+		this->getUpperCaseReadableName() + *Texts::get()->get("does_not_lead_to_city_center"), *Texts::get()->get("OK"));
 	Event events;
 	events.createE.push_back(w);
 	return events;

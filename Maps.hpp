@@ -17,10 +17,28 @@
  */
 
 
-#include <string>
+#include <fstream>
+#include "Map.hpp"
 
 
 #pragma once
 
 
-extern const std::string ROOT;
+class Maps {
+public:
+    static Maps* get() {
+        if (Maps::singletone == nullptr) {
+            Maps::singletone = new Maps();
+        }
+        return Maps::singletone;
+    }
+
+    void addPath(const std::string &name, const std::string& path);
+    [[nodiscard]] Map* load(const std::string& name);
+private:
+    Maps() = default;
+    Maps(const Maps& copy);
+    static Maps* singletone;
+
+    std::unordered_map<std::string, std::string> data;
+};

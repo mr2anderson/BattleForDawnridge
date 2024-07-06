@@ -77,15 +77,15 @@ Event UpgradeableB::handleCurrentUpgrade() {
 }
 Event UpgradeableB::handleBusyWithUpgrading() const {
 	Event events;
-	MessageW* window = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_in_progress") + std::to_wstring(this->upgradeMovesLeft));
+	SimpleWindow* window = new SimpleWindow(this->getSoundName(), "click",
+		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_in_progress") + std::to_wstring(this->upgradeMovesLeft), *Texts::get()->get("OK"));
 	events.createE.push_back(window);
 	return events;
 }
 Event UpgradeableB::handleUpgradeStart() const {
 	Event events;
-	MessageW* window = new MessageW(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_started") + std::to_wstring(this->upgradeMovesLeft));
+	SimpleWindow* window = new SimpleWindow(this->getSoundName(), "click",
+		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_started") + std::to_wstring(this->upgradeMovesLeft), *Texts::get()->get("OK"));
 	events.createE.push_back(window);
 	return events;
 }

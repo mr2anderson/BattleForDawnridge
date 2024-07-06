@@ -17,10 +17,12 @@
  */
 
 
-#include <string>
+#include "CouldntOpenMusic.hpp"
 
 
-#pragma once
+CouldntOpenMusic::CouldntOpenMusic(const std::string &path) : CouldntOpen(path) {
 
-
-extern const std::string ROOT;
+}
+std::string CouldntOpenMusic::getUpperCaseResourceReadableName() const {
+    return "MUSIC";
+}

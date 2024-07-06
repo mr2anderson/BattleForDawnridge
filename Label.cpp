@@ -33,7 +33,7 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const std::optional
 		this->text.setString(message);
 		this->text.setPosition(
 			x + this->sprite.getLocalBounds().width * this->sprite.getScale().x + 5, 
-			y + 5);
+			y + h / 2 - this->text.getLocalBounds().height / 2);
 	}
 	else {
 		message = this->centerLines(message);

@@ -17,13 +17,16 @@
  */
 
 
+#include <iostream>
 #include "Textures.hpp"
 #include "Fonts.hpp"
 #include "Sounds.hpp"
 #include "Music.hpp"
 #include "Texts.hpp"
+#include "Maps.hpp"
 #include "ColorTheme.hpp"
 #include "PlainsGeneration.hpp"
+#include "SimpleWindow.hpp"
 
 
 #pragma once
@@ -38,14 +41,15 @@ public:
 		return LoadingScreen::singletone;
 	}
 
-	void run(sf::RenderWindow &window);
+	bool run(sf::RenderWindow &window);
 private:
 	LoadingScreen() = default;
 	LoadingScreen(const LoadingScreen& copy) = delete;
 	static LoadingScreen* singletone;
 
 	void setBaseScreen(sf::RenderWindow &window);
-	void loadBase();
+	bool loadBase(sf::RenderWindow &window);
 	void setNormalScreen(sf::RenderWindow& window);
-	void loadAll();
+	bool loadAll(sf::RenderWindow &window);
+    void loadingError(LoadingError *e, sf::RenderWindow &window);
 };

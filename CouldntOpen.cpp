@@ -17,10 +17,14 @@
  */
 
 
-#include <string>
+#include "CouldntOpen.hpp"
 
 
-#pragma once
+CouldntOpen::CouldntOpen(const std::string &path) : LoadingError(path) {
 
-
-extern const std::string ROOT;
+}
+std::string CouldntOpen::msg() const {
+    return
+            "COULDN'T OPEN " + this->getUpperCaseResourceReadableName() + "\n"
+            "Path: " + this->getPath();
+}

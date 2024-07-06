@@ -493,31 +493,44 @@ press_any_key
 <\DATA>
 
 <ID>
+show_support
 <\ID>
 <DATA>
+Поддержать
 <\DATA>
 
 <ID>
+show_credits
 <\ID>
 <DATA>
+Благодарности
 <\DATA>
 
 <ID>
+show_license
 <\ID>
 <DATA>
+Лицензия
 <\DATA>
 
 <ID>
+credits
 <\ID>
 <DATA>
+Никита Чеботарев (https://github.com/mr2anderson)
+Автор идеи, главный разработчик
 <\DATA>
 
 <ID>
+support
 <\ID>
 <DATA>
+Если Вам нравится Battle for Dawnridge, то Вы можете поддержать проект, отправив небольшую сумму на этот Bitcoin кошелек: bc1ql9np8zlq487lmxv60v9ukrp83gtjthvxupwexs
 <\DATA>
 
 <ID>
+close
 <\ID>
 <DATA>
+Закрыть
 <\DATA>

@@ -38,7 +38,7 @@ public:
 		return PAKScreen::singletone;
 	}
 
-	int32_t run(sf::RenderWindow &window);
+	bool run(sf::RenderWindow &window);
 private:
 	PAKScreen() = default;
 	PAKScreen(const PAKScreen& copy) = delete;

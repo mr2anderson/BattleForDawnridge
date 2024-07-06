@@ -19,8 +19,8 @@
 
 #include <unordered_map>
 #include <SFML/Audio.hpp>
-#include <iostream>
 #include "Root.hpp"
+#include "CouldntOpenSound.hpp"
 
 
 #pragma once

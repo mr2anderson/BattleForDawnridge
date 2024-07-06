@@ -17,10 +17,15 @@
  */
 
 
-#include <string>
+#include "CouldntOpen.hpp"
 
 
 #pragma once
 
 
-extern const std::string ROOT;
+class CouldntOpenMap : public CouldntOpen {
+public:
+    CouldntOpenMap(const std::string &path);
+private:
+    std::string getUpperCaseResourceReadableName() const override;
+};

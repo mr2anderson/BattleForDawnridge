@@ -51,13 +51,13 @@ void BuildingMode::update() {
 Event BuildingMode::click() {
 	this->finish();
 	if (!this->empty()) {
-		MessageW* w = new MessageW("click", "click", *Texts::get()->get("place_occupied"));
+		SimpleWindow* w = new SimpleWindow("click", "click", *Texts::get()->get("place_occupied"), *Texts::get()->get("OK"));
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
-		MessageW* w = new MessageW("click", "click", *Texts::get()->get("too_far_from_roads"));
+		SimpleWindow* w = new SimpleWindow("click", "click", *Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"));
 		Event uiEvent;
 		uiEvent.createE.push_back(w);
 		return this->getHighlightEvent() + uiEvent;

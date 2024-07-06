@@ -23,8 +23,10 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <iostream>
 #include "Root.hpp"
+#include "UTFEncoder.hpp"
+#include "CouldntOpenText.hpp"
+#include "TextRedefinition.hpp"
 
 
 #pragma once
@@ -47,6 +49,4 @@ private:
     static Texts* singletone;
 
     std::unordered_map<std::string, std::wstring> texts;
-
-    static std::wstring UTF8_TO_UTF16(const std::string& utf8);
 };

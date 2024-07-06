@@ -24,15 +24,11 @@ Fonts* Fonts::singletone = nullptr;
 
 
 void Fonts::add(const std::string& name, const std::string& path) {
-    if (this->fonts.find(name) != this->fonts.end()) {
-        std::cerr << "Fonts: warning: id '" << name << "' already exists. Redefinition" << std::endl;
+    if (!this->fonts[name].loadFromFile(std::string(ROOT) + "/" + path)) {
+        throw CouldntOpenFont(path);
     }
-    this->fonts[name].loadFromFile(std::string(ROOT) + "/" + path);
 }
 sf::Font* Fonts::get(const std::string& name) {
     auto it = this->fonts.find(name);
-    if (it == this->fonts.end()) {
-        std::cerr << "Fonts: warning: couldn't find " << name << std::endl;
-    }
     return &it->second;
 }

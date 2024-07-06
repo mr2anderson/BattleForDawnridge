@@ -23,20 +23,44 @@
 LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
-void LoadingScreen::run(sf::RenderWindow &window) {
+bool LoadingScreen::run(sf::RenderWindow &window) {
 	this->setBaseScreen(window);
-	this->loadBase();
+	if (!this->loadBase(window)) {
+        return false;
+    }
 
 	this->setNormalScreen(window);
-	this->loadAll();
+	if (!this->loadAll(window)) {
+        return false;
+    }
+
+    return true;
 }
 void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.clear(UI_COLOR);
 	window.display();
 }
-void LoadingScreen::loadBase() {
-	Fonts::get()->add("1", "1.ttf");
-	Texts::get()->load("ru.txt");
+bool LoadingScreen::loadBase(sf::RenderWindow &window) {
+    try {
+        Fonts::get()->add("1", "1.ttf");
+    }
+	catch (CouldntOpenFont &e) {
+        return false;
+    }
+
+    try {
+        Texts::get()->load("ru.txt");
+    }
+	catch (CouldntOpenText &e) {
+        this->loadingError(&e, window);
+        return false;
+    }
+    catch (TextRedefinition &e) {
+        this->loadingError(&e, window);
+        return false;
+    }
+
+    return true;
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Text t;
@@ -52,24 +76,73 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	window.draw(t);
 	window.display();
 }
-void LoadingScreen::loadAll() {
-	for (const std::string& a : { 
-		"castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron", 
-		"market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon", 
-		"farm", "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-		"wall1", "wall2", "wall3", "road", "mountains"}) {
-		Textures::get()->add(a, a + ".png");
-	}
-	for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
-		Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
-	}
-	for (const std::string& a : { "click", "food", "gold", "hooray", "iron", 
-		"regeneration", "stone", "wood", "road", "wind"}) {
-		Sounds::get()->add(a, a + ".ogg");
-	}
-	Music::get()->add("intro", "intro.ogg");
-	Music::get()->add("menu", "menu.ogg");
-	for (uint32_t i = 0; i < 10; i = i + 1) {
-		Music::get()->add(std::to_string(i), "ingame_0" + std::to_string(i) + ".ogg");
-	}
+bool LoadingScreen::loadAll(sf::RenderWindow &window) {
+    try {
+        for (const std::string& a : {
+                "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
+                "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
+                "farm", "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
+                "wall1", "wall2", "wall3", "road", "mountains"}) {
+            Textures::get()->add(a, a + ".png");
+        }
+        for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
+            Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
+        }
+    }
+	catch (CouldntOpenTexture &e) {
+        loadingError(&e, window);
+        return false;
+    }
+
+    try {
+        for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
+                                      "regeneration", "stone", "wood", "road", "wind"}) {
+            Sounds::get()->add(a, a + ".ogg");
+        }
+    }
+    catch (CouldntOpenSound &e) {
+        loadingError(&e, window);
+        return false;
+    }
+
+    try {
+        Music::get()->add("intro", "intro.ogg");
+        Music::get()->add("menu", "menu.ogg");
+        for (uint32_t i = 0; i < 10; i = i + 1) {
+            Music::get()->add(std::to_string(i), "ingame_0" + std::to_string(i) + ".ogg");
+        }
+    }
+	catch (CouldntOpenMusic &e) {
+        loadingError(&e, window);
+        return false;
+    }
+
+    for (const std::string &a : {"ridge"}) {
+        Maps::get()->addPath(a, a + ".tmx");
+    }
+
+    return true;
+}
+void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
+    SimpleWindow element = SimpleWindow("", "", UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
+    element.run(window.getSize().x, window.getSize().y);
+    sf::Event event;
+    while (!element.finished()) {
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                return;
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    return;
+                }
+            }
+            if (event.type == sf::Event::MouseButtonPressed) {
+                element.click();
+            }
+        }
+        window.clear(UI_COLOR);
+        window.draw(element);
+        window.display();
+    }
 }

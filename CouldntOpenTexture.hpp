@@ -17,10 +17,15 @@
  */
 
 
-#include <string>
+#include "CouldntOpen.hpp"
 
 
 #pragma once
 
 
-extern const std::string ROOT;
+class CouldntOpenTexture : public CouldntOpen {
+public:
+    CouldntOpenTexture(const std::string &path);
+
+    std::string getUpperCaseResourceReadableName() const override;
+};

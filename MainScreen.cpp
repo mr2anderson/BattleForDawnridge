@@ -24,19 +24,19 @@
 MainScreen* MainScreen::singletone = nullptr;
 
 
-int32_t MainScreen::run(sf::RenderWindow& window) {
-	this->reset(window);
+bool MainScreen::run(const std::string &mapName, sf::RenderWindow& window) {
+	this->reset(mapName, window);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
-				return -1;
+				return false;
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				auto code = event.key.code;
 				if (code == sf::Keyboard::Escape) {
 					this->prepareToReturnToMenu(window);
-					return 0;
+					return true;
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
@@ -67,87 +67,16 @@ int32_t MainScreen::run(sf::RenderWindow& window) {
 		}
 	}
 }
-void MainScreen::reset(sf::RenderWindow& window) {
-	this->resetPlayers();
-	this->resetMap("ridge");
+void MainScreen::reset(const std::string& mapName, sf::RenderWindow& window) {
+	this->resetMap(mapName);
 	this->resetMoveCtr();
 	this->resetHighlightTable();
+    this->resetPlains();
 	this->resetGraphics(window);
 	this->changeMove();
 }
-void MainScreen::resetPlayers() {
-	if (this->players[0] != nullptr) {
-		delete this->players[0];
-		delete this->players[1];
-	}
-	this->players[0] = new Player(1);
-	this->players[1] = new Player(2);
-}
 void MainScreen::resetMap(const std::string& name) {
-	if (this->gameObjects != nullptr) {
-		for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-			delete this->gameObjects->at(i);
-		}
-		delete this->gameObjects;
-		delete this->units;
-		delete this->resourcePoints;
-		delete this->territoryBuildings;
-		delete this->territoryOrigins;
-		delete this->territoryConductors;
-	}
-	
-	this->gameObjects = new std::vector<GO*>();
-	this->units = new std::vector<Unit*>();
-	this->resourcePoints = new std::vector<ResourcePoint*>();
-	this->territoryBuildings = new std::vector<TerritoryB*>();
-	this->territoryOrigins = new std::vector<TerritoryOriginB*>();
-	this->territoryConductors = new std::vector<TerritoryConductorB*>();
-
-	std::ifstream file(std::string(ROOT) + "/" + name + ".tmx");
-	std::string line;
-	bool read = false;
-	uint32_t y = 0;
-	uint32_t x;
-	uint32_t currentPlayerId = 0;
-	while (std::getline(file, line)) {
-		if (line == "  <data encoding=\"csv\">") {
-			read = true;
-		}
-		else if (line == "</data>") {
-			break;
-		}
-		if (!read) {
-			continue;
-		}
-		std::stringstream ss(line);
-		std::string word;
-		x = 0;
-		while (std::getline(ss, word, ',')) {
-			if (word == "10") {
-				this->add(new Forest(x, y));
-			}
-			else if (word == "1") {
-				Castle* c = new Castle(x, y, this->players[currentPlayerId]);
-				c->setMaxHp();
-				this->add(c);
-				currentPlayerId = currentPlayerId + 1;
-			}
-			else if (word == "18") {
-				this->add(new Iron(x, y));
-			}
-			else if (word == "14") {
-				this->add(new Stone(x, y));
-			}
-			else if (word == "22") {
-				this->add(new Mountains(x, y));
-			}
-			x = x + 1;
-		}
-		y = y + 1;
-	}
-	file.close();
-
-	this->plains = PlainsGeneration(x + 1, y + 1);
+    this->map = Maps::get()->load(name);
 }
 void MainScreen::resetMoveCtr() {
 	this->move = 0;
@@ -155,12 +84,12 @@ void MainScreen::resetMoveCtr() {
 void MainScreen::resetHighlightTable() {
 	this->highlightTable.clear();
 }
+void MainScreen::resetPlains() {
+    this->plains = PlainsGeneration(this->map->getW(), this->map->getH());
+}
 void MainScreen::resetGraphics(sf::RenderWindow &window) {
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
-	if (this->view != nullptr) {
-		delete this->view;
-	}
 	this->view = new sf::View(window.getDefaultView());
 	this->endMoveButton = Button(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, std::nullopt, *Texts::get()->get("new_move"));
 	this->buildButton = Button(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, 64, 64, "hammer_icon", std::wstring());
@@ -202,7 +131,7 @@ void MainScreen::handleTryToTradeEvent(const Event& e) {
 			this->handleEvent(m->doTrade(t));
 		}
 		else {
-			MessageW* w = new MessageW("click", "click", *Texts::get()->get("no_resources_for_trade"));
+			SimpleWindow* w = new SimpleWindow("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -254,7 +183,7 @@ void MainScreen::handleTryToUpgradeEvent(const Event& e) {
 			this->handleEvent(b->startUpgrade());
 		}
 		else {
-			MessageW* w = new MessageW("click", "click", *Texts::get()->get("no_resources_for_upgrade"));
+			SimpleWindow* w = new SimpleWindow("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
@@ -284,10 +213,10 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(const Event& e) {
 void MainScreen::handleTryToBuild(const Event& e) {
 	for (const auto& a : e.tryToBuild) {
 		if (this->getCurrentPlayer()->getResources() >= a->getCost()) {
-			this->addPopUpWindow(new BuildingMode(a, this->view, this->gameObjects, this->territoryBuildings, this->getCurrentPlayer()));
+			this->addPopUpWindow(new BuildingMode(a, this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()));
 		}
 		else {
-			MessageW* w = new MessageW("", "click", *Texts::get()->get("no_resources_for_building"));
+			SimpleWindow* w = new SimpleWindow("", "click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 			delete a;
 		}
@@ -295,7 +224,7 @@ void MainScreen::handleTryToBuild(const Event& e) {
 }
 void MainScreen::handleBuild(const Event& e) {
 	for (const auto& a : e.build) {
-		this->add(a);
+		this->map->add(a);
 	}
 }
 void MainScreen::handlePlaySoundEvent(const Event& e) {
@@ -327,8 +256,8 @@ void MainScreen::changeMove() {
 	SoundQueue::get()->push(Sounds::get()->get("click"));
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
-	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		this->handleEvent(this->gameObjects->at(i)->newMove(this->getCurrentPlayer()));
+	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
+		this->handleEvent(this->map->getGO()->at(i)->newMove(this->getCurrentPlayer()));
 	}
 }
 void MainScreen::createBuildMenu() {
@@ -336,7 +265,7 @@ void MainScreen::createBuildMenu() {
 	components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
 
 	Event buildEvent;
-	buildEvent.tryToBuild.push_back(new Road(0, 0, this->getCurrentPlayer(), this->territoryOrigins, this->territoryConductors));
+	buildEvent.tryToBuild.push_back(new Road(0, 0, this->getCurrentPlayer(), this->map->getTobs(), this->map->getTcbs()));
 	components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(new Road()), true, true, buildEvent);
 	
 	buildEvent = Event();
@@ -344,15 +273,15 @@ void MainScreen::createBuildMenu() {
 	components.emplace_back(Farm().getTextureName(), GET_BUILD_DESCRIPTION(new Farm()), true, true, buildEvent);
 
 	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Sawmill(0, 0, this->getCurrentPlayer(), this->resourcePoints));
+	buildEvent.tryToBuild.push_back(new Sawmill(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
 	components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(new Sawmill()), true, true, buildEvent);
 
 	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Quarry(0, 0, this->getCurrentPlayer(), this->resourcePoints));
+	buildEvent.tryToBuild.push_back(new Quarry(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
 	components.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(new Quarry()), true, true, buildEvent);
 
 	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Mine(0, 0, this->getCurrentPlayer(), this->resourcePoints));
+	buildEvent.tryToBuild.push_back(new Mine(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
 	components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(new Mine()), true, true, buildEvent);
 
 	buildEvent = Event();
@@ -378,13 +307,13 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
 		
 }
 Player* MainScreen::getCurrentPlayer() {
-	return this->players[(move - 1) % 2];
+	return this->map->getPlayer((this->move - 1) % this->map->getPlayersNumber());
 }
 void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
-	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		this->handleEvent(this->gameObjects->at(i)->click(this->getCurrentPlayer(), mouseX, mouseY));
+	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
+		this->handleEvent(this->map->getGO()->at(i)->click(this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
 void MainScreen::addPopUpWindows(std::queue<PopUpElement*> q) {
@@ -401,15 +330,15 @@ void MainScreen::addPopUpWindow(PopUpElement* w) {
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
 	window.setView(window.getDefaultView());
+    delete this->view;
+    delete this->map;
 	Playlist::get()->restartMusic();
 }
 void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();
 	window.setView(*this->view);
 	this->drawCells(window);
-	for (uint32_t i = 0; i < this->gameObjects->size(); i = i + 1) {
-		window.draw(*this->gameObjects->at(i));
-	}
+	window.draw(*this->map);
 	if (!this->elements.empty()) {
 		window.draw(*this->elements.front());
 	}
@@ -473,34 +402,4 @@ void MainScreen::moveViewToWest() {
 void MainScreen::moveViewToEast() {
 	float d = std::min(10.f, 32 * this->plains.getW() - this->windowW / 2 - this->view->getCenter().x);
 	this->view->setCenter(this->view->getCenter() + sf::Vector2f(d, 0));
-}
-void MainScreen::add(GO* go) {
-	this->gameObjects->push_back(go);
-
-	ResourcePoint* rp = dynamic_cast<ResourcePoint*>(go);
-	if (rp) {
-		this->resourcePoints->push_back(rp);
-	}
-	else {
-		Unit* u = dynamic_cast<Unit*>(go);
-		if (u) {
-			this->units->push_back(u);
-
-			TerritoryB* tb = dynamic_cast<TerritoryB*>(go);
-			if (tb) {
-				this->territoryBuildings->push_back(tb);
-
-				TerritoryOriginB* tob = dynamic_cast<TerritoryOriginB*>(go);
-				if (tob) {
-					this->territoryOrigins->push_back(tob);
-				}
-				else {
-					TerritoryConductorB* tcb = dynamic_cast<TerritoryConductorB*>(go);
-					if (tcb) {
-						this->territoryConductors->push_back(tcb);
-					}
-				}
-			}
-		}
-	}
 }

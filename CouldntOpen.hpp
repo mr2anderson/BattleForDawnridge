@@ -17,10 +17,17 @@
  */
 
 
-#include <string>
+#include "LoadingError.hpp"
 
 
 #pragma once
 
 
-extern const std::string ROOT;
+class CouldntOpen : public LoadingError {
+public:
+    CouldntOpen(const std::string &path);
+
+    std::string msg() const override;
+protected:
+    virtual std::string getUpperCaseResourceReadableName() const = 0;
+};

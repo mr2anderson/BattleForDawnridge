@@ -17,10 +17,12 @@
  */
 
 
-#include <string>
+#include "CouldntOpenTexture.hpp"
 
 
-#pragma once
+CouldntOpenTexture::CouldntOpenTexture(const std::string &path) : CouldntOpen(path) {
 
-
-extern const std::string ROOT;
+}
+std::string CouldntOpenTexture::getUpperCaseResourceReadableName() const {
+    return "TEXTURE";
+}

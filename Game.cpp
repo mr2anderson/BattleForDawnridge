@@ -25,15 +25,18 @@ Game* Game::singletone = nullptr;
 
 void Game::run() {
 	this->initWindow();
-	LoadingScreen::get()->run(this->window);
-	if (PAKScreen::get()->run(this->window) != 0) {
+	if (!LoadingScreen::get()->run(this->window)) {
+        return;
+    }
+	if (!PAKScreen::get()->run(this->window)) {
 		return;
 	}
 	for (; ;) {
-		if (Menu::get()->run(this->window) != 0) {
-			return;
-		}
-		if (MainScreen::get()->run(this->window) != 0) {
+        std::string mapName = Menu::get()->run(this->window);
+		if (mapName.empty()) {
+            return;
+        }
+		if (!MainScreen::get()->run(mapName, this->window)) {
 			return;
 		}
 	}

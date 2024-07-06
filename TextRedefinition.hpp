@@ -17,10 +17,17 @@
  */
 
 
-#include <string>
+#include "LoadingError.hpp"
 
 
 #pragma once
 
 
-extern const std::string ROOT;
+class TextRedefinition : public LoadingError {
+public:
+    TextRedefinition(const std::string &path, const std::string &id);
+
+    std::string msg() const override;
+private:
+    std::string id;
+};

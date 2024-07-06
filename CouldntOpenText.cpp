@@ -17,10 +17,12 @@
  */
 
 
-#include <string>
+#include "CouldntOpenText.hpp"
 
 
-#pragma once
+CouldntOpenText::CouldntOpenText(const std::string &path) : CouldntOpen(path) {
 
-
-extern const std::string ROOT;
+}
+std::string CouldntOpenText::getUpperCaseResourceReadableName() const {
+    return "TEXT";
+}

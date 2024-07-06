@@ -18,7 +18,7 @@
 
 
 #include "Unit.hpp"
-#include "MessageW.hpp"
+#include "SimpleWindow.hpp"
 
 
 #pragma once
