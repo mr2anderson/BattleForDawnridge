@@ -316,12 +316,6 @@ void MainScreen::handleGameObjectClick() {
 		this->handleEvent(this->map->getGO()->at(i)->click(this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
-void MainScreen::addPopUpWindows(std::queue<PopUpElement*> q) {
-	while (!q.empty()) {
-		this->addPopUpWindow(q.front());
-		q.pop();
-	}
-}
 void MainScreen::addPopUpWindow(PopUpElement* w) {
 	this->elements.push(w);
 	if (this->elements.size() == 1) {

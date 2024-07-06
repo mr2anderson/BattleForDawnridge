@@ -34,10 +34,10 @@ void ResourceBar::minus(const Resource& resource) {
 	this->resources.minus(resource);
 }
 void ResourceBar::plus(const Resources& resources2) {
-	this->resources.plus(resources);
+	this->resources.plus(resources2);
 }
 void ResourceBar::minus(const Resources& resources2) {
-	this->resources.minus(resources);
+	this->resources.minus(resources2);
 }
 int32_t ResourceBar::get(const std::string& type) const {
 	return this->resources.get(type);

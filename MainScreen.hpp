@@ -98,7 +98,6 @@ private:
 	static std::wstring GET_BUILD_DESCRIPTION(Building* b);
 	Player* getCurrentPlayer();
 	void handleGameObjectClick();
-	void addPopUpWindows(std::queue<PopUpElement*> q);
 	void addPopUpWindow(PopUpElement* w);
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
