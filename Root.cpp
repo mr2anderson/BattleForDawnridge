@@ -20,4 +20,4 @@
 #include "Root.hpp"
 
 
-const std::string ROOT = "../resources";
+const std::string ROOT = "resources";
