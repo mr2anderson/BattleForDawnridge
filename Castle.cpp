@@ -99,15 +99,15 @@ Event Castle::getSelectionW() {
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
 		Event gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
 		components.emplace_back("upgrade_icon",
 			*Texts::get()->get("upgrade_castle_for") + this->getUpgradeCost().getReadableInfo() + L'\n' + 
 			*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
 			*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade + this->getHighlightEvent());
 	}
 
-	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
-	response.createE.push_back(window);
+	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	response.addCreateEEvent(window);
 
 	return response;
 }

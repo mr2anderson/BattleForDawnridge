@@ -75,11 +75,11 @@ Event ResourceB::collectResources() {
 		for (const auto& src : srcs) {
 			ResourcePoint* rp = std::get<ResourcePoint*>(src);
 			uint32_t n = std::get<uint32_t>(src);
-			FlyingE* element = new FlyingE(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
+			std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
 			Event gEvent;
-			gEvent.collect.emplace_back(rp, n);
+			gEvent.addCollectEvent(std::make_tuple(rp, n));
 			element->addOnStartGEvent(gEvent);
-			responce.createE.push_back(element);
+			responce.addCreateEEvent(element);
 		}
 	}
 
@@ -96,14 +96,14 @@ Event ResourceB::getSelectionW() {
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		Event gameEventUpgrade = this->getHighlightEvent();
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
 		components.emplace_back("upgrade_icon", *Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
 			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) +
 			*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
-	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
-	response.createE.push_back(window);
+	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	response.addCreateEEvent(window);
 
 	return response;
 }

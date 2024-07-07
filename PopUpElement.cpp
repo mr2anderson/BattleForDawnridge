@@ -20,10 +20,7 @@
 #include "PopUpElement.hpp"
 
 
-PopUpElement::PopUpElement() {
-	this->_finished = false;
-}
-PopUpElement::~PopUpElement() = default;
+PopUpElement::PopUpElement() = default;
 void PopUpElement::addOnStartGEvent(const Event& gEvent) {
 	this->onStart = this->onStart + gEvent;
 }
@@ -31,6 +28,7 @@ bool PopUpElement::finished() const {
 	return this->_finished;
 }
 Event PopUpElement::run(uint32_t windowW, uint32_t windowH) {
+    this->_finished = false;
 	return this->onStart;
 }
 void PopUpElement::finish() {

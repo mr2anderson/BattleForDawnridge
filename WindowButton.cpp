@@ -33,25 +33,27 @@ Event WindowButton::run(uint32_t windowW, uint32_t windowH) {
 	uint32_t buttonW = 75;
 	uint32_t buttonH = 30;
 
-	this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
-	this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText));
+    Event soundEvent1 = this->PopUpElement::run(windowW, windowH);
+    soundEvent1.addPlaySoundEvent(this->soundName1);
 
-	Event event = this->PopUpElement::run(windowW, windowH);
-    event.playSound.push_back(this->soundName1);
-    return event;
+    Event onClick;
+    onClick.addPlaySoundEvent(this->soundName2);
+    onClick.addCloseThisWindowEvent();
+
+	this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
+	this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
+
+    return soundEvent1;
 }
 void WindowButton::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(label, states);
 	target.draw(button, states);
 }
 Event WindowButton::click() {
-    Event event;
-	if (this->button.click()) {
-        if (!this->soundName2.empty()) {
-            event.playSound.push_back(this->soundName1);
-        }
-		this->finish();
-	}
+    Event event = this->button.click();
+    if (event.getCloseThisWindowEvent()) {
+        this->finish();
+    }
 	return event;
 }
 void WindowButton::update() {

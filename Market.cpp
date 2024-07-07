@@ -37,15 +37,15 @@ Event Market::doTrade(const Trade& trade) {
 	this->currentTrade = trade;
 
 	Event gEvent;
-	gEvent.subResource.push_back(trade.sell);
+	gEvent.addSubResourceEvent(trade.sell);
 
-	WindowButton* window = new WindowButton(this->getSoundName(), "click",
+	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		*Texts::get()->get("trade_started") + L'\n' +
 		trade.getReadableInfo(), *Texts::get()->get("OK"));
 	
 	window->addOnStartGEvent(gEvent);
 	Event responce;
-	responce.createE.push_back(window);
+	responce.addCreateEEvent(window);
 	return responce;
 }
 void Market::decreaseCurrentTradeMovesLeft() {
@@ -145,16 +145,16 @@ Event Market::handleCurrentTrade() {
 	}
 	Event responce;
 	Event decreaseEvent;
-	decreaseEvent.decreaseCurrentTradeMovesLeft.push_back(this);
-	FlyingE* element = new FlyingE("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-	responce.createE.push_back(element);
+	decreaseEvent.addDecreaseCurrentTradeMovesLeftEvent(this);
+	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	responce.addCreateEEvent(element);
 	element->addOnStartGEvent(decreaseEvent);
 	if (this->currentTrade.movesLeft == 1) {
 		Event gEvent;
-		gEvent.addResource.push_back(this->currentTrade.buy);
-		element = new FlyingE(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		gEvent.addAddResourceEvent(this->currentTrade.buy);
+		element = std::make_shared<FlyingE>(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
-		responce.createE.push_back(element);
+		responce.addCreateEEvent(element);
 	}
 	return responce;
 }
@@ -167,7 +167,7 @@ Event Market::getSelectionW() {
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		Event gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
 		components.emplace_back("upgrade_icon", 
 			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
 			*Texts::get()->get("upgrade_will_increase_move_number_for_one_trade_from") + std::to_wstring(this->getTradeStartTime()) + *Texts::get()->get("to") + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
@@ -182,26 +182,26 @@ Event Market::getSelectionW() {
 		std::make_tuple("stone", 50000, "gold", 100),
 		std::make_tuple("iron", 50000, "gold", 100) }) {
 		Event gameEventTrade;
-		gameEventTrade.tryToTrade.emplace_back(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
+		gameEventTrade.addTryToTradeEvent(std::make_tuple(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime())));
 		this->addTrade(components, gameEventTrade);
 	}
 
-	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
+	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	Event response;
-	response.createE.push_back(window);
+	response.addCreateEEvent(window);
 	return response;
 }
 void Market::addTrade(std::vector<GameActionWindowComponent>& components, const Event& gameEventTrade) {
-	components.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.type + "_icon",
-		*Texts::get()->get("buy") + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
-		*Texts::get()->get("for") + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, false, gameEventTrade);
+	components.emplace_back(std::get<Trade>(gameEventTrade.getTryToTradeEvent()->back()).buy.type + "_icon",
+		*Texts::get()->get("buy") + std::get<Trade>(gameEventTrade.getTryToTradeEvent()->back()).buy.getReadableInfo() +
+		*Texts::get()->get("for") + std::get<Trade>(gameEventTrade.getTryToTradeEvent()->back()).sell.getReadableInfo(), true, false, gameEventTrade);
 }
 Event Market::handleBusyWithTrade() const {
 	Event response;
-	WindowButton* window = new WindowButton(this->getSoundName(), "click",
+	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		*Texts::get()->get("market_is_busy") + L'\n' +
 		this->currentTrade.getReadableInfo(), *Texts::get()->get("OK"));
-	response.createE.push_back(window);
+	response.addCreateEEvent(window);
 	return response;
 }
 Event Market::getGameObjectResponse(Player* player) {

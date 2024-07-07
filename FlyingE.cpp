@@ -33,7 +33,7 @@ Event FlyingE::run(uint32_t windowW, uint32_t windowH) {
 	this->dst = windowH / 4;
 
 	Event uiEvent;
-	uiEvent.playSound.push_back(this->sound);
+	uiEvent.addPlaySoundEvent(this->sound);
 
 	return this->PopUpElement::run(windowW, windowH) + uiEvent;
 }

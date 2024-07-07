@@ -74,7 +74,7 @@ Event AreaB::getHighlightEvent() const {
 
 	for (uint32_t x = x2; x <= x1; x = x + 1) {
 		for (uint32_t y = y2; y <= y1; y = y + 1) {
-			gEvent.changeHighlight.emplace_back(this, x, y);
+			gEvent.addChangeHighlightEvent(std::make_tuple(this, x, y));
 		}
 	}
 

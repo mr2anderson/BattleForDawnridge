@@ -17,6 +17,7 @@
  */
 
 
+#include <queue>
 #include "Maps.hpp"
 #include "SoundQueue.hpp"
 #include "Playlist.hpp"
@@ -46,18 +47,24 @@ private:
 	static Menu* singletone;
 
 	bool graphicsInited;
-    PopUpElement *element;
-	Button start2on1pcButton;
-    Button supportButton;
-    Button creditsButton;
-    Button licenseButton;
-	Button exitButton;
+    bool exit;
+    bool startGame;
+    uint32_t windowW, windowH;
+    std::queue<std::shared_ptr<PopUpElement>> elements;
+	std::vector<Button> buttons;
 	sf::Text title;
 
 	void initGraphics(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
+    void addElement(std::shared_ptr<PopUpElement> e);
+    void removeFinishedElements();
+    void prepareToExit();
+    bool handleButtonsClick();
 
     void handleEvent(const Event &e);
 
     void handleSoundEvent(const Event &e);
+    void handleCreateEEvent(const Event &e);
+    void handleExitEvent(const Event &e);
+    void handleStartGameEvent(const Event &e);
 };

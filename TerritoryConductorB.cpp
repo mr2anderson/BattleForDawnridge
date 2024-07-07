@@ -60,9 +60,9 @@ bool TerritoryConductorB::conducted() const {
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
 Event TerritoryConductorB::getNotConductedResponce() const {
-	WindowButton* w = new WindowButton(this->getSoundName(), "click",
+	std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("does_not_lead_to_city_center"), *Texts::get()->get("OK"));
 	Event events;
-	events.createE.push_back(w);
+	events.addCreateEEvent(w);
 	return events;
 }

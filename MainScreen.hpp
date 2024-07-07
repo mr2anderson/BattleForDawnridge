@@ -56,15 +56,15 @@ private:
 	static MainScreen* singletone;
 
     Map *map;
-	std::queue<PopUpElement*> elements;
+	std::queue<std::shared_ptr<PopUpElement>> elements;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
 
+    bool exit;
 	uint32_t windowW, windowH;
 	sf::View *view;
-	Button endMoveButton;
-	Button buildButton;
+    std::vector<Button> buttons;
 
 	void reset(Map *mapPtr, sf::RenderWindow &window);
 	void resetMap(Map *mapPtr);
@@ -91,14 +91,16 @@ private:
 	void handleBuild(const Event& e);
 	void handlePlaySoundEvent(const Event& e);
 	void handleCreatePopUpElementEvent(const Event& e);
+    void handleChangeMoveEvent(const Event& e);
+    void handleExitEvent(const Event &e);
 
 	void removeFinishedElements();
 	void changeMove();
-	void createBuildMenu();
 	static std::wstring GET_BUILD_DESCRIPTION(Building* b);
 	Player* getCurrentPlayer();
+    bool handleButtonsClick();
 	void handleGameObjectClick();
-	void addPopUpWindow(PopUpElement* w);
+	void addPopUpWindow(std::shared_ptr<PopUpElement> w);
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);

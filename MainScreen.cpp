@@ -41,15 +41,9 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->elements.empty()) {
-					if (endMoveButton.click()) {
-						this->changeMove();
-					}
-					else if (buildButton.click()) {
-						this->createBuildMenu();
-					}
-					else {
-						this->handleGameObjectClick();
-					}
+					if (!this->handleButtonsClick()) {
+                        this->handleGameObjectClick();
+                    }
 				}
 				else {
 					if (event.type == sf::Event::MouseButtonPressed) {
@@ -65,6 +59,9 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
 		if (!this->elements.empty()) {
 			this->elements.front()->update();
 		}
+        if (this->exit) {
+            return false;
+        }
 	}
 }
 void MainScreen::reset(Map *mapPtr, sf::RenderWindow& window) {
@@ -88,16 +85,46 @@ void MainScreen::resetPlains() {
     this->plains = PlainsGeneration(this->map->getW(), this->map->getH());
 }
 void MainScreen::resetGraphics(sf::RenderWindow &window) {
+    Event endMoveEvent;
+    endMoveEvent.addChangeMoveEvent();
+
+    std::vector<GameActionWindowComponent> components;
+    components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
+    Event event;
+    event.addTryToBuildEvent(new Road(0, 0, this->getCurrentPlayer(), this->map->getTobs(), this->map->getTcbs()));
+    components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(new Road()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Farm(0, 0, this->getCurrentPlayer()));
+    components.emplace_back(Farm().getTextureName(), GET_BUILD_DESCRIPTION(new Farm()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Sawmill(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
+    components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(new Sawmill()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Quarry(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
+    components.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(new Quarry()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Mine(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
+    components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(new Mine()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Market(0, 0, this->getCurrentPlayer()));
+    components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(new Market()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Wall(0, 0, this->getCurrentPlayer()));
+    components.emplace_back(Wall().getTextureName(), GET_BUILD_DESCRIPTION(new Wall()), true, true, event);
+    event = Event();
+    event.addTryToBuildEvent(new Castle(0, 0, this->getCurrentPlayer()));
+    components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(new Castle()), true, true, event);
+    std::shared_ptr<GameActionWindow> w = std::make_shared<GameActionWindow>("click", "click", components);
+    Event buildEvent;
+    buildEvent.addCreateEEvent(w);
+
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
+    this->exit = false;
 	this->view = new sf::View(window.getDefaultView());
-	this->endMoveButton = Button(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")));
-	this->buildButton = Button(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"));
-	while (!this->elements.empty()) {
-		PopUpElement* w = this->elements.front();
-		delete w;
-		this->elements.pop();
-	}
+
+	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
+	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"), buildEvent);
 }
 void MainScreen::handleEvent(const Event &e) {
 	this->handleTryToAttackEvent(e);
@@ -117,50 +144,59 @@ void MainScreen::handleEvent(const Event &e) {
 	this->handleBuild(e);
 	this->handlePlaySoundEvent(e);
 	this->handleCreatePopUpElementEvent(e);
+    this->handleChangeMoveEvent(e);
+    this->handleExitEvent(e);
 }
 void MainScreen::handleTryToAttackEvent(const Event& e) {
-	for (const auto& a : e.tryToAttack) {
+    const std::vector<Unit*>* tryToAttack = e.getTryToAttackEvent();
+	for (uint32_t i = 0; i < tryToAttack->size(); i = i + 1) {
 
-	}
+    }
 }
 void MainScreen::handleTryToTradeEvent(const Event& e) {
-	for (const auto& a : e.tryToTrade) {
-		Market* m = std::get<Market*>(a);
-		Trade t = std::get<Trade>(a);
+    const std::vector<std::tuple<Market*, Trade>>* tryToTrade = e.getTryToTradeEvent();
+	for (uint32_t i = 0; i < tryToTrade->size(); i = i + 1) {
+		Market* m = std::get<Market*>(tryToTrade->at(i));
+		Trade t = std::get<Trade>(tryToTrade->at(i));
 		if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
 			this->handleEvent(m->doTrade(t));
 		}
 		else {
-			WindowButton* w = new WindowButton("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
+			std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
 }
 void MainScreen::handleAddResourceEvent(const Event& e) {
-	for (const auto& a : e.addResource) {
-		this->getCurrentPlayer()->addResource(a);
-	}
+    const std::vector<Resource>* addResource = e.getAddResourceEvent();
+    for (uint32_t i = 0; i < addResource->size(); i = i + 1) {
+        this->getCurrentPlayer()->addResource(addResource->at(i));
+    }
 }
 void MainScreen::handleSubResourceEvent(const Event& e) {
-	for (const auto& a : e.subResource) {
-		this->getCurrentPlayer()->subResource(a);
-	}
+    const std::vector<Resource>* subResource = e.getSubResourceEvent();
+    for (uint32_t i = 0; i < subResource->size(); i = i + 1) {
+        this->getCurrentPlayer()->addResource(subResource->at(i));
+    }
 }
 void MainScreen::handleAddResourcesEvent(const Event& e) {
-	for (const auto& a : e.addResources) {
-		this->getCurrentPlayer()->addResources(a);
-	}
+    const std::vector<Resources>* addResources = e.getAddResourcesEvent();
+    for (uint32_t i = 0; i < addResources->size(); i = i + 1) {
+        this->getCurrentPlayer()->addResources(addResources->at(i));
+    }
 }
 void MainScreen::handleSubResourcesEvent(const Event& e) {
-	for (const auto& a : e.subResources) {
-		this->getCurrentPlayer()->subResources(a);
-	}
+    const std::vector<Resources>* subResources = e.getSubResourcesEvent();
+    for (uint32_t i = 0; i < subResources->size(); i = i + 1) {
+        this->getCurrentPlayer()->subResources(subResources->at(i));
+    }
 }
 void MainScreen::handleChangeHighlightEvent(const Event& e) {
-	for (const auto& a : e.changeHighlight) {
-		const Unit* u = std::get<0>(a);
-		uint32_t x = std::get<1>(a);
-		uint32_t y = std::get<2>(a);
+    const std::vector<std::tuple<const Unit*, uint32_t, uint32_t>>* changeHighlight = e.getChangeHighlightEvent();
+	for (uint32_t i = 0; i < changeHighlight->size(); i = i + 1) {
+		const Unit* u = std::get<0>(changeHighlight->at(i));
+		uint32_t x = std::get<1>(changeHighlight->at(i));
+		uint32_t y = std::get<2>(changeHighlight->at(i));
 		if (x >= this->plains.getW() or y >= this->plains.getH()) {
 			continue;
 		}
@@ -168,74 +204,95 @@ void MainScreen::handleChangeHighlightEvent(const Event& e) {
 	}
 }
 void MainScreen::handleCollectEvent(const Event& e) {
-	for (const auto& a : e.collect) {
-		ResourcePoint* resourcePoint = std::get<ResourcePoint*>(a);
-		uint32_t n = std::get<uint32_t>(a);
+    const std::vector<std::tuple<ResourcePoint*, uint32_t>>* collect = e.getCollectEvent();
+	for (uint32_t i = 0; i < collect->size(); i = i + 1) {
+		ResourcePoint* resourcePoint = std::get<ResourcePoint*>(collect->at(i));
+		uint32_t n = std::get<uint32_t>(collect->at(i));
 		this->getCurrentPlayer()->addResource(Resource(resourcePoint->getResourceType(), n));
 		resourcePoint->subHp(n);
 	}
 }
 void MainScreen::handleTryToUpgradeEvent(const Event& e) {
-	for (const auto& a : e.tryToUpgrade) {
-		UpgradeableB* b = std::get<UpgradeableB*>(a);
-		Resources cost = std::get<Resources>(a);
+    const std::vector<std::tuple<UpgradeableB*, Resources>>* tryToUpgrade = e.getTryToUpgradeEvent();
+	for (uint32_t i = 0; i < tryToUpgrade->size(); i = i + 1) {
+		UpgradeableB* b = std::get<UpgradeableB*>(tryToUpgrade->at(i));
+		Resources cost = std::get<Resources>(tryToUpgrade->at(i));
 		if (this->getCurrentPlayer()->getResources() >= cost) {
 			this->handleEvent(b->startUpgrade());
 		}
 		else {
-			WindowButton* w = new WindowButton("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
+			std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
 		}
 	}
 }
 void MainScreen::handleAddHpEvent(const Event& e) {
-	for (const auto& a : e.addHp) {
-		HPGO* go = std::get<HPGO*>(a);
-		uint32_t n = std::get<uint32_t>(a);
+    const std::vector<std::tuple<HPGO*, uint32_t>>* addHp = e.getAddHpEvent();
+	for (uint32_t i = 0; i < addHp->size(); i = i + 1) {
+		HPGO* go = std::get<HPGO*>(addHp->at(i));
+		uint32_t n = std::get<uint32_t>(addHp->at(i));
 		go->addHp(n);
 	}
 }
 void MainScreen::handleDecreaseUpgradeMovesLeftEvent(const Event& e) {
-	for (const auto& a : e.decreaseUpgradeMovesLeft) {
-		a->decreaseUpgradeMovesLeft();
+    const std::vector<UpgradeableB*>* decreaseUpgradeMovesLeft = e.getDecreaseUpgradeMovesLeftEvent();
+	for (uint32_t i = 0; i < decreaseUpgradeMovesLeft->size(); i = i + 1) {
+		decreaseUpgradeMovesLeft->at(i)->decreaseUpgradeMovesLeft();
 	}
 }
 void MainScreen::handleIncreaseLevelEvent(const Event& e) {
-	for (const auto& a : e.increaseLevel) {
-		a->increaseLevel();
+    const std::vector<UpgradeableB*>* increaseLevelEvent = e.getIncreaseLevelEvent();
+	for (uint32_t i = 0; i < increaseLevelEvent->size(); i = i + 1) {
+		increaseLevelEvent->at(i)->increaseLevel();
 	}
 }
 void MainScreen::handleDecreaseCurrentTradeMovesLeft(const Event& e) {
-	for (const auto& a : e.decreaseCurrentTradeMovesLeft) {
-		a->decreaseCurrentTradeMovesLeft();
+    const std::vector<Market*>* decreaseCurrentTradeMovesLeft = e.getDecreaseCurrentTradeMovesLeftEvent();
+	for (uint32_t i = 0; i < decreaseCurrentTradeMovesLeft->size(); i = i + 1) {
+		decreaseCurrentTradeMovesLeft->at(i)->decreaseUpgradeMovesLeft();
 	}
 }
 void MainScreen::handleTryToBuild(const Event& e) {
-	for (const auto& a : e.tryToBuild) {
-		if (this->getCurrentPlayer()->getResources() >= a->getCost()) {
-			this->addPopUpWindow(new BuildingMode(a, this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()));
+    const std::vector<Building*>* tryToBuild = e.getTryToBuildEvent();
+	for (uint32_t i = 0; i < tryToBuild->size(); i = i + 1) {
+		if (this->getCurrentPlayer()->getResources() >= tryToBuild->at(i)->getCost()) {
+			this->addPopUpWindow(std::make_shared<BuildingMode>(tryToBuild->at(i), this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()));
 		}
 		else {
-			WindowButton* w = new WindowButton("", "click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
+			std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
 			this->addPopUpWindow(w);
-			delete a;
+			delete tryToBuild->at(i);
 		}
 	}
 }
 void MainScreen::handleBuild(const Event& e) {
-	for (const auto& a : e.build) {
-		this->map->add(a);
+    const std::vector<Building*>* build = e.getBuildEvent();
+	for (uint32_t i = 0; i < build->size(); i = i + 1) {
+		this->map->add(build->at(i));
 	}
 }
 void MainScreen::handlePlaySoundEvent(const Event& e) {
-	for (const auto& a : e.playSound) {
-		SoundQueue::get()->push(Sounds::get()->get(a));
+    const std::vector<std::string>* playSound = e.getPlaySoundEvent();
+	for (uint32_t i = 0; i < playSound->size(); i = i + 1) {
+		SoundQueue::get()->push(Sounds::get()->get(playSound->at(i)));
 	}
 }
 void MainScreen::handleCreatePopUpElementEvent(const Event& e) {
-	for (const auto& a : e.createE) {
-		this->addPopUpWindow(a);
+    const std::vector<std::shared_ptr<PopUpElement>>* createE = e.getCreateEEvent();
+	for (uint32_t i = 0; i < createE->size(); i = i + 1) {
+		this->addPopUpWindow(createE->at(i));
 	}
+}
+void MainScreen::handleChangeMoveEvent(const Event &e) {
+    uint32_t changeMove = e.getChangeMoveEvent();
+    for (uint32_t i = 0; i < changeMove; i = i + 1) {
+        this->changeMove();
+    }
+}
+void MainScreen::handleExitEvent(const Event &e) {
+    if (e.getExitEvent()) {
+        this->exit = true;
+    }
 }
 void MainScreen::removeFinishedElements() {
 	bool remove = false;
@@ -243,7 +300,6 @@ void MainScreen::removeFinishedElements() {
 		if (!this->elements.front()->finished()) {
 			break;
 		}
-		delete this->elements.front();
 		this->elements.pop();
 		remove = true;
 	}
@@ -260,45 +316,6 @@ void MainScreen::changeMove() {
 		this->handleEvent(this->map->getGO()->at(i)->newMove(this->getCurrentPlayer()));
 	}
 }
-void MainScreen::createBuildMenu() {
-	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
-
-	Event buildEvent;
-	buildEvent.tryToBuild.push_back(new Road(0, 0, this->getCurrentPlayer(), this->map->getTobs(), this->map->getTcbs()));
-	components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(new Road()), true, true, buildEvent);
-	
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Farm(0, 0, this->getCurrentPlayer()));
-	components.emplace_back(Farm().getTextureName(), GET_BUILD_DESCRIPTION(new Farm()), true, true, buildEvent);
-
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Sawmill(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
-	components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(new Sawmill()), true, true, buildEvent);
-
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Quarry(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
-	components.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(new Quarry()), true, true, buildEvent);
-
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Mine(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
-	components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(new Mine()), true, true, buildEvent);
-
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Market(0, 0, this->getCurrentPlayer()));
-	components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(new Market()), true, true, buildEvent);
-
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Wall(0, 0, this->getCurrentPlayer()));
-	components.emplace_back(Wall().getTextureName(), GET_BUILD_DESCRIPTION(new Wall()), true, true, buildEvent);
-
-	buildEvent = Event();
-	buildEvent.tryToBuild.push_back(new Castle(0, 0, this->getCurrentPlayer()));
-	components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(new Castle()), true, true, buildEvent);
-
-	GameActionWindow* w = new GameActionWindow("click", "click", components);
-	this->addPopUpWindow(w);
-}
 std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
 	std::wstring description = b->getDescription() + L'\n' +
 		*Texts::get()->get("cost") + b->getCost().getReadableInfo();
@@ -309,6 +326,16 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
 Player* MainScreen::getCurrentPlayer() {
 	return this->map->getPlayer((this->move - 1) % this->map->getPlayersNumber());
 }
+bool MainScreen::handleButtonsClick() {
+    for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
+        Event event = this->buttons[i].click();
+        if (!event.empty()) {
+            this->handleEvent(event);
+            return true;
+        }
+    }
+    return false;
+}
 void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
@@ -316,7 +343,7 @@ void MainScreen::handleGameObjectClick() {
 		this->handleEvent(this->map->getGO()->at(i)->click(this->getCurrentPlayer(), mouseX, mouseY));
 	}
 }
-void MainScreen::addPopUpWindow(PopUpElement* w) {
+void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
 	this->elements.push(w);
 	if (this->elements.size() == 1) {
 		this->handleEvent(w->run(this->windowW, this->windowH));
@@ -324,6 +351,7 @@ void MainScreen::addPopUpWindow(PopUpElement* w) {
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
 	window.setView(window.getDefaultView());
+    this->removeFinishedElements();
     delete this->view;
     delete this->map;
 	Playlist::get()->restartMusic();
@@ -337,8 +365,9 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 		window.draw(*this->elements.front());
 	}
 	window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
-	window.draw(endMoveButton);
-	window.draw(buildButton);
+	for (const auto &b : this->buttons) {
+        window.draw(b);
+    }
 	window.display();
 }
 void MainScreen::drawCells(sf::RenderWindow &window) {

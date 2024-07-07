@@ -51,21 +51,21 @@ void BuildingMode::update() {
 Event BuildingMode::click() {
 	this->finish();
 	if (!this->empty()) {
-		WindowButton* w = new WindowButton("click", "click", *Texts::get()->get("place_occupied"), *Texts::get()->get("OK"));
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("place_occupied"), *Texts::get()->get("OK"));
 		Event uiEvent;
-		uiEvent.createE.push_back(w);
+		uiEvent.addCreateEEvent(w);
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
-		WindowButton* w = new WindowButton("click", "click", *Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"));
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"));
 		Event uiEvent;
-		uiEvent.createE.push_back(w);
+		uiEvent.addCreateEEvent(w);
 		return this->getHighlightEvent() + uiEvent;
 	}
 	Event gEvent = this->getHighlightEvent();
-	gEvent.build.push_back(this->b);
-	gEvent.subResources.push_back(this->b->getCost());
-	gEvent.playSound.push_back(this->b->getSoundName());
+	gEvent.addBuildEvent(this->b);
+	gEvent.addSubResourcesEvent(this->b->getCost());
+	gEvent.addPlaySoundEvent(this->b->getSoundName());
 	this->returnedPtr = true;
 	return gEvent;
 }

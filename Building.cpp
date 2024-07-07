@@ -42,10 +42,10 @@ Event Building::regenerate() {
 	Event events;
 	if (this->getHP() < this->getMaxHP()) {
 		Event gEvent;
-		gEvent.addHp.emplace_back(this, this->getRegenerationSpeed());
-		FlyingE* element = new FlyingE("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
+		gEvent.addAddHpEvent(std::make_tuple(this, this->getRegenerationSpeed()));
+		std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
-		events.createE.push_back(element);
+		events.addCreateEEvent(element);
 	}
 	return events;
 }

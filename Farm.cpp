@@ -90,11 +90,11 @@ uint32_t Farm::getCollectionSpeed() const {
 }
 Event Farm::collectFood() const {
 	Event gEvent;
-	gEvent.addResource.push_back(Resource("food", this->getCollectionSpeed()));
-	PopUpElement* element = new FlyingE("food_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	gEvent.addAddResourceEvent(Resource("food", this->getCollectionSpeed()));
+	std::shared_ptr<PopUpElement> element = std::make_shared<FlyingE>("food_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(gEvent);
 	Event responce;
-	responce.createE.push_back(element);
+	responce.addCreateEEvent(element);
 	return responce;
 }
 Event Farm::getGameObjectResponse(Player* player) {
@@ -123,14 +123,14 @@ Event Farm::getSelectionW() {
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
 		Event gameEventUpgrade;
-		gameEventUpgrade.tryToUpgrade.emplace_back(this, this->getUpgradeCost());
+		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
 		components.emplace_back("upgrade_icon", 
 			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
 			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
-	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
-	response.createE.push_back(window);
+	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	response.addCreateEEvent(window);
 
 	return response;
 }

@@ -31,25 +31,22 @@ Event GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
 	this->makeButtons(windowW, windowH);
 
 	Event soundEvent;
-	soundEvent.playSound.push_back(this->soundName1);
+	soundEvent.addPlaySoundEvent(this->soundName1);
 
 	return this->PopUpElement::run(windowW, windowH) + soundEvent;
 }
 void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		target.draw(std::get<Button>(this->buttons[i]), states);
+		target.draw(this->buttons[i], states);
 	}
 }
 Event GameActionWindow::click() {
-	uint32_t x = sf::Mouse::getPosition().x;
-	uint32_t y = sf::Mouse::getPosition().y;
-	for (const auto& t : buttons) {
-		if (std::get<Button>(t).click()) {
-			if (std::get<bool>(t)) {
-				this->finish();
-			}
-			return std::get<Event>(t);
-		}
+	for (const auto& b : buttons) {
+        Event event = b.click();
+        if (event.getCloseThisWindowEvent()) {
+            this->finish();
+        }
+        return event;
 	}
 	return Event();
 }
@@ -63,12 +60,15 @@ void GameActionWindow::makeButtons(uint32_t windowW, uint32_t windowH) {
 		std::wstring message = this->components[i].message;
 		bool clickable = this->components[i].clickable;
 		bool sound = this->components[i].sound;
-		Event gEvent = this->components[i].gEvent;
+		Event onClick = this->components[i].gEvent;
+        if (clickable) {
+            onClick.addCloseThisWindowEvent();
+        }
 		if (sound) {
-			gEvent.playSound.push_back(this->soundName2);
+			onClick.addPlaySoundEvent(this->soundName2);
 		}
 
-		Button button(std::make_shared<LabelWithImage>(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message));
-		this->buttons[i] = std::make_tuple(button, clickable, gEvent);
+		Button button(std::make_shared<LabelWithImage>(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message), onClick);
+		this->buttons[i] = button;
 	}
 }

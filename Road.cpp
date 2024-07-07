@@ -64,8 +64,8 @@ Event Road::getSelectionW() {
 		this->getReadableName() + this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
-	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
-	response.createE.push_back(window);
+	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	response.addCreateEEvent(window);
 
 	return response;
 }

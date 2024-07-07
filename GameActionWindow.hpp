@@ -38,7 +38,7 @@ private:
 	std::string soundName1;
 	std::string soundName2;
 	std::vector<GameActionWindowComponent> components;
-	std::vector<std::tuple<Button, bool, Event>> buttons;
+	std::vector<Button> buttons;
 
 	void makeButtons(uint32_t windowW, uint32_t windowH);
 };

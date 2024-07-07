@@ -32,7 +32,7 @@ bool Unit::belongTo(Player* player) const {
 }
 Event Unit::getUnitOfEnemyResponse() {
 	Event gEvent;
-	gEvent.tryToAttack.push_back(this);
+	gEvent.addTryToAttackEvent(this);
 	return gEvent;
 }
 Player* Unit::getPlayer() const {

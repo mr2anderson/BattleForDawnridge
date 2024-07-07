@@ -31,9 +31,6 @@ Map* Menu::run(sf::RenderWindow& window) {
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				return nullptr;
-			}
 			if (event.type == sf::Event::KeyPressed) {
 				auto code = event.key.code;
 				if (code == sf::Keyboard::Escape) {
@@ -41,56 +38,63 @@ Map* Menu::run(sf::RenderWindow& window) {
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
-                if (this->element == nullptr) {
-                    if (this->start2on1pcButton.click()) {
-                        try {
-                            Map *map = Maps::get()->load("ridge");
-                            Music::get()->get("menu")->stop();
-                            return map;
-                        }
-                        catch (CouldntOpenMap &e) {
-                            this->element = new WindowButton("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK"));
-                        }
-                    }
-                    if (this->supportButton.click()) {
-                        this->element = new WindowButton("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
-                    }
-                    if (this->creditsButton.click()) {
-                        this->element = new WindowButton("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
-                    }
-                    if (this->licenseButton.click()) {
-                        this->element = new WindowButton("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 375);
-                    }
-                    if (this->exitButton.click()) {
-                        return nullptr;
-                    }
-                    if (this->element != nullptr) {
-                        this->handleEvent(this->element->run(window.getSize().x, window.getSize().y));
-                    }
+                if (this->elements.empty()) {
+                    this->handleButtonsClick();
                 }
                 else {
-                    this->handleEvent(this->element->click());
-                    if (this->element->finished()) {
-                        delete this->element;
-                        this->element = nullptr;
-                    }
+                    this->handleEvent(this->elements.front()->click());
                 }
 			}
 		}
 		this->drawEverything(window);
-        if (this->element != nullptr) {
-            this->element->update();
+        this->removeFinishedElements();
+        if (!this->elements.empty()) {
+            this->elements.front()->update();
+        }
+        if (this->exit) {
+            return nullptr;
+        }
+        if (this->startGame) {
+            try {
+                Map *map = Maps::get()->load("ridge");
+                this->prepareToExit();
+                return map;
+            }
+            catch (CouldntOpenMap &e) {
+                this->addElement(std::make_shared<WindowButton>("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK")));
+            }
         }
 	}
 }
 void Menu::initGraphics(uint32_t windowW, uint32_t windowH) {
 	this->graphicsInited = true;
-    this->element = nullptr;
-	this->start2on1pcButton = Button(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_2p_1pc")));
-    this->supportButton = Button(std::make_shared<Label>(10, 80, 400, 60,  *Texts::get()->get("show_support")));
-    this->creditsButton = Button(std::make_shared<Label>(10, 150, 400, 60, *Texts::get()->get("show_credits")));
-    this->licenseButton = Button(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_license")));
-	this->exitButton = Button(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("exit")));
+    this->exit = false;
+    this->startGame = false;
+    this->windowW = windowW;
+    this->windowH = windowH;
+
+    Event startGameEvent;
+    startGameEvent.addStartGameEvent();
+	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_2p_1pc")), startGameEvent);
+
+    std::shared_ptr<WindowButton> supportWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
+    Event supportEvent;
+    supportEvent.addCreateEEvent(supportWindow);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60,  *Texts::get()->get("show_support")), supportEvent);
+
+    std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
+    Event creditsEvent;
+    creditsEvent.addCreateEEvent(creditsWindow);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60, *Texts::get()->get("show_credits")), creditsEvent);
+
+    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"));
+    Event licenseEvent;
+    licenseEvent.addCreateEEvent(licenseWindow);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
+
+    Event exitEvent;
+    exitEvent.addExitEvent();
+	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("exit")), exitEvent);
 
 	this->title.setFont(*Fonts::get()->get("1"));
 	this->title.setString(*Texts::get()->get("title"));
@@ -100,22 +104,74 @@ void Menu::initGraphics(uint32_t windowW, uint32_t windowH) {
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
 	window.clear(COLOR_THEME::UI_COLOR);
-	window.draw(this->start2on1pcButton);
-    window.draw(this->supportButton);
-    window.draw(this->creditsButton);
-    window.draw(this->licenseButton);
-	window.draw(this->exitButton);
+	for (const auto& b : this->buttons) {
+        window.draw(b);
+    }
 	window.draw(this->title);
-    if (this->element != nullptr) {
-        window.draw(*this->element);
+    if (!this->elements.empty()) {
+        window.draw(*this->elements.front());
     }
 	window.display();
 }
+void Menu::addElement(std::shared_ptr<PopUpElement> e) {
+    this->elements.push(e);
+    if (this->elements.size() == 1) {
+        this->handleEvent(this->elements.front()->run(this->windowW, this->windowH));
+    }
+}
+void Menu::removeFinishedElements() {
+    bool removed = false;
+    while (!this->elements.empty()) {
+        if (!this->elements.front()->finished()) {
+            break;
+        }
+        this->elements.pop();
+        removed = true;
+    }
+    if (removed and !this->elements.empty()) {
+        this->handleEvent(this->elements.front()->run(this->windowW, this->windowH));
+    }
+}
+void Menu::prepareToExit() {
+    this->exit = false;
+    this->startGame = false;
+    Music::get()->get("menu")->stop();
+}
+bool Menu::handleButtonsClick() {
+    for (const auto& b : this->buttons) {
+        Event event = b.click();
+        if (!event.empty()) {
+            this->handleEvent(event);
+            return true;
+        }
+    }
+    return false;
+}
 void Menu::handleEvent(const Event &e) {
     this->handleSoundEvent(e);
+    this->handleCreateEEvent(e);
+    this->handleExitEvent(e);
+    this->handleStartGameEvent(e);
 }
 void Menu::handleSoundEvent(const Event &e) {
-    for (const auto& a : e.playSound) {
-        SoundQueue::get()->push(Sounds::get()->get(a));
+    const std::vector<std::string>* playSound = e.getPlaySoundEvent();
+    for (uint32_t i = 0; i < playSound->size(); i = i + 1) {
+        SoundQueue::get()->push(Sounds::get()->get(playSound->at(i)));
+    }
+}
+void Menu::handleCreateEEvent(const Event &e) {
+    const std::vector<std::shared_ptr<PopUpElement>>* toCreate = e.getCreateEEvent();
+    for (uint32_t i = 0; i < toCreate->size(); i = i + 1) {
+        this->addElement(toCreate->at(i));
+    }
+}
+void Menu::handleExitEvent(const Event &e) {
+    if (e.getExitEvent()) {
+        this->exit = true;
+    }
+}
+void Menu::handleStartGameEvent(const Event &e) {
+    if (e.getStartGameEvent()) {
+        this->startGame = true;
     }
 }
