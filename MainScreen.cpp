@@ -76,9 +76,11 @@ void MainScreen::initPlains() {
 void MainScreen::initGraphics(sf::RenderWindow &window) {
     Event endMoveEvent;
     endMoveEvent.addChangeMoveEvent();
+    endMoveEvent.addPlaySoundEvent("click");
 
     Event returnToMenuEvent;
     returnToMenuEvent.addReturnToMenuEvent();
+    returnToMenuEvent.addPlaySoundEvent("click");
 
     std::vector<GameActionWindowComponent> components;
     components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
@@ -302,7 +304,6 @@ void MainScreen::removeFinishedElements() {
 }
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
-	SoundQueue::get()->push(Sounds::get()->get("click"));
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
