@@ -17,18 +17,28 @@
  */
 
 
-#include "Event.hpp"
+#include "PopUpElement.hpp"
+#include "Button.hpp"
+#include "GameActionWindowComponent.hpp"
+#include "LabelWithImage.hpp"
 
 
 #pragma once
 
 
-struct SelectionWComponent {
-	SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Event gEvent);
+class GameActionWindow : public PopUpElement {
+public:
+	GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent>& components);
 
-	std::string pictureName;
-	std::wstring message;
-	bool clickable;
-	bool sound;
-	Event gEvent;
+	Event run(uint32_t windowW, uint32_t windowH) override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	Event click() override;
+	void update() override;
+private:
+	std::string soundName1;
+	std::string soundName2;
+	std::vector<GameActionWindowComponent> components;
+	std::vector<std::tuple<Button, bool, Event>> buttons;
+
+	void makeButtons(uint32_t windowW, uint32_t windowH);
 };

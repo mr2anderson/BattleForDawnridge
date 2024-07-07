@@ -58,13 +58,13 @@ uint32_t Road::getRadius() const {
 Event Road::getSelectionW() {
 	Event response;
 
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("road",
 		this->getReadableName() + this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
-	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
+	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
 	response.createE.push_back(window);
 
 	return response;

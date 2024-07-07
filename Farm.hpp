@@ -19,7 +19,7 @@
 
 #include "UpgradeableB.hpp"
 #include "HpSensitiveB.hpp"
-#include "SelectionW.hpp"
+#include "GameActionWindow.hpp"
 
 
 #pragma once

@@ -17,13 +17,18 @@
  */
 
 
-#include "SelectionWComponent.hpp"
+#include "Event.hpp"
 
 
-SelectionWComponent::SelectionWComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Event gEvent) {
-	this->pictureName = pictureName;
-	this->message = message;
-	this->clickable = clickable;
-	this->sound = sound;
-	this->gEvent = gEvent;
-}
+#pragma once
+
+
+struct GameActionWindowComponent {
+	GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Event gEvent);
+
+	std::string pictureName;
+	std::wstring message;
+	bool clickable;
+	bool sound;
+	Event gEvent;
+};

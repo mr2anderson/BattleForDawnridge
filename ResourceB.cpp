@@ -88,7 +88,7 @@ Event ResourceB::collectResources() {
 Event ResourceB::getSelectionW() {
 	Event response;
 
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back(this->getTextureName(), 
 		this->getDescription() + L'\n' +
@@ -102,7 +102,7 @@ Event ResourceB::getSelectionW() {
 			*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
+	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
 	response.createE.push_back(window);
 
 	return response;

@@ -43,11 +43,11 @@ bool Mountains::exist() const {
 Event Mountains::getGameObjectResponse(Player* currentPlayer) {
 	Event response;
 
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Event());
 
-	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
+	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
 	response.createE.push_back(window);
 
 	return response;

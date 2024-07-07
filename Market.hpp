@@ -20,7 +20,7 @@
 #include "UpgradeableB.hpp"
 #include "HpSensitiveB.hpp"
 #include "Trade.hpp"
-#include "SelectionW.hpp"
+#include "GameActionWindow.hpp"
 
 
 #pragma once
@@ -54,7 +54,7 @@ private:
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 	Event handleCurrentTrade();
 	Event getSelectionW();
-	void addTrade(std::vector<SelectionWComponent>& components, const Event& gameEventTrade);
+	void addTrade(std::vector<GameActionWindowComponent>& components, const Event& gameEventTrade);
 	Event handleBusyWithTrade() const;
 	Event getGameObjectResponse(Player* player) override;
 };

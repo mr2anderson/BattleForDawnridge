@@ -261,7 +261,7 @@ void MainScreen::changeMove() {
 	}
 }
 void MainScreen::createBuildMenu() {
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
 
 	Event buildEvent;
@@ -296,7 +296,7 @@ void MainScreen::createBuildMenu() {
 	buildEvent.tryToBuild.push_back(new Castle(0, 0, this->getCurrentPlayer()));
 	components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(new Castle()), true, true, buildEvent);
 
-	SelectionW* w = new SelectionW("click", "click", components);
+	GameActionWindow* w = new GameActionWindow("click", "click", components);
 	this->addPopUpWindow(w);
 }
 std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {

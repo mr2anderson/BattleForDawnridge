@@ -115,7 +115,7 @@ Event Farm::getGameObjectResponse(Player* player) {
 Event Farm::getSelectionW() {
 	Event response;
 
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back(this->getTextureName(),
 		this->getDescription() + L'\n'
@@ -129,7 +129,7 @@ Event Farm::getSelectionW() {
 			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
+	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
 	response.createE.push_back(window);
 
 	return response;

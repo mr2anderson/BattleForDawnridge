@@ -159,7 +159,7 @@ Event Market::handleCurrentTrade() {
 	return responce;
 }
 Event Market::getSelectionW() {
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back("market", 
 		this->getDescription() + L'\n' +
@@ -186,12 +186,12 @@ Event Market::getSelectionW() {
 		this->addTrade(components, gameEventTrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
+	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
 	Event response;
 	response.createE.push_back(window);
 	return response;
 }
-void Market::addTrade(std::vector<SelectionWComponent>& components, const Event& gameEventTrade) {
+void Market::addTrade(std::vector<GameActionWindowComponent>& components, const Event& gameEventTrade) {
 	components.emplace_back(std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.type + "_icon",
 		*Texts::get()->get("buy") + std::get<Trade>(gameEventTrade.tryToTrade.back()).buy.getReadableInfo() +
 		*Texts::get()->get("for") + std::get<Trade>(gameEventTrade.tryToTrade.back()).sell.getReadableInfo(), true, false, gameEventTrade);

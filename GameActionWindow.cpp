@@ -17,17 +17,17 @@
  */
 
 
-#include "SelectionW.hpp"
+#include "GameActionWindow.hpp"
 
 
 
-SelectionW::SelectionW(const std::string &soundName1, const std::string &soundName2, const std::vector<SelectionWComponent> &components) : 
+GameActionWindow::GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent> &components) :
 	PopUpElement() {
 	this->soundName1 = soundName1;
 	this->soundName2 = soundName2;
 	this->components = components;
 }
-Event SelectionW::run(uint32_t windowW, uint32_t windowH) {
+Event GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
 	this->makeButtons(windowW, windowH);
 
 	Event soundEvent;
@@ -35,12 +35,12 @@ Event SelectionW::run(uint32_t windowW, uint32_t windowH) {
 
 	return this->PopUpElement::run(windowW, windowH) + soundEvent;
 }
-void SelectionW::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
 		target.draw(std::get<Button>(this->buttons[i]), states);
 	}
 }
-Event SelectionW::click() {
+Event GameActionWindow::click() {
 	uint32_t x = sf::Mouse::getPosition().x;
 	uint32_t y = sf::Mouse::getPosition().y;
 	for (const auto& t : buttons) {
@@ -53,10 +53,10 @@ Event SelectionW::click() {
 	}
 	return Event();
 }
-void SelectionW::update() {
+void GameActionWindow::update() {
 
 }
-void SelectionW::makeButtons(uint32_t windowW, uint32_t windowH) {
+void GameActionWindow::makeButtons(uint32_t windowW, uint32_t windowH) {
 	this->buttons.resize(this->components.size());
 	for (uint32_t i = 0; i < this->components.size(); i = i + 1) {
 		std::string pictureName = this->components[i].pictureName;

@@ -18,7 +18,7 @@
 
 
 #include "GO.hpp"
-#include "SelectionW.hpp"
+#include "GameActionWindow.hpp"
 
 
 #pragma once

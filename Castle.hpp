@@ -19,7 +19,7 @@
 
 #include "TerritoryOriginB.hpp"
 #include "UpgradeableB.hpp"
-#include "SelectionW.hpp"
+#include "GameActionWindow.hpp"
 
 
 #pragma once

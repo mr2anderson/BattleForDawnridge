@@ -85,7 +85,7 @@ uint32_t Wall::getUpgradeTime() const {
 Event Wall::getSelectionW() {
 	Event response;
 
-	std::vector<SelectionWComponent> components;
+	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
 	components.emplace_back("wall" + std::to_string(this->getCurrentLevel()),
 		this->getDescription() + L'\n'
@@ -100,7 +100,7 @@ Event Wall::getSelectionW() {
 			*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
-	SelectionW* window = new SelectionW(this->getSoundName(), "click", components);
+	GameActionWindow* window = new GameActionWindow(this->getSoundName(), "click", components);
 	response.createE.push_back(window);
 
 	return response;
