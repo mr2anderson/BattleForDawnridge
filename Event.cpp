@@ -28,6 +28,7 @@ Event::Event() {
     this->closeThisWindow = false;
     this->exit = false;
     this->startGame = false;
+    this->returnToMenu = false;
 }
 Event operator+(const Event &a, const Event& b) {
 	Event c = a;

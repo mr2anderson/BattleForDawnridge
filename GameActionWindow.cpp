@@ -20,7 +20,6 @@
 #include "GameActionWindow.hpp"
 
 
-
 GameActionWindow::GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent> &components) :
 	PopUpElement() {
 	this->soundName1 = soundName1;
@@ -45,8 +44,8 @@ Event GameActionWindow::click() {
         Event event = b.click();
         if (event.getCloseThisWindowEvent()) {
             this->finish();
+            return event;
         }
-        return event;
 	}
 	return Event();
 }
