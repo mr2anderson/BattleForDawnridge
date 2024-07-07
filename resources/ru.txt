@@ -266,7 +266,7 @@ start_game_2p_1pc
 <\DATA>
 
 <ID>
-exit
+returnToMenu
 <\ID>
 <DATA>
 Выйти
@@ -541,4 +541,11 @@ failed_to_load_map
 <DATA>
 Не удалось загрузить карту
 Пожалуйсте, выберите другую
+<\DATA>
+
+<ID>
+to_menu
+<\ID>
+<DATA>
+Вернуться в меню
 <\DATA>

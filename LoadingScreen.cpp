@@ -43,8 +43,12 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     try {
         Fonts::get()->add("1", "1.ttf");
+        Sounds::get()->add("click", "click.ogg");
     }
 	catch (CouldntOpenFont &e) {
+        return false;
+    }
+    catch (CouldntOpenSound &e) {
         return false;
     }
 
@@ -124,14 +128,11 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     return true;
 }
 void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
-    WindowButton element = WindowButton("", "", UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
+    WindowButton element = WindowButton("click", "click", UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                return;
-            }
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     return;

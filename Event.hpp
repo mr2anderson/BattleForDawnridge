@@ -64,6 +64,7 @@ public:
     bool getCloseThisWindowEvent() const;
     bool getExitEvent() const;
     bool getStartGameEvent() const;
+    bool getReturnToMenuEvent() const;
 
     void addTryToAttackEvent(Unit* unit);
     void addTryToTradeEvent(const std::tuple<Market*, Trade> &trade);
@@ -86,6 +87,7 @@ public:
     void addCloseThisWindowEvent();
     void addExitEvent();
     void addStartGameEvent();
+    void addReturnToMenuEvent();
 private:
     bool _empty;
 
@@ -110,6 +112,7 @@ private:
     bool closeThisWindow;
     bool exit;
     bool startGame;
+    bool returnToMenu;
 
     void onNewEvent();
 };

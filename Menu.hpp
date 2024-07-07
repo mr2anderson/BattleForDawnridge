@@ -40,13 +40,10 @@ public:
 
 	Map* run(sf::RenderWindow& window);
 private:
-	Menu() {
-		this->graphicsInited = false;
-	}
+	Menu() = default;
 	Menu(const Menu& copy) = delete;
 	static Menu* singletone;
 
-	bool graphicsInited;
     bool exit;
     bool startGame;
     uint32_t windowW, windowH;
@@ -54,11 +51,11 @@ private:
 	std::vector<Button> buttons;
 	sf::Text title;
 
-	void initGraphics(uint32_t windowW, uint32_t windowH);
+	void init(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
     void addElement(std::shared_ptr<PopUpElement> e);
     void removeFinishedElements();
-    void prepareToExit();
+    void prepareToStartGame();
     bool handleButtonsClick();
 
     void handleEvent(const Event &e);

@@ -55,6 +55,7 @@ Event operator+(const Event &a, const Event& b) {
     c.closeThisWindow = c.closeThisWindow or b.closeThisWindow;
     c.exit = c.exit or b.exit;
     c.startGame = c.startGame or b.startGame;
+    c.returnToMenu = c.returnToMenu or b.returnToMenu;
 
 	return c;
 }
@@ -123,6 +124,9 @@ bool Event::getExitEvent() const {
 }
 bool Event::getStartGameEvent() const {
     return this->startGame;
+}
+bool Event::getReturnToMenuEvent() const {
+    return this->returnToMenu;
 }
 void Event::addTryToAttackEvent(Unit *unit) {
     this->onNewEvent();
@@ -207,6 +211,10 @@ void Event::addExitEvent() {
 void Event::addStartGameEvent() {
     this->onNewEvent();
     this->startGame = true;
+}
+void Event::addReturnToMenuEvent() {
+    this->onNewEvent();
+    this->returnToMenu = true;
 }
 void Event::onNewEvent() {
     this->_empty = false;

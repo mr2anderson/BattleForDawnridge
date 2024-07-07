@@ -24,20 +24,11 @@ Menu* Menu::singletone = nullptr;
 
 
 Map* Menu::run(sf::RenderWindow& window) {
-	Music::get()->get("menu")->play();
-	if (!this->graphicsInited) {
-		this->initGraphics(window.getSize().x, window.getSize().y);
-	}
+    this->init(window.getSize().x, window.getSize().y);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::KeyPressed) {
-				auto code = event.key.code;
-				if (code == sf::Keyboard::Escape) {
-					return nullptr;
-				}
-			}
-			else if (event.type == sf::Event::MouseButtonPressed) {
+			if (event.type == sf::Event::MouseButtonPressed) {
                 if (this->elements.empty()) {
                     this->handleButtonsClick();
                 }
@@ -57,7 +48,7 @@ Map* Menu::run(sf::RenderWindow& window) {
         if (this->startGame) {
             try {
                 Map *map = Maps::get()->load("ridge");
-                this->prepareToExit();
+                this->prepareToStartGame();
                 return map;
             }
             catch (CouldntOpenMap &e) {
@@ -66,8 +57,7 @@ Map* Menu::run(sf::RenderWindow& window) {
         }
 	}
 }
-void Menu::initGraphics(uint32_t windowW, uint32_t windowH) {
-	this->graphicsInited = true;
+void Menu::init(uint32_t windowW, uint32_t windowH) {
     this->exit = false;
     this->startGame = false;
     this->windowW = windowW;
@@ -87,14 +77,14 @@ void Menu::initGraphics(uint32_t windowW, uint32_t windowH) {
     creditsEvent.addCreateEEvent(creditsWindow);
     this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60, *Texts::get()->get("show_credits")), creditsEvent);
 
-    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"));
+    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 400, 475);
     Event licenseEvent;
     licenseEvent.addCreateEEvent(licenseWindow);
     this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
 
     Event exitEvent;
     exitEvent.addExitEvent();
-	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("exit")), exitEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("returnToMenu")), exitEvent);
 
 	this->title.setFont(*Fonts::get()->get("1"));
 	this->title.setString(*Texts::get()->get("title"));
@@ -132,10 +122,12 @@ void Menu::removeFinishedElements() {
         this->handleEvent(this->elements.front()->run(this->windowW, this->windowH));
     }
 }
-void Menu::prepareToExit() {
-    this->exit = false;
-    this->startGame = false;
+void Menu::prepareToStartGame() {
     Music::get()->get("menu")->stop();
+    while (!this->elements.empty()) {
+        this->elements.pop();
+    }
+    this->buttons.clear();
 }
 bool Menu::handleButtonsClick() {
     for (const auto& b : this->buttons) {

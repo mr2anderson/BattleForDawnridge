@@ -61,17 +61,17 @@ private:
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
 
-    bool exit;
+    bool returnToMenu;
 	uint32_t windowW, windowH;
 	sf::View *view;
     std::vector<Button> buttons;
 
-	void reset(Map *mapPtr, sf::RenderWindow &window);
-	void resetMap(Map *mapPtr);
-	void resetMoveCtr();
+	void init(Map *mapPtr, sf::RenderWindow &window);
+	void initMap(Map *mapPtr);
+	void initMoveCtr();
 	void resetHighlightTable();
-    void resetPlains();
-	void resetGraphics(sf::RenderWindow &window);
+    void initPlains();
+	void initGraphics(sf::RenderWindow &window);
 
 	void handleEvent(const Event& e);
 	void handleTryToAttackEvent(const Event& e);
@@ -92,7 +92,7 @@ private:
 	void handlePlaySoundEvent(const Event& e);
 	void handleCreatePopUpElementEvent(const Event& e);
     void handleChangeMoveEvent(const Event& e);
-    void handleExitEvent(const Event &e);
+    void handleReturnToMenuEvent(const Event &e);
 
 	void removeFinishedElements();
 	void changeMove();

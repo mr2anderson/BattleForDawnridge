@@ -24,15 +24,11 @@ PAKScreen* PAKScreen::singletone = nullptr;
 
 
 bool PAKScreen::run(sf::RenderWindow &window) {
-	Music::get()->get("intro")->play();
-	this->initGraphics(window.getSize().x, window.getSize().y);
+    this->init(window.getSize().x, window.getSize().y);
 	sf::Clock clock;
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				return false;
-			}
 			if (event.type == sf::Event::KeyPressed) {
 				auto code = event.key.code;
 				if (code == sf::Keyboard::Escape) {
@@ -45,7 +41,9 @@ bool PAKScreen::run(sf::RenderWindow &window) {
 		this->drawEverything(window);
 	}
 }
-void PAKScreen::initGraphics(uint32_t windowW, uint32_t windowH) {
+void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
+    Music::get()->get("intro")->play();
+
 	this->t.setFont(*Fonts::get()->get("1"));
 	this->t.setString(*Texts::get()->get("press_any_key"));
 	this->t.setCharacterSize(32);
@@ -53,7 +51,6 @@ void PAKScreen::initGraphics(uint32_t windowW, uint32_t windowH) {
 	this->t.setOutlineColor(sf::Color::Black);
 	this->t.setOutlineThickness(2);
 	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 50);
-
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(COLOR_THEME::UI_COLOR);

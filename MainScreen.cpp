@@ -25,19 +25,12 @@ MainScreen* MainScreen::singletone = nullptr;
 
 
 bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
-	this->reset(mapPtr, window);
+    this->init(mapPtr, window);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				return false;
-			}
-			if (event.type == sf::Event::KeyPressed) {
-				auto code = event.key.code;
-				if (code == sf::Keyboard::Escape) {
-					this->prepareToReturnToMenu(window);
-					return true;
-				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed) {
 				if (this->elements.empty()) {
@@ -59,34 +52,33 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
 		if (!this->elements.empty()) {
 			this->elements.front()->update();
 		}
-        if (this->exit) {
-            return false;
+        if (this->returnToMenu) {
+            return true;
         }
 	}
 }
-void MainScreen::reset(Map *mapPtr, sf::RenderWindow& window) {
-	this->resetMap(mapPtr);
-	this->resetMoveCtr();
-	this->resetHighlightTable();
-    this->resetPlains();
-	this->resetGraphics(window);
+void MainScreen::init(Map *mapPtr, sf::RenderWindow& window) {
+    this->initMap(mapPtr);
+    this->initMoveCtr();
+    this->initPlains();
+    this->initGraphics(window);
 	this->changeMove();
 }
-void MainScreen::resetMap(Map *mapPtr) {
+void MainScreen::initMap(Map *mapPtr) {
     this->map = mapPtr;
 }
-void MainScreen::resetMoveCtr() {
+void MainScreen::initMoveCtr() {
 	this->move = 0;
 }
-void MainScreen::resetHighlightTable() {
-	this->highlightTable.clear();
-}
-void MainScreen::resetPlains() {
+void MainScreen::initPlains() {
     this->plains = PlainsGeneration(this->map->getW(), this->map->getH());
 }
-void MainScreen::resetGraphics(sf::RenderWindow &window) {
+void MainScreen::initGraphics(sf::RenderWindow &window) {
     Event endMoveEvent;
     endMoveEvent.addChangeMoveEvent();
+
+    Event returnToMenuEvent;
+    returnToMenuEvent.addReturnToMenuEvent();
 
     std::vector<GameActionWindowComponent> components;
     components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
@@ -120,11 +112,12 @@ void MainScreen::resetGraphics(sf::RenderWindow &window) {
 
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
-    this->exit = false;
+    this->returnToMenu = false;
 	this->view = new sf::View(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"), buildEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, 30, 150, 30, *Texts::get()->get("to_menu")), returnToMenuEvent);
 }
 void MainScreen::handleEvent(const Event &e) {
 	this->handleTryToAttackEvent(e);
@@ -145,7 +138,7 @@ void MainScreen::handleEvent(const Event &e) {
 	this->handlePlaySoundEvent(e);
 	this->handleCreatePopUpElementEvent(e);
     this->handleChangeMoveEvent(e);
-    this->handleExitEvent(e);
+    this->handleReturnToMenuEvent(e);
 }
 void MainScreen::handleTryToAttackEvent(const Event& e) {
     const std::vector<Unit*>* tryToAttack = e.getTryToAttackEvent();
@@ -289,9 +282,9 @@ void MainScreen::handleChangeMoveEvent(const Event &e) {
         this->changeMove();
     }
 }
-void MainScreen::handleExitEvent(const Event &e) {
-    if (e.getExitEvent()) {
-        this->exit = true;
+void MainScreen::handleReturnToMenuEvent(const Event &e) {
+    if (e.getReturnToMenuEvent()) {
+        this->returnToMenu = true;
     }
 }
 void MainScreen::removeFinishedElements() {
@@ -352,6 +345,7 @@ void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
 	window.setView(window.getDefaultView());
     this->removeFinishedElements();
+    this->highlightTable.clear();
     delete this->view;
     delete this->map;
 	Playlist::get()->restartMusic();

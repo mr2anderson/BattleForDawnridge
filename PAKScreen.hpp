@@ -46,6 +46,6 @@ private:
 
 	sf::Text t;
 
-	void initGraphics(uint32_t windowW, uint32_t windowH);
+	void init(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
 };
