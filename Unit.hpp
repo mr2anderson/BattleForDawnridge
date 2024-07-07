@@ -30,6 +30,7 @@ public:
 	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, Player *playerPtr);
 
 	bool belongTo(Player* player) const;
+	void changePlayer(Player* newPlayerPtr);
 
 	virtual Resources getCost() const = 0;
 protected:

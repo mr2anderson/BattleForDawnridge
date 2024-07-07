@@ -21,7 +21,6 @@
 
 
 
-
 MainScreen* MainScreen::singletone = nullptr;
 
 
@@ -85,28 +84,28 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     std::vector<GameActionWindowComponent> components;
     components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Event());
     Event event;
-    event.addTryToBuildEvent(new Road(0, 0, this->getCurrentPlayer(), this->map->getTobs(), this->map->getTcbs()));
+    event.addTryToBuildEvent(new Road(0, 0, nullptr, this->map->getTobs(), this->map->getTcbs()));
     components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(new Road()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Farm(0, 0, this->getCurrentPlayer()));
+    event.addTryToBuildEvent(new Farm(0, 0, nullptr));
     components.emplace_back(Farm().getTextureName(), GET_BUILD_DESCRIPTION(new Farm()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Sawmill(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
+    event.addTryToBuildEvent(new Sawmill(0, 0, nullptr, this->map->getResourcePoints()));
     components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(new Sawmill()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Quarry(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
+    event.addTryToBuildEvent(new Quarry(0, 0, nullptr, this->map->getResourcePoints()));
     components.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(new Quarry()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Mine(0, 0, this->getCurrentPlayer(), this->map->getResourcePoints()));
+    event.addTryToBuildEvent(new Mine(0, 0, nullptr, this->map->getResourcePoints()));
     components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(new Mine()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Market(0, 0, this->getCurrentPlayer()));
+    event.addTryToBuildEvent(new Market(0, 0, nullptr));
     components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(new Market()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Wall(0, 0, this->getCurrentPlayer()));
+    event.addTryToBuildEvent(new Wall(0, 0, nullptr));
     components.emplace_back(Wall().getTextureName(), GET_BUILD_DESCRIPTION(new Wall()), true, true, event);
     event = Event();
-    event.addTryToBuildEvent(new Castle(0, 0, this->getCurrentPlayer()));
+    event.addTryToBuildEvent(new Castle(0, 0, nullptr));
     components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(new Castle()), true, true, event);
     std::shared_ptr<GameActionWindow> w = std::make_shared<GameActionWindow>("click", "click", components);
     Event buildEvent;
@@ -261,8 +260,9 @@ void MainScreen::handleTryToBuild(const Event& e) {
 	}
 }
 void MainScreen::handleBuild(const Event& e) {
-    const std::vector<Building*>* build = e.getBuildEvent();
+	const std::vector<Building*>* build = e.getBuildEvent();
 	for (uint32_t i = 0; i < build->size(); i = i + 1) {
+		build->at(i)->changePlayer(this->getCurrentPlayer());
 		this->map->add(build->at(i));
 	}
 }
@@ -318,7 +318,7 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
 		
 }
 Player* MainScreen::getCurrentPlayer() {
-	return this->map->getPlayer((this->move - 1) % this->map->getPlayersNumber());
+	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
 }
 bool MainScreen::handleButtonsClick() {
     for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {

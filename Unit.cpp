@@ -30,6 +30,9 @@ Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp,
 bool Unit::belongTo(Player* player) const {
 	return (*this->playerPtr == *player);
 }
+void Unit::changePlayer(Player* newPlayerPtr) {
+	this->playerPtr = newPlayerPtr;
+}
 Event Unit::getUnitOfEnemyResponse() {
 	Event gEvent;
 	gEvent.addTryToAttackEvent(this);
