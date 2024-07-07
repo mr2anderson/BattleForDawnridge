@@ -17,7 +17,7 @@
  */
 
 
-#include "PopUpElement.hpp"
+#include "CameraIndependentPopUpElement.hpp"
 #include "Label.hpp"
 #include "Button.hpp"
 
@@ -25,7 +25,7 @@
 #pragma once
 
 
-class WindowButton : public PopUpElement {
+class WindowButton : public CameraIndependentPopUpElement {
 public:
 	WindowButton(const std::string &soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w = 400, uint32_t h = 225);
 
@@ -41,4 +41,5 @@ private:
 	Label label;
 	Button button;
 	bool inited;
+
 };

@@ -20,7 +20,7 @@
 #include "BuildingMode.hpp"
 
 
-BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) : PopUpElement() {
+BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) {
 	this->b = b->clone();
 	this->view = view;
 	this->go = go;
@@ -39,7 +39,7 @@ Event BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
 	this->returnedPtr = false;
 	this->windowW = windowW2;
 	this->windowH = windowH2;
-	return this->getHighlightEvent() + this->PopUpElement::run(windowW, windowH);
+	return this->getHighlightEvent() + this->CameraDependentPopUpElement::run(windowW, windowH);
 }
 void BuildingMode::update() {
 	uint32_t mouseX = sf::Mouse::getPosition().x;

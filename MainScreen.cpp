@@ -344,7 +344,6 @@ void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
 	}
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
-	window.setView(window.getDefaultView());
     this->removeFinishedElements();
     this->highlightTable.clear();
     delete this->view;
@@ -357,8 +356,12 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	this->drawCells(window);
 	window.draw(*this->map);
 	if (!this->elements.empty()) {
+		if (!this->elements.front()->isCameraDependent()) {
+			window.setView(window.getDefaultView());
+		}
 		window.draw(*this->elements.front());
 	}
+	window.setView(window.getDefaultView());
 	window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
 	for (const auto &b : this->buttons) {
         window.draw(b);

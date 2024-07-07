@@ -20,8 +20,7 @@
 #include "WindowButton.hpp"
 
 
-WindowButton::WindowButton(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w, uint32_t h) :
-	PopUpElement() {
+WindowButton::WindowButton(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
     this->soundName1 = soundName1;
@@ -31,7 +30,7 @@ WindowButton::WindowButton(const std::string& soundName1, const std::string& sou
     this->inited = false;
 }
 Event WindowButton::run(uint32_t windowW, uint32_t windowH) {
-    Event soundEvent1 = this->PopUpElement::run(windowW, windowH);
+    Event soundEvent1 = this->CameraIndependentPopUpElement::run(windowW, windowH);
     soundEvent1.addPlaySoundEvent(this->soundName1);
 
     if (!this->inited) {

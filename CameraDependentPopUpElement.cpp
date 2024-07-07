@@ -18,32 +18,8 @@
 
 
 #include "CameraDependentPopUpElement.hpp"
-#include "TerritoryB.hpp"
 
 
-#pragma once
-
-
-class BuildingMode : public CameraDependentPopUpElement {
-public:
-	BuildingMode(Building *b, sf::View *view, std::vector<GO*> *go, std::vector<TerritoryB*> *tb, Player *player);
-	~BuildingMode();
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Event run(uint32_t windowW2, uint32_t windowH2) override;
-	void update() override;
-	Event click() override;
-private:
-	Building* b;
-	sf::View* view;
-	uint32_t windowW, windowH;
-	std::vector<GO*> *go;
-	std::vector<TerritoryB*> *tb;
-	Player* player;
-	bool returnedPtr;
-
-	bool empty() const;
-	bool controlled() const;
-	Event getHighlightEvent() const;
-};
+bool CameraDependentPopUpElement::isCameraDependent() const {
+	return true;
+}

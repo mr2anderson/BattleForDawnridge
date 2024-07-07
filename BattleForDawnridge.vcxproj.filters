@@ -862,6 +862,12 @@
     <ClInclude Include="Quarry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CameraDependentPopUpElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraIndependentPopUpElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowButton.cpp">
@@ -1078,6 +1084,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConductionGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraDependentPopUpElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraIndependentPopUpElemenent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

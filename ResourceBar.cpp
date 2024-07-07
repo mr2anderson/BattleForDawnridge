@@ -22,10 +22,7 @@
 
 ResourceBar::ResourceBar() = default;
 void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	sf::View old = target.getView();
-	target.setView(target.getDefaultView());
 	this->drawEverything(target, states);
-	target.setView(old);
 }
 void ResourceBar::plus(const Resource& resource) {
 	this->resources.plus(resource);

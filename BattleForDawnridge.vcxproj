@@ -488,6 +488,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="BuildingMode.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="CameraDependentPopUpElement.hpp" />
+    <ClInclude Include="CameraIndependentPopUpElement.hpp" />
     <ClInclude Include="Castle.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
@@ -659,6 +661,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingMode.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CameraDependentPopUpElement.cpp" />
+    <ClCompile Include="CameraIndependentPopUpElemenent.cpp" />
     <ClCompile Include="Castle.cpp" />
     <ClCompile Include="ColorTheme.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />

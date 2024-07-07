@@ -42,10 +42,7 @@ Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, std::wstring messag
 }
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
-	sf::View old = target.getView();
-	target.setView(target.getDefaultView());
 	target.draw(this->text, states);
-	target.setView(old);
 }
 void Label::initText() {
 	this->text.setCharacterSize(14);

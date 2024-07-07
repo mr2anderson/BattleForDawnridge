@@ -35,8 +35,6 @@ Image::Image(uint32_t x, uint32_t y, uint32_t h, const std::string &imageName) :
 }
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
-    sf::View v = target.getView();
     target.setView(target.getDefaultView());
     target.draw(this->sprite, states);
-    target.setView(v);
 }

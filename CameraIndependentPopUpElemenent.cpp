@@ -18,28 +18,8 @@
 
 
 #include "CameraIndependentPopUpElement.hpp"
-#include "Button.hpp"
-#include "GameActionWindowComponent.hpp"
-#include "LabelWithImage.hpp"
 
 
-#pragma once
-
-
-class GameActionWindow : public CameraIndependentPopUpElement {
-public:
-	GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent>& components);
-
-	Event run(uint32_t windowW, uint32_t windowH) override;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Event click() override;
-	void update() override;
-private:
-	std::string soundName1;
-	std::string soundName2;
-	std::vector<GameActionWindowComponent> components;
-	std::vector<Button> buttons;
-	bool inited;
-
-	void makeButtons(uint32_t windowW, uint32_t windowH);
-};
+bool CameraIndependentPopUpElement::isCameraDependent() const {
+	return false;
+}

@@ -18,14 +18,14 @@
 
 
 #include <cmath>
-#include "PopUpElement.hpp"
+#include "CameraDependentPopUpElement.hpp"
 #include "Textures.hpp"
 
 
 #pragma once
 
 
-class FlyingE : public PopUpElement {
+class FlyingE : public CameraDependentPopUpElement {
 public:
 	FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 

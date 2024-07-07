@@ -35,10 +35,7 @@ void RectangularUiElement::draw(sf::RenderTarget& target, sf::RenderStates state
     rect.setFillColor(COLOR_THEME::UI_COLOR);
     rect.setOutlineColor(sf::Color::Black);
     rect.setOutlineThickness(2);
-    sf::View view = target.getView();
-    target.setView(target.getDefaultView());
     target.draw(rect, states);
-    target.setView(view);
 }
 uint32_t RectangularUiElement::getX() const {
     return this->x;

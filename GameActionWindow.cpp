@@ -21,15 +21,14 @@
 
 
 
-GameActionWindow::GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent> &components) :
-	PopUpElement() {
+GameActionWindow::GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent> &components) {
 	this->soundName1 = soundName1;
 	this->soundName2 = soundName2;
 	this->components = components;
 	this->inited = false;
 }
 Event GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
-	Event event = this->PopUpElement::run(windowW, windowH);
+	Event event = this->CameraIndependentPopUpElement::run(windowW, windowH);
 	if (!this->inited) {
 		this->inited = true;
 		this->makeButtons(windowW, windowH);
