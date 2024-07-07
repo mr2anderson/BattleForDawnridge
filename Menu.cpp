@@ -28,7 +28,7 @@ Map* Menu::run(sf::RenderWindow& window) {
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::MouseButtonPressed) {
+			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
                 if (this->elements.empty()) {
                     this->handleButtonsClick();
                 }

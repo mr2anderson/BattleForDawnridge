@@ -32,7 +32,7 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
 			if (event.type == sf::Event::Closed) {
 				return false;
 			}
-			else if (event.type == sf::Event::MouseButtonPressed) {
+			else if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 				if (this->elements.empty()) {
 					if (!this->handleButtonsClick()) {
                         this->handleGameObjectClick();
