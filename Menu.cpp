@@ -42,7 +42,7 @@ Map* Menu::run(sf::RenderWindow& window) {
         if (!this->elements.empty()) {
             this->elements.front()->update();
         }
-        if (this->exit) {
+        if (this->closeMenu) {
             return nullptr;
         }
         if (this->startGame) {
@@ -58,7 +58,7 @@ Map* Menu::run(sf::RenderWindow& window) {
 	}
 }
 void Menu::init(uint32_t windowW, uint32_t windowH) {
-    this->exit = false;
+    this->closeMenu = false;
     this->startGame = false;
     this->windowW = windowW;
     this->windowH = windowH;
@@ -84,7 +84,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
 
     Event exitEvent;
-    exitEvent.addExitEvent();
+    exitEvent.addCloseMenuEvent();
 	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("returnToMenu")), exitEvent);
 
 	this->title.setFont(*Fonts::get()->get("1"));
@@ -159,8 +159,8 @@ void Menu::handleCreateEEvent(const Event &e) {
     }
 }
 void Menu::handleExitEvent(const Event &e) {
-    if (e.getExitEvent()) {
-        this->exit = true;
+    if (e.getCloseMenuEvent()) {
+        this->closeMenu = true;
     }
 }
 void Menu::handleStartGameEvent(const Event &e) {

@@ -26,7 +26,7 @@ Event::Event() {
 
     this->changeMove = 0;
     this->closeThisWindow = false;
-    this->exit = false;
+    this->closeMenu = false;
     this->startGame = false;
     this->returnToMenu = false;
 }
@@ -54,7 +54,7 @@ Event operator+(const Event &a, const Event& b) {
 	c.createE.insert(c.createE.end(), b.createE.begin(), b.createE.end());
     c.changeMove = c.changeMove + b.changeMove;
     c.closeThisWindow = c.closeThisWindow or b.closeThisWindow;
-    c.exit = c.exit or b.exit;
+    c.closeMenu = c.closeMenu or b.closeMenu;
     c.startGame = c.startGame or b.startGame;
     c.returnToMenu = c.returnToMenu or b.returnToMenu;
 
@@ -120,8 +120,8 @@ uint32_t Event::getChangeMoveEvent() const {
 bool Event::getCloseThisWindowEvent() const {
     return this->closeThisWindow;
 }
-bool Event::getExitEvent() const {
-    return this->exit;
+bool Event::getCloseMenuEvent() const {
+    return this->closeMenu;
 }
 bool Event::getStartGameEvent() const {
     return this->startGame;
@@ -205,9 +205,9 @@ void Event::addCloseThisWindowEvent() {
     this->onNewEvent();
     this->closeThisWindow = true;
 }
-void Event::addExitEvent() {
+void Event::addCloseMenuEvent() {
     this->onNewEvent();
-    this->exit = true;
+    this->closeMenu = true;
 }
 void Event::addStartGameEvent() {
     this->onNewEvent();

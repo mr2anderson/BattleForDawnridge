@@ -44,7 +44,7 @@ private:
 	Menu(const Menu& copy) = delete;
 	static Menu* singletone;
 
-    bool exit;
+    bool closeMenu;
     bool startGame;
     uint32_t windowW, windowH;
     std::queue<std::shared_ptr<PopUpElement>> elements;

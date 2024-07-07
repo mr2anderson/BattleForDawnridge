@@ -62,7 +62,7 @@ public:
     const std::vector<std::shared_ptr<PopUpElement>>* getCreateEEvent() const;
     uint32_t getChangeMoveEvent() const;
     bool getCloseThisWindowEvent() const;
-    bool getExitEvent() const;
+    bool getCloseMenuEvent() const;
     bool getStartGameEvent() const;
     bool getReturnToMenuEvent() const;
 
@@ -85,7 +85,7 @@ public:
     void addCreateEEvent(std::shared_ptr<PopUpElement> e);
     void addChangeMoveEvent();
     void addCloseThisWindowEvent();
-    void addExitEvent();
+    void addCloseMenuEvent();
     void addStartGameEvent();
     void addReturnToMenuEvent();
 private:
@@ -110,7 +110,7 @@ private:
 	std::vector<std::shared_ptr<PopUpElement>> createE;
     uint32_t changeMove;
     bool closeThisWindow;
-    bool exit;
+    bool closeMenu;
     bool startGame;
     bool returnToMenu;
 
