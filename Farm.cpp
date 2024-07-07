@@ -40,6 +40,9 @@ Event Farm::newMove(Player* player) {
 	}
 	return Event();
 }
+Building* Farm::clone() const {
+	return new Farm(*this);
+}
 bool Farm::works() const {
 	return this->HpSensitiveB::works() and this->UpgradeableB::works();
 }

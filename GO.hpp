@@ -29,7 +29,7 @@
 class GO : public sf::Drawable {
 public:
 	GO();
-	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

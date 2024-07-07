@@ -30,6 +30,7 @@ class Market : public UpgradeableB, public HpSensitiveB {
 public:
 	Market();
 	Market(uint32_t x, uint32_t y, Player *playerPtr);
+	Building* clone() const override;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

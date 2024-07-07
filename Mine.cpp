@@ -25,6 +25,9 @@ Mine::Mine() = default;
 Mine::Mine(uint32_t x, uint32_t y, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
 	ResourceB(x, y, 3, 3, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 3, 3, 20000, playerPtr) {}
+Building* Mine::clone() const {
+	return new Mine(*this);
+}
 Resources Mine::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

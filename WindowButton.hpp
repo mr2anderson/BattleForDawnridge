@@ -40,4 +40,5 @@ private:
     std::wstring buttonText;
 	Label label;
 	Button button;
+	bool inited;
 };

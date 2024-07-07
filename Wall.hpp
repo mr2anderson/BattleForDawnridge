@@ -28,8 +28,9 @@ class Wall : public UpgradeableB {
 public:
 	Wall();
 	Wall(uint32_t x, uint32_t y, Player* playerPtr);
-	Event newMove(Player* player) override;
+	Building* clone() const override;
 
+	Event newMove(Player* player) override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;

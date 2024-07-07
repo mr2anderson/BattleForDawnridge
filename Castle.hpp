@@ -29,8 +29,9 @@ class Castle : public TerritoryOriginB, public UpgradeableB {
 public:
 	Castle();
 	Castle(uint32_t x, uint32_t y, Player* playerPtr);
-	Event newMove(Player* player) override;
+	Building* clone() const override;
 
+	Event newMove(Player* player) override;
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;

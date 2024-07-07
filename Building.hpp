@@ -28,6 +28,7 @@ class Building : public Unit {
 public:
 	Building();
 	Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player *playerPtr);
+	virtual Building* clone() const = 0;
 
 	virtual bool works() const;
 protected:

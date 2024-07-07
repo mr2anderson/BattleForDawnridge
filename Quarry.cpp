@@ -25,6 +25,9 @@ Quarry::Quarry() = default;
 Quarry::Quarry(uint32_t x, uint32_t y, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
 	ResourceB(x, y, 3, 3, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 3, 3, 20000, playerPtr) {}
+Building* Quarry::clone() const {
+	return new Quarry(*this);
+}
 Resources Quarry::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

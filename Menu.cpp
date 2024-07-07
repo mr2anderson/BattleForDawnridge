@@ -32,7 +32,7 @@ Map* Menu::run(sf::RenderWindow& window) {
                 if (this->elements.empty()) {
                     this->handleButtonsClick();
                 }
-                else {
+                else if (!this->elements.empty()) {
                     this->handleEvent(this->elements.front()->click());
                 }
 			}

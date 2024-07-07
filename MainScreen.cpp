@@ -21,6 +21,7 @@
 
 
 
+
 MainScreen* MainScreen::singletone = nullptr;
 
 
@@ -38,10 +39,8 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
                         this->handleGameObjectClick();
                     }
 				}
-				else {
-					if (event.type == sf::Event::MouseButtonPressed) {
-						this->handleEvent(this->elements.front()->click());
-					}
+				else if (!this->elements.empty()) {
+					this->handleEvent(this->elements.front()->click());
 				}
 			}
 		}
@@ -53,6 +52,7 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
 			this->elements.front()->update();
 		}
         if (this->returnToMenu) {
+			this->prepareToReturnToMenu(window);
             return true;
         }
 	}

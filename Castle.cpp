@@ -33,6 +33,9 @@ Castle::Castle(uint32_t x, uint32_t y, Player* playerPtr) :
 	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 }
+Building* Castle::clone() const {
+	return new Castle(*this);
+}
 Event Castle::newMove(Player* player) {
 	Event response;
 	if (this->belongTo(player) and this->exist()) {

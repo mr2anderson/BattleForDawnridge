@@ -69,7 +69,6 @@ private:
 	void init(Map *mapPtr, sf::RenderWindow &window);
 	void initMap(Map *mapPtr);
 	void initMoveCtr();
-	void resetHighlightTable();
     void initPlains();
 	void initGraphics(sf::RenderWindow &window);
 

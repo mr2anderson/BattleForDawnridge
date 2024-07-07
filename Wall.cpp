@@ -33,6 +33,9 @@ Wall::Wall(uint32_t x, uint32_t y, Player* playerPtr) :
 	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
 
 }
+Building* Wall::clone() const {
+	return new Wall();
+}
 Event Wall::newMove(Player* player) {
 	Event response;
 	if (this->belongTo(player) and this->exist()) {

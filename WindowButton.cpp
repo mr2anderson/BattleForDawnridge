@@ -28,20 +28,25 @@ WindowButton::WindowButton(const std::string& soundName1, const std::string& sou
     this->soundName2 = soundName2;
 	this->message = message;
     this->buttonText = buttonText;
+    this->inited = false;
 }
 Event WindowButton::run(uint32_t windowW, uint32_t windowH) {
-	uint32_t buttonW = 75;
-	uint32_t buttonH = 30;
-
     Event soundEvent1 = this->PopUpElement::run(windowW, windowH);
     soundEvent1.addPlaySoundEvent(this->soundName1);
 
-    Event onClick;
-    onClick.addPlaySoundEvent(this->soundName2);
-    onClick.addCloseThisWindowEvent();
+    if (!this->inited) {
+        this->inited = true;
 
-	this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
-	this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
+        uint32_t buttonW = 75;
+        uint32_t buttonH = 30;
+
+        Event onClick;
+        onClick.addPlaySoundEvent(this->soundName2);
+        onClick.addCloseThisWindowEvent();
+
+        this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
+        this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
+    }
 
     return soundEvent1;
 }

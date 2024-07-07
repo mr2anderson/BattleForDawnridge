@@ -20,13 +20,12 @@
 #include "BuildingMode.hpp"
 
 
-BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) {
-	this->b = b;
+BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) : PopUpElement() {
+	this->b = b->clone();
 	this->view = view;
 	this->go = go;
 	this->tb = tb;
 	this->player = player;
-	this->returnedPtr = false;
 }
 BuildingMode::~BuildingMode() {
 	if (!this->returnedPtr) {
@@ -37,6 +36,7 @@ void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(*this->b);
 }
 Event BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
+	this->returnedPtr = false;
 	this->windowW = windowW2;
 	this->windowH = windowH2;
 	return this->getHighlightEvent() + this->PopUpElement::run(windowW, windowH);

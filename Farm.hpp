@@ -29,6 +29,7 @@ class Farm : public UpgradeableB, public HpSensitiveB {
 public:
 	Farm();
 	Farm(uint32_t x, uint32_t y, Player* playerPtr);
+	Building* clone() const override;
 
 	Event newMove(Player* currentPlayer) override;
 	bool works() const override;

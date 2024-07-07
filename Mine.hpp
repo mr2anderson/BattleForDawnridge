@@ -27,6 +27,7 @@ class Mine : public ResourceB {
 public:
 	Mine();
 	Mine(uint32_t x, uint32_t y, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
+	Building* clone() const override;
 
 	Resources getCost() const override;
 	std::string getTextureName() const override;

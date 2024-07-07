@@ -27,6 +27,9 @@ Market::Market(uint32_t x, uint32_t y, Player *playerPtr) :
 	Building(x, y, 3, 3, 30000, playerPtr) {
 
 }
+Building* Market::clone() const {
+	return new Market(*this);
+}
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->UpgradeableB::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {

@@ -26,6 +26,9 @@ Road::Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOrigi
 	Building(x, y, 1, 1, 1000, playerPtr) {
 	
 }
+Building* Road::clone() const {
+	return new Road(*this);
+}
 Event Road::newMove(Player* player) {
 	if (this->belongTo(player) and this->exist()) {
 		return this->regenerate();

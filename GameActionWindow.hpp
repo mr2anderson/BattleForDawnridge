@@ -39,6 +39,7 @@ private:
 	std::string soundName2;
 	std::vector<GameActionWindowComponent> components;
 	std::vector<Button> buttons;
+	bool inited;
 
 	void makeButtons(uint32_t windowW, uint32_t windowH);
 };

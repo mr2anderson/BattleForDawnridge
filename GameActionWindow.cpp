@@ -20,19 +20,22 @@
 #include "GameActionWindow.hpp"
 
 
+
 GameActionWindow::GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent> &components) :
 	PopUpElement() {
 	this->soundName1 = soundName1;
 	this->soundName2 = soundName2;
 	this->components = components;
+	this->inited = false;
 }
 Event GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
-	this->makeButtons(windowW, windowH);
-
-	Event soundEvent;
-	soundEvent.addPlaySoundEvent(this->soundName1);
-
-	return this->PopUpElement::run(windowW, windowH) + soundEvent;
+	Event event = this->PopUpElement::run(windowW, windowH);
+	if (!this->inited) {
+		this->inited = true;
+		this->makeButtons(windowW, windowH);
+	}
+	event.addPlaySoundEvent(this->soundName1);
+	return event;
 }
 void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
