@@ -43,10 +43,10 @@ castle_description
 <\DATA>
 
 <ID>
-castle_readable_name
+castle_upper_case_readable_name
 <\ID>
 <DATA>
-замок
+ЗАМОК
 <\DATA>
 
 <ID>
@@ -92,10 +92,10 @@ farm_description
 <\DATA>
 
 <ID>
-farm_readable_name
+farm_upper_case_readable_name
 <\ID>
 <DATA>
-ферма
+ФЕРМА
 <\DATA>
 
 <ID>
@@ -135,10 +135,10 @@ market_description
 <\DATA>
 
 <ID>
-market_readable_name
+market_upper_case_readable_name
 <\ID>
 <DATA>
-рынок
+РЫНОК
 <\DATA>
 
 <ID>
@@ -294,10 +294,10 @@ mine_description
 <\DATA>
 
 <ID>
-mine_readable_name
+mine_upper_case_readable_name
 <\ID>
 <DATA>
-шахта
+ШАХТА
 <\DATA>
 
 <ID>
@@ -322,10 +322,10 @@ quarry_description
 <\DATA>
 
 <ID>
-quarry_readable_name
+quarry_upper_case_readable_name
 <\ID>
 <DATA>
-каменоломня
+КАМЕНОЛОМНЯ
 <\DATA>
 
 <ID>
@@ -392,9 +392,10 @@ road_description
 <\DATA>
 
 <ID>
-road_readable_name
+road_upper_case_readable_name
 <\ID>
 <DATA>
+ДОРОГА
 <\DATA>
 
 <ID>
@@ -405,10 +406,10 @@ sawmill_description
 <\DATA>
 
 <ID>
-sawmill_readable_name
+sawmill_upper_case_readable_name
 <\ID>
 <DATA>
-лесопилка
+ЛЕСОПИЛКА
 <\DATA>
 
 <ID>
@@ -479,10 +480,10 @@ wall_description
 <\DATA>
 
 <ID>
-wall_readable_name
+wall_upper_case_readable_name
 <\ID>
 <DATA>
-стена
+СТЕНА
 <\DATA>
 
 <ID>

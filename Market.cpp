@@ -102,8 +102,8 @@ uint32_t Market::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-std::wstring Market::getReadableName() const {
-	return *Texts::get()->get("market_readable_name");
+std::wstring Market::getUpperCaseReadableName() const {
+	return *Texts::get()->get("market_upper_case_readable_name");
 }
 bool Market::busy() const {
 	return this->currentTrade.movesLeft != 0;

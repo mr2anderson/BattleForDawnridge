@@ -52,8 +52,8 @@ std::string Road::getSoundName() const {
 std::wstring Road::getDescription() const {
 	return *Texts::get()->get("road_description");
 }
-std::wstring Road::getReadableName() const {
-	return *Texts::get()->get("road_readable_name");
+std::wstring Road::getUpperCaseReadableName() const {
+	return *Texts::get()->get("road_upper_case_readable_name");
 }
 uint32_t Road::getRadius() const {
 	return 3;
@@ -64,7 +64,7 @@ Event Road::getSelectionW() {
 	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("road",
-		this->getReadableName() + this->getDescription() + L'\n'
+		this->getDescription() + L'\n'
 		+ this->getReadableHpInfo(), false, false, Event());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);

@@ -39,7 +39,7 @@ public:
 	std::wstring getDescription() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
-	std::wstring getReadableName() const override;
+	std::wstring getUpperCaseReadableName() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	static uint32_t GET_COLLECTION_SPEED(uint32_t level);

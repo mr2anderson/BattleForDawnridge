@@ -68,8 +68,8 @@ std::string Wall::getSoundName() const {
 std::wstring Wall::getDescription() const {
 	return *Texts::get()->get("wall_description");
 }
-std::wstring Wall::getReadableName() const {
-	return *Texts::get()->get("wall_readable_name");
+std::wstring Wall::getUpperCaseReadableName() const {
+	return *Texts::get()->get("wall_upper_case_readable_name");
 }
 Resources Wall::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

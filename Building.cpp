@@ -27,17 +27,6 @@ Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t ma
 bool Building::works() const {
 	return this->exist();
 }
-std::wstring Building::getUpperCaseReadableName() const {
-	std::wstring s = this->getReadableName();
-	std::wstring n;
-	for (auto c : s) {
-		n += TO_UPPER(c);
-	}
-	return n;
-}
-wchar_t Building::TO_UPPER(wchar_t a) {
-	return a;
-}
 Event Building::regenerate() {
 	Event events;
 	if (this->getHP() < this->getMaxHP()) {

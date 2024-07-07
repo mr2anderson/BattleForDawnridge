@@ -78,6 +78,6 @@ uint32_t Mine::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-std::wstring Mine::getReadableName() const {
-	return *Texts::get()->get("mine_readable_name");
+std::wstring Mine::getUpperCaseReadableName() const {
+	return *Texts::get()->get("mine_upper_case_readable_name");
 }

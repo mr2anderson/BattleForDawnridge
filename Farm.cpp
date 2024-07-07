@@ -63,8 +63,8 @@ std::wstring Farm::getDescription() const {
 uint32_t Farm::getRegenerationSpeed() const {
 	return 5000;
 }
-std::wstring Farm::getReadableName() const {
-	return *Texts::get()->get("farm_readable_name");
+std::wstring Farm::getUpperCaseReadableName() const {
+	return *Texts::get()->get("farm_upper_case_readable_name");
 }
 Resources Farm::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

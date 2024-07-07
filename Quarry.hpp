@@ -40,5 +40,5 @@ private:
 	uint32_t getRadius(uint32_t level) const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
-	std::wstring getReadableName() const override;
+	std::wstring getUpperCaseReadableName() const override;
 };

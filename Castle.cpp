@@ -71,8 +71,8 @@ uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
 uint32_t Castle::getRegenerationSpeed() const {
 	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
 }
-std::wstring Castle::getReadableName() const {
-	return *Texts::get()->get("castle_readable_name");
+std::wstring Castle::getUpperCaseReadableName() const {
+	return *Texts::get()->get("castle_upper_case_readable_name");
 }
 Resources Castle::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {

@@ -78,6 +78,6 @@ uint32_t Quarry::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-std::wstring Quarry::getReadableName() const {
-	return *Texts::get()->get("quarry_readable_name");
+std::wstring Quarry::getUpperCaseReadableName() const {
+	return *Texts::get()->get("quarry_upper_case_readable_name");
 }

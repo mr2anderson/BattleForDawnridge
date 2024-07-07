@@ -78,6 +78,6 @@ uint32_t Sawmill::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-std::wstring Sawmill::getReadableName() const {
-	return *Texts::get()->get("sawmill_readable_name");
+std::wstring Sawmill::getUpperCaseReadableName() const {
+	return *Texts::get()->get("sawmill_upper_case_readable_name");
 }
