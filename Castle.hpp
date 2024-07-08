@@ -18,34 +18,26 @@
 
 
 #include "TerritoryOriginB.hpp"
-#include "UpgradeableB.hpp"
 #include "GameActionWindow.hpp"
 
 
 #pragma once
 
 
-class Castle : public TerritoryOriginB, public UpgradeableB {
+class Castle : public TerritoryOriginB {
 public:
 	Castle();
 	Castle(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr);
 	Building* cloneBuilding() const override;
 
 	Events newMove(std::shared_ptr<Player> player) override;
-	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 private:
-	static const uint32_t LEVEL_HP[];
-
-	static uint32_t GET_REGENERATION_SPEED(uint32_t level);
-	GameActionWindowComponent getUpgradeComponent() override;
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeTime() const override;
 	uint32_t getRadius() const override;
 	Events getSelectionW();
 	Events getGameObjectResponse(std::shared_ptr<Player> player) override;

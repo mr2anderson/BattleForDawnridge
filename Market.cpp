@@ -22,7 +22,6 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, std::shared_ptr<Player>playerPtr) : 
-	UpgradeableB(x, y, 3, 3, 30000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 30000, playerPtr),
 	Building(x, y, 3, 3, 30000, playerPtr) {
 
@@ -31,7 +30,7 @@ Building* Market::cloneBuilding() const {
 	return new Market(*this);
 }
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	this->UpgradeableB::draw(target, states);
+	this->HpSensitiveB::draw(target, states);
 	if (this->exist() and this->currentTrade.movesLeft != 0) {
 		this->drawCurrentTradeShortInfo(target, states);
 	}
@@ -58,14 +57,11 @@ Events Market::newMove(std::shared_ptr<Player> currentPlayer) {
 	if (!this->belongTo(currentPlayer) or !this->exist()) {
 		return Events();
 	}
-	Events response = this->handleCurrentUpgrade() + this->regenerate();
+	Events response = this->regenerate();
 	if (this->works()) {
 		response = response + this->handleCurrentTrade();
 	}
 	return response;
-}
-bool Market::works() const {
-	return this->HpSensitiveB::works() and this->UpgradeableB::works();
 }
 Resources Market::getCost() const {
 	Resources cost;
@@ -80,19 +76,6 @@ std::string Market::getSoundName() const {
 }
 std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
-}
-GameActionWindowComponent Market::getUpgradeComponent() {
-	Events gameEventUpgrade;
-	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-	GameActionWindowComponent component = {
-		"upgrade_icon",
-		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-		*Texts::get()->get("upgrade_will_increase_move_number_for_one_trade_from") + std::to_wstring(this->getTradeStartTime()) + *Texts::get()->get("to") + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L'.',
-		true,
-		false,
-		gameEventUpgrade
-	};
-	return component;
 }
 GameActionWindowComponent Market::getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const {
 	Events events;
@@ -120,36 +103,14 @@ GameActionWindowComponent Market::getBusyWithTradeComponent() const {
 uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
 }
-Resources Market::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 60000}}),
-		Resources({{"wood", 140000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Market::getUpgradeTime() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		3,
-		6
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
-}
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
 }
 bool Market::busy() const {
 	return this->currentTrade.movesLeft != 0;
 }
-uint32_t Market::GET_TRADE_START_TIME(uint32_t level) {
-	uint32_t levelTradeStartTime[TOTAL_LEVELS] = {
-		6,
-		2,
-		1
-	};
-	return levelTradeStartTime[level];
-}
 uint32_t Market::getTradeStartTime() const {
-	return GET_TRADE_START_TIME(this->getCurrentLevel() - 1);
+	return 4;
 }
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
@@ -201,16 +162,10 @@ Events Market::getSelectionW() {
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
-	if (this->upgrading()) {
-		components.push_back(this->getBusyWithUpgradingComponent());
-	}
 	if (this->busy()) {
 		components.push_back(this->getBusyWithTradeComponent());
 	}
 	if (this->works() and !this->busy()) {
-		if (this->getCurrentLevel() != TOTAL_LEVELS) {
-			components.push_back(this->getUpgradeComponent());
-		}
 		for (const auto& a : { std::make_tuple("gold", 100, "food", 20000),
 		std::make_tuple("gold", 100, "wood", 20000),
 		std::make_tuple("gold", 100, "stone", 20000),

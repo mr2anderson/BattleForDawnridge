@@ -86,7 +86,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
                 "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-                "wall1", "wall2", "wall3", "road", "mountains", "level1", "level2", "level3",
+                "wall1", "wall2", "road", "mountains",
                 "windmill", "arable"}) {
             Textures::get()->add(a, a + ".png");
         }

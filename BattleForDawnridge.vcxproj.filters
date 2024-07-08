@@ -793,9 +793,6 @@
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
-    <ClInclude Include="DecreaseUpgradeMovesLeftEvent.hpp">
-      <Filter>Header Files\screens\service\events</Filter>
-    </ClInclude>
     <ClInclude Include="Event.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
@@ -837,9 +834,6 @@
     </ClInclude>
     <ClInclude Include="Iron.hpp">
       <Filter>Header Files\screens\service\go</Filter>
-    </ClInclude>
-    <ClInclude Include="IncreaseLevelEvent.hpp">
-      <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
     <ClInclude Include="LabelWithImage.hpp">
       <Filter>Header Files\simpleUiElements</Filter>
@@ -973,14 +967,8 @@
     <ClInclude Include="UTFEncoder.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
-    <ClInclude Include="UpgradeableB.hpp">
-      <Filter>Header Files\screens\service\go</Filter>
-    </ClInclude>
     <ClInclude Include="Unit.hpp">
       <Filter>Header Files\screens\service\go</Filter>
-    </ClInclude>
-    <ClInclude Include="TryToUpgradeEvent.hpp">
-      <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
     <ClInclude Include="TryToTradeEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
@@ -1095,9 +1083,6 @@
     <ClCompile Include="CreateEEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
-    <ClCompile Include="DecreaseUpgradeMovesLeftEvent.cpp">
-      <Filter>Source Files\screens\service\events</Filter>
-    </ClCompile>
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
@@ -1139,9 +1124,6 @@
     </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
-    </ClCompile>
-    <ClCompile Include="IncreaseLevelEvent.cpp">
-      <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
     <ClCompile Include="Iron.cpp">
       <Filter>Source Files\screens\service\go</Filter>
@@ -1263,17 +1245,11 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
-    <ClCompile Include="UpgradeableB.cpp">
-      <Filter>Source Files\screens\service\go</Filter>
-    </ClCompile>
     <ClCompile Include="TextRedefinition.cpp">
       <Filter>Source Files\resources\exceptions</Filter>
     </ClCompile>
     <ClCompile Include="UTFEncoder.cpp">
       <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="TryToUpgradeEvent.cpp">
-      <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
     <ClCompile Include="TryToBuildEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>

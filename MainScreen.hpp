@@ -88,10 +88,7 @@ private:
 	void handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e);
 	void handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent> e);
 	void handleCollectEvent(std::shared_ptr<CollectEvent> e);
-	void handleTryToUpgradeEvent(std::shared_ptr<TryToUpgradeEvent> e);
 	void handleAddHpEvent(std::shared_ptr<AddHpEvent> e);
-	void handleDecreaseUpgradeMovesLeftEvent(std::shared_ptr<DecreaseUpgradeMovesLeftEvent> e);
-	void handleIncreaseLevelEvent(std::shared_ptr<IncreaseLevelEvent> e);
 	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e);
 	void handleTryToBuild(std::shared_ptr<TryToBuildEvent> e);
 	void handleBuild(std::shared_ptr<BuildEvent> e);

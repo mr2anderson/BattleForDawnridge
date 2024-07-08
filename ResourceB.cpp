@@ -22,7 +22,6 @@
 
 ResourceB::ResourceB() = default;
 ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
-	UpgradeableB(x, y, sx, sy, maxHp, playerPtr),
 	HpSensitiveB(x, y, sx, sy, maxHp, playerPtr),
 	AreaB(x, y, sx, sy, maxHp, playerPtr),
 	Building(x, y, sx, sy, maxHp, playerPtr) {
@@ -31,36 +30,13 @@ ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t 
 }
 Events ResourceB::newMove(std::shared_ptr<Player> currentPlayer) {
 	if (this->belongTo(currentPlayer) and this->exist()) {
-		Events response = this->handleCurrentUpgrade() + this->regenerate();
+		Events response = this->regenerate();
 		if (this->works() and this->resourcesLeft) {
 			response = response + this->collectResources();
 		}
 		return response;
 	}
 	return Events();
-}
-bool ResourceB::works() const {
-	return this->UpgradeableB::works() and this->HpSensitiveB::works() and this->AreaB::works();
-}
-uint32_t ResourceB::getCollectionSpeed() const {
-	return this->getCollectionSpeed(this->getCurrentLevel() - 1);
-}
-uint32_t ResourceB::getRadius() const {
-	return this->getRadius(this->getCurrentLevel() - 1);
-}
-GameActionWindowComponent ResourceB::getUpgradeComponent() {
-	Events gameEventUpgrade = this->getHighlightEvent();
-	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-	GameActionWindowComponent component = {
-		"upgrade_icon",
-		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-		*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) +
-		*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.',
-		true,
-		false,
-		gameEventUpgrade
-	};
-	return component;
 }
 Events ResourceB::collectResources() {
 	uint32_t left = this->getCollectionSpeed();
@@ -103,12 +79,6 @@ Events ResourceB::getSelectionW() {
 	components.push_back(this->getHpInfoComponent());
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
-	}
-	if (this->upgrading()) {
-		components.push_back(this->getBusyWithUpgradingComponent());
-	}
-	if (this->works() and this->getCurrentLevel() != TOTAL_LEVELS) {
-		components.push_back(this->getUpgradeComponent());
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);

@@ -512,7 +512,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CouldntOpenTexture.hpp" />
     <ClInclude Include="CreateEEvent.hpp" />
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
-    <ClInclude Include="DecreaseUpgradeMovesLeftEvent.hpp" />
     <ClInclude Include="Event.hpp" />
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
@@ -626,7 +625,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="HPGO.hpp" />
     <ClInclude Include="HpSensitiveB.hpp" />
     <ClInclude Include="Image.hpp" />
-    <ClInclude Include="IncreaseLevelEvent.hpp" />
     <ClInclude Include="Iron.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
@@ -673,9 +671,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TryToAttackEvent.hpp" />
     <ClInclude Include="TryToBuildEvent.hpp" />
     <ClInclude Include="TryToTradeEvent.hpp" />
-    <ClInclude Include="TryToUpgradeEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
-    <ClInclude Include="UpgradeableB.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="Wall.hpp" />
     <ClInclude Include="Water.hpp" />
@@ -712,7 +708,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CouldntOpenTexture.cpp" />
     <ClCompile Include="CreateEEvent.cpp" />
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
-    <ClCompile Include="DecreaseUpgradeMovesLeftEvent.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FlyingE.cpp" />
@@ -727,7 +722,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="HPGO.cpp" />
     <ClCompile Include="HpSensitiveB.cpp" />
     <ClCompile Include="Image.cpp" />
-    <ClCompile Include="IncreaseLevelEvent.cpp" />
     <ClCompile Include="Iron.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
@@ -775,9 +769,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TryToAttackEvent.cpp" />
     <ClCompile Include="TryToBuildEvent.cpp" />
     <ClCompile Include="TryToTradeEvent.cpp" />
-    <ClCompile Include="TryToUpgradeEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
-    <ClCompile Include="UpgradeableB.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Water.cpp" />

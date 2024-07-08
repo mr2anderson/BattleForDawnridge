@@ -17,14 +17,14 @@
  */
 
 
-#include "UpgradeableB.hpp"
+#include "Building.hpp"
 #include "GameActionWindow.hpp"
 
 
 #pragma once
 
 
-class Wall : public UpgradeableB {
+class Wall : public Building {
 public:
 	Wall();
 	Wall(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr);
@@ -36,14 +36,8 @@ public:
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 private:
-	static const uint32_t LEVEL_HP[];
-
-	static uint32_t GET_REGENERATION_SPEED(uint32_t level);
-	GameActionWindowComponent getUpgradeComponent() override;
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeTime() const override;
 	Events getSelectionW();
 	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

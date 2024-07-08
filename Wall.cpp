@@ -20,17 +20,9 @@
 #include "Wall.hpp"
 
 
-const uint32_t Wall::LEVEL_HP[Wall::TOTAL_LEVELS] = {
-	100000,
-	300000,
-	700000
-};
-
-
 Wall::Wall() = default;
 Wall::Wall(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
-	UpgradeableB(x, y, 2, 2, LEVEL_HP[0], playerPtr),
-	Building(x, y, 2, 2, LEVEL_HP[0], playerPtr) {
+	Building(x, y, 2, 2, 100000, playerPtr) {
 
 }
 Building* Wall::cloneBuilding() const {
@@ -39,8 +31,7 @@ Building* Wall::cloneBuilding() const {
 Events Wall::newMove(std::shared_ptr<Player> player) {
 	Events response;
 	if (this->belongTo(player) and this->exist()) {
-		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
-		return this->handleCurrentUpgrade() + this->regenerate();
+		return  this->regenerate();
 	}
 	return response;
 }
@@ -49,28 +40,11 @@ Resources Wall::getCost() const {
 	cost.plus(Resource("stone", 10000));
 	return cost;
 }
-uint32_t Wall::GET_REGENERATION_SPEED(uint32_t level) {
-	return LEVEL_HP[level] / 3;
-}
-GameActionWindowComponent Wall::getUpgradeComponent() {
-	Events gameEventUpgrade;
-	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-	GameActionWindowComponent component = {
-		"upgrade_icon",
-		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-		*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-		*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.',
-		true,
-		false,
-		gameEventUpgrade
-	};
-	return component;
-}
 uint32_t Wall::getRegenerationSpeed() const {
-	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
+	return 25000;
 }
 std::string Wall::getTextureName() const {
-	return "wall" + std::to_string(this->getCurrentLevel());
+	return "wall1";
 }
 std::string Wall::getSoundName() const {
 	return "stone";
@@ -81,20 +55,6 @@ std::wstring Wall::getDescription() const {
 std::wstring Wall::getUpperCaseReadableName() const {
 	return *Texts::get()->get("wall_upper_case_readable_name");
 }
-Resources Wall::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"stone", 20000}}),
-		Resources({{"stone", 40000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Wall::getUpgradeTime() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		3,
-		6
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
-}
 Events Wall::getSelectionW() {
 	Events response;
 
@@ -102,9 +62,6 @@ Events Wall::getSelectionW() {
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
-	if (this->works() and this->getCurrentLevel() != TOTAL_LEVELS) {
-		components.push_back(this->getUpgradeComponent());
-	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));

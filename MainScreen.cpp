@@ -151,17 +151,8 @@ void MainScreen::handleEvent(Events &e) {
 		else if (std::shared_ptr<CollectEvent> collectEvent = std::dynamic_pointer_cast<CollectEvent>(e.at(i))) {
 			this->handleCollectEvent(collectEvent);
 		}
-		else if (std::shared_ptr<TryToUpgradeEvent> tryToUpgradeEvent = std::dynamic_pointer_cast<TryToUpgradeEvent>(e.at(i))) {
-			this->handleTryToUpgradeEvent(tryToUpgradeEvent);
-		}
 		else if (std::shared_ptr<AddHpEvent> addHpEvent = std::dynamic_pointer_cast<AddHpEvent>(e.at(i))) {
 			this->handleAddHpEvent(addHpEvent);
-		}
-		else if (std::shared_ptr<DecreaseUpgradeMovesLeftEvent> decreaseUpgradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseUpgradeMovesLeftEvent>(e.at(i))) {
-			this->handleDecreaseUpgradeMovesLeftEvent(decreaseUpgradeMovesLeftEvent);
-		}
-		else if (std::shared_ptr<IncreaseLevelEvent> increaseLevelEvent = std::dynamic_pointer_cast<IncreaseLevelEvent>(e.at(i))) {
-			this->handleIncreaseLevelEvent(increaseLevelEvent);
 		}
 		else if (std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> decreaseCurrentTradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentTradeMovesLeftEvent>(e.at(i))) {
 			this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent);
@@ -228,28 +219,10 @@ void MainScreen::handleCollectEvent(std::shared_ptr<CollectEvent> e) {
 	this->getCurrentPlayer()->addResource(Resource(resourcePoint->getResourceType(), n));
 	resourcePoint->subHp(n);
 }
-void MainScreen::handleTryToUpgradeEvent(std::shared_ptr<TryToUpgradeEvent> e) {
-	UpgradeableB* b = e->getBuilding();
-	Resources cost = b->getUpgradeCost();
-	if (this->getCurrentPlayer()->getResources() >= cost) {
-		Events events = b->startUpgrade();
-		this->handleEvent(events);
-	}
-	else {
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("no_resources_for_upgrade"), *Texts::get()->get("OK"));
-		this->addPopUpWindow(w);
-	}
-}
 void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
 	HPGO* go = e->getHPGO();
 	uint32_t n = e->getN();
 	go->addHp(n);
-}
-void MainScreen::handleDecreaseUpgradeMovesLeftEvent(std::shared_ptr<DecreaseUpgradeMovesLeftEvent> e) {
-	e->getBuilding()->decreaseUpgradeMovesLeft();
-}
-void MainScreen::handleIncreaseLevelEvent(std::shared_ptr<IncreaseLevelEvent> e) {
-	e->getB()->increaseLevel();
 }
 void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e) {
 	e->getMarket()->decreaseCurrentTradeMovesLeft();

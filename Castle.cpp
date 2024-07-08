@@ -20,18 +20,10 @@
 #include "Castle.hpp"
 
 
-const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
-	100000,
-	500000,
-	1300000
-};
-
-
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) : 
-	TerritoryOriginB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
-	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
-	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
+	TerritoryOriginB(x, y, 3, 3, 100, playerPtr),
+	Building(x, y, 3, 3, 100000, playerPtr) {
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
@@ -39,13 +31,9 @@ Building* Castle::cloneBuilding() const {
 Events Castle::newMove(std::shared_ptr<Player> player) {
 	Events response;
 	if (this->belongTo(player) and this->exist()) {
-		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
-		return this->handleCurrentUpgrade() + this->regenerate();
+		return this->regenerate();
 	}
 	return response;
-}
-bool Castle::works() const {
-	return this->TerritoryOriginB::works() and this->UpgradeableB::works();
 }
 Resources Castle::getCost() const {
 	Resources cost;
@@ -61,42 +49,11 @@ std::string Castle::getSoundName() const {
 std::wstring Castle::getDescription() const {
 	return *Texts::get()->get("castle_description");
 }
-uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
-	return LEVEL_HP[level] / 4;
-}
-GameActionWindowComponent Castle::getUpgradeComponent() {
-	Events gameEventUpgrade;
-	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-	GameActionWindowComponent component = {
-		"upgrade_icon",
-		*Texts::get()->get("upgrade_castle_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-		*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-		*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.',
-		true,
-		false,
-		gameEventUpgrade + this->getHighlightEvent()
-	};
-	return component;
-}
 uint32_t Castle::getRegenerationSpeed() const {
-	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
+	return 25000;
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");
-}
-Resources Castle::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"stone", 200000}}),
-		Resources({{"stone", 400000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Castle::getUpgradeTime() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		4,
-		8
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 uint32_t Castle::getRadius() const {
 	return 3;
@@ -110,12 +67,6 @@ Events Castle::getSelectionW() {
 	components.push_back(this->getHpInfoComponent());
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
-	}
-	if (this->upgrading()) {
-		components.push_back(this->getBusyWithUpgradingComponent());
-	}
-	if (this->works() and this->getCurrentLevel() != TOTAL_LEVELS) {
-		components.push_back(this->getUpgradeComponent());
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);

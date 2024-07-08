@@ -45,38 +45,14 @@ std::string Sawmill::getSoundName() const {
 std::string Sawmill::getResourceType() const {
 	return "wood";
 }
-uint32_t Sawmill::getCollectionSpeed(uint32_t level) const {
-	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
-		1,
-		3,
-		9
-	};
-	return 1000 * levelCollectionSpeedBonus[level];
+uint32_t Sawmill::getCollectionSpeed() const {
+	return 1000;
 }
-uint32_t Sawmill::getRadius(uint32_t level) const {
-	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
-		0,
-		2,
-		3
-	};
-	return 4 + levelRadiusBonus[level];
+uint32_t Sawmill::getRadius() const {
+	return 4;
 }
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");
-}
-Resources Sawmill::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 16000}}),
-		Resources({{"wood", 48000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Sawmill::getUpgradeTime() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		2,
-		3
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 std::wstring Sawmill::getUpperCaseReadableName() const {
 	return *Texts::get()->get("sawmill_upper_case_readable_name");

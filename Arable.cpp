@@ -22,7 +22,6 @@
 
 Arable::Arable() = default;
 Arable::Arable(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
-	UpgradeableB(x, y, 3, 3, 2000, playerPtr),
 	Building(x, y, 3, 3, 2000, playerPtr) {
 
 }
@@ -32,12 +31,12 @@ Building* Arable::cloneBuilding() const {
 Events Arable::newMove(std::shared_ptr<Player> player) {
 	if (this->exist() and this->belongTo(player)) {
 		this->collected = false;
-		return this->handleCurrentUpgrade();
+		return this->regenerate();
 	}
 	return Events();
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 10000) });
+	return Resources({ Resource("wood", 8000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -52,28 +51,7 @@ bool Arable::alreadyCollected() const {
 	return this->collected;
 }
 uint32_t Arable::collect() const {
-	return GET_COLLECTION_SPEED(this->getCurrentLevel() - 1);
-}
-uint32_t Arable::GET_COLLECTION_SPEED(uint32_t i) {
-	uint32_t collectionSpeed[UpgradeableB::TOTAL_LEVELS] = {
-		1000,
-		3000,
-		9000
-	};
-	return collectionSpeed[i];
-}
-GameActionWindowComponent Arable::getUpgradeComponent() {
-	Events gameEventUpgrade;
-	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-	GameActionWindowComponent component = {
-		"upgrade_icon",
-		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-		*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel() - 1)) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L".",
-		true,
-		false,
-		gameEventUpgrade
-	};
-	return component;
+	return 1000;
 }
 uint32_t Arable::getRegenerationSpeed() const {
 	return 1000;
@@ -81,31 +59,11 @@ uint32_t Arable::getRegenerationSpeed() const {
 std::wstring Arable::getUpperCaseReadableName() const {
 	return *Texts::get()->get("arable_upper_case_readable_name");
 }
-Resources Arable::getUpgradeCost() const {
-	Resources upgradeCosts[UpgradeableB::TOTAL_LEVELS - 1] = {
-		 Resources({ Resource("wood", 30000) }),
-		 Resources({ Resource("wood", 80000) })
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Arable::getUpgradeTime() const {
-	uint32_t upgradeTime[UpgradeableB::TOTAL_LEVELS - 1] = {
-		2,
-		3
-	};
-	return upgradeTime[this->getCurrentLevel() - 1];
-}
 Events Arable::getSelectionW() {
 	std::vector<GameActionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
-	if (this->upgrading()) {
-		components.push_back(this->getBusyWithUpgradingComponent());
-	}
-	if (this->works()) {
-		components.push_back(this->getUpgradeComponent());
-	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	Events windowEvent;

@@ -17,7 +17,6 @@
  */
 
 
-#include "UpgradeableB.hpp"
 #include "HpSensitiveB.hpp"
 #include "Trade.hpp"
 #include "GameActionWindow.hpp"
@@ -30,7 +29,7 @@
 #pragma once
 
 
-class Market : public UpgradeableB, public HpSensitiveB {
+class Market : public HpSensitiveB {
 public:
 	Market();
 	Market(uint32_t x, uint32_t y, std::shared_ptr<Player>playerPtr);
@@ -41,7 +40,6 @@ public:
 	Events doTrade(const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
 	Events newMove(std::shared_ptr<Player> currentPlayer);
-	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -49,12 +47,9 @@ public:
 private:
 	Trade currentTrade;
 
-	GameActionWindowComponent getUpgradeComponent() override;
 	GameActionWindowComponent getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const;
 	GameActionWindowComponent getBusyWithTradeComponent() const;
 	uint32_t getRegenerationSpeed() const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeTime() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	bool busy() const;
 	static uint32_t GET_TRADE_START_TIME(uint32_t level);

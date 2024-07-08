@@ -57,34 +57,6 @@ leave
 <\DATA>
 
 <ID>
-upgrade_castle_for
-<\ID>
-<DATA>
-Улучшить замок за 
-<\DATA>
-
-<ID>
-upgrade_will_increase_hp_from
-<\ID>
-<DATA>
-Улучшение увеличит защиту с 
-<\DATA>
-
-<ID>
-to
-<\ID>
-<DATA>
- до 
-<\DATA>
-
-<ID>
-and_repair_speed_from
-<\ID>
-<DATA>
- и скорость ремонта с 
-<\DATA>
-
-<ID>
 farm_description
 <\ID>
 <DATA>
@@ -96,13 +68,6 @@ farm_upper_case_readable_name
 <\ID>
 <DATA>
 ФЕРМА
-<\DATA>
-
-<ID>
-upgrade_will_decrease_move_number_for_one_trade_from
-<\ID>
-<DATA>
-Улучшение уменьшит число ходов для одной сделки с 
 <\DATA>
 
 <ID>
@@ -183,14 +148,6 @@ no_resources_for_trade
 <DATA>
 НЕДОСТАТОЧНО РЕСУРСОВ
 Вы не можете совершить эту сделку
-<\DATA>
-
-<ID>
-no_resources_for_upgrade
-<\ID>
-<DATA>
-НЕДОСТАТОЧНО РЕСУРСОВ
-Вы не можете улучшить это здание
 <\DATA>
 
 <ID>
@@ -349,20 +306,6 @@ bracket_right
 <\DATA>
 
 <ID>
-upgrade_will_increase_collection_speed_from
-<\ID>
-<DATA>
-Улучшение повысит скорость добычи с 
-<\DATA>
-
-<ID>
-and_collection_radius_from
-<\ID>
-<DATA>
- и радиус добычи с 
-<\DATA>
-
-<ID>
 road_description
 <\ID>
 <DATA>
@@ -426,22 +369,6 @@ moves_number
 <\DATA>
 
 <ID>
-upgrade_in_progress
-<\ID>
-<DATA>
-Идет улучшение. Подождите, пока оно не закончится. Число ходов до конца улучшения: 
-<\DATA>
-
-<ID>
-upgrade_started
-<\ID>
-<DATA>
-: НАЧАТО УЛУЧШЕНИЕ
-Подождите, пока оно не закончится
-Число ходов до конца улучшения: 
-<\DATA>
-
-<ID>
 wall_description
 <\ID>
 <DATA>
@@ -487,10 +414,8 @@ show_license
 credits
 <\ID>
 <DATA>
+Идея, программирование
 Никита Чеботарев (https://github.com/mr2anderson)
-Автор проекта
-Главный разработчик
-Иконки уровней зданий
 <\DATA>
 
 <ID>
@@ -555,13 +480,6 @@ left
 <\ID>
 <DATA>
 Осталось: 
-<\DATA>
-
-<ID>
-upgrade_for
-<\ID>
-<DATA>
-Улучшить за 
 <\DATA>
 
 <ID>

@@ -17,7 +17,6 @@
  */
 
 
-#include "UpgradeableB.hpp"
 #include "HpSensitiveB.hpp"
 #include "AreaB.hpp"
 #include "ResourcePoint.hpp"
@@ -28,25 +27,19 @@
 #pragma once
 
 
-class ResourceB : public UpgradeableB, public HpSensitiveB, public AreaB {
+class ResourceB : public HpSensitiveB, public AreaB {
 public:
 	ResourceB();
 	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
 
 	Events newMove(std::shared_ptr<Player> currentPlayer) override;
-	bool works() const override;
 protected:
-	uint32_t getCollectionSpeed() const;
-	uint32_t getRadius() const override;
-
 	virtual std::string getResourceType() const = 0;
-	virtual uint32_t getCollectionSpeed(uint32_t level) const = 0;
-	virtual uint32_t getRadius(uint32_t level) const = 0;
+	virtual uint32_t getCollectionSpeed() const = 0;
 private:
 	std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr;
 	bool resourcesLeft;
 
-	GameActionWindowComponent getUpgradeComponent() override;
 	Events collectResources();
 	Events getSelectionW();
 	Events getGameObjectResponse(std::shared_ptr<Player> player) override;

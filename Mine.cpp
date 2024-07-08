@@ -45,38 +45,14 @@ std::string Mine::getSoundName() const {
 std::string Mine::getResourceType() const {
 	return "iron";
 }
-uint32_t Mine::getCollectionSpeed(uint32_t level) const {
-	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
-		1,
-		3,
-		9
-	};
-	return 1000 * levelCollectionSpeedBonus[level];
+uint32_t Mine::getCollectionSpeed() const {
+	return 1000;
 }
-uint32_t Mine::getRadius(uint32_t level) const {
-	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
-		0,
-		2,
-		3
-	};
-	return 4 + levelRadiusBonus[level];
+uint32_t Mine::getRadius() const {
+	return 4;
 }
 std::wstring Mine::getDescription() const {
 	return *Texts::get()->get("mine_description");
-}
-Resources Mine::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 16000}}),
-		Resources({{"wood", 48000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Mine::getUpgradeTime() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		2,
-		3
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 std::wstring Mine::getUpperCaseReadableName() const {
 	return *Texts::get()->get("mine_upper_case_readable_name");

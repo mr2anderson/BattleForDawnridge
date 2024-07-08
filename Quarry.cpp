@@ -45,38 +45,14 @@ std::string Quarry::getSoundName() const {
 std::string Quarry::getResourceType() const {
 	return "stone";
 }
-uint32_t Quarry::getCollectionSpeed(uint32_t level) const {
-	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
-		1,
-		3,
-		9
-	};
-	return 1000 * levelCollectionSpeedBonus[level];
+uint32_t Quarry::getCollectionSpeed() const {
+	return 1000;
 }
-uint32_t Quarry::getRadius(uint32_t level) const {
-	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
-		0,
-		2,
-		3
-	};
-	return 4 + levelRadiusBonus[level];
+uint32_t Quarry::getRadius() const {
+	return 4;
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");
-}
-Resources Quarry::getUpgradeCost() const {
-	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 16000}}),
-		Resources({{"wood", 48000}})
-	};
-	return upgradeCosts[this->getCurrentLevel() - 1];
-}
-uint32_t Quarry::getUpgradeTime() const {
-	uint32_t upgradeMoves[TOTAL_LEVELS - 1] = {
-		2,
-		3
-	};
-	return upgradeMoves[this->getCurrentLevel() - 1];
 }
 std::wstring Quarry::getUpperCaseReadableName() const {
 	return *Texts::get()->get("quarry_upper_case_readable_name");

@@ -36,9 +36,7 @@ public:
 private:
 	uint32_t getRegenerationSpeed() const override;
 	std::string getResourceType() const override;
-	uint32_t getCollectionSpeed(uint32_t level) const override;
-	uint32_t getRadius(uint32_t level) const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeTime() const override;
+	uint32_t getCollectionSpeed() const override;
+	uint32_t getRadius() const override;
 	std::wstring getUpperCaseReadableName() const override;
 };
