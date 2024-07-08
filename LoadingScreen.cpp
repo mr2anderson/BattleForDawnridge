@@ -85,8 +85,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
-                "farm", "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-                "wall1", "wall2", "wall3", "road", "mountains", "level1", "level2", "level3"}) {
+                "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
+                "wall1", "wall2", "wall3", "road", "mountains", "level1", "level2", "level3",
+                "windmill", "arable"}) {
             Textures::get()->add(a, a + ".png");
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {

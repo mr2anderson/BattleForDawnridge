@@ -802,9 +802,6 @@
     <ClInclude Include="Events.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
-    <ClInclude Include="Farm.hpp">
-      <Filter>Header Files\screens\service\go</Filter>
-    </ClInclude>
     <ClInclude Include="FlyingE.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
@@ -1006,6 +1003,12 @@
     <ClInclude Include="Water.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
+    <ClInclude Include="Windmill.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Arable.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1103,9 +1106,6 @@
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\screens\service\events</Filter>
-    </ClCompile>
-    <ClCompile Include="Farm.cpp">
-      <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
     <ClCompile Include="FlyingE.cpp">
       <Filter>Source Files\popUpElements</Filter>
@@ -1303,6 +1303,12 @@
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
     <ClCompile Include="Water.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Windmill.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Arable.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
   </ItemGroup>

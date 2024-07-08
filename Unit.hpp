@@ -32,11 +32,11 @@ public:
 
 	bool belongTo(std::shared_ptr<Player> player) const;
 	void changePlayer(std::shared_ptr<Player> newPlayerPtr);
+	std::shared_ptr<Player> getPlayer() const;
 
 	virtual Resources getCost() const = 0;
 protected:
 	Events getUnitOfEnemyResponse();
-	std::shared_ptr<Player> getPlayer() const;
 private:
 	std::shared_ptr<Player> playerPtr;
 };

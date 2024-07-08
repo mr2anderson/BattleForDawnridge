@@ -570,3 +570,31 @@ water_description
 <DATA>
 Через ледяную воду не пройдет ни один человек.
 <\DATA>
+
+<ID>
+windmill_description
+<\ID>
+<DATA>
+Мельницы обеспечивают Ваш город пищей, необходимой для содержания войск.
+<\DATA>
+
+<ID>
+windmill_upper_case_readable_name
+<\ID>
+<DATA>
+МЕЛЬНИЦА
+<\DATA>
+
+<ID>
+arable_description
+<\ID>
+<DATA>
+Пашни, построенные рядом с мельницей, приносят еду каждый ход.
+<\DATA>
+
+<ID>
+arable_upper_case_readable_name
+<\ID>
+<DATA>
+ПАШНЯ
+<\DATA>

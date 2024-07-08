@@ -92,8 +92,8 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, nullptr, this->map->getTobs(), this->map->getTcbs())));
     components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, true, event);
     event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Farm>(0, 0, nullptr)));
-    components.emplace_back(Farm().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Farm>()), true, true, event);
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Windmill>(0, 0, nullptr, this->map->getArables())));
+    components.emplace_back(Windmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Windmill>()), true, true, event);
     event = Events();
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, nullptr, this->map->getResourcePoints())));
     components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, true, event);

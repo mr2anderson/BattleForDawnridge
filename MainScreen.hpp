@@ -22,7 +22,7 @@
 #include "Playlist.hpp"
 #include "Castle.hpp"
 #include "Market.hpp"
-#include "Farm.hpp"
+#include "Windmill.hpp"
 #include "Sawmill.hpp"
 #include "Quarry.hpp"
 #include "Mine.hpp"

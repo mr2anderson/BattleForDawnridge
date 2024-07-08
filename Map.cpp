@@ -119,6 +119,9 @@ std::shared_ptr<GOCollection<TerritoryConductorB>> Map::getTcbs() {
 std::shared_ptr<GOCollection<TerritoryOriginB>> Map::getTobs() {
     return this->tobs;
 }
+std::shared_ptr<GOCollection<Arable>> Map::getArables() {
+    return this->arables;
+}
 void Map::add(GO *object) {
     this->go->push(object);
 
@@ -144,6 +147,13 @@ void Map::add(GO *object) {
                     if (tcb) {
                         this->tcbs->push(tcb);
                     }
+                }
+            }
+            else {
+                Arable* a = dynamic_cast<Arable*>(object);
+
+                if (a) {
+                    this->arables->push(a);
                 }
             }
         }

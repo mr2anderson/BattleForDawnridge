@@ -17,36 +17,35 @@
  */
 
 
+
 #include "UpgradeableB.hpp"
-#include "HpSensitiveB.hpp"
-#include "GameActionWindow.hpp"
-#include "AddResourceEvent.hpp"
 
 
 #pragma once
 
 
-class Farm : public UpgradeableB, public HpSensitiveB {
+class Arable : public UpgradeableB {
 public:
-	Farm();
-	Farm(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr);
+	Arable();
+	Arable(uint32_t x, uint32_t y, std::shared_ptr<Player> player);
 	Building* cloneBuilding() const override;
 
-	Events newMove(std::shared_ptr<Player> currentPlayer) override;
-	bool works() const override;
+	Events newMove(std::shared_ptr<Player> player) override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
+	bool alreadyCollected() const;
+	uint32_t collect() const;
 private:
+	bool collected;
+
+	static uint32_t GET_COLLECTION_SPEED(uint32_t i);
 	GameActionWindowComponent getUpgradeComponent() override;
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
-	static uint32_t GET_COLLECTION_SPEED(uint32_t level);
-	uint32_t getCollectionSpeed() const;
-	Events collectFood() const;
-	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 	Events getSelectionW();
+	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

@@ -487,6 +487,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddHpEvent.hpp" />
     <ClInclude Include="AddResourceEvent.hpp" />
     <ClInclude Include="AddResourcesEvent.hpp" />
+    <ClInclude Include="Arable.hpp" />
     <ClInclude Include="AreaB.hpp" />
     <ClInclude Include="BuildEvent.hpp" />
     <ClInclude Include="Building.hpp" />
@@ -612,7 +613,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
-    <ClInclude Include="Farm.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="Fonts.hpp" />
     <ClInclude Include="Forest.hpp" />
@@ -679,6 +679,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="Wall.hpp" />
     <ClInclude Include="Water.hpp" />
+    <ClInclude Include="Windmill.hpp" />
     <ClInclude Include="WindowButton.hpp" />
     <ClInclude Include="WindowTwoButtons.hpp" />
   </ItemGroup>
@@ -686,6 +687,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AddHpEvent.cpp" />
     <ClCompile Include="AddResourceEvent.cpp" />
     <ClCompile Include="AddResourcesEvent.cpp" />
+    <ClCompile Include="Arable.cpp" />
     <ClCompile Include="AreaB.cpp" />
     <ClCompile Include="BuildEvent.cpp" />
     <ClCompile Include="Building.cpp" />
@@ -713,7 +715,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="DecreaseUpgradeMovesLeftEvent.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
-    <ClCompile Include="Farm.cpp" />
     <ClCompile Include="FlyingE.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Forest.cpp" />
@@ -780,6 +781,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Water.cpp" />
+    <ClCompile Include="Windmill.cpp" />
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowTwoButtons.cpp" />
   </ItemGroup>

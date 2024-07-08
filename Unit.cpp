@@ -33,11 +33,11 @@ bool Unit::belongTo(std::shared_ptr<Player> player) const {
 void Unit::changePlayer(std::shared_ptr<Player> newPlayerPtr) {
 	this->playerPtr = newPlayerPtr;
 }
+std::shared_ptr<Player> Unit::getPlayer() const {
+	return this->playerPtr;
+}
 Events Unit::getUnitOfEnemyResponse() {
 	Events gEvent;
 	gEvent.add(std::make_shared<TryToAttackEvent>(this));
 	return gEvent;
-}
-std::shared_ptr<Player> Unit::getPlayer() const {
-	return this->playerPtr;
 }
