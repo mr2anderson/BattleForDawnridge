@@ -58,15 +58,11 @@ Events Market::newMove(std::shared_ptr<Player> currentPlayer) {
 	if (!this->belongTo(currentPlayer) or !this->exist()) {
 		return Events();
 	}
-	Events response = this->handleCurrentUpgrade();
-	if (this->upgrading()) {
-		return response;
+	Events response = this->handleCurrentUpgrade() + this->regenerate();
+	if (this->works()) {
+		response = response + this->handleCurrentTrade();
 	}
-	response = response + this->regenerate();
-	if (this->repairing()) {
-		return response;
-	}
-	return response + this->handleCurrentTrade();
+	return response;
 }
 bool Market::works() const {
 	return this->HpSensitiveB::works() and this->UpgradeableB::works();
@@ -84,6 +80,42 @@ std::string Market::getSoundName() const {
 }
 std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
+}
+GameActionWindowComponent Market::getUpgradeComponent() {
+	Events gameEventUpgrade;
+	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
+	GameActionWindowComponent component = {
+		"upgrade_icon",
+		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+		*Texts::get()->get("upgrade_will_increase_move_number_for_one_trade_from") + std::to_wstring(this->getTradeStartTime()) + *Texts::get()->get("to") + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L'.',
+		true,
+		false,
+		gameEventUpgrade
+	};
+	return component;
+}
+GameActionWindowComponent Market::getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const {
+	Events events;
+	events.add(gameEventTrade);
+	GameActionWindowComponent component = {
+		gameEventTrade->getTrade().buy.type + "_icon",
+		*Texts::get()->get("buy") + gameEventTrade->getTrade().buy.getReadableInfo() +
+		*Texts::get()->get("for") + gameEventTrade->getTrade().sell.getReadableInfo(),
+		true,
+		false,
+		events
+	};
+	return component;
+}
+GameActionWindowComponent Market::getBusyWithTradeComponent() const {
+	GameActionWindowComponent component = {
+		"trade_icon",
+		*Texts::get()->get("market_is_busy") + this->currentTrade.getReadableInfo(),
+		false,
+		false,
+		Events()
+	};
+	return component;
 }
 uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
@@ -163,20 +195,23 @@ Events Market::handleCurrentTrade() {
 }
 Events Market::getSelectionW() {
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
-	components.emplace_back("market", 
-		this->getDescription() + L'\n' +
-		this->getReadableHpInfo(), false, false, Events());
-
-	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		Events gameEventUpgrade;
-		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-		components.emplace_back("upgrade_icon", 
-			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-			*Texts::get()->get("upgrade_will_increase_move_number_for_one_trade_from") + std::to_wstring(this->getTradeStartTime()) + *Texts::get()->get("to") + std::to_wstring(GET_TRADE_START_TIME(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+	components.push_back(this->getHpInfoComponent());
+	if (this->repairing()) {
+		components.push_back(this->getBusyWithRepairingComponent());
 	}
-
-	for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
+	if (this->upgrading()) {
+		components.push_back(this->getBusyWithUpgradingComponent());
+	}
+	if (this->busy()) {
+		components.push_back(this->getBusyWithTradeComponent());
+	}
+	if (this->works() and !this->busy()) {
+		if (this->getCurrentLevel() != TOTAL_LEVELS) {
+			components.push_back(this->getUpgradeComponent());
+		}
+		for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
 		std::make_tuple("gold", 100, "wood", 50000),
 		std::make_tuple("gold", 100, "stone", 50000),
 		std::make_tuple("gold", 100, "iron", 50000),
@@ -184,29 +219,13 @@ Events Market::getSelectionW() {
 		std::make_tuple("wood", 50000, "gold", 100),
 		std::make_tuple("stone", 50000, "gold", 100),
 		std::make_tuple("iron", 50000, "gold", 100) }) {
-		Events gameEventTrade;
-		std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
-		gameEventTrade.add(tryToTradeEvent);
-		this->addTrade(components, tryToTradeEvent);
+			std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
+			components.push_back(this->getTradeComponent(tryToTradeEvent));
+		}
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	Events response;
-	response.add(std::make_shared<CreateEEvent>(window));
-	return response;
-}
-void Market::addTrade(std::vector<GameActionWindowComponent>& components, std::shared_ptr<TryToTradeEvent> gameEventTrade) {
-	Events events;
-	events.add(gameEventTrade);
-	components.emplace_back(gameEventTrade->getTrade().buy.type + "_icon",
-		*Texts::get()->get("buy") + gameEventTrade->getTrade().buy.getReadableInfo() +
-		*Texts::get()->get("for") + gameEventTrade->getTrade().sell.getReadableInfo(), true, false, events);
-}
-Events Market::handleBusyWithTrade() const {
-	Events response;
-	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
-		*Texts::get()->get("market_is_busy") + L'\n' +
-		this->currentTrade.getReadableInfo(), *Texts::get()->get("OK"));
 	response.add(std::make_shared<CreateEEvent>(window));
 	return response;
 }
@@ -215,15 +234,6 @@ Events Market::getGameObjectResponse(std::shared_ptr<Player> player) {
 		return Events();
 	}
 	if (this->belongTo(player)) {
-		if (this->repairing()) {
-			return this->handleRepairing();
-		}
-		if (this->upgrading()) {
-			return this->handleBusyWithUpgrading();
-		}
-		if (this->busy()) {
-			return this->handleBusyWithTrade();
-		}
 		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

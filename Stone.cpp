@@ -34,5 +34,5 @@ std::string Stone::getTextureName() const {
 	return "stone";
 }
 std::wstring Stone::getDescription() const {
-	return *Texts::get()->get("stone_description_1") + std::to_wstring(this->getHP()) + *Texts::get()->get("stone_description_2");
+	return *Texts::get()->get("stone_description");
 }

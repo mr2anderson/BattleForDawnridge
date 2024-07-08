@@ -75,12 +75,15 @@ Events UpgradeableB::handleCurrentUpgrade() {
 	}
 	return events;
 }
-Events UpgradeableB::handleBusyWithUpgrading() const {
-	Events events;
-	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_in_progress") + std::to_wstring(this->upgradeMovesLeft), *Texts::get()->get("OK"));
-	events.add(std::make_shared<CreateEEvent>(window));
-	return events;
+GameActionWindowComponent UpgradeableB::getBusyWithUpgradingComponent() const {
+	GameActionWindowComponent component = {
+		"upgrade_icon",
+		*Texts::get()->get("upgrade_in_progress") + std::to_wstring(this->upgradeMovesLeft),
+		false,
+		false,
+		Events()
+	};
+	return component;
 }
 Events UpgradeableB::handleUpgradeStart() const {
 	Events events;

@@ -33,6 +33,7 @@ public:
 	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
 	virtual Events getHighlightEvent() const;
 protected:
-
 	virtual uint32_t getRadius() const = 0;
+
+	GameActionWindowComponent getExitComponent() const override;
 };

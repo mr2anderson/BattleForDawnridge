@@ -18,7 +18,6 @@
 
 
 #include "HPGO.hpp"
-#include "GameActionWindow.hpp"
 
 
 #pragma once
@@ -31,9 +30,8 @@ public:
 
 	Events newMove(std::shared_ptr<Player> player) override;
 	virtual std::string getResourceType() const = 0;
-protected:
-	virtual std::wstring getDescription() const = 0;
 private:
 	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 	Events getSelectionWindow();
+	GameActionWindowComponent getResourceLeftComponent() const;
 };

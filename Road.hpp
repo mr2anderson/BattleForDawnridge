@@ -18,7 +18,6 @@
 
 
 #include "TerritoryConductorB.hpp"
-#include "GameActionWindow.hpp"
 
 
 #pragma once

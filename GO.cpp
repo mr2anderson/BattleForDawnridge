@@ -60,6 +60,26 @@ Events GO::click(std::shared_ptr<Player>currentPlayer, uint32_t mouseX, uint32_t
 	}
 	return Events();
 }
+GameActionWindowComponent GO::getExitComponent() const {
+	GameActionWindowComponent component = {
+		"exit_icon",
+		*Texts::get()->get("leave"),
+		true,
+		true,
+		Events()
+	};
+	return component;
+}
+GameActionWindowComponent GO::getDescriptionComponent() const {
+	GameActionWindowComponent component = {
+		this->getTextureName(),
+		this->getDescription(),
+		false,
+		false,
+		Events()
+	};
+	return component;
+}
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
 	sprite.setPosition(sf::Vector2f(32 * this->getX(), 32 * this->getY()));

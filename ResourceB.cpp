@@ -30,14 +30,9 @@ ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t 
 	this->resourcesLeft = true;
 }
 Events ResourceB::newMove(std::shared_ptr<Player> currentPlayer) {
-	Events response;
 	if (this->belongTo(currentPlayer) and this->exist()) {
-		response = this->handleCurrentUpgrade();
-		if (this->upgrading()) {
-			return response;
-		}
-		response = response + this->regenerate();
-		if (!this->repairing() and this->resourcesLeft) {
+		Events response = this->handleCurrentUpgrade() + this->regenerate();
+		if (this->works() and this->resourcesLeft) {
 			response = response + this->collectResources();
 		}
 		return response;
@@ -52,6 +47,20 @@ uint32_t ResourceB::getCollectionSpeed() const {
 }
 uint32_t ResourceB::getRadius() const {
 	return this->getRadius(this->getCurrentLevel() - 1);
+}
+GameActionWindowComponent ResourceB::getUpgradeComponent() {
+	Events gameEventUpgrade = this->getHighlightEvent();
+	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
+	GameActionWindowComponent component = {
+		"upgrade_icon",
+		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+		*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) +
+		*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.',
+		true,
+		false,
+		gameEventUpgrade + this->getHighlightEvent()
+	};
+	return component;
 }
 Events ResourceB::collectResources() {
 	uint32_t left = this->getCollectionSpeed();
@@ -89,17 +98,17 @@ Events ResourceB::getSelectionW() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
-	components.emplace_back(this->getTextureName(), 
-		this->getDescription() + L'\n' +
-		this->getReadableHpInfo(), false, false, Events());
-
-	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		Events gameEventUpgrade = this->getHighlightEvent();
-		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-		components.emplace_back("upgrade_icon", *Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) +
-			*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+	components.push_back(this->getHpInfoComponent());
+	if (this->repairing()) {
+		components.push_back(this->getBusyWithRepairingComponent());
+	}
+	if (this->upgrading()) {
+		components.push_back(this->getBusyWithUpgradingComponent());
+	}
+	if (this->getCurrentLevel() != TOTAL_LEVELS) {
+		components.push_back(this->getUpgradeComponent());
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
@@ -112,15 +121,7 @@ Events ResourceB::getGameObjectResponse(std::shared_ptr<Player> player) {
 		return Events();
 	}
 	if (this->belongTo(player)) {
-		if (this->upgrading()) {
-			return this->handleBusyWithUpgrading();
-		}
-		if (this->repairing()) {
-			return this->handleRepairing();
-		}
-		Events response;
-		response = this->getHighlightEvent();
-		return response + this->getSelectionW();
+		return this->getSelectionW() + this->getHighlightEvent();
 	}
 	return this->getUnitOfEnemyResponse();
 }

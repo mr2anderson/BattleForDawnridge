@@ -40,11 +40,7 @@ Events Castle::newMove(std::shared_ptr<Player> player) {
 	Events response;
 	if (this->belongTo(player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
-		response = this->handleCurrentUpgrade();
-		if (this->upgrading()) {
-			return response;
-		}
-		return response + this->regenerate();
+		return this->handleCurrentUpgrade() + this->regenerate();
 	}
 	return response;
 }
@@ -67,6 +63,20 @@ std::wstring Castle::getDescription() const {
 }
 uint32_t Castle::GET_REGENERATION_SPEED(uint32_t level) {
 	return LEVEL_HP[level] / 4;
+}
+GameActionWindowComponent Castle::getUpgradeComponent() {
+	Events gameEventUpgrade;
+	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
+	GameActionWindowComponent component = {
+		"upgrade_icon",
+		*Texts::get()->get("upgrade_castle_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+		*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
+		*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.',
+		true,
+		false,
+		gameEventUpgrade + this->getHighlightEvent()
+	};
+	return component;
 }
 uint32_t Castle::getRegenerationSpeed() const {
 	return GET_REGENERATION_SPEED(this->getCurrentLevel() - 1);
@@ -95,18 +105,17 @@ Events Castle::getSelectionW() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
-	components.emplace_back("castle",
-		this->getDescription() + L'\n' +
-		this->getReadableHpInfo(), false, false, Events());
-
-	if (this->getCurrentLevel() != TOTAL_LEVELS) {
-		Events gameEventUpgrade;
-		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-		components.emplace_back("upgrade_icon",
-			*Texts::get()->get("upgrade_castle_for") + this->getUpgradeCost().getReadableInfo() + L'\n' + 
-			*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
-			*Texts::get()->get("and_repair_speed_from") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_REGENERATION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade + this->getHighlightEvent());
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+	components.push_back(this->getHpInfoComponent());
+	if (this->repairing()) {
+		components.push_back(this->getBusyWithRepairingComponent());
+	}
+	if (this->upgrading()) {
+		components.push_back(this->getBusyWithUpgradingComponent());
+	}
+	if (this->works() and this->getCurrentLevel() != TOTAL_LEVELS) {
+		components.push_back(this->getUpgradeComponent());
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
@@ -119,12 +128,7 @@ Events Castle::getGameObjectResponse(std::shared_ptr<Player> player) {
 		return Events();
 	}
 	if (this->belongTo(player)) {
-		if (this->upgrading()) {
-			return this->handleBusyWithUpgrading();
-		}
-		Events responce;
-		responce = this->getHighlightEvent();
-		return responce + this->getSelectionW();
+		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
 }

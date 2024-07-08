@@ -31,6 +31,6 @@ public:
 	bool works() const override;
 protected:
 	bool repairing() const;
-	Events handleRepairing() const;
+	GameActionWindowComponent getBusyWithRepairingComponent() const;
 	Events regenerate() override;
 };

@@ -30,14 +30,15 @@ bool HpSensitiveB::works() const {
 bool HpSensitiveB::repairing() const {
 	return (this->getHP() < this->getMaxHP());
 }
-Events HpSensitiveB::handleRepairing() const {
-	Events events;
-	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + *Texts::get()->get("building_in_progress") + L'\n'
-		+ this->getReadableHpInfo() + L'\n'
-		+ this->getReadableRegenerationSpeed(), *Texts::get()->get("OK"));
-	events.add(std::make_shared<CreateEEvent>(window));
-	return events;
+GameActionWindowComponent HpSensitiveB::getBusyWithRepairingComponent() const {
+	GameActionWindowComponent component = {
+		"hammer_icon",
+		*Texts::get()->get("building_in_progress"),
+		false,
+		false,
+		Events()
+	};
+	return component;
 }
 Events HpSensitiveB::regenerate() {
 	Events events = this->Building::regenerate();

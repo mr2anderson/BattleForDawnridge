@@ -49,6 +49,9 @@ public:
 private:
 	Trade currentTrade;
 
+	GameActionWindowComponent getUpgradeComponent() override;
+	GameActionWindowComponent getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const;
+	GameActionWindowComponent getBusyWithTradeComponent() const;
 	uint32_t getRegenerationSpeed() const override;
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
@@ -59,7 +62,5 @@ private:
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events handleCurrentTrade();
 	Events getSelectionW();
-	void addTrade(std::vector<GameActionWindowComponent>& components, std::shared_ptr<TryToTradeEvent> gameEventTrade);
-	Events handleBusyWithTrade() const;
 	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

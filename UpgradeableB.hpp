@@ -44,11 +44,12 @@ protected:
 	static constexpr uint32_t TOTAL_LEVELS = 3;
 
 	virtual uint32_t getUpgradeTime() const = 0;
+	virtual GameActionWindowComponent getUpgradeComponent() = 0;
 
 	uint32_t getCurrentLevel() const;
 	bool upgrading() const;
 	Events handleCurrentUpgrade();
-	Events handleBusyWithUpgrading() const;
+	GameActionWindowComponent getBusyWithUpgradingComponent() const;
 private:
 	uint32_t currentLevel;
 	uint32_t upgradeMovesLeft;

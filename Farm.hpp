@@ -39,6 +39,7 @@ public:
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 private:
+	GameActionWindowComponent getUpgradeComponent() override;
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	Resources getUpgradeCost() const override;

@@ -30,10 +30,10 @@ Trade::Trade(const Resource& sell, const Resource& buy, uint32_t movesLeft) {
 }
 std::wstring Trade::getReadableInfo() const {
 	std::wstring result;
-	result = result + *Texts::get()->get("buy_noun") + this->sell.getReadableInfo() + L'\n';
-	result = result + *Texts::get()->get("sell_noun") + this->buy.getReadableInfo();
+	result = result + *Texts::get()->get("buy_noun") + this->sell.getReadableInfo() + L'. ';
+	result = result + *Texts::get()->get("sell_noun") + this->buy.getReadableInfo() + L'.';
 	if (this->movesLeft != 0) {
-		result = result + L'\n' + *Texts::get()->get("moves_number") + std::to_wstring(this->movesLeft);
+		result = result + L' ' + *Texts::get()->get("moves_number") + std::to_wstring(this->movesLeft) + L'.';
 	}
 	return result;
 }

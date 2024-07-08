@@ -35,11 +35,22 @@ Events ResourcePoint::getSelectionWindow() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Events());
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+	components.push_back(this->getResourceLeftComponent());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
+}
+GameActionWindowComponent ResourcePoint::getResourceLeftComponent() const {
+	GameActionWindowComponent component = {
+		this->getResourceType() + "_icon",
+		*Texts::get()->get("left") + std::to_wstring(this->getHP()),
+		false,
+		false,
+		Events()
+	};
+	return component;
 }

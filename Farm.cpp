@@ -28,12 +28,8 @@ Farm::Farm(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
 	Building(x, y, 3, 3, 10000, playerPtr){}
 Events Farm::newMove(std::shared_ptr<Player> player) {	
 	if (this->belongTo(player) and this->exist()) {
-		Events response = this->handleCurrentUpgrade();
-		if (this->upgrading()) {
-			return response;
-		}
-		response = response + this->regenerate();
-		if (!this->repairing()) {
+		Events response = this->handleCurrentUpgrade() + this->regenerate();
+		if (this->works()) {
 			response = response + this->collectFood();
 		}
 		return response;
@@ -59,6 +55,19 @@ std::string Farm::getSoundName() const {
 }
 std::wstring Farm::getDescription() const {
 	return *Texts::get()->get("farm_description");
+}
+GameActionWindowComponent Farm::getUpgradeComponent() {
+	Events gameEventUpgrade;
+	gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
+	GameActionWindowComponent component = {
+		"upgrade_icon",
+		*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
+		*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L'.',
+		true,
+		false,
+		gameEventUpgrade
+	};
+	return component;
 }
 uint32_t Farm::getRegenerationSpeed() const {
 	return 5000;
@@ -105,12 +114,6 @@ Events Farm::getGameObjectResponse(std::shared_ptr<Player> player) {
 		return Events();
 	}
 	if (this->belongTo(player)) {
-		if (this->upgrading()) {
-			return this->handleBusyWithUpgrading();
-		}
-		if (this->repairing()) {
-			return this->handleRepairing();
-		}
 		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
@@ -119,17 +122,17 @@ Events Farm::getSelectionW() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
-	components.emplace_back(this->getTextureName(),
-		this->getDescription() + L'\n'
-		+ this->getReadableHpInfo(), false, false, Events());
-
-	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		Events gameEventUpgrade;
-		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
-		components.emplace_back("upgrade_icon", 
-			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
-			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+	components.push_back(this->getHpInfoComponent());
+	if (this->repairing()) {
+		components.push_back(this->getBusyWithRepairingComponent());
+	}
+	if (this->upgrading()) {
+		components.push_back(this->getBusyWithUpgradingComponent());
+	}
+	if (this->works() and this->getCurrentLevel() != TOTAL_LEVELS) {
+		components.push_back(this->getUpgradeComponent());
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);

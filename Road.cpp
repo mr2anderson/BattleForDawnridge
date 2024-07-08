@@ -62,10 +62,17 @@ Events Road::getSelectionW() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
-	components.emplace_back("road",
-		this->getDescription() + L'\n'
-		+ this->getReadableHpInfo(), false, false, Events());
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+	components.push_back(this->getHpInfoComponent());
+	if (this->repairing()) {
+		components.push_back(this->getBusyWithRepairingComponent());
+	}
+	if (this->works()) {
+		if (!this->conducted()) {
+			components.push_back(this->getNotConductedComponent());
+		}
+	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));
@@ -77,15 +84,7 @@ Events Road::getGameObjectResponse(std::shared_ptr<Player> player) {
 		return Events();
 	}
 	if (this->belongTo(player)) {
-		if (this->repairing()) {
-			return this->handleRepairing();
-		}
-		if (!this->conducted()) {
-			return this->getNotConductedResponce();
-		}
-		Events responce;
-		responce = this->getHighlightEvent();
-		return responce + this->getSelectionW();
+		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
 }

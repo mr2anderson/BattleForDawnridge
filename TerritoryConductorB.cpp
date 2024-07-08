@@ -59,10 +59,13 @@ bool TerritoryConductorB::conducted() const {
 	}
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
-Events TerritoryConductorB::getNotConductedResponce() const {
-	std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(this->getSoundName(), "click",
-		this->getUpperCaseReadableName() + *Texts::get()->get("does_not_lead_to_city_center"), *Texts::get()->get("OK"));
-	Events events;
-	events.add(std::make_shared<CreateEEvent>(w));
-	return events;
+GameActionWindowComponent TerritoryConductorB::getNotConductedComponent() const {
+	GameActionWindowComponent component = {
+		this->getTextureName(),
+		*Texts::get()->get("does_not_lead_to_city_center"),
+		false,
+		false,
+		Events()
+	};
+	return component;
 }

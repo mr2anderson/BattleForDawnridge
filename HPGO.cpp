@@ -39,7 +39,9 @@ void HPGO::subHp(uint32_t n) {
 	if (n >= this->currentHp) {
 		this->currentHp = 0;
 	}
-	this->currentHp = this->currentHp - n;
+	else {
+		this->currentHp = this->currentHp - n;
+	}
 }
 uint32_t HPGO::getHP() const {
 	return this->currentHp;

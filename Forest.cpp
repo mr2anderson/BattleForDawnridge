@@ -34,5 +34,5 @@ std::string Forest::getTextureName() const {
 	return "forest";
 }
 std::wstring Forest::getDescription() const {
-	return *Texts::get()->get("forest_description_1") + std::to_wstring(this->getHP()) + *Texts::get()->get("forest_description_2");
+	return *Texts::get()->get("forest_description");
 }

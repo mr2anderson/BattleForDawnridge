@@ -36,4 +36,5 @@ public:
 	bool exist() const override;
 private:
 	Events getGameObjectResponse(std::shared_ptr<Player> currentPlayer) override;
+	Events getGameActionWindow();
 };

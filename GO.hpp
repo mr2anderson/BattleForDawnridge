@@ -31,7 +31,7 @@
 class GO : public sf::Drawable {
 public:
 	GO();
-	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);;
+	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -50,6 +50,9 @@ public:
 	virtual std::wstring getDescription() const = 0;
 protected:
 	virtual Events getGameObjectResponse(std::shared_ptr<Player> currentPlayer) = 0;
+
+	virtual GameActionWindowComponent getExitComponent() const;
+	GameActionWindowComponent getDescriptionComponent() const;
 private:
 	uint32_t x, y;
 	uint32_t sx, sy;

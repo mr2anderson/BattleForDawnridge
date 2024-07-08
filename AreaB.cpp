@@ -80,3 +80,8 @@ Events AreaB::getHighlightEvent() const {
 
 	return gEvent;
 }
+GameActionWindowComponent AreaB::getExitComponent() const {
+	GameActionWindowComponent component = this->Building::getExitComponent();
+	component.gEvent = component.gEvent + this->getHighlightEvent();
+	return component;
+}

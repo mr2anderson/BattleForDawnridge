@@ -41,14 +41,17 @@ bool Mountains::exist() const {
 	return true;
 }
 Events Mountains::getGameObjectResponse(std::shared_ptr<Player> currentPlayer) {
-	Events response;
+	return this->getGameActionWindow();
+}
+Events Mountains::getGameActionWindow() {
+	Events events;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Events());
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.add(std::make_shared<CreateEEvent>(window));
+	events.add(std::make_shared<CreateEEvent>(window));
 
-	return response;
+	return events;
 }
