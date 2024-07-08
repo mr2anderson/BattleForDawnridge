@@ -550,3 +550,31 @@ to_menu
 <DATA>
 Вернуться в меню
 <\DATA>
+
+<ID>
+yes
+<\ID>
+<DATA>
+Да
+<\DATA>
+
+<ID>
+no
+<\ID>
+<DATA>
+Нет
+<\DATA>
+
+<ID>
+confirm_exit
+<\ID>
+<DATA>
+Вы уверены, что хотите выйти?
+<\DATA>
+
+<ID>
+confirm_return_to_menu
+<\ID>
+<DATA>
+Вы уверены, что хотите вернуться в меню?
+<\DATA>

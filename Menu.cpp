@@ -88,7 +88,12 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
     Events exitEvent;
     exitEvent.add(std::make_shared<CloseMenuEvent>());
-	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("returnToMenu")), exitEvent);
+
+    std::shared_ptr<WindowTwoButtons> confirmExitWindow = std::make_shared<WindowTwoButtons>("click", "click", *Texts::get()->get("confirm_exit"), *Texts::get()->get("yes"), *Texts::get()->get("no"), exitEvent, Events());
+    Events createConfirmExitWindowEvent;
+    createConfirmExitWindowEvent.add(std::make_shared<CreateEEvent>(confirmExitWindow));
+
+	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("returnToMenu")), createConfirmExitWindowEvent);
 
 	this->title.setFont(*Fonts::get()->get("1"));
 	this->title.setString(*Texts::get()->get("title"));

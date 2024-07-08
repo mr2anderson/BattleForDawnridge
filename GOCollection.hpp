@@ -49,6 +49,7 @@ template <> class GOCollection<GO> {
 public:
 	GOCollection() = default;
 	~GOCollection() {
+		return;
 		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
 			delete this->data[i];
 		}

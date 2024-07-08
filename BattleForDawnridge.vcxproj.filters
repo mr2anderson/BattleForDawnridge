@@ -1000,6 +1000,9 @@
     <ClInclude Include="GOCollection.hpp">
       <Filter>Header Files\screens\service</Filter>
     </ClInclude>
+    <ClInclude Include="WindowTwoButtons.hpp">
+      <Filter>Header Files\popUpElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1292,6 +1295,9 @@
     </ClCompile>
     <ClCompile Include="ReturnToMenuEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowTwoButtons.cpp">
+      <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

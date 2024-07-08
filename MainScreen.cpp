@@ -82,6 +82,10 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
     returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
+	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>("click", "click", *Texts::get()->get("confirm_return_to_menu"), *Texts::get()->get("yes"), *Texts::get()->get("no"), returnToMenuEvent, Events());
+	Events createConfirmReturnToMenuWindowEvent;
+	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
+
     std::vector<GameActionWindowComponent> components;
     components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
     Events event;
@@ -119,7 +123,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"), buildEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, 30, 150, 30, *Texts::get()->get("to_menu")), returnToMenuEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, 30, 150, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
 void MainScreen::handleEvent(Events &e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {

@@ -26,20 +26,21 @@
 #pragma once
 
 
-class WindowButton : public CameraIndependentPopUpElement {
+class WindowTwoButtons : public CameraIndependentPopUpElement {
 public:
-	WindowButton(const std::string &soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w = 400, uint32_t h = 225);
+	WindowTwoButtons(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring& buttonText1, const std::wstring& buttonText2, const Events& events1, const Events& events2, uint32_t w = 400, uint32_t h = 225);
 
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click() override;
 	void update() override;
 private:
-    uint32_t w, h;
-    std::string soundName1, soundName2;
+	uint32_t w, h;
+	std::string soundName1, soundName2;
 	std::wstring message;
-    std::wstring buttonText;
+	std::wstring buttonText1, buttonText2;
 	Label label;
-	Button button;
+	Button button1, button2;
+	Events events1, events2;
 	bool inited;
 };

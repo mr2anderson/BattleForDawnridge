@@ -26,6 +26,7 @@
 #include "Sounds.hpp"
 #include "CloseMenuEvent.hpp"
 #include "StartGameEvent.hpp"
+#include "WindowTwoButtons.hpp"
 
 
 #pragma once

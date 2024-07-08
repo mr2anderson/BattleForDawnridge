@@ -40,6 +40,7 @@
 #include "BuildEvent.hpp"
 #include "ChangeMoveEvent.hpp"
 #include "ReturnToMenuEvent.hpp"
+#include "WindowTwoButtons.hpp"
 
 
 #pragma once

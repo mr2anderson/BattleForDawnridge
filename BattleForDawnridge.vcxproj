@@ -679,6 +679,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="Wall.hpp" />
     <ClInclude Include="WindowButton.hpp" />
+    <ClInclude Include="WindowTwoButtons.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddHpEvent.cpp" />
@@ -778,6 +779,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WindowButton.cpp" />
+    <ClCompile Include="WindowTwoButtons.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
