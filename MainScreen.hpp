@@ -54,13 +54,13 @@ public:
 		return MainScreen::singletone;
 	}
 
-	bool run(Map *mapPtr, sf::RenderWindow& window);
+	bool run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window);
 private:
 	MainScreen() = default;
 	MainScreen(const MainScreen& copy) = delete;
 	static MainScreen* singletone;
 
-    Map *map;
+    std::shared_ptr<Map> map;
 	std::queue<std::shared_ptr<PopUpElement>> elements;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
@@ -71,8 +71,8 @@ private:
 	sf::View *view;
     std::vector<Button> buttons;
 
-	void init(Map *mapPtr, sf::RenderWindow &window);
-	void initMap(Map *mapPtr);
+	void init(std::shared_ptr<Map> mapPtr, sf::RenderWindow &window);
+	void initMap(std::shared_ptr<Map> mapPtr);
 	void initMoveCtr();
     void initPlains();
 	void initGraphics(sf::RenderWindow &window);

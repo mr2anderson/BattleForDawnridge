@@ -34,7 +34,7 @@ public:
     }
 
     void addPath(const std::string &name, const std::string& path);
-    [[nodiscard]] Map* load(const std::string& name);
+    std::shared_ptr<Map> load(const std::string& name);
 private:
     Maps() = default;
     Maps(const Maps& copy);

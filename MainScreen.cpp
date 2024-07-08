@@ -24,7 +24,7 @@
 MainScreen* MainScreen::singletone = nullptr;
 
 
-bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
+bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->init(mapPtr, window);
 	sf::Event event{};
 	for (; ;) {
@@ -57,14 +57,14 @@ bool MainScreen::run(Map *mapPtr, sf::RenderWindow& window) {
         }
 	}
 }
-void MainScreen::init(Map *mapPtr, sf::RenderWindow& window) {
+void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->initMap(mapPtr);
     this->initMoveCtr();
     this->initPlains();
     this->initGraphics(window);
 	this->changeMove();
 }
-void MainScreen::initMap(Map *mapPtr) {
+void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
     this->map = mapPtr;
 }
 void MainScreen::initMoveCtr() {
@@ -339,7 +339,6 @@ void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
     this->removeFinishedElements();
     this->highlightTable.clear();
     delete this->view;
-    delete this->map;
 	Playlist::get()->restartMusic();
 }
 void MainScreen::drawEverything(sf::RenderWindow& window) {

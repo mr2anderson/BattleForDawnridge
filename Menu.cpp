@@ -23,7 +23,7 @@
 Menu* Menu::singletone = nullptr;
 
 
-Map* Menu::run(sf::RenderWindow& window) {
+std::shared_ptr<Map> Menu::run(sf::RenderWindow& window) {
     this->init(window.getSize().x, window.getSize().y);
 	sf::Event event{};
 	for (; ;) {
@@ -48,7 +48,7 @@ Map* Menu::run(sf::RenderWindow& window) {
         }
         if (this->startGame) {
             try {
-                Map *map = Maps::get()->load("ridge");
+                std::shared_ptr<Map> map = Maps::get()->load("ridge");
                 this->prepareToStartGame();
                 return map;
             }

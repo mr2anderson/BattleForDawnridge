@@ -32,7 +32,7 @@ void Game::run() {
 		return;
 	}
 	for (; ;) {
-        Map *map = Menu::get()->run(this->window);
+        std::shared_ptr<Map> map = Menu::get()->run(this->window);
 		if (map == nullptr) {
             return;
         }

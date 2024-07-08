@@ -40,7 +40,7 @@ public:
 		return Menu::singletone;
 	}
 
-	Map* run(sf::RenderWindow& window);
+	std::shared_ptr<Map> run(sf::RenderWindow& window);
 private:
 	Menu() = default;
 	Menu(const Menu& copy) = delete;

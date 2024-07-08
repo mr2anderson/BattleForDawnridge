@@ -26,7 +26,7 @@ Maps* Maps::singletone = nullptr;
 void Maps::addPath(const std::string &name, const std::string &path) {
     this->data[name] = path;
 }
-Map* Maps::load(const std::string& name) {
-    Map* map = new Map(this->data[name]);
+std::shared_ptr<Map> Maps::load(const std::string& name) {
+    std::shared_ptr<Map> map = std::make_shared<Map>(this->data[name]);
     return map;
 }
