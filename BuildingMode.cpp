@@ -20,7 +20,7 @@
 #include "BuildingMode.hpp"
 
 
-BuildingMode::BuildingMode(Building* b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, std::shared_ptr<Player>player) {
+BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, std::shared_ptr<Player>player) {
 	this->b = b->cloneBuilding();
 	this->view = view;
 	this->go = go;
