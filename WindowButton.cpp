@@ -31,7 +31,9 @@ WindowButton::WindowButton(const std::string& soundName1, const std::string& sou
 }
 Events WindowButton::run(uint32_t windowW, uint32_t windowH) {
     Events soundEvent1 = this->CameraIndependentPopUpElement::run(windowW, windowH);
-    soundEvent1.add(std::make_shared<PlaySoundEvent>(this->soundName1));
+    if (!this->soundName1.empty()) {
+        soundEvent1.add(std::make_shared<PlaySoundEvent>(this->soundName1));
+    }
 
     if (!this->inited) {
         this->inited = true;
@@ -40,7 +42,9 @@ Events WindowButton::run(uint32_t windowW, uint32_t windowH) {
         uint32_t buttonH = 30;
 
         Events onClick;
-        onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
+        if (!this->soundName2.empty()) {
+            onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
+        }
         onClick.add(std::make_shared<CloseWindowEvent>());
 
         this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);

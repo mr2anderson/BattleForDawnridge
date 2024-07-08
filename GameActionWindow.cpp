@@ -33,7 +33,9 @@ Events GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
 		this->inited = true;
 		this->makeButtons(windowW, windowH);
 	}
-	event.add(std::make_shared<PlaySoundEvent>(this->soundName1));
+	if (!this->soundName1.empty()) {
+		event.add(std::make_shared<PlaySoundEvent>(this->soundName1));
+	}
 	return event;
 }
 void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -67,7 +69,7 @@ void GameActionWindow::makeButtons(uint32_t windowW, uint32_t windowH) {
         if (clickable) {
 			onClick.add(std::make_shared<CloseWindowEvent>());
         }
-		if (sound) {
+		if (sound and !this->soundName2.empty()) {
 			onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
 		}
 
