@@ -65,7 +65,7 @@ Events Market::newMove(std::shared_ptr<Player> currentPlayer) {
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 20000));
+	cost.plus(Resource("wood", 40000));
 	return cost;
 }
 std::string Market::getTextureName() const {

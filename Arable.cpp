@@ -51,7 +51,7 @@ bool Arable::alreadyCollected() const {
 	return this->collected;
 }
 uint32_t Arable::collect() const {
-	return 1000;
+	return 2000;
 }
 uint32_t Arable::getRegenerationSpeed() const {
 	return 1000;

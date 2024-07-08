@@ -37,7 +37,7 @@ Events Wall1::newMove(std::shared_ptr<Player> player) {
 }
 Resources Wall1::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 2500));
+	cost.plus(Resource("wood", 2000));
 	return cost;
 }
 uint32_t Wall1::getRegenerationSpeed() const {
