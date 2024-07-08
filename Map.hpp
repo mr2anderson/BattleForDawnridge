@@ -38,7 +38,6 @@
 class Map : public sf::Drawable {
 public:
     Map(const std::string &path);
-    ~Map();
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

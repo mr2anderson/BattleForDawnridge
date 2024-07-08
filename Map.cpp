@@ -81,11 +81,6 @@ Map::Map(const std::string &path) {
     this->w = x + 1;
     this->h = y + 1;
 }
-Map::~Map() {
-    for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
-        delete this->go->at(i);
-    }
-}
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
         target.draw(*this->go->at(i), states);
