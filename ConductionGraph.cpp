@@ -58,11 +58,14 @@ void ConductionGraph::addPathBetween(std::tuple<uint32_t, uint32_t> p1, std::tup
 	this->paths[p2].insert(p1);
 }
 bool ConductionGraph::bfs(std::tuple<uint32_t, uint32_t> current, std::map<std::tuple<uint32_t, uint32_t>, bool>& visited) const {
-	if (this->isOrigin.at(current)) {
+	if (this->isOrigin.find(current) != this->isOrigin.end() and this->isOrigin.at(current)) {
 		return true;
 	}
 
 	visited[current] = true;
+	if (this->paths.find(current) == this->paths.end()) {
+		return false;
+	}
 	for (const auto& to : this->paths.at(current)) {
 		if (visited[to]) {
 			continue;
