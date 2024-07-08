@@ -49,9 +49,9 @@ uint32_t Quarry::getCollectionSpeed(uint32_t level) const {
 	float levelCollectionSpeedBonus[TOTAL_LEVELS] = {
 		1,
 		3,
-		6
+		9
 	};
-	return 2500 * levelCollectionSpeedBonus[level];
+	return 1000 * levelCollectionSpeedBonus[level];
 }
 uint32_t Quarry::getRadius(uint32_t level) const {
 	uint32_t levelRadiusBonus[TOTAL_LEVELS] = {
@@ -59,15 +59,15 @@ uint32_t Quarry::getRadius(uint32_t level) const {
 		2,
 		3
 	};
-	return 5 + levelRadiusBonus[level];
+	return 4 + levelRadiusBonus[level];
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");
 }
 Resources Quarry::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 20000}}),
-		Resources({{"wood", 40000}})
+		Resources({{"wood", 16000}}),
+		Resources({{"wood", 48000}})
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }

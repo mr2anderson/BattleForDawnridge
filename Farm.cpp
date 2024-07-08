@@ -23,9 +23,9 @@
 
 Farm::Farm() = default;
 Farm::Farm(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) : 
-	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
-	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
-	Building(x, y, 3, 3, 10000, playerPtr){}
+	UpgradeableB(x, y, 3, 3, 20000, playerPtr),
+	HpSensitiveB(x, y, 3, 3, 20000, playerPtr),
+	Building(x, y, 3, 3, 20000, playerPtr){}
 Events Farm::newMove(std::shared_ptr<Player> player) {	
 	if (this->belongTo(player) and this->exist()) {
 		Events response = this->handleCurrentUpgrade() + this->regenerate();
@@ -44,7 +44,7 @@ bool Farm::works() const {
 }
 Resources Farm::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 5000));
+	cost.plus(Resource("wood", 10000));
 	return cost;
 }
 std::string Farm::getTextureName() const {
@@ -70,15 +70,15 @@ GameActionWindowComponent Farm::getUpgradeComponent() {
 	return component;
 }
 uint32_t Farm::getRegenerationSpeed() const {
-	return 5000;
+	return 10000;
 }
 std::wstring Farm::getUpperCaseReadableName() const {
 	return *Texts::get()->get("farm_upper_case_readable_name");
 }
 Resources Farm::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
-		Resources({{"wood", 10000}}),
-		Resources({{"wood", 20000}})
+		Resources({{"wood", 16000}}),
+		Resources({{"wood", 48000}})
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
@@ -91,9 +91,9 @@ uint32_t Farm::getUpgradeTime() const {
 }
 uint32_t Farm::GET_COLLECTION_SPEED(uint32_t level) {
 	uint32_t collectionSpeed[TOTAL_LEVELS] = {
-		1250,
-		2625,
-		5125
+		1000,
+		3000,
+		9000
 	};
 	return collectionSpeed[level];
 }

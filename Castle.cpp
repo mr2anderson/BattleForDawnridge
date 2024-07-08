@@ -22,8 +22,8 @@
 
 const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 	100000,
-	400000,
-	1000000
+	500000,
+	1300000
 };
 
 

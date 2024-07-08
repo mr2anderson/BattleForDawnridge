@@ -37,7 +37,7 @@ Events Road::newMove(std::shared_ptr<Player> player) {
 }
 Resources Road::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 1000));
+	cost.plus(Resource("wood", 2500));
 	return cost;
 }
 uint32_t Road::getRegenerationSpeed() const {

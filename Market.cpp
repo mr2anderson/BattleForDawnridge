@@ -69,7 +69,7 @@ bool Market::works() const {
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 30000));
+	cost.plus(Resource("wood", 20000));
 	return cost;
 }
 std::string Market::getTextureName() const {
@@ -123,7 +123,7 @@ uint32_t Market::getRegenerationSpeed() const {
 Resources Market::getUpgradeCost() const {
 	Resources upgradeCosts[TOTAL_LEVELS - 1] = {
 		Resources({{"wood", 60000}}),
-		Resources({{"wood", 120000}})
+		Resources({{"wood", 140000}})
 	};
 	return upgradeCosts[this->getCurrentLevel() - 1];
 }
@@ -143,7 +143,7 @@ bool Market::busy() const {
 uint32_t Market::GET_TRADE_START_TIME(uint32_t level) {
 	uint32_t levelTradeStartTime[TOTAL_LEVELS] = {
 		6,
-		4,
+		2,
 		1
 	};
 	return levelTradeStartTime[level];
@@ -211,14 +211,14 @@ Events Market::getSelectionW() {
 		if (this->getCurrentLevel() != TOTAL_LEVELS) {
 			components.push_back(this->getUpgradeComponent());
 		}
-		for (const auto& a : { std::make_tuple("gold", 100, "food", 50000),
-		std::make_tuple("gold", 100, "wood", 50000),
-		std::make_tuple("gold", 100, "stone", 50000),
-		std::make_tuple("gold", 100, "iron", 50000),
-		std::make_tuple("food", 50000, "gold", 100),
-		std::make_tuple("wood", 50000, "gold", 100),
-		std::make_tuple("stone", 50000, "gold", 100),
-		std::make_tuple("iron", 50000, "gold", 100) }) {
+		for (const auto& a : { std::make_tuple("gold", 100, "food", 20000),
+		std::make_tuple("gold", 100, "wood", 20000),
+		std::make_tuple("gold", 100, "stone", 20000),
+		std::make_tuple("gold", 100, "iron", 20000),
+		std::make_tuple("food", 20000, "gold", 100),
+		std::make_tuple("wood", 20000, "gold", 100),
+		std::make_tuple("stone", 20000, "gold", 100),
+		std::make_tuple("iron", 20000, "gold", 100) }) {
 			std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
 			components.push_back(this->getTradeComponent(tryToTradeEvent));
 		}
