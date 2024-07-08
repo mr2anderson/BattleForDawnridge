@@ -673,7 +673,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TryToTradeEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
-    <ClInclude Include="Wall.hpp" />
+    <ClInclude Include="Wall1.hpp" />
+    <ClInclude Include="Wall2.hpp" />
     <ClInclude Include="Water.hpp" />
     <ClInclude Include="Windmill.hpp" />
     <ClInclude Include="WindowButton.hpp" />
@@ -771,7 +772,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TryToTradeEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
-    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Wall1.cpp" />
+    <ClCompile Include="Wall2.cpp" />
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="Windmill.cpp" />
     <ClCompile Include="WindowButton.cpp" />

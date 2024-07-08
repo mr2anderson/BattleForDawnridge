@@ -107,9 +107,12 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, nullptr))));
     components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, event);
     event = Events();
-    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall>(0, 0, nullptr))));
-    components.emplace_back(Wall().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall>()), true, true, event);
+    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, nullptr))));
+    components.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, event);
     event = Events();
+	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, nullptr))));
+	components.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, event);
+	event = Events();
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, nullptr)));
     components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, event);
     std::shared_ptr<GameActionWindow> w = std::make_shared<GameActionWindow>("click", "click", components);

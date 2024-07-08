@@ -17,45 +17,45 @@
  */
 
 
-#include "Wall.hpp"
+#include "Wall1.hpp"
 
 
-Wall::Wall() = default;
-Wall::Wall(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
-	Building(x, y, 2, 2, 100000, playerPtr) {
+Wall1::Wall1() = default;
+Wall1::Wall1(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
+	Building(x, y, 2, 2, 30000, playerPtr) {
 
 }
-Building* Wall::cloneBuilding() const {
-	return new Wall(*this);
+Building* Wall1::cloneBuilding() const {
+	return new Wall1(*this);
 }
-Events Wall::newMove(std::shared_ptr<Player> player) {
+Events Wall1::newMove(std::shared_ptr<Player> player) {
 	Events response;
 	if (this->belongTo(player) and this->exist()) {
 		return  this->regenerate();
 	}
 	return response;
 }
-Resources Wall::getCost() const {
+Resources Wall1::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 10000));
+	cost.plus(Resource("stone", 2500));
 	return cost;
 }
-uint32_t Wall::getRegenerationSpeed() const {
+uint32_t Wall1::getRegenerationSpeed() const {
 	return 25000;
 }
-std::string Wall::getTextureName() const {
+std::string Wall1::getTextureName() const {
 	return "wall1";
 }
-std::string Wall::getSoundName() const {
+std::string Wall1::getSoundName() const {
 	return "stone";
 }
-std::wstring Wall::getDescription() const {
-	return *Texts::get()->get("wall_description");
+std::wstring Wall1::getDescription() const {
+	return *Texts::get()->get("wall1_description");
 }
-std::wstring Wall::getUpperCaseReadableName() const {
-	return *Texts::get()->get("wall_upper_case_readable_name");
+std::wstring Wall1::getUpperCaseReadableName() const {
+	return *Texts::get()->get("wall1_upper_case_readable_name");
 }
-Events Wall::getSelectionW() {
+Events Wall1::getSelectionW() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
@@ -68,7 +68,7 @@ Events Wall::getSelectionW() {
 
 	return response;
 }
-Events Wall::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events Wall1::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (this->belongTo(player)) {
 		return this->getSelectionW();
 	}

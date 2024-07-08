@@ -961,7 +961,7 @@
     <ClInclude Include="WindowButton.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.hpp">
+    <ClInclude Include="Wall1.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
     <ClInclude Include="UTFEncoder.hpp">
@@ -995,6 +995,9 @@
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
     <ClInclude Include="Arable.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall2.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1239,7 +1242,7 @@
     <ClCompile Include="TerritoryOriginB.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
+    <ClCompile Include="Wall1.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
@@ -1285,6 +1288,9 @@
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
     <ClCompile Include="Arable.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall2.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
   </ItemGroup>

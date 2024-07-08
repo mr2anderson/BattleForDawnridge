@@ -369,17 +369,31 @@ moves_number
 <\DATA>
 
 <ID>
-wall_description
+wall1_description
 <\ID>
 <DATA>
-Защитите свой город этими мощными городскими стенами от неожиданного нападения.
+Защитите свой город этими городскими стенами от неожиданного нападения.
 <\DATA>
 
 <ID>
-wall_upper_case_readable_name
+wall1_upper_case_readable_name
 <\ID>
 <DATA>
 СТЕНА
+<\DATA>
+
+<ID>
+wall2_description
+<\ID>
+<DATA>
+Укрепленные городские стены станут надежной защитой от врагов.
+<\DATA>
+
+<ID>
+wall2_upper_case_readable_name
+<\ID>
+<DATA>
+УКРЕПЛЕННАЯ СТЕНА
 <\DATA>
 
 <ID>

@@ -24,10 +24,10 @@
 #pragma once
 
 
-class Wall : public Building {
+class Wall1 : public Building {
 public:
-	Wall();
-	Wall(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr);
+	Wall1();
+	Wall1(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr);
 	Building* cloneBuilding() const override;
 
 	Events newMove(std::shared_ptr<Player> player) override;
