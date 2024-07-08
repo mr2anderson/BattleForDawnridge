@@ -58,7 +58,7 @@ GameActionWindowComponent ResourceB::getUpgradeComponent() {
 		*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.',
 		true,
 		false,
-		gameEventUpgrade + this->getHighlightEvent()
+		gameEventUpgrade
 	};
 	return component;
 }
@@ -107,7 +107,7 @@ Events ResourceB::getSelectionW() {
 	if (this->upgrading()) {
 		components.push_back(this->getBusyWithUpgradingComponent());
 	}
-	if (this->getCurrentLevel() != TOTAL_LEVELS) {
+	if (this->works() and this->getCurrentLevel() != TOTAL_LEVELS) {
 		components.push_back(this->getUpgradeComponent());
 	}
 
