@@ -36,8 +36,8 @@ Wall::Wall(uint32_t x, uint32_t y, Player* playerPtr) :
 Building* Wall::clone() const {
 	return new Wall();
 }
-Event Wall::newMove(Player* player) {
-	Event response;
+Events Wall::newMove(Player* player) {
+	Events response;
 	if (this->belongTo(player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
@@ -85,18 +85,18 @@ uint32_t Wall::getUpgradeTime() const {
 	};
 	return upgradeMoves[this->getCurrentLevel() - 1];
 }
-Event Wall::getSelectionW() {
-	Event response;
+Events Wall::getSelectionW() {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
 	components.emplace_back("wall" + std::to_string(this->getCurrentLevel()),
 		this->getDescription() + L'\n'
-		+ this->getReadableHpInfo(), false, false, Event());
+		+ this->getReadableHpInfo(), false, false, Events());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
-		Event gameEventUpgrade;
-		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
+		Events gameEventUpgrade;
+		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
 		components.emplace_back("wall" + std::to_string(this->getCurrentLevel() + 1),
 			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
 			*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
@@ -104,11 +104,11 @@ Event Wall::getSelectionW() {
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }
-Event Wall::getGameObjectResponse(Player* player) {
+Events Wall::getGameObjectResponse(Player* player) {
 	if (this->belongTo(player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();

@@ -29,9 +29,9 @@ WindowButton::WindowButton(const std::string& soundName1, const std::string& sou
     this->buttonText = buttonText;
     this->inited = false;
 }
-Event WindowButton::run(uint32_t windowW, uint32_t windowH) {
-    Event soundEvent1 = this->CameraIndependentPopUpElement::run(windowW, windowH);
-    soundEvent1.addPlaySoundEvent(this->soundName1);
+Events WindowButton::run(uint32_t windowW, uint32_t windowH) {
+    Events soundEvent1 = this->CameraIndependentPopUpElement::run(windowW, windowH);
+    soundEvent1.add(std::make_shared<PlaySoundEvent>(this->soundName1));
 
     if (!this->inited) {
         this->inited = true;
@@ -39,9 +39,9 @@ Event WindowButton::run(uint32_t windowW, uint32_t windowH) {
         uint32_t buttonW = 75;
         uint32_t buttonH = 30;
 
-        Event onClick;
-        onClick.addPlaySoundEvent(this->soundName2);
-        onClick.addCloseThisWindowEvent();
+        Events onClick;
+        onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
+        onClick.add(std::make_shared<CloseWindowEvent>());
 
         this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
         this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
@@ -53,10 +53,13 @@ void WindowButton::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(label, states);
 	target.draw(button, states);
 }
-Event WindowButton::click() {
-    Event event = this->button.click();
-    if (event.getCloseThisWindowEvent()) {
-        this->finish();
+Events WindowButton::click() {
+    Events event = this->button.click();
+    for (uint32_t i = 0; i < event.size(); i = i + 1) {
+        if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
+            this->finish();
+            break;
+        }
     }
 	return event;
 }

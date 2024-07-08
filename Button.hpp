@@ -29,12 +29,12 @@
 class Button : public sf::Drawable {
 public:
 	Button();
-	Button(std::shared_ptr<RectangularUiElement> element, const Event &onClick);
+	Button(std::shared_ptr<RectangularUiElement> element, const Events &onClick);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Event click() const;
+	Events click() const;
 private:
     std::shared_ptr<RectangularUiElement> element;
-    Event onClick;
+    Events onClick;
 };

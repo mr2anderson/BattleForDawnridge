@@ -20,6 +20,7 @@
 #include "UpgradeableB.hpp"
 #include "HpSensitiveB.hpp"
 #include "GameActionWindow.hpp"
+#include "AddResourceEvent.hpp"
 
 
 #pragma once
@@ -31,7 +32,7 @@ public:
 	Farm(uint32_t x, uint32_t y, Player* playerPtr);
 	Building* clone() const override;
 
-	Event newMove(Player* currentPlayer) override;
+	Events newMove(Player* currentPlayer) override;
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -44,7 +45,7 @@ private:
 	uint32_t getUpgradeTime() const override;
 	static uint32_t GET_COLLECTION_SPEED(uint32_t level);
 	uint32_t getCollectionSpeed() const;
-	Event collectFood() const;
-	Event getGameObjectResponse(Player* player) override;
-	Event getSelectionW();
+	Events collectFood() const;
+	Events getGameObjectResponse(Player* player) override;
+	Events getSelectionW();
 };

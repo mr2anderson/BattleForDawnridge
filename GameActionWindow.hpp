@@ -21,6 +21,7 @@
 #include "Button.hpp"
 #include "GameActionWindowComponent.hpp"
 #include "LabelWithImage.hpp"
+#include "CloseWindowEvent.hpp"
 
 
 #pragma once
@@ -30,9 +31,9 @@ class GameActionWindow : public CameraIndependentPopUpElement {
 public:
 	GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent>& components);
 
-	Event run(uint32_t windowW, uint32_t windowH) override;
+	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Event click() override;
+	Events click() override;
 	void update() override;
 private:
 	std::string soundName1;

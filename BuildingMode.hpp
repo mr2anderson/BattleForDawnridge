@@ -19,6 +19,8 @@
 
 #include "CameraDependentPopUpElement.hpp"
 #include "TerritoryB.hpp"
+#include "BuildEvent.hpp"
+#include "SubResourcesEvent.hpp"
 
 
 #pragma once
@@ -31,9 +33,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Event run(uint32_t windowW2, uint32_t windowH2) override;
+	Events run(uint32_t windowW2, uint32_t windowH2) override;
 	void update() override;
-	Event click() override;
+	Events click() override;
 private:
 	Building* b;
 	sf::View* view;
@@ -45,5 +47,5 @@ private:
 
 	bool empty() const;
 	bool controlled() const;
-	Event getHighlightEvent() const;
+	Events getHighlightEvent() const;
 };

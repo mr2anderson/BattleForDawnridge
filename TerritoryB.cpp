@@ -33,9 +33,9 @@ bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy,
 	}
 	return this->inRadius(x, y, sx, sy);
 }
-Event TerritoryB::getHighlightEvent() const {
+Events TerritoryB::getHighlightEvent() const {
 	if (!this->works()) {
-		return Event();
+		return Events();
 	}
 	return this->AreaB::getHighlightEvent();
 }

@@ -340,7 +340,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Dynamic|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -484,13 +484,22 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <Library Include="extlibs\lib\x86\vorbisfile.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddHpEvent.hpp" />
+    <ClInclude Include="AddResourceEvent.hpp" />
+    <ClInclude Include="AddResourcesEvent.hpp" />
     <ClInclude Include="AreaB.hpp" />
+    <ClInclude Include="BuildEvent.hpp" />
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="BuildingMode.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="CameraDependentPopUpElement.hpp" />
     <ClInclude Include="CameraIndependentPopUpElement.hpp" />
     <ClInclude Include="Castle.hpp" />
+    <ClInclude Include="ChangeHighlightEvent.hpp" />
+    <ClInclude Include="ChangeMoveEvent.hpp" />
+    <ClInclude Include="CloseWindowEvent.hpp" />
+    <ClInclude Include="CloseMenuEvent.hpp" />
+    <ClInclude Include="CollectEvent.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
     <ClInclude Include="CouldntOpen.hpp" />
@@ -500,7 +509,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CouldntOpenSound.hpp" />
     <ClInclude Include="CouldntOpenText.hpp" />
     <ClInclude Include="CouldntOpenTexture.hpp" />
+    <ClInclude Include="CreateEEvent.hpp" />
+    <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
+    <ClInclude Include="DecreaseUpgradeMovesLeftEvent.hpp" />
     <ClInclude Include="Event.hpp" />
+    <ClInclude Include="Events.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\Export.hpp" />
@@ -612,6 +625,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="HPGO.hpp" />
     <ClInclude Include="HpSensitiveB.hpp" />
     <ClInclude Include="Image.hpp" />
+    <ClInclude Include="IncreaseLevelEvent.hpp" />
     <ClInclude Include="Iron.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
@@ -629,6 +643,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="PlainsGeneration.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Playlist.hpp" />
+    <ClInclude Include="PlaySoundEvent.hpp" />
     <ClInclude Include="PopUpElement.hpp" />
     <ClInclude Include="Quarry.hpp" />
     <ClInclude Include="RectangularUIElement.hpp" />
@@ -637,12 +652,16 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="ResourceBar.hpp" />
     <ClInclude Include="ResourcePoint.hpp" />
     <ClInclude Include="Resources.hpp" />
+    <ClInclude Include="ReturnToMenuEvent.hpp" />
     <ClInclude Include="Road.hpp" />
     <ClInclude Include="Root.hpp" />
     <ClInclude Include="Sawmill.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
+    <ClInclude Include="StartGameEvent.hpp" />
     <ClInclude Include="Stone.hpp" />
+    <ClInclude Include="SubResourceEvent.hpp" />
+    <ClInclude Include="SubResourcesEvent.hpp" />
     <ClInclude Include="TerritoryB.hpp" />
     <ClInclude Include="TerritoryConductorB.hpp" />
     <ClInclude Include="TerritoryOriginB.hpp" />
@@ -650,6 +669,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Texts.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
+    <ClInclude Include="TryToAttackEvent.hpp" />
+    <ClInclude Include="TryToBuildEvent.hpp" />
+    <ClInclude Include="TryToTradeEvent.hpp" />
+    <ClInclude Include="TryToUpgradeEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UpgradeableB.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
@@ -657,13 +680,22 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="WindowButton.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddHpEvent.cpp" />
+    <ClCompile Include="AddResourceEvent.cpp" />
+    <ClCompile Include="AddResourcesEvent.cpp" />
     <ClCompile Include="AreaB.cpp" />
+    <ClCompile Include="BuildEvent.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingMode.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraDependentPopUpElement.cpp" />
     <ClCompile Include="CameraIndependentPopUpElemenent.cpp" />
     <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="ChangeHighlightEvent.cpp" />
+    <ClCompile Include="ChangeMoveEvent.cpp" />
+    <ClCompile Include="CloseWindowEvent.cpp" />
+    <ClCompile Include="CloseMenuEvent.cpp" />
+    <ClCompile Include="CollectEvent.cpp" />
     <ClCompile Include="ColorTheme.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />
     <ClCompile Include="CouldntOpen.cpp" />
@@ -673,7 +705,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CouldntOpenSound.cpp" />
     <ClCompile Include="CouldntOpenText.cpp" />
     <ClCompile Include="CouldntOpenTexture.cpp" />
+    <ClCompile Include="CreateEEvent.cpp" />
+    <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
+    <ClCompile Include="DecreaseUpgradeMovesLeftEvent.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Events.cpp" />
     <ClCompile Include="Farm.cpp" />
     <ClCompile Include="FlyingE.cpp" />
     <ClCompile Include="Fonts.cpp" />
@@ -687,6 +723,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="HPGO.cpp" />
     <ClCompile Include="HpSensitiveB.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="IncreaseLevelEvent.cpp" />
     <ClCompile Include="Iron.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
@@ -705,6 +742,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="PlainsGeneration.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Playlist.cpp" />
+    <ClCompile Include="PlaySoundEvent.cpp" />
     <ClCompile Include="PopUpElement.cpp" />
     <ClCompile Include="Quarry.cpp" />
     <ClCompile Include="RectangularUiElement.cpp" />
@@ -713,12 +751,16 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="ResourceBar.cpp" />
     <ClCompile Include="ResourcePoint.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="ReturnToMenuEvent.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="Sawmill.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
+    <ClCompile Include="StartGameEvent.cpp" />
     <ClCompile Include="Stone.cpp" />
+    <ClCompile Include="SubResourceEvent.cpp" />
+    <ClCompile Include="SubResourcesEvent.cpp" />
     <ClCompile Include="TerritoryB.cpp" />
     <ClCompile Include="TerritoryConductorB.cpp" />
     <ClCompile Include="TerritoryOriginB.cpp" />
@@ -726,6 +768,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Texts.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />
+    <ClCompile Include="TryToAttackEvent.cpp" />
+    <ClCompile Include="TryToBuildEvent.cpp" />
+    <ClCompile Include="TryToTradeEvent.cpp" />
+    <ClCompile Include="TryToUpgradeEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UpgradeableB.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />

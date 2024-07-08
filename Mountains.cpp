@@ -25,8 +25,8 @@ Mountains::Mountains(uint32_t x, uint32_t y) :
 	GO(x, y, 2, 2) {
 
 }
-Event Mountains::newMove(Player* currentPlayer) {
-	return Event();
+Events Mountains::newMove(Player* currentPlayer) {
+	return Events();
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";
@@ -40,15 +40,15 @@ std::wstring Mountains::getDescription() const {
 bool Mountains::exist() const {
 	return true;
 }
-Event Mountains::getGameObjectResponse(Player* currentPlayer) {
-	Event response;
+Events Mountains::getGameObjectResponse(Player* currentPlayer) {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
+	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Events());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }

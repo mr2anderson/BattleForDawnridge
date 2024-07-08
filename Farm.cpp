@@ -26,9 +26,9 @@ Farm::Farm(uint32_t x, uint32_t y, Player* playerPtr) :
 	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
 	Building(x, y, 3, 3, 10000, playerPtr){}
-Event Farm::newMove(Player* player) {	
+Events Farm::newMove(Player* player) {	
 	if (this->belongTo(player) and this->exist()) {
-		Event response = this->handleCurrentUpgrade();
+		Events response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
 			return response;
 		}
@@ -38,7 +38,7 @@ Event Farm::newMove(Player* player) {
 		}
 		return response;
 	}
-	return Event();
+	return Events();
 }
 Building* Farm::clone() const {
 	return new Farm(*this);
@@ -91,18 +91,18 @@ uint32_t Farm::GET_COLLECTION_SPEED(uint32_t level) {
 uint32_t Farm::getCollectionSpeed() const {
 	return GET_COLLECTION_SPEED(this->getCurrentLevel() - 1);
 }
-Event Farm::collectFood() const {
-	Event gEvent;
-	gEvent.addAddResourceEvent(Resource("food", this->getCollectionSpeed()));
+Events Farm::collectFood() const {
+	Events gEvent;
+	gEvent.add(std::make_shared<AddResourceEvent>(Resource("food", this->getCollectionSpeed())));
 	std::shared_ptr<PopUpElement> element = std::make_shared<FlyingE>("food_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(gEvent);
-	Event responce;
-	responce.addCreateEEvent(element);
+	Events responce;
+	responce.add(std::make_shared<CreateEEvent>(element));
 	return responce;
 }
-Event Farm::getGameObjectResponse(Player* player) {
+Events Farm::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
-		return Event();
+		return Events();
 	}
 	if (this->belongTo(player)) {
 		if (this->upgrading()) {
@@ -115,25 +115,25 @@ Event Farm::getGameObjectResponse(Player* player) {
 	}
 	return this->getUnitOfEnemyResponse();
 }
-Event Farm::getSelectionW() {
-	Event response;
+Events Farm::getSelectionW() {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
 	components.emplace_back(this->getTextureName(),
 		this->getDescription() + L'\n'
-		+ this->getReadableHpInfo(), false, false, Event());
+		+ this->getReadableHpInfo(), false, false, Events());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		Event gameEventUpgrade;
-		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
+		Events gameEventUpgrade;
+		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
 		components.emplace_back("upgrade_icon", 
 			*Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
 			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(GET_COLLECTION_SPEED(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }

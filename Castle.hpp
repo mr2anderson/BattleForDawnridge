@@ -31,7 +31,7 @@ public:
 	Castle(uint32_t x, uint32_t y, Player* playerPtr);
 	Building* clone() const override;
 
-	Event newMove(Player* player) override;
+	Events newMove(Player* player) override;
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -46,6 +46,6 @@ private:
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	uint32_t getRadius() const override;
-	Event getSelectionW();
-	Event getGameObjectResponse(Player* player) override;
+	Events getSelectionW();
+	Events getGameObjectResponse(Player* player) override;
 };

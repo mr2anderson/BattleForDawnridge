@@ -35,6 +35,11 @@
 #include "BuildingMode.hpp"
 #include "Sounds.hpp"
 #include "WindowButton.hpp"
+#include "AddResourcesEvent.hpp"
+#include "TryToBuildEvent.hpp"
+#include "BuildEvent.hpp"
+#include "ChangeMoveEvent.hpp"
+#include "ReturnToMenuEvent.hpp"
 
 
 #pragma once
@@ -72,26 +77,27 @@ private:
     void initPlains();
 	void initGraphics(sf::RenderWindow &window);
 
-	void handleEvent(const Event& e);
-	void handleTryToAttackEvent(const Event& e);
-	void handleTryToTradeEvent(const Event& e);
-	void handleAddResourceEvent(const Event& e);
-	void handleSubResourceEvent(const Event& e);
-	void handleAddResourcesEvent(const Event& e);
-	void handleSubResourcesEvent(const Event& e);
-	void handleChangeHighlightEvent(const Event& e);
-	void handleCollectEvent(const Event& e);
-	void handleTryToUpgradeEvent(const Event& e);
-	void handleAddHpEvent(const Event& e);
-	void handleDecreaseUpgradeMovesLeftEvent(const Event& e);
-	void handleIncreaseLevelEvent(const Event& e);
-	void handleDecreaseCurrentTradeMovesLeft(const Event& e);
-	void handleTryToBuild(const Event& e);
-	void handleBuild(const Event& e);
-	void handlePlaySoundEvent(const Event& e);
-	void handleCreatePopUpElementEvent(const Event& e);
-    void handleChangeMoveEvent(const Event& e);
-    void handleReturnToMenuEvent(const Event &e);
+	void handleEvent(Events& e);
+
+	void handleTryToAttackEvent(std::shared_ptr<TryToAttackEvent> e);
+	void handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e);
+	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
+	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
+	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e);
+	void handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e);
+	void handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent> e);
+	void handleCollectEvent(std::shared_ptr<CollectEvent> e);
+	void handleTryToUpgradeEvent(std::shared_ptr<TryToUpgradeEvent> e);
+	void handleAddHpEvent(std::shared_ptr<AddHpEvent> e);
+	void handleDecreaseUpgradeMovesLeftEvent(std::shared_ptr<DecreaseUpgradeMovesLeftEvent> e);
+	void handleIncreaseLevelEvent(std::shared_ptr<IncreaseLevelEvent> e);
+	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e);
+	void handleTryToBuild(std::shared_ptr<TryToBuildEvent> e);
+	void handleBuild(std::shared_ptr<BuildEvent> e);
+	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
+	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e);
+    void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
+    void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
 
 	void removeFinishedElements();
 	void changeMove();

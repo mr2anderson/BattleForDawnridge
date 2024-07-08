@@ -28,12 +28,12 @@ FlyingE::FlyingE(const std::string& picture, const std::string& sound, uint32_t 
 	this->sx = sx;
 	this->sy = sy;
 }
-Event FlyingE::run(uint32_t windowW, uint32_t windowH) {
+Events FlyingE::run(uint32_t windowW, uint32_t windowH) {
 	this->clock.restart();
 	this->dst = windowH / 4;
 
-	Event uiEvent;
-	uiEvent.addPlaySoundEvent(this->sound);
+	Events uiEvent;
+	uiEvent.add(std::make_shared<PlaySoundEvent>(this->sound));
 
 	return this->CameraDependentPopUpElement::run(windowW, windowH) + uiEvent;
 }
@@ -47,8 +47,8 @@ void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sprite.setPosition(this->getPosition(t));
 	target.draw(sprite, states);
 }
-Event FlyingE::click() {
-	return Event();
+Events FlyingE::click() {
+	return Events();
 }
 void FlyingE::update() {
 	if (this->clock.getElapsedTime().asSeconds() >= TIME) {

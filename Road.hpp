@@ -30,7 +30,7 @@ public:
 	Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
 	Building* clone() const override;
 
-	Event newMove(Player* player) override;
+	Events newMove(Player* player) override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -39,6 +39,6 @@ private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	uint32_t getRadius() const override;
-	Event getSelectionW();
-	Event getGameObjectResponse(Player* player) override;
+	Events getSelectionW();
+	Events getGameObjectResponse(Player* player) override;
 };

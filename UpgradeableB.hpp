@@ -18,6 +18,10 @@
 
 
 #include "Building.hpp"
+#include "TryToUpgradeEvent.hpp"
+#include "DecreaseUpgradeMovesLeftEvent.hpp"
+#include "IncreaseLevelEvent.hpp"
+#include "SubResourcesEvent.hpp"
 
 
 #pragma once
@@ -30,26 +34,27 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Event startUpgrade();
+	Events startUpgrade();
 	void decreaseUpgradeMovesLeft();
 	void increaseLevel();
 	bool works() const override;
+
+	virtual Resources getUpgradeCost() const = 0;
 protected:
 	static constexpr uint32_t TOTAL_LEVELS = 3;
 
-	virtual Resources getUpgradeCost() const = 0;
 	virtual uint32_t getUpgradeTime() const = 0;
 
 	uint32_t getCurrentLevel() const;
 	bool upgrading() const;
-	Event handleCurrentUpgrade();
-	Event handleBusyWithUpgrading() const;
+	Events handleCurrentUpgrade();
+	Events handleBusyWithUpgrading() const;
 private:
 	uint32_t currentLevel;
 	uint32_t upgradeMovesLeft;
 
-	Event handleUpgradeStart() const;
-	Event handleUpgradeEnd();
+	Events handleUpgradeStart() const;
+	Events handleUpgradeEnd();
 	void drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const;
 	void drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const;
 };

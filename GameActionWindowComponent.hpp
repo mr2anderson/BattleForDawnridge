@@ -17,18 +17,18 @@
  */
 
 
-#include "Event.hpp"
+#include "Events.hpp"
 
 
 #pragma once
 
 
 struct GameActionWindowComponent {
-	GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Event gEvent);
+	GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent);
 
 	std::string pictureName;
 	std::wstring message;
 	bool clickable;
 	bool sound;
-	Event gEvent;
+	Events gEvent;
 };

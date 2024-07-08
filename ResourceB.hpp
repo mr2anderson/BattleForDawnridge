@@ -21,6 +21,7 @@
 #include "HpSensitiveB.hpp"
 #include "AreaB.hpp"
 #include "ResourcePoint.hpp"
+#include "CollectEvent.hpp"
 
 
 #pragma once
@@ -31,7 +32,7 @@ public:
 	ResourceB();
 	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
 
-	Event newMove(Player* currentPlayer) override;
+	Events newMove(Player* currentPlayer) override;
 	bool works() const override;
 protected:
 	uint32_t getCollectionSpeed() const;
@@ -45,7 +46,7 @@ private:
 	std::vector<ResourcePoint*>* resourcePointsPtr;
 	bool resourcesLeft;
 
-	Event collectResources();
-	Event getSelectionW();
-	Event getGameObjectResponse(Player* player) override;
+	Events collectResources();
+	Events getSelectionW();
+	Events getGameObjectResponse(Player* player) override;
 };

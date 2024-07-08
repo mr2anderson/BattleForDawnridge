@@ -27,14 +27,14 @@ Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t ma
 bool Building::works() const {
 	return this->exist();
 }
-Event Building::regenerate() {
-	Event events;
+Events Building::regenerate() {
+	Events events;
 	if (this->getHP() < this->getMaxHP()) {
-		Event gEvent;
-		gEvent.addAddHpEvent(std::make_tuple(this, this->getRegenerationSpeed()));
+		Events gEvent;
+		gEvent.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));
 		std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
 		element->addOnStartGEvent(gEvent);
-		events.addCreateEEvent(element);
+		events.add(std::make_shared<CreateEEvent>(element));
 	}
 	return events;
 }

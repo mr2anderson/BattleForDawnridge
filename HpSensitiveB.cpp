@@ -30,20 +30,20 @@ bool HpSensitiveB::works() const {
 bool HpSensitiveB::repairing() const {
 	return (this->getHP() < this->getMaxHP());
 }
-Event HpSensitiveB::handleRepairing() const {
-	Event events;
+Events HpSensitiveB::handleRepairing() const {
+	Events events;
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("building_in_progress") + L'\n'
 		+ this->getReadableHpInfo() + L'\n'
 		+ this->getReadableRegenerationSpeed(), *Texts::get()->get("OK"));
-	events.addCreateEEvent(window);
+	events.add(std::make_shared<CreateEEvent>(window));
 	return events;
 }
-Event HpSensitiveB::regenerate() {
-	Event events = this->Building::regenerate();
+Events HpSensitiveB::regenerate() {
+	Events events = this->Building::regenerate();
 	if (this->getHP() != this->getMaxHP() and this->getHP() + this->getRegenerationSpeed() >= this->getMaxHP()) {
 		std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("hammer_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-		events.addCreateEEvent(element);
+		events.add(std::make_shared<CreateEEvent>(element));
 	}
 	return events;
 }

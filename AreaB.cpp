@@ -43,8 +43,8 @@ bool AreaB::inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
 	}
 	return true;
 }
-Event AreaB::getHighlightEvent() const {
-	Event gEvent;
+Events AreaB::getHighlightEvent() const {
+	Events gEvent;
 	if (!this->exist()) {
 		return gEvent;
 	}
@@ -74,7 +74,7 @@ Event AreaB::getHighlightEvent() const {
 
 	for (uint32_t x = x2; x <= x1; x = x + 1) {
 		for (uint32_t y = y2; y <= y1; y = y + 1) {
-			gEvent.addChangeHighlightEvent(std::make_tuple(this, x, y));
+			gEvent.add(std::make_shared<ChangeHighlightEvent>(this, x, y));
 		}
 	}
 

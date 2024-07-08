@@ -22,24 +22,24 @@
 
 ResourcePoint::ResourcePoint() = default;
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : HPGO(x, y, sx, sy, size, size) {}
-Event ResourcePoint::newMove(Player* player) {
-	return Event();
+Events ResourcePoint::newMove(Player* player) {
+	return Events();
 }
-Event ResourcePoint::getGameObjectResponse(Player* player) {
+Events ResourcePoint::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
-		return Event();
+		return Events();
 	}
 	return this->getSelectionWindow();
 }
-Event ResourcePoint::getSelectionWindow() {
-	Event response;
+Events ResourcePoint::getSelectionWindow() {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
-	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Event());
-	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Event());
+	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, Events());
+	components.emplace_back(this->getTextureName(), this->getDescription(), false, false, Events());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }

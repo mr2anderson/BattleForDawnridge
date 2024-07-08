@@ -38,9 +38,9 @@ void UpgradeableB::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		}
 	}
 }
-Event UpgradeableB::startUpgrade() {
-	Event events;
-	events.addSubResourcesEvent(this->getUpgradeCost());
+Events UpgradeableB::startUpgrade() {
+	Events events;
+	events.add(std::make_shared<SubResourcesEvent>(this->getUpgradeCost()));
 	this->upgradeMovesLeft = this->getUpgradeTime();
 	events = events + this->handleUpgradeStart();
 	return events;
@@ -60,42 +60,42 @@ uint32_t UpgradeableB::getCurrentLevel() const {
 bool UpgradeableB::upgrading() const {
 	return (this->upgradeMovesLeft > 0);
 }
-Event UpgradeableB::handleCurrentUpgrade() {
+Events UpgradeableB::handleCurrentUpgrade() {
 	if (this->upgradeMovesLeft == 0) {
-		return Event();
+		return Events();
 	}
-	Event events;
+	Events events;
 	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("upgrade_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
-	events.addCreateEEvent(element);
-	Event event;
-	event.addDecreaseUpgradeMovesLeftEvent(this);
+	events.add(std::make_shared<CreateEEvent>(element));
+	Events event;
+	event.add(std::make_shared<DecreaseUpgradeMovesLeftEvent>(this));
 	element->addOnStartGEvent(event);
 	if (this->upgradeMovesLeft == 1) {
 		events = events + this->handleUpgradeEnd();
 	}
 	return events;
 }
-Event UpgradeableB::handleBusyWithUpgrading() const {
-	Event events;
+Events UpgradeableB::handleBusyWithUpgrading() const {
+	Events events;
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_in_progress") + std::to_wstring(this->upgradeMovesLeft), *Texts::get()->get("OK"));
-	events.addCreateEEvent(window);
+	events.add(std::make_shared<CreateEEvent>(window));
 	return events;
 }
-Event UpgradeableB::handleUpgradeStart() const {
-	Event events;
+Events UpgradeableB::handleUpgradeStart() const {
+	Events events;
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("upgrade_started") + std::to_wstring(this->upgradeMovesLeft), *Texts::get()->get("OK"));
-	events.addCreateEEvent(window);
+	events.add(std::make_shared<CreateEEvent>(window));
 	return events;
 }
-Event UpgradeableB::handleUpgradeEnd() {
-	Event events;
-	Event event;
-	event.addIncreaseLevelEvent(this);
+Events UpgradeableB::handleUpgradeEnd() {
+	Events events;
+	Events event;
+	event.add(std::make_shared<IncreaseLevelEvent>(this));
 	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("upgrade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	element->addOnStartGEvent(event);
-	events.addCreateEEvent(element);
+	events.add(std::make_shared<CreateEEvent>(element));
 	return events;
 }
 void UpgradeableB::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {

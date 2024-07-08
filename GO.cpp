@@ -51,14 +51,14 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
-Event GO::click(Player*currentPlayer, uint32_t mouseX, uint32_t mouseY) {
+Events GO::click(Player*currentPlayer, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 32 * this->getX() and
 		mouseY >= 32 * this->getY() and
 		mouseX < 32 * (this->getX() + this->getSX()) and
 		mouseY < 32 * (this->getY() + this->getSY())) {
 		return this->getGameObjectResponse(currentPlayer);
 	}
-	return Event();
+	return Events();
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;

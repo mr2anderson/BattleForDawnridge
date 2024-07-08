@@ -27,13 +27,13 @@ GameActionWindow::GameActionWindow(const std::string &soundName1, const std::str
 	this->components = components;
 	this->inited = false;
 }
-Event GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
-	Event event = this->CameraIndependentPopUpElement::run(windowW, windowH);
+Events GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
+	Events event = this->CameraIndependentPopUpElement::run(windowW, windowH);
 	if (!this->inited) {
 		this->inited = true;
 		this->makeButtons(windowW, windowH);
 	}
-	event.addPlaySoundEvent(this->soundName1);
+	event.add(std::make_shared<PlaySoundEvent>(this->soundName1));
 	return event;
 }
 void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -41,15 +41,17 @@ void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) c
 		target.draw(this->buttons[i], states);
 	}
 }
-Event GameActionWindow::click() {
+Events GameActionWindow::click() {
 	for (const auto& b : buttons) {
-        Event event = b.click();
-        if (event.getCloseThisWindowEvent()) {
-            this->finish();
-            return event;
-        }
+        Events event = b.click();
+		for (uint32_t i = 0; i < event.size(); i = i + 1) {
+			if (std::shared_ptr<CloseWindowEvent> e = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
+				this->finish();
+				return event;
+			}
+		}
 	}
-	return Event();
+	return Events();
 }
 void GameActionWindow::update() {
 
@@ -61,12 +63,12 @@ void GameActionWindow::makeButtons(uint32_t windowW, uint32_t windowH) {
 		std::wstring message = this->components[i].message;
 		bool clickable = this->components[i].clickable;
 		bool sound = this->components[i].sound;
-		Event onClick = this->components[i].gEvent;
+		Events onClick = this->components[i].gEvent;
         if (clickable) {
-            onClick.addCloseThisWindowEvent();
+			onClick.add(std::make_shared<CloseWindowEvent>());
         }
 		if (sound) {
-			onClick.addPlaySoundEvent(this->soundName2);
+			onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
 		}
 
 		Button button(std::make_shared<LabelWithImage>(10, windowH - (64 + 10) * (i + 1), windowW - 20, 64, pictureName, message), onClick);

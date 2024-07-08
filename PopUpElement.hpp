@@ -18,7 +18,8 @@
 
 
 #include <SFML/Graphics.hpp>
-#include "Event.hpp"
+#include "Events.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 #pragma once
@@ -28,16 +29,16 @@ class PopUpElement : public sf::Drawable {
 public:
 	PopUpElement();
 
-	void addOnStartGEvent(const Event& event);
+	void addOnStartGEvent(const Events& event);
 	bool finished() const;
 	virtual void update() = 0;
 
-	virtual Event run(uint32_t windowW, uint32_t windowH);
-	virtual Event click() = 0;
+	virtual Events run(uint32_t windowW, uint32_t windowH);
+	virtual Events click() = 0;
 	virtual bool isCameraDependent() const = 0;
 protected:
 	void finish();
 private:
-	Event onStart;
+	Events onStart;
 	bool _finished;
 };

@@ -33,7 +33,8 @@ Map* Menu::run(sf::RenderWindow& window) {
                     this->handleButtonsClick();
                 }
                 else if (!this->elements.empty()) {
-                    this->handleEvent(this->elements.front()->click());
+                    Events events = this->elements.front()->click();
+                    this->handleEvent(events);
                 }
 			}
 		}
@@ -65,28 +66,28 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     this->windowW = windowW;
     this->windowH = windowH;
 
-    Event startGameEvent;
-    startGameEvent.addStartGameEvent();
-    startGameEvent.addPlaySoundEvent("click");
+    Events startGameEvent;
+    startGameEvent.add(std::make_shared<StartGameEvent>());
+    startGameEvent.add(std::make_shared<PlaySoundEvent>("click"));
 	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_2p_1pc")), startGameEvent);
 
     std::shared_ptr<WindowButton> supportWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
-    Event supportEvent;
-    supportEvent.addCreateEEvent(supportWindow);
+    Events supportEvent;
+    supportEvent.add(std::make_shared<CreateEEvent>(supportWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60,  *Texts::get()->get("show_support")), supportEvent);
 
     std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
-    Event creditsEvent;
-    creditsEvent.addCreateEEvent(creditsWindow);
+    Events creditsEvent;
+    creditsEvent.add(std::make_shared<CreateEEvent>(creditsWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60, *Texts::get()->get("show_credits")), creditsEvent);
 
     std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 400);
-    Event licenseEvent;
-    licenseEvent.addCreateEEvent(licenseWindow);
+    Events licenseEvent;
+    licenseEvent.add(std::make_shared<CreateEEvent>(licenseWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
 
-    Event exitEvent;
-    exitEvent.addCloseMenuEvent();
+    Events exitEvent;
+    exitEvent.add(std::make_shared<CloseMenuEvent>());
 	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("returnToMenu")), exitEvent);
 
 	this->title.setFont(*Fonts::get()->get("1"));
@@ -109,7 +110,8 @@ void Menu::drawEverything(sf::RenderWindow &window) {
 void Menu::addElement(std::shared_ptr<PopUpElement> e) {
     this->elements.push(e);
     if (this->elements.size() == 1) {
-        this->handleEvent(this->elements.front()->run(this->windowW, this->windowH));
+        Events events = this->elements.front()->run(this->windowW, this->windowH);
+        this->handleEvent(events);
     }
 }
 void Menu::removeFinishedElements() {
@@ -122,7 +124,8 @@ void Menu::removeFinishedElements() {
         removed = true;
     }
     if (removed and !this->elements.empty()) {
-        this->handleEvent(this->elements.front()->run(this->windowW, this->windowH));
+        Events events = this->elements.front()->run(this->windowW, this->windowH);
+        this->handleEvent(events);
     }
 }
 void Menu::prepareToStartGame() {
@@ -134,7 +137,7 @@ void Menu::prepareToStartGame() {
 }
 bool Menu::handleButtonsClick() {
     for (const auto& b : this->buttons) {
-        Event event = b.click();
+        Events event = b.click();
         if (!event.empty()) {
             this->handleEvent(event);
             return true;
@@ -142,31 +145,31 @@ bool Menu::handleButtonsClick() {
     }
     return false;
 }
-void Menu::handleEvent(const Event &e) {
-    this->handleSoundEvent(e);
-    this->handleCreateEEvent(e);
-    this->handleExitEvent(e);
-    this->handleStartGameEvent(e);
-}
-void Menu::handleSoundEvent(const Event &e) {
-    const std::vector<std::string>* playSound = e.getPlaySoundEvent();
-    for (uint32_t i = 0; i < playSound->size(); i = i + 1) {
-        SoundQueue::get()->push(Sounds::get()->get(playSound->at(i)));
+void Menu::handleEvent(Events &e) {
+    for (uint32_t i = 0; i < e.size(); i = i + 1) {
+        if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e.at(i))) {
+            this->handleSoundEvent(playSoundEvent);
+        }
+        else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e.at(i))) {
+            this->handleCreateEEvent(createEEvent);
+        }
+        else if (std::shared_ptr<CloseMenuEvent> closeMenuEvent = std::dynamic_pointer_cast<CloseMenuEvent>(e.at(i))) {
+            this->handleCloseMenuEvent(closeMenuEvent);
+        }
+        else if (std::shared_ptr<StartGameEvent> startGameEvent = std::dynamic_pointer_cast<StartGameEvent>(e.at(i))) {
+            this->handleStartGameEvent(startGameEvent);
+        }
     }
 }
-void Menu::handleCreateEEvent(const Event &e) {
-    const std::vector<std::shared_ptr<PopUpElement>>* toCreate = e.getCreateEEvent();
-    for (uint32_t i = 0; i < toCreate->size(); i = i + 1) {
-        this->addElement(toCreate->at(i));
-    }
+void Menu::handleSoundEvent(std::shared_ptr<PlaySoundEvent> e) {
+    SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }
-void Menu::handleExitEvent(const Event &e) {
-    if (e.getCloseMenuEvent()) {
-        this->closeMenu = true;
-    }
+void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
+    this->addElement(e->getElement());
 }
-void Menu::handleStartGameEvent(const Event &e) {
-    if (e.getStartGameEvent()) {
-        this->startGame = true;
-    }
+void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
+    this->closeMenu = true;
+}
+void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
+    this->startGame = true;
 }

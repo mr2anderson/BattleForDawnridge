@@ -24,6 +24,8 @@
 #include "ColorTheme.hpp"
 #include "WindowButton.hpp"
 #include "Sounds.hpp"
+#include "CloseMenuEvent.hpp"
+#include "StartGameEvent.hpp"
 
 
 #pragma once
@@ -58,10 +60,10 @@ private:
     void prepareToStartGame();
     bool handleButtonsClick();
 
-    void handleEvent(const Event &e);
+    void handleEvent(Events &e);
 
-    void handleSoundEvent(const Event &e);
-    void handleCreateEEvent(const Event &e);
-    void handleExitEvent(const Event &e);
-    void handleStartGameEvent(const Event &e);
+    void handleSoundEvent(std::shared_ptr<PlaySoundEvent> e);
+    void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
+    void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
+    void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
 };

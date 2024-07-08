@@ -29,11 +29,11 @@ Road::Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOrigi
 Building* Road::clone() const {
 	return new Road(*this);
 }
-Event Road::newMove(Player* player) {
+Events Road::newMove(Player* player) {
 	if (this->belongTo(player) and this->exist()) {
 		return this->regenerate();
 	}
-	return Event();
+	return Events();
 }
 Resources Road::getCost() const {
 	Resources cost;
@@ -58,23 +58,23 @@ std::wstring Road::getUpperCaseReadableName() const {
 uint32_t Road::getRadius() const {
 	return 3;
 }
-Event Road::getSelectionW() {
-	Event response;
+Events Road::getSelectionW() {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("road",
 		this->getDescription() + L'\n'
-		+ this->getReadableHpInfo(), false, false, Event());
+		+ this->getReadableHpInfo(), false, false, Events());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }
-Event Road::getGameObjectResponse(Player* player) {
+Events Road::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
-		return Event();
+		return Events();
 	}
 	if (this->belongTo(player)) {
 		if (this->repairing()) {
@@ -83,7 +83,7 @@ Event Road::getGameObjectResponse(Player* player) {
 		if (!this->conducted()) {
 			return this->getNotConductedResponce();
 		}
-		Event responce;
+		Events responce;
 		responce = this->getHighlightEvent();
 		return responce + this->getSelectionW();
 	}

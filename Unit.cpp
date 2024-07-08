@@ -33,9 +33,9 @@ bool Unit::belongTo(Player* player) const {
 void Unit::changePlayer(Player* newPlayerPtr) {
 	this->playerPtr = newPlayerPtr;
 }
-Event Unit::getUnitOfEnemyResponse() {
-	Event gEvent;
-	gEvent.addTryToAttackEvent(this);
+Events Unit::getUnitOfEnemyResponse() {
+	Events gEvent;
+	gEvent.add(std::make_shared<TryToAttackEvent>(this));
 	return gEvent;
 }
 Player* Unit::getPlayer() const {

@@ -35,7 +35,7 @@ BuildingMode::~BuildingMode() {
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
 }
-Event BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
+Events BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
 	this->returnedPtr = false;
 	this->windowW = windowW2;
 	this->windowH = windowH2;
@@ -48,24 +48,24 @@ void BuildingMode::update() {
 	this->b->setX((mouseX + this->view->getCenter().x - this->windowW / 2) / 32);
 	this->b->setY((mouseY + this->view->getCenter().y - this->windowH / 2) / 32);
 }
-Event BuildingMode::click() {
+Events BuildingMode::click() {
 	this->finish();
 	if (!this->empty()) {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("place_occupied"), *Texts::get()->get("OK"));
-		Event uiEvent;
-		uiEvent.addCreateEEvent(w);
+		Events uiEvent;
+		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"));
-		Event uiEvent;
-		uiEvent.addCreateEEvent(w);
+		Events uiEvent;
+		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->getHighlightEvent() + uiEvent;
 	}
-	Event gEvent = this->getHighlightEvent();
-	gEvent.addBuildEvent(this->b);
-	gEvent.addSubResourcesEvent(this->b->getCost());
-	gEvent.addPlaySoundEvent(this->b->getSoundName());
+	Events gEvent = this->getHighlightEvent();
+	gEvent.add(std::make_shared<BuildEvent>(this->b));
+	gEvent.add(std::make_shared<SubResourcesEvent>(this->b->getCost()));
+	gEvent.add(std::make_shared<PlaySoundEvent>(this->b->getSoundName()));
 	this->returnedPtr = true;
 	return gEvent;
 }
@@ -106,8 +106,8 @@ bool BuildingMode::controlled() const {
 
 	return false;
 }
-Event BuildingMode::getHighlightEvent() const {
-	Event result;
+Events BuildingMode::getHighlightEvent() const {
+	Events result;
 	for (uint32_t i = 0; i < tb->size(); i = i + 1) {
 		result = result + tb->at(i)->getHighlightEvent();
 	}

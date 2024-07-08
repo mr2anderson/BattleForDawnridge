@@ -29,9 +29,9 @@ class FlyingE : public CameraDependentPopUpElement {
 public:
 	FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
-	Event run(uint32_t windowW, uint32_t windowH) override;
+	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Event click() override;
+	Events click() override;
 	void update() override;
 private:
 	std::string picture;

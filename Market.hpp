@@ -21,6 +21,10 @@
 #include "HpSensitiveB.hpp"
 #include "Trade.hpp"
 #include "GameActionWindow.hpp"
+#include "SubResourceEvent.hpp"
+#include "AddResourceEvent.hpp"
+#include "DecreaseCurrentTradeMovesLeftEvent.hpp"
+#include "TryToTradeEvent.hpp"
 
 
 #pragma once
@@ -34,9 +38,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Event doTrade(const Trade& trade);
+	Events doTrade(const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
-	Event newMove(Player* currentPlayer);
+	Events newMove(Player* currentPlayer);
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -53,9 +57,9 @@ private:
 	static uint32_t GET_TRADE_START_TIME(uint32_t level);
 	uint32_t getTradeStartTime() const;
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
-	Event handleCurrentTrade();
-	Event getSelectionW();
-	void addTrade(std::vector<GameActionWindowComponent>& components, const Event& gameEventTrade);
-	Event handleBusyWithTrade() const;
-	Event getGameObjectResponse(Player* player) override;
+	Events handleCurrentTrade();
+	Events getSelectionW();
+	void addTrade(std::vector<GameActionWindowComponent>& components, std::shared_ptr<TryToTradeEvent> gameEventTrade);
+	Events handleBusyWithTrade() const;
+	Events getGameObjectResponse(Player* player) override;
 };

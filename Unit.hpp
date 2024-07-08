@@ -19,6 +19,7 @@
 
 
 #include "HPGO.hpp"
+#include "TryToAttackEvent.hpp"
 
 
 #pragma once
@@ -34,7 +35,7 @@ public:
 
 	virtual Resources getCost() const = 0;
 protected:
-	Event getUnitOfEnemyResponse();
+	Events getUnitOfEnemyResponse();
 	Player* getPlayer() const;
 private:
 	Player* playerPtr;

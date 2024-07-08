@@ -29,8 +29,8 @@ ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t 
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }
-Event ResourceB::newMove(Player* currentPlayer) {
-	Event response;
+Events ResourceB::newMove(Player* currentPlayer) {
+	Events response;
 	if (this->belongTo(currentPlayer) and this->exist()) {
 		response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
@@ -42,7 +42,7 @@ Event ResourceB::newMove(Player* currentPlayer) {
 		}
 		return response;
 	}
-	return Event();
+	return Events();
 }
 bool ResourceB::works() const {
 	return this->UpgradeableB::works() and this->HpSensitiveB::works() and this->AreaB::works();
@@ -53,7 +53,7 @@ uint32_t ResourceB::getCollectionSpeed() const {
 uint32_t ResourceB::getRadius() const {
 	return this->getRadius(this->getCurrentLevel() - 1);
 }
-Event ResourceB::collectResources() {
+Events ResourceB::collectResources() {
 	uint32_t left = this->getCollectionSpeed();
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> srcs;
 	for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
@@ -67,7 +67,7 @@ Event ResourceB::collectResources() {
 		}
 	}
 
-	Event responce;
+	Events responce;
 	if (left == this->getCollectionSpeed()) {
 		this->resourcesLeft = false;
 	}
@@ -76,40 +76,40 @@ Event ResourceB::collectResources() {
 			ResourcePoint* rp = std::get<ResourcePoint*>(src);
 			uint32_t n = std::get<uint32_t>(src);
 			std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
-			Event gEvent;
-			gEvent.addCollectEvent(std::make_tuple(rp, n));
+			Events gEvent;
+			gEvent.add(std::make_shared<CollectEvent>(rp, n));
 			element->addOnStartGEvent(gEvent);
-			responce.addCreateEEvent(element);
+			responce.add(std::make_shared<CreateEEvent>(element));
 		}
 	}
 
 	return responce;
 }
-Event ResourceB::getSelectionW() {
-	Event response;
+Events ResourceB::getSelectionW() {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back(this->getTextureName(), 
 		this->getDescription() + L'\n' +
-		this->getReadableHpInfo(), false, false, Event());
+		this->getReadableHpInfo(), false, false, Events());
 
 	if (this->getCurrentLevel() < TOTAL_LEVELS) {
-		Event gameEventUpgrade = this->getHighlightEvent();
-		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
+		Events gameEventUpgrade = this->getHighlightEvent();
+		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
 		components.emplace_back("upgrade_icon", *Texts::get()->get("upgrade_for") + this->getUpgradeCost().getReadableInfo() + L'\n' +
 			*Texts::get()->get("upgrade_will_increase_collection_speed_from") + std::to_wstring(this->getCollectionSpeed()) + *Texts::get()->get("to") + std::to_wstring(this->getCollectionSpeed(this->getCurrentLevel())) +
 			*Texts::get()->get("and_collection_radius_from") + std::to_wstring(this->getRadius()) + *Texts::get()->get("to") + std::to_wstring(this->getRadius(this->getCurrentLevel())) + L'.', true, false, gameEventUpgrade);
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }
-Event ResourceB::getGameObjectResponse(Player* player) {
+Events ResourceB::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
-		return Event();
+		return Events();
 	}
 	if (this->belongTo(player)) {
 		if (this->upgrading()) {
@@ -118,7 +118,7 @@ Event ResourceB::getGameObjectResponse(Player* player) {
 		if (this->repairing()) {
 			return this->handleRepairing();
 		}
-		Event response;
+		Events response;
 		response = this->getHighlightEvent();
 		return response + this->getSelectionW();
 	}

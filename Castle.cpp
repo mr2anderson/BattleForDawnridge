@@ -36,8 +36,8 @@ Castle::Castle(uint32_t x, uint32_t y, Player* playerPtr) :
 Building* Castle::clone() const {
 	return new Castle(*this);
 }
-Event Castle::newMove(Player* player) {
-	Event response;
+Events Castle::newMove(Player* player) {
+	Events response;
 	if (this->belongTo(player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
 		response = this->handleCurrentUpgrade();
@@ -91,18 +91,18 @@ uint32_t Castle::getUpgradeTime() const {
 uint32_t Castle::getRadius() const {
 	return 3;
 }
-Event Castle::getSelectionW() {
-	Event response;
+Events Castle::getSelectionW() {
+	Events response;
 
 	std::vector<GameActionWindowComponent> components;
 	components.emplace_back("exit_icon", *Texts::get()->get("leave"), true, true, this->getHighlightEvent());
 	components.emplace_back("castle",
 		this->getDescription() + L'\n' +
-		this->getReadableHpInfo(), false, false, Event());
+		this->getReadableHpInfo(), false, false, Events());
 
 	if (this->getCurrentLevel() != TOTAL_LEVELS) {
-		Event gameEventUpgrade;
-		gameEventUpgrade.addTryToUpgradeEvent(std::make_tuple(this, this->getUpgradeCost()));
+		Events gameEventUpgrade;
+		gameEventUpgrade.add(std::make_shared<TryToUpgradeEvent>(this));
 		components.emplace_back("upgrade_icon",
 			*Texts::get()->get("upgrade_castle_for") + this->getUpgradeCost().getReadableInfo() + L'\n' + 
 			*Texts::get()->get("upgrade_will_increase_hp_from") + std::to_wstring(LEVEL_HP[this->getCurrentLevel() - 1]) + *Texts::get()->get("to") + std::to_wstring(LEVEL_HP[this->getCurrentLevel()]) +
@@ -110,19 +110,19 @@ Event Castle::getSelectionW() {
 	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
-	response.addCreateEEvent(window);
+	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }
-Event Castle::getGameObjectResponse(Player* player) {
+Events Castle::getGameObjectResponse(Player* player) {
 	if (!this->exist()) {
-		return Event();
+		return Events();
 	}
 	if (this->belongTo(player)) {
 		if (this->upgrading()) {
 			return this->handleBusyWithUpgrading();
 		}
-		Event responce;
+		Events responce;
 		responce = this->getHighlightEvent();
 		return responce + this->getSelectionW();
 	}

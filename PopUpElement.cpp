@@ -23,13 +23,13 @@
 PopUpElement::PopUpElement() {
 	this->_finished = false;
 }
-void PopUpElement::addOnStartGEvent(const Event& gEvent) {
+void PopUpElement::addOnStartGEvent(const Events& gEvent) {
 	this->onStart = this->onStart + gEvent;
 }
 bool PopUpElement::finished() const {
 	return this->_finished;
 }
-Event PopUpElement::run(uint32_t windowW, uint32_t windowH) {
+Events PopUpElement::run(uint32_t windowW, uint32_t windowH) {
 	this->_finished = false;
 	return this->onStart;
 }

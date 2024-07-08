@@ -20,6 +20,7 @@
 #include "CameraIndependentPopUpElement.hpp"
 #include "Label.hpp"
 #include "Button.hpp"
+#include "CloseWindowEvent.hpp"
 
 
 #pragma once
@@ -29,9 +30,9 @@ class WindowButton : public CameraIndependentPopUpElement {
 public:
 	WindowButton(const std::string &soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w = 400, uint32_t h = 225);
 
-	Event run(uint32_t windowW, uint32_t windowH) override;
+	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Event click() override;
+	Events click() override;
 	void update() override;
 private:
     uint32_t w, h;

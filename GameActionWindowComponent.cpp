@@ -20,7 +20,7 @@
 #include "GameActionWindowComponent.hpp"
 
 
-GameActionWindowComponent::GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Event gEvent) {
+GameActionWindowComponent::GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent) {
 	this->pictureName = pictureName;
 	this->message = message;
 	this->clickable = clickable;

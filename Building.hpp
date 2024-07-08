@@ -19,6 +19,8 @@
 
 #include "Unit.hpp"
 #include "WindowButton.hpp"
+#include "CreateEEvent.hpp"
+#include "AddHpEvent.hpp"
 
 
 #pragma once
@@ -35,6 +37,6 @@ protected:
 	virtual uint32_t getRegenerationSpeed() const = 0;
 	virtual std::wstring getUpperCaseReadableName() const = 0;
 
-	virtual Event regenerate();
+	virtual Events regenerate();
 	std::wstring getReadableRegenerationSpeed() const;
 };

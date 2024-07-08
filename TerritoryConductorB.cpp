@@ -34,9 +34,9 @@ bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uin
 	}
 	return this->TerritoryB::allowBuilding(x, y, sx, sy, player);
 }
-Event TerritoryConductorB::getHighlightEvent() const {
+Events TerritoryConductorB::getHighlightEvent() const {
 	if (!this->conducted()) {
-		return Event();
+		return Events();
 	}
 	return this->TerritoryB::getHighlightEvent();
 }
@@ -59,10 +59,10 @@ bool TerritoryConductorB::conducted() const {
 	}
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
-Event TerritoryConductorB::getNotConductedResponce() const {
+Events TerritoryConductorB::getNotConductedResponce() const {
 	std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		this->getUpperCaseReadableName() + *Texts::get()->get("does_not_lead_to_city_center"), *Texts::get()->get("OK"));
-	Event events;
-	events.addCreateEEvent(w);
+	Events events;
+	events.add(std::make_shared<CreateEEvent>(w));
 	return events;
 }
