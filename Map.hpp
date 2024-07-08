@@ -30,6 +30,7 @@
 #include "TerritoryOriginB.hpp"
 #include "CouldntOpenMap.hpp"
 #include "GOCollection.hpp"
+#include "Water.hpp"
 
 
 #pragma once

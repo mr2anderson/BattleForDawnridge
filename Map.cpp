@@ -72,6 +72,9 @@ Map::Map(const std::string &path) {
             else if (word == "22") {
                 this->add(new Mountains(x, y));
             }
+            else if (word == "26") {
+                this->add(new Water(x, y));
+            }
             x = x + 1;
         }
         y = y + 1;

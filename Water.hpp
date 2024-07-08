@@ -23,17 +23,21 @@
 #pragma once
 
 
-class Mountains : public GO {
+class Water : public GO {
 public:
-	Mountains();
-	Mountains(uint32_t x, uint32_t y);
+	Water();
+	Water(uint32_t x, uint32_t y);
 
 	Events newMove(std::shared_ptr<Player> currentPlayer) override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 	bool exist() const override;
+
+	static const uint32_t TOTAL_ANIMATIONS;
 private:
+	sf::Clock clock;
+
 	Events getGameObjectResponse(std::shared_ptr<Player> currentPlayer) override;
 	Events getGameActionWindow();
 };

@@ -678,6 +678,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="UpgradeableB.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="Wall.hpp" />
+    <ClInclude Include="Water.hpp" />
     <ClInclude Include="WindowButton.hpp" />
     <ClInclude Include="WindowTwoButtons.hpp" />
   </ItemGroup>
@@ -778,6 +779,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UpgradeableB.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Water.cpp" />
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowTwoButtons.cpp" />
   </ItemGroup>

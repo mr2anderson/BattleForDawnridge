@@ -563,3 +563,10 @@ upgrade_for
 <DATA>
 Улучшить за 
 <\DATA>
+
+<ID>
+water_description
+<\ID>
+<DATA>
+Через ледяную воду не пройдет ни один человек.
+<\DATA>

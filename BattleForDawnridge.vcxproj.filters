@@ -1003,6 +1003,9 @@
     <ClInclude Include="WindowTwoButtons.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
+    <ClInclude Include="Water.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1298,6 +1301,9 @@
     </ClCompile>
     <ClCompile Include="WindowTwoButtons.cpp">
       <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
