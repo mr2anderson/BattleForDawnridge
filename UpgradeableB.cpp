@@ -102,20 +102,12 @@ Events UpgradeableB::handleUpgradeEnd() {
 	return events;
 }
 void UpgradeableB::drawCurrentLevel(sf::RenderTarget& target, sf::RenderStates states) const {
-	std::string s;
-	while (s.size() < this->getCurrentLevel()) {
-		s = s + "#";
-	}
-
-	sf::Text text;
-	text.setFont(*Fonts::get()->get("1"));
-	text.setString(s);
-	text.setCharacterSize(12);
-	text.setFillColor(sf::Color(75, 0, 130));
-	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(1);
-	text.setPosition(32 * this->getX() + 32 * this->getSX() - text.getLocalBounds().width, 32 * this->getY());
-	target.draw(text, states);
+	sf::Sprite sprite;
+	sprite.setTexture(*Textures::get()->get("level" + std::to_string(this->getCurrentLevel())));
+	float scale = std::min(this->getSX(), this->getSY()) * 32 / (float)sprite.getTexture()->getSize().x / 4;
+	sprite.setScale(scale, scale);
+	sprite.setPosition(32 * this->getX() + 32 * this->getSX() - sprite.getTexture()->getSize().x * scale, 32 * this->getY());
+	target.draw(sprite, states);
 }
 void UpgradeableB::drawUpgrading(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
