@@ -21,7 +21,7 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr, std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr) :
+Road::Road(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
 	TerritoryConductorB(x, y, 1, 1, 1000, playerPtr, originsPtr, conductorsPtr),
 	Building(x, y, 1, 1, 1000, playerPtr) {
 	

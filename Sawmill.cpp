@@ -22,7 +22,7 @@
 
 
 Sawmill::Sawmill() = default;
-Sawmill::Sawmill(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<ResourcePoint*>> resourcePointsPtr) : 
+Sawmill::Sawmill(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
 	ResourceB(x, y, 3, 3, 20000, playerPtr, resourcePointsPtr),
 	Building(x, y, 3, 3, 20000, playerPtr) {}
 Building* Sawmill::cloneBuilding() const {

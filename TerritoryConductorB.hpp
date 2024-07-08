@@ -19,6 +19,7 @@
 
 #include "TerritoryOriginB.hpp"
 #include "ConductionGraph.hpp"
+#include "GOCollection.hpp"
 
 
 #pragma once
@@ -27,7 +28,7 @@
 class TerritoryConductorB : public TerritoryB {
 public:
 	TerritoryConductorB();
-	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player, std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr, std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr);
+	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr);
 	
 	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, std::shared_ptr<Player> player) const override;
 	Events getHighlightEvent() const override;
@@ -35,6 +36,6 @@ protected:
 	bool conducted() const;
 	Events getNotConductedResponce() const;
 private:
-	std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr;
-	std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr;
+	std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr;
+	std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr;
 };

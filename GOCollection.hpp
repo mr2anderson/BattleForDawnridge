@@ -17,28 +17,52 @@
  */
 
 
-#include "ResourceB.hpp"
+#include <vector>
 
 
 #pragma once
 
 
-class Sawmill : public ResourceB {
-public:
-	Sawmill();
-	Sawmill(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
-	Building* cloneBuilding() const override;
+class GO;
 
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+
+template <typename T> class GOCollection {
+public:
+	GOCollection() = default;
+
+	void push(T* t) {
+		this->data.push_back(t);
+	}
+	uint32_t size() const {
+		return this->data.size();
+	}
+	T* at(uint32_t i) {
+		return this->data.at(i);
+	}
 private:
-	uint32_t getRegenerationSpeed() const override;
-	std::string getResourceType() const override;
-	uint32_t getCollectionSpeed(uint32_t level) const override;
-	uint32_t getRadius(uint32_t level) const override;
-	Resources getUpgradeCost() const override;
-	uint32_t getUpgradeTime() const override;
-	std::wstring getUpperCaseReadableName() const override;
+	std::vector<T*> data;
+};
+
+
+
+template <> class GOCollection<GO> {
+public:
+	GOCollection() = default;
+	~GOCollection() {
+		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
+			delete this->data[i];
+		}
+	}
+
+	void push(GO* go) {
+		this->data.push_back(go);
+	}
+	uint32_t size() const {
+		return this->data.size();
+	}
+	GO* at(uint32_t i) {
+		return this->data.at(i);
+	}
+private:
+	std::vector<GO*> data;
 };

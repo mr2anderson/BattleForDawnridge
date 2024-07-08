@@ -21,6 +21,7 @@
 #include "TerritoryB.hpp"
 #include "BuildEvent.hpp"
 #include "SubResourcesEvent.hpp"
+#include "GOCollection.hpp"
 
 
 #pragma once
@@ -28,7 +29,7 @@
 
 class BuildingMode : public CameraDependentPopUpElement {
 public:
-	BuildingMode(Building *b, std::shared_ptr<sf::View> view, std::shared_ptr<std::vector<GO*>> go, std::shared_ptr<std::vector<TerritoryB*>> tb, std::shared_ptr<Player>player);
+	BuildingMode(Building *b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, std::shared_ptr<Player>player);
 	~BuildingMode();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -40,8 +41,8 @@ private:
 	Building* b;
 	std::shared_ptr<sf::View> view;
 	uint32_t windowW, windowH;
-	std::shared_ptr<std::vector<GO*>> go;
-	std::shared_ptr<std::vector<TerritoryB*>> tb;
+	std::shared_ptr<GOCollection<GO>> go;
+	std::shared_ptr<GOCollection<TerritoryB>> tb;
 	std::shared_ptr<Player> player;
 	bool returnedPtr;
 

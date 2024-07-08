@@ -997,6 +997,9 @@
     <ClInclude Include="ReturnToMenuEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
+    <ClInclude Include="GOCollection.hpp">
+      <Filter>Header Files\screens\service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

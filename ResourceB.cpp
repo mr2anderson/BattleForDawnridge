@@ -21,7 +21,7 @@
 
 
 ResourceB::ResourceB() = default;
-ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<ResourcePoint*>> resourcePointsPtr) : 
+ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
 	UpgradeableB(x, y, sx, sy, maxHp, playerPtr),
 	HpSensitiveB(x, y, sx, sy, maxHp, playerPtr),
 	AreaB(x, y, sx, sy, maxHp, playerPtr),

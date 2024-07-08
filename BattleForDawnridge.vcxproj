@@ -620,6 +620,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="GameActionWindow.hpp" />
     <ClInclude Include="GameActionWindowComponent.hpp" />
     <ClInclude Include="GO.hpp" />
+    <ClInclude Include="GOCollection.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
     <ClInclude Include="HPBar.hpp" />
     <ClInclude Include="HPGO.hpp" />

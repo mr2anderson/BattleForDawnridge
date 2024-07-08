@@ -29,6 +29,7 @@
 #include "TerritoryConductorB.hpp"
 #include "TerritoryOriginB.hpp"
 #include "CouldntOpenMap.hpp"
+#include "GOCollection.hpp"
 
 
 #pragma once
@@ -45,20 +46,20 @@ public:
     uint32_t getH() const;
     uint32_t getPlayersNumber() const;
     std::shared_ptr<Player> getPlayer(uint32_t i);
-    std::shared_ptr<std::vector<GO*>> getGO();
-    std::shared_ptr<std::vector<ResourcePoint*>> getResourcePoints();
-    std::shared_ptr<std::vector<Unit*>> getUnits();
-    std::shared_ptr<std::vector<TerritoryB*>> getTbs();
-    std::shared_ptr<std::vector<TerritoryConductorB*>> getTcbs();
-    std::shared_ptr<std::vector<TerritoryOriginB*>> getTobs();
+    std::shared_ptr<GOCollection<GO>> getGO();
+    std::shared_ptr<GOCollection<ResourcePoint>> getResourcePoints();
+    std::shared_ptr<GOCollection<Unit>> getUnits();
+    std::shared_ptr<GOCollection<TerritoryB>> getTbs();
+    std::shared_ptr<GOCollection<TerritoryConductorB>> getTcbs();
+    std::shared_ptr<GOCollection<TerritoryOriginB>> getTobs();
     void add(GO* object);
 private:
     uint32_t w, h;
     std::vector<std::shared_ptr<Player>> players;
-    std::shared_ptr<std::vector<GO*>> go;
-    std::shared_ptr<std::vector<ResourcePoint*>> resourcePoints;
-    std::shared_ptr<std::vector<Unit*>> units;
-    std::shared_ptr<std::vector<TerritoryB*>> tbs;
-    std::shared_ptr<std::vector<TerritoryConductorB*>> tcbs;
-    std::shared_ptr<std::vector<TerritoryOriginB*>> tobs;
+    std::shared_ptr<GOCollection<GO>> go;
+    std::shared_ptr<GOCollection<ResourcePoint>> resourcePoints;
+    std::shared_ptr<GOCollection<Unit>> units;
+    std::shared_ptr<GOCollection<TerritoryB>> tbs;
+    std::shared_ptr<GOCollection<TerritoryConductorB>> tcbs;
+    std::shared_ptr<GOCollection<TerritoryOriginB>> tobs;
 };

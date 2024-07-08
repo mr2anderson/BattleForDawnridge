@@ -21,12 +21,12 @@
 
 
 Map::Map(const std::string &path) {
-    this->go = std::make_shared<std::vector<GO*>>();
-    this->resourcePoints = std::make_shared<std::vector<ResourcePoint*>>();
-    this->units = std::make_shared<std::vector<Unit*>>();
-    this->tbs = std::make_shared<std::vector<TerritoryB*>>();
-    this->tcbs = std::make_shared<std::vector<TerritoryConductorB*>>();
-    this->tobs = std::make_shared<std::vector<TerritoryOriginB*>>();
+    this->go = std::make_shared<GOCollection<GO>>();
+    this->resourcePoints = std::make_shared<GOCollection<ResourcePoint>>();
+    this->units = std::make_shared<GOCollection<Unit>>();
+    this->tbs = std::make_shared<GOCollection<TerritoryB>>();
+    this->tcbs = std::make_shared<GOCollection<TerritoryConductorB>>();
+    this->tobs = std::make_shared<GOCollection<TerritoryOriginB>>();
 
     std::ifstream file(ROOT + "/" + path);
     if (!file.is_open()) {
@@ -103,48 +103,48 @@ uint32_t Map::getPlayersNumber() const {
 std::shared_ptr<Player> Map::getPlayer(uint32_t i) {
     return this->players.at(i);
 }
-std::shared_ptr<std::vector<GO*>> Map::getGO() {
+std::shared_ptr<GOCollection<GO>> Map::getGO() {
     return this->go;
 }
-std::shared_ptr<std::vector<Unit*>> Map::getUnits() {
+std::shared_ptr<GOCollection<Unit>> Map::getUnits() {
     return this->units;
 }
-std::shared_ptr<std::vector<ResourcePoint*>> Map::getResourcePoints() {
+std::shared_ptr<GOCollection<ResourcePoint>> Map::getResourcePoints() {
     return this->resourcePoints;
 }
-std::shared_ptr<std::vector<TerritoryB*>> Map::getTbs() {
+std::shared_ptr<GOCollection<TerritoryB>> Map::getTbs() {
     return this->tbs;
 }
-std::shared_ptr<std::vector<TerritoryConductorB*>> Map::getTcbs() {
+std::shared_ptr<GOCollection<TerritoryConductorB>> Map::getTcbs() {
     return this->tcbs;
 }
-std::shared_ptr<std::vector<TerritoryOriginB*>> Map::getTobs() {
+std::shared_ptr<GOCollection<TerritoryOriginB>> Map::getTobs() {
     return this->tobs;
 }
 void Map::add(GO *object) {
-    this->go->push_back(object);
+    this->go->push(object);
 
     ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object);
     if (rp) {
-        this->resourcePoints->push_back(rp);
+        this->resourcePoints->push(rp);
     }
     else {
         Unit* u = dynamic_cast<Unit*>(object);
         if (u) {
-            this->units->push_back(u);
+            this->units->push(u);
 
             TerritoryB* tb = dynamic_cast<TerritoryB*>(object);
             if (tb) {
-                this->tbs->push_back(tb);
+                this->tbs->push(tb);
 
                 TerritoryOriginB* tob = dynamic_cast<TerritoryOriginB*>(object);
                 if (tob) {
-                    this->tobs->push_back(tob);
+                    this->tobs->push(tob);
                 }
                 else {
                     TerritoryConductorB* tcb = dynamic_cast<TerritoryConductorB*>(object);
                     if (tcb) {
-                        this->tcbs->push_back(tcb);
+                        this->tcbs->push(tcb);
                     }
                 }
             }
