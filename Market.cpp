@@ -21,13 +21,13 @@
 
 
 Market::Market() = default;
-Market::Market(uint32_t x, uint32_t y, Player *playerPtr) : 
+Market::Market(uint32_t x, uint32_t y, std::shared_ptr<Player>playerPtr) : 
 	UpgradeableB(x, y, 3, 3, 30000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 30000, playerPtr),
 	Building(x, y, 3, 3, 30000, playerPtr) {
 
 }
-Building* Market::clone() const {
+Building* Market::cloneBuilding() const {
 	return new Market(*this);
 }
 void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -54,7 +54,7 @@ Events Market::doTrade(const Trade& trade) {
 void Market::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 }
-Events Market::newMove(Player* currentPlayer) {
+Events Market::newMove(std::shared_ptr<Player> currentPlayer) {
 	if (!this->belongTo(currentPlayer) or !this->exist()) {
 		return Events();
 	}
@@ -210,7 +210,7 @@ Events Market::handleBusyWithTrade() const {
 	response.add(std::make_shared<CreateEEvent>(window));
 	return response;
 }
-Events Market::getGameObjectResponse(Player* player) {
+Events Market::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (!this->exist()) {
 		return Events();
 	}

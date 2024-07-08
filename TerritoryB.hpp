@@ -27,8 +27,8 @@
 class TerritoryB : virtual public AreaB, virtual public HpSensitiveB {
 public:
 	TerritoryB();
-	TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* player);
+	TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player);
 
-	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, Player* player) const;
+	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, std::shared_ptr<Player> player) const;
 	Events getHighlightEvent() const override;
 };

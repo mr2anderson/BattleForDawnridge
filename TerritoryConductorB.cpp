@@ -22,13 +22,13 @@
 
 
 TerritoryConductorB::TerritoryConductorB() = default;
-TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* player, std::vector<TerritoryOriginB*>* originsPtr, std::vector<TerritoryConductorB*>* conductorsPtr) :
+TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player, std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr, std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr) :
 	TerritoryB(x, y, sx, sy, maxHp, player),
 	Building(x, y, sx, sy, maxHp, player) {
 	this->originsPtr = originsPtr;
 	this->conductorsPtr = conductorsPtr;
 }
-bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, Player *player) const {
+bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, std::shared_ptr<Player>player) const {
 	if (!this->conducted()) {
 		return false;
 	}

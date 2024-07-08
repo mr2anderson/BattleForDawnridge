@@ -115,7 +115,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
     this->returnToMenu = false;
-	this->view = new sf::View(window.getDefaultView());
+	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"), buildEvent);
@@ -307,7 +307,7 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(Building* b) {
 	return description;
 		
 }
-Player* MainScreen::getCurrentPlayer() {
+std::shared_ptr<Player> MainScreen::getCurrentPlayer() {
 	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
 }
 bool MainScreen::handleButtonsClick() {
@@ -338,7 +338,6 @@ void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
     this->removeFinishedElements();
     this->highlightTable.clear();
-    delete this->view;
 	Playlist::get()->restartMusic();
 }
 void MainScreen::drawEverything(sf::RenderWindow& window) {

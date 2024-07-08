@@ -20,8 +20,8 @@
 #include "BuildingMode.hpp"
 
 
-BuildingMode::BuildingMode(Building* b, sf::View *view, std::vector<GO*>* go, std::vector<TerritoryB*>* tb, Player *player) {
-	this->b = b->clone();
+BuildingMode::BuildingMode(Building* b, std::shared_ptr<sf::View> view, std::shared_ptr<std::vector<GO*>> go, std::shared_ptr<std::vector<TerritoryB*>> tb, std::shared_ptr<Player>player) {
+	this->b = b->cloneBuilding();
 	this->view = view;
 	this->go = go;
 	this->tb = tb;

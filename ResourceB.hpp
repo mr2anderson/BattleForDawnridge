@@ -30,9 +30,9 @@
 class ResourceB : public UpgradeableB, public HpSensitiveB, public AreaB {
 public:
 	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr);
+	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<ResourcePoint*>> resourcePointsPtr);
 
-	Events newMove(Player* currentPlayer) override;
+	Events newMove(std::shared_ptr<Player> currentPlayer) override;
 	bool works() const override;
 protected:
 	uint32_t getCollectionSpeed() const;
@@ -43,10 +43,10 @@ protected:
 	virtual uint32_t getRadius(uint32_t level) const = 0;
 
 private:
-	std::vector<ResourcePoint*>* resourcePointsPtr;
+	std::shared_ptr<std::vector<ResourcePoint*>> resourcePointsPtr;
 	bool resourcesLeft;
 
 	Events collectResources();
 	Events getSelectionW();
-	Events getGameObjectResponse(Player* player) override;
+	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

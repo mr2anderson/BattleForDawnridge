@@ -28,7 +28,7 @@
 
 class BuildingMode : public CameraDependentPopUpElement {
 public:
-	BuildingMode(Building *b, sf::View *view, std::vector<GO*> *go, std::vector<TerritoryB*> *tb, Player *player);
+	BuildingMode(Building *b, std::shared_ptr<sf::View> view, std::shared_ptr<std::vector<GO*>> go, std::shared_ptr<std::vector<TerritoryB*>> tb, std::shared_ptr<Player>player);
 	~BuildingMode();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -38,11 +38,11 @@ public:
 	Events click() override;
 private:
 	Building* b;
-	sf::View* view;
+	std::shared_ptr<sf::View> view;
 	uint32_t windowW, windowH;
-	std::vector<GO*> *go;
-	std::vector<TerritoryB*> *tb;
-	Player* player;
+	std::shared_ptr<std::vector<GO*>> go;
+	std::shared_ptr<std::vector<TerritoryB*>> tb;
+	std::shared_ptr<Player> player;
 	bool returnedPtr;
 
 	bool empty() const;

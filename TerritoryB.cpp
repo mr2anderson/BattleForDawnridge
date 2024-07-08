@@ -21,13 +21,13 @@
 
 
 TerritoryB::TerritoryB() = default;
-TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player *player) : 
+TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player>player) : 
 	AreaB(x, y, sx, sy, maxHp, player),
 	HpSensitiveB(x, y, sx, sy, maxHp, player),
 	Building(x, y, sx, sy, maxHp, player) {
 
 }
-bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, Player* player) const {
+bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, std::shared_ptr<Player> player) const {
 	if (!this->works() or !this->belongTo(player)) {
 		return false;
 	}

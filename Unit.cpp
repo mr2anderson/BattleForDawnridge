@@ -22,15 +22,15 @@
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, Player* playerPtr) : 
+Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, std::shared_ptr<Player> playerPtr) : 
 	HPGO(x, y, sx, sy, currentHp, maxHp) {
 	this->playerPtr = playerPtr;
 
 }
-bool Unit::belongTo(Player* player) const {
+bool Unit::belongTo(std::shared_ptr<Player> player) const {
 	return (*this->playerPtr == *player);
 }
-void Unit::changePlayer(Player* newPlayerPtr) {
+void Unit::changePlayer(std::shared_ptr<Player> newPlayerPtr) {
 	this->playerPtr = newPlayerPtr;
 }
 Events Unit::getUnitOfEnemyResponse() {
@@ -38,6 +38,6 @@ Events Unit::getUnitOfEnemyResponse() {
 	gEvent.add(std::make_shared<TryToAttackEvent>(this));
 	return gEvent;
 }
-Player* Unit::getPlayer() const {
+std::shared_ptr<Player> Unit::getPlayer() const {
 	return this->playerPtr;
 }

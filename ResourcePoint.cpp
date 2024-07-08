@@ -22,10 +22,10 @@
 
 ResourcePoint::ResourcePoint() = default;
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : HPGO(x, y, sx, sy, size, size) {}
-Events ResourcePoint::newMove(Player* player) {
+Events ResourcePoint::newMove(std::shared_ptr<Player> player) {
 	return Events();
 }
-Events ResourcePoint::getGameObjectResponse(Player* player) {
+Events ResourcePoint::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (!this->exist()) {
 		return Events();
 	}

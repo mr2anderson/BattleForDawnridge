@@ -27,10 +27,10 @@
 class Road : public TerritoryConductorB {
 public:
 	Road();
-	Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
-	Building* clone() const override;
+	Road(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr, std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr);
+	Building* cloneBuilding() const override;
 
-	Events newMove(Player* player) override;
+	Events newMove(std::shared_ptr<Player> player) override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -40,5 +40,5 @@ private:
 	std::wstring getUpperCaseReadableName() const override;
 	uint32_t getRadius() const override;
 	Events getSelectionW();
-	Events getGameObjectResponse(Player* player) override;
+	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

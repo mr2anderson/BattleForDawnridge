@@ -28,15 +28,15 @@
 class Unit : public HPGO {
 public:
 	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, Player *playerPtr);
+	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, std::shared_ptr<Player> playerPtr);
 
-	bool belongTo(Player* player) const;
-	void changePlayer(Player* newPlayerPtr);
+	bool belongTo(std::shared_ptr<Player> player) const;
+	void changePlayer(std::shared_ptr<Player> newPlayerPtr);
 
 	virtual Resources getCost() const = 0;
 protected:
 	Events getUnitOfEnemyResponse();
-	Player* getPlayer() const;
+	std::shared_ptr<Player> getPlayer() const;
 private:
-	Player* playerPtr;
+	std::shared_ptr<Player> playerPtr;
 };

@@ -51,7 +51,7 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
-Events GO::click(Player*currentPlayer, uint32_t mouseX, uint32_t mouseY) {
+Events GO::click(std::shared_ptr<Player>currentPlayer, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 32 * this->getX() and
 		mouseY >= 32 * this->getY() and
 		mouseX < 32 * (this->getX() + this->getSX()) and

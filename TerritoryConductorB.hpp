@@ -27,14 +27,14 @@
 class TerritoryConductorB : public TerritoryB {
 public:
 	TerritoryConductorB();
-	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* player, std::vector<TerritoryOriginB*> *originsPtr, std::vector<TerritoryConductorB*> *conductorsPtr);
+	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player, std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr, std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr);
 	
-	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, Player* player) const override;
+	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, std::shared_ptr<Player> player) const override;
 	Events getHighlightEvent() const override;
 protected:
 	bool conducted() const;
 	Events getNotConductedResponce() const;
 private:
-	std::vector<TerritoryOriginB*>* originsPtr;
-	std::vector<TerritoryConductorB*>* conductorsPtr;
+	std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr;
+	std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr;
 };

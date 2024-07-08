@@ -33,14 +33,14 @@
 class Market : public UpgradeableB, public HpSensitiveB {
 public:
 	Market();
-	Market(uint32_t x, uint32_t y, Player *playerPtr);
-	Building* clone() const override;
+	Market(uint32_t x, uint32_t y, std::shared_ptr<Player>playerPtr);
+	Building* cloneBuilding() const override;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	Events doTrade(const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
-	Events newMove(Player* currentPlayer);
+	Events newMove(std::shared_ptr<Player> currentPlayer);
 	bool works() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
@@ -61,5 +61,5 @@ private:
 	Events getSelectionW();
 	void addTrade(std::vector<GameActionWindowComponent>& components, std::shared_ptr<TryToTradeEvent> gameEventTrade);
 	Events handleBusyWithTrade() const;
-	Events getGameObjectResponse(Player* player) override;
+	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

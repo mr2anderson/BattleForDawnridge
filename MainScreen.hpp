@@ -68,7 +68,7 @@ private:
 
     bool returnToMenu;
 	uint32_t windowW, windowH;
-	sf::View *view;
+	std::shared_ptr<sf::View> view;
     std::vector<Button> buttons;
 
 	void init(std::shared_ptr<Map> mapPtr, sf::RenderWindow &window);
@@ -102,7 +102,7 @@ private:
 	void removeFinishedElements();
 	void changeMove();
 	static std::wstring GET_BUILD_DESCRIPTION(Building* b);
-	Player* getCurrentPlayer();
+	std::shared_ptr<Player> getCurrentPlayer();
     bool handleButtonsClick();
 	void handleGameObjectClick();
 	void addPopUpWindow(std::shared_ptr<PopUpElement> w);

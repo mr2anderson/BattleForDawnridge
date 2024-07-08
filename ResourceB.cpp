@@ -21,7 +21,7 @@
 
 
 ResourceB::ResourceB() = default;
-ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* playerPtr, std::vector<ResourcePoint*>* resourcePointsPtr) : 
+ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<ResourcePoint*>> resourcePointsPtr) : 
 	UpgradeableB(x, y, sx, sy, maxHp, playerPtr),
 	HpSensitiveB(x, y, sx, sy, maxHp, playerPtr),
 	AreaB(x, y, sx, sy, maxHp, playerPtr),
@@ -29,7 +29,7 @@ ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t 
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }
-Events ResourceB::newMove(Player* currentPlayer) {
+Events ResourceB::newMove(std::shared_ptr<Player> currentPlayer) {
 	Events response;
 	if (this->belongTo(currentPlayer) and this->exist()) {
 		response = this->handleCurrentUpgrade();
@@ -107,7 +107,7 @@ Events ResourceB::getSelectionW() {
 
 	return response;
 }
-Events ResourceB::getGameObjectResponse(Player* player) {
+Events ResourceB::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (!this->exist()) {
 		return Events();
 	}

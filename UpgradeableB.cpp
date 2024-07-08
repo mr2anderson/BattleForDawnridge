@@ -24,7 +24,7 @@ UpgradeableB::UpgradeableB() {
 	this->currentLevel = 1;
 	this->upgradeMovesLeft = 0;
 }
-UpgradeableB::UpgradeableB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* playerPtr) : 
+UpgradeableB::UpgradeableB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr) : 
 	Building(x, y, sx, sy, maxHp, playerPtr) {
 	this->currentLevel = 1;
 	this->upgradeMovesLeft = 0;

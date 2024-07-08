@@ -27,7 +27,7 @@
 class AreaB : virtual public Building {
 public:
 	AreaB();
-	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, Player* player);
+	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player);
 
 	bool inRadius(GO* go) const;
 	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;

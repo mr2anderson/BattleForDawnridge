@@ -21,15 +21,15 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, Player* playerPtr, std::vector<TerritoryOriginB*>* originsPtr, std::vector<TerritoryConductorB*>* conductorsPtr) :
+Road::Road(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<std::vector<TerritoryOriginB*>> originsPtr, std::shared_ptr<std::vector<TerritoryConductorB*>> conductorsPtr) :
 	TerritoryConductorB(x, y, 1, 1, 1000, playerPtr, originsPtr, conductorsPtr),
 	Building(x, y, 1, 1, 1000, playerPtr) {
 	
 }
-Building* Road::clone() const {
+Building* Road::cloneBuilding() const {
 	return new Road(*this);
 }
-Events Road::newMove(Player* player) {
+Events Road::newMove(std::shared_ptr<Player> player) {
 	if (this->belongTo(player) and this->exist()) {
 		return this->regenerate();
 	}
@@ -72,7 +72,7 @@ Events Road::getSelectionW() {
 
 	return response;
 }
-Events Road::getGameObjectResponse(Player* player) {
+Events Road::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (!this->exist()) {
 		return Events();
 	}

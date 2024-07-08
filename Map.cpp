@@ -21,13 +21,12 @@
 
 
 Map::Map(const std::string &path) {
-    this->players = new std::vector<Player*>();
-    this->go = new std::vector<GO*>();
-    this->resourcePoints = new std::vector<ResourcePoint*>();
-    this->units = new std::vector<Unit*>();
-    this->tbs = new std::vector<TerritoryB*>();
-    this->tcbs = new std::vector<TerritoryConductorB*>();
-    this->tobs = new std::vector<TerritoryOriginB*>();
+    this->go = std::make_shared<std::vector<GO*>>();
+    this->resourcePoints = std::make_shared<std::vector<ResourcePoint*>>();
+    this->units = std::make_shared<std::vector<Unit*>>();
+    this->tbs = std::make_shared<std::vector<TerritoryB*>>();
+    this->tcbs = std::make_shared<std::vector<TerritoryConductorB*>>();
+    this->tobs = std::make_shared<std::vector<TerritoryOriginB*>>();
 
     std::ifstream file(ROOT + "/" + path);
     if (!file.is_open()) {
@@ -57,9 +56,9 @@ Map::Map(const std::string &path) {
                 this->add(new Forest(x, y));
             }
             else if (word == "1") {
-                this->players->resize(this->players->size() + 1);
-                this->players->back() = new Player(this->players->size());
-                Castle* c = new Castle(x, y, this->players->at(currentPlayerId));
+                this->players.resize(this->players.size() + 1);
+                this->players.back() = std::make_shared<Player>(this->players.size());
+                Castle* c = new Castle(x, y, this->players.at(currentPlayerId));
                 c->setMaxHp();
                 this->add(c);
                 currentPlayerId = currentPlayerId + 1;
@@ -83,21 +82,9 @@ Map::Map(const std::string &path) {
     this->h = y + 1;
 }
 Map::~Map() {
-    for (uint32_t i = 0; i < this->players->size(); i = i + 1) {
-        delete this->players->at(i);
-    }
-    delete this->players;
-
     for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
         delete this->go->at(i);
     }
-    delete this->go;
-
-    delete this->resourcePoints;
-    delete this->units;
-    delete this->tbs;
-    delete this->tcbs;
-    delete this->tobs;
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
@@ -111,27 +98,27 @@ uint32_t Map::getH() const {
     return this->h;
 }
 uint32_t Map::getPlayersNumber() const {
-    return this->players->size();
+    return this->players.size();
 }
-Player* Map::getPlayer(uint32_t i) {
-    return this->players->at(i);
+std::shared_ptr<Player> Map::getPlayer(uint32_t i) {
+    return this->players.at(i);
 }
-std::vector<GO*>* Map::getGO() {
+std::shared_ptr<std::vector<GO*>> Map::getGO() {
     return this->go;
 }
-std::vector<Unit*>* Map::getUnits() {
+std::shared_ptr<std::vector<Unit*>> Map::getUnits() {
     return this->units;
 }
-std::vector<ResourcePoint*>* Map::getResourcePoints() {
+std::shared_ptr<std::vector<ResourcePoint*>> Map::getResourcePoints() {
     return this->resourcePoints;
 }
-std::vector<TerritoryB*>* Map::getTbs() {
+std::shared_ptr<std::vector<TerritoryB*>> Map::getTbs() {
     return this->tbs;
 }
-std::vector<TerritoryConductorB*>* Map::getTcbs() {
+std::shared_ptr<std::vector<TerritoryConductorB*>> Map::getTcbs() {
     return this->tcbs;
 }
-std::vector<TerritoryOriginB*>* Map::getTobs() {
+std::shared_ptr<std::vector<TerritoryOriginB*>> Map::getTobs() {
     return this->tobs;
 }
 void Map::add(GO *object) {

@@ -27,10 +27,10 @@
 class Wall : public UpgradeableB {
 public:
 	Wall();
-	Wall(uint32_t x, uint32_t y, Player* playerPtr);
-	Building* clone() const override;
+	Wall(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr);
+	Building* cloneBuilding() const override;
 
-	Events newMove(Player* player) override;
+	Events newMove(std::shared_ptr<Player> player) override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -44,5 +44,5 @@ private:
 	Resources getUpgradeCost() const override;
 	uint32_t getUpgradeTime() const override;
 	Events getSelectionW();
-	Events getGameObjectResponse(Player* player) override;
+	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
 };

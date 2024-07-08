@@ -25,7 +25,7 @@ Mountains::Mountains(uint32_t x, uint32_t y) :
 	GO(x, y, 2, 2) {
 
 }
-Events Mountains::newMove(Player* currentPlayer) {
+Events Mountains::newMove(std::shared_ptr<Player> currentPlayer) {
 	return Events();
 }
 std::string Mountains::getTextureName() const {
@@ -40,7 +40,7 @@ std::wstring Mountains::getDescription() const {
 bool Mountains::exist() const {
 	return true;
 }
-Events Mountains::getGameObjectResponse(Player* currentPlayer) {
+Events Mountains::getGameObjectResponse(std::shared_ptr<Player> currentPlayer) {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;

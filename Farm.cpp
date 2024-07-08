@@ -22,11 +22,11 @@
 
 
 Farm::Farm() = default;
-Farm::Farm(uint32_t x, uint32_t y, Player* playerPtr) : 
+Farm::Farm(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) : 
 	UpgradeableB(x, y, 3, 3, 10000, playerPtr),
 	HpSensitiveB(x, y, 3, 3, 10000, playerPtr),
 	Building(x, y, 3, 3, 10000, playerPtr){}
-Events Farm::newMove(Player* player) {	
+Events Farm::newMove(std::shared_ptr<Player> player) {	
 	if (this->belongTo(player) and this->exist()) {
 		Events response = this->handleCurrentUpgrade();
 		if (this->upgrading()) {
@@ -40,7 +40,7 @@ Events Farm::newMove(Player* player) {
 	}
 	return Events();
 }
-Building* Farm::clone() const {
+Building* Farm::cloneBuilding() const {
 	return new Farm(*this);
 }
 bool Farm::works() const {
@@ -100,7 +100,7 @@ Events Farm::collectFood() const {
 	responce.add(std::make_shared<CreateEEvent>(element));
 	return responce;
 }
-Events Farm::getGameObjectResponse(Player* player) {
+Events Farm::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (!this->exist()) {
 		return Events();
 	}

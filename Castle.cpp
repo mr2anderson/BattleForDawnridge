@@ -28,15 +28,15 @@ const uint32_t Castle::LEVEL_HP[Castle::TOTAL_LEVELS] = {
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, Player* playerPtr) : 
+Castle::Castle(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) : 
 	TerritoryOriginB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	UpgradeableB(x, y, 3, 3, LEVEL_HP[0], playerPtr),
 	Building(x, y, 3, 3, LEVEL_HP[0], playerPtr) {
 }
-Building* Castle::clone() const {
+Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
 }
-Events Castle::newMove(Player* player) {
+Events Castle::newMove(std::shared_ptr<Player> player) {
 	Events response;
 	if (this->belongTo(player) and this->exist()) {
 		this->changeMaxHp(LEVEL_HP[this->getCurrentLevel() - 1]);
@@ -114,7 +114,7 @@ Events Castle::getSelectionW() {
 
 	return response;
 }
-Events Castle::getGameObjectResponse(Player* player) {
+Events Castle::getGameObjectResponse(std::shared_ptr<Player> player) {
 	if (!this->exist()) {
 		return Events();
 	}
