@@ -41,7 +41,7 @@ Resources Wall1::getCost() const {
 	return cost;
 }
 uint32_t Wall1::getRegenerationSpeed() const {
-	return 25000;
+	return 10000;
 }
 std::string Wall1::getTextureName() const {
 	return "wall1";

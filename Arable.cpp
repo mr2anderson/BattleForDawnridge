@@ -36,7 +36,7 @@ Events Arable::newMove(std::shared_ptr<Player> player) {
 	return Events();
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 7500)});
+	return Resources({ Resource("wood", 4000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -51,7 +51,7 @@ bool Arable::alreadyCollected() const {
 	return this->collected;
 }
 uint32_t Arable::collect() const {
-	return 2000;
+	return 1000;
 }
 uint32_t Arable::getRegenerationSpeed() const {
 	return 1000;
