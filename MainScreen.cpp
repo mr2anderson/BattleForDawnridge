@@ -286,6 +286,7 @@ void MainScreen::removeFinishedElements() {
 		if (!this->elements.front()->finished()) {
 			break;
 		}
+		this->elements.front()->restart();
 		this->elements.pop();
 		remove = true;
 	}
@@ -349,7 +350,6 @@ void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
 	}
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
-    this->removeFinishedElements();
     this->highlightTable.clear();
 	Playlist::get()->restartMusic();
 }

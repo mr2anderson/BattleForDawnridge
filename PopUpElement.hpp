@@ -31,6 +31,7 @@ public:
 
 	void addOnStartGEvent(const Events& event);
 	bool finished() const;
+	void restart();
 	virtual void update();
 
 	virtual Events run(uint32_t windowW, uint32_t windowH);

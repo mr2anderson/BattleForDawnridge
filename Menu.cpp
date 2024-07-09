@@ -183,6 +183,7 @@ void Menu::removeFinishedElements() {
         if (!this->elements.front()->finished()) {
             break;
         }
+        this->elements.front()->restart();
         this->elements.pop();
         removed = true;
     }
@@ -193,9 +194,6 @@ void Menu::removeFinishedElements() {
 }
 void Menu::prepareToStartGame() {
     Music::get()->get("menu")->stop();
-    while (!this->elements.empty()) {
-        this->elements.pop();
-    }
     this->buttons.clear();
 }
 bool Menu::handleButtonsClick() {
