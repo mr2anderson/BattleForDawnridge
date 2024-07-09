@@ -87,7 +87,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
                 "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
                 "wall1", "wall2", "road", "mountains",
-                "windmill", "arable"}) {
+                "windmill", "arable", "black", "blue", "green", "grey",
+                "purple", "yellow"}) {
             Textures::get()->add(a, a + ".png");
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {

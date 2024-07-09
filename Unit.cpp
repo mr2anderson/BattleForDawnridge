@@ -27,6 +27,12 @@ Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp,
 	this->playerId = playerId;
 
 }
+void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	this->HPGO::draw(target, states);
+	if (this->exist() and this->getPlayerId() != 0) {
+		this->drawPlayerPointer(target, states);
+	}
+}
 bool Unit::belongTo(uint32_t playerId) const {
 	return (this->playerId == playerId);
 }
@@ -40,4 +46,8 @@ Events Unit::getUnitOfEnemyResponse() {
 	Events gEvent;
 	gEvent.add(std::make_shared<TryToAttackEvent>(this));
 	return gEvent;
+}
+void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const {
+	PlayerPointer pointer(this->getPlayerId(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	target.draw(pointer, states);
 }

@@ -1000,6 +1000,9 @@
     <ClInclude Include="ResourceBar.hpp">
       <Filter>Header Files\screens\service</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerPointer.hpp">
+      <Filter>Header Files\screens\service\go\service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1292,6 +1295,9 @@
     </ClCompile>
     <ClCompile Include="ResourceBar.cpp">
       <Filter>Source Files\screens\service</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPointer.cpp">
+      <Filter>Source Files\screens\service\go\service</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

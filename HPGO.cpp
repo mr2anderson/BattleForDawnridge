@@ -66,26 +66,6 @@ bool HPGO::exist() const {
 	return (this->currentHp != 0);
 }
 void HPGO::drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t size = (32 / 4 * this->getSY() - 32 * this->getSY() / 8) * this->currentHp / this->maxHp;
-
-	uint32_t posX = 32 * this->getX() + 4;
-	uint32_t posY = 32 * this->getY() + 4;
-
-	uint32_t red = 255 - 255 * this->currentHp / this->maxHp;
-	uint32_t green = 255 * this->currentHp / this->maxHp;
-	uint32_t blue = 0;
-
-	sf::RectangleShape rect1;
-	rect1.setPosition(posX, posY);
-	rect1.setFillColor(sf::Color::Black);
-	rect1.setOutlineColor(sf::Color::Black);
-	rect1.setOutlineThickness(1);
-	rect1.setSize(sf::Vector2f(2, 32 / 4 * this->getSY() - 32 * this->getSY() / 8));
-	target.draw(rect1);
-
-	sf::RectangleShape rect2;
-	rect2.setPosition(sf::Vector2f(posX, posY) + sf::Vector2f(0, 32 / 4 * this->getSY() - 32 * this->getSY() / 8 - size));
-	rect2.setFillColor(sf::Color(red, green, blue));
-	rect2.setSize(sf::Vector2f(2, size));
-	target.draw(rect2, states);
+	HPBar bar(this->currentHp, this->maxHp, this->getX(), this->getY(), this->getSX(), this->getSY());
+	target.draw(bar, states);
 }

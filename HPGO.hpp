@@ -18,6 +18,7 @@
 
 
 #include "GO.hpp"
+#include "HPBar.hpp"
 
 
 #pragma once

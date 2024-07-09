@@ -17,32 +17,19 @@
  */
 
 
-
-#include "HPGO.hpp"
-#include "Resources.hpp"
-#include "TryToAttackEvent.hpp"
-#include "PlayerPointer.hpp"
+#include "Textures.hpp"
 
 
 #pragma once
 
 
-class Unit : public HPGO {
+class PlayerPointer : public sf::Drawable {
 public:
-	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId);
+	PlayerPointer(uint32_t side, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	bool belongTo(uint32_t playerId) const;
-	void changePlayer(uint32_t newPlayerId);
-	uint32_t getPlayerId() const;
-
-	virtual Resources getCost() const = 0;
-protected:
-	Events getUnitOfEnemyResponse();
 private:
-	uint32_t playerId;
-
-	void drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const;
+	uint32_t side;
+	uint32_t x, y;
+	uint32_t sx, sy;
 };

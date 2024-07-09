@@ -54,36 +54,3 @@ void HPBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	rect2.setSize(sf::Vector2f(2, size));
 	target.draw(rect2, states);
 }
-
-HPBar operator+(HPBar a, uint32_t b) {
-	a.current = std::min(a.current + b, a.max);
-	return a;
-}
-HPBar operator-(HPBar a, uint32_t b) {
-	if (b >= a.current) {
-		a.current = 0;
-	}
-	else {
-		a.current = a.current - b;
-	}
-	return a;
-}
-
-uint32_t HPBar::getX() const {
-	return this->x;
-}
-uint32_t HPBar::getY() const {
-	return this->y;
-}
-uint32_t HPBar::getSX() const {
-	return this->sx;
-}
-uint32_t HPBar::getSY() const {
-	return this->sy;
-}
-void HPBar::setX(uint32_t newX) {
-	this->x = newX;
-}
-void HPBar::setY(uint32_t newY) {
-	this->y = newY;
-}

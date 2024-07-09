@@ -17,32 +17,30 @@
  */
 
 
-
-#include "HPGO.hpp"
-#include "Resources.hpp"
-#include "TryToAttackEvent.hpp"
 #include "PlayerPointer.hpp"
 
 
-#pragma once
-
-
-class Unit : public HPGO {
-public:
-	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId);
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	bool belongTo(uint32_t playerId) const;
-	void changePlayer(uint32_t newPlayerId);
-	uint32_t getPlayerId() const;
-
-	virtual Resources getCost() const = 0;
-protected:
-	Events getUnitOfEnemyResponse();
-private:
-	uint32_t playerId;
-
-	void drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const;
-};
+PlayerPointer::PlayerPointer(uint32_t side, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+	this->side = side;
+	this->x = x;
+	this->y = y;
+	this->sx = sx;
+	this->sy = sy;
+}
+void PlayerPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	std::string colors[6] = {
+		"yellow",
+		"purple",
+		"green",
+		"blue",
+		"black",
+		"grey"
+	};
+	std::string color = colors[this->side - 1];
+	sf::Sprite pointer;
+	pointer.setTexture(*Textures::get()->get(color));
+	float scale = std::max(0.5f, 32 * (float)this->sy / (float)pointer.getTexture()->getSize().y / 12);
+	pointer.setScale(scale, scale);
+	pointer.setPosition(32 * (this->x + this->sx) - pointer.getLocalBounds().width, 32 * this->y);
+	target.draw(pointer, states);
+}
