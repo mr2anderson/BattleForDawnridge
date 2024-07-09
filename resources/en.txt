@@ -629,3 +629,17 @@ ridge_description
 <DATA>
 The Ridge is a two-player map, separated by a ridge of mountains with a small transition. Wood and stone are in abundance, but iron will have to be captured in the center.
 <\DATA>
+
+<ID>
+language
+<\ID>
+<DATA>
+Language
+<\DATA>
+
+<ID>
+language_was_changed
+<\ID>
+<DATA>
+The language has been changed. Re-enter for the changes to take effect
+<\DATA>

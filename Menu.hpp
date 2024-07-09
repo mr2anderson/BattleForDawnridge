@@ -28,6 +28,7 @@
 #include "StartGameEvent.hpp"
 #include "WindowTwoButtons.hpp"
 #include "HorizontalSelectionWindow.hpp"
+#include "ChooseLanguageEvent.hpp"
 
 
 #pragma once
@@ -68,4 +69,5 @@ private:
     void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
     void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
+	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

@@ -91,20 +91,54 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
 	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_local")), createChooseLevelWindowEvent);
 
+    Events chooseLanguageEnglishEvent;
+    chooseLanguageEnglishEvent.add(std::make_shared<ChooseLanguageEvent>("en.txt"));
+
+    Events chooseLanguageRussianEvent;
+    chooseLanguageRussianEvent.add(std::make_shared<ChooseLanguageEvent>("ru.txt"));
+
+    std::vector<HorizontalSelectionWindowComponent> chooseLanguageWindowComponents;
+    chooseLanguageWindowComponents.emplace_back(
+        "exit_icon",
+        *Texts::get()->get("cancel"),
+        true,
+        true,
+        Events()
+    );
+    chooseLanguageWindowComponents.emplace_back(
+        "english_icon",
+        UTFEncoder::get()->utf8ToUtf16("English"),
+        true,
+        false,
+        chooseLanguageEnglishEvent
+    );
+    chooseLanguageWindowComponents.emplace_back(
+        "russian_icon",
+        UTFEncoder::get()->utf8ToUtf16("Russian"),
+        true,
+        false,
+        chooseLanguageRussianEvent
+    );
+    std::shared_ptr<HorizontalSelectionWindow> chooseLanguageWindow = std::make_shared<HorizontalSelectionWindow>("click", "click", chooseLanguageWindowComponents);
+    Events createChooseLanguageWindowEvent;
+    createChooseLanguageWindowEvent.add(std::make_shared<CreateEEvent>(chooseLanguageWindow));
+    
+    this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60, *Texts::get()->get("language")), createChooseLanguageWindowEvent);
+
     std::shared_ptr<WindowButton> supportWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
     Events supportEvent;
     supportEvent.add(std::make_shared<CreateEEvent>(supportWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60,  *Texts::get()->get("show_support")), supportEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60,  *Texts::get()->get("show_support")), supportEvent);
 
     std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("credits"), *Texts::get()->get("close"));
     Events creditsEvent;
     creditsEvent.add(std::make_shared<CreateEEvent>(creditsWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60, *Texts::get()->get("show_credits")), creditsEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_credits")), creditsEvent);
 
     std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), 500, 400);
     Events licenseEvent;
     licenseEvent.add(std::make_shared<CreateEEvent>(licenseWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
 
     Events exitEvent;
     exitEvent.add(std::make_shared<CloseMenuEvent>());
@@ -113,7 +147,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     Events createConfirmExitWindowEvent;
     createConfirmExitWindowEvent.add(std::make_shared<CreateEEvent>(confirmExitWindow));
 
-	this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("returnToMenu")), createConfirmExitWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(10, 360, 400, 60, *Texts::get()->get("returnToMenu")), createConfirmExitWindowEvent);
 
 	this->title.setFont(*Fonts::get()->get("1"));
 	this->title.setString(*Texts::get()->get("title"));
@@ -184,6 +218,9 @@ void Menu::handleEvent(Events &e) {
         else if (std::shared_ptr<StartGameEvent> startGameEvent = std::dynamic_pointer_cast<StartGameEvent>(e.at(i))) {
             this->handleStartGameEvent(startGameEvent);
         }
+        else if (std::shared_ptr<ChooseLanguageEvent> chooseLanguageEvent = std::dynamic_pointer_cast<ChooseLanguageEvent>(e.at(i))) {
+            this->handleChooseLanguageEvent(chooseLanguageEvent);
+        }
     }
 }
 void Menu::handleSoundEvent(std::shared_ptr<PlaySoundEvent> e) {
@@ -197,4 +234,10 @@ void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
 }
 void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
     this->startGameMap = e->getMapName();
+}
+void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
+    Texts::get()->setDefaultPath(e->getLocaleFile());
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("language_was_changed"), *Texts::get()->get("OK"));
+    std::shared_ptr<CreateEEvent> createEvent = std::make_shared<CreateEEvent>(w);
+    this->handleCreateEEvent(createEvent);
 }

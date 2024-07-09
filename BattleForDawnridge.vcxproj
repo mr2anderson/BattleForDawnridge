@@ -498,6 +498,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Castle.hpp" />
     <ClInclude Include="ChangeHighlightEvent.hpp" />
     <ClInclude Include="ChangeMoveEvent.hpp" />
+    <ClInclude Include="ChooseLanguageEvent.hpp" />
     <ClInclude Include="CloseWindowEvent.hpp" />
     <ClInclude Include="CloseMenuEvent.hpp" />
     <ClInclude Include="CollectEvent.hpp" />
@@ -668,7 +669,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TerritoryB.hpp" />
     <ClInclude Include="TerritoryConductorB.hpp" />
     <ClInclude Include="TerritoryOriginB.hpp" />
-    <ClInclude Include="TextRedefinition.hpp" />
     <ClInclude Include="Texts.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
@@ -704,6 +704,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Castle.cpp" />
     <ClCompile Include="ChangeHighlightEvent.cpp" />
     <ClCompile Include="ChangeMoveEvent.cpp" />
+    <ClCompile Include="ChooseLanguageEvent.cpp" />
     <ClCompile Include="CloseWindowEvent.cpp" />
     <ClCompile Include="CloseMenuEvent.cpp" />
     <ClCompile Include="CollectEvent.cpp" />
@@ -776,7 +777,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TerritoryB.cpp" />
     <ClCompile Include="TerritoryConductorB.cpp" />
     <ClCompile Include="TerritoryOriginB.cpp" />
-    <ClCompile Include="TextRedefinition.cpp" />
     <ClCompile Include="Texts.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />

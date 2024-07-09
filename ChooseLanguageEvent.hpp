@@ -17,17 +17,18 @@
  */
 
 
-#include "LoadingError.hpp"
+#include <string>
+#include "Event.hpp"
 
 
 #pragma once
 
 
-class TextRedefinition : public LoadingError {
+class ChooseLanguageEvent : public Event {
 public:
-    TextRedefinition(const std::string &path, const std::string &id);
+	ChooseLanguageEvent(const std::string& localeFile);
 
-    std::string msg() const override;
+	std::string getLocaleFile() const;
 private:
-    std::string id;
+	std::string localeFile;
 };

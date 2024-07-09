@@ -47,7 +47,7 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 				onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
 			}
 
-			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (40 + this->componentSize), this->componentSize, pictureName, message), onClick);
+			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message), onClick);
 			this->buttons[i] = button;
 			if (button.getY() > (int32_t)(windowH / 2)) {
 				y = button.getY() - 10;

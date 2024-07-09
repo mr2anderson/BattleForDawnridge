@@ -24,8 +24,9 @@
 Texts* Texts::singletone = nullptr;
 
 
-void Texts::load(const std::string &path) {
-    std::ifstream file(std::string(ROOT) + "/" + path);
+void Texts::load() {
+    std::string path = this->getPath();
+    std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenText(path);
     }
@@ -60,9 +61,6 @@ void Texts::load(const std::string &path) {
             if (!currentData.empty()) {
                 currentData.pop_back();
             }
-            if (this->texts.find(currentId) != this->texts.end()) {
-                throw TextRedefinition(path, currentId);
-            }
             this->texts[currentId] = currentData;
             
             continue;
@@ -78,6 +76,21 @@ void Texts::load(const std::string &path) {
 
     file.close();
 }
+void Texts::setDefaultPath(const std::string& path) {
+    std::ofstream file(ROOT + "/language.txt");
+    file << ROOT << "/" << path;
+    file.close();
+}
 std::wstring* Texts::get(const std::string& name) {
     return &this->texts[name];
+}
+std::string Texts::getPath() const {
+    std::ifstream file(ROOT + "/language.txt");
+    if (file.is_open()) {
+        std::string path;
+        std::getline(file, path);
+        file.close();
+        return path;
+    }
+    return ROOT + "/en.txt";
 }

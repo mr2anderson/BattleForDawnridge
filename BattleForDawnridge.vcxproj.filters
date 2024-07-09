@@ -937,9 +937,6 @@
     <ClInclude Include="TerritoryOriginB.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
-    <ClInclude Include="TextRedefinition.hpp">
-      <Filter>Header Files\resources\exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="Texts.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
@@ -1025,6 +1022,9 @@
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
     <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseLanguageEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1272,9 +1272,6 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
-    <ClCompile Include="TextRedefinition.cpp">
-      <Filter>Source Files\resources\exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="UTFEncoder.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
@@ -1345,6 +1342,9 @@
       <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
     <ClCompile Include="MoveGameActionWindowDownEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseLanguageEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
   </ItemGroup>

@@ -26,7 +26,6 @@
 #include "Root.hpp"
 #include "UTFEncoder.hpp"
 #include "CouldntOpenText.hpp"
-#include "TextRedefinition.hpp"
 
 
 #pragma once
@@ -41,7 +40,8 @@ public:
         return Texts::singletone;
     }
 
-    void load(const std::string& path);
+    void load();
+    void setDefaultPath(const std::string& path);
     [[nodiscard]] std::wstring* get(const std::string& name);
 private:
     Texts() = default;
@@ -49,4 +49,6 @@ private:
     static Texts* singletone;
 
     std::unordered_map<std::string, std::wstring> texts;
+
+    std::string getPath() const;
 };

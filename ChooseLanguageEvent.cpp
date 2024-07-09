@@ -17,14 +17,12 @@
  */
 
 
-#include "TextRedefinition.hpp"
+#include "ChooseLanguageEvent.hpp"
 
 
-TextRedefinition::TextRedefinition(const std::string &path, const std::string &id) : LoadingError(path) {
-    this->id = id;
+ChooseLanguageEvent::ChooseLanguageEvent(const std::string& localeFile) {
+	this->localeFile = localeFile;
 }
-std::string TextRedefinition::msg() const {
-    return
-        "COULDN'T LOAD TEXT\n"
-        "Multiple definition of id '" + this->id + "' in " + this->getPath() + ".";
+std::string ChooseLanguageEvent::getLocaleFile() const {
+	return this->localeFile;
 }
