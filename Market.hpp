@@ -32,14 +32,14 @@
 class Market : public HpSensitiveB {
 public:
 	Market();
-	Market(uint32_t x, uint32_t y, std::shared_ptr<Player>playerPtr);
+	Market(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	Events doTrade(const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
-	Events newMove(std::shared_ptr<Player> currentPlayer);
+	Events newMove(uint32_t playerId);
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -52,10 +52,9 @@ private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	bool busy() const;
-	static uint32_t GET_TRADE_START_TIME(uint32_t level);
 	uint32_t getTradeStartTime() const;
 	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events handleCurrentTrade();
 	Events getSelectionW();
-	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
+	Events getGameObjectResponse(uint32_t playerId) override;
 };

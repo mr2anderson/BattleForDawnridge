@@ -58,8 +58,8 @@ Map::Map(const std::string &path) {
             }
             else if (word == "1") {
                 this->players.resize(this->players.size() + 1);
-                this->players.back() = std::make_shared<Player>(this->players.size());
-                Castle* c = new Castle(x, y, this->players.at(currentPlayerId));
+                this->players.back() = Player(this->players.size());
+                Castle* c = new Castle(x, y, this->players.at(currentPlayerId).getId());
                 c->setMaxHp();
                 this->add(c);
                 currentPlayerId = currentPlayerId + 1;
@@ -99,8 +99,8 @@ uint32_t Map::getH() const {
 uint32_t Map::getPlayersNumber() const {
     return this->players.size();
 }
-std::shared_ptr<Player> Map::getPlayer(uint32_t i) {
-    return this->players.at(i);
+Player* Map::getPlayer(uint32_t i) {
+    return &this->players[i];
 }
 std::shared_ptr<GOCollection<GO>> Map::getGO() {
     return this->go;

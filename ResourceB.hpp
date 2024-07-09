@@ -30,9 +30,9 @@
 class ResourceB : public HpSensitiveB, public AreaB {
 public:
 	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
+	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
 
-	Events newMove(std::shared_ptr<Player> currentPlayer) override;
+	Events newMove(uint32_t playerId) override;
 protected:
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;
@@ -42,5 +42,5 @@ private:
 
 	Events collectResources();
 	Events getSelectionW();
-	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
+	Events getGameObjectResponse(uint32_t playerId) override;
 };

@@ -21,15 +21,15 @@
 
 
 ResourceB::ResourceB() = default;
-ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
-	HpSensitiveB(x, y, sx, sy, maxHp, playerPtr),
-	AreaB(x, y, sx, sy, maxHp, playerPtr),
-	Building(x, y, sx, sy, maxHp, playerPtr) {
+ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
+	HpSensitiveB(x, y, sx, sy, maxHp, playerId),
+	AreaB(x, y, sx, sy, maxHp, playerId),
+	Building(x, y, sx, sy, maxHp, playerId) {
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }
-Events ResourceB::newMove(std::shared_ptr<Player> currentPlayer) {
-	if (this->belongTo(currentPlayer) and this->exist()) {
+Events ResourceB::newMove(uint32_t playerId) {
+	if (this->belongTo(playerId) and this->exist()) {
 		Events response = this->regenerate();
 		if (this->works() and this->resourcesLeft) {
 			response = response + this->collectResources();
@@ -86,11 +86,11 @@ Events ResourceB::getSelectionW() {
 
 	return response;
 }
-Events ResourceB::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events ResourceB::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
 	}
-	if (this->belongTo(player)) {
+	if (this->belongTo(playerId)) {
 		return this->getSelectionW() + this->getHighlightEvent();
 	}
 	return this->getUnitOfEnemyResponse();

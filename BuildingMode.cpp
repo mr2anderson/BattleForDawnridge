@@ -20,12 +20,12 @@
 #include "BuildingMode.hpp"
 
 
-BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, std::shared_ptr<Player>player) {
+BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId) {
 	this->b = b->cloneBuilding();
 	this->view = view;
 	this->go = go;
 	this->tb = tb;
-	this->player = player;
+	this->playerId = playerId;
 }
 BuildingMode::~BuildingMode() {
 	if (!this->returnedPtr) {
@@ -99,7 +99,7 @@ bool BuildingMode::controlled() const {
 	uint32_t sy = this->b->getSY();
 
 	for (uint32_t i = 0; i < tb->size(); i = i + 1) {
-		if (tb->at(i)->allowBuilding(x, y, sx, sy, this->player)) {
+		if (tb->at(i)->allowBuilding(x, y, sx, sy, this->playerId)) {
 			return true;
 		}
 	}

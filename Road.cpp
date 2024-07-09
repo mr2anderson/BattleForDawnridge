@@ -21,16 +21,16 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
-	TerritoryConductorB(x, y, 1, 1, 1000, playerPtr, originsPtr, conductorsPtr),
-	Building(x, y, 1, 1, 1000, playerPtr) {
+Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
+	TerritoryConductorB(x, y, 1, 1, 1000, playerId, originsPtr, conductorsPtr),
+	Building(x, y, 1, 1, 1000, playerId) {
 	
 }
 Building* Road::cloneBuilding() const {
 	return new Road(*this);
 }
-Events Road::newMove(std::shared_ptr<Player> player) {
-	if (this->belongTo(player) and this->exist()) {
+Events Road::newMove(uint32_t playerId) {
+	if (this->belongTo(playerId) and this->exist()) {
 		return this->regenerate();
 	}
 	return Events();
@@ -79,11 +79,11 @@ Events Road::getSelectionW() {
 
 	return response;
 }
-Events Road::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events Road::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
 	}
-	if (this->belongTo(player)) {
+	if (this->belongTo(playerId)) {
 		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

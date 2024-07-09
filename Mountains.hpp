@@ -28,12 +28,12 @@ public:
 	Mountains();
 	Mountains(uint32_t x, uint32_t y);
 
-	Events newMove(std::shared_ptr<Player> currentPlayer) override;
+	Events newMove(uint32_t playerId) override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 	bool exist() const override;
 private:
-	Events getGameObjectResponse(std::shared_ptr<Player> currentPlayer) override;
+	Events getGameObjectResponse(uint32_t playerId) override;
 	Events getGameActionWindow();
 };

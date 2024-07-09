@@ -42,14 +42,14 @@ public:
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
 	virtual bool exist() const = 0;
-	Events click(std::shared_ptr<Player> currentPlayer, uint32_t mouseX, uint32_t mouseY);
+	Events click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
 
-	virtual Events newMove(std::shared_ptr<Player> currentPlayer) = 0;
+	virtual Events newMove(uint32_t currentPlayerId) = 0;
 	virtual std::string getTextureName() const = 0;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:
-	virtual Events getGameObjectResponse(std::shared_ptr<Player> currentPlayer) = 0;
+	virtual Events getGameObjectResponse(uint32_t currentPlayerId) = 0;
 
 	virtual GameActionWindowComponent getExitComponent() const;
 	GameActionWindowComponent getDescriptionComponent() const;

@@ -46,7 +46,7 @@ public:
     uint32_t getW() const;
     uint32_t getH() const;
     uint32_t getPlayersNumber() const;
-    std::shared_ptr<Player> getPlayer(uint32_t i);
+    Player* getPlayer(uint32_t i);
     std::shared_ptr<GOCollection<GO>> getGO();
     std::shared_ptr<GOCollection<ResourcePoint>> getResourcePoints();
     std::shared_ptr<GOCollection<Unit>> getUnits();
@@ -57,7 +57,7 @@ public:
     void add(GO* object);
 private:
     uint32_t w, h;
-    std::vector<std::shared_ptr<Player>> players;
+    std::vector<Player> players;
     std::shared_ptr<GOCollection<GO>> go;
     std::shared_ptr<GOCollection<ResourcePoint>> resourcePoints;
     std::shared_ptr<GOCollection<Unit>> units;

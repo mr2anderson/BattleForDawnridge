@@ -101,7 +101,7 @@ private:
 	void removeFinishedElements();
 	void changeMove();
 	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
-	std::shared_ptr<Player> getCurrentPlayer();
+	Player* getCurrentPlayer();
     bool handleButtonsClick();
 	void handleGameObjectClick();
 	void addPopUpWindow(std::shared_ptr<PopUpElement> w);

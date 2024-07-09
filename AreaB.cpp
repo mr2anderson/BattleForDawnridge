@@ -21,8 +21,8 @@
 
 
 AreaB::AreaB() = default;
-AreaB::AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player) :
-	Building(x, y, sx, sy, maxHp, player) {
+AreaB::AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId) :
+	Building(x, y, sx, sy, maxHp, playerId) {
 
 }
 bool AreaB::inRadius(GO *go) const {

@@ -22,17 +22,17 @@
 
 
 TerritoryConductorB::TerritoryConductorB() = default;
-TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> player, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
-	TerritoryB(x, y, sx, sy, maxHp, player),
-	Building(x, y, sx, sy, maxHp, player) {
+TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
+	TerritoryB(x, y, sx, sy, maxHp, playerId),
+	Building(x, y, sx, sy, maxHp, playerId) {
 	this->originsPtr = originsPtr;
 	this->conductorsPtr = conductorsPtr;
 }
-bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, std::shared_ptr<Player>player) const {
+bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) const {
 	if (!this->conducted()) {
 		return false;
 	}
-	return this->TerritoryB::allowBuilding(x, y, sx, sy, player);
+	return this->TerritoryB::allowBuilding(x, y, sx, sy, playerId);
 }
 Events TerritoryConductorB::getHighlightEvent() const {
 	if (!this->conducted()) {
@@ -47,13 +47,13 @@ bool TerritoryConductorB::conducted() const {
 	ConductionGraph g;
 	for (uint32_t i = 0; i < this->originsPtr->size(); i = i + 1) {
 		auto o = this->originsPtr->at(i);
-		if (o->belongTo(this->getPlayer()) and o->works()) {
+		if (o->belongTo(this->getPlayerId()) and o->works()) {
 			g.addOrigin(o->getX(), o->getY(), o->getSX(), o->getSY());
 		}
 	}
 	for (uint32_t i = 0; i < this->conductorsPtr->size(); i = i + 1) {
 		auto c = this->conductorsPtr->at(i);
-		if (c->belongTo(this->getPlayer()) and c->works()) {
+		if (c->belongTo(this->getPlayerId()) and c->works()) {
 			g.addConductor(c->getX(), c->getY(), c->getSX(), c->getSY());
 		}
 	}

@@ -21,8 +21,8 @@
 
 
 Building::Building() = default;
-Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr) : 
-	Unit(x, y, sx, sy, 1, maxHp, playerPtr) {
+Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId) : 
+	Unit(x, y, sx, sy, 1, maxHp, playerId) {
 }
 bool Building::works() const {
 	return this->exist();

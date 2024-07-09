@@ -29,7 +29,7 @@
 
 class BuildingMode : public CameraDependentPopUpElement {
 public:
-	BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, std::shared_ptr<Player>player);
+	BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId);
 	~BuildingMode();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -43,7 +43,7 @@ private:
 	uint32_t windowW, windowH;
 	std::shared_ptr<GOCollection<GO>> go;
 	std::shared_ptr<GOCollection<TerritoryB>> tb;
-	std::shared_ptr<Player> player;
+	uint32_t playerId;
 	bool returnedPtr;
 
 	bool empty() const;

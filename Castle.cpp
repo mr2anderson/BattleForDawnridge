@@ -21,16 +21,16 @@
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) : 
-	TerritoryOriginB(x, y, 3, 3, 100, playerPtr),
-	Building(x, y, 3, 3, 100000, playerPtr) {
+Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) : 
+	TerritoryOriginB(x, y, 3, 3, 100, playerId),
+	Building(x, y, 3, 3, 100000, playerId) {
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
 }
-Events Castle::newMove(std::shared_ptr<Player> player) {
+Events Castle::newMove(uint32_t playerId) {
 	Events response;
-	if (this->belongTo(player) and this->exist()) {
+	if (this->belongTo(playerId) and this->exist()) {
 		return this->regenerate();
 	}
 	return response;
@@ -74,11 +74,11 @@ Events Castle::getSelectionW() {
 
 	return response;
 }
-Events Castle::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events Castle::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
 	}
-	if (this->belongTo(player)) {
+	if (this->belongTo(playerId)) {
 		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

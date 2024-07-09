@@ -21,17 +21,17 @@
 
 
 Windmill::Windmill() = default;
-Windmill::Windmill(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<Arable>> arables) :
-	HpSensitiveB(x, y, 3, 3, 20000, playerPtr),
-	AreaB(x, y, 3, 3, 20000, playerPtr),
-	Building(x, y, 3, 3, 20000, playerPtr) {
+Windmill::Windmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Arable>> arables) :
+	HpSensitiveB(x, y, 3, 3, 20000, playerId),
+	AreaB(x, y, 3, 3, 20000, playerId),
+	Building(x, y, 3, 3, 20000, playerId) {
 	this->arables = arables;
 }
 Building* Windmill::cloneBuilding() const {
 	return new Windmill(*this);
 }
-Events Windmill::newMove(std::shared_ptr<Player> player) {
-	if (this->exist() and this->belongTo(player)) {
+Events Windmill::newMove(uint32_t playerId) {
+	if (this->exist() and this->belongTo(playerId)) {
 		Events response = this->regenerate();
 		if (this->works()) {
 			response = response + this->getCollectEvents();
@@ -78,9 +78,9 @@ Events Windmill::getSelectionW() {
 	createWindowEvent.add(std::make_shared<CreateEEvent>(window));
 	return createWindowEvent;
 }
-Events Windmill::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events Windmill::getGameObjectResponse(uint32_t playerId) {
 	if (this->exist()) {
-		if (this->belongTo(player)) {
+		if (this->belongTo(playerId)) {
 			return this->getSelectionW() + this->getHighlightEvent();
 		}
 		return this->getUnitOfEnemyResponse();
@@ -89,7 +89,7 @@ Events Windmill::getGameObjectResponse(std::shared_ptr<Player> player) {
 }
 GameActionWindowComponent Windmill::getBuildArableComponent() const {
 	Events event = this->getHighlightEvent();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, nullptr)));
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0)));
 	GameActionWindowComponent component = {
 		Arable().getTextureName(),
 		Arable().getDescription() + L"\n" + 
@@ -104,7 +104,7 @@ Events Windmill::getCollectEvents() {
 	Events events;
 	for (uint32_t i = 0; i < this->arables->size(); i = i + 1) {
 		Arable* arable = this->arables->at(i);
-		if (!arable->works() or arable->getPlayer() != this->getPlayer() or arable->alreadyCollected()) {
+		if (!arable->works() or arable->getPlayerId() != this->getPlayerId() or arable->alreadyCollected()) {
 			continue;
 		}
 		uint32_t n = arable->collect();

@@ -21,16 +21,16 @@
 
 
 Arable::Arable() = default;
-Arable::Arable(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
-	HpSensitiveB(x, y, 3, 3, 2000, playerPtr),
-	Building(x, y, 3, 3, 2000, playerPtr) {
+Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId) :
+	HpSensitiveB(x, y, 3, 3, 2000, playerId),
+	Building(x, y, 3, 3, 2000, playerId) {
 
 }
 Building* Arable::cloneBuilding() const {
 	return new Arable(*this);
 }
-Events Arable::newMove(std::shared_ptr<Player> player) {
-	if (this->exist() and this->belongTo(player)) {
+Events Arable::newMove(uint32_t playerId) {
+	if (this->exist() and this->belongTo(playerId)) {
 		this->collected = false;
 		return this->regenerate();
 	}
@@ -74,9 +74,9 @@ Events Arable::getSelectionW() {
 	windowEvent.add(std::make_shared<CreateEEvent>(window));
 	return windowEvent;
 }
-Events Arable::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events Arable::getGameObjectResponse(uint32_t playerId) {
 	if (this->exist()) {
-		if (this->belongTo(player)) {
+		if (this->belongTo(playerId)) {
 			return this->getSelectionW();
 		}
 		return this->getUnitOfEnemyResponse();

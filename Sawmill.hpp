@@ -26,7 +26,7 @@
 class Sawmill : public ResourceB {
 public:
 	Sawmill();
-	Sawmill(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
+	Sawmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
 	Building* cloneBuilding() const override;
 
 	Resources getCost() const override;

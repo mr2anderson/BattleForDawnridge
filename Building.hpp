@@ -29,7 +29,7 @@
 class Building : public Unit {
 public:
 	Building();
-	Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr);
+	Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId);
 	virtual Building* cloneBuilding() const = 0;
 
 	virtual bool works() const;

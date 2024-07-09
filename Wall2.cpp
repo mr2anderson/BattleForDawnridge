@@ -21,16 +21,16 @@
 
 
 Wall2::Wall2() = default;
-Wall2::Wall2(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
-	Building(x, y, 2, 2, 150000, playerPtr) {
+Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, 2, 2, 150000, playerId) {
 
 }
 Building* Wall2::cloneBuilding() const {
 	return new Wall2(*this);
 }
-Events Wall2::newMove(std::shared_ptr<Player> player) {
+Events Wall2::newMove(uint32_t playerId) {
 	Events response;
-	if (this->belongTo(player) and this->exist()) {
+	if (this->belongTo(playerId) and this->exist()) {
 		return  this->regenerate();
 	}
 	return response;
@@ -68,8 +68,8 @@ Events Wall2::getSelectionW() {
 
 	return response;
 }
-Events Wall2::getGameObjectResponse(std::shared_ptr<Player> player) {
-	if (this->belongTo(player)) {
+Events Wall2::getGameObjectResponse(uint32_t playerId) {
+	if (this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

@@ -89,31 +89,31 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     std::vector<GameActionWindowComponent> components;
     components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
     Events event;
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, nullptr, this->map->getTobs(), this->map->getTcbs())));
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getTobs(), this->map->getTcbs())));
     components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, true, event);
     event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Windmill>(0, 0, nullptr, this->map->getArables())));
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Windmill>(0, 0, 0, this->map->getArables())));
     components.emplace_back(Windmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Windmill>()), true, true, event);
     event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, nullptr, this->map->getResourcePoints())));
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getResourcePoints())));
     components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, true, event);
     event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, nullptr, this->map->getResourcePoints())));
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0, this->map->getResourcePoints())));
     components.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Quarry>()), true, true, event);
     event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, nullptr, this->map->getResourcePoints())));
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getResourcePoints())));
     components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Mine>()), true, true, event);
     event = Events();
-    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, nullptr))));
+    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0))));
     components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, event);
     event = Events();
-    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, nullptr))));
+    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0))));
     components.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, event);
     event = Events();
-	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, nullptr))));
+	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0))));
 	components.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, event);
 	event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, nullptr)));
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0)));
     components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, event);
     std::shared_ptr<GameActionWindow> w = std::make_shared<GameActionWindow>("click", "click", components);
     Events buildEvent;
@@ -232,7 +232,7 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCur
 }
 void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
-		this->addPopUpWindow(std::make_shared<BuildingMode>(e->getBuilding(), this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()));
+		this->addPopUpWindow(std::make_shared<BuildingMode>(e->getBuilding(), this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()->getId()));
 	}
 	else {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"));
@@ -241,7 +241,7 @@ void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
 }
 void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
 	Building* b = e->getBuilding();
-	b->changePlayer(this->getCurrentPlayer());
+	b->changePlayer(this->getCurrentPlayer()->getId());
 	this->map->add(b);
 }
 void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
@@ -275,7 +275,7 @@ void MainScreen::changeMove() {
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
-		Events events = this->map->getGO()->at(i)->newMove(this->getCurrentPlayer());
+		Events events = this->map->getGO()->at(i)->newMove(this->getCurrentPlayer()->getId());
 		this->handleEvent(events);
 	}
 }
@@ -285,7 +285,7 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b) {
 	return description;
 		
 }
-std::shared_ptr<Player> MainScreen::getCurrentPlayer() {
+Player* MainScreen::getCurrentPlayer() {
 	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
 }
 bool MainScreen::handleButtonsClick() {
@@ -302,7 +302,7 @@ void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
 	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
-		Events events = this->map->getGO()->at(i)->click(this->getCurrentPlayer(), mouseX, mouseY);
+		Events events = this->map->getGO()->at(i)->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
 		this->handleEvent(events);
 	}
 }

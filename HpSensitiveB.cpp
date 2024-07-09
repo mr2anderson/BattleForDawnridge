@@ -21,8 +21,8 @@
 
 
 HpSensitiveB::HpSensitiveB() = default;
-HpSensitiveB::HpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, std::shared_ptr<Player> playerPtr) : 
-	Building(x, y, sx, sy, maxHp, playerPtr) {
+HpSensitiveB::HpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId) : 
+	Building(x, y, sx, sy, maxHp, playerId) {
 }
 bool HpSensitiveB::works() const {
 	return this->Building::works() and !this->repairing();

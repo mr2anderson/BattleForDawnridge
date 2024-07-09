@@ -21,9 +21,9 @@
 
 
 Market::Market() = default;
-Market::Market(uint32_t x, uint32_t y, std::shared_ptr<Player>playerPtr) : 
-	HpSensitiveB(x, y, 3, 3, 30000, playerPtr),
-	Building(x, y, 3, 3, 30000, playerPtr) {
+Market::Market(uint32_t x, uint32_t y, uint32_t playerId) : 
+	HpSensitiveB(x, y, 3, 3, 30000, playerId),
+	Building(x, y, 3, 3, 30000, playerId) {
 
 }
 Building* Market::cloneBuilding() const {
@@ -53,8 +53,8 @@ Events Market::doTrade(const Trade& trade) {
 void Market::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 }
-Events Market::newMove(std::shared_ptr<Player> currentPlayer) {
-	if (!this->belongTo(currentPlayer) or !this->exist()) {
+Events Market::newMove(uint32_t playerId) {
+	if (!this->belongTo(playerId) or !this->exist()) {
 		return Events();
 	}
 	Events response = this->regenerate();
@@ -184,11 +184,11 @@ Events Market::getSelectionW() {
 	response.add(std::make_shared<CreateEEvent>(window));
 	return response;
 }
-Events Market::getGameObjectResponse(std::shared_ptr<Player> player) {
+Events Market::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
 	}
-	if (this->belongTo(player)) {
+	if (this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();

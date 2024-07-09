@@ -28,7 +28,7 @@ Water::Water(uint32_t x, uint32_t y) :
 	GO(x, y, 2, 2) {
 
 }
-Events Water::newMove(std::shared_ptr<Player> currentPlayer) {
+Events Water::newMove(uint32_t playerId) {
 	return Events();
 }
 std::string Water::getTextureName() const {
@@ -43,7 +43,7 @@ std::wstring Water::getDescription() const {
 bool Water::exist() const {
 	return true;
 }
-Events Water::getGameObjectResponse(std::shared_ptr<Player> currentPlayer) {
+Events Water::getGameObjectResponse(uint32_t playerId) {
 	return this->getGameActionWindow();
 }
 Events Water::getGameActionWindow() {

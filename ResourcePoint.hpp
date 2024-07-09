@@ -28,10 +28,10 @@ public:
 	ResourcePoint();
 	ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size);
 
-	Events newMove(std::shared_ptr<Player> player) override;
+	Events newMove(uint32_t playerId) override;
 	virtual std::string getResourceType() const = 0;
 private:
-	Events getGameObjectResponse(std::shared_ptr<Player> player) override;
+	Events getGameObjectResponse(uint32_t playerId) override;
 	Events getSelectionWindow();
 	GameActionWindowComponent getResourceLeftComponent() const;
 };
