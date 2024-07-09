@@ -53,7 +53,7 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     }
 
     try {
-        Texts::get()->load("ru.txt");
+        Texts::get()->load("en.txt");
     }
 	catch (CouldntOpenText &e) {
         this->loadingError(&e, window);
