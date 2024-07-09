@@ -139,7 +139,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     creditsEvent.add(std::make_shared<CreateEEvent>(creditsWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, *Texts::get()->get("show_credits")), creditsEvent);
 
-    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), Events(), 500, 400);
+    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("license"), *Texts::get()->get("close"), Events(), 600, 400);
     Events licenseEvent;
     licenseEvent.add(std::make_shared<CreateEEvent>(licenseWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Texts::get()->get("show_license")), licenseEvent);
@@ -156,11 +156,17 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 	this->title.setFont(*Fonts::get()->get("1"));
 	this->title.setString(*Texts::get()->get("title"));
 	this->title.setCharacterSize(60);
-	this->title.setFillColor(sf::Color::White);
+	this->title.setFillColor(sf::Color(20, 0, 100));
+    this->title.setOutlineColor(sf::Color::Black);
+    this->title.setOutlineThickness(1);
 	this->title.setPosition(windowW - 40 - title.getLocalBounds().width, 40);
+
+    this->background.setTexture(*Textures::get()->get("bg"));
+    this->background.setPosition(windowW - this->background.getLocalBounds().width, windowH - this->background.getLocalBounds().height);
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
-	window.clear(COLOR_THEME::UI_COLOR);
+    window.clear(COLOR_THEME::UI_COLOR);
+    window.draw(this->background);
 	for (const auto& b : this->buttons) {
         window.draw(b);
     }

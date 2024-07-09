@@ -89,6 +89,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon"}) {
             Textures::get()->add(a, a + ".png");
         }
+        Textures::get()->add("bg", "bg.jpg");
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
         }

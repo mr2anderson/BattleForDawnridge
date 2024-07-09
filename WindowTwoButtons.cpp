@@ -47,7 +47,7 @@ Events WindowTwoButtons::run(uint32_t windowW, uint32_t windowH) {
     if (!this->inited) {
         this->inited = true;
 
-        uint32_t buttonW = 75;
+        uint32_t buttonW = 95;
         uint32_t buttonH = 30;
 
         Events onClick;

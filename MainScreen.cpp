@@ -155,9 +155,9 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
-	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 150, 40, 150, 30, *Texts::get()->get("new_move")), createConfirmEndMoveWindowEvent);
-	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 150, 40 + 10 + 30, "hammer_icon"), buildEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 150, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Texts::get()->get("new_move")), createConfirmEndMoveWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 200, 40 + 10 + 30, "hammer_icon"), buildEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
 void MainScreen::handleEvent(Events &e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {

@@ -45,7 +45,7 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
     Music::get()->get("intro")->play();
 
 	this->t.setFont(*Fonts::get()->get("1"));
-	this->t.setString(*Texts::get()->get("press_any_key"));
+	this->t.setString(*Texts::get()->get("press_any_key_to_continue"));
 	this->t.setCharacterSize(32);
 	this->t.setFillColor(sf::Color::White);
 	this->t.setOutlineColor(sf::Color::Black);
