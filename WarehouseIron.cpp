@@ -37,7 +37,7 @@ Events WarehouseIron::newMove(uint32_t playerId) {
 }
 Resources WarehouseIron::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 20000));
+	cost.plus(Resource("wood", 10000));
 	return cost;
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {

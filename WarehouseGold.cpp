@@ -22,7 +22,7 @@
 
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 3, 3, 30000, playerId) {
+	Building(x, y, 3, 3, 60000, playerId) {
 
 }
 Building* WarehouseGold::cloneBuilding() const {
