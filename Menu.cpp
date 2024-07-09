@@ -53,6 +53,7 @@ std::shared_ptr<Map> Menu::run(sf::RenderWindow& window) {
                 return map;
             }
             catch (CouldntOpenMap &e) {
+                this->startGameMap = "";
                 this->addElement(std::make_shared<WindowButton>("click", "click", *Texts::get()->get("failed_to_load_map"), *Texts::get()->get("OK")));
             }
         }
