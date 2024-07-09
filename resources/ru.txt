@@ -110,8 +110,7 @@ market_upper_case_readable_name
 market_is_busy
 <\ID>
 <DATA>
-РЫНОК ЗАНЯТ
-Детали сделки
+Идет сделка. Детали: 
 <\DATA>
 
 <ID>

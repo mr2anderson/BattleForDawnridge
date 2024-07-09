@@ -22,7 +22,7 @@
 
 WarehouseFood::WarehouseFood() = default;
 WarehouseFood::WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 2, 2, 30000, playerId) {
+	Building(x, y, 3, 3, 30000, playerId) {
 
 }
 Building* WarehouseFood::cloneBuilding() const {

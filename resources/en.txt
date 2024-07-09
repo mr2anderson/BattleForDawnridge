@@ -110,8 +110,7 @@ MARKET
 market_is_busy
 <\ID>
 <DATA>
-TRADE IN PROGRESS
-Details:
+Train in progress. Details: 
 <\DATA>
 
 <ID>
