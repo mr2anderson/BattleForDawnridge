@@ -17,29 +17,21 @@
  */
 
 
-#include "TerritoryOriginB.hpp"
 #include "ResourceStorageB.hpp"
 
 
-#pragma once
+ResourceStorageB::ResourceStorageB() = default;
+ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId) :
+	Building(x, y, sx, sy, maxHp, playerId) {
 
-
-class Castle : public TerritoryOriginB, public ResourceStorageB {
-public:
-	Castle();
-	Castle(uint32_t x, uint32_t y, uint32_t playerId);
-	Building* cloneBuilding() const override;
-
-	Events newMove(uint32_t playerId) override;
-	Resources getLimit() const override;
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-private:
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
-	uint32_t getRadius() const override;
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
-};
+}
+GameActionWindowComponent ResourceStorageB::getResourceStorageComponent() const {
+	GameActionWindowComponent component = {
+		"resources_icon",
+		*Texts::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
+		false,
+		false,
+		Events()
+	};
+	return component;
+}

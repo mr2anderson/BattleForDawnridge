@@ -530,3 +530,81 @@ arable_upper_case_readable_name
 <DATA>
 ПАШНЯ
 <\DATA>
+
+<ID>
+resource_storage_building_description
+<\ID>
+<DATA>
+Это здание увеличивает лимит ресурсов. Если его уничтожить, то не вмещающиеся ресурсы пропадут!
+Лимит увеличен на 
+<\DATA>
+
+<ID>
+warehouse_food_description
+<\ID>
+<DATA>
+Продовольственный склад надежно защищает еду города.
+<\DATA>
+
+<ID>
+warehouse_food_upper_case_readable_name
+<\ID>
+<DATA>
+ПРОДОВОЛЬСТВЕННЫЙ СКЛАД
+<\DATA>
+
+<ID>
+warehouse_wood_description
+<\ID>
+<DATA>
+Древохранилище надежно защищает добытую древесину.
+<\DATA>
+
+<ID>
+warehouse_wood_upper_case_readable_name
+<\ID>
+<DATA>
+ДРЕВОХРАНИЛИЩЕ
+<\DATA>
+
+<ID>
+warehouse_stone_description
+<\ID>
+<DATA>
+Камнехранилище надежно защищает добытый Вами камень.
+<\DATA>
+
+<ID>
+warehouse_stone_upper_case_readable_name
+<\ID>
+<DATA>
+КАМНЕХРАНИЛИЩЕ
+<\DATA>
+
+<ID>
+warehouse_iron_description
+<\ID>
+<DATA>
+Железохранилище надежно защищает добытое городом железо.
+<\DATA>
+
+<ID>
+warehouse_iron_upper_case_readable_name
+<\ID>
+<DATA>
+ЖЕЛЕЗОХРАНИЛИЩЕ
+<\DATA>
+
+<ID>
+warehouse_gold_description
+<\ID>
+<DATA>
+Золотохранилище надежно защищает золото, вымененное на рынках.
+<\DATA>
+
+<ID>
+warehouse_gold_upper_case_readable_name
+<\ID>
+<DATA>
+ЗОЛОТОХРАНИЛИЩЕ
+<\DATA>

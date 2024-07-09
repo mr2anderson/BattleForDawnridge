@@ -31,9 +31,9 @@ public:
 	uint32_t getId() const;
 	friend bool operator==(Player a, Player b);
 	friend bool operator!=(Player a, Player b);
-	void addResource(const Resource &resource);
+	void addResource(const Resource& resource, uint32_t limit);
 	void subResource(const Resource &resource);
-	void addResources(const Resources& resources);
+	void addResources(const Resources& resources, const Resources& limit);
 	void subResources(const Resources& resources);
 	int32_t getResource(const std::string& id) const;
 	Resources getResources() const;

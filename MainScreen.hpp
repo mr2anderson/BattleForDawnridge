@@ -43,6 +43,11 @@
 #include "ReturnToMenuEvent.hpp"
 #include "WindowTwoButtons.hpp"
 #include "ResourceBar.hpp"
+#include "WarehouseFood.hpp"
+#include "WarehouseWood.hpp"
+#include "WarehouseStone.hpp"
+#include "WarehouseIron.hpp"
+#include "WarehouseGold.hpp"
 
 
 #pragma once
@@ -103,6 +108,7 @@ private:
 	void changeMove();
 	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
 	Player* getCurrentPlayer();
+	Resources getResourcesLimit();
     bool handleButtonsClick();
 	void handleGameObjectClick();
 	void addPopUpWindow(std::shared_ptr<PopUpElement> w);

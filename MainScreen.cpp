@@ -104,6 +104,21 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getResourcePoints())));
     components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Mine>()), true, true, event);
     event = Events();
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseFood>(0, 0, 0)));
+	components.emplace_back(WarehouseFood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseFood>()), true, true, event);
+	event = Events();
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseWood>(0, 0, 0)));
+	components.emplace_back(WarehouseWood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseWood>()), true, true, event);
+	event = Events();
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseStone>(0, 0, 0)));
+	components.emplace_back(WarehouseStone().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseStone>()), true, true, event);
+	event = Events();
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseIron>(0, 0, 0)));
+	components.emplace_back(WarehouseIron().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseIron>()), true, true, event);
+	event = Events();
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0)));
+	components.emplace_back(WarehouseGold().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseGold>()), true, true, event);
+	event = Events();
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0))));
     components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, event);
     event = Events();
@@ -196,13 +211,13 @@ void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
 	}
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
-	this->getCurrentPlayer()->addResource(e->getResource());
+	this->getCurrentPlayer()->addResource(e->getResource(), this->getResourcesLimit().get(e->getResource().type));
 }
 void MainScreen::handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e) {
 	this->getCurrentPlayer()->subResource(e->getResource());
 }
 void MainScreen::handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e) {
-	this->getCurrentPlayer()->addResources(e->getResources());
+	this->getCurrentPlayer()->addResources(e->getResources(), this->getResourcesLimit());
 }
 void MainScreen::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e) {
 	this->getCurrentPlayer()->subResources(e->getResources());
@@ -219,8 +234,9 @@ void MainScreen::handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent
 void MainScreen::handleCollectEvent(std::shared_ptr<CollectEvent> e) {
 	ResourcePoint* resourcePoint = e->getRp();
 	uint32_t n = e->getN();
-	this->getCurrentPlayer()->addResource(Resource(resourcePoint->getResourceType(), n));
 	resourcePoint->subHp(n);
+	std::shared_ptr<AddResourceEvent> addResourceEvent = std::make_shared<AddResourceEvent>(Resource(resourcePoint->getResourceType(), n));
+	this->handleAddResourceEvent(addResourceEvent);
 }
 void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
 	HPGO* go = e->getHPGO();
@@ -288,6 +304,17 @@ std::wstring MainScreen::GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b) {
 Player* MainScreen::getCurrentPlayer() {
 	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
 }
+Resources MainScreen::getResourcesLimit() {
+	Resources limit;
+	std::shared_ptr<GOCollection<ResourceStorageB>> rsbs = this->map->getRsbs();
+	for (uint32_t i = 0; i < rsbs->size(); i = i + 1) {
+		ResourceStorageB* rsb = rsbs->at(i);
+		if (rsb->exist() and rsb->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			limit.plus(rsb->getLimit());
+		}
+	}
+	return limit;
+}
 bool MainScreen::handleButtonsClick() {
     for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
         Events event = this->buttons[i].click();
@@ -339,6 +366,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	ResourceBar bar;
 	bar.setResources(this->getCurrentPlayer()->getResources());
+	bar.setLimit(this->getResourcesLimit());
 	window.draw(bar);
 }
 void MainScreen::drawCells(sf::RenderWindow &window) {

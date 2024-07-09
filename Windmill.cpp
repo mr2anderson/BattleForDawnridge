@@ -69,9 +69,7 @@ Events Windmill::getSelectionW() {
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
-	if (this->works()) {
-		components.push_back(this->getBuildArableComponent());
-	}
+	components.push_back(this->getBuildArableComponent());
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	Events createWindowEvent;
@@ -104,7 +102,7 @@ Events Windmill::getCollectEvents() {
 	Events events;
 	for (uint32_t i = 0; i < this->arables->size(); i = i + 1) {
 		Arable* arable = this->arables->at(i);
-		if (!arable->works() or arable->getPlayerId() != this->getPlayerId() or arable->alreadyCollected()) {
+		if (!arable->works() or arable->getPlayerId() != this->getPlayerId() or arable->alreadyCollected() or !this->inRadius(arable)) {
 			continue;
 		}
 		uint32_t n = arable->collect();

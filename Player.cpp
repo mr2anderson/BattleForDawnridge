@@ -24,8 +24,8 @@
 Player::Player() = default;
 Player::Player(uint32_t id) {
 	this->id = id;
-	this->addResource(Resource("food", 20000));
-	this->addResource(Resource("wood", 20000));
+	this->resources.plus(Resource("food", 20000));
+	this->resources.plus(Resource("wood", 20000));
 }
 uint32_t Player::getId() const {
 	return this->id;
@@ -39,14 +39,14 @@ bool operator==(Player a, Player b) {
 bool operator!=(Player a, Player b) {
 	return !(a == b);
 }
-void Player::addResource(const Resource &resource) {
-	this->resources.plus(resource);
+void Player::addResource(const Resource& resource, uint32_t limit) {
+	this->resources.plus(resource, limit);
 }
 void Player::subResource(const Resource &resource) {
 	this->resources.minus(resource);
 }
-void Player::addResources(const Resources& resources) {
-	this->resources.plus(resources);
+void Player::addResources(const Resources& resources, const Resources& limit) {
+	this->resources.plus(resources, limit);
 }
 void Player::subResources(const Resources& resources) {
 	this->resources.minus(resources);

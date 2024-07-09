@@ -17,29 +17,27 @@
  */
 
 
-#include "TerritoryOriginB.hpp"
 #include "ResourceStorageB.hpp"
 
 
 #pragma once
 
 
-class Castle : public TerritoryOriginB, public ResourceStorageB {
+class WarehouseGold : public ResourceStorageB {
 public:
-	Castle();
-	Castle(uint32_t x, uint32_t y, uint32_t playerId);
+	WarehouseGold();
+	WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;
-	Resources getLimit() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
+	Resources getLimit() const override;
 private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	uint32_t getRadius() const override;
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

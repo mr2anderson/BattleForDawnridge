@@ -55,6 +55,7 @@ public:
     std::shared_ptr<GOCollection<TerritoryConductorB>> getTcbs();
     std::shared_ptr<GOCollection<TerritoryOriginB>> getTobs();
     std::shared_ptr<GOCollection<Arable>> getArables();
+    std::shared_ptr<GOCollection<ResourceStorageB>> getRsbs();
     void add(GO* object);
 private:
     uint32_t w, h;
@@ -66,4 +67,5 @@ private:
     std::shared_ptr<GOCollection<TerritoryConductorB>> tcbs;
     std::shared_ptr<GOCollection<TerritoryOriginB>> tobs;
     std::shared_ptr<GOCollection<Arable>> arables;
+    std::shared_ptr<GOCollection<ResourceStorageB>> rsbs;
 };

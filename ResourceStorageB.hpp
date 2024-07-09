@@ -17,29 +17,18 @@
  */
 
 
-#include "TerritoryOriginB.hpp"
-#include "ResourceStorageB.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Castle : public TerritoryOriginB, public ResourceStorageB {
+class ResourceStorageB : virtual public Building {
 public:
-	Castle();
-	Castle(uint32_t x, uint32_t y, uint32_t playerId);
-	Building* cloneBuilding() const override;
+	ResourceStorageB();
+	ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId);
 
-	Events newMove(uint32_t playerId) override;
-	Resources getLimit() const override;
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-private:
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
-	uint32_t getRadius() const override;
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
+	virtual Resources getLimit() const = 0;
+protected:
+	GameActionWindowComponent getResourceStorageComponent() const;
 };

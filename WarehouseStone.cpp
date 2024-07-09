@@ -17,51 +17,48 @@
  */
 
 
-#include "Castle.hpp"
+#include "WarehouseStone.hpp"
 
 
-Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) : 
-	TerritoryOriginB(x, y, 3, 3, 100, playerId),
-	Building(x, y, 3, 3, 100000, playerId) {
+WarehouseStone::WarehouseStone() = default;
+WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, 2, 2, 30000, playerId) {
+
 }
-Building* Castle::cloneBuilding() const {
-	return new Castle(*this);
+Building* WarehouseStone::cloneBuilding() const {
+	return new WarehouseStone(*this);
 }
-Events Castle::newMove(uint32_t playerId) {
+Events WarehouseStone::newMove(uint32_t playerId) {
 	Events response;
 	if (this->belongTo(playerId) and this->exist()) {
-		return this->regenerate();
+		return  this->regenerate();
 	}
 	return response;
 }
-Resources Castle::getLimit() const {
-	return Resources({ Resource("food", 20000), Resource("wood", 20000) });
-}
-Resources Castle::getCost() const {
+Resources WarehouseStone::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 100000));
+	cost.plus(Resource("wood", 20000));
 	return cost;
 }
-std::string Castle::getTextureName() const {
-	return "castle";
+uint32_t WarehouseStone::getRegenerationSpeed() const {
+	return 10000;
 }
-std::string Castle::getSoundName() const {
-	return "hooray";
+std::string WarehouseStone::getTextureName() const {
+	return "warehouse_stone";
 }
-std::wstring Castle::getDescription() const {
-	return *Texts::get()->get("castle_description");
+std::string WarehouseStone::getSoundName() const {
+	return "stone";
 }
-uint32_t Castle::getRegenerationSpeed() const {
-	return 25000;
+std::wstring WarehouseStone::getDescription() const {
+	return *Texts::get()->get("warehouse_stone_description");
 }
-std::wstring Castle::getUpperCaseReadableName() const {
-	return *Texts::get()->get("castle_upper_case_readable_name");
+Resources WarehouseStone::getLimit() const {
+	return Resources({ Resource("stone", 10000) });
 }
-uint32_t Castle::getRadius() const {
-	return 3;
+std::wstring WarehouseStone::getUpperCaseReadableName() const {
+	return *Texts::get()->get("warehouse_stone_upper_case_readable_name");
 }
-Events Castle::getSelectionW() {
+Events WarehouseStone::getSelectionW() {
 	Events response;
 
 	std::vector<GameActionWindowComponent> components;
@@ -69,21 +66,15 @@ Events Castle::getSelectionW() {
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
 	components.push_back(this->getResourceStorageComponent());
-	if (this->repairing()) {
-		components.push_back(this->getBusyWithRepairingComponent());
-	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }
-Events Castle::getGameObjectResponse(uint32_t playerId) {
-	if (!this->exist()) {
-		return Events();
-	}
+Events WarehouseStone::getGameObjectResponse(uint32_t playerId) {
 	if (this->belongTo(playerId)) {
-		return this->getHighlightEvent() + this->getSelectionW();
+		return this->getSelectionW();
 	}
 	return this->getUnitOfEnemyResponse();
 }

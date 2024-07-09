@@ -27,6 +27,9 @@ void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 void ResourceBar::setResources(const Resources& resources) {
 	this->resources = resources;
 }
+void ResourceBar::setLimit(const Resources& limit) {
+	this->limit = limit;
+}
 void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
@@ -46,7 +49,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 
 		sf::Text text;
 		text.setFont(*Fonts::get()->get("1"));
-		text.setString(std::to_string(this->resources.get(res[i])));
+		text.setString(std::to_string(this->resources.get(res[i])) + " / " + std::to_string(this->limit.get(res[i])));
 		text.setCharacterSize(16);
 		text.setFillColor(sf::Color::White);
 		text.setOutlineColor(sf::Color::Black);

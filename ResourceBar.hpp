@@ -32,8 +32,9 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void setResources(const Resources& resources);
+	void setLimit(const Resources& limit);
 private:
-	Resources resources;
+	Resources resources, limit;
 
 	void drawEverything(sf::RenderTarget& target, sf::RenderStates states) const;
 };

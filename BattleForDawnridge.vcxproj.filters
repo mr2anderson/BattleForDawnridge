@@ -1003,6 +1003,24 @@
     <ClInclude Include="PlayerPointer.hpp">
       <Filter>Header Files\screens\service\go\service</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceStorageB.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseFood.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseWood.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseStone.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseIron.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGold.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1298,6 +1316,24 @@
     </ClCompile>
     <ClCompile Include="PlayerPointer.cpp">
       <Filter>Source Files\screens\service\go\service</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceStorageB.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseFood.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseWood.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseStone.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseIron.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGold.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

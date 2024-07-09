@@ -30,8 +30,10 @@ public:
 	Resources(const std::vector<Resource>& v);
 
 	void plus(const Resource& resource);
+	void plus(const Resource& resource, uint32_t limit);
 	void minus(const Resource& resource);
 	void plus(const Resources& resources);
+	void plus(const Resources& resources, const Resources& limit);
 	void minus(const Resources& resources);
 	int32_t get(const std::string& id) const;
 	std::wstring getReadableInfo() const;

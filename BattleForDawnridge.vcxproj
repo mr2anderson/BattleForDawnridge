@@ -652,6 +652,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="ResourceBar.hpp" />
     <ClInclude Include="ResourcePoint.hpp" />
     <ClInclude Include="Resources.hpp" />
+    <ClInclude Include="ResourceStorageB.hpp" />
     <ClInclude Include="ReturnToMenuEvent.hpp" />
     <ClInclude Include="Road.hpp" />
     <ClInclude Include="Root.hpp" />
@@ -676,6 +677,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="Wall1.hpp" />
     <ClInclude Include="Wall2.hpp" />
+    <ClInclude Include="WarehouseFood.hpp" />
+    <ClInclude Include="WarehouseGold.hpp" />
+    <ClInclude Include="WarehouseIron.hpp" />
+    <ClInclude Include="WarehouseStone.hpp" />
+    <ClInclude Include="WarehouseWood.hpp" />
     <ClInclude Include="Water.hpp" />
     <ClInclude Include="Windmill.hpp" />
     <ClInclude Include="WindowButton.hpp" />
@@ -752,6 +758,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="ResourceBar.cpp" />
     <ClCompile Include="ResourcePoint.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="ResourceStorageB.cpp" />
     <ClCompile Include="ReturnToMenuEvent.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Root.cpp" />
@@ -776,6 +783,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="Wall1.cpp" />
     <ClCompile Include="Wall2.cpp" />
+    <ClCompile Include="WarehouseFood.cpp" />
+    <ClCompile Include="WarehouseGold.cpp" />
+    <ClCompile Include="WarehouseIron.cpp" />
+    <ClCompile Include="WarehouseStone.cpp" />
+    <ClCompile Include="WarehouseWood.cpp" />
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="Windmill.cpp" />
     <ClCompile Include="WindowButton.cpp" />

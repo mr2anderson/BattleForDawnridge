@@ -28,6 +28,7 @@ Map::Map(const std::string &path) {
     this->tcbs = std::make_shared<GOCollection<TerritoryConductorB>>();
     this->tobs = std::make_shared<GOCollection<TerritoryOriginB>>();
     this->arables = std::make_shared<GOCollection<Arable>>();
+    this->rsbs = std::make_shared<GOCollection<ResourceStorageB>>();
 
     std::ifstream file(ROOT + "/" + path);
     if (!file.is_open()) {
@@ -123,6 +124,9 @@ std::shared_ptr<GOCollection<TerritoryOriginB>> Map::getTobs() {
 std::shared_ptr<GOCollection<Arable>> Map::getArables() {
     return this->arables;
 }
+std::shared_ptr<GOCollection<ResourceStorageB>> Map::getRsbs() {
+    return this->rsbs;
+}
 void Map::add(GO *object) {
     this->go->push(object);
 
@@ -149,6 +153,10 @@ void Map::add(GO *object) {
                         this->tcbs->push(tcb);
                     }
                 }
+            }
+            ResourceStorageB* rsb = dynamic_cast<ResourceStorageB*>(object);
+            if (rsb) {
+                this->rsbs->push(rsb);
             }
             else {
                 Arable* a = dynamic_cast<Arable*>(object);

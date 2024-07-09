@@ -29,12 +29,23 @@ Resources::Resources(const std::vector<Resource>& v) {
 void Resources::plus(const Resource& resource) {
 	this->map[resource.type] += resource.n;
 }
+void Resources::plus(const Resource& resource, uint32_t limit) {
+	this->plus(resource);
+	if (this->map[resource.type] > limit) {
+		this->map[resource.type] = limit;
+	}
+}
 void Resources::minus(const Resource& resource) {
 	this->map[resource.type] -= resource.n;
 }
 void Resources::plus(const Resources& resources) {
 	for (const auto& a : resources.map) {
 		this->map[a.first] += a.second;
+	}
+}
+void Resources::plus(const Resources& resources, const Resources& limit) {
+	for (const auto& a : resources.map) {
+		this->plus(Resource(a.first, a.second), limit.get(a.first));
 	}
 }
 void Resources::minus(const Resources& resources) {
