@@ -27,6 +27,7 @@ Map::Map(const std::string &path) {
     this->tbs = std::make_shared<GOCollection<TerritoryB>>();
     this->tcbs = std::make_shared<GOCollection<TerritoryConductorB>>();
     this->tobs = std::make_shared<GOCollection<TerritoryOriginB>>();
+    this->arables = std::make_shared<GOCollection<Arable>>();
 
     std::ifstream file(ROOT + "/" + path);
     if (!file.is_open()) {
