@@ -21,11 +21,21 @@
 
 
 LabelWithImage::LabelWithImage() = default;
-LabelWithImage::LabelWithImage(uint32_t x, uint32_t y, uint32_t sumW, uint32_t h, const std::string &imageName, const std::wstring &message) : RectangularUiElement(x, y, sumW, h) {
+LabelWithImage::LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t h, const std::string &imageName, const std::wstring &message) : RectangularUiElement(x, y, sumW, h) {
     this->image = Image(x, y, h, imageName);
     this->label = Label(x + this->image.getW() + 5, y, sumW - this->image.getW() - 5, h, message, false);
 }
 void LabelWithImage::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(this->image, states);
     target.draw(this->label, states);
+}
+void LabelWithImage::setX(int32_t newX) {
+    this->RectangularUiElement::setX(newX);
+    this->label.setX(newX);
+    this->image.setX(newX);
+}
+void LabelWithImage::setY(int32_t newY) {
+    this->RectangularUiElement::setY(newY);
+    this->label.setY(newY);
+    this->image.setY(newY);
 }

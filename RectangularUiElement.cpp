@@ -21,7 +21,7 @@
 
 
 RectangularUiElement::RectangularUiElement() = default;
-RectangularUiElement::RectangularUiElement(uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
+RectangularUiElement::RectangularUiElement(int32_t x, int32_t y, uint32_t w, uint32_t h) {
     this->x = x;
     this->y = y;
 
@@ -37,10 +37,10 @@ void RectangularUiElement::draw(sf::RenderTarget& target, sf::RenderStates state
     rect.setOutlineThickness(2);
     target.draw(rect, states);
 }
-uint32_t RectangularUiElement::getX() const {
+int32_t RectangularUiElement::getX() const {
     return this->x;
 }
-uint32_t RectangularUiElement::getY() const {
+int32_t RectangularUiElement::getY() const {
     return this->y;
 }
 uint32_t RectangularUiElement::getW() const {
@@ -48,4 +48,10 @@ uint32_t RectangularUiElement::getW() const {
 }
 uint32_t RectangularUiElement::getH() const {
     return this->h;
+}
+void RectangularUiElement::setX(int32_t newX) {
+    this->x = newX;
+}
+void RectangularUiElement::setY(int32_t newY) {
+    this->y = newY;
 }

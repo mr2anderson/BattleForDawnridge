@@ -81,6 +81,3 @@ Events WindowTwoButtons::click() {
    
     return Events();
 }
-void WindowTwoButtons::update() {
-
-}

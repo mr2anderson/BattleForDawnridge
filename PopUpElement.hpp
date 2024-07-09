@@ -31,13 +31,13 @@ public:
 
 	void addOnStartGEvent(const Events& event);
 	bool finished() const;
-	virtual void update() = 0;
+	virtual void update();
 
 	virtual Events run(uint32_t windowW, uint32_t windowH);
 	virtual Events click() = 0;
 	virtual bool isCameraDependent() const = 0;
 protected:
-	void finish();
+	virtual void finish();
 private:
 	Events onStart;
 	bool _finished;

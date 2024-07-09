@@ -67,6 +67,3 @@ Events WindowButton::click() {
     }
 	return event;
 }
-void WindowButton::update() {
-
-}

@@ -40,3 +40,21 @@ Events Button::click() const {
     }
     return Events();
 }
+void Button::setX(int32_t newX) {
+    this->element->setX(newX);
+}
+void Button::setY(int32_t newY) {
+    this->element->setY(newY);
+}
+int32_t Button::getX() const {
+    return this->element->getX();
+}
+int32_t Button::getY() const {
+    return this->element->getY();
+}
+uint32_t Button::getW() const {
+    return this->element->getW();
+}
+uint32_t Button::getH() const {
+    return this->element->getH();
+}

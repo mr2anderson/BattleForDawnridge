@@ -22,6 +22,10 @@
 #include "GameActionWindowComponent.hpp"
 #include "LabelWithImage.hpp"
 #include "CloseWindowEvent.hpp"
+#include "MoveGameActionWindowUpEvent.hpp"
+#include "MoveGameActionWindowDownEvent.hpp"
+#include "SoundQueue.hpp"
+#include "Sounds.hpp"
 
 
 #pragma once
@@ -34,13 +38,25 @@ public:
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click() override;
-	void update() override;
 private:
+	RectangularUiElement rect;
 	std::string soundName1;
 	std::string soundName2;
 	std::vector<GameActionWindowComponent> components;
 	std::vector<Button> buttons;
+	Button up;
+	Button down;
 	bool inited;
 
-	void makeButtons(uint32_t windowW, uint32_t windowH);
+	void finish() override;
+	bool show(const Button& button) const;
+	bool possibleToMoveUp() const;
+	bool possibleToMoveDown() const;
+	void moveUp();
+	void moveDown();
+	void handle(Events& events);
+
+	void handleMoveUpEvent(std::shared_ptr<MoveGameActionWindowUpEvent> e);
+	void handleMoveDownEvent(std::shared_ptr<MoveGameActionWindowDownEvent> e);
+	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
 };

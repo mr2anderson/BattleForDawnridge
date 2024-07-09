@@ -28,15 +28,17 @@
 class RectangularUiElement : public sf::Drawable {
 public:
     RectangularUiElement();
-    RectangularUiElement(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+    RectangularUiElement(int32_t x, int32_t y, uint32_t w, uint32_t h);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    uint32_t getX() const;
-    uint32_t getY() const;
+    int32_t getX() const;
+    int32_t getY() const;
     uint32_t getW() const;
     uint32_t getH() const;
+    virtual void setX(int32_t newX);
+    virtual void setY(int32_t newY);
 private:
-    uint32_t x, y;
+    int32_t x, y;
     uint32_t w, h;
 };

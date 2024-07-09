@@ -27,10 +27,11 @@
 class Image : public RectangularUiElement {
 public:
     Image();
-    Image(uint32_t x, uint32_t y, const std::string& imageName);
-    Image(uint32_t x, uint32_t y, uint32_t h, const std::string &imageName);
+    Image(int32_t x, int32_t y, const std::string& imageName);
+    Image(int32_t x, int32_t y, uint32_t h, const std::string &imageName);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-    sf::Sprite sprite;
+    float scale;
+    std::string imageName;
 };

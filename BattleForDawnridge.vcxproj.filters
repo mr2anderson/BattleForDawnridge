@@ -1006,20 +1006,26 @@
     <ClInclude Include="ResourceStorageB.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
-    <ClInclude Include="WarehouseFood.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WarehouseWood.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
-    <ClInclude Include="WarehouseStone.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseIron.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="WarehouseFood.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
     <ClInclude Include="WarehouseGold.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseIron.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseStone.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveGameActionWindowUpEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveGameActionWindowDownEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1334,6 +1340,12 @@
     </ClCompile>
     <ClCompile Include="WarehouseGold.cpp">
       <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveGameActionWindowUpEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveGameActionWindowDownEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

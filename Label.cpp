@@ -22,27 +22,27 @@
 
 
 Label::Label() = default;
-Label::Label(uint32_t x, uint32_t y, uint32_t w, uint32_t h, std::wstring message, bool center) : RectangularUiElement(x, y, w, h) {
+Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, std::wstring message, bool center) : RectangularUiElement(x, y, w, h) {
 	this->initText();
 	message = this->putNLs(message, w);
     if (center) {
         message = this->centerLines(message);
     }
     this->text.setString(message);
-    if (center) {
-        this->text.setPosition(
-                x + w / 2 - this->text.getLocalBounds().width / 2,
-                y + 5);
-    }
-    else {
-        this->text.setPosition(
-                x,
-                y + 5);
-    }
+	this->center = center;
+	this->rerenderNewPosition();
 }
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
 	target.draw(this->text, states);
+}
+void Label::setX(int32_t newX) {
+	this->RectangularUiElement::setX(newX);
+	this->rerenderNewPosition();
+}
+void Label::setY(int32_t newY) {
+	this->RectangularUiElement::setY(newY);
+	this->rerenderNewPosition();
 }
 void Label::initText() {
 	this->text.setCharacterSize(14);
@@ -99,4 +99,16 @@ std::wstring Label::centerLines(const std::wstring& message, uint32_t maxWidth) 
 		result = result + prevWord + L'\n';
 	}
 	return result;
+}
+void Label::rerenderNewPosition() {
+	if (center) {
+		this->text.setPosition(
+			this->getX() + (int32_t)this->getW() / 2 - this->text.getLocalBounds().width / 2,
+			this->getY() + 5);
+	}
+	else {
+		this->text.setPosition(
+			this->getX(),
+			this->getY() + 5);
+	}
 }

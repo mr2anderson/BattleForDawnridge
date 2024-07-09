@@ -89,7 +89,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "wall1", "wall2", "road", "mountains",
                 "windmill", "arable", "black", "blue", "green", "grey",
                 "purple", "yellow", "warehouse_food", "warehouse_wood", "warehouse_stone",
-                "warehouse_gold", "warehouse_iron", "resources_icon"}) {
+                "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
+                "down_icon"}) {
             Textures::get()->add(a, a + ".png");
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {

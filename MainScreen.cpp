@@ -28,6 +28,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->init(mapPtr, window);
 	sf::Event event{};
 	for (; ;) {
+		float wheelDelta = 0;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				return false;
@@ -43,14 +44,19 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 					this->handleEvent(events);
 				}
 			}
+			else if (event.type == sf::Event::MouseWheelScrolled) {
+				if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+					wheelDelta = wheelDelta + event.mouseWheelScroll.delta;
+				}
+			}
 		}
 		this->drawEverything(window);
 		Playlist::get()->update();
 		this->removeFinishedElements();
-		this->moveView();
 		if (!this->elements.empty()) {
 			this->elements.front()->update();
 		}
+		this->moveView();
         if (this->returnToMenu) {
 			this->prepareToReturnToMenu(window);
             return true;
@@ -139,9 +145,9 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
-	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, this->windowH - 20 - 30, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
-	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 20 - 150 - 20 - 64, this->windowH - 20 - 64, "hammer_icon"), buildEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 20 - 150, 30, 150, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 150, 40, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
+	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 150, 40 + 10 + 30, "hammer_icon"), buildEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 150, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
 void MainScreen::handleEvent(Events &e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {

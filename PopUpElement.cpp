@@ -29,6 +29,9 @@ void PopUpElement::addOnStartGEvent(const Events& gEvent) {
 bool PopUpElement::finished() const {
 	return this->_finished;
 }
+void PopUpElement::update() {
+
+}
 Events PopUpElement::run(uint32_t windowW, uint32_t windowH) {
 	this->_finished = false;
 	return this->onStart;

@@ -68,7 +68,6 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
     Events startGameEvent;
     startGameEvent.add(std::make_shared<StartGameEvent>());
-    startGameEvent.add(std::make_shared<PlaySoundEvent>("click"));
 	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_2p_1pc")), startGameEvent);
 
     std::shared_ptr<WindowButton> supportWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));

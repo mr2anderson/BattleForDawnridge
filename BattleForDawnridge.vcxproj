@@ -637,6 +637,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="Mine.hpp" />
     <ClInclude Include="Mountains.hpp" />
+    <ClInclude Include="MoveGameActionWindowDownEvent.hpp" />
+    <ClInclude Include="MoveGameActionWindowUpEvent.hpp" />
     <ClInclude Include="Music.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
     <ClInclude Include="PlainsGeneration.hpp" />
@@ -743,6 +745,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="Mountains.cpp" />
+    <ClCompile Include="MoveGameActionWindowDownEvent.cpp" />
+    <ClCompile Include="MoveGameActionWindowUpEvent.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PAKScreen.cpp" />
     <ClCompile Include="PlainsGeneration.cpp" />
