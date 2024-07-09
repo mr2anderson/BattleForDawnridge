@@ -19,6 +19,7 @@
 
 
 #include "HPGO.hpp"
+#include "Resources.hpp"
 #include "TryToAttackEvent.hpp"
 
 

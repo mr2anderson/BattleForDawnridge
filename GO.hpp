@@ -20,7 +20,6 @@
 #include "Textures.hpp"
 #include "Texts.hpp"
 #include "Events.hpp"
-#include "Player.hpp"
 #include "GameActionWindow.hpp"
 #include "CreateEEvent.hpp"
 

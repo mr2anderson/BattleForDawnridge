@@ -24,23 +24,8 @@ ResourceBar::ResourceBar() = default;
 void ResourceBar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->drawEverything(target, states);
 }
-void ResourceBar::plus(const Resource& resource) {
-	this->resources.plus(resource);
-}
-void ResourceBar::minus(const Resource& resource) {
-	this->resources.minus(resource);
-}
-void ResourceBar::plus(const Resources& resources2) {
-	this->resources.plus(resources2);
-}
-void ResourceBar::minus(const Resources& resources2) {
-	this->resources.minus(resources2);
-}
-int32_t ResourceBar::get(const std::string& type) const {
-	return this->resources.get(type);
-}
-Resources ResourceBar::getResources() const {
-	return this->resources;
+void ResourceBar::setResources(const Resources& resources) {
+	this->resources = resources;
 }
 void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
@@ -61,7 +46,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 
 		sf::Text text;
 		text.setFont(*Fonts::get()->get("1"));
-		text.setString(std::to_string(this->get(res[i])));
+		text.setString(std::to_string(this->resources.get(res[i])));
 		text.setCharacterSize(16);
 		text.setFillColor(sf::Color::White);
 		text.setOutlineColor(sf::Color::Black);

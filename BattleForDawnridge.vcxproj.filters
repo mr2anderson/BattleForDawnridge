@@ -955,9 +955,6 @@
     <ClInclude Include="Resource.hpp">
       <Filter>Header Files\screens\service\go\service</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceBar.hpp">
-      <Filter>Header Files\screens\service\go\service</Filter>
-    </ClInclude>
     <ClInclude Include="WindowButton.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
@@ -999,6 +996,9 @@
     </ClInclude>
     <ClInclude Include="Wall2.hpp">
       <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceBar.hpp">
+      <Filter>Header Files\screens\service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1191,9 +1191,6 @@
     <ClCompile Include="RectangularUiElement.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceBar.cpp">
-      <Filter>Source Files\screens\service\go\service</Filter>
-    </ClCompile>
     <ClCompile Include="Resource.cpp">
       <Filter>Source Files\screens\service\go\service</Filter>
     </ClCompile>
@@ -1292,6 +1289,9 @@
     </ClCompile>
     <ClCompile Include="Wall2.cpp">
       <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceBar.cpp">
+      <Filter>Source Files\screens\service</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

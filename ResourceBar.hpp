@@ -31,12 +31,7 @@ public:
 	ResourceBar();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void plus(const Resource& resource);
-	void minus(const Resource& resource);
-	void plus(const Resources& resources2);
-	void minus(const Resources& resources2);
-	int32_t get(const std::string& id) const;
-	Resources getResources() const;
+	void setResources(const Resources& resources);
 private:
 	Resources resources;
 

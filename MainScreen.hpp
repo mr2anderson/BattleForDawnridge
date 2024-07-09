@@ -42,6 +42,7 @@
 #include "ChangeMoveEvent.hpp"
 #include "ReturnToMenuEvent.hpp"
 #include "WindowTwoButtons.hpp"
+#include "ResourceBar.hpp"
 
 
 #pragma once
@@ -107,6 +108,7 @@ private:
 	void addPopUpWindow(std::shared_ptr<PopUpElement> w);
 	void prepareToReturnToMenu(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
+	void drawResourceBar(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);
 	void moveView();
 	void updatePlayerViewPoint();

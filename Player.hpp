@@ -17,7 +17,7 @@
  */
 
 
-#include "ResourceBar.hpp"
+#include "Resources.hpp"
 
 
 #pragma once
@@ -31,7 +31,6 @@ public:
 	uint32_t getId() const;
 	friend bool operator==(Player a, Player b);
 	friend bool operator!=(Player a, Player b);
-	const ResourceBar* getConstResourceBarPtr() const;
 	void addResource(const Resource &resource);
 	void subResource(const Resource &resource);
 	void addResources(const Resources& resources);
@@ -40,5 +39,5 @@ public:
 	Resources getResources() const;
 private:
 	uint32_t id;
-	ResourceBar bar;
+	Resources resources;
 };

@@ -32,6 +32,7 @@
 #include "CouldntOpenMap.hpp"
 #include "GOCollection.hpp"
 #include "Water.hpp"
+#include "Player.hpp"
 
 
 #pragma once

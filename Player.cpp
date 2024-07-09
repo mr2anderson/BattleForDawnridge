@@ -24,8 +24,8 @@
 Player::Player() = default;
 Player::Player(uint32_t id) {
 	this->id = id;
-	this->bar.plus(Resource("food", 20000));
-	this->bar.plus(Resource("wood", 20000));
+	this->addResource(Resource("food", 20000));
+	this->addResource(Resource("wood", 20000));
 }
 uint32_t Player::getId() const {
 	return this->id;
@@ -39,24 +39,21 @@ bool operator==(Player a, Player b) {
 bool operator!=(Player a, Player b) {
 	return !(a == b);
 }
-const ResourceBar* Player::getConstResourceBarPtr() const {
-	return &this->bar;
-}
 void Player::addResource(const Resource &resource) {
-	this->bar.plus(resource);
+	this->resources.plus(resource);
 }
 void Player::subResource(const Resource &resource) {
-	this->bar.minus(resource);
+	this->resources.minus(resource);
 }
 void Player::addResources(const Resources& resources) {
-	this->bar.plus(resources);
+	this->resources.plus(resources);
 }
 void Player::subResources(const Resources& resources) {
-	this->bar.minus(resources);
+	this->resources.minus(resources);
 }
 int32_t Player::getResource(const std::string& id) const {
-	return this->bar.get(id);
+	return this->resources.get(id);
 }
 Resources Player::getResources() const {
-	return this->bar.getResources();
+	return this->resources;
 }

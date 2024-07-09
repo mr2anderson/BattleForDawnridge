@@ -330,11 +330,16 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 		window.draw(*this->elements.front());
 	}
 	window.setView(window.getDefaultView());
-	window.draw(*this->getCurrentPlayer()->getConstResourceBarPtr());
+	this->drawResourceBar(window);
 	for (const auto &b : this->buttons) {
         window.draw(b);
     }
 	window.display();
+}
+void MainScreen::drawResourceBar(sf::RenderWindow& window) {
+	ResourceBar bar;
+	bar.setResources(this->getCurrentPlayer()->getResources());
+	window.draw(bar);
 }
 void MainScreen::drawCells(sf::RenderWindow &window) {
 	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
