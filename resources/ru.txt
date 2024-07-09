@@ -608,3 +608,10 @@ warehouse_gold_upper_case_readable_name
 <DATA>
 ЗОЛОТОХРАНИЛИЩЕ
 <\DATA>
+
+<ID>
+confirm_end_move
+<\ID>
+<DATA>
+Вы уверены, что хотите завершить свой ход?
+<\DATA>

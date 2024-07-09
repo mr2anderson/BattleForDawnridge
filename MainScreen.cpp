@@ -82,7 +82,10 @@ void MainScreen::initPlains() {
 void MainScreen::initGraphics(sf::RenderWindow &window) {
     Events endMoveEvent;
 	endMoveEvent.add(std::make_shared<ChangeMoveEvent>());
-    endMoveEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+	std::shared_ptr<WindowTwoButtons> confirmEndMoveWindow = std::make_shared<WindowTwoButtons>("click", "click", *Texts::get()->get("confirm_end_move"), *Texts::get()->get("yes"), *Texts::get()->get("no"), endMoveEvent, Events());
+	Events createConfirmEndMoveWindowEvent;
+	createConfirmEndMoveWindowEvent.add(std::make_shared<CreateEEvent>(confirmEndMoveWindow));
 
     Events returnToMenuEvent;
 	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
@@ -145,7 +148,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
-	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 150, 40, 150, 30, *Texts::get()->get("new_move")), endMoveEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 150, 40, 150, 30, *Texts::get()->get("new_move")), createConfirmEndMoveWindowEvent);
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 150, 40 + 10 + 30, "hammer_icon"), buildEvent);
     this->buttons.emplace_back(std::make_shared<Label>(5, 40, 150, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
