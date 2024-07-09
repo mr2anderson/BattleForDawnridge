@@ -68,13 +68,12 @@ void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->initMoveCtr();
     this->initPlains();
     this->initGraphics(window);
-	this->changeMove();
 }
 void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
     this->map = mapPtr;
 }
 void MainScreen::initMoveCtr() {
-	this->move = 0;
+	this->move = 1;
 }
 void MainScreen::initPlains() {
     this->plains = PlainsGeneration(this->map->getW(), this->map->getH());

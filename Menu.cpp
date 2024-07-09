@@ -70,6 +70,10 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     Events startGameOnRidgeEvent;
     startGameOnRidgeEvent.add(std::make_shared<StartGameEvent>("ridge"));
 
+    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>("click", "click", *Texts::get()->get("local_ridge_verify"), *Texts::get()->get("yes"), *Texts::get()->get("no"), startGameOnRidgeEvent, Events());
+    Events createStartGameOnRidgeVerifyWindow;
+    createStartGameOnRidgeVerifyWindow.add(std::make_shared<CreateEEvent>(startGameOnRidgeVerifyWindow));
+
     std::vector<HorizontalSelectionWindowComponent> chooseLevelWindowComponents;
     chooseLevelWindowComponents.emplace_back(
         "exit_icon",
@@ -83,7 +87,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         *Texts::get()->get("ridge_description"),
         true,
         false,
-        startGameOnRidgeEvent
+        createStartGameOnRidgeVerifyWindow
     );
     std::shared_ptr<HorizontalSelectionWindow> chooseLevelWindow = std::make_shared<HorizontalSelectionWindow>("click", "click", chooseLevelWindowComponents, Maps::THUMBNAIL_SIZE);
     Events createChooseLevelWindowEvent;

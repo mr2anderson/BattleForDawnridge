@@ -643,3 +643,10 @@ language_was_changed
 <DATA>
 The language has been changed. Re-enter for the changes to take effect
 <\DATA>
+
+<ID>
+local_ridge_verify
+<\ID>
+<DATA>
+Start a local game on the Ridge map?
+<\DATA>
