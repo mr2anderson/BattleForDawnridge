@@ -44,6 +44,9 @@ bool PAKScreen::run(sf::RenderWindow &window) {
 void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
     Music::get()->get("intro")->play();
 
+	this->s.setTexture(*Textures::get()->get("bg"));
+	this->s.setPosition(windowW - this->s.getLocalBounds().width, windowH - this->s.getLocalBounds().height);
+
 	this->t.setFont(*Fonts::get()->get("1"));
 	this->t.setString(*Texts::get()->get("press_any_key_to_continue"));
 	this->t.setCharacterSize(32);
@@ -54,6 +57,7 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(COLOR_THEME::UI_COLOR);
+	window.draw(this->s);
 	window.draw(this->t);
 	window.display();
 }

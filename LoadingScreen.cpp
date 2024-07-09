@@ -54,8 +54,13 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
 
     try {
         Texts::get()->load();
+        Textures::get()->add("bg", "bg.jpg");
     }
 	catch (CouldntOpenText &e) {
+        this->loadingError(&e, window);
+        return false;
+    }
+    catch (CouldntOpenTexture& e) {
         this->loadingError(&e, window);
         return false;
     }
@@ -63,6 +68,10 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     return true;
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
+    sf::Sprite s;
+    s.setTexture(*Textures::get()->get("bg"));
+    s.setPosition(window.getSize().x - s.getLocalBounds().width, window.getSize().y - s.getLocalBounds().height);
+
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
 	t.setString(*Texts::get()->get("please_wait"));
@@ -73,6 +82,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 50);
 
 	window.clear(COLOR_THEME::UI_COLOR);
+    window.draw(s);
 	window.draw(t);
 	window.display();
 }
@@ -90,7 +100,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "btc"}) {
             Textures::get()->add(a, a + ".png");
         }
-        Textures::get()->add("bg", "bg.jpg");
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
         }

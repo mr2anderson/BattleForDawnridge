@@ -44,6 +44,7 @@ private:
 	PAKScreen(const PAKScreen& copy) = delete;
 	static PAKScreen* singletone;
 
+	sf::Sprite s;
 	sf::Text t;
 
 	void init(uint32_t windowW, uint32_t windowH);
