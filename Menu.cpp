@@ -129,7 +129,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     
     this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60, *Texts::get()->get("language")), createChooseLanguageWindowEvent);
 
-    std::shared_ptr<WindowButton> supportWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
+    std::shared_ptr<WindowButtonImage> supportWindow = std::make_shared<WindowButtonImage>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"), "btc", Events(), 400, 300);
     Events supportEvent;
     supportEvent.add(std::make_shared<CreateEEvent>(supportWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60,  *Texts::get()->get("show_support")), supportEvent);

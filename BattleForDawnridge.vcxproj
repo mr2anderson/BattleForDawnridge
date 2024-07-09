@@ -691,6 +691,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Water.hpp" />
     <ClInclude Include="Windmill.hpp" />
     <ClInclude Include="WindowButton.hpp" />
+    <ClInclude Include="WindowButtonImage.hpp" />
     <ClInclude Include="WindowTwoButtons.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -803,6 +804,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="Windmill.cpp" />
     <ClCompile Include="WindowButton.cpp" />
+    <ClCompile Include="WindowButtonImage.cpp" />
     <ClCompile Include="WindowTwoButtons.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

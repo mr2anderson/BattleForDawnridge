@@ -27,6 +27,7 @@
 #include "CloseMenuEvent.hpp"
 #include "StartGameEvent.hpp"
 #include "WindowTwoButtons.hpp"
+#include "WindowButtonImage.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
 
