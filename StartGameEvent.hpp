@@ -17,6 +17,7 @@
  */
 
 
+#include <string>
 #include "Event.hpp"
 
 
@@ -25,5 +26,9 @@
 
 class StartGameEvent : public Event {
 public:
-	StartGameEvent();
+	StartGameEvent(const std::string &mapName);
+
+	std::string getMapName() const;
+private:
+	std::string mapName;
 };

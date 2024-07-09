@@ -35,5 +35,5 @@ public:
 protected:
 	virtual uint32_t getRadius() const = 0;
 
-	GameActionWindowComponent getExitComponent() const override;
+	HorizontalSelectionWindowComponent getExitComponent() const override;
 };

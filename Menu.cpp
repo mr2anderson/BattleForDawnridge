@@ -46,9 +46,9 @@ std::shared_ptr<Map> Menu::run(sf::RenderWindow& window) {
         if (this->closeMenu) {
             return nullptr;
         }
-        if (this->startGame) {
+        if (!this->startGameMap.empty()) {
             try {
-                std::shared_ptr<Map> map = Maps::get()->load("ridge");
+                std::shared_ptr<Map> map = Maps::get()->load(startGameMap);
                 this->prepareToStartGame();
                 return map;
             }
@@ -62,13 +62,33 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     Music::get()->get("menu")->play();
 
     this->closeMenu = false;
-    this->startGame = false;
+    this->startGameMap = "";
     this->windowW = windowW;
     this->windowH = windowH;
 
-    Events startGameEvent;
-    startGameEvent.add(std::make_shared<StartGameEvent>());
-	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_2p_1pc")), startGameEvent);
+    Events startGameOnRidgeEvent;
+    startGameOnRidgeEvent.add(std::make_shared<StartGameEvent>("ridge"));
+
+    std::vector<HorizontalSelectionWindowComponent> chooseLevelWindowComponents;
+    chooseLevelWindowComponents.emplace_back(
+        "exit_icon",
+        *Texts::get()->get("cancel"),
+        true,
+        true,
+        Events()
+    );
+    chooseLevelWindowComponents.emplace_back(
+        "ridge",
+        *Texts::get()->get("ridge_description"),
+        true,
+        false,
+        startGameOnRidgeEvent
+    );
+    std::shared_ptr<HorizontalSelectionWindow> chooseLevelWindow = std::make_shared<HorizontalSelectionWindow>("click", "click", chooseLevelWindowComponents, Maps::THUMBNAIL_SIZE);
+    Events createChooseLevelWindowEvent;
+    createChooseLevelWindowEvent.add(std::make_shared<CreateEEvent>(chooseLevelWindow));
+
+	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Texts::get()->get("start_game_local")), createChooseLevelWindowEvent);
 
     std::shared_ptr<WindowButton> supportWindow = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("support"), *Texts::get()->get("close"));
     Events supportEvent;
@@ -98,7 +118,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 	this->title.setString(*Texts::get()->get("title"));
 	this->title.setCharacterSize(60);
 	this->title.setFillColor(sf::Color::White);
-	this->title.setPosition(windowW - 40 - title.getLocalBounds().width, windowH - 40 - title.getLocalBounds().height);
+	this->title.setPosition(windowW - 40 - title.getLocalBounds().width, 40);
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
 	window.clear(COLOR_THEME::UI_COLOR);
@@ -175,5 +195,5 @@ void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
     this->closeMenu = true;
 }
 void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
-    this->startGame = true;
+    this->startGameMap = e->getMapName();
 }

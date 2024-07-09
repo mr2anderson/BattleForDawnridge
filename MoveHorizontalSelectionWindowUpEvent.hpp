@@ -23,7 +23,7 @@
 #pragma once
 
 
-class MoveGameActionWindowUpEvent : public Event {
+class MoveHorizontalSelectionWindowUpEvent : public Event {
 public:
-	MoveGameActionWindowUpEvent();
+	MoveHorizontalSelectionWindowUpEvent();
 };

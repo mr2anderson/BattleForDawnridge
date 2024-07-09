@@ -20,7 +20,7 @@
 #include "Textures.hpp"
 #include "Texts.hpp"
 #include "Events.hpp"
-#include "GameActionWindow.hpp"
+#include "HorizontalSelectionWindow.hpp"
 #include "CreateEEvent.hpp"
 
 
@@ -50,8 +50,8 @@ public:
 protected:
 	virtual Events getGameObjectResponse(uint32_t currentPlayerId) = 0;
 
-	virtual GameActionWindowComponent getExitComponent() const;
-	GameActionWindowComponent getDescriptionComponent() const;
+	virtual HorizontalSelectionWindowComponent getExitComponent() const;
+	HorizontalSelectionWindowComponent getDescriptionComponent() const;
 private:
 	uint32_t x, y;
 	uint32_t sx, sy;

@@ -77,10 +77,10 @@ std::string Market::getSoundName() const {
 std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
-GameActionWindowComponent Market::getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const {
+HorizontalSelectionWindowComponent Market::getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const {
 	Events events;
 	events.add(gameEventTrade);
-	GameActionWindowComponent component = {
+	HorizontalSelectionWindowComponent component = {
 		gameEventTrade->getTrade().buy.type + "_icon",
 		*Texts::get()->get("buy") + gameEventTrade->getTrade().buy.getReadableInfo() +
 		*Texts::get()->get("for") + gameEventTrade->getTrade().sell.getReadableInfo(),
@@ -90,8 +90,8 @@ GameActionWindowComponent Market::getTradeComponent(std::shared_ptr<TryToTradeEv
 	};
 	return component;
 }
-GameActionWindowComponent Market::getBusyWithTradeComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent Market::getBusyWithTradeComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		"trade_icon",
 		*Texts::get()->get("market_is_busy") + this->currentTrade.getReadableInfo(),
 		false,
@@ -155,7 +155,7 @@ Events Market::handleCurrentTrade() {
 	return responce;
 }
 Events Market::getSelectionW() {
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
@@ -179,7 +179,7 @@ Events Market::getSelectionW() {
 		}
 	}
 
-	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	Events response;
 	response.add(std::make_shared<CreateEEvent>(window));
 	return response;

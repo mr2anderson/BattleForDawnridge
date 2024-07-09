@@ -44,16 +44,16 @@ bool Water::exist() const {
 	return true;
 }
 Events Water::getGameObjectResponse(uint32_t playerId) {
-	return this->getGameActionWindow();
+	return this->getHorizontalSelectionWindow();
 }
-Events Water::getGameActionWindow() {
+Events Water::getHorizontalSelectionWindow() {
 	Events events;
 
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 
-	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	events.add(std::make_shared<CreateEEvent>(window));
 
 	return events;

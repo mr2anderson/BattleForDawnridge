@@ -38,8 +38,8 @@ Events Building::regenerate() {
 	}
 	return events;
 }
-GameActionWindowComponent Building::getHpInfoComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		"shield_icon",
 		*Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L"\n" +
 		*Texts::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("p_per_move"),

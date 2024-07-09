@@ -17,13 +17,18 @@
  */
 
 
-#include "Event.hpp"
+#include "Events.hpp"
 
 
 #pragma once
 
 
-class MoveGameActionWindowDownEvent : public Event {
-public:
-	MoveGameActionWindowDownEvent();
+struct HorizontalSelectionWindowComponent {
+	HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent);
+
+	std::string pictureName;
+	std::wstring message;
+	bool clickable;
+	bool sound;
+	Events gEvent;
 };

@@ -62,7 +62,7 @@ std::wstring Windmill::getUpperCaseReadableName() const {
 	return *Texts::get()->get("windmill_upper_case_readable_name");
 }
 Events Windmill::getSelectionW() {
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
@@ -71,7 +71,7 @@ Events Windmill::getSelectionW() {
 	}
 	components.push_back(this->getBuildArableComponent());
 
-	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	Events createWindowEvent;
 	createWindowEvent.add(std::make_shared<CreateEEvent>(window));
 	return createWindowEvent;
@@ -85,10 +85,10 @@ Events Windmill::getGameObjectResponse(uint32_t playerId) {
 	}
 	return Events();
 }
-GameActionWindowComponent Windmill::getBuildArableComponent() const {
+HorizontalSelectionWindowComponent Windmill::getBuildArableComponent() const {
 	Events event = this->getHighlightEvent();
 	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0)));
-	GameActionWindowComponent component = {
+	HorizontalSelectionWindowComponent component = {
 		Arable().getTextureName(),
 		Arable().getDescription() + L"\n" + 
 		*Texts::get()->get("cost") + Arable().getCost().getReadableInfo(),

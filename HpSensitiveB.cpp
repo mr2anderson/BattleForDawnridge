@@ -30,8 +30,8 @@ bool HpSensitiveB::works() const {
 bool HpSensitiveB::repairing() const {
 	return (this->getHP() < this->getMaxHP());
 }
-GameActionWindowComponent HpSensitiveB::getBusyWithRepairingComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent HpSensitiveB::getBusyWithRepairingComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		"hammer_icon",
 		*Texts::get()->get("building_in_progress"),
 		false,

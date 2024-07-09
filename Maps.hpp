@@ -19,6 +19,7 @@
 
 #include <fstream>
 #include "Map.hpp"
+#include "PlainsGeneration.hpp"
 
 
 #pragma once
@@ -33,12 +34,16 @@ public:
         return Maps::singletone;
     }
 
-    void addPath(const std::string &name, const std::string& path);
+    void add(const std::string &name, const std::string& path);
     std::shared_ptr<Map> load(const std::string& name);
+
+    static const uint32_t THUMBNAIL_SIZE;
 private:
     Maps() = default;
     Maps(const Maps& copy);
     static Maps* singletone;
 
-    std::unordered_map<std::string, std::string> data;
+    std::unordered_map<std::string, std::string> paths;
+
+    void generateThumbnail(const std::string& name);
 };

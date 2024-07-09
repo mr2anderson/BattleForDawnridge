@@ -17,13 +17,13 @@
  */
 
 
-#include "GameActionWindowComponent.hpp"
+#include "Event.hpp"
 
 
-GameActionWindowComponent::GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent) {
-	this->pictureName = pictureName;
-	this->message = message;
-	this->clickable = clickable;
-	this->sound = sound;
-	this->gEvent = gEvent;
-}
+#pragma once
+
+
+class MoveHorizontalSelectionWindowDownEvent : public Event {
+public:
+	MoveHorizontalSelectionWindowDownEvent();
+};

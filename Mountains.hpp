@@ -35,5 +35,5 @@ public:
 	bool exist() const override;
 private:
 	Events getGameObjectResponse(uint32_t playerId) override;
-	Events getGameActionWindow();
+	Events getHorizontalSelectionWindow();
 };

@@ -73,7 +73,7 @@ Events Castle::addWood() const {
 Events Castle::getSelectionW() {
 	Events response;
 
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
@@ -82,7 +82,7 @@ Events Castle::getSelectionW() {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
 
-	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;

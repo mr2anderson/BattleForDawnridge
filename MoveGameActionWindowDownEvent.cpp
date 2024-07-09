@@ -17,7 +17,7 @@
  */
 
 
-#include "MoveGameActionWindowDownEvent.hpp"
+#include "MoveHorizontalSelectionWindowDownEvent.hpp"
 
 
-MoveGameActionWindowDownEvent::MoveGameActionWindowDownEvent() = default;
+MoveHorizontalSelectionWindowDownEvent::MoveHorizontalSelectionWindowDownEvent() = default;

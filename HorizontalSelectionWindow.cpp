@@ -17,17 +17,18 @@
  */
 
 
-#include "GameActionWindow.hpp"
+#include "HorizontalSelectionWindow.hpp"
 
 
 
-GameActionWindow::GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent> &components) {
+HorizontalSelectionWindow::HorizontalSelectionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize) {
 	this->soundName1 = soundName1;
 	this->soundName2 = soundName2;
 	this->components = components;
+	this->componentSize = componentSize;
 	this->inited = false;
 }
-Events GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
+Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 	Events event = this->CameraIndependentPopUpElement::run(windowW, windowH);
 	if (!this->inited) {
 		this->inited = true;
@@ -46,20 +47,20 @@ Events GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
 				onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
 			}
 
-			Button button(std::make_shared<LabelWithImage>(94, windowH - 10 - (64 + 10) * (i + 1), windowW - 114, 64, pictureName, message), onClick);
+			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (40 + this->componentSize), this->componentSize, pictureName, message), onClick);
 			this->buttons[i] = button;
 			if (button.getY() > (int32_t)(windowH / 2)) {
 				y = button.getY() - 10;
 			}
 		}
 		Events upEvent;
-		upEvent.add(std::make_shared<MoveGameActionWindowUpEvent>());
+		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
 		upEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		this->up = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (64 + 10), "up_icon"), upEvent);
+		this->up = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, "up_icon"), upEvent);
 		Events downEvent;
-		downEvent.add(std::make_shared<MoveGameActionWindowDownEvent>());
+		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
 		downEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (64 + 10), "down_icon"), downEvent);
+		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, "down_icon"), downEvent);
 		this->rect = RectangularUiElement(10, y, windowW - 20, windowH - y - 10);
 	}
 	if (!this->soundName1.empty()) {
@@ -67,7 +68,7 @@ Events GameActionWindow::run(uint32_t windowW, uint32_t windowH) {
 	}
 	return event;
 }
-void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void HorizontalSelectionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(this->rect, states);
 	if (this->possibleToMoveUp()) {
 		target.draw(this->up);
@@ -81,7 +82,7 @@ void GameActionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) c
 		}
 	}
 }
-Events GameActionWindow::click() {
+Events HorizontalSelectionWindow::click() {
 	if (this->possibleToMoveUp()) {
 		Events events = this->up.click();
 		this->handle(events);
@@ -103,39 +104,39 @@ Events GameActionWindow::click() {
 	}
 	return Events();
 }
-void GameActionWindow::finish() {
+void HorizontalSelectionWindow::finish() {
 	this->PopUpElement::finish();
 	while (this->possibleToMoveDown()) {
 		this->moveDown();
 	}
 }
-bool GameActionWindow::show(const Button& button) const {
+bool HorizontalSelectionWindow::show(const Button& button) const {
 	return (button.getY() + button.getH() > this->rect.getY() and 
 			button.getY() + button.getH() < this->rect.getY() + this->rect.getH());
 }
-bool GameActionWindow::possibleToMoveUp() const {
+bool HorizontalSelectionWindow::possibleToMoveUp() const {
 	return (this->buttons.back().getY() < this->rect.getY());
 }
-bool GameActionWindow::possibleToMoveDown() const {
+bool HorizontalSelectionWindow::possibleToMoveDown() const {
 	return (this->buttons.front().getY() + this->buttons.front().getH() > this->rect.getY() + this->rect.getH());
 }
-void GameActionWindow::moveUp() {
+void HorizontalSelectionWindow::moveUp() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons[i].setY(this->buttons[i].getY() + (64 + 10));
+		this->buttons[i].setY(this->buttons[i].getY() + (this->componentSize + 10));
 	}
 }
-void GameActionWindow::moveDown() {
+void HorizontalSelectionWindow::moveDown() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons[i].setY(this->buttons[i].getY() - (64 + 10));
+		this->buttons[i].setY(this->buttons[i].getY() - (this->componentSize + 10));
 	}
 }
-void GameActionWindow::handle(Events& events) {
+void HorizontalSelectionWindow::handle(Events& events) {
 	for (uint32_t i = 0; i < events.size(); i = i + 1) {
 		std::shared_ptr<Event> e = events.at(i);
-		if (std::shared_ptr<MoveGameActionWindowUpEvent> moveUp = std::dynamic_pointer_cast<MoveGameActionWindowUpEvent>(e)) {
+		if (std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> moveUp = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowUpEvent>(e)) {
 			this->handleMoveUpEvent(moveUp);
 		}
-		else if (std::shared_ptr<MoveGameActionWindowDownEvent> moveDown = std::dynamic_pointer_cast<MoveGameActionWindowDownEvent>(e)) {
+		else if (std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> moveDown = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowDownEvent>(e)) {
 			this->handleMoveDownEvent(moveDown);
 		}
 		else if (std::shared_ptr<PlaySoundEvent> playSound = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
@@ -143,12 +144,12 @@ void GameActionWindow::handle(Events& events) {
 		}
 	}
 }
-void GameActionWindow::handleMoveUpEvent(std::shared_ptr<MoveGameActionWindowUpEvent> e) {
+void HorizontalSelectionWindow::handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e) {
 	this->moveUp();
 }
-void GameActionWindow::handleMoveDownEvent(std::shared_ptr<MoveGameActionWindowDownEvent> e) {
+void HorizontalSelectionWindow::handleMoveDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e) {
 	this->moveDown();
 }
-void GameActionWindow::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
+void HorizontalSelectionWindow::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
 	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }

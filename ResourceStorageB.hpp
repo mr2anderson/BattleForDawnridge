@@ -30,5 +30,5 @@ public:
 
 	virtual Resources getLimit() const = 0;
 protected:
-	GameActionWindowComponent getResourceStorageComponent() const;
+	HorizontalSelectionWindowComponent getResourceStorageComponent() const;
 };

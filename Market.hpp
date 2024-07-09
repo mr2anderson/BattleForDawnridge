@@ -19,7 +19,7 @@
 
 #include "HpSensitiveB.hpp"
 #include "Trade.hpp"
-#include "GameActionWindow.hpp"
+#include "HorizontalSelectionWindow.hpp"
 #include "SubResourceEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
@@ -47,8 +47,8 @@ public:
 private:
 	Trade currentTrade;
 
-	GameActionWindowComponent getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const;
-	GameActionWindowComponent getBusyWithTradeComponent() const;
+	HorizontalSelectionWindowComponent getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const;
+	HorizontalSelectionWindowComponent getBusyWithTradeComponent() const;
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	bool busy() const;

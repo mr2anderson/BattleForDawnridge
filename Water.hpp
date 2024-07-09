@@ -39,5 +39,5 @@ private:
 	sf::Clock clock;
 
 	Events getGameObjectResponse(uint32_t playerId) override;
-	Events getGameActionWindow();
+	Events getHorizontalSelectionWindow();
 };

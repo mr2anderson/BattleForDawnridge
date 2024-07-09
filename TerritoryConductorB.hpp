@@ -34,7 +34,7 @@ public:
 	Events getHighlightEvent() const override;
 protected:
 	bool conducted() const;
-	GameActionWindowComponent getNotConductedComponent() const;
+	HorizontalSelectionWindowComponent getNotConductedComponent() const;
 private:
 	std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr;
 	std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr;

@@ -60,8 +60,8 @@ Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
 	}
 	return Events();
 }
-GameActionWindowComponent GO::getExitComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent GO::getExitComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		"exit_icon",
 		*Texts::get()->get("leave"),
 		true,
@@ -70,8 +70,8 @@ GameActionWindowComponent GO::getExitComponent() const {
 	};
 	return component;
 }
-GameActionWindowComponent GO::getDescriptionComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		this->getTextureName(),
 		this->getDescription(),
 		false,

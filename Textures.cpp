@@ -28,6 +28,9 @@ void Textures::add(const std::string& name, const std::string& path) {
         throw CouldntOpenTexture(path);
     }
 }
+void Textures::add(const std::string& name, const sf::Texture& texture) {
+    this->textures[name] = texture;
+}
 sf::Texture *Textures::get(const std::string& name) {
     auto it = this->textures.find(name);
     return &it->second;

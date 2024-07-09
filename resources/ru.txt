@@ -194,10 +194,10 @@ along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
 <\DATA>
 
 <ID>
-start_game_2p_1pc
+start_game_local
 <\ID>
 <DATA>
-Начать (2 игрока 1 ПК)
+Начать локальную игру
 <\DATA>
 
 <ID>
@@ -614,4 +614,18 @@ confirm_end_move
 <\ID>
 <DATA>
 Вы уверены, что хотите завершить свой ход?
+<\DATA>
+
+<ID>
+cancel
+<\ID>
+<DATA>
+Отменить
+<\DATA>
+
+<ID>
+ridge_description
+<\ID>
+<DATA>
+Хребет — карта на двух игроков, разделенных хребтом гор с небольшим переходом. Дерева и камня в избытке, а железо придется захватывать в центре.
 <\DATA>

@@ -61,7 +61,7 @@ uint32_t Road::getRadius() const {
 Events Road::getSelectionW() {
 	Events response;
 
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
@@ -74,7 +74,7 @@ Events Road::getSelectionW() {
 		}
 	}
 
-	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;

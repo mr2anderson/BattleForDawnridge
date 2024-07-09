@@ -17,7 +17,7 @@
  */
 
 
-#include "MoveGameActionWindowUpEvent.hpp"
+#include "MoveHorizontalSelectionWindowUpEvent.hpp"
 
 
-MoveGameActionWindowUpEvent::MoveGameActionWindowUpEvent() = default;
+MoveHorizontalSelectionWindowUpEvent::MoveHorizontalSelectionWindowUpEvent() = default;

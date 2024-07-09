@@ -33,5 +33,5 @@ public:
 private:
 	Events getGameObjectResponse(uint32_t playerId) override;
 	Events getSelectionWindow();
-	GameActionWindowComponent getResourceLeftComponent() const;
+	HorizontalSelectionWindowComponent getResourceLeftComponent() const;
 };

@@ -25,8 +25,8 @@ ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t
 	Building(x, y, sx, sy, maxHp, playerId) {
 
 }
-GameActionWindowComponent ResourceStorageB::getResourceStorageComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent ResourceStorageB::getResourceStorageComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		"resources_icon",
 		*Texts::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
 		false,

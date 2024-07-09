@@ -23,10 +23,49 @@
 Maps* Maps::singletone = nullptr;
 
 
-void Maps::addPath(const std::string &name, const std::string &path) {
-    this->data[name] = path;
+const uint32_t Maps::THUMBNAIL_SIZE = 64;
+
+
+void Maps::add(const std::string &name, const std::string &path) {
+    this->paths[name] = path;
+    this->generateThumbnail(name);
 }
 std::shared_ptr<Map> Maps::load(const std::string& name) {
-    std::shared_ptr<Map> map = std::make_shared<Map>(this->data[name]);
+    std::shared_ptr<Map> map = std::make_shared<Map>(this->paths[name]);
     return map;
+}
+void Maps::generateThumbnail(const std::string& name) {
+    std::shared_ptr<Map> map = this->load(name);
+
+    float sx = std::min((float)THUMBNAIL_SIZE / (float)map->getW(), (float)THUMBNAIL_SIZE / (float)map->getH());
+    float sy = sx;
+    float scaleX = sx / 32.f;
+    float scaleY = scaleX;
+
+    sf::RenderTexture renderTexture;
+    renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+
+    PlainsGeneration generation = PlainsGeneration(THUMBNAIL_SIZE / 32, THUMBNAIL_SIZE / 32);
+    for (uint32_t i = 0; i < THUMBNAIL_SIZE / 32; i = i + 32) {
+        for (uint32_t j = 0; j < THUMBNAIL_SIZE / 32; j = j + 32) {
+            sf::Sprite sprite;
+            sprite.setTexture(*Textures::get()->get(std::to_string(generation.getType(i, j) + 1)));
+            sprite.setPosition(32 * i, THUMBNAIL_SIZE - 32 * j);
+            renderTexture.draw(sprite);
+        }
+    }
+
+    std::shared_ptr<GOCollection<GO>> go = map->getGO();
+    for (uint32_t i = 0; i < go->size(); i = i + 1) {
+        GO* o = go->at(i);
+        float x = o->getX() * sx;
+        float y = o->getY() * sy;
+        sf::Sprite sprite;
+        sprite.setTexture(*Textures::get()->get(o->getTextureName()));
+        sprite.setPosition(x, THUMBNAIL_SIZE - y);
+        sprite.setScale(scaleX, scaleY);
+        renderTexture.draw(sprite);
+    }
+
+    Textures::get()->add(name, renderTexture.getTexture());
 }

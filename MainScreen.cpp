@@ -95,7 +95,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	Events createConfirmReturnToMenuWindowEvent;
 	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
 
-    std::vector<GameActionWindowComponent> components;
+    std::vector<HorizontalSelectionWindowComponent> components;
     components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
     Events event;
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getTobs(), this->map->getTcbs())));
@@ -139,7 +139,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	event = Events();
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0)));
     components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, event);
-    std::shared_ptr<GameActionWindow> w = std::make_shared<GameActionWindow>("click", "click", components);
+    std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>("click", "click", components);
     Events buildEvent;
     buildEvent.add(std::make_shared<CreateEEvent>(w));
 

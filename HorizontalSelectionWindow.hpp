@@ -19,11 +19,11 @@
 
 #include "CameraIndependentPopUpElement.hpp"
 #include "Button.hpp"
-#include "GameActionWindowComponent.hpp"
+#include "HorizontalSelectionWindowComponent.hpp"
 #include "LabelWithImage.hpp"
 #include "CloseWindowEvent.hpp"
-#include "MoveGameActionWindowUpEvent.hpp"
-#include "MoveGameActionWindowDownEvent.hpp"
+#include "MoveHorizontalSelectionWindowUpEvent.hpp"
+#include "MoveHorizontalSelectionWindowDownEvent.hpp"
 #include "SoundQueue.hpp"
 #include "Sounds.hpp"
 
@@ -31,9 +31,9 @@
 #pragma once
 
 
-class GameActionWindow : public CameraIndependentPopUpElement {
+class HorizontalSelectionWindow : public CameraIndependentPopUpElement {
 public:
-	GameActionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<GameActionWindowComponent>& components);
+	HorizontalSelectionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64);
 
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -42,7 +42,8 @@ private:
 	RectangularUiElement rect;
 	std::string soundName1;
 	std::string soundName2;
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
+	uint32_t componentSize;
 	std::vector<Button> buttons;
 	Button up;
 	Button down;
@@ -56,7 +57,7 @@ private:
 	void moveDown();
 	void handle(Events& events);
 
-	void handleMoveUpEvent(std::shared_ptr<MoveGameActionWindowUpEvent> e);
-	void handleMoveDownEvent(std::shared_ptr<MoveGameActionWindowDownEvent> e);
+	void handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e);
+	void handleMoveDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e);
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
 };

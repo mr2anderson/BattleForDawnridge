@@ -34,18 +34,18 @@ Events ResourcePoint::getGameObjectResponse(uint32_t playerId) {
 Events ResourcePoint::getSelectionWindow() {
 	Events response;
 
-	std::vector<GameActionWindowComponent> components;
+	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getResourceLeftComponent());
 
-	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
 }
-GameActionWindowComponent ResourcePoint::getResourceLeftComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		this->getResourceType() + "_icon",
 		*Texts::get()->get("left") + std::to_wstring(this->getHP()),
 		false,

@@ -27,6 +27,7 @@
 #include "CloseMenuEvent.hpp"
 #include "StartGameEvent.hpp"
 #include "WindowTwoButtons.hpp"
+#include "HorizontalSelectionWindow.hpp"
 
 
 #pragma once
@@ -48,7 +49,7 @@ private:
 	static Menu* singletone;
 
     bool closeMenu;
-    bool startGame;
+	std::string startGameMap;
     uint32_t windowW, windowH;
     std::queue<std::shared_ptr<PopUpElement>> elements;
 	std::vector<Button> buttons;

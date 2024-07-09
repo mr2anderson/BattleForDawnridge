@@ -59,8 +59,8 @@ bool TerritoryConductorB::conducted() const {
 	}
 	return g.connectedToOrigin(this->getX(), this->getY());
 }
-GameActionWindowComponent TerritoryConductorB::getNotConductedComponent() const {
-	GameActionWindowComponent component = {
+HorizontalSelectionWindowComponent TerritoryConductorB::getNotConductedComponent() const {
+	HorizontalSelectionWindowComponent component = {
 		this->getTextureName(),
 		*Texts::get()->get("does_not_lead_to_city_center"),
 		false,

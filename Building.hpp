@@ -38,5 +38,5 @@ protected:
 	virtual std::wstring getUpperCaseReadableName() const = 0;
 
 	virtual Events regenerate();
-	GameActionWindowComponent getHpInfoComponent() const;
+	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 };

@@ -808,10 +808,10 @@
     <ClInclude Include="Forest.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
-    <ClInclude Include="GameActionWindow.hpp">
+    <ClInclude Include="HorizontalSelectionWindow.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
-    <ClInclude Include="GameActionWindowComponent.hpp">
+    <ClInclude Include="HorizontalSelectionWindowComponent.hpp">
       <Filter>Header Files\popUpElements\service</Filter>
     </ClInclude>
     <ClInclude Include="GO.hpp">
@@ -1021,10 +1021,10 @@
     <ClInclude Include="WarehouseStone.hpp">
       <Filter>Header Files\screens\service\go</Filter>
     </ClInclude>
-    <ClInclude Include="MoveGameActionWindowUpEvent.hpp">
+    <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
-    <ClInclude Include="MoveGameActionWindowDownEvent.hpp">
+    <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1131,10 +1131,10 @@
     <ClCompile Include="Forest.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
-    <ClCompile Include="GameActionWindow.cpp">
+    <ClCompile Include="HorizontalSelectionWindow.cpp">
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
-    <ClCompile Include="GameActionWindowComponent.cpp">
+    <ClCompile Include="HorizontalSelectionWindowComponent.cpp">
       <Filter>Source Files\popUpElements\service</Filter>
     </ClCompile>
     <ClCompile Include="GO.cpp">

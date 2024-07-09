@@ -20,4 +20,9 @@
 #include "StartGameEvent.hpp"
 
 
-StartGameEvent::StartGameEvent() = default;
+StartGameEvent::StartGameEvent(const std::string& mapName) {
+	this->mapName = mapName;
+}
+std::string StartGameEvent::getMapName() const {
+	return this->mapName;
+}

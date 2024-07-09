@@ -17,18 +17,13 @@
  */
 
 
-#include "Events.hpp"
+#include "HorizontalSelectionWindowComponent.hpp"
 
 
-#pragma once
-
-
-struct GameActionWindowComponent {
-	GameActionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent);
-
-	std::string pictureName;
-	std::wstring message;
-	bool clickable;
-	bool sound;
-	Events gEvent;
-};
+HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent) {
+	this->pictureName = pictureName;
+	this->message = message;
+	this->clickable = clickable;
+	this->sound = sound;
+	this->gEvent = gEvent;
+}

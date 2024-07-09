@@ -18,7 +18,7 @@
 
 
 #include "Building.hpp"
-#include "GameActionWindow.hpp"
+#include "HorizontalSelectionWindow.hpp"
 
 
 #pragma once

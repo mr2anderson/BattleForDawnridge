@@ -36,6 +36,7 @@ public:
     }
 
     void add(const std::string& name, const std::string& path);
+    void add(const std::string& name, const sf::Texture& texture);
     sf::Texture *get(const std::string& name);
 private:
     Textures() = default;

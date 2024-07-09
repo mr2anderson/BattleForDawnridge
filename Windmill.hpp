@@ -47,6 +47,6 @@ private:
 	std::wstring getUpperCaseReadableName() const override;
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
-	GameActionWindowComponent getBuildArableComponent() const;
+	HorizontalSelectionWindowComponent getBuildArableComponent() const;
 	Events getCollectEvents();
 };

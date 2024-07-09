@@ -616,8 +616,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Fonts.hpp" />
     <ClInclude Include="Forest.hpp" />
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="GameActionWindow.hpp" />
-    <ClInclude Include="GameActionWindowComponent.hpp" />
+    <ClInclude Include="HorizontalSelectionWindow.hpp" />
+    <ClInclude Include="HorizontalSelectionWindowComponent.hpp" />
     <ClInclude Include="GO.hpp" />
     <ClInclude Include="GOCollection.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
@@ -637,8 +637,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="Mine.hpp" />
     <ClInclude Include="Mountains.hpp" />
-    <ClInclude Include="MoveGameActionWindowDownEvent.hpp" />
-    <ClInclude Include="MoveGameActionWindowUpEvent.hpp" />
+    <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp" />
+    <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp" />
     <ClInclude Include="Music.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
     <ClInclude Include="PlainsGeneration.hpp" />
@@ -724,8 +724,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameActionWindow.cpp" />
-    <ClCompile Include="GameActionWindowComponent.cpp" />
+    <ClCompile Include="HorizontalSelectionWindow.cpp" />
+    <ClCompile Include="HorizontalSelectionWindowComponent.cpp" />
     <ClCompile Include="GO.cpp" />
     <ClCompile Include="HighlightTable.cpp" />
     <ClCompile Include="HPBar.cpp" />

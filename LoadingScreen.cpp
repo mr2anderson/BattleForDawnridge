@@ -132,8 +132,14 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         return false;
     }
 
-    for (const std::string &a : {"ridge"}) {
-        Maps::get()->addPath(a, a + ".tmx");
+    try {
+        for (const std::string& a : { "ridge" }) {
+            Maps::get()->add(a, a + ".tmx");
+        }
+    }
+    catch (CouldntOpenMap& e) {
+        loadingError(&e, window);
+        return false;
     }
 
     return true;
