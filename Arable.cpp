@@ -22,6 +22,7 @@
 
 Arable::Arable() = default;
 Arable::Arable(uint32_t x, uint32_t y, std::shared_ptr<Player> playerPtr) :
+	HpSensitiveB(x, y, 3, 3, 2000, playerPtr),
 	Building(x, y, 3, 3, 2000, playerPtr) {
 
 }
@@ -64,6 +65,9 @@ Events Arable::getSelectionW() {
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
+	if (this->repairing()) {
+		components.push_back(this->getBusyWithRepairingComponent());
+	}
 
 	std::shared_ptr<GameActionWindow> window = std::make_shared<GameActionWindow>(this->getSoundName(), "click", components);
 	Events windowEvent;

@@ -18,13 +18,13 @@
 
 
 
-#include "Building.hpp"
+#include "HpSensitiveB.hpp"
 
 
 #pragma once
 
 
-class Arable : public Building {
+class Arable : public HpSensitiveB {
 public:
 	Arable();
 	Arable(uint32_t x, uint32_t y, std::shared_ptr<Player> player);

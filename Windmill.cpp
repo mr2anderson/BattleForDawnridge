@@ -104,7 +104,7 @@ Events Windmill::getCollectEvents() {
 	Events events;
 	for (uint32_t i = 0; i < this->arables->size(); i = i + 1) {
 		Arable* arable = this->arables->at(i);
-		if (arable->getPlayer() != this->getPlayer() or arable->alreadyCollected()) {
+		if (!arable->works() or arable->getPlayer() != this->getPlayer() or arable->alreadyCollected()) {
 			continue;
 		}
 		uint32_t n = arable->collect();
