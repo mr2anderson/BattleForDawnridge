@@ -31,7 +31,7 @@ Building* Castle::cloneBuilding() const {
 Events Castle::newMove(uint32_t playerId) {
 	Events response;
 	if (this->belongTo(playerId) and this->exist()) {
-		return this->regenerate();
+		return this->regenerate() + this->addWood();
 	}
 	return response;
 }
@@ -60,6 +60,15 @@ std::wstring Castle::getUpperCaseReadableName() const {
 }
 uint32_t Castle::getRadius() const {
 	return 3;
+}
+Events Castle::addWood() const {
+	Events addWoodEvent;
+	addWoodEvent.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", "wood", this->getX(), this->getY(), this->getSX(), this->getSY());
+	flyingE->addOnStartGEvent(addWoodEvent);
+	Events createFlyingEEvent;
+	createFlyingEEvent.add(std::make_shared<CreateEEvent>(flyingE));
+	return createFlyingEEvent;
 }
 Events Castle::getSelectionW() {
 	Events response;
