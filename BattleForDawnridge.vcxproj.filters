@@ -1027,6 +1027,18 @@
     <ClInclude Include="ChooseLanguageEvent.hpp">
       <Filter>Header Files\screens\service\events</Filter>
     </ClInclude>
+    <ClInclude Include="DestroyEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryConditionBDestroyedEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceStorageBDestroyedEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryConditionB.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1346,6 +1358,18 @@
     </ClCompile>
     <ClCompile Include="ChooseLanguageEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryConditionBDestroyedEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceStorageBDestroyedEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryConditionB.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

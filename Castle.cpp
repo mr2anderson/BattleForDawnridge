@@ -22,7 +22,9 @@
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) : 
-	TerritoryOriginB(x, y, 3, 3, 100, playerId),
+	TerritoryOriginB(x, y, 3, 3, 100000, playerId),
+	ResourceStorageB(x, y, 3, 3, 100000, playerId),
+	VictoryConditionB(x, y, 3, 3, 100000, playerId),
 	Building(x, y, 3, 3, 100000, playerId) {
 }
 Building* Castle::cloneBuilding() const {
@@ -52,6 +54,9 @@ std::string Castle::getSoundName() const {
 std::wstring Castle::getDescription() const {
 	return *Texts::get()->get("castle_description");
 }
+Events Castle::destroy() {
+	return this->ResourceStorageB::destroy() + this->VictoryConditionB::destroy();
+}
 uint32_t Castle::getRegenerationSpeed() const {
 	return 25000;
 }
@@ -77,7 +82,9 @@ Events Castle::getSelectionW() {
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
+	components.push_back(this->getVictoryConditionComponent());
 	components.push_back(this->getResourceStorageComponent());
+	components.push_back(this->getDestroyComponent());
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}

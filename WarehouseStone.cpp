@@ -66,6 +66,7 @@ Events WarehouseStone::getSelectionW() {
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
 	components.push_back(this->getResourceStorageComponent());
+	components.push_back(this->getDestroyComponent());
 
 	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
 	response.add(std::make_shared<CreateEEvent>(window));

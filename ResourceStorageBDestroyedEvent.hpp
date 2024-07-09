@@ -17,24 +17,15 @@
  */
 
 
-#include "Building.hpp"
-#include "ChangeHighlightEvent.hpp"
+#include <cstdint>
+#include "Event.hpp"
 
 
-#pragma once
-
-
-class AreaB : virtual public Building {
+class ResourceStorageBDestroyedEvent : public Event {
 public:
-	AreaB();
-	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId);
+	ResourceStorageBDestroyedEvent(uint32_t playerId);
 
-	bool inRadius(GO* go) const;
-	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
-	virtual Events getHighlightEvent() const;
-protected:
-	virtual uint32_t getRadius() const = 0;
-
-	HorizontalSelectionWindowComponent getExitComponent() const override;
-	HorizontalSelectionWindowComponent getDestroyComponent() override;
+	uint32_t getPlayerId() const;
+private:
+	uint32_t playerId;
 };

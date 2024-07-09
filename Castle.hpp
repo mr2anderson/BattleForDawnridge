@@ -19,13 +19,14 @@
 
 #include "TerritoryOriginB.hpp"
 #include "ResourceStorageB.hpp"
+#include "VictoryConditionB.hpp"
 #include "AddResourceEvent.hpp"
 
 
 #pragma once
 
 
-class Castle : public TerritoryOriginB, public ResourceStorageB {
+class Castle : public TerritoryOriginB, public ResourceStorageB, public VictoryConditionB {
 public:
 	Castle();
 	Castle(uint32_t x, uint32_t y, uint32_t playerId);
@@ -37,6 +38,7 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
+	Events destroy() override;
 private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;

@@ -35,6 +35,7 @@ public:
 	void subResource(const Resource &resource);
 	void addResources(const Resources& resources, const Resources& limit);
 	void subResources(const Resources& resources);
+	void limitResources(const Resources& limit);
 	int32_t getResource(const std::string& id) const;
 	Resources getResources() const;
 private:

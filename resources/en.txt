@@ -39,7 +39,7 @@ This place is too far from roads
 castle_description
 <\ID>
 <DATA>
-Castle is a heart of your city. Protect it at all costs. Destroying all castles will result in defeat.
+Castle is a heart of your city.
 <\DATA>
 
 <ID>
@@ -649,4 +649,39 @@ local_ridge_verify
 <\ID>
 <DATA>
 Start a local game on the Ridge map?
+<\DATA>
+
+<ID>
+destroy_this_building
+<\ID>
+<DATA>
+Destroy this building. Resources won't be returned
+<\DATA>
+
+<ID>
+verify_destroy
+<\ID>
+<DATA>
+Are you sure, you want to destroy the building?
+<\DATA>
+
+<ID>
+victory_condition_building_description
+<\ID>
+<DATA>
+Your victory depends on this building. Protect it at all costs.
+<\DATA>
+
+<ID>
+player_is_out
+<\ID>
+<DATA>
+One of the players has been ruined
+<\DATA>
+
+<ID>
+game_finished
+<\ID>
+<DATA>
+Game has been finished!
 <\DATA>

@@ -32,6 +32,12 @@ WindowTwoButtons::WindowTwoButtons(const std::string& soundName1, const std::str
     this->events2 = events2;
     this->inited = false;
 }
+void WindowTwoButtons::addEvent1(const Events &events) {
+    this->events1 = this->events1 + events;
+}
+void WindowTwoButtons::addEvent2(const Events& events) {
+    this->events2 = this->events2 + events;
+}
 Events WindowTwoButtons::run(uint32_t windowW, uint32_t windowH) {
     Events soundEvent1 = this->CameraIndependentPopUpElement::run(windowW, windowH);
     if (!this->soundName1.empty()) {

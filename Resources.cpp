@@ -53,6 +53,13 @@ void Resources::minus(const Resources& resources) {
 		this->map[a.first] -= a.second;
 	}
 }
+void Resources::limit(const Resources& resources) {
+	for (const auto& a : this->map) {
+		if (a.second > resources.get(a.first)) {
+			this->map[a.first] = resources.get(a.first);
+		}
+	}
+}
 int32_t Resources::get(const std::string& type) const {
 	if (this->map.find(type) == this->map.end()) {
 		return 0;

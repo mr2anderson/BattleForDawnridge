@@ -27,6 +27,12 @@ Building::Building(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t ma
 bool Building::works() const {
 	return this->exist();
 }
+Events Building::destroy() {
+	this->subHp(this->getHP());
+	Events soundEvent;
+	soundEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
+	return soundEvent;
+}
 Events Building::regenerate() {
 	Events events;
 	if (this->getHP() < this->getMaxHP()) {
@@ -46,6 +52,21 @@ HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 		false,
 		false,
 		Events()
+	};
+	return component;
+}
+HorizontalSelectionWindowComponent Building::getDestroyComponent() {
+	Events destroyEvent;
+	destroyEvent.add(std::make_shared<DestroyEvent>(this));
+	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>("click", "click", *Texts::get()->get("verify_destroy"), *Texts::get()->get("yes"), *Texts::get()->get("no"), destroyEvent, Events());
+	Events createVerify;
+	createVerify.add(std::make_shared<CreateEEvent>(verify));
+	HorizontalSelectionWindowComponent component = {
+		"destroy_icon",
+		*Texts::get()->get("destroy_this_building"),
+		true,
+		false,
+		createVerify
 	};
 	return component;
 }

@@ -69,6 +69,8 @@ private:
 	static MainScreen* singletone;
 
     std::shared_ptr<Map> map;
+	std::vector<bool> playerIsActive;
+	uint32_t currentPlayerIndex;
 	std::queue<std::shared_ptr<PopUpElement>> elements;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
@@ -81,6 +83,8 @@ private:
 
 	void init(std::shared_ptr<Map> mapPtr, sf::RenderWindow &window);
 	void initMap(std::shared_ptr<Map> mapPtr);
+	void initPlayerIsActiveTable();
+	void initCurrentPlayerIndex();
 	void initMoveCtr();
     void initPlains();
 	void initGraphics(sf::RenderWindow &window);
@@ -103,6 +107,9 @@ private:
 	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e);
     void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
     void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
+	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
+	void handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e);
+	void handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e);
 
 	void removeFinishedElements();
 	void changeMove();

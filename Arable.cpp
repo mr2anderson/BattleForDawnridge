@@ -65,6 +65,7 @@ Events Arable::getSelectionW() {
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getHpInfoComponent());
+	components.push_back(this->getDestroyComponent());
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}

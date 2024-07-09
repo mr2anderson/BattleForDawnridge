@@ -18,6 +18,7 @@
 
 
 #include "Building.hpp"
+#include "ResourceStorageBDestroyedEvent.hpp"
 
 
 #pragma once
@@ -29,6 +30,7 @@ public:
 	ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId);
 
 	virtual Resources getLimit() const = 0;
+	Events destroy() override;
 protected:
 	HorizontalSelectionWindowComponent getResourceStorageComponent() const;
 };

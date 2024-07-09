@@ -28,7 +28,7 @@
 
 class WindowButton : public CameraIndependentPopUpElement {
 public:
-	WindowButton(const std::string &soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w = 400, uint32_t h = 225);
+	WindowButton(const std::string &soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, const Events &onFinish = Events(), uint32_t w = 400, uint32_t h = 225);
 
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -36,6 +36,7 @@ public:
 private:
     uint32_t w, h;
     std::string soundName1, soundName2;
+	Events onFinish;
 	std::wstring message;
     std::wstring buttonText;
 	Label label;

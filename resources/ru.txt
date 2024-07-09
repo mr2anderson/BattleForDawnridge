@@ -39,7 +39,7 @@ too_far_from_roads
 castle_description
 <\ID>
 <DATA>
-Замок — сердце города. Защищайте его любой ценой. Разгром всех замков приведет к поражению.
+Замок — сердце города.
 <\DATA>
 
 <ID>
@@ -649,4 +649,40 @@ local_ridge_verify
 <\ID>
 <DATA>
 Начать локалькую игру на карте Хребет?
+<\DATA>
+
+<ID>
+destroy_this_building
+<\ID>
+<DATA>
+Уничтожить это здание. Ресурсы возвращены не будут
+<\DATA>
+
+<ID>
+verify_destroy
+<\ID>
+<DATA>
+Вы уверены, что хотите уничтожить это здание?
+<\DATA>
+
+<ID>
+victory_condition_building_description
+<\ID>
+<DATA>
+От этого здания зависит Ваша победа. Защищайте его любой ценой.
+<\DATA>
+
+
+<ID>
+player_is_out
+<\ID>
+<DATA>
+Один из игроков был разорен
+<\DATA>
+
+<ID>
+game_finished
+<\ID>
+<DATA>
+Игра окончена!
 <\DATA>

@@ -25,6 +25,11 @@ ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t
 	Building(x, y, sx, sy, maxHp, playerId) {
 
 }
+Events ResourceStorageB::destroy() {
+	Events response = this->Building::destroy();
+	response.add(std::make_shared<ResourceStorageBDestroyedEvent>(this->getPlayerId()));
+	return response;
+}
 HorizontalSelectionWindowComponent ResourceStorageB::getResourceStorageComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		"resources_icon",

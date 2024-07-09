@@ -35,6 +35,7 @@ public:
 	void plus(const Resources& resources);
 	void plus(const Resources& resources, const Resources& limit);
 	void minus(const Resources& resources);
+	void limit(const Resources& resources);
 	int32_t get(const std::string& id) const;
 	std::wstring getReadableInfo() const;
 	friend bool operator>=(const Resources& a, const Resources& b);

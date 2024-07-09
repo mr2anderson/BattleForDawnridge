@@ -86,7 +86,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "windmill", "arable", "black", "blue", "green", "grey",
                 "purple", "yellow", "warehouse_food", "warehouse_wood", "warehouse_stone",
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
-                "down_icon", "russian_icon", "english_icon"}) {
+                "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon"}) {
             Textures::get()->add(a, a + ".png");
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
@@ -107,7 +107,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
 
     try {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
-                                      "regeneration", "stone", "wood", "road", "wind", "water"}) {
+                                      "regeneration", "stone", "wood", "road", "wind", "water",
+                                      "destroy"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }

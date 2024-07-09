@@ -85,3 +85,11 @@ HorizontalSelectionWindowComponent AreaB::getExitComponent() const {
 	component.gEvent = component.gEvent + this->getHighlightEvent();
 	return component;
 }
+HorizontalSelectionWindowComponent AreaB::getDestroyComponent() {
+	HorizontalSelectionWindowComponent component = this->Building::getDestroyComponent();
+	std::shared_ptr<CreateEEvent> createEvent = std::static_pointer_cast<CreateEEvent>(component.gEvent.at(0));
+	std::shared_ptr<WindowTwoButtons> window = std::static_pointer_cast<WindowTwoButtons>(createEvent->getElement());
+	window->addEvent1(this->getHighlightEvent());
+	window->addEvent2(this->getHighlightEvent());
+	return component;
+}

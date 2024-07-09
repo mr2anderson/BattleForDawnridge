@@ -30,6 +30,8 @@ class WindowTwoButtons : public CameraIndependentPopUpElement {
 public:
 	WindowTwoButtons(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring& buttonText1, const std::wstring& buttonText2, const Events& events1, const Events& events2, uint32_t w = 400, uint32_t h = 225);
 
+	void addEvent1(const Events &events);
+	void addEvent2(const Events& events);
 	Events run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click() override;

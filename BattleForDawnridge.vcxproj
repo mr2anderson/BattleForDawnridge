@@ -513,6 +513,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CouldntOpenTexture.hpp" />
     <ClInclude Include="CreateEEvent.hpp" />
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
+    <ClInclude Include="DestroyEvent.hpp" />
     <ClInclude Include="Event.hpp" />
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
@@ -656,6 +657,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="ResourcePoint.hpp" />
     <ClInclude Include="Resources.hpp" />
     <ClInclude Include="ResourceStorageB.hpp" />
+    <ClInclude Include="ResourceStorageBDestroyedEvent.hpp" />
     <ClInclude Include="ReturnToMenuEvent.hpp" />
     <ClInclude Include="Road.hpp" />
     <ClInclude Include="Root.hpp" />
@@ -677,6 +679,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TryToTradeEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
+    <ClInclude Include="VictoryConditionB.hpp" />
+    <ClInclude Include="VictoryConditionBDestroyedEvent.hpp" />
     <ClInclude Include="Wall1.hpp" />
     <ClInclude Include="Wall2.hpp" />
     <ClInclude Include="WarehouseFood.hpp" />
@@ -719,6 +723,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CouldntOpenTexture.cpp" />
     <ClCompile Include="CreateEEvent.cpp" />
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
+    <ClCompile Include="DestroyEvent.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FlyingE.cpp" />
@@ -764,6 +769,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="ResourcePoint.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="ResourceStorageB.cpp" />
+    <ClCompile Include="ResourceStorageBDestroyedEvent.cpp" />
     <ClCompile Include="ReturnToMenuEvent.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Root.cpp" />
@@ -785,6 +791,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TryToTradeEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
+    <ClCompile Include="VictoryConditionB.cpp" />
+    <ClCompile Include="VictoryConditionBDestroyedEvent.cpp" />
     <ClCompile Include="Wall1.cpp" />
     <ClCompile Include="Wall2.cpp" />
     <ClCompile Include="WarehouseFood.cpp" />

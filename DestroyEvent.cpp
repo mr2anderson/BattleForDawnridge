@@ -17,24 +17,12 @@
  */
 
 
-#include "Building.hpp"
-#include "ChangeHighlightEvent.hpp"
+#include "DestroyEvent.hpp"
 
 
-#pragma once
-
-
-class AreaB : virtual public Building {
-public:
-	AreaB();
-	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId);
-
-	bool inRadius(GO* go) const;
-	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
-	virtual Events getHighlightEvent() const;
-protected:
-	virtual uint32_t getRadius() const = 0;
-
-	HorizontalSelectionWindowComponent getExitComponent() const override;
-	HorizontalSelectionWindowComponent getDestroyComponent() override;
-};
+DestroyEvent::DestroyEvent(Building* b) {
+	this->b = b;
+}
+Building* DestroyEvent::getBuilding() {
+	return this->b;
+}

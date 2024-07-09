@@ -21,6 +21,8 @@
 #include "WindowButton.hpp"
 #include "CreateEEvent.hpp"
 #include "AddHpEvent.hpp"
+#include "WindowTwoButtons.hpp"
+#include "DestroyEvent.hpp"
 
 
 #pragma once
@@ -33,10 +35,12 @@ public:
 	virtual Building* cloneBuilding() const = 0;
 
 	virtual bool works() const;
+	virtual Events destroy();
 protected:
 	virtual uint32_t getRegenerationSpeed() const = 0;
 	virtual std::wstring getUpperCaseReadableName() const = 0;
 
 	virtual Events regenerate();
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
+	virtual HorizontalSelectionWindowComponent getDestroyComponent();
 };

@@ -17,24 +17,26 @@
  */
 
 
-#include "Building.hpp"
-#include "ChangeHighlightEvent.hpp"
+#include "VictoryConditionB.hpp"
 
 
-#pragma once
+VictoryConditionB::VictoryConditionB() = default;
+VictoryConditionB::VictoryConditionB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId) :
+	Building(x, y, sx, sy, maxHp, playerId) {
 
-
-class AreaB : virtual public Building {
-public:
-	AreaB();
-	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId);
-
-	bool inRadius(GO* go) const;
-	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
-	virtual Events getHighlightEvent() const;
-protected:
-	virtual uint32_t getRadius() const = 0;
-
-	HorizontalSelectionWindowComponent getExitComponent() const override;
-	HorizontalSelectionWindowComponent getDestroyComponent() override;
-};
+}
+Events VictoryConditionB::destroy() {
+	Events response = this->Building::destroy();
+	response.add(std::make_shared<VictoryConditionBDestroyedEvent>(this->getPlayerId()));
+	return response;
+}
+HorizontalSelectionWindowComponent VictoryConditionB::getVictoryConditionComponent() const {
+	HorizontalSelectionWindowComponent component = {
+		"star_icon",
+		*Texts::get()->get("victory_condition_building_description"),
+		false,
+		false,
+		Events()
+	};
+	return component;
+}

@@ -65,12 +65,20 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 }
 void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->initMap(mapPtr);
+	this->initPlayerIsActiveTable();
+	this->initCurrentPlayerIndex();
     this->initMoveCtr();
     this->initPlains();
     this->initGraphics(window);
 }
 void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
     this->map = mapPtr;
+}
+void MainScreen::initPlayerIsActiveTable() {
+	this->playerIsActive.resize(this->map->getPlayersNumber(), true);
+}
+void MainScreen::initCurrentPlayerIndex() {
+	this->currentPlayerIndex = 0;
 }
 void MainScreen::initMoveCtr() {
 	this->move = 1;
@@ -201,6 +209,15 @@ void MainScreen::handleEvent(Events &e) {
 		else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e.at(i))) {
 			this->handleReturnToMenuEvent(returnToMenuEvent);
 		}
+		else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e.at(i))) {
+			this->handleDestroyEvent(destroyEvent);
+		}
+		else if (std::shared_ptr<ResourceStorageBDestroyedEvent> resourceStorageBDestroyedEvent = std::dynamic_pointer_cast<ResourceStorageBDestroyedEvent>(e.at(i))) {
+			this->handleResourceStorageBDestroyedEvent(resourceStorageBDestroyedEvent);
+		}
+		else if (std::shared_ptr<VictoryConditionBDestroyedEvent> victoryConditionBDestroyedEvent = std::dynamic_pointer_cast<VictoryConditionBDestroyedEvent>(e.at(i))) {
+			this->handleVictoryConditionBDestroyedEvent(victoryConditionBDestroyedEvent);
+		}
 	}
 }
 void MainScreen::handleTryToAttackEvent(std::shared_ptr<TryToAttackEvent> e) {
@@ -280,6 +297,38 @@ void MainScreen::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e) {
 void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
 	this->returnToMenu = true;
 }
+void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
+	Events events = e->getBuilding()->destroy();
+	this->handleEvent(events);
+}
+void MainScreen::handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e) {
+	this->map->getPlayer(e->getPlayerId() - 1)->limitResources(this->getResourcesLimit());
+}
+void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e) {
+	std::shared_ptr<GOCollection<VictoryConditionB>> vcbs = this->map->getVcbs();
+	for (uint32_t i = 0; i < vcbs->size(); i = i + 1) {
+		VictoryConditionB* vcb = vcbs->at(i);
+		if (vcb->getPlayerId() == e->getPlayerId() and vcb->exist()) {
+			return;
+		}
+	}
+	this->playerIsActive[this->currentPlayerIndex] = false;
+	uint32_t count = 0;
+	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
+		count = count + this->playerIsActive[i];
+	}
+	std::shared_ptr<WindowButton> w;
+	if (count == 1) {
+		Events returnToMenu;
+		returnToMenu.add(std::make_shared<ReturnToMenuEvent>());
+		w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("game_finished"), *Texts::get()->get("OK"), returnToMenu);
+	}
+	else {
+		w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("player_is_out"), *Texts::get()->get("OK"));
+	}
+	std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
+	this->handleCreatePopUpElementEvent(createW);
+}
 void MainScreen::removeFinishedElements() {
 	bool remove = false;
 	while (!this->elements.empty()) {
@@ -297,6 +346,10 @@ void MainScreen::removeFinishedElements() {
 }
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
+	do {
+		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
+	}
+	while (!this->playerIsActive[this->currentPlayerIndex]);
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
@@ -351,6 +404,7 @@ void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
     this->highlightTable.clear();
+	this->playerIsActive.clear();
 	Playlist::get()->restartMusic();
 }
 void MainScreen::drawEverything(sf::RenderWindow& window) {

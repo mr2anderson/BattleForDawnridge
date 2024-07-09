@@ -33,6 +33,7 @@
 #include "GOCollection.hpp"
 #include "Water.hpp"
 #include "Player.hpp"
+#include "VictoryConditionB.hpp"
 
 
 #pragma once
@@ -56,6 +57,7 @@ public:
     std::shared_ptr<GOCollection<TerritoryOriginB>> getTobs();
     std::shared_ptr<GOCollection<Arable>> getArables();
     std::shared_ptr<GOCollection<ResourceStorageB>> getRsbs();
+    std::shared_ptr<GOCollection<VictoryConditionB>> getVcbs();
     void add(GO* object);
 private:
     uint32_t w, h;
@@ -68,4 +70,5 @@ private:
     std::shared_ptr<GOCollection<TerritoryOriginB>> tobs;
     std::shared_ptr<GOCollection<Arable>> arables;
     std::shared_ptr<GOCollection<ResourceStorageB>> rsbs;
+    std::shared_ptr<GOCollection<VictoryConditionB>> vcbs;
 };

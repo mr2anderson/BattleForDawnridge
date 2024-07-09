@@ -51,6 +51,9 @@ void Player::addResources(const Resources& resources, const Resources& limit) {
 void Player::subResources(const Resources& resources) {
 	this->resources.minus(resources);
 }
+void Player::limitResources(const Resources& limit) {
+	this->resources.limit(limit);
+}
 int32_t Player::getResource(const std::string& id) const {
 	return this->resources.get(id);
 }

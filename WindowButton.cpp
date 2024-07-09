@@ -20,11 +20,12 @@
 #include "WindowButton.hpp"
 
 
-WindowButton::WindowButton(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, uint32_t w, uint32_t h) {
+WindowButton::WindowButton(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, const Events &onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
     this->soundName1 = soundName1;
     this->soundName2 = soundName2;
+    this->onFinish = onFinish;
 	this->message = message;
     this->buttonText = buttonText;
     this->inited = false;
@@ -46,6 +47,7 @@ Events WindowButton::run(uint32_t windowW, uint32_t windowH) {
             onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
         }
         onClick.add(std::make_shared<CloseWindowEvent>());
+        onClick = onClick + onFinish;
 
         this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
         this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
