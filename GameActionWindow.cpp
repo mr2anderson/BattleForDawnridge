@@ -114,19 +114,19 @@ bool GameActionWindow::show(const Button& button) const {
 			button.getY() + button.getH() < this->rect.getY() + this->rect.getH());
 }
 bool GameActionWindow::possibleToMoveUp() const {
-	return (this->buttons.front().getY() + this->buttons.front().getH() > this->rect.getY() + this->rect.getH());
+	return (this->buttons.back().getY() < this->rect.getY());
 }
 bool GameActionWindow::possibleToMoveDown() const {
-	return (this->buttons.back().getY() < this->rect.getY());
+	return (this->buttons.front().getY() + this->buttons.front().getH() > this->rect.getY() + this->rect.getH());
 }
 void GameActionWindow::moveUp() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons[i].setY(this->buttons[i].getY() - (64 + 10));
+		this->buttons[i].setY(this->buttons[i].getY() + (64 + 10));
 	}
 }
 void GameActionWindow::moveDown() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons[i].setY(this->buttons[i].getY() + (64 + 10));
+		this->buttons[i].setY(this->buttons[i].getY() - (64 + 10));
 	}
 }
 void GameActionWindow::handle(Events& events) {
