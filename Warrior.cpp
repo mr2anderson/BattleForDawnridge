@@ -76,6 +76,12 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 		}
 		return 0;
 	}
+	if (type == "tipping over") {
+		if (direction == "n" or direction == "s" or direction == "w" or direction == "e" or direction == "nw" or direction == "ne" or direction == "sw" or direction == "se") {
+			return this->getTippingOverAnimationsNumberInSet();
+		}
+		return 0;
+	}
 	return 0;
 }
 bool Warrior::canMoveTo(uint32_t newX, uint32_t newY) const {

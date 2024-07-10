@@ -20,17 +20,20 @@
 #include "Game.hpp"
 
 
-/*/void process(const std::string& path) {
+/*void process(std::string path) {
 	sf::Image image;
 	image.loadFromFile(path);
 	for (uint32_t i = 0; i < image.getSize().x; i = i + 1) {
 		for (uint32_t j = 0; j < image.getSize().y; j = j + 1) {
-			if (image.getPixel(i, j) == sf::Color(106, 76, 48)) {
+			if (image.getPixel(i, j) == sf::Color(106, 76, 48) or image.getPixel(i, j) == sf::Color(39, 27, 17)) {
 				image.setPixel(i, j, sf::Color::Transparent);
 			}
 		}
 	}
-	image.saveToFile(path);
+	path.pop_back();
+	path.pop_back();
+	path.pop_back();
+	image.saveToFile(path + "png");
 }*/
 int main() {
 	/*for (const std::string& d : {"n", "s", "w", "e"}) {
@@ -39,14 +42,14 @@ int main() {
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/walking " + d + ns + ".png");
+			process("resources/infantryman/walking " + d + ns + ".bmp");
 		}
 		for (uint32_t n = 0; n < 13; n = n + 1) {
 			std::string ns = std::to_string(n);
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/attack " + d + ns + ".png");
+			process("resources/infantryman/attack " + d + ns + ".bmp");
 		}
 	}
 	for (uint32_t n = 0; n < 7; n = n + 1) {
@@ -54,7 +57,7 @@ int main() {
 		while (ns.size() < 4) {
 			ns = ('0' + ns);
 		}
-		process("resources/infantryman/talking e" + ns + ".png");
+		process("resources/infantryman/talking e" + ns + ".bmp");
 	}
 	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
 		for (uint32_t n = 0; n < 7; n = n + 1) {
@@ -62,7 +65,16 @@ int main() {
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/been hit " + d + ns + ".png");
+			process("resources/infantryman/been hit " + d + ns + ".bmp");
+		}
+	}
+	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
+		for (uint32_t n = 0; n < 9; n = n + 1) {
+			std::string ns = std::to_string(n);
+			while (ns.size() < 4) {
+				ns = ('0' + ns);
+			}
+			process("resources/infantryman/tipping over " + d + ns + ".bmp");
 		}
 	}*/
 	Game::get()->run();

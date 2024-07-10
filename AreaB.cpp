@@ -58,7 +58,7 @@ Events AreaB::getHighlightEvent() const {
 	return gEvent;
 }
 uint32_t AreaB::getAreaXMin() const {
-	if (this->getX() > this->getRadius()) {
+	if (this->getX() >= this->getRadius()) {
 		return this->getX() - this->getRadius();
 	}
 	return 0;
@@ -67,7 +67,7 @@ uint32_t AreaB::getAreaXMax() const {
 	return this->getX() + this->getSX() - 1 + this->getRadius();
 }
 uint32_t AreaB::getAreaYMin() const {
-	if (this->getY() > this->getRadius()) {
+	if (this->getY() >= this->getRadius()) {
 		return this->getY() - this->getRadius();
 	}
 	return 0;

@@ -44,6 +44,7 @@ public:
 	virtual uint32_t getWalkingAnimationsNumberInSet() const = 0;
 	virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
+	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
 private:
 	std::shared_ptr<GOCollection<GO>> go;
 	std::string currentDirection;

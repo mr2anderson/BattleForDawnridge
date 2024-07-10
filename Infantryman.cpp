@@ -22,7 +22,7 @@
 
 Infantryman::Infantryman() = default;
 Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go) :
-	Warrior(x, y, 1, 1, 1000, playerId, go) {
+	Warrior(x, y, 2, 2, 1000, playerId, go) {
 
 }
 Warrior* Infantryman::cloneWarrior() const {
@@ -51,6 +51,9 @@ uint32_t Infantryman::getAttackAnimationsNumberInSet() const {
 }
 uint32_t Infantryman::getBeenHitAnimationsNumberInSet() const {
 	return 7;
+}
+uint32_t Infantryman::getTippingOverAnimationsNumberInSet() const {
+	return 9;
 }
 std::string Infantryman::getBaseTextureName() const {
 	return "infantryman";

@@ -18,6 +18,7 @@
 
 
 #include "WarriorProducer.hpp"
+#include <iostream>
 
 
 WarriorProducer::WarriorProducer() = default;
@@ -146,7 +147,7 @@ Events WarriorProducer::handleCurrentProducing() {
 }
 std::tuple<uint32_t, uint32_t> WarriorProducer::getNewWarriorPosition() const {
 	for (uint32_t x = this->getAreaXMin(); x <= this->getAreaXMax(); x = x + 1) {
-		for (uint32_t y = this->getAreaYMin(); y <= this->getAreaYMax(); x = x + 1) {
+		for (uint32_t y = this->getAreaYMin(); y <= this->getAreaYMax(); y = y + 1) {
 			if (this->inRadius(x, y, this->currentProducing->getSX(), this->currentProducing->getSY()) and this->currentProducing->canMoveTo(x, y)) {
 				return std::make_tuple(x, y);
 			}
