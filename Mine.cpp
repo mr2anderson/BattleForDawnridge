@@ -23,8 +23,8 @@
 
 Mine::Mine() = default;
 Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
-	ResourceB(x, y, 3, 3, 20000, playerId, resourcePointsPtr),
-	Building(x, y, 3, 3, 20000, playerId) {}
+	ResourceB(x, y, 3, 3, 10000, playerId, resourcePointsPtr),
+	Building(x, y, 3, 3, 10000, playerId) {}
 Building* Mine::cloneBuilding() const {
 	return new Mine(*this);
 }
@@ -34,7 +34,7 @@ Resources Mine::getCost() const {
 	return cost;
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::string Mine::getTextureName() const {
 	return "mine";
@@ -46,10 +46,10 @@ std::string Mine::getResourceType() const {
 	return "iron";
 }
 uint32_t Mine::getCollectionSpeed() const {
-	return 2000;
+	return 1000;
 }
 uint32_t Mine::getRadius() const {
-	return 5;
+	return 4;
 }
 std::wstring Mine::getDescription() const {
 	return *Texts::get()->get("mine_description");

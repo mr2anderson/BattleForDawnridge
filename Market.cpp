@@ -22,8 +22,8 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, uint32_t playerId) : 
-	HpSensitiveB(x, y, 3, 3, 30000, playerId),
-	Building(x, y, 3, 3, 30000, playerId) {
+	HpSensitiveB(x, y, 3, 3, 15000, playerId),
+	Building(x, y, 3, 3, 15000, playerId) {
 
 }
 Building* Market::cloneBuilding() const {
@@ -65,7 +65,7 @@ Events Market::newMove(uint32_t playerId) {
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 40000));
+	cost.plus(Resource("stone", 25000));
 	return cost;
 }
 std::string Market::getTextureName() const {
@@ -167,14 +167,14 @@ Events Market::getSelectionW() {
 		components.push_back(this->getBusyWithTradeComponent());
 	}
 	if (this->works() and !this->busy()) {
-		for (const auto& a : { std::make_tuple("gold", 100, "food", 20000),
-		std::make_tuple("gold", 100, "wood", 20000),
-		std::make_tuple("gold", 100, "stone", 20000),
-		std::make_tuple("gold", 100, "iron", 20000),
-		std::make_tuple("food", 20000, "gold", 100),
-		std::make_tuple("wood", 20000, "gold", 100),
-		std::make_tuple("stone", 20000, "gold", 100),
-		std::make_tuple("iron", 20000, "gold", 100) }) {
+		for (const auto& a : { std::make_tuple("gold", 10000, "food", 10000),
+		std::make_tuple("gold", 10000, "wood", 10000),
+		std::make_tuple("gold", 10000, "stone", 10000),
+		std::make_tuple("gold", 10000, "iron", 10000),
+		std::make_tuple("food", 10000, "gold", 10000),
+		std::make_tuple("wood", 10000, "gold", 10000),
+		std::make_tuple("stone", 10000, "gold", 10000),
+		std::make_tuple("iron", 10000, "gold", 10000) }) {
 			std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
 			components.push_back(this->getTradeComponent(tryToTradeEvent));
 		}

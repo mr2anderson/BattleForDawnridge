@@ -23,8 +23,8 @@
 
 Quarry::Quarry() = default;
 Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
-	ResourceB(x, y, 3, 3, 20000, playerId, resourcePointsPtr),
-	Building(x, y, 3, 3, 20000, playerId) {}
+	ResourceB(x, y, 3, 3, 10000, playerId, resourcePointsPtr),
+	Building(x, y, 3, 3, 10000, playerId) {}
 Building* Quarry::cloneBuilding() const {
 	return new Quarry(*this);
 }
@@ -34,7 +34,7 @@ Resources Quarry::getCost() const {
 	return cost;
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";
@@ -46,10 +46,10 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getCollectionSpeed() const {
-	return 2000;
+	return 1000;
 }
 uint32_t Quarry::getRadius() const {
-	return 5;
+	return 4;
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");

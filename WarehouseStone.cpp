@@ -22,7 +22,7 @@
 
 WarehouseStone::WarehouseStone() = default;
 WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 3, 3, 30000, playerId) {
+	Building(x, y, 3, 3, 20000, playerId) {
 
 }
 Building* WarehouseStone::cloneBuilding() const {
@@ -37,11 +37,11 @@ Events WarehouseStone::newMove(uint32_t playerId) {
 }
 Resources WarehouseStone::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 10000));
+	cost.plus(Resource("stone", 15000));
 	return cost;
 }
 uint32_t WarehouseStone::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::string WarehouseStone::getTextureName() const {
 	return "warehouse_stone";

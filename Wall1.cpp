@@ -22,7 +22,7 @@
 
 Wall1::Wall1() = default;
 Wall1::Wall1(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 2, 2, 30000, playerId) {
+	Building(x, y, 2, 2, 50000, playerId) {
 
 }
 Building* Wall1::cloneBuilding() const {
@@ -37,7 +37,7 @@ Events Wall1::newMove(uint32_t playerId) {
 }
 Resources Wall1::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 5000));
+	cost.plus(Resource("wood", 2500));
 	return cost;
 }
 uint32_t Wall1::getRegenerationSpeed() const {

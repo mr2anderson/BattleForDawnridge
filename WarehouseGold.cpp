@@ -22,7 +22,7 @@
 
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 3, 3, 60000, playerId) {
+	Building(x, y, 3, 3, 20000, playerId) {
 
 }
 Building* WarehouseGold::cloneBuilding() const {
@@ -37,11 +37,11 @@ Events WarehouseGold::newMove(uint32_t playerId) {
 }
 Resources WarehouseGold::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 20000));
+	cost.plus(Resource("stone", 15000));
 	return cost;
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";
@@ -53,7 +53,7 @@ std::wstring WarehouseGold::getDescription() const {
 	return *Texts::get()->get("warehouse_gold_description");
 }
 Resources WarehouseGold::getLimit() const {
-	return Resources({ Resource("gold", 100) });
+	return Resources({ Resource("gold", 10000) });
 }
 std::wstring WarehouseGold::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_gold_upper_case_readable_name");

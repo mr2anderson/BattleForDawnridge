@@ -22,8 +22,8 @@
 
 Road::Road() = default;
 Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
-	TerritoryConductorB(x, y, 1, 1, 1000, playerId, originsPtr, conductorsPtr),
-	Building(x, y, 1, 1, 1000, playerId) {
+	TerritoryConductorB(x, y, 1, 1, 500, playerId, originsPtr, conductorsPtr),
+	Building(x, y, 1, 1, 500, playerId) {
 	
 }
 Building* Road::cloneBuilding() const {
@@ -37,11 +37,11 @@ Events Road::newMove(uint32_t playerId) {
 }
 Resources Road::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 2500));
+	cost.plus(Resource("wood", 1000));
 	return cost;
 }
 uint32_t Road::getRegenerationSpeed() const {
-	return 1000;
+	return 500;
 }
 std::string Road::getTextureName() const {
 	return "road";

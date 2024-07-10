@@ -22,10 +22,10 @@
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) : 
-	TerritoryOriginB(x, y, 3, 3, 100000, playerId),
-	ResourceStorageB(x, y, 3, 3, 100000, playerId),
-	VictoryConditionB(x, y, 3, 3, 100000, playerId),
-	Building(x, y, 3, 3, 100000, playerId) {
+	TerritoryOriginB(x, y, 3, 3, 500000, playerId),
+	ResourceStorageB(x, y, 3, 3, 500000, playerId),
+	VictoryConditionB(x, y, 3, 3, 500000, playerId),
+	Building(x, y, 3, 3, 500000, playerId) {
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
@@ -38,11 +38,11 @@ Events Castle::newMove(uint32_t playerId) {
 	return response;
 }
 Resources Castle::getLimit() const {
-	return Resources({ Resource("food", 20000), Resource("wood", 20000) });
+	return Resources({ Resource("wood", 20000), Resource("stone", 20000)});
 }
 Resources Castle::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 100000));
+	cost.plus(Resource("stone", 50000));
 	return cost;
 }
 std::string Castle::getTextureName() const {
@@ -58,7 +58,7 @@ Events Castle::destroy() {
 	return this->ResourceStorageB::destroy() + this->VictoryConditionB::destroy();
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return 25000;
+	return 100000;
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");

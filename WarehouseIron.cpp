@@ -22,7 +22,7 @@
 
 WarehouseIron::WarehouseIron() = default;
 WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 3, 3, 30000, playerId) {
+	Building(x, y, 3, 3, 20000, playerId) {
 
 }
 Building* WarehouseIron::cloneBuilding() const {
@@ -37,11 +37,11 @@ Events WarehouseIron::newMove(uint32_t playerId) {
 }
 Resources WarehouseIron::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 10000));
+	cost.plus(Resource("stone", 15000));
 	return cost;
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
-	return 10000;
+	return 5;
 }
 std::string WarehouseIron::getTextureName() const {
 	return "warehouse_iron";

@@ -22,9 +22,9 @@
 
 Windmill::Windmill() = default;
 Windmill::Windmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Arable>> arables) :
-	HpSensitiveB(x, y, 3, 3, 20000, playerId),
-	AreaB(x, y, 3, 3, 20000, playerId),
-	Building(x, y, 3, 3, 20000, playerId) {
+	HpSensitiveB(x, y, 3, 3, 10000, playerId),
+	AreaB(x, y, 3, 3, 10000, playerId),
+	Building(x, y, 3, 3, 10000, playerId) {
 	this->arables = arables;
 }
 Building* Windmill::cloneBuilding() const {
@@ -56,7 +56,7 @@ uint32_t Windmill::getRadius() const {
 	return 4;
 }
 uint32_t Windmill::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::wstring Windmill::getUpperCaseReadableName() const {
 	return *Texts::get()->get("windmill_upper_case_readable_name");
