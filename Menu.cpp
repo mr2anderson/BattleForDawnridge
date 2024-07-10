@@ -157,7 +157,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     this->background.setPosition(windowW - this->background.getLocalBounds().width, windowH - this->background.getLocalBounds().height);
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
-    window.clear(COLOR_THEME::UI_COLOR);
+    window.clear(sf::Color::Black);
     window.draw(this->background);
 	for (const auto& b : this->buttons) {
         window.draw(b);

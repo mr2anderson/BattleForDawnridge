@@ -23,20 +23,58 @@
 Image::Image() = default;
 Image::Image(int32_t x, int32_t y, const std::string &imageName) :
         RectangularUiElement(x, y, Textures::get()->get(imageName)->getSize().x, Textures::get()->get(imageName)->getSize().y) {
-    this->scale = 1;
-    this->imageName = imageName;
+    this->sprite.setTexture(*Textures::get()->get(imageName));
+    this->sprite.setPosition(this->getX(), this->getY());
 }
 Image::Image(int32_t x, int32_t y, uint32_t h, const std::string &imageName) :
         RectangularUiElement(x, y, (float)Textures::get()->get(imageName)->getSize().x * (float)h / (float)Textures::get()->get(imageName)->getSize().y, h) {
-    this->scale = (float)h / (float)Textures::get()->get(imageName)->getSize().y;
-    this->imageName = imageName;
+    float scale = (float)h / (float)Textures::get()->get(imageName)->getSize().y;
+    this->sprite.setTexture(*Textures::get()->get(imageName));
+    this->sprite.setScale(scale, scale);
+    this->sprite.setPosition(this->getX(), this->getY());
+}
+Image::Image(int32_t x, int32_t y, uint32_t w, uint32_t h, bool left, bool up, const std::string& imageName) :
+        RectangularUiElement(x, y, w, h) {
+    this->sprite.setTexture(*Textures::get()->get(imageName));
+    uint32_t textureWidth = this->sprite.getTexture()->getSize().x;
+    uint32_t textureHeight = this->sprite.getTexture()->getSize().y;
+    if (w > textureWidth) {
+        w = textureWidth;
+    }
+    if (h > textureHeight) {
+        h = textureHeight;
+    }
+    if (left) {
+        if (up) {
+            this->sprite.setTextureRect(sf::IntRect(0, 0, w, h));
+        }
+        else {
+            this->sprite.setTextureRect(sf::IntRect(0, textureHeight - h, w, h));
+        }
+    }
+    else {
+        if (up) {
+            this->sprite.setTextureRect(sf::IntRect(textureWidth - w, 0, w, h));
+        }
+        else {
+            this->sprite.setTextureRect(sf::IntRect(textureWidth - w, textureHeight - h, w, h));
+        }
+    }
+    this->sprite.setPosition(this->getX(), this->getY());
 }
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
-    target.setView(target.getDefaultView());
-    sf::Sprite sprite;
-    sprite.setTexture(*Textures::get()->get(imageName));
-    sprite.setPosition(this->getX(), this->getY());
-    sprite.setScale(scale, scale);
+    
     target.draw(sprite, states);
+}
+void Image::setX(int32_t newX) {
+    this->RectangularUiElement::setX(newX);
+    this->rerenderBasedOnPosition();
+}
+void Image::setY(int32_t newY) {
+    this->RectangularUiElement::setY(newY);
+    this->rerenderBasedOnPosition();
+}
+void Image::rerenderBasedOnPosition() {
+    this->sprite.setPosition(this->getX(), this->getY());
 }

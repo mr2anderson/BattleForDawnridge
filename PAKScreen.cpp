@@ -56,7 +56,7 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
 	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 50);
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
-	window.clear(COLOR_THEME::UI_COLOR);
+	window.clear(sf::Color::Black);
 	window.draw(this->s);
 	window.draw(this->t);
 	window.display();

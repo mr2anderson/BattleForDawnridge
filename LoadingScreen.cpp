@@ -37,7 +37,7 @@ bool LoadingScreen::run(sf::RenderWindow &window) {
     return true;
 }
 void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
-	window.clear(COLOR_THEME::UI_COLOR);
+	window.clear(sf::Color::Black);
 	window.display();
 }
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
@@ -80,7 +80,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	t.setOutlineThickness(2);
 	t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 50);
 
-	window.clear(COLOR_THEME::UI_COLOR);
+	window.clear(sf::Color::Black);
     window.draw(s);
 	window.draw(t);
 	window.display();
@@ -184,7 +184,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
                 element.click();
             }
         }
-        window.clear(COLOR_THEME::UI_COLOR);
+        window.clear(sf::Color::Black);
         window.draw(s);
         window.draw(element);
         window.display();

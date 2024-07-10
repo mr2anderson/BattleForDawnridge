@@ -27,11 +27,16 @@
 class Image : public RectangularUiElement {
 public:
     Image();
-    Image(int32_t x, int32_t y, const std::string& imageName);
-    Image(int32_t x, int32_t y, uint32_t h, const std::string &imageName);
+    Image(int32_t x, int32_t y, const std::string& imageName); // creating image with default size
+    Image(int32_t x, int32_t y, uint32_t h, const std::string &imageName); // creating image making it fit in specified height by scaling
+    Image(int32_t x, int32_t y, uint32_t w, uint32_t h, bool left, bool up, const std::string& imageName); // creating image cropping it to specific size
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    void setX(int32_t newX) override;
+    void setY(int32_t newY) override;
 private:
-    float scale;
-    std::string imageName;
+    sf::Sprite sprite;
+
+    void rerenderBasedOnPosition();
 };

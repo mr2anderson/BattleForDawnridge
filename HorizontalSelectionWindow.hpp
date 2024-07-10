@@ -39,7 +39,7 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click() override;
 private:
-	RectangularUiElement rect;
+	std::unique_ptr<RectangularUiElement> rect;
 	std::string soundName1;
 	std::string soundName2;
 	std::vector<HorizontalSelectionWindowComponent> components;

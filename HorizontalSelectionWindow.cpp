@@ -61,7 +61,7 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
 		downEvent.add(std::make_shared<PlaySoundEvent>("click"));
 		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, "down_icon"), downEvent);
-		this->rect = RectangularUiElement(10, y, windowW - 20, windowH - y - 10);
+		this->rect = std::make_unique<RectangularUiElement>(10, y, windowW - 20, windowH - y - 10);
 	}
 	if (!this->soundName1.empty()) {
 		event.add(std::make_shared<PlaySoundEvent>(this->soundName1));
@@ -69,7 +69,7 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 	return event;
 }
 void HorizontalSelectionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(this->rect, states);
+	target.draw(*this->rect.get(), states);
 	if (this->possibleToMoveUp()) {
 		target.draw(this->up);
 	}
@@ -111,14 +111,14 @@ void HorizontalSelectionWindow::finish() {
 	}
 }
 bool HorizontalSelectionWindow::show(const Button& button) const {
-	return (button.getY() + button.getH() > this->rect.getY() and 
-			button.getY() + button.getH() < this->rect.getY() + this->rect.getH());
+	return (button.getY() + button.getH() > this->rect->getY() and 
+			button.getY() + button.getH() < this->rect->getY() + this->rect->getH());
 }
 bool HorizontalSelectionWindow::possibleToMoveUp() const {
-	return (this->buttons.back().getY() < this->rect.getY());
+	return (this->buttons.back().getY() < this->rect->getY());
 }
 bool HorizontalSelectionWindow::possibleToMoveDown() const {
-	return (this->buttons.front().getY() + this->buttons.front().getH() > this->rect.getY() + this->rect.getH());
+	return (this->buttons.front().getY() + this->buttons.front().getH() > this->rect->getY() + this->rect->getH());
 }
 void HorizontalSelectionWindow::moveUp() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
