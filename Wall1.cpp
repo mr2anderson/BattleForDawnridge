@@ -37,7 +37,7 @@ Events Wall1::newMove(uint32_t playerId) {
 }
 Resources Wall1::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 2500));
+	cost.plus(Resource("wood", 5000));
 	return cost;
 }
 uint32_t Wall1::getRegenerationSpeed() const {

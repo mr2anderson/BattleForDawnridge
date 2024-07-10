@@ -110,7 +110,7 @@ bool Market::busy() const {
 	return this->currentTrade.movesLeft != 0;
 }
 uint32_t Market::getTradeStartTime() const {
-	return 4;
+	return 8;
 }
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;

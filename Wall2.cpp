@@ -22,7 +22,7 @@
 
 Wall2::Wall2() = default;
 Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 2, 2, 400000, playerId) {
+	Building(x, y, 2, 2, 200000, playerId) {
 
 }
 Building* Wall2::cloneBuilding() const {
