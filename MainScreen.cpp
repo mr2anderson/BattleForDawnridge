@@ -138,6 +138,9 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0))));
     components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, event);
     event = Events();
+	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getGO()))));
+	components.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, true, event);
+	event = Events();
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0))));
     components.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, event);
     event = Events();
@@ -217,6 +220,21 @@ void MainScreen::handleEvent(Events &e) {
 		}
 		else if (std::shared_ptr<VictoryConditionBDestroyedEvent> victoryConditionBDestroyedEvent = std::dynamic_pointer_cast<VictoryConditionBDestroyedEvent>(e.at(i))) {
 			this->handleVictoryConditionBDestroyedEvent(victoryConditionBDestroyedEvent);
+		}
+		else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e.at(i))) {
+			this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent);
+		}
+		else if (std::shared_ptr<TryToProduceEvent> tryToProduceEvent = std::dynamic_pointer_cast<TryToProduceEvent>(e.at(i))) {
+			this->handleTryToProduceEvent(tryToProduceEvent);
+		}
+		else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e.at(i))) {
+			this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent);
+		}
+		else if (std::shared_ptr<SelectWarriorEvent> selectWarriorEvent = std::dynamic_pointer_cast<SelectWarriorEvent>(e.at(i))) {
+			this->handleSelectWarriorEvent(selectWarriorEvent);
+		}
+		else if (std::shared_ptr<StartWarriorClickAnimationEvent> startWarriorClickAnimationEvent = std::dynamic_pointer_cast<StartWarriorClickAnimationEvent>(e.at(i))) {
+			this->handleStartWarriorClickAnimationEvent(startWarriorClickAnimationEvent);
 		}
 	}
 }
@@ -328,6 +346,31 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 	}
 	std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
 	this->handleCreatePopUpElementEvent(createW);
+}
+void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
+	e->getBuilding()->decreaseCurrentProducingMovesLeft();
+}
+void MainScreen::handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e) {
+	if (this->getCurrentPlayer()->getResources() >= e->getWarrior()->getCost()) {
+		Events events;
+		events.add(std::make_shared<SubResourcesEvent>(e->getWarrior()->getCost()));
+		events = events + e->getProducer()->startProducing(e->getWarrior());
+		this->handleEvent(events);
+	}
+	else {
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("no_resources_for_producing"), *Texts::get()->get("OK"));
+		this->addPopUpWindow(w);
+	}
+}
+void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e) {
+	e->getProducer()->stopProducing();
+	this->map->add(e->getWarrior()->cloneWarrior());
+}
+void MainScreen::handleSelectWarriorEvent(std::shared_ptr<SelectWarriorEvent> e) {
+
+}
+void MainScreen::handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e) {
+	e->getWarrior()->startClickAnimation();
 }
 void MainScreen::removeFinishedElements() {
 	bool remove = false;

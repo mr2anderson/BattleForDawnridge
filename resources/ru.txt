@@ -685,3 +685,61 @@ game_finished
 <DATA>
 Игра окончена!
 <\DATA>
+
+<ID>
+producing_started
+<\ID>
+<DATA>
+НАЧАТО ОБУЧЕНИЕ
+Число ходов до конца обучения: 
+<\DATA>
+
+<ID>
+time_to_produce
+<\ID>
+<DATA>
+Число ходов на обучение: 
+<\DATA>
+
+<ID>
+producing_in_progress
+<\ID>
+<DATA>
+Идет обучение. Число ходов до конца обучения: 
+<\DATA>
+
+<ID>
+couldnt_find_new_warrior_position
+<\ID>
+<DATA>
+Обучение завершено, но нет свободного места.
+<\DATA>
+
+<ID>
+no_resources_for_producing
+<\ID>
+<DATA>
+НЕДОСТАТОЧНО РЕСУРСОВ
+Вы не можете начать обучение
+<\DATA>
+
+<ID>
+infantryman_description
+<\ID>
+<DATA>
+Вчерашние крестьяне не сравнятся с профессиональными солдатами и едва ли способны на самостоятельный штурм, но из-за своей низкой стоимости могут быть полезны.
+<\DATA>
+
+<ID>
+barracks_description
+<\ID>
+<DATA>
+Казармы позволяют обучать пехоту.
+<\DATA>
+
+<ID>
+barracks_upper_case_readable_name
+<\ID>
+<DATA>
+КАЗАРМА
+<\DATA>

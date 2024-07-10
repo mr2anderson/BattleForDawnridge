@@ -490,9 +490,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddResourcesEvent.hpp" />
     <ClInclude Include="Arable.hpp" />
     <ClInclude Include="AreaB.hpp" />
+    <ClInclude Include="Barracks.hpp" />
     <ClInclude Include="BuildEvent.hpp" />
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="BuildingMode.hpp" />
+    <ClInclude Include="BuildingShortInfo.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="CameraDependentPopUpElement.hpp" />
     <ClInclude Include="CameraIndependentPopUpElement.hpp" />
@@ -505,6 +507,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CollectEvent.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
+    <ClInclude Include="CouldntFindNewWarriorPosition.hpp" />
     <ClInclude Include="CouldntOpen.hpp" />
     <ClInclude Include="CouldntOpenFont.hpp" />
     <ClInclude Include="CouldntOpenMap.hpp" />
@@ -513,6 +516,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CouldntOpenText.hpp" />
     <ClInclude Include="CouldntOpenTexture.hpp" />
     <ClInclude Include="CreateEEvent.hpp" />
+    <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
     <ClInclude Include="DestroyEvent.hpp" />
     <ClInclude Include="Event.hpp" />
@@ -628,6 +632,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="HPGO.hpp" />
     <ClInclude Include="HpSensitiveB.hpp" />
     <ClInclude Include="Image.hpp" />
+    <ClInclude Include="Infantryman.hpp" />
     <ClInclude Include="Iron.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
@@ -663,9 +668,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Road.hpp" />
     <ClInclude Include="Root.hpp" />
     <ClInclude Include="Sawmill.hpp" />
+    <ClInclude Include="SelectWarriorEvent.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
     <ClInclude Include="StartGameEvent.hpp" />
+    <ClInclude Include="StartWarriorClickAnimationEvent.hpp" />
     <ClInclude Include="Stone.hpp" />
     <ClInclude Include="SubResourceEvent.hpp" />
     <ClInclude Include="SubResourcesEvent.hpp" />
@@ -677,6 +684,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="TryToAttackEvent.hpp" />
     <ClInclude Include="TryToBuildEvent.hpp" />
+    <ClInclude Include="TryToProduceEvent.hpp" />
     <ClInclude Include="TryToTradeEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
@@ -689,6 +697,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="WarehouseIron.hpp" />
     <ClInclude Include="WarehouseStone.hpp" />
     <ClInclude Include="WarehouseWood.hpp" />
+    <ClInclude Include="Warrior.hpp" />
+    <ClInclude Include="WarriorProducer.hpp" />
+    <ClInclude Include="WarriorProducingFinishedEvent.hpp" />
     <ClInclude Include="Water.hpp" />
     <ClInclude Include="Windmill.hpp" />
     <ClInclude Include="WindowButton.hpp" />
@@ -701,9 +712,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AddResourcesEvent.cpp" />
     <ClCompile Include="Arable.cpp" />
     <ClCompile Include="AreaB.cpp" />
+    <ClCompile Include="Barracks.cpp" />
     <ClCompile Include="BuildEvent.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingMode.cpp" />
+    <ClCompile Include="BuildingShortInfo.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraDependentPopUpElement.cpp" />
     <ClCompile Include="CameraIndependentPopUpElemenent.cpp" />
@@ -716,6 +729,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CollectEvent.cpp" />
     <ClCompile Include="ColorTheme.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />
+    <ClCompile Include="CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="CouldntOpen.cpp" />
     <ClCompile Include="CouldntOpenFont.cpp" />
     <ClCompile Include="CouldntOpenMap.cpp" />
@@ -724,6 +738,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CouldntOpenText.cpp" />
     <ClCompile Include="CouldntOpenTexture.cpp" />
     <ClCompile Include="CreateEEvent.cpp" />
+    <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
     <ClCompile Include="DestroyEvent.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -740,6 +755,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="HPGO.cpp" />
     <ClCompile Include="HpSensitiveB.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Infantryman.cpp" />
     <ClCompile Include="Iron.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
@@ -776,9 +792,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="Sawmill.cpp" />
+    <ClCompile Include="SelectWarriorEvent.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="StartGameEvent.cpp" />
+    <ClCompile Include="StartWarriorClickAnimationEvent.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="SubResourceEvent.cpp" />
     <ClCompile Include="SubResourcesEvent.cpp" />
@@ -790,6 +808,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="TryToAttackEvent.cpp" />
     <ClCompile Include="TryToBuildEvent.cpp" />
+    <ClCompile Include="TryToProduceEvent.cpp" />
     <ClCompile Include="TryToTradeEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
@@ -802,6 +821,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="WarehouseIron.cpp" />
     <ClCompile Include="WarehouseStone.cpp" />
     <ClCompile Include="WarehouseWood.cpp" />
+    <ClCompile Include="Warrior.cpp" />
+    <ClCompile Include="WarriorProducer.cpp" />
+    <ClCompile Include="WarriorProducingFinishedEvent.cpp" />
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="Windmill.cpp" />
     <ClCompile Include="WindowButton.cpp" />

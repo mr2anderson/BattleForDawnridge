@@ -19,11 +19,11 @@
 
 #include "HpSensitiveB.hpp"
 #include "Trade.hpp"
-#include "HorizontalSelectionWindow.hpp"
 #include "SubResourceEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 #include "TryToTradeEvent.hpp"
+#include "BuildingShortInfo.hpp"
 
 
 #pragma once

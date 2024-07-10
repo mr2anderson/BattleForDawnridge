@@ -44,6 +44,7 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     try {
         Fonts::get()->add("1", "1.ttf");
         Sounds::get()->add("click", "click.ogg");
+        Textures::get()->add("loading_screen", "loading_screen.jpg");
     }
 	catch (CouldntOpenFont &e) {
         return false;
@@ -51,16 +52,14 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     catch (CouldntOpenSound &e) {
         return false;
     }
+    catch (CouldntOpenTexture& e) {
+        return false;
+    }
 
     try {
         Texts::get()->load();
-        Textures::get()->add("bg", "bg.jpg");
     }
 	catch (CouldntOpenText &e) {
-        this->loadingError(&e, window);
-        return false;
-    }
-    catch (CouldntOpenTexture& e) {
         this->loadingError(&e, window);
         return false;
     }
@@ -69,8 +68,8 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
     sf::Sprite s;
-    s.setTexture(*Textures::get()->get("bg"));
-    s.setPosition(window.getSize().x - s.getLocalBounds().width, window.getSize().y - s.getLocalBounds().height);
+    s.setTexture(*Textures::get()->get("loading_screen"));
+    s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
@@ -97,8 +96,22 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "purple", "yellow", "warehouse_food", "warehouse_wood", "warehouse_stone",
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
-                "btc"}) {
+                "btc", "producing_icon", "barracks"}) {
             Textures::get()->add(a, a + ".png");
+        }
+        Textures::get()->add("menu", "menu.jpg");
+        for (const std::string& a : { "talking", "walking", "attack", "been hit" }) {
+            for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
+                for (const std::tuple<std::string, uint32_t>& w : { std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d))}) {
+                    for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
+                        std::string s = std::to_string(i);
+                        while (s.size() < 4) {
+                            s = ('0' + s);
+                        }
+                        Textures::get()->add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
+                    }
+                }
+            }
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
@@ -153,6 +166,10 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     return true;
 }
 void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
+    sf::Sprite s;
+    s.setTexture(*Textures::get()->get("loading_screen"));
+    s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
+
     WindowButton element = WindowButton("click", "click", UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
@@ -168,6 +185,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
             }
         }
         window.clear(COLOR_THEME::UI_COLOR);
+        window.draw(s);
         window.draw(element);
         window.display();
     }

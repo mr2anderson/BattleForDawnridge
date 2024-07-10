@@ -40,8 +40,10 @@ public:
 	uint32_t getSY() const;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
+	bool blockForWarrior(uint32_t warriorPlayerId) const;
 	virtual bool exist() const = 0;
 	Events click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
+	bool intersects(GO* go) const;
 
 	virtual Events newMove(uint32_t currentPlayerId) = 0;
 	virtual std::string getTextureName() const = 0;

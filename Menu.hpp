@@ -56,7 +56,6 @@ private:
     std::queue<std::shared_ptr<PopUpElement>> elements;
 	std::vector<Button> buttons;
 	sf::Sprite background;
-	sf::Text title;
 
 	void init(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);

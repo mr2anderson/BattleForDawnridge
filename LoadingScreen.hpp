@@ -25,6 +25,7 @@
 #include "Texts.hpp"
 #include "Maps.hpp"
 #include "ColorTheme.hpp"
+#include "Infantryman.hpp"
 #include "PlainsGeneration.hpp"
 #include "WindowButton.hpp"
 #include "Water.hpp"

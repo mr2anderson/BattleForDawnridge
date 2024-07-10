@@ -44,7 +44,7 @@ bool PAKScreen::run(sf::RenderWindow &window) {
 void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
     Music::get()->get("intro")->play();
 
-	this->s.setTexture(*Textures::get()->get("bg"));
+	this->s.setTexture(*Textures::get()->get("loading_screen"));
 	this->s.setPosition(windowW - this->s.getLocalBounds().width, windowH - this->s.getLocalBounds().height);
 
 	this->t.setFont(*Fonts::get()->get("1"));

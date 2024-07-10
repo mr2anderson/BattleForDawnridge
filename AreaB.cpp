@@ -49,36 +49,31 @@ Events AreaB::getHighlightEvent() const {
 		return gEvent;
 	}
 
-	uint32_t x1, y1;
-	uint32_t x2, y2;
-
-	x1 = this->getX() + this->getSX() - 1 + this->getRadius();
-	y1 = this->getY() + this->getSY() - 1 + this->getRadius();
-
-	x2 = this->getX();
-	y2 = this->getY();
-
-	if (this->getX() > this->getRadius()) {
-		x2 = this->getX() - this->getRadius();
-	}
-	else {
-		x2 = 0;
-	}
-
-	if (this->getY() > this->getRadius()) {
-		y2 = this->getY() - this->getRadius();
-	}
-	else {
-		y2 = 0;
-	}
-
-	for (uint32_t x = x2; x <= x1; x = x + 1) {
-		for (uint32_t y = y2; y <= y1; y = y + 1) {
+	for (uint32_t x = this->getAreaXMin(); x <= this->getAreaXMax(); x = x + 1) {
+		for (uint32_t y = this->getAreaYMin(); y <= this->getAreaYMax(); y = y + 1) {
 			gEvent.add(std::make_shared<ChangeHighlightEvent>(this, x, y));
 		}
 	}
 
 	return gEvent;
+}
+uint32_t AreaB::getAreaXMin() const {
+	if (this->getX() > this->getRadius()) {
+		return this->getX() - this->getRadius();
+	}
+	return 0;
+}
+uint32_t AreaB::getAreaXMax() const {
+	return this->getX() + this->getSX() - 1 + this->getRadius();
+}
+uint32_t AreaB::getAreaYMin() const {
+	if (this->getY() > this->getRadius()) {
+		return this->getY() - this->getRadius();
+	}
+	return 0;
+}
+uint32_t AreaB::getAreaYMax() const {
+	return this->getY() + this->getSY() - 1 + this->getRadius();
 }
 HorizontalSelectionWindowComponent AreaB::getExitComponent() const {
 	HorizontalSelectionWindowComponent component = this->Building::getExitComponent();

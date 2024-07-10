@@ -38,7 +38,14 @@ Events Castle::newMove(uint32_t playerId) {
 	return response;
 }
 Resources Castle::getLimit() const {
-	return Resources({ Resource("wood", 20000), Resource("stone", 20000)});
+	//return Resources({ Resource("wood", 20000), Resource("stone", 20000)});
+	return Resources({
+		Resource("food", 9999999),
+		Resource("wood", 9999999),
+		Resource("stone", 9999999),
+		Resource("iron", 9999999),
+		Resource("gold", 9999999),
+		});
 }
 Resources Castle::getCost() const {
 	Resources cost;
@@ -64,7 +71,7 @@ std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");
 }
 uint32_t Castle::getRadius() const {
-	return 3;
+	return 5;
 }
 Events Castle::addWood() const {
 	Events addWoodEvent;

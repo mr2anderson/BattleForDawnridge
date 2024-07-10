@@ -153,15 +153,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
 	this->buttons.emplace_back(std::make_shared<Label>(10, 360, 400, 60, *Texts::get()->get("returnToMenu")), createConfirmExitWindowEvent);
 
-	this->title.setFont(*Fonts::get()->get("1"));
-	this->title.setString(*Texts::get()->get("title"));
-	this->title.setCharacterSize(60);
-	this->title.setFillColor(sf::Color(20, 0, 100));
-    this->title.setOutlineColor(sf::Color::Black);
-    this->title.setOutlineThickness(1);
-	this->title.setPosition(windowW - 40 - title.getLocalBounds().width, 40);
-
-    this->background.setTexture(*Textures::get()->get("bg"));
+    this->background.setTexture(*Textures::get()->get("menu"));
     this->background.setPosition(windowW - this->background.getLocalBounds().width, windowH - this->background.getLocalBounds().height);
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
@@ -170,7 +162,6 @@ void Menu::drawEverything(sf::RenderWindow &window) {
 	for (const auto& b : this->buttons) {
         window.draw(b);
     }
-	window.draw(this->title);
     if (!this->elements.empty()) {
         window.draw(*this->elements.front());
     }

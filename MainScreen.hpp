@@ -48,6 +48,7 @@
 #include "WarehouseStone.hpp"
 #include "WarehouseIron.hpp"
 #include "WarehouseGold.hpp"
+#include "Barracks.hpp"
 
 
 #pragma once
@@ -110,6 +111,11 @@ private:
 	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
 	void handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e);
 	void handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e);
+	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e);
+	void handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e);
+	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
+	void handleSelectWarriorEvent(std::shared_ptr<SelectWarriorEvent> w);
+	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
 
 	void removeFinishedElements();
 	void changeMove();

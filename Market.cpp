@@ -113,27 +113,8 @@ uint32_t Market::getTradeStartTime() const {
 	return 8;
 }
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
-	sf::RectangleShape rect;
-	rect.setFillColor(COLOR_THEME::UI_COLOR);
-	rect.setSize(sf::Vector2f(32 * this->getSX(), 32 * this->getSY() / 2));
-	rect.setPosition(32 * this->getX(), 32 * this->getY() + 32 * this->getSY() / 2);
-	target.draw(rect, states);
-
-	sf::Sprite sprite;
-	sprite.setTexture(*Textures::get()->get(this->currentTrade.buy.type + "_icon"));
-	sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
-	sprite.setPosition(rect.getPosition());
-	target.draw(sprite, states);
-
-	sf::Text text;
-	text.setFont(*Fonts::get()->get("1"));
-	text.setString(std::to_string(this->currentTrade.movesLeft));
-	text.setCharacterSize(25);
-	text.setFillColor(sf::Color::White);
-	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(1);
-	text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2, 0));
-	target.draw(text, states);
+	BuildingShortInfo info(this->getX(), this->getY(), this->getSX(), this->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
+	target.draw(info, states);
 }
 Events Market::handleCurrentTrade() {
 	if (!this->busy()) {

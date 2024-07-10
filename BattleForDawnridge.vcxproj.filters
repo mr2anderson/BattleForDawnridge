@@ -1042,6 +1042,39 @@
     <ClInclude Include="WindowButtonImage.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
+    <ClInclude Include="WarriorProducer.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Warrior.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="TryToProduceEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorProducingFinishedEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntFindNewWarriorPosition.hpp">
+      <Filter>Header Files\screens\service\go\service</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingShortInfo.hpp">
+      <Filter>Header Files\screens\service\go\service</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectWarriorEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="StartWarriorClickAnimationEvent.hpp">
+      <Filter>Header Files\screens\service\events</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantryman.hpp">
+      <Filter>Header Files\screens\service\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1376,6 +1409,39 @@
     </ClCompile>
     <ClCompile Include="WindowButtonImage.cpp">
       <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducer.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Warrior.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="TryToProduceEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntFindNewWarriorPosition.cpp">
+      <Filter>Source Files\screens\service\go\service</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingShortInfo.cpp">
+      <Filter>Source Files\screens\service\go\service</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectWarriorEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWarriorClickAnimationEvent.cpp">
+      <Filter>Source Files\screens\service\events</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantryman.cpp">
+      <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

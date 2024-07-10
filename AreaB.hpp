@@ -32,6 +32,10 @@ public:
 	bool inRadius(GO* go) const;
 	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
 	virtual Events getHighlightEvent() const;
+	uint32_t getAreaXMin() const;
+	uint32_t getAreaXMax() const;
+	uint32_t getAreaYMin() const;
+	uint32_t getAreaYMax() const;
 protected:
 	virtual uint32_t getRadius() const = 0;
 

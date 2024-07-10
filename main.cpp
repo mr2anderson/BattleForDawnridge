@@ -20,7 +20,51 @@
 #include "Game.hpp"
 
 
+/*/void process(const std::string& path) {
+	sf::Image image;
+	image.loadFromFile(path);
+	for (uint32_t i = 0; i < image.getSize().x; i = i + 1) {
+		for (uint32_t j = 0; j < image.getSize().y; j = j + 1) {
+			if (image.getPixel(i, j) == sf::Color(106, 76, 48)) {
+				image.setPixel(i, j, sf::Color::Transparent);
+			}
+		}
+	}
+	image.saveToFile(path);
+}*/
 int main() {
+	/*for (const std::string& d : {"n", "s", "w", "e"}) {
+		for (uint32_t n = 0; n < 8; n = n + 1) {
+			std::string ns = std::to_string(n);
+			while (ns.size() < 4) {
+				ns = ('0' + ns);
+			}
+			process("resources/infantryman/walking " + d + ns + ".png");
+		}
+		for (uint32_t n = 0; n < 13; n = n + 1) {
+			std::string ns = std::to_string(n);
+			while (ns.size() < 4) {
+				ns = ('0' + ns);
+			}
+			process("resources/infantryman/attack " + d + ns + ".png");
+		}
+	}
+	for (uint32_t n = 0; n < 7; n = n + 1) {
+		std::string ns = std::to_string(n);
+		while (ns.size() < 4) {
+			ns = ('0' + ns);
+		}
+		process("resources/infantryman/talking e" + ns + ".png");
+	}
+	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
+		for (uint32_t n = 0; n < 7; n = n + 1) {
+			std::string ns = std::to_string(n);
+			while (ns.size() < 4) {
+				ns = ('0' + ns);
+			}
+			process("resources/infantryman/been hit " + d + ns + ".png");
+		}
+	}*/
 	Game::get()->run();
 	return 0;
 }

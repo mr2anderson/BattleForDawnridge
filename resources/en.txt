@@ -684,3 +684,60 @@ game_finished
 <DATA>
 Game has been finished!
 <\DATA>
+
+<ID>
+producing_started
+<\ID>
+TRAINING HAS BEGUN
+Turns left: 
+<\ID>
+
+<ID>
+time_to_produce
+<\ID>
+<DATA>
+Turns to train: 
+<\ID>
+
+<ID>
+producing_in_progress
+<\ID>
+<DATA>
+Training in progress. Turns left: 
+<\DATA>
+
+<ID>
+couldnt_find_new_warrior_position
+<\ID>
+<DATA>
+Training has been completed, but there is no space available.
+<\DATA>
+
+<ID>
+no_resources_for_producing
+<\ID>
+<DATA>
+INSUFFICIENT RESOURCES
+You can't start training
+<\DATA>
+
+<ID>
+infantryman_description
+<\ID>
+<DATA>
+Yesterday's peasants are no match for professional soldiers and are hardly capable of an independent assault, but because of their low cost they can be useful.
+<\DATA>
+
+<ID>
+barracks_description
+<\ID>
+<DATA>
+Barracks allow you to train infantry.
+<\DATA>
+
+<ID>
+barracks_upper_case_readable_name
+<\ID>
+<DATA>
+BARRACKS
+<\DATA>

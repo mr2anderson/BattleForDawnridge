@@ -20,6 +20,7 @@
 #include "HorizontalSelectionWindowComponent.hpp"
 
 
+HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent() = default;
 HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent) {
 	this->pictureName = pictureName;
 	this->message = message;

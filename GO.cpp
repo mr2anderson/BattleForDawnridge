@@ -51,6 +51,9 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
+bool GO::blockForWarrior(uint32_t warriotPlayerId) const {
+	return true;
+}
 Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 32 * this->getX() and
 		mouseY >= 32 * this->getY() and
@@ -59,6 +62,21 @@ Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
 		return this->getGameObjectResponse(currentPlayerId);
 	}
 	return Events();
+}
+bool GO::intersects(GO* go) const {
+	sf::IntRect rect1;
+	rect1.left = this->getX();
+	rect1.top = this->getY();
+	rect1.width = this->getSX();
+	rect1.height = this->getSY();
+
+	sf::IntRect rect2;
+	rect2.left = go->getX();
+	rect2.top = go->getY();
+	rect2.width = go->getSX();
+	rect2.height = go->getSY();
+
+	return rect1.intersects(rect2);
 }
 HorizontalSelectionWindowComponent GO::getExitComponent() const {
 	HorizontalSelectionWindowComponent component = {

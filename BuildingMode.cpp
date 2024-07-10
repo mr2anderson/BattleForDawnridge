@@ -70,26 +70,14 @@ Events BuildingMode::click() {
 	return gEvent;
 }
 bool BuildingMode::empty() const {
-	sf::IntRect rect1;
-	rect1.left = this->b->getX();
-	rect1.top = this->b->getY();
-	rect1.width = this->b->getSX();
-	rect1.height = this->b->getSY();
-
 	for (uint32_t i = 0; i < go->size(); i = i + 1) {
 		if (!go->at(i)->exist()) {
 			continue;
 		}
-		sf::IntRect rect2;
-		rect2.left = go->at(i)->getX();
-		rect2.top = go->at(i)->getY();
-		rect2.width = go->at(i)->getSX();
-		rect2.height = go->at(i)->getSY();
-		if (rect1.intersects(rect2)) {
+		if (this->b->intersects(go->at(i))) {
 			return false;
 		}
 	}
-
 	return true;
 }
 bool BuildingMode::controlled() const {

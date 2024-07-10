@@ -56,7 +56,7 @@ std::wstring Road::getUpperCaseReadableName() const {
 	return *Texts::get()->get("road_upper_case_readable_name");
 }
 uint32_t Road::getRadius() const {
-	return 3;
+	return 5;
 }
 Events Road::getSelectionW() {
 	Events response;
