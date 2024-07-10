@@ -28,31 +28,23 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->init(mapPtr, window);
 	sf::Event event{};
 	for (; ;) {
-		float wheelDelta = 0;
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				return false;
-			}
-			else if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
-				if (this->elements.empty()) {
+			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
+				if (this->elements.empty() and this->allNewMoveEventsHandled()) {
 					if (!this->handleButtonsClick()) {
                         this->handleGameObjectClick();
                     }
 				}
-				else if (!this->elements.empty()) {
+				if (!this->elements.empty()) {
 					Events events = this->elements.front()->click();
 					this->handleEvent(events);
-				}
-			}
-			else if (event.type == sf::Event::MouseWheelScrolled) {
-				if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
-					wheelDelta = wheelDelta + event.mouseWheelScroll.delta;
 				}
 			}
 		}
 		this->drawEverything(window);
 		Playlist::get()->update();
 		this->removeFinishedElements();
+		this->handleNewMoveEvents();
 		if (!this->elements.empty()) {
 			this->elements.front()->update();
 		}
@@ -70,6 +62,7 @@ void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->initMoveCtr();
     this->initPlains();
     this->initGraphics(window);
+	this->changeMove();
 }
 void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
     this->map = mapPtr;
@@ -81,7 +74,7 @@ void MainScreen::initCurrentPlayerIndex() {
 	this->currentPlayerIndex = 0;
 }
 void MainScreen::initMoveCtr() {
-	this->move = 1;
+	this->move = 0;
 }
 void MainScreen::initPlains() {
     this->plains = PlainsGeneration(this->map->getW(), this->map->getH());
@@ -387,18 +380,29 @@ void MainScreen::removeFinishedElements() {
 		this->handleEvent(events);
 	}
 }
+void MainScreen::handleNewMoveEvents() {
+	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
+		if (!this->elements.empty()) {
+			break;
+		}
+		Events event = this->map->getGO()->at(this->currentGOIndexNewMoveEvent)->newMove(this->getCurrentPlayer()->getId());
+		this->handleEvent(event);
+		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
+	}
+}
+bool MainScreen::allNewMoveEventsHandled() const {
+	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
+}
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
+	this->currentGOIndexNewMoveEvent = 0;
+	this->totalGONewMoveEvents = this->map->getGO()->size();
 	do {
 		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
 	}
 	while (!this->playerIsActive.at(this->currentPlayerIndex));
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
-	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
-		Events events = this->map->getGO()->at(i)->newMove(this->getCurrentPlayer()->getId());
-		this->handleEvent(events);
-	}
 }
 std::wstring MainScreen::GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b) {
 	std::wstring description = b->getDescription() + L'\n' +

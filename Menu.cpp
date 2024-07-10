@@ -32,7 +32,7 @@ std::shared_ptr<Map> Menu::run(sf::RenderWindow& window) {
                 if (this->elements.empty()) {
                     this->handleButtonsClick();
                 }
-                else if (!this->elements.empty()) {
+                if (!this->elements.empty()) {
                     Events events = this->elements.front()->click();
                     this->handleEvent(events);
                 }

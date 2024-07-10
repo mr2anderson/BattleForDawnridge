@@ -76,6 +76,8 @@ private:
 	uint32_t move = 0;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
+	uint32_t currentGOIndexNewMoveEvent;
+	uint32_t totalGONewMoveEvents;
 
     bool returnToMenu;
 	uint32_t windowW, windowH;
@@ -118,6 +120,8 @@ private:
 	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
 
 	void removeFinishedElements();
+	void handleNewMoveEvents();
+	bool allNewMoveEventsHandled() const;
 	void changeMove();
 	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
 	Player* getCurrentPlayer();
