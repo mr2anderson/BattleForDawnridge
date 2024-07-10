@@ -67,7 +67,7 @@ bool ConductionGraph::bfs(std::tuple<uint32_t, uint32_t> current, std::map<std::
 		return false;
 	}
 	for (const auto& to : this->paths.at(current)) {
-		if (visited.at(to)) {
+		if (visited[to])) {
 			continue;
 		}
 		if (this->bfs(to, visited)) {
