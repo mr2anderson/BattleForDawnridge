@@ -102,7 +102,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         Textures::get()->add("menu", "menu.jpg");
         for (const std::string& a : { "talking", "walking", "attack", "been hit", "tipping over"}) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-                for (const std::tuple<std::string, uint32_t>& w : { std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d))}) {
+                for (const std::tuple<std::string, uint32_t>& w : { std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)), std::make_tuple("knight", Knight().getAnimationNumber(a, d)) }) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
                         while (s.size() < 4) {
@@ -132,7 +132,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
-                                      "destroy"}) {
+                                      "destroy", "sword"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }

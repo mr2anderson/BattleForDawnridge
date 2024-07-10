@@ -19,6 +19,7 @@
 
 #include "WarriorProducer.hpp"
 #include "Infantryman.hpp"
+#include "Knight.hpp"
 
 
 #pragma once

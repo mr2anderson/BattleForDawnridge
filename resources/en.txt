@@ -741,3 +741,10 @@ barracks_upper_case_readable_name
 <DATA>
 BARRACKS
 <\DATA>
+
+<ID>
+knight_description
+<\ID>
+<DATA>
+As masters of their craft, fully armored knights are able to single-handedly take out entire squads despite their slowness, thanks to their increased defense and damage. However, even with their help, attempting an assault without siege weapons can end in defeat.
+<\DATA>

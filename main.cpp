@@ -25,7 +25,7 @@
 	image.loadFromFile(path);
 	for (uint32_t i = 0; i < image.getSize().x; i = i + 1) {
 		for (uint32_t j = 0; j < image.getSize().y; j = j + 1) {
-			if (image.getPixel(i, j) == sf::Color(106, 76, 48) or image.getPixel(i, j) == sf::Color(39, 27, 17)) {
+			if (image.getPixel(i, j) == sf::Color(66, 93, 41) or image.getPixel(i, j) == sf::Color(8, 12, 0)) {
 				image.setPixel(i, j, sf::Color::Transparent);
 			}
 		}
@@ -37,44 +37,44 @@
 }*/
 int main() {
 	/*for (const std::string& d : {"n", "s", "w", "e"}) {
-		for (uint32_t n = 0; n < 8; n = n + 1) {
+		for (uint32_t n = 0; n < 12; n = n + 1) {
 			std::string ns = std::to_string(n);
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/walking " + d + ns + ".bmp");
+			process("resources/knight/walking " + d + ns + ".bmp");
 		}
-		for (uint32_t n = 0; n < 13; n = n + 1) {
+		for (uint32_t n = 0; n < 12; n = n + 1) {
 			std::string ns = std::to_string(n);
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/attack " + d + ns + ".bmp");
+			process("resources/knight/attack " + d + ns + ".bmp");
 		}
 	}
-	for (uint32_t n = 0; n < 7; n = n + 1) {
+	for (uint32_t n = 0; n < 12; n = n + 1) {
 		std::string ns = std::to_string(n);
 		while (ns.size() < 4) {
 			ns = ('0' + ns);
 		}
-		process("resources/infantryman/talking e" + ns + ".bmp");
+		process("resources/knight/talking e" + ns + ".bmp");
 	}
 	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-		for (uint32_t n = 0; n < 7; n = n + 1) {
+		for (uint32_t n = 0; n < 12; n = n + 1) {
 			std::string ns = std::to_string(n);
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/been hit " + d + ns + ".bmp");
+			process("resources/knight/been hit " + d + ns + ".bmp");
 		}
 	}
 	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-		for (uint32_t n = 0; n < 9; n = n + 1) {
+		for (uint32_t n = 0; n < 12; n = n + 1) {
 			std::string ns = std::to_string(n);
 			while (ns.size() < 4) {
 				ns = ('0' + ns);
 			}
-			process("resources/infantryman/tipping over " + d + ns + ".bmp");
+			process("resources/knight/tipping over " + d + ns + ".bmp");
 		}
 	}*/
 	Game::get()->run();

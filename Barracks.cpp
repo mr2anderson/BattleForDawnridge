@@ -30,7 +30,7 @@ Building* Barracks::cloneBuilding() const {
 	return new Barracks(*this);
 }
 Resources Barracks::getCost() const {
-	return Resources({ Resource("wood", 35000) });
+	return Resources({ Resource("wood", 25000) });
 }
 std::string Barracks::getTextureName() const {
 	return "barracks";
@@ -44,6 +44,7 @@ std::wstring Barracks::getDescription() const {
 std::vector<std::shared_ptr<Warrior>> Barracks::getWarriorsToProduce() {
 	std::vector<std::shared_ptr<Warrior>> warriors;
 	warriors.push_back(std::make_shared<Infantryman>(0, 0, this->getPlayerId(), this->getGO()));
+	warriors.push_back(std::make_shared<Knight>(0, 0, this->getPlayerId(), this->getGO()));
 	return warriors;
 }
 uint32_t Barracks::getRadius() const {

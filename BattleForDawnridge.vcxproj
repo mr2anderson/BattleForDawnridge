@@ -634,6 +634,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Image.hpp" />
     <ClInclude Include="Infantryman.hpp" />
     <ClInclude Include="Iron.hpp" />
+    <ClInclude Include="Knight.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
     <ClInclude Include="LoadingError.hpp" />
@@ -757,6 +758,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Infantryman.cpp" />
     <ClCompile Include="Iron.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
     <ClCompile Include="LoadingError.cpp" />
