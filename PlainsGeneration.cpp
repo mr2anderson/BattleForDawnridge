@@ -26,18 +26,18 @@ PlainsGeneration::PlainsGeneration(uint32_t w, uint32_t h) {
 	std::mt19937 mersenne(rd());
 	this->data.resize(w);
 	for (uint32_t i = 0; i < w; i = i + 1) {
-		this->data[i].resize(h);
+		this->data.at(i).resize(h);
 		for (uint32_t j = 0; j < h; j = j + 1) {
-			this->data[i][j] = mersenne() % TOTAL_PLAINS;
+			this->data.at(i).at(j) = mersenne() % TOTAL_PLAINS;
 		}
 	}
 }
 uint32_t PlainsGeneration::getType(uint32_t i, uint32_t j) const {
-	return this->data[i][j];
+	return this->data.at(i).at(j);
 }
 uint32_t PlainsGeneration::getW() const {
 	return this->data.size();
 }
 uint32_t PlainsGeneration::getH() const {
-	return this->data[0].size();
+	return this->data.at(0).size();
 }

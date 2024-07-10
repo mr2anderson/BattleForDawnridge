@@ -42,7 +42,7 @@ public:
 
     void load();
     void setDefaultPath(const std::string& path);
-    [[nodiscard]] std::wstring* get(const std::string& name);
+    std::wstring* get(const std::string& name);
 private:
     Texts() = default;
     Texts(const Texts& copy);

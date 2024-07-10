@@ -17,6 +17,7 @@
  */
 
 
+#include <array>
 #include "Textures.hpp"
 #include "Fonts.hpp"
 #include "ColorTheme.hpp"

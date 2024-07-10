@@ -28,7 +28,7 @@ PlayerPointer::PlayerPointer(uint32_t side, uint32_t x, uint32_t y, uint32_t sx,
 	this->sy = sy;
 }
 void PlayerPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	std::string colors[6] = {
+	std::array<std::string, 6> colors = {
 		"yellow",
 		"purple",
 		"green",
@@ -36,7 +36,7 @@ void PlayerPointer::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 		"black",
 		"grey"
 	};
-	std::string color = colors[this->side - 1];
+	std::string color = colors.at(this->side - 1);
 	sf::Sprite pointer;
 	pointer.setTexture(*Textures::get()->get(color));
 	float scale = std::max(0.5f, 32 * (float)this->sy / (float)pointer.getTexture()->getSize().y / 12);

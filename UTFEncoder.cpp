@@ -31,7 +31,7 @@ std::wstring UTFEncoder::utf8ToUtf16(const std::string &utf8) {
         unsigned long uni;
         size_t todo;
         bool error = false;
-        unsigned char ch = utf8[i++];
+        unsigned char ch = utf8.at(i++);
         if (ch <= 0x7F)
         {
             uni = ch;
@@ -64,7 +64,7 @@ std::wstring UTFEncoder::utf8ToUtf16(const std::string &utf8) {
         {
             if (i == utf8.size())
                 throw std::logic_error("not a UTF-8 string");
-            unsigned char ch = utf8[i++];
+            unsigned char ch = utf8.at(i++);
             if (ch < 0x80 || ch > 0xBF)
                 throw std::logic_error("not a UTF-8 string");
             uni <<= 6;
@@ -79,7 +79,7 @@ std::wstring UTFEncoder::utf8ToUtf16(const std::string &utf8) {
     std::wstring utf16;
     for (size_t i = 0; i < unicode.size(); ++i)
     {
-        unsigned long uni = unicode[i];
+        unsigned long uni = unicode.at(i);
         if (uni <= 0xFFFF)
         {
             utf16 += (wchar_t)uni;

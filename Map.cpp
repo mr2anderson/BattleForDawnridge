@@ -102,7 +102,7 @@ uint32_t Map::getPlayersNumber() const {
     return this->players.size();
 }
 Player* Map::getPlayer(uint32_t i) {
-    return &this->players[i];
+    return &this->players.at(i);
 }
 std::shared_ptr<GOCollection<GO>> Map::getGO() {
     return this->go;

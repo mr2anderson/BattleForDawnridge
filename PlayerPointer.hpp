@@ -17,6 +17,7 @@
  */
 
 
+#include <array>
 #include "Textures.hpp"
 
 

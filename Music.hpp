@@ -36,7 +36,7 @@ public:
     }
 
     void add(const std::string& name, const std::string& path);
-    [[nodiscard]] sf::Music *get(const std::string& name);
+    sf::Music *get(const std::string& name);
 private:
     Music() = default;
     Music(const Music& copy);

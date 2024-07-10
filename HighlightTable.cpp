@@ -29,7 +29,7 @@ void HighlightTable::mark(uint32_t x, uint32_t y, const Unit* unitPtr) {
 	std::vector<const Unit*> v = this->data[p];
 	bool found = false;
 	for (uint32_t i = 0; i < v.size(); i = i + 1) {
-		if (v[i] == unitPtr) {
+		if (v.at(i) == unitPtr) {
 			v.erase(v.begin() + i);
 			found = true;
 			break;
@@ -38,7 +38,7 @@ void HighlightTable::mark(uint32_t x, uint32_t y, const Unit* unitPtr) {
 	if (!found) {
 		v.push_back(unitPtr);
 	}
-	this->data[p] = v;
+	this->data.at(p) = v;
 }
 bool HighlightTable::highlighted(uint32_t x, uint32_t y) const {
 	std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);

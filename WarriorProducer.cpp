@@ -68,7 +68,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducer::getProduceCompo
 	std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce();
 	std::vector<HorizontalSelectionWindowComponent> components(toProduce.size());
 	for (uint32_t i = 0; i < components.size(); i = i + 1) {
-		std::shared_ptr<Warrior> w = toProduce[i];
+		std::shared_ptr<Warrior> w = toProduce.at(i);
 		Events tryToProduceEvent;
 		tryToProduceEvent.add(std::make_shared<TryToProduceEvent>(this, w));
 		HorizontalSelectionWindowComponent component = {
@@ -79,7 +79,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducer::getProduceCompo
 			false,
 			tryToProduceEvent + this->getHighlightEvent()
 		};
-		components[i] = component;
+		components.at(i) = component;
 	}
 	return components;
 }

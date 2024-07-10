@@ -35,11 +35,11 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 		this->buttons.resize(this->components.size());
 		int32_t y;
 		for (uint32_t i = 0; i < this->components.size(); i = i + 1) {
-			std::string pictureName = this->components[i].pictureName;
-			std::wstring message = this->components[i].message;
-			bool clickable = this->components[i].clickable;
-			bool sound = this->components[i].sound;
-			Events onClick = this->components[i].gEvent;
+			std::string pictureName = this->components.at(i).pictureName;
+			std::wstring message = this->components.at(i).message;
+			bool clickable = this->components.at(i).clickable;
+			bool sound = this->components.at(i).sound;
+			Events onClick = this->components.at(i).gEvent;
 			if (clickable) {
 				onClick.add(std::make_shared<CloseWindowEvent>());
 			}
@@ -48,7 +48,7 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 			}
 
 			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message), onClick);
-			this->buttons[i] = button;
+			this->buttons.at(i) = button;
 			if (button.getY() > (int32_t)(windowH / 2)) {
 				y = button.getY() - 10;
 			}
@@ -77,8 +77,8 @@ void HorizontalSelectionWindow::draw(sf::RenderTarget& target, sf::RenderStates 
 		target.draw(this->down);
 	}
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		if (this->show(this->buttons[i])) {
-			target.draw(this->buttons[i], states);
+		if (this->show(this->buttons.at(i))) {
+			target.draw(this->buttons.at(i), states);
 		}
 	}
 }
@@ -122,12 +122,12 @@ bool HorizontalSelectionWindow::possibleToMoveDown() const {
 }
 void HorizontalSelectionWindow::moveUp() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons[i].setY(this->buttons[i].getY() + (this->componentSize + 10));
+		this->buttons.at(i).setY(this->buttons.at(i).getY() + (this->componentSize + 10));
 	}
 }
 void HorizontalSelectionWindow::moveDown() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons[i].setY(this->buttons[i].getY() - (this->componentSize + 10));
+		this->buttons.at(i).setY(this->buttons.at(i).getY() - (this->componentSize + 10));
 	}
 }
 void HorizontalSelectionWindow::handle(Events& events) {

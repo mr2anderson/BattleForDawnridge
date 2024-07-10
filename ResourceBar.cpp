@@ -39,17 +39,17 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	rect.setOutlineThickness(2);
 	target.draw(rect, states);
 
-	std::string res[5] = { "food", "wood", "stone", "iron", "gold" };
+	std::array<std::string, 5> res = { "food", "wood", "stone", "iron", "gold" };
 	for (uint32_t i = 0; i < 5; i = i + 1) {
 		sf::Sprite sprite;
-		sprite.setTexture(*Textures::get()->get(res[i] + "_icon"));
+		sprite.setTexture(*Textures::get()->get(res.at(i) + "_icon"));
 		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 5, rect.getPosition().y));
 		sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
 		target.draw(sprite, states);
 
 		sf::Text text;
 		text.setFont(*Fonts::get()->get("1"));
-		text.setString(std::to_string(this->resources.get(res[i])) + " / " + std::to_string(this->limit.get(res[i])));
+		text.setString(std::to_string(this->resources.get(res.at(i))) + " / " + std::to_string(this->limit.get(res.at(i))));
 		text.setCharacterSize(16);
 		text.setFillColor(sf::Color::White);
 		text.setOutlineColor(sf::Color::Black);

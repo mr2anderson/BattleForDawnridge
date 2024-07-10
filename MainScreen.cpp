@@ -330,10 +330,10 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 			return;
 		}
 	}
-	this->playerIsActive[this->currentPlayerIndex] = false;
+	this->playerIsActive.at(this->currentPlayerIndex) = false;
 	uint32_t count = 0;
 	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
-		count = count + this->playerIsActive[i];
+		count = count + this->playerIsActive.at(i);
 	}
 	std::shared_ptr<WindowButton> w;
 	if (count == 1) {
@@ -392,7 +392,7 @@ void MainScreen::changeMove() {
 	do {
 		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
 	}
-	while (!this->playerIsActive[this->currentPlayerIndex]);
+	while (!this->playerIsActive.at(this->currentPlayerIndex));
 	this->updatePlayerViewPoint();
 	this->highlightTable.clear();
 	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
@@ -422,7 +422,7 @@ Resources MainScreen::getResourcesLimit() {
 }
 bool MainScreen::handleButtonsClick() {
     for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-        Events event = this->buttons[i].click();
+        Events event = this->buttons.at(i).click();
         if (!event.empty()) {
             this->handleEvent(event);
             return true;

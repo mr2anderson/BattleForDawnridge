@@ -50,7 +50,7 @@ public:
 	GOCollection() = default;
 	~GOCollection() {
 		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
-			delete this->data[i];
+			delete this->data.at(i);
 		}
 	}
 

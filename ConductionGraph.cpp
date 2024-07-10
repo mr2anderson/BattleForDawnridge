@@ -35,7 +35,7 @@ void ConductionGraph::add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool
 	for (uint32_t i = 0; i < sx; i = i + 1) {
 		for (uint32_t j = 0; j < sy; j = j + 1) {
 			auto p = std::make_tuple(x + i, y + j);
-			this->isOrigin[p] = origin;
+			this->isOrigin.at(p) = origin;
 			this->addPossiblePaths(p);
 		}
 	}
@@ -54,20 +54,20 @@ void ConductionGraph::addPathBetween(std::tuple<uint32_t, uint32_t> p1, std::tup
 	if (this->isOrigin.find(p2) == this->isOrigin.end()) {
 		return;
 	}
-	this->paths[p1].insert(p2);
-	this->paths[p2].insert(p1);
+	this->paths.at(p1).insert(p2);
+	this->paths.at(p2).insert(p1);
 }
 bool ConductionGraph::bfs(std::tuple<uint32_t, uint32_t> current, std::map<std::tuple<uint32_t, uint32_t>, bool>& visited) const {
 	if (this->isOrigin.find(current) != this->isOrigin.end() and this->isOrigin.at(current)) {
 		return true;
 	}
 
-	visited[current] = true;
+	visited.at(current) = true;
 	if (this->paths.find(current) == this->paths.end()) {
 		return false;
 	}
 	for (const auto& to : this->paths.at(current)) {
-		if (visited[to]) {
+		if (visited.at(to)) {
 			continue;
 		}
 		if (this->bfs(to, visited)) {

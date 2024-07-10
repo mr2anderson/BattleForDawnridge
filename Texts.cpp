@@ -82,7 +82,7 @@ void Texts::setDefaultPath(const std::string& path) {
     file.close();
 }
 std::wstring* Texts::get(const std::string& name) {
-    return &this->texts[name];
+    return &this->texts.at(name);
 }
 std::string Texts::getPath() const {
     std::ifstream file(ROOT + "/language.txt");

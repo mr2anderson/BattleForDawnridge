@@ -31,7 +31,7 @@ void Maps::add(const std::string &name, const std::string &path) {
     this->generateThumbnail(name);
 }
 std::shared_ptr<Map> Maps::load(const std::string& name) {
-    std::shared_ptr<Map> map = std::make_shared<Map>(this->paths[name]);
+    std::shared_ptr<Map> map = std::make_shared<Map>(this->paths.at(name));
     return map;
 }
 void Maps::generateThumbnail(const std::string& name) {
