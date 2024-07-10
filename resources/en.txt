@@ -252,7 +252,7 @@ Press any key to continue...
 quarry_description
 <\ID>
 <DATA>
-Quarries provide your city with the stone needed to build defenses.
+Quarries provide your city with the stone needed to build buildings.
 <\DATA>
 
 <ID>
