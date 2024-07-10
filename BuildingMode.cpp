@@ -39,7 +39,7 @@ Events BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
 	this->returnedPtr = false;
 	this->windowW = windowW2;
 	this->windowH = windowH2;
-	return this->getHighlightEvent() + this->CameraDependentPopUpElement::run(windowW, windowH);
+	return this->getHighlightEvent();
 }
 void BuildingMode::update() {
 	uint32_t mouseX = sf::Mouse::getPosition().x;

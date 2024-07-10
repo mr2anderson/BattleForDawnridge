@@ -108,10 +108,8 @@ Events Windmill::getCollectEvents() {
 		}
 		uint32_t n = arable->collect();
 		std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("food_icon", "food", arable->getX(), arable->getY(), arable->getSX(), arable->getSY());
-		Events collectEvent;
-		collectEvent.add(std::make_shared<AddResourceEvent>(Resource("food", n)));
-		flyingE->addOnStartGEvent(collectEvent);
 		events.add(std::make_shared<CreateEEvent>(flyingE));
+		events.add(std::make_shared<AddResourceEvent>(Resource("food", n)));
 	}
 	return events;
 }

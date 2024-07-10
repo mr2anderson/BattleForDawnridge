@@ -35,7 +35,7 @@ Events FlyingE::run(uint32_t windowW, uint32_t windowH) {
 	Events uiEvent;
 	uiEvent.add(std::make_shared<PlaySoundEvent>(this->sound));
 
-	return this->CameraDependentPopUpElement::run(windowW, windowH) + uiEvent;
+	return uiEvent;
 }
 void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	float t = this->clock.getElapsedTime().asSeconds();

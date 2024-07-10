@@ -29,7 +29,7 @@ HorizontalSelectionWindow::HorizontalSelectionWindow(const std::string &soundNam
 	this->inited = false;
 }
 Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
-	Events event = this->CameraIndependentPopUpElement::run(windowW, windowH);
+	Events event;
 	if (!this->inited) {
 		this->inited = true;
 		this->buttons.resize(this->components.size());

@@ -23,9 +23,6 @@
 PopUpElement::PopUpElement() {
 	this->_finished = false;
 }
-void PopUpElement::addOnStartGEvent(const Events& gEvent) {
-	this->onStart = this->onStart + gEvent;
-}
 bool PopUpElement::finished() const {
 	return this->_finished;
 }
@@ -34,9 +31,6 @@ void PopUpElement::restart() {
 }
 void PopUpElement::update() {
 
-}
-Events PopUpElement::run(uint32_t windowW, uint32_t windowH) {
-	return this->onStart;
 }
 void PopUpElement::finish() {
 	this->_finished = true;

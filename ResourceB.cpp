@@ -61,10 +61,8 @@ Events ResourceB::collectResources() {
 			ResourcePoint* rp = std::get<ResourcePoint*>(src);
 			uint32_t n = std::get<uint32_t>(src);
 			std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
-			Events gEvent;
-			gEvent.add(std::make_shared<CollectEvent>(rp, n));
-			element->addOnStartGEvent(gEvent);
 			responce.add(std::make_shared<CreateEEvent>(element));
+			responce.add(std::make_shared<CollectEvent>(rp, n));
 		}
 	}
 

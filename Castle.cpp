@@ -74,13 +74,11 @@ uint32_t Castle::getRadius() const {
 	return 5;
 }
 Events Castle::addWood() const {
-	Events addWoodEvent;
-	addWoodEvent.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));
+	Events response;
 	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", "wood", this->getX(), this->getY(), this->getSX(), this->getSY());
-	flyingE->addOnStartGEvent(addWoodEvent);
-	Events createFlyingEEvent;
-	createFlyingEEvent.add(std::make_shared<CreateEEvent>(flyingE));
-	return createFlyingEEvent;
+	response.add(std::make_shared<CreateEEvent>(flyingE));
+	response.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));
+	return response;
 }
 Events Castle::getSelectionW() {
 	Events response;

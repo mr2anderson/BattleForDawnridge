@@ -29,17 +29,15 @@ class PopUpElement : public sf::Drawable {
 public:
 	PopUpElement();
 
-	void addOnStartGEvent(const Events& event);
 	bool finished() const;
 	void restart();
 	virtual void update();
 
-	virtual Events run(uint32_t windowW, uint32_t windowH);
+	virtual Events run(uint32_t windowW, uint32_t windowH) = 0;
 	virtual Events click() = 0;
 	virtual bool isCameraDependent() const = 0;
 protected:
 	virtual void finish();
 private:
-	Events onStart;
 	bool _finished;
 };

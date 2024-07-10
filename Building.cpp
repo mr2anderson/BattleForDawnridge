@@ -36,11 +36,9 @@ Events Building::destroy() {
 Events Building::regenerate() {
 	Events events;
 	if (this->getHP() < this->getMaxHP()) {
-		Events gEvent;
-		gEvent.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));
 		std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
-		element->addOnStartGEvent(gEvent);
 		events.add(std::make_shared<CreateEEvent>(element));
+		events.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));
 	}
 	return events;
 }

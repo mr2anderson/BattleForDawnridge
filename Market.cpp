@@ -38,17 +38,13 @@ void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 Events Market::doTrade(const Trade& trade) {
 	this->currentTrade = trade;
 
-	Events gEvent;
-	gEvent.add(std::make_shared<SubResourceEvent>(trade.sell));
-
+	Events response;
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
 		*Texts::get()->get("trade_started") + L'\n' +
 		trade.getReadableInfo(), *Texts::get()->get("OK"));
-	
-	window->addOnStartGEvent(gEvent);
-	Events responce;
-	responce.add(std::make_shared<CreateEEvent>(window));
-	return responce;
+	response.add(std::make_shared<CreateEEvent>(window));
+	response.add(std::make_shared<SubResourceEvent>(trade.sell));
+	return response;
 }
 void Market::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
@@ -121,17 +117,13 @@ Events Market::handleCurrentTrade() {
 		return Events();
 	}
 	Events responce;
-	Events decreaseEvent;
-	decreaseEvent.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
 	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 	responce.add(std::make_shared<CreateEEvent>(element));
-	element->addOnStartGEvent(decreaseEvent);
+	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
 	if (this->currentTrade.movesLeft == 1) {
-		Events gEvent;
-		gEvent.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));
 		element = std::make_shared<FlyingE>(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-		element->addOnStartGEvent(gEvent);
 		responce.add(std::make_shared<CreateEEvent>(element));
+		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));
 	}
 	return responce;
 }

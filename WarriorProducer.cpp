@@ -120,11 +120,9 @@ Events WarriorProducer::handleCurrentProducing() {
 	}
 	Events response;
 	if (this->currentProducingMovesLeft != 0) {
-		Events decreaseEvent;
-		decreaseEvent.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
 		std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("producing_icon", this->currentProducing->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-		flyingE->addOnStartGEvent(decreaseEvent);
 		response.add(std::make_shared<CreateEEvent>(flyingE));
+		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
 	}
 	if (this->currentProducingMovesLeft != 1) {
 		return response;
@@ -134,11 +132,7 @@ Events WarriorProducer::handleCurrentProducing() {
 		std::tie(x, y) = this->getNewWarriorPosition();
 		this->currentProducing->setX(x);
 		this->currentProducing->setY(y);
-		Events warriorProduceFinishedEvent;
-		warriorProduceFinishedEvent.add(std::make_shared<WarriorProducingFinishedEvent>(this, this->currentProducing));
-		std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(this->currentProducing->getTextureName(), this->currentProducing->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-		flyingE->addOnStartGEvent(warriorProduceFinishedEvent);
-		response.add(std::make_shared<CreateEEvent>(flyingE));
+		response.add(std::make_shared<WarriorProducingFinishedEvent>(this, this->currentProducing));
 		return response;
 	}
 	catch (CouldntFindNewWarriorPosition& e) {
