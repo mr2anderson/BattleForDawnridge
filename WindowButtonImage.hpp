@@ -21,7 +21,6 @@
 #include "Label.hpp"
 #include "Image.hpp"
 #include "Button.hpp"
-#include "CloseWindowEvent.hpp"
 
 
 #pragma once

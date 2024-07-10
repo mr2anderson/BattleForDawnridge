@@ -18,6 +18,7 @@
 
 
 #include "Knight.hpp"
+#include "Texts.hpp"
 
 
 Knight::Knight() = default;

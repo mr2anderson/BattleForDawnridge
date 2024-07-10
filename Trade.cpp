@@ -18,6 +18,7 @@
 
 
 #include "Trade.hpp"
+#include "Texts.hpp"
 
 
 Trade::Trade() {

@@ -18,18 +18,8 @@
 
 
 
-#include "Textures.hpp"
-#include "Fonts.hpp"
-#include "Sounds.hpp"
-#include "Music.hpp"
-#include "Texts.hpp"
-#include "Maps.hpp"
-#include "ColorTheme.hpp"
-#include "Infantryman.hpp"
-#include "Knight.hpp"
-#include "PlainsGeneration.hpp"
-#include "WindowButton.hpp"
-#include "Water.hpp"
+#include <SFML/Graphics.hpp>
+#include "LoadingError.hpp"
 
 
 #pragma once

@@ -18,6 +18,7 @@
 
 
 #include "WarehouseWood.hpp"
+#include "Texts.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;

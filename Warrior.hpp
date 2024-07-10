@@ -19,8 +19,6 @@
 
 #include "Unit.hpp"
 #include "GOCollection.hpp"
-#include "SelectWarriorEvent.hpp"
-#include "StartWarriorClickAnimationEvent.hpp"
 
 
 #pragma once

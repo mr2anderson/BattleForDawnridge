@@ -18,6 +18,7 @@
 
 
 #include "Infantryman.hpp"
+#include "Texts.hpp"
 
 
 Infantryman::Infantryman() = default;

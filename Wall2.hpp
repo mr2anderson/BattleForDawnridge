@@ -18,7 +18,6 @@
 
 
 #include "Building.hpp"
-#include "HorizontalSelectionWindow.hpp"
 
 
 #pragma once

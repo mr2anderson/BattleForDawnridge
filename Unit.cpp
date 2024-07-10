@@ -18,6 +18,8 @@
 
 
 #include "Unit.hpp"
+#include "TryToAttackEvent.hpp"
+#include "PlayerPointer.hpp"
 
 
 

@@ -18,6 +18,7 @@
 
 
 #include "WarehouseGold.hpp"
+#include "Texts.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;

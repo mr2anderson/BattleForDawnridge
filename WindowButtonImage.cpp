@@ -18,6 +18,9 @@
 
 
 #include "WindowButtonImage.hpp"
+#include "CloseWindowEvent.hpp"
+#include "PlaySoundEvent.hpp"
+#include "Textures.hpp"
 
 
 WindowButtonImage::WindowButtonImage(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {

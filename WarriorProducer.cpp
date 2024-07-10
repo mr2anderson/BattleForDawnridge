@@ -18,7 +18,13 @@
 
 
 #include "WarriorProducer.hpp"
-#include <iostream>
+#include "CouldntFindNewWarriorPosition.hpp"
+#include "DecreaseCurrentProducingMovesLeftEvent.hpp"
+#include "TryToProduceEvent.hpp"
+#include "WarriorProducingFinishedEvent.hpp"
+#include "BuildingShortInfo.hpp"
+#include "FlyingE.hpp"
+#include "Texts.hpp"
 
 
 WarriorProducer::WarriorProducer() = default;

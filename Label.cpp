@@ -17,8 +17,9 @@
  */
 
 
-
+#include <sstream>
 #include "Label.hpp"
+#include "Fonts.hpp"
 
 
 Label::Label() = default;

@@ -18,6 +18,10 @@
 
 
 #include "Windmill.hpp"
+#include "AddResourceEvent.hpp"
+#include "TryToBuildEvent.hpp"
+#include "Texts.hpp"
+#include "FlyingE.hpp"
 
 
 Windmill::Windmill() = default;

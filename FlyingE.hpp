@@ -17,9 +17,7 @@
  */
 
 
-#include <cmath>
 #include "CameraDependentPopUpElement.hpp"
-#include "Textures.hpp"
 
 
 #pragma once

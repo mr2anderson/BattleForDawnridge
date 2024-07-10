@@ -18,6 +18,7 @@
 
 
 #include "AreaB.hpp"
+#include "ChangeHighlightEvent.hpp"
 
 
 AreaB::AreaB() = default;

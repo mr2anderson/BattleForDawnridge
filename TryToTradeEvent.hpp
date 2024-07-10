@@ -14,7 +14,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
- */#include "Event.hpp"
+ */
+
+
+#include "Event.hpp"
 #include "Trade.hpp"
 
 

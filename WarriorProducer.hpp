@@ -20,11 +20,6 @@
 #include "HpSensitiveB.hpp"
 #include "AreaB.hpp"
 #include "Warrior.hpp"
-#include "CouldntFindNewWarriorPosition.hpp"
-#include "DecreaseCurrentProducingMovesLeftEvent.hpp"
-#include "TryToProduceEvent.hpp"
-#include "WarriorProducingFinishedEvent.hpp"
-#include "BuildingShortInfo.hpp"
 
 
 #pragma once

@@ -18,6 +18,7 @@
 
 
 #include "Stone.hpp"
+#include "Texts.hpp"
 
 
 Stone::Stone() = default;

@@ -19,6 +19,7 @@
 
 
 #include "Quarry.hpp"
+#include "Texts.hpp"
 
 
 Quarry::Quarry() = default;

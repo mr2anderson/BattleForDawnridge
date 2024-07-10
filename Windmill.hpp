@@ -21,8 +21,6 @@
 #include "AreaB.hpp"
 #include "Arable.hpp"
 #include "GOCollection.hpp"
-#include "AddResourceEvent.hpp"
-#include "TryToBuildEvent.hpp"
 
 
 #pragma once

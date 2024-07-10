@@ -18,6 +18,9 @@
 
 
 #include "Building.hpp"
+#include "PlaySoundEvent.hpp"
+#include "Texts.hpp"
+#include "FlyingE.hpp"
 
 
 Building::Building() = default;

@@ -20,7 +20,6 @@
 #include "CameraIndependentPopUpElement.hpp"
 #include "Label.hpp"
 #include "Button.hpp"
-#include "CloseWindowEvent.hpp"
 
 
 #pragma once

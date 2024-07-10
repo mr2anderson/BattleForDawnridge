@@ -18,6 +18,7 @@
 
 
 #include "Playlist.hpp"
+#include "Music.hpp"
 
 
 Playlist *Playlist::singletone = nullptr;

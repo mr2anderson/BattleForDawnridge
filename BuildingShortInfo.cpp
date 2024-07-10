@@ -18,6 +18,8 @@
 
 
 #include "BuildingShortInfo.hpp"
+#include "Textures.hpp"
+#include "Fonts.hpp"
 
 
 BuildingShortInfo::BuildingShortInfo(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const std::string& pictureName, const std::string& text) {

@@ -18,7 +18,31 @@
 
 
 #include "MainScreen.hpp"
-
+#include "WindowTwoButtons.hpp"
+#include "ResourceBar.hpp"
+#include "WarehouseFood.hpp"
+#include "WarehouseWood.hpp"
+#include "WarehouseStone.hpp"
+#include "WarehouseIron.hpp"
+#include "WarehouseGold.hpp"
+#include "Barracks.hpp"
+#include "Playlist.hpp"
+#include "Castle.hpp"
+#include "Market.hpp"
+#include "Windmill.hpp"
+#include "Sawmill.hpp"
+#include "Quarry.hpp"
+#include "Mine.hpp"
+#include "Wall1.hpp"
+#include "Wall2.hpp"
+#include "Road.hpp"
+#include "SoundQueue.hpp"
+#include "BuildingMode.hpp"
+#include "Sounds.hpp"
+#include "WindowButton.hpp"
+#include "Textures.hpp"
+#include "Texts.hpp"
+#include "ColorTheme.hpp"
 
 
 MainScreen* MainScreen::singletone = nullptr;

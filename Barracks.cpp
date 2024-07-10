@@ -18,6 +18,9 @@
 
 
 #include "Barracks.hpp"
+#include "Infantryman.hpp"
+#include "Knight.hpp"
+#include "Texts.hpp"
 
 
 Barracks::Barracks() = default;

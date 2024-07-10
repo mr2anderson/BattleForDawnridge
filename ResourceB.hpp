@@ -20,7 +20,6 @@
 #include "HpSensitiveB.hpp"
 #include "AreaB.hpp"
 #include "ResourcePoint.hpp"
-#include "CollectEvent.hpp"
 #include "GOCollection.hpp"
 
 

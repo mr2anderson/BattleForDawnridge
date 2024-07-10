@@ -18,6 +18,7 @@
 
 
 #include "PopUpElement.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 PopUpElement::PopUpElement() {

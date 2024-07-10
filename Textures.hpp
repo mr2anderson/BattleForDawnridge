@@ -19,8 +19,6 @@
 
 #include <unordered_map>
 #include <SFML/Graphics.hpp>
-#include "Root.hpp"
-#include "CouldntOpenTexture.hpp"
 
 
 #pragma once

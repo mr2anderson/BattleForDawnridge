@@ -18,6 +18,19 @@
 
 
 #include "Menu.hpp"
+#include "WindowTwoButtons.hpp"
+#include "WindowButtonImage.hpp"
+#include "Maps.hpp"
+#include "CouldntOpenMap.hpp"
+#include "SoundQueue.hpp"
+#include "Playlist.hpp"
+#include "ColorTheme.hpp"
+#include "WindowButton.hpp"
+#include "Sounds.hpp"
+#include "Texts.hpp"
+#include "Textures.hpp"
+#include "Music.hpp"
+#include "UTFEncoder.hpp"
 
 
 Menu* Menu::singletone = nullptr;

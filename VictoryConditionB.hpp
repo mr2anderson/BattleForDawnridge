@@ -18,7 +18,6 @@
 
 
 #include "Building.hpp"
-#include "VictoryConditionBDestroyedEvent.hpp"
 
 
 #pragma once

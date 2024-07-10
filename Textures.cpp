@@ -18,6 +18,8 @@
 
 
 #include "Textures.hpp"
+#include "Root.hpp"
+#include "CouldntOpenTexture.hpp"
 
 
 Textures *Textures::singletone = nullptr;

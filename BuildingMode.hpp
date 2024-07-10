@@ -19,8 +19,6 @@
 
 #include "CameraDependentPopUpElement.hpp"
 #include "TerritoryB.hpp"
-#include "BuildEvent.hpp"
-#include "SubResourcesEvent.hpp"
 #include "GOCollection.hpp"
 
 

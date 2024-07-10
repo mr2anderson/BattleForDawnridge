@@ -18,6 +18,7 @@
 
 
 #include "WarehouseFood.hpp"
+#include "Texts.hpp"
 
 
 WarehouseFood::WarehouseFood() = default;

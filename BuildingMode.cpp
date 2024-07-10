@@ -18,6 +18,10 @@
 
 
 #include "BuildingMode.hpp"
+#include "BuildEvent.hpp"
+#include "SubResourcesEvent.hpp"
+#include "PlaySoundEvent.hpp"
+#include "Texts.hpp"
 
 
 BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId) {

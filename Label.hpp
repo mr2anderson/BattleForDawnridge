@@ -17,9 +17,7 @@
  */
 
 
-#include <sstream>
 #include "RectangularUIElement.hpp"
-#include "Fonts.hpp"
 
 
 #pragma once

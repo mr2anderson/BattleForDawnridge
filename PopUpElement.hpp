@@ -19,7 +19,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Events.hpp"
-#include "PlaySoundEvent.hpp"
 
 
 #pragma once

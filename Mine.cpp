@@ -19,6 +19,7 @@
 
 
 #include "Mine.hpp"
+#include "Texts.hpp"
 
 
 Mine::Mine() = default;

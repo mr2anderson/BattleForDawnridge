@@ -18,6 +18,13 @@
 
 
 #include "PAKScreen.hpp"
+#include "Textures.hpp"
+#include "Fonts.hpp"
+#include "Sounds.hpp"
+#include "Music.hpp"
+#include "Texts.hpp"
+#include "SoundQueue.hpp"
+#include "ColorTheme.hpp"
 
 
 PAKScreen* PAKScreen::singletone = nullptr;

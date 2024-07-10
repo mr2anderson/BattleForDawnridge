@@ -18,6 +18,8 @@
 
 
 #include "Music.hpp"
+#include "Root.hpp"
+#include "CouldntOpenMusic.hpp"
 
 
 Music *Music::singletone = nullptr;

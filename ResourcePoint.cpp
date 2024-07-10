@@ -18,6 +18,8 @@
 
 
 #include "ResourcePoint.hpp"
+#include "CreateEEvent.hpp"
+#include "Texts.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;

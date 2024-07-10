@@ -18,6 +18,9 @@
 
 
 #include "Castle.hpp"
+#include "AddResourceEvent.hpp"
+#include "Texts.hpp"
+#include "FlyingE.hpp"
 
 
 Castle::Castle() = default;

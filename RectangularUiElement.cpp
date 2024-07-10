@@ -18,6 +18,7 @@
 
 
 #include "RectangularUIElement.hpp"
+#include "ColorTheme.hpp"
 
 
 RectangularUiElement::RectangularUiElement() = default;

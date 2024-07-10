@@ -18,6 +18,9 @@
 
 
 #include "HorizontalSelectionWindow.hpp"
+#include "SoundQueue.hpp"
+#include "Sounds.hpp"
+#include "CloseWindowEvent.hpp"
 
 
 

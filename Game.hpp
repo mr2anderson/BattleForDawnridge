@@ -18,10 +18,7 @@
 
 
 
-#include "LoadingScreen.hpp"
-#include "PAKScreen.hpp"
-#include "Menu.hpp"
-#include "MainScreen.hpp"
+#include <SFML/Graphics.hpp>
 
 
 #pragma once

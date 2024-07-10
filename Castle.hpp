@@ -20,7 +20,6 @@
 #include "TerritoryOriginB.hpp"
 #include "ResourceStorageB.hpp"
 #include "VictoryConditionB.hpp"
-#include "AddResourceEvent.hpp"
 
 
 #pragma once

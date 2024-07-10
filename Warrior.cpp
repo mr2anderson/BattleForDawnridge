@@ -18,6 +18,8 @@
 
 
 #include "Warrior.hpp"
+#include "SelectWarriorEvent.hpp"
+#include "StartWarriorClickAnimationEvent.hpp"
 
 
 Warrior::Warrior() {

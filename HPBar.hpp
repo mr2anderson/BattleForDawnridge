@@ -19,6 +19,7 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once

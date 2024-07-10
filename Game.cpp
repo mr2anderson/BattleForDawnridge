@@ -18,6 +18,10 @@
 
 
 #include "Game.hpp"
+#include "LoadingScreen.hpp"
+#include "PAKScreen.hpp"
+#include "Menu.hpp"
+#include "MainScreen.hpp"
 
 
 Game* Game::singletone = nullptr;

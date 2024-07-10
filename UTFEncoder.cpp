@@ -17,6 +17,8 @@
  */
 
 
+#include <vector>
+#include <stdexcept>
 #include "UTFEncoder.hpp"
 
 

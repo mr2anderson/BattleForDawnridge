@@ -18,6 +18,7 @@
 
 
 #include "Image.hpp"
+#include "Textures.hpp"
 
 
 Image::Image() = default;

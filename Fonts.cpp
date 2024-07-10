@@ -18,6 +18,8 @@
 
 
 #include "Fonts.hpp"
+#include "Root.hpp"
+#include "CouldntOpenFont.hpp"
 
 
 Fonts* Fonts::singletone = nullptr;

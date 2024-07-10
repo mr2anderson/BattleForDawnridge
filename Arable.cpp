@@ -18,6 +18,7 @@
 
 
 #include "Arable.hpp"
+#include "Texts.hpp"
 
 
 Arable::Arable() = default;

@@ -18,6 +18,7 @@
 
 
 #include "Wall1.hpp"
+#include "Texts.hpp"
 
 
 Wall1::Wall1() = default;

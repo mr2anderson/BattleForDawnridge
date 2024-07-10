@@ -18,6 +18,8 @@
 
 
 #include "VictoryConditionB.hpp"
+#include "VictoryConditionBDestroyedEvent.hpp"
+#include "Texts.hpp"
 
 
 VictoryConditionB::VictoryConditionB() = default;

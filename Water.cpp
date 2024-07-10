@@ -18,6 +18,8 @@
 
 
 #include "Water.hpp"
+#include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 const uint32_t Water::TOTAL_ANIMATIONS = 40;

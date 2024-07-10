@@ -20,8 +20,6 @@
 
 #include "HPGO.hpp"
 #include "Resources.hpp"
-#include "TryToAttackEvent.hpp"
-#include "PlayerPointer.hpp"
 
 
 #pragma once

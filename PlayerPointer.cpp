@@ -17,7 +17,9 @@
  */
 
 
+#include <array>
 #include "PlayerPointer.hpp"
+#include "Textures.hpp"
 
 
 PlayerPointer::PlayerPointer(uint32_t side, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {

@@ -17,9 +17,8 @@
  */
 
 
-#include "Textures.hpp"
-#include "Fonts.hpp"
-#include "ColorTheme.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once

@@ -18,7 +18,8 @@
 
 
 #include "TerritoryConductorB.hpp"
-
+#include "ConductionGraph.hpp"
+#include "Texts.hpp"
 
 
 TerritoryConductorB::TerritoryConductorB() = default;

@@ -17,7 +17,16 @@
  */
 
 
+#include <fstream>
+#include <sstream>
 #include "Map.hpp"
+#include "CouldntOpenMap.hpp"
+#include "Forest.hpp"
+#include "Stone.hpp"
+#include "Iron.hpp"
+#include "Mountains.hpp"
+#include "Water.hpp"
+#include "Root.hpp"
 
 
 Map::Map(const std::string &path) {

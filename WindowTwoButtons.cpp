@@ -18,6 +18,8 @@
 
 
 #include "WindowTwoButtons.hpp"
+#include "CloseWindowEvent.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 WindowTwoButtons::WindowTwoButtons(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring& buttonText1, const std::wstring& buttonText2, const Events& events1, const Events& events2, uint32_t w, uint32_t h) {

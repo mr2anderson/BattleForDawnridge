@@ -18,6 +18,25 @@
 
 
 #include "LoadingScreen.hpp"
+#include "Textures.hpp"
+#include "Fonts.hpp"
+#include "Sounds.hpp"
+#include "Music.hpp"
+#include "Texts.hpp"
+#include "Maps.hpp"
+#include "ColorTheme.hpp"
+#include "Infantryman.hpp"
+#include "Knight.hpp"
+#include "PlainsGeneration.hpp"
+#include "WindowButton.hpp"
+#include "Water.hpp"
+#include "CouldntOpenTexture.hpp"
+#include "CouldntOpenFont.hpp"
+#include "CouldntOpenSound.hpp"
+#include "CouldntOpenMusic.hpp"
+#include "CouldntOpenText.hpp"
+#include "CouldntOpenMap.hpp"
+#include "UTFEncoder.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;

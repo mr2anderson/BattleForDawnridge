@@ -18,6 +18,9 @@
 
 
 #include "GO.hpp"
+#include "Textures.hpp"
+#include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 GO::GO() = default;

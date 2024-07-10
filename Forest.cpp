@@ -18,6 +18,7 @@
 
 
 #include "Forest.hpp"
+#include "Texts.hpp"
 
 
 Forest::Forest() = default;

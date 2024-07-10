@@ -1104,17 +1104,8 @@
     <ClCompile Include="Building.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
-    <ClCompile Include="BuildingMode.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraIndependentPopUpElemenent.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraDependentPopUpElement.cpp">
-      <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
     <ClCompile Include="Castle.cpp">
       <Filter>Source Files\screens\service\go</Filter>
@@ -1173,17 +1164,11 @@
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
-    <ClCompile Include="FlyingE.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
     <ClCompile Include="Fonts.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
     <ClCompile Include="Forest.cpp">
       <Filter>Source Files\screens\service\go</Filter>
-    </ClCompile>
-    <ClCompile Include="HorizontalSelectionWindow.cpp">
-      <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
     <ClCompile Include="HorizontalSelectionWindowComponent.cpp">
       <Filter>Source Files\popUpElements\service</Filter>
@@ -1260,9 +1245,6 @@
     <ClCompile Include="PlaySoundEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpElement.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
     <ClCompile Include="Quarry.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
@@ -1334,9 +1316,6 @@
     </ClCompile>
     <ClCompile Include="TryToAttackEvent.cpp">
       <Filter>Source Files\screens\service\events</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowButton.cpp">
-      <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
     <ClCompile Include="Trade.cpp">
       <Filter>Source Files\screens\service\go\service</Filter>
@@ -1410,9 +1389,6 @@
     <ClCompile Include="VictoryConditionB.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
-    <ClCompile Include="WindowButtonImage.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
     <ClCompile Include="WarriorProducer.cpp">
       <Filter>Source Files\screens\service\go</Filter>
     </ClCompile>
@@ -1448,6 +1424,30 @@
     </ClCompile>
     <ClCompile Include="Knight.cpp">
       <Filter>Source Files\screens\service\go</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingMode.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraDependentPopUpElement.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraIndependentPopUpElemenent.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingE.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalSelectionWindow.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpElement.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowButton.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowButtonImage.cpp">
+      <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

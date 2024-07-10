@@ -18,7 +18,6 @@
 
 
 #include "Building.hpp"
-#include "ChangeHighlightEvent.hpp"
 
 
 #pragma once

@@ -17,7 +17,11 @@
  */
 
 
+#include <array>
 #include "ResourceBar.hpp"
+#include "Textures.hpp"
+#include "Fonts.hpp"
+#include "ColorTheme.hpp"
 
 
 ResourceBar::ResourceBar() = default;

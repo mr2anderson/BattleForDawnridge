@@ -18,6 +18,7 @@
 
 
 #include "Resource.hpp"
+#include "Texts.hpp"
 
 
 Resource::Resource() = default;

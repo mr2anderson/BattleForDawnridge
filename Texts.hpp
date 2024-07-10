@@ -19,13 +19,7 @@
 
 
 #include <unordered_map>
-#include <cstdint>
 #include <string>
-#include <vector>
-#include <fstream>
-#include "Root.hpp"
-#include "UTFEncoder.hpp"
-#include "CouldntOpenText.hpp"
 
 
 #pragma once

@@ -18,7 +18,6 @@
 
 
 #include "TerritoryOriginB.hpp"
-#include "ConductionGraph.hpp"
 #include "GOCollection.hpp"
 
 

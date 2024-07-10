@@ -18,6 +18,7 @@
 
 
 #include "WarehouseStone.hpp"
+#include "Texts.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;

@@ -17,7 +17,10 @@
  */
 
 
+#include <cmath>
 #include "FlyingE.hpp"
+#include "Textures.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 FlyingE::FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {

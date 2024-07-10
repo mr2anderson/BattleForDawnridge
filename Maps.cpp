@@ -18,6 +18,8 @@
 
 
 #include "Maps.hpp"
+#include "PlainsGeneration.hpp"
+#include "Textures.hpp"
 
 
 Maps* Maps::singletone = nullptr;

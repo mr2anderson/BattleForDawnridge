@@ -17,11 +17,7 @@
  */
 
 
-#include "Textures.hpp"
-#include "Texts.hpp"
-#include "Events.hpp"
 #include "HorizontalSelectionWindow.hpp"
-#include "CreateEEvent.hpp"
 
 
 #pragma once

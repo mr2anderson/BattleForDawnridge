@@ -18,6 +18,8 @@
 
 
 #include "HpSensitiveB.hpp"
+#include "Texts.hpp"
+#include "FlyingE.hpp"
 
 
 HpSensitiveB::HpSensitiveB() = default;

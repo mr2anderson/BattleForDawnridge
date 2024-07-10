@@ -19,6 +19,7 @@
 
 
 #include "Sawmill.hpp"
+#include "Texts.hpp"
 
 
 Sawmill::Sawmill() = default;

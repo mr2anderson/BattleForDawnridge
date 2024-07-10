@@ -18,18 +18,12 @@
 
 
 #include <queue>
-#include "Maps.hpp"
-#include "SoundQueue.hpp"
-#include "Playlist.hpp"
-#include "ColorTheme.hpp"
-#include "WindowButton.hpp"
-#include "Sounds.hpp"
+#include "Map.hpp"
 #include "CloseMenuEvent.hpp"
 #include "StartGameEvent.hpp"
-#include "WindowTwoButtons.hpp"
-#include "WindowButtonImage.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 #pragma once

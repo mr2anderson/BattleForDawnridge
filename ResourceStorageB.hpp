@@ -18,7 +18,6 @@
 
 
 #include "Building.hpp"
-#include "ResourceStorageBDestroyedEvent.hpp"
 
 
 #pragma once

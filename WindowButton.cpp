@@ -18,6 +18,8 @@
 
 
 #include "WindowButton.hpp"
+#include "CloseWindowEvent.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 WindowButton::WindowButton(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring &buttonText, const Events &onFinish, uint32_t w, uint32_t h) {

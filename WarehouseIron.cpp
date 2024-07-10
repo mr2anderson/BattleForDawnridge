@@ -18,6 +18,7 @@
 
 
 #include "WarehouseIron.hpp"
+#include "Texts.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;

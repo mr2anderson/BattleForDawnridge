@@ -18,7 +18,13 @@
 
 
 
+#include <cstdint>
+#include <vector>
+#include <fstream>
 #include "Texts.hpp"
+#include "Root.hpp"
+#include "UTFEncoder.hpp"
+#include "CouldntOpenText.hpp"
 
 
 Texts* Texts::singletone = nullptr;

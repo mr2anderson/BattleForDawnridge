@@ -18,6 +18,8 @@
 
 
 #include "ResourceStorageB.hpp"
+#include "Texts.hpp"
+#include "ResourceStorageBDestroyedEvent.hpp"
 
 
 ResourceStorageB::ResourceStorageB() = default;

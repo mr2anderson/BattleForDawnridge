@@ -17,8 +17,8 @@
  */
 
 
-#include <array>
-#include "Textures.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once

@@ -19,7 +19,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstdint>
-#include "ColorTheme.hpp"
 
 
 #pragma once

@@ -21,11 +21,9 @@
 #include "Button.hpp"
 #include "HorizontalSelectionWindowComponent.hpp"
 #include "LabelWithImage.hpp"
-#include "CloseWindowEvent.hpp"
 #include "MoveHorizontalSelectionWindowUpEvent.hpp"
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
-#include "SoundQueue.hpp"
-#include "Sounds.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 #pragma once

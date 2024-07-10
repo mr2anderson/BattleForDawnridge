@@ -16,7 +16,10 @@
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "Sounds.hpp"
+#include "Root.hpp"
+#include "CouldntOpenSound.hpp"
 
 
 Sounds *Sounds::singletone = nullptr;

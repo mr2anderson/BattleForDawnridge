@@ -18,7 +18,6 @@
 
 
 #include "RectangularUIElement.hpp"
-#include "Textures.hpp"
 
 
 #pragma once

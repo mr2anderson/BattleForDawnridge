@@ -18,6 +18,12 @@
 
 
 #include "Market.hpp"
+#include "SubResourceEvent.hpp"
+#include "AddResourceEvent.hpp"
+#include "DecreaseCurrentTradeMovesLeftEvent.hpp"
+#include "BuildingShortInfo.hpp"
+#include "Texts.hpp"
+#include "FlyingE.hpp"
 
 
 Market::Market() = default;

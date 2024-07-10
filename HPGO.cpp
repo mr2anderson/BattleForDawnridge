@@ -18,6 +18,8 @@
 
 
 #include "HPGO.hpp"
+#include "HPBar.hpp"
+#include "Texts.hpp"
 
 
 HPGO::HPGO() = default;

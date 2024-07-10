@@ -18,6 +18,8 @@
 
 
 #include "Mountains.hpp"
+#include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 Mountains::Mountains() = default;
