@@ -55,7 +55,7 @@ std::wstring WarehouseIron::getDescription() const {
 	return *Texts::get()->get("warehouse_iron_description");
 }
 Resources WarehouseIron::getLimit() const {
-	return Resources({ Resource("iron", 5000) });
+	return Resources({ Resource("iron", 10000) });
 }
 std::wstring WarehouseIron::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_iron_upper_case_readable_name");

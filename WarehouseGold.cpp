@@ -56,7 +56,7 @@ std::wstring WarehouseGold::getDescription() const {
 	return *Texts::get()->get("warehouse_gold_description");
 }
 Resources WarehouseGold::getLimit() const {
-	return Resources({ Resource("gold", 5000) });
+	return Resources({ Resource("gold", 10000) });
 }
 std::wstring WarehouseGold::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_gold_upper_case_readable_name");
