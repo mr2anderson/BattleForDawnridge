@@ -671,7 +671,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Road.hpp" />
     <ClInclude Include="Root.hpp" />
     <ClInclude Include="Sawmill.hpp" />
-    <ClInclude Include="SelectWarriorEvent.hpp" />
+    <ClInclude Include="Selectable.hpp" />
+    <ClInclude Include="SelectEvent.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
     <ClInclude Include="StartGameEvent.hpp" />
@@ -692,6 +693,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TryToProduceEvent.hpp" />
     <ClInclude Include="TryToTradeEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
+    <ClInclude Include="UnselectEvent.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="VictoryConditionB.hpp" />
     <ClInclude Include="VictoryConditionBDestroyedEvent.hpp" />
@@ -799,7 +801,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="Sawmill.cpp" />
-    <ClCompile Include="SelectWarriorEvent.cpp" />
+    <ClCompile Include="Selectable.cpp" />
+    <ClCompile Include="SelectEvent.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="StartGameEvent.cpp" />
@@ -820,6 +823,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TryToProduceEvent.cpp" />
     <ClCompile Include="TryToTradeEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnselectEvent.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="VictoryConditionB.cpp" />
     <ClCompile Include="VictoryConditionBDestroyedEvent.cpp" />

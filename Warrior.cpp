@@ -18,7 +18,7 @@
 
 
 #include "Warrior.hpp"
-#include "SelectWarriorEvent.hpp"
+#include "SelectEvent.hpp"
 #include "StartWarriorClickAnimationEvent.hpp"
 
 
@@ -109,6 +109,15 @@ bool Warrior::canMoveTo(uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
+Events Warrior::unselect(uint32_t x, uint32_t y) {
+	Events events = this->Selectable::unselect(x, y);
+	events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+	events.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
+	return events;
+}
+Events Warrior::unselect() {
+	return this->Selectable::unselect();
+}
 void Warrior::startAnimation(const std::string &type) {
 	this->animationClock.restart();
 	this->currentAnimation = type;
@@ -121,7 +130,7 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 		return Events();
 	}
 	Events response;
-	response.add(std::make_shared<SelectWarriorEvent>(this));
+	response.add(std::make_shared<SelectEvent>(this));
 	response.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
 	return response;
 }

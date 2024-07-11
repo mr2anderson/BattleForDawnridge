@@ -56,7 +56,14 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 				if (this->elements.empty() and this->allNewMoveEventsHandled()) {
 					if (!this->handleButtonsClick()) {
-                        this->handleGameObjectClick();
+						if (this->selected == nullptr) {
+							this->handleGameObjectClick();
+						}
+						else {
+							std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
+							Events events = this->selected->unselect(std::get<0>(pos) / 32, std::get<1>(pos) / 32);
+							this->handleEvent(events);
+						}
                     }
 				}
 				if (!this->elements.empty()) {
@@ -84,6 +91,7 @@ void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 	this->initPlayerIsActiveTable();
 	this->initCurrentPlayerIndex();
     this->initMoveCtr();
+	this->initSelectable();
     this->initPlains();
     this->initGraphics(window);
 	this->changeMove();
@@ -99,6 +107,9 @@ void MainScreen::initCurrentPlayerIndex() {
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;
+}
+void MainScreen::initSelectable() {
+	this->selected = nullptr;
 }
 void MainScreen::initPlains() {
     this->plains = PlainsGeneration(this->map->getW(), this->map->getH());
@@ -244,8 +255,11 @@ void MainScreen::handleEvent(Events &e) {
 		else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e.at(i))) {
 			this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent);
 		}
-		else if (std::shared_ptr<SelectWarriorEvent> selectWarriorEvent = std::dynamic_pointer_cast<SelectWarriorEvent>(e.at(i))) {
-			this->handleSelectWarriorEvent(selectWarriorEvent);
+		else if (std::shared_ptr<SelectEvent> selectEvent = std::dynamic_pointer_cast<SelectEvent>(e.at(i))) {
+			this->handleSelectEvent(selectEvent);
+		}
+		else if (std::shared_ptr<UnselectEvent> unselectEvent = std::dynamic_pointer_cast<UnselectEvent>(e.at(i))) {
+			this->handleUnselectEvent(unselectEvent);
 		}
 		else if (std::shared_ptr<StartWarriorClickAnimationEvent> startWarriorClickAnimationEvent = std::dynamic_pointer_cast<StartWarriorClickAnimationEvent>(e.at(i))) {
 			this->handleStartWarriorClickAnimationEvent(startWarriorClickAnimationEvent);
@@ -380,8 +394,11 @@ void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProd
 	e->getProducer()->stopProducing();
 	this->map->add(e->getWarrior()->cloneWarrior());
 }
-void MainScreen::handleSelectWarriorEvent(std::shared_ptr<SelectWarriorEvent> e) {
-
+void MainScreen::handleSelectEvent(std::shared_ptr<SelectEvent> e) {
+	this->selected = e->getSelectable();
+}
+void MainScreen::handleUnselectEvent(std::shared_ptr<UnselectEvent> e) {
+	this->selected = nullptr;
 }
 void MainScreen::handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e) {
 	e->getWarrior()->startClickAnimation();
@@ -462,6 +479,9 @@ bool MainScreen::handleButtonsClick() {
     for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
         Events event = this->buttons.at(i).click();
         if (!event.empty()) {
+			if (this->selected != nullptr) {
+				this->selected->unselect();
+			}
             this->handleEvent(event);
             return true;
         }
@@ -469,8 +489,8 @@ bool MainScreen::handleButtonsClick() {
     return false;
 }
 void MainScreen::handleGameObjectClick() {
-	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
-	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
+	uint32_t mouseX, mouseY;
+	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
 	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
 		Events events = this->map->getGO()->at(i)->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
 		this->handleEvent(events);
@@ -528,6 +548,11 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 			}
 		}
 	}
+}
+std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView() const {
+	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
+	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
+	return std::make_tuple(mouseX, mouseY);
 }
 void MainScreen::moveView() {
 	auto p = sf::Mouse::getPosition();

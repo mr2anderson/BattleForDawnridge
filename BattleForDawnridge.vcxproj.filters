@@ -1063,7 +1063,7 @@
     <ClInclude Include="BuildingShortInfo.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="SelectWarriorEvent.hpp">
+    <ClInclude Include="SelectEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="StartWarriorClickAnimationEvent.hpp">
@@ -1086,6 +1086,12 @@
     </ClInclude>
     <ClInclude Include="TryToCollectEvent.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Selectable.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="UnselectEvent.hpp">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1398,7 +1404,7 @@
     <ClCompile Include="BuildingShortInfo.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
-    <ClCompile Include="SelectWarriorEvent.cpp">
+    <ClCompile Include="SelectEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="StartWarriorClickAnimationEvent.cpp">
@@ -1466,6 +1472,12 @@
     </ClCompile>
     <ClCompile Include="TryToCollectEvent.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Selectable.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="UnselectEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

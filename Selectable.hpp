@@ -17,12 +17,14 @@
  */
 
 
-#include "SelectWarriorEvent.hpp"
+#include <cstdint>
+#include "Events.hpp"
 
 
-SelectWarriorEvent::SelectWarriorEvent(Warrior* w) {
-	this->w = w;
-}
-Warrior* SelectWarriorEvent::getWarrior() {
-	return this->w;
-}
+class Selectable {
+public:
+	virtual Events unselect(uint32_t x, uint32_t y);
+	virtual Events unselect();
+private:
+	Events getUnselectEvent();
+};

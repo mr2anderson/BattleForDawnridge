@@ -19,12 +19,13 @@
 
 #include "Unit.hpp"
 #include "GOCollection.hpp"
+#include "Selectable.hpp"
 
 
 #pragma once
 
 
-class Warrior : public Unit {
+class Warrior : public Unit, public Selectable {
 public:
 	Warrior();
 	Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
@@ -49,6 +50,8 @@ private:
 	std::string currentAnimation;
 	sf::Clock animationClock;
 
+	Events unselect(uint32_t x, uint32_t y) override;
+	Events unselect() override;
 	void startAnimation(const std::string &type);
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

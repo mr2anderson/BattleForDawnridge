@@ -23,14 +23,14 @@
 #pragma once
 
 
-class Warrior;
+class Selectable;
 
 
-class SelectWarriorEvent : public Event {
+class UnselectEvent : public Event {
 public:
-	SelectWarriorEvent(Warrior* w);
+	UnselectEvent(Selectable* s);
 
-	Warrior* getWarrior();
+	Selectable* getSelectable();
 private:
-	Warrior* w;
+	Selectable* s;
 };

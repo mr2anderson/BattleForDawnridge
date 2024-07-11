@@ -36,7 +36,8 @@
 #include "DecreaseCurrentProducingMovesLeftEvent.hpp"
 #include "TryToProduceEvent.hpp"
 #include "WarriorProducingFinishedEvent.hpp"
-#include "SelectWarriorEvent.hpp"
+#include "SelectEvent.hpp"
+#include "UnselectEvent.hpp"
 #include "StartWarriorClickAnimationEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "ResourceStorageBDestroyedEvent.hpp"
@@ -71,6 +72,7 @@ private:
 	PlainsGeneration plains;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
+	Selectable* selected;
 
     bool returnToMenu;
 	uint32_t windowW, windowH;
@@ -82,6 +84,7 @@ private:
 	void initPlayerIsActiveTable();
 	void initCurrentPlayerIndex();
 	void initMoveCtr();
+	void initSelectable();
     void initPlains();
 	void initGraphics(sf::RenderWindow &window);
 
@@ -108,7 +111,8 @@ private:
 	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e);
 	void handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e);
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
-	void handleSelectWarriorEvent(std::shared_ptr<SelectWarriorEvent> w);
+	void handleSelectEvent(std::shared_ptr<SelectEvent> w);
+	void handleUnselectEvent(std::shared_ptr<UnselectEvent> w);
 	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
 	void handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e);
 
@@ -126,6 +130,7 @@ private:
 	void drawEverything(sf::RenderWindow& window);
 	void drawResourceBar(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);
+	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
 	void moveView();
 	void updatePlayerViewPoint();
 
