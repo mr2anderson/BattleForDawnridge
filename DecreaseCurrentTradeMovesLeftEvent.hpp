@@ -23,14 +23,14 @@
 #pragma once
 
 
-class Market;
+class TradingB;
 
 
 class DecreaseCurrentTradeMovesLeftEvent : public Event {
 public:
-	DecreaseCurrentTradeMovesLeftEvent(Market *m);
+	DecreaseCurrentTradeMovesLeftEvent(TradingB *m);
 
-	Market* getMarket();
+	TradingB* getBuilding();
 private:
-	Market* m;
+	TradingB* m;
 };

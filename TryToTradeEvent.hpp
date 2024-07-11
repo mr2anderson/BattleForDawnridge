@@ -24,16 +24,16 @@
 #pragma once
 
 
-class Market;
+class TradingB;
 
 
 class TryToTradeEvent : public Event {
 public:
-	TryToTradeEvent(Market* market, const Trade& trade);
+	TryToTradeEvent(TradingB* market, const Trade& trade);
 
-	Market* getMarket();
+	TradingB* getBuilding();
 	Trade getTrade() const;
 private:
-	Market* market;
+	TradingB* market;
 	Trade trade;
 };

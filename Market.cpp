@@ -18,52 +18,17 @@
 
 
 #include "Market.hpp"
-#include "SubResourceEvent.hpp"
-#include "AddResourceEvent.hpp"
-#include "DecreaseCurrentTradeMovesLeftEvent.hpp"
-#include "BuildingShortInfo.hpp"
 #include "Texts.hpp"
-#include "FlyingE.hpp"
 
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, uint32_t playerId) : 
-	HpSensitiveB(x, y, 3, 3, 15000, playerId),
+	TradingB(x, y, 3, 3, 15000, playerId),
 	Building(x, y, 3, 3, 15000, playerId) {
 
 }
 Building* Market::cloneBuilding() const {
 	return new Market(*this);
-}
-void Market::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	this->HpSensitiveB::draw(target, states);
-	if (this->exist() and this->currentTrade.movesLeft != 0) {
-		this->drawCurrentTradeShortInfo(target, states);
-	}
-}
-Events Market::doTrade(const Trade& trade) {
-	this->currentTrade = trade;
-
-	Events response;
-	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
-		*Texts::get()->get("trade_started") + L'\n' +
-		trade.getReadableInfo(), *Texts::get()->get("OK"));
-	response.add(std::make_shared<CreateEEvent>(window));
-	response.add(std::make_shared<SubResourceEvent>(trade.sell));
-	return response;
-}
-void Market::decreaseCurrentTradeMovesLeft() {
-	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
-}
-Events Market::newMove(uint32_t playerId) {
-	if (!this->belongTo(playerId) or !this->exist()) {
-		return Events();
-	}
-	Events response = this->regenerate();
-	if (this->works()) {
-		response = response + this->handleCurrentTrade();
-	}
-	return response;
 }
 Resources Market::getCost() const {
 	Resources cost;
@@ -79,94 +44,38 @@ std::string Market::getSoundName() const {
 std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
-HorizontalSelectionWindowComponent Market::getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const {
-	Events events;
-	events.add(gameEventTrade);
-	HorizontalSelectionWindowComponent component = {
-		gameEventTrade->getTrade().buy.type + "_icon",
-		*Texts::get()->get("buy") + gameEventTrade->getTrade().buy.getReadableInfo() +
-		*Texts::get()->get("for") + gameEventTrade->getTrade().sell.getReadableInfo(),
-		true,
-		false,
-		events
-	};
-	return component;
-}
-HorizontalSelectionWindowComponent Market::getBusyWithTradeComponent() const {
-	HorizontalSelectionWindowComponent component = {
-		"trade_icon",
-		*Texts::get()->get("market_is_busy") + this->currentTrade.getReadableInfo(),
-		false,
-		false,
-		Events()
-	};
-	return component;
-}
 uint32_t Market::getRegenerationSpeed() const {
 	return 10000;
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
 }
-bool Market::busy() const {
-	return this->currentTrade.movesLeft != 0;
-}
-uint32_t Market::getTradeStartTime() const {
-	return 4;
-}
-void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
-	BuildingShortInfo info(this->getX(), this->getY(), this->getSX(), this->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
-	target.draw(info, states);
-}
-Events Market::handleCurrentTrade() {
-	if (!this->busy()) {
-		return Events();
-	}
-	Events responce;
-	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-	responce.add(std::make_shared<CreateEEvent>(element));
-	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
-	if (this->currentTrade.movesLeft == 1) {
-		element = std::make_shared<FlyingE>(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
-		responce.add(std::make_shared<CreateEEvent>(element));
-		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));
-	}
-	return responce;
-}
-Events Market::getSelectionW() {
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getDestroyComponent());
-	if (this->repairing()) {
-		components.push_back(this->getBusyWithRepairingComponent());
-	}
-	if (this->busy()) {
-		components.push_back(this->getBusyWithTradeComponent());
-	}
-	if (this->works() and !this->busy()) {
-		for (const auto& a :  {
-		std::make_tuple("food", 15000, "gold", 5000),
-		std::make_tuple("wood", 15000, "gold", 5000),
-		std::make_tuple("stone", 15000, "gold", 5000),
-		std::make_tuple("iron", 5000, "gold", 5000) }) {
-			std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
-			components.push_back(this->getTradeComponent(tryToTradeEvent));
-		}
-	}
+std::vector<Trade> Market::getTrades() const {
+	const uint32_t time = 5;
+	const uint32_t goldVolume = 5000;
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
-	Events response;
-	response.add(std::make_shared<CreateEEvent>(window));
-	return response;
-}
-Events Market::getGameObjectResponse(uint32_t playerId) {
-	if (!this->exist()) {
-		return Events();
-	}
-	if (this->belongTo(playerId)) {
-		return this->getSelectionW();
-	}
-	return this->getUnitOfEnemyResponse();
+	std::vector<Trade> trades;
+
+	trades.emplace_back(
+		Resource("gold", goldVolume),
+		Resource("food", 3 * goldVolume),
+		time
+	);
+	trades.emplace_back(
+		Resource("gold", goldVolume),
+		Resource("wood", 3 * goldVolume),
+		time
+	);
+	trades.emplace_back(
+		Resource("gold", goldVolume),
+		Resource("stone", 3 * goldVolume),
+		time
+	);
+	trades.emplace_back(
+		Resource("gold", goldVolume),
+		Resource("iron", goldVolume),
+		time
+	);
+
+	return trades;
 }

@@ -20,9 +20,9 @@
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 
 
-DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(Market* m) {
+DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(TradingB* m) {
 	this->m = m;
 }
-Market* DecreaseCurrentTradeMovesLeftEvent::getMarket() {
+TradingB* DecreaseCurrentTradeMovesLeftEvent::getBuilding() {
 	return this->m;
 }

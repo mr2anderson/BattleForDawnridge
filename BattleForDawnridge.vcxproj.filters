@@ -1078,6 +1078,9 @@
     <ClInclude Include="Knight.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
+    <ClInclude Include="TradingB.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1448,6 +1451,9 @@
     </ClCompile>
     <ClCompile Include="ResourceBar.cpp">
       <Filter>Source Files\screensService</Filter>
+    </ClCompile>
+    <ClCompile Include="TradingB.cpp">
+      <Filter>Source Files\go</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

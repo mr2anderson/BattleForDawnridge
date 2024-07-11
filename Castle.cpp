@@ -68,7 +68,7 @@ Events Castle::destroy() {
 	return this->ResourceStorageB::destroy() + this->VictoryConditionB::destroy();
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return 100000;
+	return 20000;
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");

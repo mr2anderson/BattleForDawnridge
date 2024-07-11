@@ -20,11 +20,11 @@
 #include "TryToTradeEvent.hpp"
 
 
-TryToTradeEvent::TryToTradeEvent(Market* market, const Trade& trade) {
+TryToTradeEvent::TryToTradeEvent(TradingB* market, const Trade& trade) {
 	this->market = market;
 	this->trade = trade;
 }
-Market* TryToTradeEvent::getMarket() {
+TradingB* TryToTradeEvent::getBuilding() {
 	return this->market;
 }
 Trade TryToTradeEvent::getTrade() const {

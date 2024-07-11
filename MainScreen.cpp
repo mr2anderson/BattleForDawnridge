@@ -259,10 +259,10 @@ void MainScreen::handleTryToAttackEvent(std::shared_ptr<TryToAttackEvent> e) {
     
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
-	Market* m = e->getMarket();
+	TradingB* b = e->getBuilding();
 	Trade t = e->getTrade();
 	if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
-		Events events = m->doTrade(t);
+		Events events = b->doTrade(t);
 		this->handleEvent(events);
 	}
 	else {
@@ -304,7 +304,7 @@ void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
 	go->addHp(n);
 }
 void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e) {
-	e->getMarket()->decreaseCurrentTradeMovesLeft();
+	e->getBuilding()->decreaseCurrentTradeMovesLeft();
 }
 void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {

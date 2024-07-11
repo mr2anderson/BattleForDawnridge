@@ -17,25 +17,18 @@
  */
 
 
-#include "HpSensitiveB.hpp"
-#include "Trade.hpp"
-#include "TryToTradeEvent.hpp"
+#include "TradingB.hpp"
 
 
 #pragma once
 
 
-class Market : public HpSensitiveB {
+class Market : public TradingB {
 public:
 	Market();
 	Market(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Events doTrade(const Trade& trade);
-	void decreaseCurrentTradeMovesLeft();
-	Events newMove(uint32_t playerId);
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -43,14 +36,7 @@ public:
 private:
 	Trade currentTrade;
 
-	HorizontalSelectionWindowComponent getTradeComponent(std::shared_ptr<TryToTradeEvent> gameEventTrade) const;
-	HorizontalSelectionWindowComponent getBusyWithTradeComponent() const;
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	bool busy() const;
-	uint32_t getTradeStartTime() const;
-	void drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
-	Events handleCurrentTrade();
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
+	std::vector<Trade> getTrades() const override;
 };
