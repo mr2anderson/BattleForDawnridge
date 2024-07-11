@@ -684,6 +684,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="Trade.hpp" />
     <ClInclude Include="TradingB.hpp" />
+    <ClInclude Include="Treasure.hpp" />
     <ClInclude Include="TryToAttackEvent.hpp" />
     <ClInclude Include="TryToBuildEvent.hpp" />
     <ClInclude Include="TryToProduceEvent.hpp" />
@@ -810,6 +811,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Trade.cpp" />
     <ClCompile Include="TradingB.cpp" />
+    <ClCompile Include="Treasure.cpp" />
     <ClCompile Include="TryToAttackEvent.cpp" />
     <ClCompile Include="TryToBuildEvent.cpp" />
     <ClCompile Include="TryToProduceEvent.cpp" />

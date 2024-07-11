@@ -1081,6 +1081,9 @@
     <ClInclude Include="TradingB.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
+    <ClInclude Include="Treasure.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1453,6 +1456,9 @@
       <Filter>Source Files\screensService</Filter>
     </ClCompile>
     <ClCompile Include="TradingB.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Treasure.cpp">
       <Filter>Source Files\go</Filter>
     </ClCompile>
   </ItemGroup>

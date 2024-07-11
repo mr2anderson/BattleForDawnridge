@@ -26,6 +26,7 @@
 #include "Iron.hpp"
 #include "Mountains.hpp"
 #include "Water.hpp"
+#include "Treasure.hpp"
 #include "Root.hpp"
 
 
@@ -86,6 +87,9 @@ Map::Map(const std::string &path) {
             }
             else if (word == "26") {
                 this->add(new Water(x, y));
+            }
+            else if (word == "30") {
+                this->add(new Treasure(x, y));
             }
             x = x + 1;
         }
