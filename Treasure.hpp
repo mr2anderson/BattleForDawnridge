@@ -28,9 +28,14 @@ public:
 	Treasure();
 	Treasure(uint32_t x, uint32_t y);
 
+	Events newMove(uint32_t playerId) override;
+	Events tryToCollect(uint32_t playerId, uint32_t value) override;
+
 	std::string getResourceType() const override;
 	std::string getSoundName() const override;
 private:
+	bool alreadyCollected;
+
 	std::string getTextureName() const override;
 	std::wstring getDescription() const override;
 };

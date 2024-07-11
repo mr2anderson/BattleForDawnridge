@@ -253,6 +253,9 @@ void MainScreen::handleEvent(Events &e) {
 		else if (std::shared_ptr<StartWarriorClickAnimationEvent> startWarriorClickAnimationEvent = std::dynamic_pointer_cast<StartWarriorClickAnimationEvent>(e.at(i))) {
 			this->handleStartWarriorClickAnimationEvent(startWarriorClickAnimationEvent);
 		}
+		else if (std::shared_ptr<TryToCollectEvent> tryToCollectEvent = std::dynamic_pointer_cast<TryToCollectEvent>(e.at(i))) {
+			this->handleTryToCollectEvent(tryToCollectEvent);
+		}
 	}
 }
 void MainScreen::handleTryToAttackEvent(std::shared_ptr<TryToAttackEvent> e) {
@@ -388,6 +391,19 @@ void MainScreen::handleSelectWarriorEvent(std::shared_ptr<SelectWarriorEvent> e)
 }
 void MainScreen::handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e) {
 	e->getWarrior()->startClickAnimation();
+}
+void MainScreen::handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e) {
+	uint32_t id = e->getPlayerId();
+	ResourcePoint* rp = e->getResourcePoint();
+	uint32_t value = e->getValue();
+
+	uint32_t limit = this->getResourcesLimit().get(rp->getResourceType()) - this->getCurrentPlayer()->getResource(rp->getResourceType());
+	if (value > limit) {
+		value = limit;
+	}
+
+	Events events = rp->tryToCollect(id, value);
+	this->handleEvent(events);
 }
 void MainScreen::removeFinishedElements() {
 	bool remove = false;

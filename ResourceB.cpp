@@ -18,7 +18,7 @@
 
 
 #include "ResourceB.hpp"
-#include "CollectEvent.hpp"
+#include "TryToCollectEvent.hpp"
 #include "FlyingE.hpp"
 
 
@@ -28,43 +28,25 @@ ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t 
 	AreaB(x, y, sx, sy, maxHp, playerId, units),
 	Building(x, y, sx, sy, maxHp, playerId, units) {
 	this->resourcePointsPtr = resourcePointsPtr;
-	this->resourcesLeft = true;
 }
 Events ResourceB::newMove(uint32_t playerId) {
 	if (this->belongTo(playerId) and this->exist()) {
 		Events response = this->regenerate();
-		if (this->works() and this->resourcesLeft) {
-			response = response + this->collectResources();
+		if (this->works()) {
+			response = response + this->tryToCollectResources();
 		}
 		return response;
 	}
 	return Events();
 }
-Events ResourceB::collectResources() {
-	uint32_t left = this->getCollectionSpeed();
-	std::vector<std::tuple<ResourcePoint*, uint32_t>> srcs;
-	for (uint32_t i = 0; i < this->resourcePointsPtr->size() and left; i = i + 1) {
-		ResourcePoint* rp = this->resourcePointsPtr->at(i);
-		if (rp->getResourceType() == this->getResourceType() and this->inRadius(rp)) {
-			uint32_t got = std::min(left, rp->getHP());
-			left = left - got;
-			if (got != 0) {
-				srcs.emplace_back(rp, got);
-			}
-		}
-	}
-
+Events ResourceB::tryToCollectResources() {
 	Events responce;
-	if (left == this->getCollectionSpeed()) {
-		this->resourcesLeft = false;
-	}
-	else {
-		for (const auto& src : srcs) {
-			ResourcePoint* rp = std::get<ResourcePoint*>(src);
-			uint32_t n = std::get<uint32_t>(src);
-			std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getSoundName(), rp->getX(), rp->getY(), rp->getSX(), rp->getSY());
-			responce.add(std::make_shared<CreateEEvent>(element));
-			responce.add(std::make_shared<CollectEvent>(rp, n));
+
+	for (uint32_t i = 0; i < this->resourcePointsPtr->size(); i = i + 1) {
+		ResourcePoint* rp = this->resourcePointsPtr->at(i);
+		if (rp->exist() and this->inRadius(rp) and rp->getResourceType() == this->getResourceType()) {
+			responce.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), rp, this->getCollectionSpeed()));
+			break;
 		}
 	}
 

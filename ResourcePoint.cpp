@@ -20,12 +20,32 @@
 #include "ResourcePoint.hpp"
 #include "CreateEEvent.hpp"
 #include "Texts.hpp"
+#include "FlyingE.hpp"
+#include "CollectEvent.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : HPGO(x, y, sx, sy, size, size) {}
 Events ResourcePoint::newMove(uint32_t playerId) {
 	return Events();
+}
+Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
+	if (value == 0) {
+		return Events();
+	}
+
+	Events response;
+
+	if (value > this->getHP()) {
+		value = this->getHP();
+	}
+
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getResourceType(), this->getX(), this->getY(), this->getSX(), this->getSY());
+
+	response.add(std::make_shared<CreateEEvent>(flyingE));
+	response.add(std::make_shared<CollectEvent>(this, value));
+
+	return response;
 }
 Events ResourcePoint::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {

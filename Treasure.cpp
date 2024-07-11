@@ -25,6 +25,17 @@ Treasure::Treasure() = default;
 Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2, 2, 60000) {
 
 }
+Events Treasure::newMove(uint32_t playerId) {
+	this->alreadyCollected = false;
+	return Events();
+}
+Events Treasure::tryToCollect(uint32_t playerId, uint32_t value) {
+	if (!this->alreadyCollected) {
+		this->alreadyCollected = true;
+		return this->ResourcePoint::tryToCollect(playerId, value);
+	}
+	return Events();
+}
 std::string Treasure::getResourceType() const {
 	return "gold";
 }

@@ -42,6 +42,7 @@
 #include "PlaySoundEvent.hpp"
 #include "ResourceStorageBDestroyedEvent.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
+#include "TryToCollectEvent.hpp"
 
 
 #pragma once
@@ -111,6 +112,7 @@ private:
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
 	void handleSelectWarriorEvent(std::shared_ptr<SelectWarriorEvent> w);
 	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
+	void handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e);
 
 	void removeFinishedElements();
 	void handleNewMoveEvents();

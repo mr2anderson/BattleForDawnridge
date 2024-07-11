@@ -17,22 +17,20 @@
  */
 
 
-#include "HPGO.hpp"
+#include "TryToCollectEvent.hpp"
 
 
-#pragma once
-
-
-class ResourcePoint : public HPGO {
-public:
-	ResourcePoint();
-	ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size);
-
-	Events newMove(uint32_t playerId) override;
-	virtual Events tryToCollect(uint32_t playerId, uint32_t value);
-	virtual std::string getResourceType() const = 0;
-private:
-	Events getGameObjectResponse(uint32_t playerId) override;
-	Events getSelectionWindow();
-	HorizontalSelectionWindowComponent getResourceLeftComponent() const;
-};
+TryToCollectEvent::TryToCollectEvent(uint32_t playerId, ResourcePoint* rp, uint32_t value) {
+	this->id = playerId;
+	this->rp = rp;
+	this->value = value;
+}
+uint32_t TryToCollectEvent::getPlayerId() const {
+	return this->id;
+}
+ResourcePoint* TryToCollectEvent::getResourcePoint() {
+	return this->rp;
+}
+uint32_t TryToCollectEvent::getValue() {
+	return this->value;
+}

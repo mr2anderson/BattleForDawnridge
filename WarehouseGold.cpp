@@ -19,8 +19,7 @@
 
 #include "WarehouseGold.hpp"
 #include "Texts.hpp"
-#include "CollectEvent.hpp"
-#include "FlyingE.hpp"
+#include "TryToCollectEvent.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
@@ -68,11 +67,7 @@ Events WarehouseGold::collect() {
 	for (uint32_t i = 0; i < this->treasures->size(); i = i + 1) {
 		Treasure* t = this->treasures->at(i);
 		if (t->exist() and this->connectedTo(t)) {
-			uint32_t toCollect = std::min((uint32_t)3000, t->getHP());
-
-			std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(t->getResourceType() + "_icon", t->getResourceType(), t->getX(), t->getY(), t->getSX(), t->getSY());
-			events.add(std::make_shared<CreateEEvent>(flyingE));
-			events.add(std::make_shared<CollectEvent>(t, toCollect));
+			events.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), t, 3000));
 		}
 	}
 

@@ -37,9 +37,8 @@ protected:
 	virtual uint32_t getCollectionSpeed() const = 0;
 private:
 	std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr;
-	bool resourcesLeft;
 
-	Events collectResources();
+	Events tryToCollectResources();
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
 };
