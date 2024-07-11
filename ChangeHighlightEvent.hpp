@@ -18,6 +18,7 @@
 
 
 #include <cstdint>
+#include <SFML/Graphics.hpp>
 #include "Event.hpp"
 
 
@@ -29,12 +30,14 @@ class Unit;
 
 class ChangeHighlightEvent : public Event {
 public:
-	ChangeHighlightEvent(const Unit* u, uint32_t x, uint32_t y);
+	ChangeHighlightEvent(const Unit* u, sf::Color color, uint32_t x, uint32_t y);
 
 	const Unit* getUnit() const;
+	sf::Color getColor() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
 private:
 	const Unit* u;
+	sf::Color color;
 	uint32_t x, y;
 };

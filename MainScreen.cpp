@@ -42,7 +42,6 @@
 #include "WindowButton.hpp"
 #include "Textures.hpp"
 #include "Texts.hpp"
-#include "ColorTheme.hpp"
 
 
 MainScreen* MainScreen::singletone = nullptr;
@@ -295,12 +294,13 @@ void MainScreen::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e) {
 }
 void MainScreen::handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent> e) {
 	const Unit* u = e->getUnit();
+	sf::Color c = e->getColor();
 	uint32_t x = e->getX();
 	uint32_t y = e->getY();
 	if (x >= this->plains.getW() or y >= this->plains.getH()) {
 		return;
 	}
-	this->highlightTable.mark(x, y, u);
+	this->highlightTable.mark(x, y, u, c);
 }
 void MainScreen::handleCollectEvent(std::shared_ptr<CollectEvent> e) {
 	ResourcePoint* resourcePoint = e->getRp();
@@ -539,11 +539,12 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
 			s.setPosition(32 * i, 32 * j);
 			window.draw(s);
-			if (this->highlightTable.highlighted(i, j)) {
+			std::vector<sf::Color> colors = this->highlightTable.getHighlightColors(i, j);
+			for (uint32_t k = 0; k < colors.size(); k = k + 1) {
 				sf::RectangleShape r;
 				r.setPosition(s.getPosition());
 				r.setSize(sf::Vector2f(32, 32));
-				r.setFillColor(COLOR_THEME::CELL_COLOR_HIGHLIGHTED);
+				r.setFillColor(colors[k]);
 				window.draw(r);
 			}
 		}

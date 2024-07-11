@@ -24,26 +24,30 @@ HighlightTable::HighlightTable() = default;
 void HighlightTable::clear() {
 	this->data.clear();
 }
-void HighlightTable::mark(uint32_t x, uint32_t y, const Unit* unitPtr) {
+void HighlightTable::mark(uint32_t x, uint32_t y, const Unit* unitPtr, sf::Color color) {
 	std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);
-	std::vector<const Unit*> v = this->data[p];
+	std::vector<std::tuple<const Unit*, sf::Color>> v = this->data[p];
 	bool found = false;
 	for (uint32_t i = 0; i < v.size(); i = i + 1) {
-		if (v.at(i) == unitPtr) {
+		if (v.at(i) == std::make_tuple(unitPtr, color)) {
 			v.erase(v.begin() + i);
 			found = true;
 			break;
 		}
 	}
 	if (!found) {
-		v.push_back(unitPtr);
+		v.emplace_back(unitPtr, color);
 	}
 	this->data.at(p) = v;
 }
-bool HighlightTable::highlighted(uint32_t x, uint32_t y) const {
+std::vector<sf::Color> HighlightTable::getHighlightColors(uint32_t x, uint32_t y) const {
 	std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);
 	if (this->data.find(p) == this->data.end()) {
-		return false;
+		return std::vector<sf::Color>();
 	}
-	return !this->data.at(p).empty();
+	std::vector<sf::Color> colors;
+	for (uint32_t i = 0; i < this->data.at(p).size(); i = i + 1) {
+		colors.push_back(std::get<sf::Color>(this->data.at(p).at(i)));
+	}
+	return colors;
 }

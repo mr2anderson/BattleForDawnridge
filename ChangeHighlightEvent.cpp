@@ -20,13 +20,17 @@
 #include "ChangeHighlightEvent.hpp"
 
 
-ChangeHighlightEvent::ChangeHighlightEvent(const Unit* u, uint32_t x, uint32_t y) {
+ChangeHighlightEvent::ChangeHighlightEvent(const Unit* u, sf::Color color, uint32_t x, uint32_t y) {
 	this->u = u;
+	this->color = color;
 	this->x = x;
 	this->y = y;
 }
 const Unit* ChangeHighlightEvent::getUnit() const {
 	return this->u;
+}
+sf::Color ChangeHighlightEvent::getColor() const {
+	return this->color;
 }
 uint32_t ChangeHighlightEvent::getX() const {
 	return this->x;

@@ -19,6 +19,7 @@
 
 #include "AreaB.hpp"
 #include "ChangeHighlightEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 AreaB::AreaB() = default;
@@ -52,7 +53,7 @@ Events AreaB::getHighlightEvent() const {
 
 	for (uint32_t x = this->getAreaXMin(); x <= this->getAreaXMax(); x = x + 1) {
 		for (uint32_t y = this->getAreaYMin(); y <= this->getAreaYMax(); y = y + 1) {
-			gEvent.add(std::make_shared<ChangeHighlightEvent>(this, x, y));
+			gEvent.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE, x, y));
 		}
 	}
 

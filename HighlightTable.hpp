@@ -29,8 +29,8 @@ public:
 	HighlightTable();
 
 	void clear();
-	void mark(uint32_t x, uint32_t y, const Unit* unitPtr);
-	bool highlighted(uint32_t x, uint32_t y) const;
+	void mark(uint32_t x, uint32_t y, const Unit* unitPtr, sf::Color color);
+	std::vector<sf::Color> getHighlightColors(uint32_t x, uint32_t y) const;
 private:
-	std::map<std::tuple<uint32_t, uint32_t>, std::vector<const Unit*>> data;
+	std::map<std::tuple<uint32_t, uint32_t>, std::vector<std::tuple<const Unit*, sf::Color>>> data;
 };
