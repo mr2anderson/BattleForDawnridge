@@ -38,7 +38,7 @@ Events WarehouseGold::newMove(uint32_t playerId) {
 }
 Resources WarehouseGold::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 15000));
+	cost.plus(Resource("stone", 20000));
 	return cost;
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
@@ -54,7 +54,7 @@ std::wstring WarehouseGold::getDescription() const {
 	return *Texts::get()->get("warehouse_gold_description");
 }
 Resources WarehouseGold::getLimit() const {
-	return Resources({ Resource("gold", 10000) });
+	return Resources({ Resource("gold", 5000) });
 }
 std::wstring WarehouseGold::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_gold_upper_case_readable_name");

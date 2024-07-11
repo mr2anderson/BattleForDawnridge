@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "Sounds.hpp"
 #include "Root.hpp"
 #include "CouldntOpenSound.hpp"
@@ -32,5 +33,8 @@ void Sounds::add(const std::string& name, const std::string& path) {
 }
 sf::SoundBuffer *Sounds::get(const std::string& name) {
     auto it = this->sounds.find(name);
+    if (it == this->sounds.end()) {
+        std::cerr << "Invalid sound id: " << name << std::endl;
+    }
     return &it->second;
 }

@@ -25,10 +25,10 @@
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) : 
-	TerritoryOriginB(x, y, 3, 3, 50000, playerId),
-	ResourceStorageB(x, y, 3, 3, 50000, playerId),
-	VictoryConditionB(x, y, 3, 3, 50000, playerId),
-	Building(x, y, 3, 3, 50000, playerId) {
+	TerritoryOriginB(x, y, 3, 3, 160000, playerId),
+	ResourceStorageB(x, y, 3, 3, 160000, playerId),
+	VictoryConditionB(x, y, 3, 3, 160000, playerId),
+	Building(x, y, 3, 3, 160000, playerId) {
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
@@ -52,7 +52,7 @@ Resources Castle::getLimit() const {
 }
 Resources Castle::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 50000));
+	cost.plus(Resource("stone", 80000));
 	return cost;
 }
 std::string Castle::getTextureName() const {

@@ -38,7 +38,7 @@ Events WarehouseIron::newMove(uint32_t playerId) {
 }
 Resources WarehouseIron::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 15000));
+	cost.plus(Resource("stone", 20000));
 	return cost;
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
@@ -54,7 +54,7 @@ std::wstring WarehouseIron::getDescription() const {
 	return *Texts::get()->get("warehouse_iron_description");
 }
 Resources WarehouseIron::getLimit() const {
-	return Resources({ Resource("iron", 10000) });
+	return Resources({ Resource("iron", 5000) });
 }
 std::wstring WarehouseIron::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_iron_upper_case_readable_name");

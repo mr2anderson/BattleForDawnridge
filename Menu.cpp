@@ -164,7 +164,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
     Events createConfirmExitWindowEvent;
     createConfirmExitWindowEvent.add(std::make_shared<CreateEEvent>(confirmExitWindow));
 
-	this->buttons.emplace_back(std::make_shared<Label>(10, 360, 400, 60, *Texts::get()->get("returnToMenu")), createConfirmExitWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(10, 360, 400, 60, *Texts::get()->get("exit")), createConfirmExitWindowEvent);
 
     this->background.setTexture(*Textures::get()->get("menu"));
     this->background.setPosition(windowW - this->background.getLocalBounds().width, windowH - this->background.getLocalBounds().height);

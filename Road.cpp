@@ -38,7 +38,7 @@ Events Road::newMove(uint32_t playerId) {
 }
 Resources Road::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 1000));
+	cost.plus(Resource("wood", 1250));
 	return cost;
 }
 uint32_t Road::getRegenerationSpeed() const {

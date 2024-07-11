@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "Maps.hpp"
 #include "PlainsGeneration.hpp"
 #include "Textures.hpp"
@@ -33,7 +34,11 @@ void Maps::add(const std::string &name, const std::string &path) {
     this->generateThumbnail(name);
 }
 std::shared_ptr<Map> Maps::load(const std::string& name) {
-    std::shared_ptr<Map> map = std::make_shared<Map>(this->paths.at(name));
+    auto it = this->paths.find(name);
+    if (it == this->paths.end()) {
+        std::cerr << "Invalid map id: " << name << std::endl;
+    }
+    std::shared_ptr<Map> map = std::make_shared<Map>(it->second);
     return map;
 }
 void Maps::generateThumbnail(const std::string& name) {

@@ -23,14 +23,14 @@
 
 Knight::Knight() = default;
 Knight::Knight(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go) :
-	Warrior(x, y, 2, 2, 2000, playerId, go) {
+	Warrior(x, y, 2, 2, 1800, playerId, go) {
 
 }
 Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 20000), Resource("iron", 2500) });
+	return Resources({ Resource("food", 10000), Resource("iron", 2500) });
 }
 uint32_t Knight::getTimeToProduce() const {
 	return 5;

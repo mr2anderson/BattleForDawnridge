@@ -38,7 +38,7 @@ Events WarehouseFood::newMove(uint32_t playerId) {
 }
 Resources WarehouseFood::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 15000));
+	cost.plus(Resource("stone", 20000));
 	return cost;
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {

@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "Music.hpp"
 #include "Root.hpp"
 #include "CouldntOpenMusic.hpp"
@@ -32,5 +33,8 @@ void Music::add(const std::string& name, const std::string& path) {
 }
 sf::Music *Music::get(const std::string& name) {
     auto it = this->music.find(name);
+    if (it == this->music.end()) {
+        std::cerr << "Invalid music id: " << name << std::endl;
+    }
     return &it->second;
 }

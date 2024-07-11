@@ -38,7 +38,7 @@ Events Arable::newMove(uint32_t playerId) {
 	return Events();
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 2500)});
+	return Resources({ Resource("wood", 3000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";

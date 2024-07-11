@@ -23,7 +23,7 @@
 
 Wall2::Wall2() = default;
 Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 2, 2, 50000, playerId) {
+	Building(x, y, 2, 2, 160000, playerId) {
 
 }
 Building* Wall2::cloneBuilding() const {
@@ -38,11 +38,11 @@ Events Wall2::newMove(uint32_t playerId) {
 }
 Resources Wall2::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 10000));
+	cost.plus(Resource("stone", 15000));
 	return cost;
 }
 uint32_t Wall2::getRegenerationSpeed() const {
-	return 100000;
+	return 40000;
 }
 std::string Wall2::getTextureName() const {
 	return "wall2";

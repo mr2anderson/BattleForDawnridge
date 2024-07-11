@@ -67,7 +67,7 @@ Events Market::newMove(uint32_t playerId) {
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 25000));
+	cost.plus(Resource("stone", 30000));
 	return cost;
 }
 std::string Market::getTextureName() const {
@@ -112,7 +112,7 @@ bool Market::busy() const {
 	return this->currentTrade.movesLeft != 0;
 }
 uint32_t Market::getTradeStartTime() const {
-	return 8;
+	return 4;
 }
 void Market::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
 	BuildingShortInfo info(this->getX(), this->getY(), this->getSX(), this->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
@@ -146,14 +146,11 @@ Events Market::getSelectionW() {
 		components.push_back(this->getBusyWithTradeComponent());
 	}
 	if (this->works() and !this->busy()) {
-		for (const auto& a : { std::make_tuple("gold", 10000, "food", 10000),
-		std::make_tuple("gold", 10000, "wood", 10000),
-		std::make_tuple("gold", 10000, "stone", 10000),
-		std::make_tuple("gold", 10000, "iron", 10000),
-		std::make_tuple("food", 10000, "gold", 10000),
-		std::make_tuple("wood", 10000, "gold", 10000),
-		std::make_tuple("stone", 10000, "gold", 10000),
-		std::make_tuple("iron", 10000, "gold", 10000) }) {
+		for (const auto& a :  {
+		std::make_tuple("food", 15000, "gold", 5000),
+		std::make_tuple("wood", 15000, "gold", 5000),
+		std::make_tuple("stone", 15000, "gold", 5000),
+		std::make_tuple("iron", 5000, "gold", 5000) }) {
 			std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, Trade(Resource(std::get<0>(a), std::get<1>(a)), Resource(std::get<2>(a), std::get<3>(a)), this->getTradeStartTime()));
 			components.push_back(this->getTradeComponent(tryToTradeEvent));
 		}

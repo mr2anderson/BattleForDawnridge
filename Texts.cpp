@@ -21,6 +21,7 @@
 #include <cstdint>
 #include <vector>
 #include <fstream>
+#include <iostream>
 #include "Texts.hpp"
 #include "Root.hpp"
 #include "UTFEncoder.hpp"
@@ -88,7 +89,11 @@ void Texts::setDefaultPath(const std::string& path) {
     file.close();
 }
 std::wstring* Texts::get(const std::string& name) {
-    return &this->texts.at(name);
+    auto it = this->texts.find(name);
+    if (it == this->texts.end()) {
+        std::cerr << "Invalid text id: " << name << std::endl;
+    }
+    return &it->second;
 }
 std::string Texts::getPath() const {
     std::ifstream file(ROOT + "/language.txt");

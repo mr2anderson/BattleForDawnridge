@@ -23,14 +23,14 @@
 
 Infantryman::Infantryman() = default;
 Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go) :
-	Warrior(x, y, 2, 2, 1000, playerId, go) {
+	Warrior(x, y, 2, 2, 900, playerId, go) {
 
 }
 Warrior* Infantryman::cloneWarrior() const {
 	return new Infantryman(*this);
 }
 Resources Infantryman::getCost() const {
-	return Resources({ Resource("food", 10000), Resource("wood", 2500) });
+	return Resources({ Resource("food", 5000 )});
 }
 uint32_t Infantryman::getTimeToProduce() const {
 	return 3;
