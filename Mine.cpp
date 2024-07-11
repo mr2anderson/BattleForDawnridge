@@ -50,7 +50,7 @@ uint32_t Mine::getCollectionSpeed() const {
 	return 1000;
 }
 uint32_t Mine::getRadius() const {
-	return 4;
+	return 6;
 }
 std::wstring Mine::getDescription() const {
 	return *Texts::get()->get("mine_description");

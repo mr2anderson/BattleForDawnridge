@@ -32,12 +32,13 @@ public:
 
 	void addConductor(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	void addDestination(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
-	bool connectedToDestination(uint32_t x, uint32_t y) const;
+	bool connectedToDestination(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 private:
 	std::map<std::tuple<uint32_t, uint32_t>, std::set<std::tuple<uint32_t, uint32_t>>> paths;
 	std::map<std::tuple<uint32_t, uint32_t>, bool> isDestination;
 
 	void add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool destination);
+	void addAllPossiblePaths();
 	void addPossiblePaths(std::tuple<uint32_t, uint32_t> p);
 	void addPathBetween(std::tuple<uint32_t, uint32_t> p1, std::tuple<uint32_t, uint32_t> p2);
 	bool bfs(std::tuple<uint32_t, uint32_t> current, std::map<std::tuple<uint32_t, uint32_t>, bool>& visited) const;

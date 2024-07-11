@@ -50,7 +50,7 @@ uint32_t Quarry::getCollectionSpeed() const {
 	return 1000;
 }
 uint32_t Quarry::getRadius() const {
-	return 4;
+	return 6;
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");

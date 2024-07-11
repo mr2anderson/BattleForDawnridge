@@ -56,14 +56,14 @@ bool Unit::connectedTo(GO* go) const {
 
 	for (uint32_t i = 0; i < this->units->size(); i = i + 1) {
 		Unit* u = this->units->at(i);
-		if (u->isActiveConductor()) {
+		if (u->isActiveConductor() and u->getPlayerId() == this->getPlayerId()) {
 			g.addConductor(u->getX(), u->getY(), u->getSX(), u->getSY());
 		}
 	}
 
 	g.addDestination(go->getX(), go->getY(), go->getSX(), go->getSY());
 
-	return g.connectedToDestination(this->getX(), this->getY());
+	return g.connectedToDestination(this->getX(), this->getY(), this->getSX(), this->getSY());
 }
 Events Unit::getUnitOfEnemyResponse() {
 	Events gEvent;

@@ -50,7 +50,7 @@ uint32_t Sawmill::getCollectionSpeed() const {
 	return 1000;
 }
 uint32_t Sawmill::getRadius() const {
-	return 4;
+	return 6;
 }
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");

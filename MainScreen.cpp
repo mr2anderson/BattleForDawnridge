@@ -149,7 +149,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseIron>(0, 0, 0, this->map->getUnits())));
 	components.emplace_back(WarehouseIron().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseIron>()), true, true, event);
 	event = Events();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0, this->map->getUnits())));
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0, this->map->getUnits(), this->map->getTreasures())));
 	components.emplace_back(WarehouseGold().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseGold>()), true, true, event);
 	event = Events();
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));

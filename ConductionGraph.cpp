@@ -27,7 +27,9 @@ void ConductionGraph::addConductor(uint32_t x, uint32_t y, uint32_t sx, uint32_t
 void ConductionGraph::addDestination(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->add(x, y, sx, sy, true);
 }
-bool ConductionGraph::connectedToDestination(uint32_t x, uint32_t y) const {
+bool ConductionGraph::connectedToDestination(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+	this->addConductor(x, y, sx, sy);
+	this->addAllPossiblePaths();
 	std::map<std::tuple<uint32_t, uint32_t>, bool> visited;
 	return this->bfs(std::make_tuple(x, y), visited);
 }
@@ -35,9 +37,18 @@ void ConductionGraph::add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool
 	for (uint32_t i = 0; i < sx; i = i + 1) {
 		for (uint32_t j = 0; j < sy; j = j + 1) {
 			auto p = std::make_tuple(x + i, y + j);
-			this->isDestination[p] = destination;
-			this->addPossiblePaths(p);
+			if (this->isDestination.find(p) == this->isDestination.end()) {
+				this->isDestination[p] = destination;
+			}
+			else {
+				this->isDestination[p] = this->isDestination[p] or destination;
+			}
 		}
+	}
+}
+void ConductionGraph::addAllPossiblePaths() {
+	for (const auto& a : this->isDestination) {
+		this->addPossiblePaths(a.first);
 	}
 }
 void ConductionGraph::addPossiblePaths(std::tuple<uint32_t, uint32_t> p) {

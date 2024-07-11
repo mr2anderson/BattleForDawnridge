@@ -19,13 +19,15 @@
 
 #include "WarehouseGold.hpp"
 #include "Texts.hpp"
+#include "CollectEvent.hpp"
+#include "FlyingE.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
-WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Treasure>> treasures) :
 	ResourceStorageB(x, y, 3, 3, 20000, playerId, units),
 	Building(x, y, 3, 3, 20000, playerId, units) {
-
+	this->treasures = treasures;
 }
 Building* WarehouseGold::cloneBuilding() const {
 	return new WarehouseGold(*this);
@@ -33,7 +35,7 @@ Building* WarehouseGold::cloneBuilding() const {
 Events WarehouseGold::newMove(uint32_t playerId) {
 	Events response;
 	if (this->belongTo(playerId) and this->exist()) {
-		return  this->regenerate();
+		return this->regenerate() + this->collect();
 	}
 	return response;
 }
@@ -59,6 +61,22 @@ Resources WarehouseGold::getLimit() const {
 }
 std::wstring WarehouseGold::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_gold_upper_case_readable_name");
+}
+Events WarehouseGold::collect() {
+	Events events;
+
+	for (uint32_t i = 0; i < this->treasures->size(); i = i + 1) {
+		Treasure* t = this->treasures->at(i);
+		if (t->exist() and this->connectedTo(t)) {
+			uint32_t toCollect = std::min((uint32_t)3000, t->getHP());
+
+			std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(t->getResourceType() + "_icon", t->getResourceType(), t->getX(), t->getY(), t->getSX(), t->getSY());
+			events.add(std::make_shared<CreateEEvent>(flyingE));
+			events.add(std::make_shared<CollectEvent>(t, toCollect));
+		}
+	}
+
+	return events;
 }
 Events WarehouseGold::getSelectionW() {
 	Events response;

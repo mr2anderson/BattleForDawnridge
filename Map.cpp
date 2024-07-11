@@ -26,7 +26,6 @@
 #include "Iron.hpp"
 #include "Mountains.hpp"
 #include "Water.hpp"
-#include "Treasure.hpp"
 #include "Root.hpp"
 
 
@@ -39,6 +38,7 @@ Map::Map(const std::string &path) {
     this->arables = std::make_shared<GOCollection<Arable>>();
     this->rsbs = std::make_shared<GOCollection<ResourceStorageB>>();
     this->vcbs = std::make_shared<GOCollection<VictoryConditionB>>();
+    this->treasures = std::make_shared<GOCollection<Treasure>>();
 
     std::ifstream file(ROOT + "/" + path);
     if (!file.is_open()) {
@@ -140,6 +140,9 @@ std::shared_ptr<GOCollection<ResourceStorageB>> Map::getRsbs() {
 std::shared_ptr<GOCollection<VictoryConditionB>> Map::getVcbs() {
     return this->vcbs;
 }
+std::shared_ptr<GOCollection<Treasure>> Map::getTreasures() {
+    return this->treasures;
+}
 void Map::add(GO *object) {
     this->go->push(object);
 
@@ -164,5 +167,8 @@ void Map::add(GO *object) {
     }
     if (VictoryConditionB* vcb = dynamic_cast<VictoryConditionB*>(object)) {
         this->vcbs->push(vcb);
+    }
+    if (Treasure* t = dynamic_cast<Treasure*>(object)) {
+        this->treasures->push(t);
     }
 }
