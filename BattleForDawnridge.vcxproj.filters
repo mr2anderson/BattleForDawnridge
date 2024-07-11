@@ -970,9 +970,6 @@
     <ClInclude Include="TryToBuildEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="TryToAttackEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
     <ClInclude Include="ReturnToMenuEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
@@ -1083,6 +1080,12 @@
     </ClInclude>
     <ClInclude Include="Treasure.hpp">
       <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="ConductorB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TryToCollectEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1302,9 +1305,6 @@
     <ClCompile Include="TryToTradeEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="TryToAttackEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
     <ClCompile Include="Trade.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
@@ -1460,6 +1460,12 @@
     </ClCompile>
     <ClCompile Include="Treasure.cpp">
       <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="ConductorB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TryToCollectEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

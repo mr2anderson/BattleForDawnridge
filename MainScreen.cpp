@@ -181,10 +181,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 }
 void MainScreen::handleEvent(Events &e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
-		if (std::shared_ptr<TryToAttackEvent> tryToAttackEvent = std::dynamic_pointer_cast<TryToAttackEvent>(e.at(i))) {
-			this->handleTryToAttackEvent(tryToAttackEvent);
-		}
-		else if (std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::dynamic_pointer_cast<TryToTradeEvent>(e.at(i))) {
+		if (std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::dynamic_pointer_cast<TryToTradeEvent>(e.at(i))) {
 			this->handleTryToTradeEvent(tryToTradeEvent);
 		}
 		else if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e.at(i))) {
@@ -257,9 +254,6 @@ void MainScreen::handleEvent(Events &e) {
 			this->handleTryToCollectEvent(tryToCollectEvent);
 		}
 	}
-}
-void MainScreen::handleTryToAttackEvent(std::shared_ptr<TryToAttackEvent> e) {
-    
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
 	TradingB* b = e->getBuilding();

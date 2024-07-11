@@ -38,7 +38,6 @@
 #include "WarriorProducingFinishedEvent.hpp"
 #include "SelectWarriorEvent.hpp"
 #include "StartWarriorClickAnimationEvent.hpp"
-#include "TryToAttackEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "ResourceStorageBDestroyedEvent.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
@@ -88,7 +87,6 @@ private:
 
 	void handleEvent(Events& e);
 
-	void handleTryToAttackEvent(std::shared_ptr<TryToAttackEvent> e);
 	void handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);

@@ -18,7 +18,6 @@
 
 
 #include "Unit.hpp"
-#include "TryToAttackEvent.hpp"
 #include "PlayerPointer.hpp"
 #include "ConductionGraph.hpp"
 
@@ -64,11 +63,6 @@ bool Unit::connectedTo(GO* go) const {
 	g.addDestination(go->getX(), go->getY(), go->getSX(), go->getSY());
 
 	return g.connectedToDestination(this->getX(), this->getY(), this->getSX(), this->getSY());
-}
-Events Unit::getUnitOfEnemyResponse() {
-	Events gEvent;
-	gEvent.add(std::make_shared<TryToAttackEvent>(this));
-	return gEvent;
 }
 void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const {
 	PlayerPointer pointer(this->getPlayerId(), this->getX(), this->getY(), this->getSX(), this->getSY());

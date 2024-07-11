@@ -109,5 +109,5 @@ Events Castle::getGameObjectResponse(uint32_t playerId) {
 	if (this->belongTo(playerId)) {
 		return this->getHighlightEvent() + this->getSelectionW();
 	}
-	return this->getUnitOfEnemyResponse();
+	return Events();
 }

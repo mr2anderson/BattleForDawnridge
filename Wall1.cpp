@@ -74,5 +74,5 @@ Events Wall1::getGameObjectResponse(uint32_t playerId) {
 	if (this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}
-	return this->getUnitOfEnemyResponse();
+	return Events();
 }

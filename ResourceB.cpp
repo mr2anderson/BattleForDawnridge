@@ -76,5 +76,5 @@ Events ResourceB::getGameObjectResponse(uint32_t playerId) {
 	if (this->belongTo(playerId)) {
 		return this->getSelectionW() + this->getHighlightEvent();
 	}
-	return this->getUnitOfEnemyResponse();
+	return Events();
 }

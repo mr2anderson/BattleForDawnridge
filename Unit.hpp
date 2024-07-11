@@ -42,7 +42,6 @@ protected:
 	std::shared_ptr<GOCollection<Unit>> getUnits();
 	virtual bool isActiveConductor() const;
 	bool connectedTo(GO* go) const;
-	Events getUnitOfEnemyResponse();
 private:
 	uint32_t playerId;
 	std::shared_ptr<GOCollection<Unit>> units;

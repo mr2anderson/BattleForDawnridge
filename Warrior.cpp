@@ -118,7 +118,7 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 		return Events();
 	}
 	if (!this->belongTo(playerId)) {
-		return this->getUnitOfEnemyResponse();
+		return Events();
 	}
 	Events response;
 	response.add(std::make_shared<SelectWarriorEvent>(this));
