@@ -23,6 +23,10 @@
 #include "PlaySoundEvent.hpp"
 
 
+const float FlyingE::TIME = 0.5f;
+const float FlyingE::V0 = 64;
+
+
 FlyingE::FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->picture = picture;
 	this->sound = sound;

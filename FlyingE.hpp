@@ -39,8 +39,8 @@ private:
 	sf::Clock clock;
 	float dst;
 
-	static constexpr float TIME = 0.5;
-	static constexpr float V0 = 64;
+	static const float TIME;
+	static const float V0;
 
 	sf::Color getTransparencyLevel(float t) const;
 	sf::Vector2f getPosition(float t) const;
