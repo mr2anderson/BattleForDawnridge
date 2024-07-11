@@ -25,6 +25,10 @@ SoundQueue *SoundQueue::singletone = nullptr;
 
 void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
     this->removeOldSounds();
+    if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
+        this->data.back().stop();
+        this->data.pop_back();
+    }
     this->data.emplace_back();
     this->data.back().setBuffer(*soundbuffer);
     this->data.back().play();

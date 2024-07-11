@@ -41,6 +41,7 @@ private:
     static SoundQueue *singletone;
 
     std::list<sf::Sound> data;
+    sf::Clock prevSound;
 
     void removeOldSounds();
 };
