@@ -20,14 +20,15 @@
 #include "Unit.hpp"
 #include "TryToAttackEvent.hpp"
 #include "PlayerPointer.hpp"
+#include "ConductionGraph.hpp"
 
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId) : 
+Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
 	HPGO(x, y, sx, sy, currentHp, maxHp) {
 	this->playerId = playerId;
-
+	this->units = units;
 }
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->HPGO::draw(target, states);
@@ -43,6 +44,26 @@ void Unit::changePlayer(uint32_t newPlayerId) {
 }
 uint32_t Unit::getPlayerId() const {
 	return this->playerId;
+}
+std::shared_ptr<GOCollection<Unit>> Unit::getUnits() {
+	return this->units;
+}
+bool Unit::isActiveConductor() const {
+	return false;
+}
+bool Unit::connectedTo(GO* go) const {
+	ConductionGraph g;
+
+	for (uint32_t i = 0; i < this->units->size(); i = i + 1) {
+		Unit* u = this->units->at(i);
+		if (u->isActiveConductor()) {
+			g.addConductor(u->getX(), u->getY(), u->getSX(), u->getSY());
+		}
+	}
+
+	g.addDestination(go->getX(), go->getY(), go->getSX(), go->getSY());
+
+	return g.connectedToDestination(this->getX(), this->getY());
 }
 Events Unit::getUnitOfEnemyResponse() {
 	Events gEvent;

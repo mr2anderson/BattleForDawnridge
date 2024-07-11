@@ -35,7 +35,6 @@ Map::Map(const std::string &path) {
     this->resourcePoints = std::make_shared<GOCollection<ResourcePoint>>();
     this->units = std::make_shared<GOCollection<Unit>>();
     this->tbs = std::make_shared<GOCollection<TerritoryB>>();
-    this->tcbs = std::make_shared<GOCollection<TerritoryConductorB>>();
     this->tobs = std::make_shared<GOCollection<TerritoryOriginB>>();
     this->arables = std::make_shared<GOCollection<Arable>>();
     this->rsbs = std::make_shared<GOCollection<ResourceStorageB>>();
@@ -71,7 +70,7 @@ Map::Map(const std::string &path) {
             else if (word == "1") {
                 this->players.resize(this->players.size() + 1);
                 this->players.back() = Player(this->players.size());
-                Castle* c = new Castle(x, y, this->players.at(currentPlayerId).getId());
+                Castle* c = new Castle(x, y, this->players.at(currentPlayerId).getId(), this->getUnits());
                 c->setMaxHp();
                 this->add(c);
                 currentPlayerId = currentPlayerId + 1;
@@ -129,9 +128,6 @@ std::shared_ptr<GOCollection<ResourcePoint>> Map::getResourcePoints() {
 std::shared_ptr<GOCollection<TerritoryB>> Map::getTbs() {
     return this->tbs;
 }
-std::shared_ptr<GOCollection<TerritoryConductorB>> Map::getTcbs() {
-    return this->tcbs;
-}
 std::shared_ptr<GOCollection<TerritoryOriginB>> Map::getTobs() {
     return this->tobs;
 }
@@ -147,45 +143,26 @@ std::shared_ptr<GOCollection<VictoryConditionB>> Map::getVcbs() {
 void Map::add(GO *object) {
     this->go->push(object);
 
-    ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object);
-    if (rp) {
+    
+    if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
         this->resourcePoints->push(rp);
     }
-    else {
-        Unit* u = dynamic_cast<Unit*>(object);
-        if (u) {
-            this->units->push(u);
-
-            TerritoryB* tb = dynamic_cast<TerritoryB*>(object);
-            if (tb) {
-                this->tbs->push(tb);
-
-                TerritoryOriginB* tob = dynamic_cast<TerritoryOriginB*>(object);
-                if (tob) {
-                    this->tobs->push(tob);
-                }
-                else {
-                    TerritoryConductorB* tcb = dynamic_cast<TerritoryConductorB*>(object);
-                    if (tcb) {
-                        this->tcbs->push(tcb);
-                    }
-                }
-            }
-            ResourceStorageB* rsb = dynamic_cast<ResourceStorageB*>(object);
-            if (rsb) {
-                this->rsbs->push(rsb);
-            }
-            VictoryConditionB* vcb = dynamic_cast<VictoryConditionB*>(object);
-            if (vcb) {
-                this->vcbs->push(vcb);
-            }
-            else {
-                Arable* a = dynamic_cast<Arable*>(object);
-
-                if (a) {
-                    this->arables->push(a);
-                }
-            }
-        }
+    if (Unit* u = dynamic_cast<Unit*>(object)) {
+        this->units->push(u);
+    }
+    if (TerritoryB* tb = dynamic_cast<TerritoryB*>(object)) {
+        this->tbs->push(tb);
+    }
+    if (TerritoryOriginB* tob = dynamic_cast<TerritoryOriginB*>(object)) {
+        this->tobs->push(tob);
+    }
+    if (Arable* a = dynamic_cast<Arable*>(object)) {
+        this->arables->push(a);
+    }
+    if (ResourceStorageB* rsb = dynamic_cast<ResourceStorageB*>(object)) {
+        this->rsbs->push(rsb);
+    }
+    if (VictoryConditionB* vcb = dynamic_cast<VictoryConditionB*>(object)) {
+        this->vcbs->push(vcb);
     }
 }

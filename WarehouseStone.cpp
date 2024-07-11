@@ -22,8 +22,9 @@
 
 
 WarehouseStone::WarehouseStone() = default;
-WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 3, 3, 20000, playerId) {
+WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	ResourceStorageB(x, y, 3, 3, 20000, playerId, units),
+	Building(x, y, 3, 3, 20000, playerId, units) {
 
 }
 Building* WarehouseStone::cloneBuilding() const {

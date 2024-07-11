@@ -22,9 +22,9 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr) :
-	TerritoryConductorB(x, y, 1, 1, 500, playerId, originsPtr, conductorsPtr),
-	Building(x, y, 1, 1, 500, playerId) {
+Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+	TerritoryConductorB(x, y, 1, 1, 500, playerId, units, originsPtr),
+	Building(x, y, 1, 1, 500, playerId, units) {
 	
 }
 Building* Road::cloneBuilding() const {
@@ -71,8 +71,8 @@ Events Road::getSelectionW() {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
 	if (this->works()) {
-		if (!this->conducted()) {
-			components.push_back(this->getNotConductedComponent());
+		if (!this->connectedToTerritoryOriginB()) {
+			components.push_back(this->getNotConnectedComponent());
 		}
 	}
 

@@ -26,7 +26,7 @@
 class Quarry : public ResourceB {
 public:
 	Quarry();
-	Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
+	Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
 	Building* cloneBuilding() const override;
 
 	Resources getCost() const override;

@@ -17,26 +17,16 @@
  */
 
 
-#include "TradingB.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Market : public TradingB {
+class ConductorB : virtual public Building {
 public:
-	Market();
-	Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
-	Building* cloneBuilding() const override;
-
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	ConductorB();
+	ConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 private:
-	Trade currentTrade;
-
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
-	std::vector<Trade> getTrades() const override;
+	bool isActiveConductor() const override;
 };

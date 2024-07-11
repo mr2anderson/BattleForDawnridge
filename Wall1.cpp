@@ -22,8 +22,8 @@
 
 
 Wall1::Wall1() = default;
-Wall1::Wall1(uint32_t x, uint32_t y, uint32_t playerId) :
-	Building(x, y, 2, 2, 40000, playerId) {
+Wall1::Wall1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	Building(x, y, 2, 2, 40000, playerId, units) {
 
 }
 Building* Wall1::cloneBuilding() const {

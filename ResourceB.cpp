@@ -23,10 +23,10 @@
 
 
 ResourceB::ResourceB() = default;
-ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
-	HpSensitiveB(x, y, sx, sy, maxHp, playerId),
-	AreaB(x, y, sx, sy, maxHp, playerId),
-	Building(x, y, sx, sy, maxHp, playerId) {
+ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) :
+	HpSensitiveB(x, y, sx, sy, maxHp, playerId, units),
+	AreaB(x, y, sx, sy, maxHp, playerId, units),
+	Building(x, y, sx, sy, maxHp, playerId, units) {
 	this->resourcePointsPtr = resourcePointsPtr;
 	this->resourcesLeft = true;
 }

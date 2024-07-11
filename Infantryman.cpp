@@ -22,8 +22,8 @@
 
 
 Infantryman::Infantryman() = default;
-Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go) :
-	Warrior(x, y, 2, 2, 900, playerId, go) {
+Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go) :
+	Warrior(x, y, 2, 2, 900, playerId, units, go) {
 
 }
 Warrior* Infantryman::cloneWarrior() const {

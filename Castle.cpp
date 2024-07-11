@@ -24,11 +24,11 @@
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) : 
-	TerritoryOriginB(x, y, 3, 3, 160000, playerId),
-	ResourceStorageB(x, y, 3, 3, 160000, playerId),
-	VictoryConditionB(x, y, 3, 3, 160000, playerId),
-	Building(x, y, 3, 3, 160000, playerId) {
+Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	TerritoryOriginB(x, y, 3, 3, 160000, playerId, units),
+	ResourceStorageB(x, y, 3, 3, 160000, playerId, units),
+	VictoryConditionB(x, y, 3, 3, 160000, playerId, units),
+	Building(x, y, 3, 3, 160000, playerId, units) {
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);

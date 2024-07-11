@@ -26,7 +26,7 @@
 class Infantryman : public Warrior {
 public:
 	Infantryman();
-	Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go);
+	Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
 	Warrior* cloneWarrior() const override;
 
 	Resources getCost() const override;

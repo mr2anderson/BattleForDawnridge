@@ -507,6 +507,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CollectEvent.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
+    <ClInclude Include="ConductorB.hpp" />
     <ClInclude Include="CouldntFindNewWarriorPosition.hpp" />
     <ClInclude Include="CouldntOpen.hpp" />
     <ClInclude Include="CouldntOpenFont.hpp" />
@@ -732,6 +733,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CollectEvent.cpp" />
     <ClCompile Include="ColorTheme.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />
+    <ClCompile Include="ConductorB.cpp" />
     <ClCompile Include="CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="CouldntOpen.cpp" />
     <ClCompile Include="CouldntOpenFont.cpp" />

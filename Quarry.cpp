@@ -23,9 +23,9 @@
 
 
 Quarry::Quarry() = default;
-Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) : 
-	ResourceB(x, y, 3, 3, 10000, playerId, resourcePointsPtr),
-	Building(x, y, 3, 3, 10000, playerId) {}
+Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) :
+	ResourceB(x, y, 3, 3, 10000, playerId, units, resourcePointsPtr),
+	Building(x, y, 3, 3, 10000, playerId, units) {}
 Building* Quarry::cloneBuilding() const {
 	return new Quarry(*this);
 }

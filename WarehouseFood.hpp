@@ -26,7 +26,7 @@
 class WarehouseFood : public ResourceStorageB {
 public:
 	WarehouseFood();
-	WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId);
+	WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;

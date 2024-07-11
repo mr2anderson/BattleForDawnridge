@@ -20,6 +20,7 @@
 
 #include "HPGO.hpp"
 #include "Resources.hpp"
+#include "GOCollection.hpp"
 
 
 #pragma once
@@ -28,7 +29,7 @@
 class Unit : public HPGO {
 public:
 	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId);
+	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -38,9 +39,13 @@ public:
 
 	virtual Resources getCost() const = 0;
 protected:
+	std::shared_ptr<GOCollection<Unit>> getUnits();
+	virtual bool isActiveConductor() const;
+	bool connectedTo(GO* go) const;
 	Events getUnitOfEnemyResponse();
 private:
 	uint32_t playerId;
+	std::shared_ptr<GOCollection<Unit>> units;
 
 	void drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const;
 };

@@ -25,10 +25,10 @@
 
 
 Windmill::Windmill() = default;
-Windmill::Windmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Arable>> arables) :
-	HpSensitiveB(x, y, 3, 3, 10000, playerId),
-	AreaB(x, y, 3, 3, 10000, playerId),
-	Building(x, y, 3, 3, 10000, playerId) {
+Windmill::Windmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Arable>> arables) :
+	HpSensitiveB(x, y, 3, 3, 10000, playerId, units),
+	AreaB(x, y, 3, 3, 10000, playerId, units),
+	Building(x, y, 3, 3, 10000, playerId, units) {
 	this->arables = arables;
 }
 Building* Windmill::cloneBuilding() const {
@@ -90,9 +90,9 @@ Events Windmill::getGameObjectResponse(uint32_t playerId) {
 	}
 	return Events();
 }
-HorizontalSelectionWindowComponent Windmill::getBuildArableComponent() const {
+HorizontalSelectionWindowComponent Windmill::getBuildArableComponent() {
 	Events event = this->getHighlightEvent();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0)));
+	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->getUnits())));
 	HorizontalSelectionWindowComponent component = {
 		Arable().getTextureName(),
 		Arable().getDescription() + L"\n" + 

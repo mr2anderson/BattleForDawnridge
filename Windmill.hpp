@@ -29,7 +29,7 @@
 class Windmill : public HpSensitiveB, public AreaB {
 public:
 	Windmill();
-	Windmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Arable>> arables);
+	Windmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Arable>> arables);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;
@@ -45,6 +45,6 @@ private:
 	std::wstring getUpperCaseReadableName() const override;
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
-	HorizontalSelectionWindowComponent getBuildArableComponent() const;
+	HorizontalSelectionWindowComponent getBuildArableComponent();
 	Events getCollectEvents();
 };

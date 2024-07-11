@@ -26,7 +26,7 @@
 class Road : public TerritoryConductorB {
 public:
 	Road();
-	Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr, std::shared_ptr<GOCollection<TerritoryConductorB>> conductorsPtr);
+	Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;

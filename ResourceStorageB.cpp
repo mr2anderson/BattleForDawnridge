@@ -23,8 +23,8 @@
 
 
 ResourceStorageB::ResourceStorageB() = default;
-ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId) :
-	Building(x, y, sx, sy, maxHp, playerId) {
+ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	Building(x, y, sx, sy, maxHp, playerId, units) {
 
 }
 Events ResourceStorageB::destroy() {

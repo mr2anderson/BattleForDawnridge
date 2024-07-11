@@ -26,7 +26,7 @@
 class Barracks : public WarriorProducer {
 public:
 	Barracks();
-	Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go);
+	Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
 	Building* cloneBuilding() const override;
 
 	Resources getCost() const override;

@@ -22,9 +22,9 @@
 
 
 Arable::Arable() = default;
-Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId) :
-	HpSensitiveB(x, y, 3, 3, 2000, playerId),
-	Building(x, y, 3, 3, 2000, playerId) {
+Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	HpSensitiveB(x, y, 3, 3, 2000, playerId, units),
+	Building(x, y, 3, 3, 2000, playerId, units) {
 
 }
 Building* Arable::cloneBuilding() const {

@@ -24,18 +24,18 @@ ConductionGraph::ConductionGraph() = default;
 void ConductionGraph::addConductor(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->add(x, y, sx, sy, false);
 }
-void ConductionGraph::addOrigin(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+void ConductionGraph::addDestination(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->add(x, y, sx, sy, true);
 }
-bool ConductionGraph::connectedToOrigin(uint32_t x, uint32_t y) const {
+bool ConductionGraph::connectedToDestination(uint32_t x, uint32_t y) const {
 	std::map<std::tuple<uint32_t, uint32_t>, bool> visited;
 	return this->bfs(std::make_tuple(x, y), visited);
 }
-void ConductionGraph::add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool origin) {
+void ConductionGraph::add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool destination) {
 	for (uint32_t i = 0; i < sx; i = i + 1) {
 		for (uint32_t j = 0; j < sy; j = j + 1) {
 			auto p = std::make_tuple(x + i, y + j);
-			this->isOrigin[p] = origin;
+			this->isDestination[p] = destination;
 			this->addPossiblePaths(p);
 		}
 	}
@@ -51,14 +51,14 @@ void ConductionGraph::addPossiblePaths(std::tuple<uint32_t, uint32_t> p) {
 	this->addPathBetween(p, std::make_tuple(std::get<0>(p), std::get<1>(p) + 1));
 }
 void ConductionGraph::addPathBetween(std::tuple<uint32_t, uint32_t> p1, std::tuple<uint32_t, uint32_t> p2) {
-	if (this->isOrigin.find(p2) == this->isOrigin.end()) {
+	if (this->isDestination.find(p2) == this->isDestination.end()) {
 		return;
 	}
 	this->paths[p1].insert(p2);
 	this->paths[p2].insert(p1);
 }
 bool ConductionGraph::bfs(std::tuple<uint32_t, uint32_t> current, std::map<std::tuple<uint32_t, uint32_t>, bool>& visited) const {
-	if (this->isOrigin.find(current) != this->isOrigin.end() and this->isOrigin.at(current)) {
+	if (this->isDestination.find(current) != this->isDestination.end() and this->isDestination.at(current)) {
 		return true;
 	}
 

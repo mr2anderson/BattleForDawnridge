@@ -28,7 +28,7 @@
 class WarriorProducer : public HpSensitiveB, public AreaB {
 public:
 	WarriorProducer();
-	WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<GO>> go);
+	WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
