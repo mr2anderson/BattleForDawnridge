@@ -45,7 +45,7 @@ std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
