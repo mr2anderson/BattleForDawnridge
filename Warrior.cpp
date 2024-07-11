@@ -20,21 +20,33 @@
 #include "Warrior.hpp"
 #include "SelectEvent.hpp"
 #include "StartWarriorClickAnimationEvent.hpp"
+#include "ChangeHighlightEvent.hpp"
+#include "RefreshMovementPointsEvent.hpp"
+#include "MovementGraph.hpp"
+#include "ColorTheme.hpp"
 
 
 Warrior::Warrior() {
 	this->startClickAnimation();
 }
-Warrior::Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go) :
+Warrior::Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
 	Unit(x, y, sx, sy, maxHp, maxHp, playerId, units) {
+	this->movementPoints = std::nullopt;
 	this->go = go;
+	this->mapW = mapW;
+	this->mapH = mapH;
 	this->startClickAnimation();
 }
 Events Warrior::newMove(uint32_t currentPlayerId) {
 	if (!this->exist() or !this->belongTo(currentPlayerId)) {
-		return Events();
+		Events events;
+		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
+		return events;
 	}
 	return Events();
+}
+void Warrior::refreshMovementPoints() {
+	this->movementPoints = this->getMovementPoints();
 }
 void Warrior::startClickAnimation() {
 	this->currentDirection = "e";
@@ -86,7 +98,7 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 	}
 	return 0;
 }
-bool Warrior::canMoveTo(uint32_t newX, uint32_t newY) const {
+bool Warrior::canFitIt(uint32_t newX, uint32_t newY) const {
 	sf::IntRect thisRect;
 	thisRect.left = newX;
 	thisRect.top = newY;
@@ -113,10 +125,74 @@ Events Warrior::unselect(uint32_t x, uint32_t y) {
 	Events events = this->Selectable::unselect(x, y);
 	events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	events.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
-	return events;
+	return events + this->getMoveHighlightionEvent();
 }
 Events Warrior::unselect() {
-	return this->Selectable::unselect();
+	return this->Selectable::unselect() + this->getMoveHighlightionEvent();
+}
+Events Warrior::getMoveHighlightionEvent() {
+	Events event;
+
+	std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves();
+	std::map<std::tuple<uint32_t, uint32_t>, bool> marked;
+
+	for (uint32_t i = 0; i < moves.size(); i = i + 1) {
+		std::tuple<uint32_t, uint32_t> move = moves.at(i);
+		uint32_t moveX, moveY;
+		std::tie(moveX, moveY) = move;
+
+		for (uint32_t x = 0; x < this->getSX(); x = x + 1) {
+			for (uint32_t y = 0; y < this->getSY(); y = y + 1) {
+				uint32_t modMoveX = moveX + x;
+				uint32_t modMoveY = moveY + y;
+				if (modMoveX >= this->mapW or modMoveY >= this->mapH) {
+					continue;
+				}
+				std::tuple<uint32_t, uint32_t> modMove = std::make_tuple(modMoveX, modMoveY);
+
+				if (marked.find(modMove) == marked.end()) {
+					marked[modMove] = true;
+					event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, modMoveX, modMoveY));
+				}
+			}
+		}
+	}
+
+	return event;
+}
+std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves() {
+	MovementGraph g(this->mapW, this->mapH);
+
+	if (!this->movementPoints.has_value()) {
+		this->movementPoints = this->getMovementPoints();
+	}
+
+	uint32_t xMin;
+	if (this->movementPoints >= this->getX()) {
+		xMin = 0;
+	}
+	else {
+		xMin = this->getX() - this->movementPoints.value();
+	}
+
+	uint32_t yMin;
+	if (this->movementPoints >= this->getY()) {
+		yMin = 0;
+	}
+	else {
+		yMin = this->getY() - this->movementPoints.value();
+	}
+
+	uint32_t xMax = std::min(this->mapW - this->getSX(), this->getX() + this->movementPoints.value());
+	uint32_t yMax = std::min(this->mapH - this->getSY(), this->getY() + this->movementPoints.value());
+
+	for (uint32_t x = xMin; x <= xMax; x = x + 1) {
+		for (uint32_t y = yMin; y <= yMax; y = y + 1) {
+			g.set(x, y, this->canFitIt(x, y));
+		}
+	}
+
+	return g.getMoves(this->getX(), this->getY(), this->movementPoints.value());
 }
 void Warrior::startAnimation(const std::string &type) {
 	this->animationClock.restart();

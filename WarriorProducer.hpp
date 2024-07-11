@@ -28,7 +28,7 @@
 class WarriorProducer : public HpSensitiveB, public AreaB {
 public:
 	WarriorProducer();
-	WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
+	WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -38,10 +38,13 @@ public:
 	Events newMove(uint32_t playerId) override;
 protected:
 	std::shared_ptr<GOCollection<GO>> getGO();
+	uint32_t getMapW() const;
+	uint32_t getMapH() const;
 
 	virtual std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce() = 0;
 private:
 	std::shared_ptr<GOCollection<GO>> go;
+	uint32_t mapW, mapH;
 	std::shared_ptr<Warrior> currentProducing;
 	uint32_t currentProducingMovesLeft;
 	bool producing;

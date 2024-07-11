@@ -650,8 +650,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Mountains.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp" />
+    <ClInclude Include="MovementGraph.hpp" />
     <ClInclude Include="Music.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
+    <ClInclude Include="PathDoesNotExist.hpp" />
     <ClInclude Include="PlainsGeneration.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayerPointer.hpp" />
@@ -660,6 +662,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="PopUpElement.hpp" />
     <ClInclude Include="Quarry.hpp" />
     <ClInclude Include="RectangularUIElement.hpp" />
+    <ClInclude Include="RefreshMovementPointsEvent.hpp" />
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="ResourceB.hpp" />
     <ClInclude Include="ResourceBar.hpp" />
@@ -780,8 +783,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Mountains.cpp" />
     <ClCompile Include="MoveGameActionWindowDownEvent.cpp" />
     <ClCompile Include="MoveGameActionWindowUpEvent.cpp" />
+    <ClCompile Include="MovementGraph.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PAKScreen.cpp" />
+    <ClCompile Include="PathDoesNotExist.cpp" />
     <ClCompile Include="PlainsGeneration.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerPointer.cpp" />
@@ -790,6 +795,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="PopUpElement.cpp" />
     <ClCompile Include="Quarry.cpp" />
     <ClCompile Include="RectangularUiElement.cpp" />
+    <ClCompile Include="RefreshMovementPointsEvent.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceB.cpp" />
     <ClCompile Include="ResourceBar.cpp" />

@@ -17,6 +17,7 @@
  */
 
 
+#include <optional>
 #include "Unit.hpp"
 #include "GOCollection.hpp"
 #include "Selectable.hpp"
@@ -28,14 +29,15 @@
 class Warrior : public Unit, public Selectable {
 public:
 	Warrior();
-	Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
+	Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	virtual Warrior* cloneWarrior() const = 0;
 
 	Events newMove(uint32_t playerId);
+	void refreshMovementPoints();
 	void startClickAnimation();
 	std::string getTextureName() const override;
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
-	bool canMoveTo(uint32_t newX, uint32_t newY) const;
+	bool canFitIt(uint32_t newX, uint32_t newY) const;
 
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
@@ -44,14 +46,20 @@ public:
 	virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
+protected:
+	virtual uint32_t getMovementPoints() const = 0;
 private:
+	std::optional<uint32_t> movementPoints;
 	std::shared_ptr<GOCollection<GO>> go;
+	uint32_t mapW, mapH;
 	std::string currentDirection;
 	std::string currentAnimation;
 	sf::Clock animationClock;
 
 	Events unselect(uint32_t x, uint32_t y) override;
 	Events unselect() override;
+	Events getMoveHighlightionEvent();
+	std::vector<std::tuple<uint32_t, uint32_t>> getMoves();
 	void startAnimation(const std::string &type);
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

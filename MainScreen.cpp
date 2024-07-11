@@ -165,7 +165,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
     components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, event);
     event = Events();
-	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO()))));
+	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH()))));
 	components.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, true, event);
 	event = Events();
     event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
@@ -265,6 +265,9 @@ void MainScreen::handleEvent(Events &e) {
 		}
 		else if (std::shared_ptr<TryToCollectEvent> tryToCollectEvent = std::dynamic_pointer_cast<TryToCollectEvent>(e.at(i))) {
 			this->handleTryToCollectEvent(tryToCollectEvent);
+		}
+		else if (std::shared_ptr<RefreshMovementPointsEvent> refreshMovementPointsEvent = std::dynamic_pointer_cast<RefreshMovementPointsEvent>(e.at(i))) {
+			this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent);
 		}
 	}
 }
@@ -415,6 +418,9 @@ void MainScreen::handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e) {
 
 	Events events = rp->tryToCollect(id, value);
 	this->handleEvent(events);
+}
+void MainScreen::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e) {
+	e->getWarrior()->refreshMovementPoints();
 }
 void MainScreen::removeFinishedElements() {
 	bool remove = false;

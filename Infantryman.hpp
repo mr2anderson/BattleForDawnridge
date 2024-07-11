@@ -26,7 +26,7 @@
 class Infantryman : public Warrior {
 public:
 	Infantryman();
-	Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go);
+	Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	Warrior* cloneWarrior() const override;
 
 	Resources getCost() const override;
@@ -40,4 +40,5 @@ private:
 	uint32_t getBeenHitAnimationsNumberInSet() const override;
 	uint32_t getTippingOverAnimationsNumberInSet() const override;
 	std::string getBaseTextureName() const override;
+	uint32_t getMovementPoints() const override;
 };

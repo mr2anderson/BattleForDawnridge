@@ -24,8 +24,8 @@
 
 
 Barracks::Barracks() = default;
-Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go) :
-	WarriorProducer(x, y, 3, 3, 30000, playerId, units, go),
+Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	WarriorProducer(x, y, 3, 3, 30000, playerId, units, go, mapW, mapH),
 	Building(x, y, 3, 3, 30000, playerId, units) {
 
 }
@@ -46,8 +46,8 @@ std::wstring Barracks::getDescription() const {
 }
 std::vector<std::shared_ptr<Warrior>> Barracks::getWarriorsToProduce() {
 	std::vector<std::shared_ptr<Warrior>> warriors;
-	warriors.push_back(std::make_shared<Infantryman>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO()));
-	warriors.push_back(std::make_shared<Knight>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO()));
+	warriors.push_back(std::make_shared<Infantryman>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
+	warriors.push_back(std::make_shared<Knight>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
 	return warriors;
 }
 uint32_t Barracks::getRadius() const {

@@ -17,25 +17,12 @@
  */
 
 
-#include "WarriorProducer.hpp"
+#include "RefreshMovementPointsEvent.hpp"
 
 
-#pragma once
-
-
-class Barracks : public WarriorProducer {
-public:
-	Barracks();
-	Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
-	Building* cloneBuilding() const override;
-
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-private:
-	std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce() override;
-	uint32_t getRadius() const override;
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
-};
+RefreshMovementPointsEvent::RefreshMovementPointsEvent(Warrior* w) {
+	this->w = w;
+}
+Warrior* RefreshMovementPointsEvent::getWarrior() {
+	return this->w;
+}

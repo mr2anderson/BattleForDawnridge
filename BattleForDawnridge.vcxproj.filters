@@ -1093,6 +1093,15 @@
     <ClInclude Include="UnselectEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
+    <ClInclude Include="MovementGraph.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="RefreshMovementPointsEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="PathDoesNotExist.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1478,6 +1487,15 @@
     </ClCompile>
     <ClCompile Include="UnselectEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementGraph.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="RefreshMovementPointsEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="PathDoesNotExist.cpp">
+      <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

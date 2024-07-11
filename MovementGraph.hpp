@@ -17,25 +17,26 @@
  */
 
 
-#include "WarriorProducer.hpp"
+#include <map>
+#include <tuple>
+#include <vector>
+#include <cstdint>
+#include <limits>
+#include <optional>
 
 
 #pragma once
 
 
-class Barracks : public WarriorProducer {
+class MovementGraph {
 public:
-	Barracks();
-	Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
-	Building* cloneBuilding() const override;
+	MovementGraph(uint32_t mapW, uint32_t mapH);
 
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	void set(uint32_t x, uint32_t y, bool canFitIn);
+	std::vector<std::tuple<uint32_t, uint32_t>> getMoves(uint32_t x, uint32_t y, uint32_t movePoints = std::numeric_limits<uint32_t>::max());
 private:
-	std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce() override;
-	uint32_t getRadius() const override;
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
+	uint32_t mapW, mapH;
+	std::map<std::tuple<uint32_t, uint32_t>, bool> fitTable;
+
+	void bfs(std::tuple<uint32_t, uint32_t> p, std::optional<std::tuple<uint32_t, uint32_t>> dst, std::map<std::tuple<uint32_t, uint32_t>, uint32_t>& visited, uint32_t movePoints, uint32_t l = 0);
 };

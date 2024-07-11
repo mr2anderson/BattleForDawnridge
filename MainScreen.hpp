@@ -43,6 +43,7 @@
 #include "ResourceStorageBDestroyedEvent.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
 #include "TryToCollectEvent.hpp"
+#include "RefreshMovementPointsEvent.hpp"
 
 
 #pragma once
@@ -115,6 +116,7 @@ private:
 	void handleUnselectEvent(std::shared_ptr<UnselectEvent> w);
 	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
 	void handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e);
+	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e);
 
 	void removeFinishedElements();
 	void handleNewMoveEvents();
