@@ -507,14 +507,14 @@ resource_storage_building_description
 warehouse_food_description
 <\ID>
 <DATA>
-Продовольственный склад надежно защищает еду города.
+Амбар надежно защищает еду города.
 <\DATA>
 
 <ID>
 warehouse_food_upper_case_readable_name
 <\ID>
 <DATA>
-ПРОДОВОЛЬСТВЕННЫЙ СКЛАД
+АМБАР
 <\DATA>
 
 <ID>

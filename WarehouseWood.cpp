@@ -23,8 +23,8 @@
 
 WarehouseWood::WarehouseWood() = default;
 WarehouseWood::WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	ResourceStorageB(x, y, 3, 3, 20000, playerId, units),
-	Building(x, y, 3, 3, 20000, playerId, units) {
+	ResourceStorageB(x, y, 2, 2, 20000, playerId, units),
+	Building(x, y, 2, 2, 20000, playerId, units) {
 
 }
 Building* WarehouseWood::cloneBuilding() const {

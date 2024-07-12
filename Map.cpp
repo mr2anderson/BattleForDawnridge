@@ -48,8 +48,8 @@ Map::Map(const std::string &path) {
 
     std::string line;
     bool read = false;
-    uint32_t y = 0;
-    uint32_t x;
+    int32_t y = -1;
+    uint32_t x = 0;
     uint32_t currentPlayerId = 0;
     while (std::getline(file, line)) {
         if (line == "  <data encoding=\"csv\">") {
@@ -63,9 +63,9 @@ Map::Map(const std::string &path) {
         }
         std::stringstream ss(line);
         std::string word;
-        x = 0;
+        x = -1;
         while (std::getline(ss, word, ',')) {
-            if (word == "10") {
+            if (word == "3") {
                 this->add(new Forest(x, y));
             }
             else if (word == "1") {
@@ -81,19 +81,19 @@ Map::Map(const std::string &path) {
 
                 currentPlayerId = currentPlayerId + 1;
             }
-            else if (word == "18") {
+            else if (word == "4") {
                 this->add(new Iron(x, y));
             }
-            else if (word == "14") {
+            else if (word == "6") {
                 this->add(new Stone(x, y));
             }
-            else if (word == "22") {
+            else if (word == "5") {
                 this->add(new Mountains(x, y));
             }
-            else if (word == "26") {
+            else if (word == "7") {
                 this->add(new Water(x, y));
             }
-            else if (word == "30") {
+            else if (word == "8") {
                 this->add(new Treasure(x, y));
             }
             x = x + 1;
@@ -103,7 +103,7 @@ Map::Map(const std::string &path) {
     file.close();
 
     this->w = x + 1;
-    this->h = y + 1;
+    this->h = y;
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (uint8_t c = 0; c <= 1; c = c + 1) {

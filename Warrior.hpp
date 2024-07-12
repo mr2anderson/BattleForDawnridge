@@ -29,7 +29,7 @@
 class Warrior : public Unit, public Selectable {
 public:
 	Warrior();
-	Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+	Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	virtual Warrior* cloneWarrior() const = 0;
 
 	Events newMove(uint32_t playerId);

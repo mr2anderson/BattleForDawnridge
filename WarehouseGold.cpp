@@ -24,8 +24,8 @@
 
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Treasure>> treasures) :
-	ResourceStorageB(x, y, 3, 3, 20000, playerId, units),
-	Building(x, y, 3, 3, 20000, playerId, units) {
+	ResourceStorageB(x, y, 2, 2, 20000, playerId, units),
+	Building(x, y, 2, 2, 20000, playerId, units) {
 	this->treasures = treasures;
 }
 Building* WarehouseGold::cloneBuilding() const {

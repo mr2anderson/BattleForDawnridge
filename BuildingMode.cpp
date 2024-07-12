@@ -51,8 +51,8 @@ void BuildingMode::update() {
 	uint32_t mouseX = sf::Mouse::getPosition().x;
 	uint32_t mouseY = sf::Mouse::getPosition().y;
 
-	this->b->setX((mouseX + this->view->getCenter().x - this->windowW / 2) / 32);
-	this->b->setY((mouseY + this->view->getCenter().y - this->windowH / 2) / 32);
+	this->b->setX((mouseX + this->view->getCenter().x - this->windowW / 2) / 64);
+	this->b->setY((mouseY + this->view->getCenter().y - this->windowH / 2) / 64);
 }
 Events BuildingMode::click() {
 	this->finish();
@@ -114,7 +114,9 @@ bool BuildingMode::controlled() const {
 Events BuildingMode::getHighlightEvent() const {
 	Events result;
 	for (uint32_t i = 0; i < tb->size(); i = i + 1) {
-		result = result + tb->at(i)->getHighlightEvent();
+		if (tb->at(i)->works() and tb->at(i)->getPlayerId() == this->playerId) {
+			result = result + tb->at(i)->getHighlightEvent();
+		}
 	}
 	return result;
 }

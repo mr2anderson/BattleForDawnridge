@@ -21,6 +21,9 @@
 #include "PlainsGeneration.hpp"
 
 
+const uint32_t PlainsGeneration::TOTAL_PLAINS = 5;
+
+
 PlainsGeneration::PlainsGeneration() = default;
 PlainsGeneration::PlainsGeneration(uint32_t w, uint32_t h) {
 	std::random_device rd;

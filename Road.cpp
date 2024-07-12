@@ -38,7 +38,7 @@ Events Road::newMove(uint32_t playerId) {
 }
 Resources Road::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 1250));
+	cost.plus(Resource("wood", 2500));
 	return cost;
 }
 uint32_t Road::getRegenerationSpeed() const {
@@ -57,7 +57,7 @@ std::wstring Road::getUpperCaseReadableName() const {
 	return *Texts::get()->get("road_upper_case_readable_name");
 }
 uint32_t Road::getRadius() const {
-	return 5;
+	return 2;
 }
 Events Road::getSelectionW() {
 	Events response;

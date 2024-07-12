@@ -23,7 +23,7 @@
 
 BlackKnight::BlackKnight() = default;
 BlackKnight::BlackKnight(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Warrior(x, y, 2, 2, 3000, playerId, units, go, mapW, mapH) {
+	Warrior(x, y, 3000, playerId, units, go, mapW, mapH) {
 
 }
 Warrior* BlackKnight::cloneWarrior() const {

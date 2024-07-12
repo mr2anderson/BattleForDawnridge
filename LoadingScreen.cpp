@@ -95,7 +95,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
 	t.setString(*Texts::get()->get("please_wait"));
-	t.setCharacterSize(32);
+	t.setCharacterSize(31);
 	t.setFillColor(sf::Color::White);
 	t.setOutlineColor(sf::Color::Black);
 	t.setOutlineThickness(2);

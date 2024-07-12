@@ -22,7 +22,7 @@
 
 
 Forest::Forest() = default;
-Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2, 2, 10000) {
+Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 10000) {
 
 }
 std::string Forest::getResourceType() const {

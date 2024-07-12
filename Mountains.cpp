@@ -23,7 +23,7 @@
 
 Mountains::Mountains() = default;
 Mountains::Mountains(uint32_t x, uint32_t y) :
-	ImpassableObstacle(x, y, 2, 2) {
+	ImpassableObstacle(x, y, 1, 1) {
 
 }
 std::string Mountains::getTextureName() const {

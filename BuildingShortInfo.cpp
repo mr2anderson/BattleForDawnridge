@@ -24,8 +24,8 @@
 
 BuildingShortInfo::BuildingShortInfo(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const std::string& pictureName, const std::string& text) {
 	this->rect.setFillColor(sf::Color::Black);
-	this->rect.setSize(sf::Vector2f(32 * sx, 32 * sy / 2));
-	this->rect.setPosition(32 * x, 32 * y + 32 * sy / 2);
+	this->rect.setSize(sf::Vector2f(64 * sx, 64 * sy / 2));
+	this->rect.setPosition(64 * x, 64 * y + 64 * sy / 2);
 
 	this->sprite.setTexture(*Textures::get()->get(pictureName));
 	this->sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);

@@ -61,7 +61,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 					}
 					else {
 						std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-						Events events = this->selected->unselect(std::get<0>(pos) / 32, std::get<1>(pos) / 32);
+						Events events = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64);
 						this->handleEvent(events);
 					}
 				}
@@ -563,7 +563,7 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
 			sf::Sprite s;
 			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
-			s.setPosition(32 * i, 32 * j);
+			s.setPosition(64 * i, 64 * j);
 			window.draw(s);
 		}
 	}
@@ -599,7 +599,7 @@ void MainScreen::updatePlayerViewPoint() {
 		this->view->setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
 	}
 	else {
-		this->view->setCenter(sf::Vector2f(32 * this->plains.getW() - this->windowW / 2, 32 * this->plains.getH() - this->windowH / 2));
+		this->view->setCenter(sf::Vector2f(64 * this->plains.getW() - this->windowW / 2, 64 * this->plains.getH() - this->windowH / 2));
 	}
 }
 void MainScreen::moveViewToNorth() {
@@ -607,7 +607,7 @@ void MainScreen::moveViewToNorth() {
 	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, d));
 }
 void MainScreen::moveViewToSouth() {
-	float d = std::min(10.f, 32 * this->plains.getH() - this->windowH / 2 - this->view->getCenter().y);
+	float d = std::min(10.f, 64 * this->plains.getH() - this->windowH / 2 - this->view->getCenter().y);
 	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, d));
 }
 void MainScreen::moveViewToWest() {
@@ -615,6 +615,6 @@ void MainScreen::moveViewToWest() {
 	this->view->setCenter(this->view->getCenter() - sf::Vector2f(d, 0));
 }
 void MainScreen::moveViewToEast() {
-	float d = std::min(10.f, 32 * this->plains.getW() - this->windowW / 2 - this->view->getCenter().x);
+	float d = std::min(10.f, 64 * this->plains.getW() - this->windowW / 2 - this->view->getCenter().x);
 	this->view->setCenter(this->view->getCenter() + sf::Vector2f(d, 0));
 }

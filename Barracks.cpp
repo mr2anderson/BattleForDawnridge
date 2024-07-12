@@ -27,8 +27,8 @@
 
 Barracks::Barracks() = default;
 Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	WarriorProducer(x, y, 3, 3, 30000, playerId, units, go, mapW, mapH),
-	Building(x, y, 3, 3, 30000, playerId, units) {
+	WarriorProducer(x, y, 2, 2, 30000, playerId, units, go, mapW, mapH),
+	Building(x, y, 2, 2, 30000, playerId, units) {
 
 }
 Building* Barracks::cloneBuilding() const {
@@ -55,7 +55,7 @@ std::vector<std::shared_ptr<Warrior>> Barracks::getWarriorsToProduce() {
 	return warriors;
 }
 uint32_t Barracks::getRadius() const {
-	return 2;
+	return 1;
 }
 uint32_t Barracks::getRegenerationSpeed() const {
 	return 10000;

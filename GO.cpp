@@ -55,10 +55,10 @@ void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
 Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
-	if (mouseX >= 32 * this->getX() and
-		mouseY >= 32 * this->getY() and
-		mouseX < 32 * (this->getX() + this->getSX()) and
-		mouseY < 32 * (this->getY() + this->getSY())) {
+	if (mouseX >= 64 * this->getX() and
+		mouseY >= 64 * this->getY() and
+		mouseX < 64 * (this->getX() + this->getSX()) and
+		mouseY < 64 * (this->getY() + this->getSY())) {
 		return this->getGameObjectResponse(currentPlayerId);
 	}
 	return Events();
@@ -106,7 +106,7 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
-	sprite.setPosition(sf::Vector2f(32 * this->getX(), 32 * this->getY()));
+	sprite.setPosition(sf::Vector2f(64 * this->getX(), 64 * this->getY()));
 	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
 	target.draw(sprite, states);
 }

@@ -33,7 +33,7 @@ public:
 	uint32_t getW() const;
 	uint32_t getH() const;
 
-	static constexpr uint32_t TOTAL_PLAINS = 20;
+	static const uint32_t TOTAL_PLAINS;
 private:
 	std::vector<std::vector<uint32_t>> data;
 };

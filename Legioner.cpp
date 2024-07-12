@@ -23,7 +23,7 @@
 
 Legioner::Legioner() = default;
 Legioner::Legioner(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Warrior(x, y, 2, 2, 1000, playerId, units, go, mapW, mapH) {
+	Warrior(x, y, 1000, playerId, units, go, mapW, mapH) {
 
 }
 Warrior* Legioner::cloneWarrior() const {

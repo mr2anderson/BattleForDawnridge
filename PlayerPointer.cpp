@@ -41,8 +41,8 @@ void PlayerPointer::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	std::string color = colors.at(this->side - 1);
 	sf::Sprite pointer;
 	pointer.setTexture(*Textures::get()->get(color));
-	float scale = std::max(0.5f, 32 * (float)this->sy / (float)pointer.getTexture()->getSize().y / 12);
+	float scale = std::max(0.5f, 64 * (float)this->sy / (float)pointer.getTexture()->getSize().y / 12);
 	pointer.setScale(scale, scale);
-	pointer.setPosition(32 * (this->x + this->sx) - pointer.getLocalBounds().width, 32 * this->y);
+	pointer.setPosition(64 * (this->x + this->sx) - pointer.getLocalBounds().width, 64 * this->y);
 	target.draw(pointer, states);
 }

@@ -22,7 +22,7 @@
 
 
 Treasure::Treasure() = default;
-Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y, 2, 2, 60000) {
+Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 60000) {
 
 }
 Events Treasure::newMove(uint32_t playerId) {

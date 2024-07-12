@@ -30,8 +30,8 @@
 Warrior::Warrior() {
 	this->startClickAnimation();
 }
-Warrior::Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Unit(x, y, sx, sy, maxHp, maxHp, playerId, units) {
+Warrior::Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	Unit(x, y, 1, 1, maxHp, maxHp, playerId, units) {
 	this->movementPoints = std::nullopt;
 	this->go = go;
 	this->mapW = mapW;
@@ -202,7 +202,7 @@ std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves() {
 		}
 	}
 
-	return g.getMoves(this->getX(), this->getY(), this->getSX(), this->getSY(), this->movementPoints.value());
+	return g.getMoves(this->getX(), this->getY(), this->movementPoints.value());
 }
 void Warrior::startAnimation(const std::string &type) {
 	this->animationClock.restart();

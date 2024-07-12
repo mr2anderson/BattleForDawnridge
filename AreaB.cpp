@@ -62,7 +62,7 @@ Events AreaB::getHighlightEvent() const {
 		return gEvent;
 	}
 
-	gEvent.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE, this->getAreaXMin(), this->getAreaYMin(), this->getAreaWidth(), this->getAreaHeight()));
+	gEvent.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_DARK, this->getAreaXMin(), this->getAreaYMin(), this->getAreaWidth(), this->getAreaHeight()));
 
 	return gEvent;
 }

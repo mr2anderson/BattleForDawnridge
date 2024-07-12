@@ -46,18 +46,18 @@ void Maps::generateThumbnail(const std::string& name) {
 
     float sx = std::min((float)THUMBNAIL_SIZE / (float)map->getW(), (float)THUMBNAIL_SIZE / (float)map->getH());
     float sy = sx;
-    float scaleX = sx / 32.f;
+    float scaleX = sx / 64.f;
     float scaleY = scaleX;
 
     sf::RenderTexture renderTexture;
     renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 
-    PlainsGeneration generation = PlainsGeneration(THUMBNAIL_SIZE / 32, THUMBNAIL_SIZE / 32);
-    for (uint32_t i = 0; i < THUMBNAIL_SIZE / 32; i = i + 32) {
-        for (uint32_t j = 0; j < THUMBNAIL_SIZE / 32; j = j + 32) {
+    PlainsGeneration generation = PlainsGeneration(THUMBNAIL_SIZE / 64, THUMBNAIL_SIZE / 64);
+    for (uint32_t i = 0; i < THUMBNAIL_SIZE / 64; i = i + 64) {
+        for (uint32_t j = 0; j < THUMBNAIL_SIZE / 64; j = j + 64) {
             sf::Sprite sprite;
             sprite.setTexture(*Textures::get()->get(std::to_string(generation.getType(i, j) + 1)));
-            sprite.setPosition(32 * i, THUMBNAIL_SIZE - 32 * j);
+            sprite.setPosition(64 * i, THUMBNAIL_SIZE - 64 * j);
             renderTexture.draw(sprite);
         }
     }

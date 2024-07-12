@@ -26,7 +26,7 @@ const uint32_t Water::TOTAL_ANIMATIONS = 40;
 
 Water::Water() = default;
 Water::Water(uint32_t x, uint32_t y) :
-	ImpassableObstacle(x, y, 2, 2) {
+	ImpassableObstacle(x, y, 1, 1) {
 
 }
 std::string Water::getTextureName() const {
