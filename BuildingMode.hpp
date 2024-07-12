@@ -27,7 +27,7 @@
 
 class BuildingMode : public CameraDependentPopUpElement {
 public:
-	BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId);
+	BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH);
 	~BuildingMode();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -42,8 +42,10 @@ private:
 	std::shared_ptr<GOCollection<GO>> go;
 	std::shared_ptr<GOCollection<TerritoryB>> tb;
 	uint32_t playerId;
+	uint32_t mapW, mapH;
 	bool returnedPtr;
 
+	bool inMap() const;
 	bool empty() const;
 	bool controlled() const;
 	Events getHighlightEvent() const;

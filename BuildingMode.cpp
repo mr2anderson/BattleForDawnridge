@@ -24,12 +24,14 @@
 #include "Texts.hpp"
 
 
-BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId) {
+BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH) {
 	this->b = b->cloneBuilding();
 	this->view = view;
 	this->go = go;
 	this->tb = tb;
 	this->playerId = playerId;
+	this->mapW = mapW;
+	this->mapH = mapH;
 }
 BuildingMode::~BuildingMode() {
 	if (!this->returnedPtr) {
@@ -54,6 +56,12 @@ void BuildingMode::update() {
 }
 Events BuildingMode::click() {
 	this->finish();
+	if (!this->inMap()) {
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("not_in_map"), *Texts::get()->get("OK"));
+		Events uiEvent;
+		uiEvent.add(std::make_shared<CreateEEvent>(w));
+		return this->getHighlightEvent() + uiEvent;
+	}
 	if (!this->empty()) {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("place_occupied"), *Texts::get()->get("OK"));
 		Events uiEvent;
@@ -72,6 +80,11 @@ Events BuildingMode::click() {
 	gEvent.add(std::make_shared<PlaySoundEvent>(this->b->getSoundName()));
 	this->returnedPtr = true;
 	return gEvent;
+}
+bool BuildingMode::inMap() const {
+	return
+			(b->getX() + b->getSX() < this->mapW and
+			b->getY() + b->getSY() < this->mapH);
 }
 bool BuildingMode::empty() const {
 	for (uint32_t i = 0; i < go->size(); i = i + 1) {
