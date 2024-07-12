@@ -55,7 +55,7 @@ std::vector<std::shared_ptr<Warrior>> Barracks::getWarriorsToProduce() {
 	return warriors;
 }
 uint32_t Barracks::getRadius() const {
-	return 3;
+	return 2;
 }
 uint32_t Barracks::getRegenerationSpeed() const {
 	return 10000;
