@@ -19,6 +19,7 @@
 
 #include <queue>
 #include <limits>
+#include <algorithm>
 #include "MovementGraph.hpp"
 #include "PathDoesNotExist.hpp"
 
@@ -30,18 +31,42 @@ MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
 void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, bool canMoveThrough) {
 	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, canMoveThrough);
 }
-std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist = this->bfs(std::make_tuple(x, y), movePoints);
-
-	std::vector<std::tuple<uint32_t, uint32_t>> moves;
+std::vector<Move> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
+	std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist = this->bfs(std::make_tuple(x, y), movePoints, fromToStory);
+	
+	std::vector<Move> moves;
 	for (const auto& a : dist) {
 		if (this->fitTable[a.first].canStay) {
-			moves.push_back(a.first);
+			Move move;
+			move.finalX = std::get<0>(a.first);
+			move.finalY = std::get<1>(a.first);
+			
+			std::tuple<uint32_t, uint32_t> current = a.first;
+			while (current != std::make_tuple(x, y)) {
+				std::tuple<uint32_t, uint32_t> previous = fromToStory.at(current);
+				if (std::get<0>(current) > std::get<0>(previous)) {
+					move.route.push_back('e');
+				}
+				else if (std::get<0>(current) < std::get<0>(previous)) {
+					move.route.push_back('w');
+				}
+				else if (std::get<0>(current) > std::get<0>(previous)) {
+					move.route.push_back('s');
+				}
+				else {
+					move.route.push_back('n');
+				}
+				current = previous;
+			}
+			std::reverse(move.route.begin(), move.route.end());
+
+			moves.push_back(move);
 		}
 	}
 	return moves;
 }
-std::map<std::tuple<uint32_t, uint32_t>, uint32_t> MovementGraph::bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints) {
+std::map<std::tuple<uint32_t, uint32_t>, uint32_t> MovementGraph::bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>>& fromToStory) {
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
 	dist[s] = 0;
 	std::queue<std::tuple<uint32_t, uint32_t>> q;
@@ -94,6 +119,7 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> MovementGraph::bfs(std::tuple
 
 			if (dist[u] > dist[v] + 1) {
 				dist[u] = dist[v] + 1;
+				fromToStory[u] = v;
 				q.push(u);
 			}
 		}

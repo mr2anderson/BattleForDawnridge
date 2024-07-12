@@ -18,12 +18,11 @@
 
 
 #include <map>
-#include <tuple>
-#include <vector>
-#include <cstdint>
 #include <limits>
 #include <optional>
+#include <tuple>
 #include "FitTableElement.hpp"
+#include "Move.hpp"
 
 
 #pragma once
@@ -34,10 +33,10 @@ public:
 	MovementGraph(uint32_t mapW, uint32_t mapH);
 
 	void set(uint32_t x, uint32_t y, bool canStay, bool canMoveThrough);
-	std::vector<std::tuple<uint32_t, uint32_t>> getMoves(uint32_t x, uint32_t y, uint32_t movePoints = std::numeric_limits<uint32_t>::max());
+	std::vector<Move> getMoves(uint32_t x, uint32_t y, uint32_t movePoints = std::numeric_limits<uint32_t>::max());
 private:
 	uint32_t mapW, mapH;
 	std::map<std::tuple<uint32_t, uint32_t>, FitTableElement> fitTable;
 
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints);
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> &fromToStory);
 };

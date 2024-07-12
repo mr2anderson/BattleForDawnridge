@@ -658,6 +658,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="Mine.hpp" />
     <ClInclude Include="Mountains.hpp" />
+    <ClInclude Include="Move.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp" />
     <ClInclude Include="MovementGraph.hpp" />
@@ -801,6 +802,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="Mountains.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="MoveGameActionWindowDownEvent.cpp" />
     <ClCompile Include="MoveGameActionWindowUpEvent.cpp" />
     <ClCompile Include="MovementGraph.cpp" />

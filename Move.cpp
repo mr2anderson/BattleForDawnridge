@@ -17,20 +17,7 @@
  */
 
 
-#include <ctime>
-#include "ClueManager.hpp"
-#include "Texts.hpp"
+#include "Move.hpp"
 
 
-ClueManager* ClueManager::singletone = nullptr;
-
-
-ClueManager::ClueManager() {
-	this->label = Label(0, 0, 450, 75, *Texts::get()->get("clue" + std::to_string(time(nullptr) % TOTAL_CLUES)));
-}
-Label ClueManager::getClueLabel(uint32_t windowW, uint32_t windowH) {
-	label.setX(windowW - label.getW() - 20);
-	label.setY(windowH - label.getH() - 20);
-
-	return label;
-}
+Move::Move() = default;

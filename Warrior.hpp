@@ -21,6 +21,7 @@
 #include "Unit.hpp"
 #include "GOCollection.hpp"
 #include "Selectable.hpp"
+#include "Move.hpp"
 
 
 #pragma once
@@ -64,7 +65,7 @@ private:
 	Events unselect(uint32_t x, uint32_t y) override;
 	Events unselect() override;
 	Events getMoveHighlightionEvent();
-	std::vector<std::tuple<uint32_t, uint32_t>> getMoves();
+	std::vector<Move> getMoves();
 	void startAnimation(const std::string &type);
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "Warrior.hpp"
 #include "SelectEvent.hpp"
 #include "StartWarriorClickAnimationEvent.hpp"
@@ -151,6 +152,15 @@ Events Warrior::unselect(uint32_t x, uint32_t y) {
 	Events events = this->Selectable::unselect(x, y);
 	events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	events.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
+	std::vector<Move> moves = this->getMoves();
+	for (uint32_t i = 0; i < moves.size(); i = i + 1) {
+		if (moves[i].finalX == x and moves[i].finalY == y) {
+			for (uint32_t j = 0; j < moves[i].route.size(); j = j + 1) {
+				std::cout << moves[i].route[j] << " ";
+			}
+		}
+	}
+	std::cout << std::endl;
 	return events + this->getMoveHighlightionEvent();
 }
 Events Warrior::unselect() {
@@ -159,18 +169,16 @@ Events Warrior::unselect() {
 Events Warrior::getMoveHighlightionEvent() {
 	Events event;
 
-	std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves();
+	std::vector<Move> moves = this->getMoves();
 
 	for (uint32_t i = 0; i < moves.size(); i = i + 1) {
-		std::tuple<uint32_t, uint32_t> move = moves.at(i);
-		uint32_t moveX, moveY;
-		std::tie(moveX, moveY) = move;
-		event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, moveX, moveY, this->getSX(), this->getSY()));
+		Move move = moves.at(i);
+		event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, move.finalX, move.finalY, this->getSX(), this->getSY()));
 	}
 
 	return event;
 }
-std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves() {
+std::vector<Move> Warrior::getMoves() {
 	MovementGraph g(this->mapW, this->mapH);
 
 	if (!this->movementPoints.has_value()) {
