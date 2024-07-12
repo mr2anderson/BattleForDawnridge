@@ -31,7 +31,7 @@ Building* Mine::cloneBuilding() const {
 }
 Resources Mine::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 10000));
+	cost.plus(Resource("wood", 20000));
 	return cost;
 }
 uint32_t Mine::getRegenerationSpeed() const {
@@ -47,7 +47,7 @@ std::string Mine::getResourceType() const {
 	return "iron";
 }
 uint32_t Mine::getCollectionSpeed() const {
-	return 1000;
+	return 2500;
 }
 uint32_t Mine::getRadius() const {
 	return 3;

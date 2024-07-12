@@ -48,6 +48,6 @@ Events VictoryConditionB::addWood() const {
 	Events response;
 	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", "wood", this->getX(), this->getY(), this->getSX(), this->getSY());
 	response.add(std::make_shared<CreateEEvent>(flyingE));
-	response.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));
+	response.add(std::make_shared<AddResourceEvent>(Resource("wood", 2500)));
 	return response;
 }

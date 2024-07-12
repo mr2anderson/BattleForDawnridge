@@ -31,7 +31,7 @@ Building* Quarry::cloneBuilding() const {
 }
 Resources Quarry::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 10000));
+	cost.plus(Resource("wood", 20000));
 	return cost;
 }
 uint32_t Quarry::getRegenerationSpeed() const {
@@ -47,10 +47,10 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getCollectionSpeed() const {
-	return 1000;
+	return 2500;
 }
 uint32_t Quarry::getRadius() const {
-	return 3;
+	return 4;
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");

@@ -31,7 +31,7 @@ Building* Sawmill::cloneBuilding() const {
 }
 Resources Sawmill::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 10000));
+	cost.plus(Resource("wood", 20000));
 	return cost;
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
@@ -47,10 +47,10 @@ std::string Sawmill::getResourceType() const {
 	return "wood";
 }
 uint32_t Sawmill::getCollectionSpeed() const {
-	return 1000;
+	return 2500;
 }
 uint32_t Sawmill::getRadius() const {
-	return 3;
+	return 4;
 }
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");
