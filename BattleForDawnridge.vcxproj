@@ -506,6 +506,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="ChooseLanguageEvent.hpp" />
     <ClInclude Include="CloseWindowEvent.hpp" />
     <ClInclude Include="CloseMenuEvent.hpp" />
+    <ClInclude Include="ClueManager.hpp" />
     <ClInclude Include="CollectEvent.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
@@ -746,6 +747,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="ChooseLanguageEvent.cpp" />
     <ClCompile Include="CloseWindowEvent.cpp" />
     <ClCompile Include="CloseMenuEvent.cpp" />
+    <ClCompile Include="ClueManager.cpp" />
     <ClCompile Include="CollectEvent.cpp" />
     <ClCompile Include="ColorTheme.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />

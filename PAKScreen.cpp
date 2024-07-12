@@ -25,6 +25,7 @@
 #include "Texts.hpp"
 #include "SoundQueue.hpp"
 #include "ColorTheme.hpp"
+#include "ClueManager.hpp"
 
 
 PAKScreen* PAKScreen::singletone = nullptr;
@@ -60,11 +61,12 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
 	this->t.setFillColor(sf::Color::White);
 	this->t.setOutlineColor(sf::Color::Black);
 	this->t.setOutlineThickness(2);
-	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 50);
+	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 125);
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(sf::Color::Black);
 	window.draw(this->s);
+	window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(this->t);
 	window.display();
 }

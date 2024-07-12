@@ -1129,6 +1129,9 @@
     <ClInclude Include="BlackKnight.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
+    <ClInclude Include="ClueManager.hpp">
+      <Filter>Header Files\screensService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1550,6 +1553,9 @@
     </ClCompile>
     <ClCompile Include="BlackKnight.cpp">
       <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="ClueManager.cpp">
+      <Filter>Source Files\screensService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

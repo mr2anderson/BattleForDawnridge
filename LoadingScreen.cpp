@@ -39,6 +39,7 @@
 #include "CouldntOpenText.hpp"
 #include "CouldntOpenMap.hpp"
 #include "UTFEncoder.hpp"
+#include "ClueManager.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -99,10 +100,11 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	t.setFillColor(sf::Color::White);
 	t.setOutlineColor(sf::Color::Black);
 	t.setOutlineThickness(2);
-	t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 50);
+	t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 125);
 
 	window.clear(sf::Color::Black);
     window.draw(s);
+    window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(t);
 	window.display();
 }

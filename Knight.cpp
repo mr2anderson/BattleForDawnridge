@@ -33,7 +33,7 @@ Resources Knight::getCost() const {
 	return Resources({ Resource("food", 8000), Resource("iron", 4000) });
 }
 uint32_t Knight::getTimeToProduce() const {
-	return 4;
+	return 7;
 }
 std::string Knight::getSoundName() const {
 	return "sword";

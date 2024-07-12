@@ -33,7 +33,7 @@ Resources Infantryman::getCost() const {
 	return Resources({ Resource("food", 5000 )});
 }
 uint32_t Infantryman::getTimeToProduce() const {
-	return 1;
+	return 3;
 }
 std::string Infantryman::getSoundName() const {
 	return "hooray";
