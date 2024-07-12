@@ -51,6 +51,9 @@ public:
 protected:
 	virtual uint32_t getMovementPoints() const = 0;
 private:
+	static const uint32_t DIV_MOD_X;
+	static const uint32_t DIV_MOD_Y;
+
 	std::optional<uint32_t> movementPoints;
 	std::shared_ptr<GOCollection<GO>> go;
 	uint32_t mapW, mapH;

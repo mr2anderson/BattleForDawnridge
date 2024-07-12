@@ -32,10 +32,21 @@ bool AreaB::inRadius(GO *go) const {
 }
 bool AreaB::inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
 	sf::IntRect rect2;
+
 	rect2.left = this->getAreaXMin();
 	rect2.top = this->getAreaYMin();
-	rect2.width = this->getAreaWidth();
-	rect2.height = this->getAreaHeight();
+	rect2.width = this->getAreaWidth() + 1;
+	rect2.height = this->getAreaHeight() + 1;
+
+	if (rect2.left != 0) {
+		rect2.left = rect2.left - 1;
+		rect2.width = rect2.width + 1;
+	}
+	if (rect2.top != 0) {
+		rect2.top = rect2.top - 1;
+		rect2.height = rect2.height + 1;
+	}
+
 	for (uint32_t i = x; i <= x + sx; i = i + sx) {
 		for (uint32_t j = y; j <= y + sy; j = j + sy) {
 			if (!rect2.contains(i, j)) {
@@ -74,10 +85,10 @@ uint32_t AreaB::getAreaYMax() const {
 	return this->getY() + this->getSY() - 1 + this->getRadius();
 }
 uint32_t AreaB::getAreaWidth() const {
-	return this->getSX() + 2 * this->getRadius() + 1;
+	return (this->getSX() + this->getRadius() + this->getX()) - this->getAreaXMin();
 }
 uint32_t AreaB::getAreaHeight() const {
-	return this->getSY() + 2 * this->getRadius() + 1;
+	return (this->getSY() + this->getRadius() + this->getY()) - this->getAreaYMin();
 }
 HorizontalSelectionWindowComponent AreaB::getExitComponent() const {
 	HorizontalSelectionWindowComponent component = this->Building::getExitComponent();

@@ -27,11 +27,15 @@
 #include "DisableCursorEvent.hpp"
 
 
+const uint32_t Warrior::DIV_MOD_X = 0;
+const uint32_t Warrior::DIV_MOD_Y = 1;
+
+
 Warrior::Warrior() {
 	this->startClickAnimation();
 }
 Warrior::Warrior(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Unit(x, y, sx, sy, maxHp, maxHp, playerId, units) {
+	Unit(x / sx * sy + DIV_MOD_X, y / sy * sy + DIV_MOD_Y, sx, sy, maxHp, maxHp, playerId, units) {
 	this->movementPoints = std::nullopt;
 	this->go = go;
 	this->mapW = mapW;
@@ -100,6 +104,10 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 	return 0;
 }
 bool Warrior::canFitIn(uint32_t newX, uint32_t newY, bool stay) const {
+	if (newX % this->getSX() != DIV_MOD_X or newY % this->getSY() != DIV_MOD_Y) {
+		return false;
+	}
+
 	sf::IntRect thisRect;
 	thisRect.left = newX;
 	thisRect.top = newY;

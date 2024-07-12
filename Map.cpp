@@ -76,9 +76,9 @@ Map::Map(const std::string &path) {
                 c->setMaxHp();
                 this->add(c);
                 
-                this->add(new Legioner(x, y + c->getSY(), this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
+                this->add(new Legioner(x + c->getSX(), y, this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
                 for (uint32_t i = 1; i < 3; i = i + 1) {
-                    this->add(new Infantryman(x + i * this->go->at(this->go->size() - 1)->getSX(), y + c->getSY(), this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
+                    this->add(new Infantryman(x + c->getSX() + i * this->go->at(this->go->size() - 1)->getSX(), y, this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
                 }
 
                 currentPlayerId = currentPlayerId + 1;
