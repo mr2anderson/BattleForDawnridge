@@ -76,7 +76,7 @@ Events WarehouseStone::getSelectionW() {
 	return response;
 }
 Events WarehouseStone::getGameObjectResponse(uint32_t playerId) {
-	if (this->belongTo(playerId)) {
+	if (this->exist() and this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}
 	return Events();

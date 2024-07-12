@@ -76,7 +76,7 @@ Events WarehouseIron::getSelectionW() {
 	return response;
 }
 Events WarehouseIron::getGameObjectResponse(uint32_t playerId) {
-	if (this->belongTo(playerId)) {
+	if (this->exist() and this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}
 	return Events();

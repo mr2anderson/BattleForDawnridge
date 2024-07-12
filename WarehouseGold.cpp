@@ -89,7 +89,7 @@ Events WarehouseGold::getSelectionW() {
 	return response;
 }
 Events WarehouseGold::getGameObjectResponse(uint32_t playerId) {
-	if (this->belongTo(playerId)) {
+	if (this->exist() and this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}
 	return Events();
