@@ -17,13 +17,7 @@
  */
 
 
-#include "Event.hpp"
+#include "DisableCursorEvent.hpp"
 
 
-#pragma once
-
-
-class UnselectEvent : public Event {
-public:
-	UnselectEvent();
-};
+DisableCursorEvent::DisableCursorEvent() = default;

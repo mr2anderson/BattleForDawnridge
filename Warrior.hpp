@@ -56,6 +56,7 @@ private:
 	std::string currentAnimation;
 	sf::Clock animationClock;
 
+	std::string getSelectableTextureName() const override;
 	Events unselect(uint32_t x, uint32_t y) override;
 	Events unselect() override;
 	Events getMoveHighlightionEvent();

@@ -44,6 +44,8 @@
 #include "VictoryConditionBDestroyedEvent.hpp"
 #include "TryToCollectEvent.hpp"
 #include "RefreshMovementPointsEvent.hpp"
+#include "EnableCursorEvent.hpp"
+#include "DisableCursorEvent.hpp"
 
 
 #pragma once
@@ -76,6 +78,7 @@ private:
 	Selectable* selected;
 
     bool returnToMenu;
+	bool curcorVisibility;
 	uint32_t windowW, windowH;
 	std::shared_ptr<sf::View> view;
     std::vector<Button> buttons;
@@ -117,6 +120,8 @@ private:
 	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
 	void handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e);
 	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e);
+	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e);
+	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e);
 
 	void removeFinishedElements();
 	void handleNewMoveEvents();

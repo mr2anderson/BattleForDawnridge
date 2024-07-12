@@ -54,16 +54,16 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 				if (this->elements.empty() and this->allNewMoveEventsHandled()) {
-					if (!this->handleButtonsClick()) {
-						if (this->selected == nullptr) {
+					if (this->selected == nullptr) {
+						if (!this->handleButtonsClick()) {
 							this->handleGameObjectClick();
 						}
-						else {
-							std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-							Events events = this->selected->unselect(std::get<0>(pos) / 32, std::get<1>(pos) / 32);
-							this->handleEvent(events);
-						}
-                    }
+					}
+					else {
+						std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
+						Events events = this->selected->unselect(std::get<0>(pos) / 32, std::get<1>(pos) / 32);
+						this->handleEvent(events);
+					}
 				}
 				if (!this->elements.empty()) {
 					Events events = this->elements.front()->click();
@@ -83,6 +83,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 			this->prepareToReturnToMenu(window);
             return true;
         }
+		window.setMouseCursorVisible(this->curcorVisibility);
 	}
 }
 void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
@@ -183,6 +184,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
     this->returnToMenu = false;
+	this->curcorVisibility = true;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Texts::get()->get("new_move")), createConfirmEndMoveWindowEvent);
@@ -268,6 +270,12 @@ void MainScreen::handleEvent(Events &e) {
 		}
 		else if (std::shared_ptr<RefreshMovementPointsEvent> refreshMovementPointsEvent = std::dynamic_pointer_cast<RefreshMovementPointsEvent>(e.at(i))) {
 			this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent);
+		}
+		else if (std::shared_ptr<EnableCursorEvent> enableCursorEvent = std::dynamic_pointer_cast<EnableCursorEvent>(e.at(i))) {
+			this->handleEnableCursorEvent(enableCursorEvent);
+		}
+		else if (std::shared_ptr<DisableCursorEvent> disableCursorEvent = std::dynamic_pointer_cast<DisableCursorEvent>(e.at(i))) {
+			this->handleDisableCursorEvent(disableCursorEvent);
 		}
 	}
 }
@@ -422,6 +430,12 @@ void MainScreen::handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e) {
 void MainScreen::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e) {
 	e->getWarrior()->refreshMovementPoints();
 }
+void MainScreen::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e) {
+	this->curcorVisibility = true;
+}
+void MainScreen::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e) {
+	this->curcorVisibility = false;
+}
 void MainScreen::removeFinishedElements() {
 	bool remove = false;
 	while (!this->elements.empty()) {
@@ -519,6 +533,9 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.setView(*this->view);
 	this->drawCells(window);
 	window.draw(*this->map);
+	if (this->selected != nullptr) {
+		window.draw(this->selected->getSprite(this->getMousePositionBasedOnView()));
+	}
 	if (!this->elements.empty()) {
 		if (!this->elements.front()->isCameraDependent()) {
 			window.setView(window.getDefaultView());

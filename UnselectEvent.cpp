@@ -20,9 +20,6 @@
 #include "UnselectEvent.hpp"
 
 
-UnselectEvent::UnselectEvent(Selectable* s) {
-	this->s = s;
-}
-Selectable* UnselectEvent::getSelectable() {
-	return this->s;
+UnselectEvent::UnselectEvent() {
+	
 }

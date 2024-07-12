@@ -23,7 +23,7 @@
 #pragma once
 
 
-class UnselectEvent : public Event {
+class DisableCursorEvent : public Event {
 public:
-	UnselectEvent();
+	DisableCursorEvent();
 };

@@ -521,6 +521,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
     <ClInclude Include="DestroyEvent.hpp" />
+    <ClInclude Include="DisableCursorEvent.hpp" />
+    <ClInclude Include="EnableCursorEvent.hpp" />
     <ClInclude Include="Event.hpp" />
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
@@ -751,6 +753,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
     <ClCompile Include="DestroyEvent.cpp" />
+    <ClCompile Include="DisableCursorEvent.cpp" />
+    <ClCompile Include="EnableCursorEvent.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FlyingE.cpp" />

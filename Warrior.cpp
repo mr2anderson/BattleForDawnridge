@@ -24,6 +24,7 @@
 #include "RefreshMovementPointsEvent.hpp"
 #include "MovementGraph.hpp"
 #include "ColorTheme.hpp"
+#include "DisableCursorEvent.hpp"
 
 
 Warrior::Warrior() {
@@ -121,6 +122,9 @@ bool Warrior::canFitIt(uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
+std::string Warrior::getSelectableTextureName() const {
+	return "hand";
+}
 Events Warrior::unselect(uint32_t x, uint32_t y) {
 	Events events = this->Selectable::unselect(x, y);
 	events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
@@ -205,8 +209,10 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 	if (!this->belongTo(playerId)) {
 		return Events();
 	}
-	Events response;
+	Events response = this->getMoveHighlightionEvent();
 	response.add(std::make_shared<SelectEvent>(this));
+	response.add(std::make_shared<DisableCursorEvent>());
+	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
 	return response;
 }

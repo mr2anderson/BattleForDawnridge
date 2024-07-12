@@ -18,6 +18,8 @@
 
 
 #include <cstdint>
+#include <SFML/Graphics.hpp>
+#include <tuple>
 #include "Events.hpp"
 
 
@@ -25,6 +27,10 @@ class Selectable {
 public:
 	virtual Events unselect(uint32_t x, uint32_t y);
 	virtual Events unselect();
+	sf::Sprite getSprite(uint32_t mouseX, uint32_t mouseY);
+	sf::Sprite getSprite(std::tuple<uint32_t, uint32_t> mousePos);
+protected:
+	virtual std::string getSelectableTextureName() const = 0;
 private:
-	Events getUnselectEvent();
+	Events getOnUnselectEvents();
 };
