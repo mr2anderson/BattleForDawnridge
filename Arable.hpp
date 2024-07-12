@@ -35,13 +35,10 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-	bool alreadyCollected() const;
-	uint32_t collect() const;
 private:
-	bool collected;
-
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
+	Events addFood() const;
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

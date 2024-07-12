@@ -21,7 +21,6 @@
 #include "ResourcePoint.hpp"
 #include "Unit.hpp"
 #include "Castle.hpp"
-#include "Arable.hpp"
 #include "TerritoryB.hpp"
 #include "TerritoryOriginB.hpp"
 #include "GOCollection.hpp"
@@ -48,7 +47,6 @@ public:
     std::shared_ptr<GOCollection<Unit>> getUnits();
     std::shared_ptr<GOCollection<TerritoryB>> getTbs();
     std::shared_ptr<GOCollection<TerritoryOriginB>> getTobs();
-    std::shared_ptr<GOCollection<Arable>> getArables();
     std::shared_ptr<GOCollection<ResourceStorageB>> getRsbs();
     std::shared_ptr<GOCollection<VictoryConditionB>> getVcbs();
     std::shared_ptr<GOCollection<Treasure>> getTreasures();
@@ -62,7 +60,6 @@ private:
     std::shared_ptr<GOCollection<Unit>> units;
     std::shared_ptr<GOCollection<TerritoryB>> tbs;
     std::shared_ptr<GOCollection<TerritoryOriginB>> tobs;
-    std::shared_ptr<GOCollection<Arable>> arables;
     std::shared_ptr<GOCollection<ResourceStorageB>> rsbs;
     std::shared_ptr<GOCollection<VictoryConditionB>> vcbs;
     std::shared_ptr<GOCollection<Treasure>> treasures;

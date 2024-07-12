@@ -711,7 +711,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="WarriorProducer.hpp" />
     <ClInclude Include="WarriorProducingFinishedEvent.hpp" />
     <ClInclude Include="Water.hpp" />
-    <ClInclude Include="Windmill.hpp" />
     <ClInclude Include="WindowButton.hpp" />
     <ClInclude Include="WindowButtonImage.hpp" />
     <ClInclude Include="WindowTwoButtons.hpp" />
@@ -844,7 +843,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="WarriorProducer.cpp" />
     <ClCompile Include="WarriorProducingFinishedEvent.cpp" />
     <ClCompile Include="Water.cpp" />
-    <ClCompile Include="Windmill.cpp" />
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowButtonImage.cpp" />
     <ClCompile Include="WindowTwoButtons.cpp" />

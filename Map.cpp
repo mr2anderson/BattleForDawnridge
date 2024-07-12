@@ -37,7 +37,6 @@ Map::Map(const std::string &path) {
     this->units = std::make_shared<GOCollection<Unit>>();
     this->tbs = std::make_shared<GOCollection<TerritoryB>>();
     this->tobs = std::make_shared<GOCollection<TerritoryOriginB>>();
-    this->arables = std::make_shared<GOCollection<Arable>>();
     this->rsbs = std::make_shared<GOCollection<ResourceStorageB>>();
     this->vcbs = std::make_shared<GOCollection<VictoryConditionB>>();
     this->treasures = std::make_shared<GOCollection<Treasure>>();
@@ -139,9 +138,6 @@ std::shared_ptr<GOCollection<TerritoryB>> Map::getTbs() {
 std::shared_ptr<GOCollection<TerritoryOriginB>> Map::getTobs() {
     return this->tobs;
 }
-std::shared_ptr<GOCollection<Arable>> Map::getArables() {
-    return this->arables;
-}
 std::shared_ptr<GOCollection<ResourceStorageB>> Map::getRsbs() {
     return this->rsbs;
 }
@@ -166,9 +162,6 @@ void Map::add(GO *object) {
     }
     if (TerritoryOriginB* tob = dynamic_cast<TerritoryOriginB*>(object)) {
         this->tobs->push(tob);
-    }
-    if (Arable* a = dynamic_cast<Arable*>(object)) {
-        this->arables->push(a);
     }
     if (ResourceStorageB* rsb = dynamic_cast<ResourceStorageB*>(object)) {
         this->rsbs->push(rsb);

@@ -19,6 +19,8 @@
 
 #include "Arable.hpp"
 #include "Texts.hpp"
+#include "FlyingE.hpp"
+#include "AddResourceEvent.hpp"
 
 
 Arable::Arable() = default;
@@ -32,13 +34,16 @@ Building* Arable::cloneBuilding() const {
 }
 Events Arable::newMove(uint32_t playerId) {
 	if (this->exist() and this->belongTo(playerId)) {
-		this->collected = false;
-		return this->regenerate();
+		Events e = this->regenerate();
+		if (this->works()) {
+			e = e + this->addFood();
+		}
+		return e;
 	}
 	return Events();
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 3000)});
+	return Resources({ Resource("wood", 5000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -49,17 +54,18 @@ std::string Arable::getSoundName() const {
 std::wstring Arable::getDescription() const {
 	return *Texts::get()->get("arable_description");
 }
-bool Arable::alreadyCollected() const {
-	return this->collected;
-}
-uint32_t Arable::collect() const {
-	return 500;
-}
 uint32_t Arable::getRegenerationSpeed() const {
 	return 1000;
 }
 std::wstring Arable::getUpperCaseReadableName() const {
 	return *Texts::get()->get("arable_upper_case_readable_name");
+}
+Events Arable::addFood() const {
+	Events response;
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", "wood", this->getX(), this->getY(), this->getSX(), this->getSY());
+	response.add(std::make_shared<CreateEEvent>(flyingE));
+	response.add(std::make_shared<AddResourceEvent>(Resource("food", 500)));
+	return response;
 }
 Events Arable::getSelectionW() {
 	std::vector<HorizontalSelectionWindowComponent> components;

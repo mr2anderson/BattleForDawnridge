@@ -982,9 +982,6 @@
     <ClInclude Include="Water.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
-    <ClInclude Include="Windmill.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="Arable.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
@@ -1336,9 +1333,6 @@
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
     <ClCompile Include="Water.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Windmill.cpp">
       <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="Arable.cpp">

@@ -29,7 +29,7 @@
 #include "Playlist.hpp"
 #include "Castle.hpp"
 #include "Market.hpp"
-#include "Windmill.hpp"
+#include "Arable.hpp"
 #include "Sawmill.hpp"
 #include "Quarry.hpp"
 #include "Mine.hpp"
@@ -135,8 +135,8 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getTobs())));
     components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, true, event);
     event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Windmill>(0, 0, 0, this->map->getUnits(), this->map->getArables())));
-    components.emplace_back(Windmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Windmill>()), true, true, event);
+    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->map->getUnits())));
+    components.emplace_back(Arable().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Arable>()), true, true, event);
     event = Events();
     event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
     components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, true, event);
