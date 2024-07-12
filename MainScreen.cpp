@@ -542,6 +542,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.setView(*this->view);
 	this->drawCells(window);
 	window.draw(*this->map);
+	this->drawHighlightion(window);
 	if (this->selected != nullptr) {
 		window.draw(this->selected->getSprite(this->getMousePositionBasedOnView()));
 	}
@@ -571,10 +572,16 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
 			s.setPosition(32 * i, 32 * j);
 			window.draw(s);
+		}
+	}
+}
+void MainScreen::drawHighlightion(sf::RenderWindow& window) {
+	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
+		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
 			std::vector<sf::Color> colors = this->highlightTable.getHighlightColors(i, j);
 			for (uint32_t k = 0; k < colors.size(); k = k + 1) {
 				sf::RectangleShape r;
-				r.setPosition(s.getPosition());
+				r.setPosition(32 * i, 32 * j);
 				r.setSize(sf::Vector2f(32, 32));
 				r.setFillColor(colors[k]);
 				window.draw(r);

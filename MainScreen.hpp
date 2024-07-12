@@ -137,6 +137,7 @@ private:
 	void drawEverything(sf::RenderWindow& window);
 	void drawResourceBar(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow &window);
+	void drawHighlightion(sf::RenderWindow& window);
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
 	void moveView();
 	void updatePlayerViewPoint();
