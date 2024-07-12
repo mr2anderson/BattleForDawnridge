@@ -820,7 +820,7 @@
     <ClInclude Include="HighlightTable.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
-    <ClInclude Include="HPBar.hpp">
+    <ClInclude Include="HPPointer.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="HPGO.hpp">
@@ -1227,7 +1227,7 @@
     <ClCompile Include="GO.cpp">
       <Filter>Source Files\go</Filter>
     </ClCompile>
-    <ClCompile Include="HPBar.cpp">
+    <ClCompile Include="HPPointer.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="HPGO.cpp">

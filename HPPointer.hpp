@@ -25,10 +25,10 @@
 #pragma once
 
 
-class HPBar : public sf::Drawable {
+class HPPointer : public sf::Drawable {
 public:
-	HPBar();
-	HPBar(uint32_t current, uint32_t max, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	HPPointer();
+	HPPointer(uint32_t current, uint32_t max, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
