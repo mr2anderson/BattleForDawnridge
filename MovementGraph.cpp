@@ -25,8 +25,8 @@ MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
 	this->mapW = mapW;
 	this->mapH = mapH;
 }
-void MovementGraph::set(uint32_t x, uint32_t y, bool canFitIn) {
-	this->fitTable[std::make_tuple(x, y)] = canFitIn;
+void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, bool canMoveThrough) {
+	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, canMoveThrough);
 }
 std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> visited;
@@ -34,7 +34,9 @@ std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, 
 
 	std::vector<std::tuple<uint32_t, uint32_t>> moves;
 	for (const auto& a : visited) {
-		moves.push_back(a.first);
+		if (this->fitTable[a.first].canStay) {
+			moves.push_back(a.first);
+		}
 	}
 	return moves;
 }
@@ -49,25 +51,25 @@ void MovementGraph::bfs(std::tuple<uint32_t, uint32_t> p, std::optional<std::tup
 
 	if (x != 0) {
 		auto to = std::make_tuple(x - 1, y);
-		if (this->fitTable[to] and visited.find(to) == visited.end()) {
+		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
 			this->bfs(to, dst, visited, movePoints - 1, l + 1);
 		}
 	}
 	if (y != 0) {
 		auto to = std::make_tuple(x, y - 1);
-		if (this->fitTable[to] and visited.find(to) == visited.end()) {
+		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
 			this->bfs(to, dst, visited, movePoints - 1, l + 1);
 		}
 	}
 	if (x != this->mapW - 1) {
 		auto to = std::make_tuple(x + 1, y);
-		if (this->fitTable[to] and visited.find(to) == visited.end()) {
+		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
 			this->bfs(to, dst, visited, movePoints - 1, l + 1);
 		}
 	}
 	if (y != this->mapH - 1) {
 		auto to = std::make_tuple(x, y + 1);
-		if (this->fitTable[to] and visited.find(to) == visited.end()) {
+		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
 			this->bfs(to, dst, visited, movePoints - 1, l + 1);
 		}
 	}

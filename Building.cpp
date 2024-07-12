@@ -72,3 +72,9 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	};
 	return component;
 }
+bool Building::warriorCanStay(uint32_t warriorPlayerId) const {
+	return true;
+}
+bool Building::warriorCanMoveThrough(uint32_t warriorPlayerId) const {
+	return true;
+}

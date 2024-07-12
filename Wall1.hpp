@@ -17,19 +17,18 @@
  */
 
 
-#include "Building.hpp"
+#include "Wall.hpp"
 
 
 #pragma once
 
 
-class Wall1 : public Building {
+class Wall1 : public Wall {
 public:
 	Wall1();
 	Wall1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 	Building* cloneBuilding() const override;
 
-	Events newMove(uint32_t playerId) override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
@@ -37,6 +36,4 @@ public:
 private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
 };

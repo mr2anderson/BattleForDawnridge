@@ -47,6 +47,12 @@ Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 
 	return response;
 }
+bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
+	return true;
+}
+bool ResourcePoint::warriorCanMoveThrough(uint32_t warriorPlayerId) const {
+	return true;
+}
 Events ResourcePoint::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();

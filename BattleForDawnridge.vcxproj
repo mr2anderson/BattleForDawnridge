@@ -623,10 +623,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
+    <ClInclude Include="FitTableElement.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="Fonts.hpp" />
     <ClInclude Include="Forest.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Gates.hpp" />
+    <ClInclude Include="Gates1.hpp" />
+    <ClInclude Include="Gates2.hpp" />
     <ClInclude Include="HorizontalSelectionWindow.hpp" />
     <ClInclude Include="HorizontalSelectionWindowComponent.hpp" />
     <ClInclude Include="GO.hpp" />
@@ -636,6 +640,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="HPGO.hpp" />
     <ClInclude Include="HpSensitiveB.hpp" />
     <ClInclude Include="Image.hpp" />
+    <ClInclude Include="ImpassableObstacle.hpp" />
     <ClInclude Include="Infantryman.hpp" />
     <ClInclude Include="Iron.hpp" />
     <ClInclude Include="Knight.hpp" />
@@ -702,6 +707,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="VictoryConditionB.hpp" />
     <ClInclude Include="VictoryConditionBDestroyedEvent.hpp" />
+    <ClInclude Include="Wall.hpp" />
     <ClInclude Include="Wall1.hpp" />
     <ClInclude Include="Wall2.hpp" />
     <ClInclude Include="WarehouseFood.hpp" />
@@ -757,10 +763,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="EnableCursorEvent.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
+    <ClCompile Include="FitTableElement.cpp" />
     <ClCompile Include="FlyingE.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gates.cpp" />
+    <ClCompile Include="Gates1.cpp" />
+    <ClCompile Include="Gates2.cpp" />
     <ClCompile Include="HorizontalSelectionWindow.cpp" />
     <ClCompile Include="HorizontalSelectionWindowComponent.cpp" />
     <ClCompile Include="GO.cpp" />
@@ -769,6 +779,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="HPGO.cpp" />
     <ClCompile Include="HpSensitiveB.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImpassableObstacle.cpp" />
     <ClCompile Include="Infantryman.cpp" />
     <ClCompile Include="Iron.cpp" />
     <ClCompile Include="Knight.cpp" />
@@ -836,6 +847,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="VictoryConditionB.cpp" />
     <ClCompile Include="VictoryConditionBDestroyedEvent.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wall1.cpp" />
     <ClCompile Include="Wall2.cpp" />
     <ClCompile Include="WarehouseFood.cpp" />

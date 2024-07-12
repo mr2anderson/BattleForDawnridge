@@ -37,7 +37,9 @@ public:
 	void startClickAnimation();
 	std::string getTextureName() const override;
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
-	bool canFitIt(uint32_t newX, uint32_t newY) const;
+	bool canFitIn(uint32_t newX, uint32_t newY, bool stay) const;
+	bool warriorCanStay(uint32_t warriorPlayerId) const override;
+	bool warriorCanMoveThrough(uint32_t warriorPlayerId) const override;
 
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;

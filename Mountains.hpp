@@ -17,23 +17,18 @@
  */
 
 
-#include "GO.hpp"
+#include "ImpassableObstacle.hpp"
 
 
 #pragma once
 
 
-class Mountains : public GO {
+class Mountains : public ImpassableObstacle {
 public:
 	Mountains();
 	Mountains(uint32_t x, uint32_t y);
 
-	Events newMove(uint32_t playerId) override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-	bool exist() const override;
-private:
-	Events getGameObjectResponse(uint32_t playerId) override;
-	Events getHorizontalSelectionWindow();
 };

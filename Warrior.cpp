@@ -99,7 +99,7 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 	}
 	return 0;
 }
-bool Warrior::canFitIt(uint32_t newX, uint32_t newY) const {
+bool Warrior::canFitIn(uint32_t newX, uint32_t newY, bool stay) const {
 	sf::IntRect thisRect;
 	thisRect.left = newX;
 	thisRect.top = newY;
@@ -108,7 +108,17 @@ bool Warrior::canFitIt(uint32_t newX, uint32_t newY) const {
 
 	for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
 		GO* o = this->go->at(i);
-		if (o->exist() and o->blockForWarrior(this->getPlayerId())) {
+		if (o->exist()) {
+			if (stay) {
+				if (o->warriorCanStay(this->getPlayerId())) {
+					continue;
+				}
+			}
+			else {
+				if (o->warriorCanMoveThrough(this->getPlayerId())) {
+					continue;
+				}
+			}
 			sf::IntRect goRect;
 			goRect.left = o->getX();
 			goRect.top = o->getY();
@@ -121,6 +131,12 @@ bool Warrior::canFitIt(uint32_t newX, uint32_t newY) const {
 	}
 
 	return true;
+}
+bool Warrior::warriorCanStay(uint32_t warriorPlayerId) const {
+	return false;
+}
+bool Warrior::warriorCanMoveThrough(uint32_t warriorPlayerId) const {
+	return (this->getPlayerId() == warriorPlayerId);
 }
 bool Warrior::highDrawingPriority() const {
 	return true;
@@ -182,7 +198,7 @@ std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves() {
 
 	for (uint32_t x = xMin; x <= xMax; x = x + 1) {
 		for (uint32_t y = yMin; y <= yMax; y = y + 1) {
-			g.set(x, y, this->canFitIt(x, y));
+			g.set(x, y, this->canFitIn(x, y, true), this->canFitIn(x, y, false));
 		}
 	}
 

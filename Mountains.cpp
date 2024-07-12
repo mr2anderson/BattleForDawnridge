@@ -19,16 +19,12 @@
 
 #include "Mountains.hpp"
 #include "Texts.hpp"
-#include "CreateEEvent.hpp"
 
 
 Mountains::Mountains() = default;
 Mountains::Mountains(uint32_t x, uint32_t y) :
-	GO(x, y, 2, 2) {
+	ImpassableObstacle(x, y, 2, 2) {
 
-}
-Events Mountains::newMove(uint32_t playerId) {
-	return Events();
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";
@@ -38,22 +34,4 @@ std::string Mountains::getSoundName() const {
 }
 std::wstring Mountains::getDescription() const {
 	return *Texts::get()->get("mountains_description");
-}
-bool Mountains::exist() const {
-	return true;
-}
-Events Mountains::getGameObjectResponse(uint32_t playerId) {
-	return this->getHorizontalSelectionWindow();
-}
-Events Mountains::getHorizontalSelectionWindow() {
-	Events events;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
-	events.add(std::make_shared<CreateEEvent>(window));
-
-	return events;
 }

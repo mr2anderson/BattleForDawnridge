@@ -1078,12 +1078,6 @@
     <ClInclude Include="Treasure.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
-    <ClInclude Include="ConductorB.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TryToCollectEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Selectable.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
@@ -1104,6 +1098,30 @@
     </ClInclude>
     <ClInclude Include="EnableCursorEvent.hpp">
       <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpassableObstacle.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Gates.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Gates1.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="Gates2.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="TryToCollectEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="FitTableElement.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="ConductorB.hpp">
+      <Filter>Header Files\go</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1476,12 +1494,6 @@
     <ClCompile Include="Treasure.cpp">
       <Filter>Source Files\go</Filter>
     </ClCompile>
-    <ClCompile Include="ConductorB.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TryToCollectEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Selectable.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
@@ -1502,6 +1514,30 @@
     </ClCompile>
     <ClCompile Include="EnableCursorEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpassableObstacle.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Gates.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Gates1.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="Gates2.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="ConductorB.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="TryToCollectEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="FitTableElement.cpp">
+      <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

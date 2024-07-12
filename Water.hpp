@@ -17,27 +17,22 @@
  */
 
 
-#include "GO.hpp"
+#include "ImpassableObstacle.hpp"
 
 
 #pragma once
 
 
-class Water : public GO {
+class Water : public ImpassableObstacle {
 public:
 	Water();
 	Water(uint32_t x, uint32_t y);
 
-	Events newMove(uint32_t playerId) override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-	bool exist() const override;
 
 	static const uint32_t TOTAL_ANIMATIONS;
 private:
 	sf::Clock clock;
-
-	Events getGameObjectResponse(uint32_t playerId) override;
-	Events getHorizontalSelectionWindow();
 };

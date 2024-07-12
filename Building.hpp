@@ -43,4 +43,7 @@ protected:
 	virtual Events regenerate();
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 	virtual HorizontalSelectionWindowComponent getDestroyComponent();
+private:
+	bool warriorCanStay(uint32_t warriorPlayerId) const override;
+	bool warriorCanMoveThrough(uint32_t warriorPlayerId) const override;
 };

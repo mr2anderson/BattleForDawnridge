@@ -17,23 +17,22 @@
  */
 
 
-#include "Wall.hpp"
+#include "GO.hpp"
 
 
 #pragma once
 
 
-class Wall2 : public Wall {
+class ImpassableObstacle : public GO {
 public:
-	Wall2();
-	Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
-	Building* cloneBuilding() const override;
+	ImpassableObstacle();
+	ImpassableObstacle(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	Events newMove(uint32_t playerId) override;
+	bool exist() const override;
+	bool warriorCanStay(uint32_t warriorPlayerId) const override;
+	bool warriorCanMoveThrough(uint32_t warriorPlayerId) const override;
 private:
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
+	Events getGameObjectResponse(uint32_t playerId) override;
+	Events getHorizontalSelectionWindow();
 };

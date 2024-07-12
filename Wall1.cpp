@@ -23,18 +23,11 @@
 
 Wall1::Wall1() = default;
 Wall1::Wall1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	Building(x, y, 2, 2, 40000, playerId, units) {
+	Wall(x, y, 2, 2, 40000, playerId, units) {
 
 }
 Building* Wall1::cloneBuilding() const {
 	return new Wall1(*this);
-}
-Events Wall1::newMove(uint32_t playerId) {
-	Events response;
-	if (this->belongTo(playerId) and this->exist()) {
-		return  this->regenerate();
-	}
-	return response;
 }
 Resources Wall1::getCost() const {
 	Resources cost;
@@ -55,24 +48,4 @@ std::wstring Wall1::getDescription() const {
 }
 std::wstring Wall1::getUpperCaseReadableName() const {
 	return *Texts::get()->get("wall1_upper_case_readable_name");
-}
-Events Wall1::getSelectionW() {
-	Events response;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getDestroyComponent());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
-	response.add(std::make_shared<CreateEEvent>(window));
-
-	return response;
-}
-Events Wall1::getGameObjectResponse(uint32_t playerId) {
-	if (this->belongTo(playerId)) {
-		return this->getSelectionW();
-	}
-	return Events();
 }
