@@ -55,7 +55,7 @@ void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
 bool GO::blockForWarrior(uint32_t warriotPlayerId) const {
-	return true;
+	return false;
 }
 Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 32 * this->getX() and
