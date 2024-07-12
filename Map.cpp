@@ -27,6 +27,8 @@
 #include "Mountains.hpp"
 #include "Water.hpp"
 #include "Root.hpp"
+#include "Infantryman.hpp"
+#include <iostream>
 
 
 Map::Map(const std::string &path) {
@@ -70,9 +72,15 @@ Map::Map(const std::string &path) {
             else if (word == "1") {
                 this->players.resize(this->players.size() + 1);
                 this->players.back() = Player(this->players.size());
+
                 Castle* c = new Castle(x, y, this->players.at(currentPlayerId).getId(), this->getUnits());
                 c->setMaxHp();
                 this->add(c);
+                
+                for (uint32_t i = 0; i < 3; i = i + 1) {
+                    this->add(new Infantryman(x + i * this->go->at(this->go->size() - 1)->getSX(), y + c->getSY(), this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
+                }
+
                 currentPlayerId = currentPlayerId + 1;
             }
             else if (word == "18") {
