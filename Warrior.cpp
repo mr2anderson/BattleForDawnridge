@@ -144,28 +144,12 @@ Events Warrior::getMoveHighlightionEvent() {
 	Events event;
 
 	std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves();
-	std::map<std::tuple<uint32_t, uint32_t>, bool> marked;
 
 	for (uint32_t i = 0; i < moves.size(); i = i + 1) {
 		std::tuple<uint32_t, uint32_t> move = moves.at(i);
 		uint32_t moveX, moveY;
 		std::tie(moveX, moveY) = move;
-
-		for (uint32_t x = 0; x < this->getSX(); x = x + 1) {
-			for (uint32_t y = 0; y < this->getSY(); y = y + 1) {
-				uint32_t modMoveX = moveX + x;
-				uint32_t modMoveY = moveY + y;
-				if (modMoveX >= this->mapW or modMoveY >= this->mapH) {
-					continue;
-				}
-				std::tuple<uint32_t, uint32_t> modMove = std::make_tuple(modMoveX, modMoveY);
-
-				if (marked.find(modMove) == marked.end()) {
-					marked[modMove] = true;
-					event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, modMoveX, modMoveY));
-				}
-			}
-		}
+		event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, moveX, moveY));
 	}
 
 	return event;
