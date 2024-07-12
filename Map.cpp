@@ -107,8 +107,13 @@ Map::Map(const std::string &path) {
     this->h = y + 1;
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
-        target.draw(*this->go->at(i), states);
+    for (uint8_t c = 0; c <= 1; c = c + 1) {
+        for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
+            GO* o = this->go->at(i);
+            if (o->highDrawingPriority() == c) {
+                target.draw(*o, states);
+            }
+        }
     }
 }
 uint32_t Map::getW() const {

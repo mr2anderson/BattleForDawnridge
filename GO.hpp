@@ -42,6 +42,8 @@ public:
 	bool intersects(GO* go) const;
 
 	virtual Events newMove(uint32_t currentPlayerId) = 0;
+	virtual bool highDrawingPriority() const;
+	virtual bool highClickPriority() const;
 	virtual std::string getTextureName() const = 0;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;

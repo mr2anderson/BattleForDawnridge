@@ -122,6 +122,12 @@ bool Warrior::canFitIt(uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
+bool Warrior::highDrawingPriority() const {
+	return true;
+}
+bool Warrior::highClickPriority() const {
+	return true;
+}
 std::string Warrior::getSelectableTextureName() const {
 	return "hand";
 }

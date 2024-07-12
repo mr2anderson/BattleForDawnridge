@@ -511,9 +511,18 @@ bool MainScreen::handleButtonsClick() {
 void MainScreen::handleGameObjectClick() {
 	uint32_t mouseX, mouseY;
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
-	for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
-		Events events = this->map->getGO()->at(i)->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
-		this->handleEvent(events);
+
+	for (int8_t c = 1; c >= 0; c = c - 1) {
+		for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
+			GO* go = this->map->getGO()->at(i);
+			if (go->highClickPriority() == c) {
+				Events events = go->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
+				if (!events.empty()) {
+					this->handleEvent(events);
+					return;
+				}
+			}
+		}
 	}
 }
 void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {

@@ -81,6 +81,12 @@ bool GO::intersects(GO* go) const {
 
 	return rect1.intersects(rect2);
 }
+bool GO::highDrawingPriority() const {
+	return false;
+}
+bool GO::highClickPriority() const {
+	return false;
+}
 HorizontalSelectionWindowComponent GO::getExitComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		"exit_icon",
