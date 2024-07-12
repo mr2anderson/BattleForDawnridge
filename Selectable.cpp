@@ -31,7 +31,7 @@ Events Selectable::unselect() {
 }
 sf::Sprite Selectable::getSprite(uint32_t mouseX, uint32_t mouseY) {
 	sf::Sprite sprite;
-	sprite.setPosition(mouseX / 32 * 32, mouseY / 32 * 32);
+	sprite.setPosition(mouseX, mouseY);
 	sprite.setTexture(*Textures::get()->get(this->getSelectableTextureName()));
 	return sprite;
 }
