@@ -30,7 +30,7 @@ Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 10000), Resource("iron", 2500) });
+	return Resources({ Resource("food", 10000), Resource("iron", 4375) });
 }
 uint32_t Knight::getTimeToProduce() const {
 	return 5;
@@ -60,5 +60,5 @@ std::string Knight::getBaseTextureName() const {
 	return "knight";
 }
 uint32_t Knight::getMovementPoints() const {
-	return 6;
+	return 4;
 }

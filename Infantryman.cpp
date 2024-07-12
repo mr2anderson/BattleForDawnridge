@@ -60,5 +60,5 @@ std::string Infantryman::getBaseTextureName() const {
 	return "infantryman";
 }
 uint32_t Infantryman::getMovementPoints() const {
-	return 9;
+	return 5;
 }

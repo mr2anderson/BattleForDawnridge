@@ -37,8 +37,8 @@ std::vector<sf::RectangleShape> HighlightTable::getRects() const {
 	rects.reserve(this->data.size());
 	for (const auto& e : this->data) {
 		sf::RectangleShape rect;
-		rect.setSize(sf::Vector2f(32 * e.first.getSX(), 32 * e.first.getSY()));
-		rect.setPosition(32 * e.first.getX(), 32 * e.first.getY());
+		rect.setSize(sf::Vector2f(32 * e.first.getSX() - 4, 32 * e.first.getSY() - 4));
+		rect.setPosition(32 * e.first.getX() + 2, 32 * e.first.getY() + 2);
 		rect.setFillColor(e.first.getColor());
 		rect.setOutlineThickness(1);
 		rect.setOutlineColor(sf::Color::Black);

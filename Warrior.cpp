@@ -202,7 +202,7 @@ std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves() {
 		}
 	}
 
-	return g.getMoves(this->getX(), this->getY(), this->movementPoints.value());
+	return g.getMoves(this->getX(), this->getY(), this->getSX(), this->getSY(), this->movementPoints.value());
 }
 void Warrior::startAnimation(const std::string &type) {
 	this->animationClock.restart();
