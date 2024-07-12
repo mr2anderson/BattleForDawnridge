@@ -19,7 +19,9 @@
 
 #include "Barracks.hpp"
 #include "Infantryman.hpp"
+#include "Legioner.hpp"
 #include "Knight.hpp"
+#include "BlackKnight.hpp"
 #include "Texts.hpp"
 
 
@@ -47,7 +49,9 @@ std::wstring Barracks::getDescription() const {
 std::vector<std::shared_ptr<Warrior>> Barracks::getWarriorsToProduce() {
 	std::vector<std::shared_ptr<Warrior>> warriors;
 	warriors.push_back(std::make_shared<Infantryman>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
+	warriors.push_back(std::make_shared<Legioner>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
 	warriors.push_back(std::make_shared<Knight>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
+	warriors.push_back(std::make_shared<BlackKnight>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
 	return warriors;
 }
 uint32_t Barracks::getRadius() const {

@@ -23,7 +23,7 @@
 
 Infantryman::Infantryman() = default;
 Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Warrior(x, y, 2, 2, 900, playerId, units, go, mapW, mapH) {
+	Warrior(x, y, 2, 2, 1000, playerId, units, go, mapW, mapH) {
 
 }
 Warrior* Infantryman::cloneWarrior() const {
@@ -33,7 +33,7 @@ Resources Infantryman::getCost() const {
 	return Resources({ Resource("food", 5000 )});
 }
 uint32_t Infantryman::getTimeToProduce() const {
-	return 3;
+	return 1;
 }
 std::string Infantryman::getSoundName() const {
 	return "hooray";

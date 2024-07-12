@@ -23,17 +23,17 @@
 
 Knight::Knight() = default;
 Knight::Knight(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Warrior(x, y, 2, 2, 1800, playerId, units, go, mapW, mapH) {
+	Warrior(x, y, 2, 2, 2000, playerId, units, go, mapW, mapH) {
 
 }
 Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 10000), Resource("iron", 4375) });
+	return Resources({ Resource("food", 8000), Resource("iron", 4000) });
 }
 uint32_t Knight::getTimeToProduce() const {
-	return 5;
+	return 4;
 }
 std::string Knight::getSoundName() const {
 	return "sword";

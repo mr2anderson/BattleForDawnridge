@@ -1123,6 +1123,12 @@
     <ClInclude Include="ConductorB.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
+    <ClInclude Include="Legioner.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackKnight.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1538,6 +1544,12 @@
     </ClCompile>
     <ClCompile Include="FitTableElement.cpp">
       <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="Legioner.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackKnight.cpp">
+      <Filter>Source Files\go</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -26,7 +26,9 @@
 #include "Maps.hpp"
 #include "ColorTheme.hpp"
 #include "Infantryman.hpp"
+#include "Legioner.hpp"
 #include "Knight.hpp"
+#include "BlackKnight.hpp"
 #include "PlainsGeneration.hpp"
 #include "WindowButton.hpp"
 #include "Water.hpp"
@@ -121,7 +123,11 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         Textures::get()->add("menu", "menu.jpg");
         for (const std::string& a : { "talking", "walking", "attack", "been hit", "tipping over"}) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-                for (const std::tuple<std::string, uint32_t>& w : { std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)), std::make_tuple("knight", Knight().getAnimationNumber(a, d)) }) {
+                for (const std::tuple<std::string, uint32_t>& w : { 
+                    std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)), 
+                    std::make_tuple("legioner", Legioner().getAnimationNumber(a, d)),
+                    std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
+                    std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)) }) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
                         while (s.size() < 4) {

@@ -492,6 +492,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Arable.hpp" />
     <ClInclude Include="AreaB.hpp" />
     <ClInclude Include="Barracks.hpp" />
+    <ClInclude Include="BlackKnight.hpp" />
     <ClInclude Include="BuildEvent.hpp" />
     <ClInclude Include="Building.hpp" />
     <ClInclude Include="BuildingMode.hpp" />
@@ -646,6 +647,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Knight.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
+    <ClInclude Include="Legioner.hpp" />
     <ClInclude Include="LoadingError.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
     <ClInclude Include="MainScreen.hpp" />
@@ -730,6 +732,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Arable.cpp" />
     <ClCompile Include="AreaB.cpp" />
     <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="BlackKnight.cpp" />
     <ClCompile Include="BuildEvent.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingMode.cpp" />
@@ -785,6 +788,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
+    <ClCompile Include="Legioner.cpp" />
     <ClCompile Include="LoadingError.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
