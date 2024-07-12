@@ -17,6 +17,11 @@
  */
 
 
+
+
+
+
+
 #include "MainScreen.hpp"
 #include "WindowTwoButtons.hpp"
 #include "ResourceBar.hpp"
@@ -44,7 +49,16 @@
 #include "Texts.hpp"
 
 
+
+
+
+
+
 MainScreen* MainScreen::singletone = nullptr;
+
+
+
+
 
 
 bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
@@ -86,6 +100,16 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 		window.setMouseCursorVisible(this->curcorVisibility);
 	}
 }
+
+
+
+
+
+
+
+
+
+
 void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->initMap(mapPtr);
 	this->initPlayerIsActiveTable();
@@ -191,7 +215,259 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 200, 40 + 10 + 30, "hammer_icon"), buildEvent);
     this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
-void MainScreen::handleEvent(Events &e) {
+std::wstring MainScreen::GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b) {
+	std::wstring description = b->getDescription() + L'\n' +
+		*Texts::get()->get("cost") + b->getCost().getReadableInfo();
+	return description;
+}
+
+
+
+
+
+
+
+
+
+
+void MainScreen::drawEverything(sf::RenderWindow& window) {
+	window.clear();
+	window.setView(*this->view);
+	this->drawCells(window);
+	window.draw(*this->map);
+	this->drawHighlightion(window);
+	if (this->selected != nullptr) {
+		window.draw(this->selected->getSprite(this->getMousePositionBasedOnView()));
+	}
+	if (!this->elements.empty()) {
+		if (!this->elements.front()->isCameraDependent()) {
+			window.setView(window.getDefaultView());
+		}
+		window.draw(*this->elements.front());
+	}
+	window.setView(window.getDefaultView());
+	this->drawResourceBar(window);
+	for (const auto& b : this->buttons) {
+		window.draw(b);
+	}
+	window.display();
+}
+void MainScreen::drawResourceBar(sf::RenderWindow& window) {
+	ResourceBar bar;
+	bar.setResources(this->getCurrentPlayer()->getResources());
+	bar.setLimit(this->getResourcesLimit());
+	window.draw(bar);
+}
+void MainScreen::drawCells(sf::RenderWindow& window) {
+	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
+		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
+			sf::Sprite s;
+			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
+			s.setPosition(64 * i, 64 * j);
+			window.draw(s);
+		}
+	}
+}
+void MainScreen::drawHighlightion(sf::RenderWindow& window) {
+	std::vector<sf::RectangleShape> rects = this->highlightTable.getRects();
+	for (const auto& rect : rects) {
+		window.draw(rect);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+void MainScreen::removeFinishedElements() {
+	bool remove = false;
+	while (!this->elements.empty()) {
+		if (!this->elements.front()->finished()) {
+			break;
+		}
+		this->elements.front()->restart();
+		this->elements.pop();
+		remove = true;
+	}
+	if (remove and !this->elements.empty()) {
+		Events events = this->elements.front()->run(this->windowW, this->windowH);
+		this->handleEvent(events);
+	}
+}
+void MainScreen::handleNewMoveEvents() {
+	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
+		if (!this->elements.empty()) {
+			break;
+		}
+		Events event = this->map->getGO()->at(this->currentGOIndexNewMoveEvent)->newMove(this->getCurrentPlayer()->getId());
+		this->handleEvent(event);
+		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
+	}
+}
+bool MainScreen::allNewMoveEventsHandled() const {
+	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
+}
+void MainScreen::changeMove() {
+	this->move = this->move + 1;
+	this->currentGOIndexNewMoveEvent = 0;
+	this->totalGONewMoveEvents = this->map->getGO()->size();
+	do {
+		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
+	} while (!this->playerIsActive.at(this->currentPlayerIndex));
+	this->updatePlayerViewPoint();
+	this->highlightTable.clear();
+}
+Player* MainScreen::getCurrentPlayer() {
+	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
+}
+Resources MainScreen::getResourcesLimit() {
+	Resources limit;
+	std::shared_ptr<GOCollection<ResourceStorageB>> rsbs = this->map->getRsbs();
+	for (uint32_t i = 0; i < rsbs->size(); i = i + 1) {
+		ResourceStorageB* rsb = rsbs->at(i);
+		if (rsb->exist() and rsb->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			limit.plus(rsb->getLimit());
+		}
+	}
+	return limit;
+}
+bool MainScreen::handleButtonsClick() {
+	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
+		Events event = this->buttons.at(i).click();
+		if (!event.empty()) {
+			if (this->selected != nullptr) {
+				this->selected->unselect();
+			}
+			this->handleEvent(event);
+			return true;
+		}
+	}
+	return false;
+}
+void MainScreen::handleGameObjectClick() {
+	uint32_t mouseX, mouseY;
+	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
+
+	for (int8_t c = 1; c >= 0; c = c - 1) {
+		for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
+			GO* go = this->map->getGO()->at(i);
+			if (go->highClickPriority() == c) {
+				Events events = go->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
+				if (!events.empty()) {
+					this->handleEvent(events);
+					return;
+				}
+			}
+		}
+	}
+}
+void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
+	this->elements.push(w);
+	if (this->elements.size() == 1) {
+		Events events = w->run(this->windowW, this->windowH);
+		this->handleEvent(events);
+	}
+}
+void MainScreen::prepareToReturnToMenu(sf::RenderWindow& window) {
+	this->highlightTable.clear();
+	this->playerIsActive.clear();
+	Playlist::get()->restartMusic();
+}
+std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView() const {
+	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
+	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
+	return std::make_tuple(mouseX, mouseY);
+}
+void MainScreen::moveView() {
+	auto p = sf::Mouse::getPosition();
+	if (p.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		this->moveViewToWest();
+	}
+	else if (p.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		this->moveViewToEast();
+	}
+	if (p.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		this->moveViewToNorth();
+	}
+	else if (p.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		this->moveViewToSouth();
+	}
+}
+void MainScreen::updatePlayerViewPoint() {
+	std::shared_ptr<GOCollection<VictoryConditionB>> vcbs = this->map->getVcbs();
+	for (uint32_t i = 0; i < vcbs->size(); i = i + 1) {
+		VictoryConditionB* vcb = vcbs->at(i);
+		if (vcb->exist() and vcb->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			this->view->setCenter(64 * vcb->getX(), 64 * vcb->getY());
+			this->verifyViewNorth();
+			this->verifyViewSouth();
+			this->verifyViewWest();
+			this->verifyViewEast();
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+void MainScreen::moveViewToNorth() {
+	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, 10));
+	this->verifyViewNorth();
+}
+void MainScreen::moveViewToSouth() {
+	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, 10));
+	this->verifyViewSouth();
+}
+void MainScreen::moveViewToWest() {
+	this->view->setCenter(this->view->getCenter() - sf::Vector2f(10, 0));
+	this->verifyViewWest();
+}
+void MainScreen::moveViewToEast() {
+	this->view->setCenter(this->view->getCenter() + sf::Vector2f(10, 0));
+	this->verifyViewEast();
+}
+void MainScreen::verifyViewNorth() {
+	if (this->view->getCenter().y < this->windowH / 2) {
+		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, this->windowH / 2));
+	}
+}
+void MainScreen::verifyViewSouth() {
+	if (this->view->getCenter().y > 64 * this->plains.getH() - this->windowH / 2) {
+		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, 64 * this->plains.getH() - this->windowH / 2));
+	}
+}
+void MainScreen::verifyViewWest() {
+	if (this->view->getCenter().x < this->windowW / 2) {
+		this->view->setCenter(sf::Vector2f(this->windowW / 2, this->view->getCenter().y));
+	}
+}
+void MainScreen::verifyViewEast() {
+	if (this->view->getCenter().x > 64 * this->plains.getW() - this->windowW / 2) {
+		this->view->setCenter(sf::Vector2f(64 * this->plains.getW() - this->windowW / 2, this->view->getCenter().y));
+	}
+}
+
+
+
+
+
+
+
+
+
+
+void MainScreen::handleEvent(Events& e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
 		if (std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::dynamic_pointer_cast<TryToTradeEvent>(e.at(i))) {
 			this->handleTryToTradeEvent(tryToTradeEvent);
@@ -428,193 +704,4 @@ void MainScreen::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e) {
 }
 void MainScreen::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e) {
 	this->curcorVisibility = false;
-}
-void MainScreen::removeFinishedElements() {
-	bool remove = false;
-	while (!this->elements.empty()) {
-		if (!this->elements.front()->finished()) {
-			break;
-		}
-		this->elements.front()->restart();
-		this->elements.pop();
-		remove = true;
-	}
-	if (remove and !this->elements.empty()) {
-		Events events = this->elements.front()->run(this->windowW, this->windowH);
-		this->handleEvent(events);
-	}
-}
-void MainScreen::handleNewMoveEvents() {
-	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
-		if (!this->elements.empty()) {
-			break;
-		}
-		Events event = this->map->getGO()->at(this->currentGOIndexNewMoveEvent)->newMove(this->getCurrentPlayer()->getId());
-		this->handleEvent(event);
-		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-	}
-}
-bool MainScreen::allNewMoveEventsHandled() const {
-	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
-}
-void MainScreen::changeMove() {
-	this->move = this->move + 1;
-	this->currentGOIndexNewMoveEvent = 0;
-	this->totalGONewMoveEvents = this->map->getGO()->size();
-	do {
-		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
-	}
-	while (!this->playerIsActive.at(this->currentPlayerIndex));
-	this->updatePlayerViewPoint();
-	this->highlightTable.clear();
-}
-std::wstring MainScreen::GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b) {
-	std::wstring description = b->getDescription() + L'\n' +
-		*Texts::get()->get("cost") + b->getCost().getReadableInfo();
-	return description;
-		
-}
-Player* MainScreen::getCurrentPlayer() {
-	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
-}
-Resources MainScreen::getResourcesLimit() {
-	Resources limit;
-	std::shared_ptr<GOCollection<ResourceStorageB>> rsbs = this->map->getRsbs();
-	for (uint32_t i = 0; i < rsbs->size(); i = i + 1) {
-		ResourceStorageB* rsb = rsbs->at(i);
-		if (rsb->exist() and rsb->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			limit.plus(rsb->getLimit());
-		}
-	}
-	return limit;
-}
-bool MainScreen::handleButtonsClick() {
-    for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-        Events event = this->buttons.at(i).click();
-        if (!event.empty()) {
-			if (this->selected != nullptr) {
-				this->selected->unselect();
-			}
-            this->handleEvent(event);
-            return true;
-        }
-    }
-    return false;
-}
-void MainScreen::handleGameObjectClick() {
-	uint32_t mouseX, mouseY;
-	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
-
-	for (int8_t c = 1; c >= 0; c = c - 1) {
-		for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
-			GO* go = this->map->getGO()->at(i);
-			if (go->highClickPriority() == c) {
-				Events events = go->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
-				if (!events.empty()) {
-					this->handleEvent(events);
-					return;
-				}
-			}
-		}
-	}
-}
-void MainScreen::addPopUpWindow(std::shared_ptr<PopUpElement> w) {
-	this->elements.push(w);
-	if (this->elements.size() == 1) {
-		Events events = w->run(this->windowW, this->windowH);
-		this->handleEvent(events);
-	}
-}
-void MainScreen::prepareToReturnToMenu(sf::RenderWindow &window) {
-    this->highlightTable.clear();
-	this->playerIsActive.clear();
-	Playlist::get()->restartMusic();
-}
-void MainScreen::drawEverything(sf::RenderWindow& window) {
-	window.clear();
-	window.setView(*this->view);
-	this->drawCells(window);
-	window.draw(*this->map);
-	this->drawHighlightion(window);
-	if (this->selected != nullptr) {
-		window.draw(this->selected->getSprite(this->getMousePositionBasedOnView()));
-	}
-	if (!this->elements.empty()) {
-		if (!this->elements.front()->isCameraDependent()) {
-			window.setView(window.getDefaultView());
-		}
-		window.draw(*this->elements.front());
-	}
-	window.setView(window.getDefaultView());
-	this->drawResourceBar(window);
-	for (const auto &b : this->buttons) {
-        window.draw(b);
-    }
-	window.display();
-}
-void MainScreen::drawResourceBar(sf::RenderWindow& window) {
-	ResourceBar bar;
-	bar.setResources(this->getCurrentPlayer()->getResources());
-	bar.setLimit(this->getResourcesLimit());
-	window.draw(bar);
-}
-void MainScreen::drawCells(sf::RenderWindow &window) {
-	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
-		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
-			sf::Sprite s;
-			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
-			s.setPosition(64 * i, 64 * j);
-			window.draw(s);
-		}
-	}
-}
-void MainScreen::drawHighlightion(sf::RenderWindow& window) {
-	std::vector<sf::RectangleShape> rects = this->highlightTable.getRects();
-	for (const auto& rect : rects) {
-		window.draw(rect);
-	}
-}
-std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView() const {
-	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - this->windowW / 2;
-	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - this->windowH / 2;
-	return std::make_tuple(mouseX, mouseY);
-}
-void MainScreen::moveView() {
-	auto p = sf::Mouse::getPosition();
-	if (p.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		this->moveViewToWest();
-	}
-	else if (p.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		this->moveViewToEast();
-	}
-	if (p.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		this->moveViewToNorth();
-	}
-	else if (p.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		this->moveViewToSouth();
-	}
-}
-void MainScreen::updatePlayerViewPoint() {
-	if (this->getCurrentPlayer()->getId() == 1) {
-		this->view->setCenter(sf::Vector2f(this->windowW / 2, this->windowH / 2));
-	}
-	else {
-		this->view->setCenter(sf::Vector2f(64 * this->plains.getW() - this->windowW / 2, 64 * this->plains.getH() - this->windowH / 2));
-	}
-}
-void MainScreen::moveViewToNorth() {
-	float d = std::min(10.f, this->view->getCenter().y - this->windowH / 2);
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, d));
-}
-void MainScreen::moveViewToSouth() {
-	float d = std::min(10.f, 64 * this->plains.getH() - this->windowH / 2 - this->view->getCenter().y);
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, d));
-}
-void MainScreen::moveViewToWest() {
-	float d = std::min(10.f, this->view->getCenter().x - this->windowW / 2);
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(d, 0));
-}
-void MainScreen::moveViewToEast() {
-	float d = std::min(10.f, 64 * this->plains.getW() - this->windowW / 2 - this->view->getCenter().x);
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(d, 0));
 }

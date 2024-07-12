@@ -91,9 +91,42 @@ private:
 	void initSelectable();
     void initPlains();
 	void initGraphics(sf::RenderWindow &window);
+	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
+
+
+	void drawEverything(sf::RenderWindow& window);
+	void drawResourceBar(sf::RenderWindow& window);
+	void drawCells(sf::RenderWindow& window);
+	void drawHighlightion(sf::RenderWindow& window);
+
+
+	void removeFinishedElements();
+	void handleNewMoveEvents();
+	bool allNewMoveEventsHandled() const;
+	void changeMove();
+	Player* getCurrentPlayer();
+	Resources getResourcesLimit();
+	bool handleButtonsClick();
+	void handleGameObjectClick();
+	void addPopUpWindow(std::shared_ptr<PopUpElement> w);
+	void prepareToReturnToMenu(sf::RenderWindow& window);
+	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
+	void moveView();
+	void updatePlayerViewPoint();
+
+
+
+	void moveViewToNorth();
+	void moveViewToSouth();
+	void moveViewToWest();
+	void moveViewToEast();
+	void verifyViewNorth();
+	void verifyViewSouth();
+	void verifyViewWest();
+	void verifyViewEast();
+
 
 	void handleEvent(Events& e);
-
 	void handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
@@ -107,8 +140,8 @@ private:
 	void handleBuild(std::shared_ptr<BuildEvent> e);
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
 	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e);
-    void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
-    void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
+	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
+	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
 	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
 	void handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e);
 	void handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e);
@@ -122,28 +155,4 @@ private:
 	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e);
 	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e);
 	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e);
-
-	void removeFinishedElements();
-	void handleNewMoveEvents();
-	bool allNewMoveEventsHandled() const;
-	void changeMove();
-	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
-	Player* getCurrentPlayer();
-	Resources getResourcesLimit();
-    bool handleButtonsClick();
-	void handleGameObjectClick();
-	void addPopUpWindow(std::shared_ptr<PopUpElement> w);
-	void prepareToReturnToMenu(sf::RenderWindow &window);
-	void drawEverything(sf::RenderWindow& window);
-	void drawResourceBar(sf::RenderWindow& window);
-	void drawCells(sf::RenderWindow &window);
-	void drawHighlightion(sf::RenderWindow& window);
-	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
-	void moveView();
-	void updatePlayerViewPoint();
-
-	void moveViewToNorth();
-	void moveViewToSouth();
-	void moveViewToWest();
-	void moveViewToEast();
 };
