@@ -39,14 +39,7 @@ Events Castle::newMove(uint32_t playerId) {
 	return response;
 }
 Resources Castle::getLimit() const {
-	//return Resources({ Resource("wood", 40000), Resource("stone", 20000)});
-	return Resources({
-		Resource("food", 9999999),
-		Resource("wood", 9999999),
-		Resource("stone", 9999999),
-		Resource("iron", 9999999),
-		Resource("gold", 9999999),
-		});
+	return Resources({ Resource("wood", 40000), Resource("stone", 20000)});
 }
 Resources Castle::getCost() const {
 	Resources cost;

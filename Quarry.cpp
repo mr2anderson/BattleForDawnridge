@@ -47,10 +47,10 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getCollectionSpeed() const {
-	return 2500;
+	return 1500;
 }
 uint32_t Quarry::getRadius() const {
-	return 4;
+	return 3;
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");

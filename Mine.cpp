@@ -47,10 +47,10 @@ std::string Mine::getResourceType() const {
 	return "iron";
 }
 uint32_t Mine::getCollectionSpeed() const {
-	return 2500;
+	return 1500;
 }
 uint32_t Mine::getRadius() const {
-	return 3;
+	return 2;
 }
 std::wstring Mine::getDescription() const {
 	return *Texts::get()->get("mine_description");

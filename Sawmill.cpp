@@ -47,10 +47,10 @@ std::string Sawmill::getResourceType() const {
 	return "wood";
 }
 uint32_t Sawmill::getCollectionSpeed() const {
-	return 2500;
+	return 1500;
 }
 uint32_t Sawmill::getRadius() const {
-	return 4;
+	return 3;
 }
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");
