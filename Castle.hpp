@@ -42,7 +42,6 @@ private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 	uint32_t getRadius() const override;
-	Events addWood() const;
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

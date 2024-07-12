@@ -20,6 +20,8 @@
 #include "VictoryConditionB.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
 #include "Texts.hpp"
+#include "FlyingE.hpp"
+#include "AddResourceEvent.hpp"
 
 
 VictoryConditionB::VictoryConditionB() = default;
@@ -41,4 +43,11 @@ HorizontalSelectionWindowComponent VictoryConditionB::getVictoryConditionCompone
 		Events()
 	};
 	return component;
+}
+Events VictoryConditionB::addWood() const {
+	Events response;
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", "wood", this->getX(), this->getY(), this->getSX(), this->getSY());
+	response.add(std::make_shared<CreateEEvent>(flyingE));
+	response.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));
+	return response;
 }

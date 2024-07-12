@@ -31,4 +31,5 @@ public:
 	Events destroy() override;
 protected:
 	HorizontalSelectionWindowComponent getVictoryConditionComponent() const;
+	Events addWood() const;
 };
