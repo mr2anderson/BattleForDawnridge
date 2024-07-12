@@ -60,5 +60,5 @@ std::string Knight::getBaseTextureName() const {
 	return "knight";
 }
 uint32_t Knight::getMovementPoints() const {
-	return 4;
+	return 3;
 }
