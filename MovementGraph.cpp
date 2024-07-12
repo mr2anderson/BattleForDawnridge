@@ -17,6 +17,8 @@
  */
 
 
+#include <queue>
+#include <limits>
 #include "MovementGraph.hpp"
 #include "PathDoesNotExist.hpp"
 
@@ -29,48 +31,73 @@ void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, bool canMoveThroug
 	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, canMoveThrough);
 }
 std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> visited;
-	this->bfs(std::make_tuple(x, y), std::nullopt, visited, movePoints);
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist = this->bfs(std::make_tuple(x, y), movePoints);
 
 	std::vector<std::tuple<uint32_t, uint32_t>> moves;
-	for (const auto& a : visited) {
+	for (const auto& a : dist) {
 		if (this->fitTable[a.first].canStay) {
 			moves.push_back(a.first);
 		}
 	}
 	return moves;
 }
-void MovementGraph::bfs(std::tuple<uint32_t, uint32_t> p, std::optional<std::tuple<uint32_t, uint32_t>> dst, std::map<std::tuple<uint32_t, uint32_t>, uint32_t>& visited, uint32_t movePoints, uint32_t l) {
-	visited[p] = l;
-	if ((dst.has_value() and dst.value() == p) or movePoints == 0) {
-		return;
+std::map<std::tuple<uint32_t, uint32_t>, uint32_t> MovementGraph::bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints) {
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
+	dist[s] = 0;
+	std::queue<std::tuple<uint32_t, uint32_t>> q;
+	q.push(s);
+
+	while (!q.empty()) {
+		std::tuple<uint32_t, uint32_t> v = q.front();
+		q.pop();
+		uint32_t vx, vy;
+		std::tie(vx, vy) = v;
+
+		if (dist.find(v) == dist.end()) {
+			dist[v] = std::numeric_limits<uint32_t>::max();
+		}
+		else if (dist[v] >= movePoints) {
+			continue;
+		}
+
+		std::vector<std::tuple<uint32_t, uint32_t>> adj;
+		if (vx >= 1) {
+			auto to = std::make_tuple(vx - 1, vy);
+			if (this->fitTable[to].canMoveThrough) {
+				adj.push_back(to);
+			}
+		}
+		if (vy >= 1) {
+			auto to = std::make_tuple(vx, vy - 1);
+			if (this->fitTable[to].canMoveThrough) {
+				adj.push_back(to);
+			}
+		}
+		if (vx + 2 < this->mapW) {
+			auto to = std::make_tuple(vx + 1, vy);
+			if (this->fitTable[to].canMoveThrough) {
+				adj.push_back(to);
+			}
+		}
+		if (vx + 2 < this->mapH) {
+			auto to = std::make_tuple(vx, vy + 1);
+			if (this->fitTable[to].canMoveThrough) {
+				adj.push_back(to);
+			}
+		}
+
+		for (std::tuple<uint32_t, uint32_t> u : adj) {
+
+			if (dist.find(u) == dist.end()) {
+				dist[u] = std::numeric_limits<uint32_t>::max();
+			}
+
+			if (dist[u] > dist[v] + 1) {
+				dist[u] = dist[v] + 1;
+				q.push(u);
+			}
+		}
 	}
 
-	uint32_t x, y;
-	std::tie(x, y) = p;
-
-	if (x >= 1) {
-		auto to = std::make_tuple(x - 1, y);
-		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
-			this->bfs(to, dst, visited, movePoints - 1, l + 1);
-		}
-	}
-	if (y >= 1) {
-		auto to = std::make_tuple(x, y - 1);
-		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
-			this->bfs(to, dst, visited, movePoints - 1, l + 1);
-		}
-	}
-	if (x + 2 < this->mapW) {
-		auto to = std::make_tuple(x + 1, y);
-		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
-			this->bfs(to, dst, visited, movePoints - 1, l + 1);
-		}
-	}
-	if (x + 2 < this->mapH) {
-		auto to = std::make_tuple(x, y + 1);
-		if (this->fitTable[to].canMoveThrough and visited.find(to) == visited.end()) {
-			this->bfs(to, dst, visited, movePoints - 1, l + 1);
-		}
-	}
+	return dist;
 }

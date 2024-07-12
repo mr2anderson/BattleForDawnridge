@@ -39,5 +39,5 @@ private:
 	uint32_t mapW, mapH;
 	std::map<std::tuple<uint32_t, uint32_t>, FitTableElement> fitTable;
 
-	void bfs(std::tuple<uint32_t, uint32_t> p, std::optional<std::tuple<uint32_t, uint32_t>> dst, std::map<std::tuple<uint32_t, uint32_t>, uint32_t>& visited, uint32_t movePoints, uint32_t l = 0);
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints);
 };

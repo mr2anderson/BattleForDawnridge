@@ -102,7 +102,7 @@ Map::Map(const std::string &path) {
     }
     file.close();
 
-    this->w = x + 1;
+    this->w = x;
     this->h = y;
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
