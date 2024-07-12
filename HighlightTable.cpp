@@ -24,30 +24,25 @@ HighlightTable::HighlightTable() = default;
 void HighlightTable::clear() {
 	this->data.clear();
 }
-void HighlightTable::mark(uint32_t x, uint32_t y, const Unit* unitPtr, sf::Color color) {
-	std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);
-	std::vector<std::tuple<const Unit*, sf::Color>> v = this->data[p];
-	bool found = false;
-	for (uint32_t i = 0; i < v.size(); i = i + 1) {
-		if (v.at(i) == std::make_tuple(unitPtr, color)) {
-			v.erase(v.begin() + i);
-			found = true;
-			break;
-		}
+void HighlightTable::mark(ChangeHighlightEvent e) {
+	if (this->data.find(e) == this->data.end()) {
+		this->data[e] = true;
 	}
-	if (!found) {
-		v.emplace_back(unitPtr, color);
+	else {
+		this->data.erase(e);
 	}
-	this->data.at(p) = v;
 }
-std::vector<sf::Color> HighlightTable::getHighlightColors(uint32_t x, uint32_t y) const {
-	std::tuple<uint32_t, uint32_t> p = std::make_tuple(x, y);
-	if (this->data.find(p) == this->data.end()) {
-		return std::vector<sf::Color>();
+std::vector<sf::RectangleShape> HighlightTable::getRects() const {
+	std::vector<sf::RectangleShape> rects;
+	rects.reserve(this->data.size());
+	for (const auto& e : this->data) {
+		sf::RectangleShape rect;
+		rect.setSize(sf::Vector2f(32 * e.first.getSX(), 32 * e.first.getSY()));
+		rect.setPosition(32 * e.first.getX(), 32 * e.first.getY());
+		rect.setFillColor(e.first.getColor());
+		rect.setOutlineThickness(1);
+		rect.setOutlineColor(sf::Color::Black);
+		rects.push_back(rect);
 	}
-	std::vector<sf::Color> colors;
-	for (uint32_t i = 0; i < this->data.at(p).size(); i = i + 1) {
-		colors.push_back(std::get<sf::Color>(this->data.at(p).at(i)));
-	}
-	return colors;
+	return rects;
 }

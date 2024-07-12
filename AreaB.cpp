@@ -32,10 +32,10 @@ bool AreaB::inRadius(GO *go) const {
 }
 bool AreaB::inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
 	sf::IntRect rect2;
-	rect2.left = (int32_t)this->getX() - (int32_t)this->getRadius();
-	rect2.top = (int32_t)this->getY() - (int32_t)this->getRadius();
-	rect2.width = this->getSX() + 2 * this->getRadius() + 1;
-	rect2.height = this->getSY() + 2 * this->getRadius() + 1 ;
+	rect2.left = this->getAreaXMin();
+	rect2.top = this->getAreaYMin();
+	rect2.width = this->getAreaWidth();
+	rect2.height = this->getAreaHeight();
 	for (uint32_t i = x; i <= x + sx; i = i + sx) {
 		for (uint32_t j = y; j <= y + sy; j = j + sy) {
 			if (!rect2.contains(i, j)) {
@@ -51,11 +51,7 @@ Events AreaB::getHighlightEvent() const {
 		return gEvent;
 	}
 
-	for (uint32_t x = this->getAreaXMin(); x <= this->getAreaXMax(); x = x + 1) {
-		for (uint32_t y = this->getAreaYMin(); y <= this->getAreaYMax(); y = y + 1) {
-			gEvent.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE, x, y));
-		}
-	}
+	gEvent.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE, this->getAreaXMin(), this->getAreaYMin(), this->getAreaWidth(), this->getAreaHeight()));
 
 	return gEvent;
 }
@@ -76,6 +72,12 @@ uint32_t AreaB::getAreaYMin() const {
 }
 uint32_t AreaB::getAreaYMax() const {
 	return this->getY() + this->getSY() - 1 + this->getRadius();
+}
+uint32_t AreaB::getAreaWidth() const {
+	return this->getSX() + 2 * this->getRadius() + 1;
+}
+uint32_t AreaB::getAreaHeight() const {
+	return this->getSY() + 2 * this->getRadius() + 1;
 }
 HorizontalSelectionWindowComponent AreaB::getExitComponent() const {
 	HorizontalSelectionWindowComponent component = this->Building::getExitComponent();

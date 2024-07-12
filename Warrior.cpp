@@ -165,7 +165,7 @@ Events Warrior::getMoveHighlightionEvent() {
 		std::tuple<uint32_t, uint32_t> move = moves.at(i);
 		uint32_t moveX, moveY;
 		std::tie(moveX, moveY) = move;
-		event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, moveX, moveY));
+		event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, moveX, moveY, this->getSX(), this->getSY()));
 	}
 
 	return event;

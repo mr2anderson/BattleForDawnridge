@@ -304,14 +304,7 @@ void MainScreen::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e) {
 	this->getCurrentPlayer()->subResources(e->getResources());
 }
 void MainScreen::handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent> e) {
-	const Unit* u = e->getUnit();
-	sf::Color c = e->getColor();
-	uint32_t x = e->getX();
-	uint32_t y = e->getY();
-	if (x >= this->plains.getW() or y >= this->plains.getH()) {
-		return;
-	}
-	this->highlightTable.mark(x, y, u, c);
+	this->highlightTable.mark(*e);
 }
 void MainScreen::handleCollectEvent(std::shared_ptr<CollectEvent> e) {
 	ResourcePoint* resourcePoint = e->getRp();
@@ -576,17 +569,9 @@ void MainScreen::drawCells(sf::RenderWindow &window) {
 	}
 }
 void MainScreen::drawHighlightion(sf::RenderWindow& window) {
-	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
-		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
-			std::vector<sf::Color> colors = this->highlightTable.getHighlightColors(i, j);
-			for (uint32_t k = 0; k < colors.size(); k = k + 1) {
-				sf::RectangleShape r;
-				r.setPosition(32 * i, 32 * j);
-				r.setSize(sf::Vector2f(32, 32));
-				r.setFillColor(colors[k]);
-				window.draw(r);
-			}
-		}
+	std::vector<sf::RectangleShape> rects = this->highlightTable.getRects();
+	for (const auto& rect : rects) {
+		window.draw(rect);
 	}
 }
 std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView() const {

@@ -35,6 +35,8 @@ public:
 	uint32_t getAreaXMax() const;
 	uint32_t getAreaYMin() const;
 	uint32_t getAreaYMax() const;
+	uint32_t getAreaWidth() const;
+	uint32_t getAreaHeight() const;
 protected:
 	virtual uint32_t getRadius() const = 0;
 

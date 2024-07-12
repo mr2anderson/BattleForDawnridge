@@ -30,14 +30,19 @@ class Unit;
 
 class ChangeHighlightEvent : public Event {
 public:
-	ChangeHighlightEvent(const Unit* u, sf::Color color, uint32_t x, uint32_t y);
+	ChangeHighlightEvent(const Unit* u, sf::Color color, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+
+	friend bool operator<(ChangeHighlightEvent a, ChangeHighlightEvent b);
 
 	const Unit* getUnit() const;
 	sf::Color getColor() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
+	uint32_t getSX() const;
+	uint32_t getSY() const;
 private:
 	const Unit* u;
 	sf::Color color;
 	uint32_t x, y;
+	uint32_t sx, sy;
 };
