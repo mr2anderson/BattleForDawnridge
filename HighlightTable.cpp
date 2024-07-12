@@ -25,24 +25,34 @@ void HighlightTable::clear() {
 	this->data.clear();
 }
 void HighlightTable::mark(ChangeHighlightEvent e) {
-	if (this->data.find(e) == this->data.end()) {
-		this->data[e] = true;
-	}
-	else {
-		this->data.erase(e);
+	const Unit* u = e.getUnit();
+	for (uint32_t dx = 0; dx < e.getSX(); dx = dx + 1) {
+		for (uint32_t dy = 0; dy < e.getSY(); dy = dy + 1) {
+			std::tuple<uint32_t, uint32_t, uint8_t, uint8_t, uint8_t, uint8_t> key = std::make_tuple(e.getX() + dx, e.getY() + dy, e.getColor().r, e.getColor().g, e.getColor().b, e.getColor().a);
+			std::map<const Unit*, bool> byUnits = this->data[key];
+			if (byUnits.find(u) == byUnits.end()) {
+				byUnits[u] = true;
+			}
+			else {
+				byUnits.erase(u);
+			}
+			this->data[key] = byUnits;
+		}
 	}
 }
 std::vector<sf::RectangleShape> HighlightTable::getRects() const {
 	std::vector<sf::RectangleShape> rects;
 	rects.reserve(this->data.size());
-	for (const auto& e : this->data) {
-		sf::RectangleShape rect;
-		rect.setSize(sf::Vector2f(64 * e.first.getSX() - 4, 64 * e.first.getSY() - 4));
-		rect.setPosition(64 * e.first.getX() + 2, 64 * e.first.getY() + 2);
-		rect.setFillColor(e.first.getColor());
-		rect.setOutlineThickness(1);
-		rect.setOutlineColor(sf::Color::Black);
-		rects.push_back(rect);
+	for (const auto& p : this->data) {
+		if (!p.second.empty()) {
+			sf::RectangleShape rect;
+			rect.setSize(sf::Vector2f(64, 64));
+			rect.setPosition(64 * std::get<0>(p.first), 64 * std::get<1>(p.first));
+			rect.setFillColor(sf::Color(std::get<2>(p.first), std::get<3>(p.first), std::get<4>(p.first), std::get<5>(p.first)));
+			rect.setOutlineThickness(1);
+			rect.setOutlineColor(sf::Color::Black);
+			rects.push_back(rect);
+		}
 	}
 	return rects;
 }
