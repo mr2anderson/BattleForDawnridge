@@ -45,8 +45,9 @@ Events WarriorProducer::startProducing(std::shared_ptr<Warrior> w) {
 	this->currentProducingMovesLeft = w->getTimeToProduce();
 	this->producing = true;
 
-	std::shared_ptr<WindowButton> producingStartedWindow = std::make_shared<WindowButton>(this->currentProducing->getSoundName(), "click", *Texts::get()->get("producing_started") + std::to_wstring(this->currentProducingMovesLeft), *Texts::get()->get("OK"));
+	std::shared_ptr<WindowButton> producingStartedWindow = std::make_shared<WindowButton>(*Texts::get()->get("producing_started") + std::to_wstring(this->currentProducingMovesLeft), *Texts::get()->get("OK"));
 	Events response;
+    response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(producingStartedWindow));
 	return response;
 } 
@@ -78,7 +79,6 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducer::getProduceCompo
 			w->getDescription() + L"\n" +
 			*Texts::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
 			true,
-			false,
 			tryToProduceEvent + this->getHighlightEvent()
 		};
 		components.at(i) = component;
@@ -96,7 +96,6 @@ HorizontalSelectionWindowComponent WarriorProducer::getBusyWithProducingComponen
 	HorizontalSelectionWindowComponent component = {
 		currentProducing->getTextureName(),
 		text,
-		false,
 		false,
 		Events()
 	};
@@ -122,7 +121,8 @@ Events WarriorProducer::handleCurrentProducing() {
 	}
 	Events response;
 	if (this->currentProducingMovesLeft != 0) {
-		std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("producing_icon", this->currentProducing->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("producing_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+        response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
 	}
@@ -175,8 +175,9 @@ Events WarriorProducer::getSelectionW() {
 		}
 	}
 	
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
 	Events createWindowEvent;
+    createWindowEvent.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	createWindowEvent.add(std::make_shared<CreateEEvent>(window));
 	return createWindowEvent;
 }
@@ -185,7 +186,7 @@ Events WarriorProducer::getGameObjectResponse(uint32_t playerId) {
 		return Events();
 	}
 	if (this->belongTo(playerId)) {
-		return this->getSelectionW() + this->getHighlightEvent();
+		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return Events();
 }

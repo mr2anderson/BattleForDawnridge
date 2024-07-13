@@ -32,7 +32,7 @@ public:
 	void restart();
 	virtual void update();
 
-	virtual Events run(uint32_t windowW, uint32_t windowH) = 0;
+	virtual void run(uint32_t windowW, uint32_t windowH) = 0;
 	virtual Events click() = 0;
 	virtual bool isCameraDependent() const = 0;
 protected:

@@ -31,15 +31,13 @@
 
 class HorizontalSelectionWindow : public CameraIndependentPopUpElement {
 public:
-	HorizontalSelectionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64);
+	HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64);
 
-	Events run(uint32_t windowW, uint32_t windowH) override;
+	void run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click() override;
 private:
 	std::unique_ptr<RectangularUiElement> rect;
-	std::string soundName1;
-	std::string soundName2;
 	std::vector<HorizontalSelectionWindowComponent> components;
 	uint32_t componentSize;
 	std::vector<Button> buttons;

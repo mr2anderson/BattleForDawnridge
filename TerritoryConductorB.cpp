@@ -53,7 +53,6 @@ HorizontalSelectionWindowComponent TerritoryConductorB::getNotConnectedComponent
 		this->getTextureName(),
 		*Texts::get()->get("does_not_lead_to_city_center"),
 		false,
-		false,
 		Events()
 	};
 	return component;

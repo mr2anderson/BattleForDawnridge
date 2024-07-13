@@ -39,12 +39,15 @@ void TradingB::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	}
 }
 Events TradingB::doTrade(const Trade& trade) {
-	this->currentTrade = trade;
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
+	this->currentTrade = trade;
 	Events response;
-	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(this->getSoundName(), "click",
+	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(
 		*Texts::get()->get("trade_started") + L'\n' +
-		trade.getReadableInfo(), *Texts::get()->get("OK"));
+		    trade.getReadableInfo(), *Texts::get()->get("OK"), clickSoundEvent);
+    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(window));
 	response.add(std::make_shared<SubResourceEvent>(trade.sell));
 	return response;
@@ -70,7 +73,6 @@ HorizontalSelectionWindowComponent TradingB::getTradeComponent(std::shared_ptr<T
 		*Texts::get()->get("buy") + gameEventTrade->getTrade().buy.getReadableInfo() +
 		*Texts::get()->get("for") + gameEventTrade->getTrade().sell.getReadableInfo(),
 		true,
-		false,
 		events
 	};
 	return component;
@@ -79,7 +81,6 @@ HorizontalSelectionWindowComponent TradingB::getBusyWithTradeComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		"trade_icon",
 		*Texts::get()->get("trading_building_is_busy") + this->currentTrade.getReadableInfo(),
-		false,
 		false,
 		Events()
 	};
@@ -97,11 +98,13 @@ Events TradingB::handleCurrentTrade() {
 		return Events();
 	}
 	Events responce;
-	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("trade_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("trade_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+    responce.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	responce.add(std::make_shared<CreateEEvent>(element));
 	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
 	if (this->currentTrade.movesLeft == 1) {
-		element = std::make_shared<FlyingE>(this->currentTrade.buy.type + "_icon", this->getSoundName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+		element = std::make_shared<FlyingE>(this->currentTrade.buy.type + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+        responce.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 		responce.add(std::make_shared<CreateEEvent>(element));
 		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));
 	}
@@ -127,8 +130,9 @@ Events TradingB::getSelectionW() {
 		}
 	}
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
 	Events response;
+    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(window));
 	return response;
 }

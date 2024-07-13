@@ -65,13 +65,9 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     try {
         Fonts::get()->add("1", "1.ttf");
-        Sounds::get()->add("click", "click.ogg");
         Textures::get()->add("loading_screen", "loading_screen.jpg");
     }
 	catch (CouldntOpenFont &e) {
-        return false;
-    }
-    catch (CouldntOpenSound &e) {
         return false;
     }
     catch (CouldntOpenTexture& e) {
@@ -197,7 +193,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
     s.setTexture(*Textures::get()->get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
-    WindowButton element = WindowButton("click", "click", UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
+    WindowButton element = WindowButton(UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {

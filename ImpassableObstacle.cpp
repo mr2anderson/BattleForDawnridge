@@ -48,7 +48,8 @@ Events ImpassableObstacle::getHorizontalSelectionWindow() {
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
+    events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	events.add(std::make_shared<CreateEEvent>(window));
 
 	return events;

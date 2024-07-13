@@ -40,7 +40,8 @@ Events Building::destroy() {
 Events Building::regenerate() {
 	Events events;
 	if (this->getHP() < this->getMaxHP()) {
-		std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("shield_icon", "regeneration", this->getX(), this->getY(), this->getSX(), this->getSY());
+		std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("shield_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+        events.add(std::make_shared<PlaySoundEvent>("regeneration"));
 		events.add(std::make_shared<CreateEEvent>(element));
 		events.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));
 	}
@@ -52,22 +53,23 @@ HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 		*Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L"\n" +
 		*Texts::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("p_per_move"),
 		false,
-		false,
 		Events()
 	};
 	return component;
 }
 HorizontalSelectionWindowComponent Building::getDestroyComponent() {
-	Events destroyEvent;
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+	Events destroyEvent = clickSoundEvent;
 	destroyEvent.add(std::make_shared<DestroyEvent>(this));
-	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>("click", "click", *Texts::get()->get("verify_destroy"), *Texts::get()->get("yes"), *Texts::get()->get("no"), destroyEvent, Events());
-	Events createVerify;
+	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(*Texts::get()->get("verify_destroy"), *Texts::get()->get("yes"), *Texts::get()->get("no"), destroyEvent, clickSoundEvent);
+	Events createVerify = clickSoundEvent;
 	createVerify.add(std::make_shared<CreateEEvent>(verify));
 	HorizontalSelectionWindowComponent component = {
 		"destroy_icon",
 		*Texts::get()->get("destroy_this_building"),
 		true,
-		false,
 		createVerify
 	};
 	return component;

@@ -32,9 +32,10 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Events run(uint32_t windowW2, uint32_t windowH2) override;
+	void run(uint32_t windowW2, uint32_t windowH2) override;
 	void update() override;
 	Events click() override;
+    Events getHighlightEvent() const;
 private:
 	Building* b;
 	std::shared_ptr<sf::View> view;
@@ -48,5 +49,4 @@ private:
 	bool inMap() const;
 	bool empty() const;
 	bool controlled() const;
-	Events getHighlightEvent() const;
 };

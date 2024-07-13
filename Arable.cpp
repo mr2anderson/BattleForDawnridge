@@ -62,7 +62,8 @@ std::wstring Arable::getUpperCaseReadableName() const {
 }
 Events Arable::addFood() const {
 	Events response;
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("food_icon", "food", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("food_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+    response.add(std::make_shared<PlaySoundEvent>("click"));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<AddResourceEvent>(Resource("food", 300)));
 	return response;
@@ -77,8 +78,9 @@ Events Arable::getSelectionW() {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
 	Events windowEvent;
+    windowEvent.add(std::make_shared<PlaySoundEvent>("click"));
 	windowEvent.add(std::make_shared<CreateEEvent>(window));
 	return windowEvent;
 }

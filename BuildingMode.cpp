@@ -41,11 +41,10 @@ BuildingMode::~BuildingMode() {
 void BuildingMode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->b);
 }
-Events BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
+void BuildingMode::run(uint32_t windowW2, uint32_t windowH2) {
 	this->returnedPtr = false;
 	this->windowW = windowW2;
 	this->windowH = windowH2;
-	return this->getHighlightEvent();
 }
 void BuildingMode::update() {
 	uint32_t mouseX = sf::Mouse::getPosition().x;
@@ -55,31 +54,46 @@ void BuildingMode::update() {
 	this->b->setY((mouseY + this->view->getCenter().y - this->windowH / 2) / 64);
 }
 Events BuildingMode::click() {
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
 	this->finish();
+
 	if (!this->inMap()) {
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("not_in_map"), *Texts::get()->get("OK"));
-		Events uiEvent;
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("not_in_map"), *Texts::get()->get("OK"), clickSoundEvent);
+		Events uiEvent = clickSoundEvent;
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->empty()) {
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("place_occupied"), *Texts::get()->get("OK"));
-		Events uiEvent;
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("place_occupied"), *Texts::get()->get("OK"), clickSoundEvent);
+		Events uiEvent = clickSoundEvent;
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled()) {
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>("click", "click", *Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"));
-		Events uiEvent;
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"), clickSoundEvent);
+		Events uiEvent = clickSoundEvent;
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->getHighlightEvent() + uiEvent;
 	}
+
 	Events gEvent = this->getHighlightEvent();
+    gEvent.add(std::make_shared<PlaySoundEvent>(this->b->getSoundName()));
 	gEvent.add(std::make_shared<BuildEvent>(this->b));
 	gEvent.add(std::make_shared<SubResourcesEvent>(this->b->getCost()));
-	gEvent.add(std::make_shared<PlaySoundEvent>(this->b->getSoundName()));
 	this->returnedPtr = true;
+
 	return gEvent;
+}
+Events BuildingMode::getHighlightEvent() const {
+    Events result;
+    for (uint32_t i = 0; i < tb->size(); i = i + 1) {
+        if (tb->at(i)->works() and tb->at(i)->getPlayerId() == this->playerId) {
+            result = result + tb->at(i)->getHighlightEvent();
+        }
+    }
+    return result;
 }
 bool BuildingMode::inMap() const {
 	return
@@ -110,13 +124,4 @@ bool BuildingMode::controlled() const {
 	}
 
 	return false;
-}
-Events BuildingMode::getHighlightEvent() const {
-	Events result;
-	for (uint32_t i = 0; i < tb->size(); i = i + 1) {
-		if (tb->at(i)->works() and tb->at(i)->getPlayerId() == this->playerId) {
-			result = result + tb->at(i)->getHighlightEvent();
-		}
-	}
-	return result;
 }

@@ -70,7 +70,8 @@ Events ResourceB::getSelectionW() {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
+    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
@@ -80,7 +81,7 @@ Events ResourceB::getGameObjectResponse(uint32_t playerId) {
 		return Events();
 	}
 	if (this->belongTo(playerId)) {
-		return this->getSelectionW() + this->getHighlightEvent();
+		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return Events();
 }

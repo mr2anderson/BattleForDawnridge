@@ -91,12 +91,14 @@ bool GO::highClickPriority() const {
 	return false;
 }
 HorizontalSelectionWindowComponent GO::getExitComponent() {
+    Events soundEvent;
+    soundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
 	HorizontalSelectionWindowComponent component = {
 		"exit_icon",
 		*Texts::get()->get("leave"),
 		true,
-		true,
-		Events()
+		soundEvent
 	};
 	return component;
 }
@@ -104,7 +106,6 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		this->getTextureName(),
 		this->getDescription(),
-		false,
 		false,
 		Events()
 	};

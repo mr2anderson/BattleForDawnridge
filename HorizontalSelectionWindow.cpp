@@ -24,14 +24,12 @@
 
 
 
-HorizontalSelectionWindow::HorizontalSelectionWindow(const std::string &soundName1, const std::string &soundName2, const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize) {
-	this->soundName1 = soundName1;
-	this->soundName2 = soundName2;
+HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize) {
 	this->components = components;
 	this->componentSize = componentSize;
 	this->inited = false;
 }
-Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
+void HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 	Events event;
 	if (!this->inited) {
 		this->inited = true;
@@ -41,13 +39,9 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 			std::string pictureName = this->components.at(i).pictureName;
 			std::wstring message = this->components.at(i).message;
 			bool clickable = this->components.at(i).clickable;
-			bool sound = this->components.at(i).sound;
 			Events onClick = this->components.at(i).gEvent;
 			if (clickable) {
 				onClick.add(std::make_shared<CloseWindowEvent>());
-			}
-			if (sound and !this->soundName2.empty()) {
-				onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
 			}
 
 			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message), onClick);
@@ -66,10 +60,6 @@ Events HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, "down_icon"), downEvent);
 		this->rect = std::make_unique<RectangularUiElement>(10, y, windowW - 20, windowH - y - 10);
 	}
-	if (!this->soundName1.empty()) {
-		event.add(std::make_shared<PlaySoundEvent>(this->soundName1));
-	}
-	return event;
 }
 void HorizontalSelectionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->rect.get(), states);

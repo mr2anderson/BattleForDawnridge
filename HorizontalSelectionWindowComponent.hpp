@@ -25,11 +25,10 @@
 
 struct HorizontalSelectionWindowComponent {
 	HorizontalSelectionWindowComponent();
-	HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, bool sound, Events gEvent);
+	HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, Events gEvent);
 
 	std::string pictureName;
 	std::wstring message;
 	bool clickable;
-	bool sound;
 	Events gEvent;
 };

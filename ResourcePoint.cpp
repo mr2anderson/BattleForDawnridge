@@ -40,8 +40,9 @@ Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 		value = this->getHP();
 	}
 
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getResourceType(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
 
+    response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<CollectEvent>(this, value));
 
@@ -67,7 +68,8 @@ Events ResourcePoint::getSelectionWindow() {
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getResourceLeftComponent());
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
+    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;
@@ -76,7 +78,6 @@ HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() con
 	HorizontalSelectionWindowComponent component = {
 		this->getResourceType() + "_icon",
 		*Texts::get()->get("left") + std::to_wstring(this->getHP()),
-		false,
 		false,
 		Events()
 	};

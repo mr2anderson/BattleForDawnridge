@@ -18,6 +18,7 @@
 
 
 #include "AreaB.hpp"
+#include "Texts.hpp"
 
 
 AreaB::AreaB() = default;
@@ -30,14 +31,23 @@ bool AreaB::inRadius(GO *go) {
 }
 HorizontalSelectionWindowComponent AreaB::getExitComponent() {
 	HorizontalSelectionWindowComponent component = this->Building::getExitComponent();
-	component.gEvent = component.gEvent + this->getHighlightEvent();
+	component.gEvent = this->getHighlightEvent() + component.gEvent;
 	return component;
 }
 HorizontalSelectionWindowComponent AreaB::getDestroyComponent() {
-	HorizontalSelectionWindowComponent component = this->Building::getDestroyComponent();
-	std::shared_ptr<CreateEEvent> createEvent = std::static_pointer_cast<CreateEEvent>(component.gEvent.at(0));
-	std::shared_ptr<WindowTwoButtons> window = std::static_pointer_cast<WindowTwoButtons>(createEvent->getElement());
-	window->addEvent1(this->getHighlightEvent());
-	window->addEvent2(this->getHighlightEvent());
-	return component;
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    Events destroyEvent = clickSoundEvent + this->getHighlightEvent();
+    destroyEvent.add(std::make_shared<DestroyEvent>(this));
+    std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(*Texts::get()->get("verify_destroy"), *Texts::get()->get("yes"), *Texts::get()->get("no"), destroyEvent, clickSoundEvent + this->getHighlightEvent());
+    Events createVerify = clickSoundEvent;
+    createVerify.add(std::make_shared<CreateEEvent>(verify));
+    HorizontalSelectionWindowComponent component = {
+            "destroy_icon",
+            *Texts::get()->get("destroy_this_building"),
+            true,
+            createVerify
+    };
+    return component;
 }

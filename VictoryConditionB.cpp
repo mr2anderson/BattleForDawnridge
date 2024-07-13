@@ -39,14 +39,14 @@ HorizontalSelectionWindowComponent VictoryConditionB::getVictoryConditionCompone
 		"star_icon",
 		*Texts::get()->get("victory_condition_building_description"),
 		false,
-		false,
 		Events()
 	};
 	return component;
 }
 Events VictoryConditionB::addWood() const {
 	Events response;
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", "wood", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("wood_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+    response.add(std::make_shared<PlaySoundEvent>("wood"));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));
 	return response;

@@ -70,7 +70,8 @@ Events WarehouseWood::getSelectionW() {
 	components.push_back(this->getResourceStorageComponent());
 	components.push_back(this->getDestroyComponent());
 
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
+    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	return response;

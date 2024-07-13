@@ -47,19 +47,20 @@ private:
     bool closeMenu;
 	std::string startGameMap;
     uint32_t windowW, windowH;
-    std::queue<std::shared_ptr<PopUpElement>> elements;
+    std::queue<std::shared_ptr<Event>> events;
+    std::shared_ptr<PopUpElement> element;
 	std::vector<Button> buttons;
 	sf::Sprite background;
 
 	void init(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
-    void addElement(std::shared_ptr<PopUpElement> e);
-    void removeFinishedElements();
+    void removeFinishedElement();
+    void processEvents();
     void prepareToStartGame();
-    bool handleButtonsClick();
+    void addButtonClickEventToQueue();
+    void addEvents(Events &e);
 
-    void handleEvent(Events &e);
-
+    void handleEvent(std::shared_ptr<Event> e);
     void handleSoundEvent(std::shared_ptr<PlaySoundEvent> e);
     void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);

@@ -27,22 +27,16 @@ const float FlyingE::TIME = 0.5f;
 const float FlyingE::V0 = 64;
 
 
-FlyingE::FlyingE(const std::string& picture, const std::string& sound, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+FlyingE::FlyingE(const std::string& picture, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->picture = picture;
-	this->sound = sound;
 	this->x = x;
 	this->y = y;
 	this->sx = sx;
 	this->sy = sy;
 }
-Events FlyingE::run(uint32_t windowW, uint32_t windowH) {
+void FlyingE::run(uint32_t windowW, uint32_t windowH) {
 	this->clock.restart();
 	this->dst = windowH / 4;
-
-	Events uiEvent;
-	uiEvent.add(std::make_shared<PlaySoundEvent>(this->sound));
-
-	return uiEvent;
 }
 void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	float t = this->clock.getElapsedTime().asSeconds();

@@ -37,7 +37,6 @@ HorizontalSelectionWindowComponent ResourceStorageB::getResourceStorageComponent
 		"resources_icon",
 		*Texts::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
 		false,
-		false,
 		Events()
 	};
 	return component;

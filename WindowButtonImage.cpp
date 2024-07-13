@@ -19,27 +19,19 @@
 
 #include "WindowButtonImage.hpp"
 #include "CloseWindowEvent.hpp"
-#include "PlaySoundEvent.hpp"
 #include "Textures.hpp"
 
 
-WindowButtonImage::WindowButtonImage(const std::string& soundName1, const std::string& soundName2, const std::wstring& message, const std::wstring& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
+WindowButtonImage::WindowButtonImage(const std::wstring& message, const std::wstring& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
-    this->soundName1 = soundName1;
-    this->soundName2 = soundName2;
     this->onFinish = onFinish;
     this->message = message;
     this->buttonText = buttonText;
     this->pictureName = pictureName;
     this->inited = false;
 }
-Events WindowButtonImage::run(uint32_t windowW, uint32_t windowH) {
-    Events soundEvent1;
-    if (!this->soundName1.empty()) {
-        soundEvent1.add(std::make_shared<PlaySoundEvent>(this->soundName1));
-    }
-
+void WindowButtonImage::run(uint32_t windowW, uint32_t windowH) {
     if (!this->inited) {
         this->inited = true;
 
@@ -47,9 +39,6 @@ Events WindowButtonImage::run(uint32_t windowW, uint32_t windowH) {
         uint32_t buttonH = 30;
 
         Events onClick;
-        if (!this->soundName2.empty()) {
-            onClick.add(std::make_shared<PlaySoundEvent>(this->soundName2));
-        }
         onClick.add(std::make_shared<CloseWindowEvent>());
         onClick = onClick + onFinish;
 
@@ -58,8 +47,6 @@ Events WindowButtonImage::run(uint32_t windowW, uint32_t windowH) {
         sf::Texture* t = Textures::get()->get(this->pictureName);
         this->image = Image(this->label.getX() + (this->w - t->getSize().x) / 2, this->button.getY() - 15 - t->getSize().y, this->pictureName);
     }
-
-    return soundEvent1;
 }
 void WindowButtonImage::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(this->label, states);

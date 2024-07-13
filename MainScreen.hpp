@@ -69,7 +69,8 @@ private:
     std::shared_ptr<Map> map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerIndex;
-	std::queue<std::shared_ptr<PopUpElement>> elements;
+	std::shared_ptr<PopUpElement> element;
+    std::queue<std::shared_ptr<Event>> events;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
@@ -100,15 +101,16 @@ private:
 	void drawHighlightion(sf::RenderWindow& window);
 
 
-	void removeFinishedElements();
-	void handleNewMoveEvents();
-	bool allNewMoveEventsHandled() const;
+	void removeFinishedElement();
+	void addNewMoveEvent();
+	bool allNewMoveEventsAdded() const;
 	void changeMove();
 	Player* getCurrentPlayer();
 	Resources getResourcesLimit();
-	bool handleButtonsClick();
-	void handleGameObjectClick();
-	void addPopUpWindow(std::shared_ptr<PopUpElement> w);
+	void addButtonClickEventToQueue();
+	void addGameObjectClickEventToQueue();
+    void processEvents();
+    void addEvents(Events &e);
 	void prepareToReturnToMenu(sf::RenderWindow& window);
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
 	void moveView();
@@ -126,7 +128,7 @@ private:
 	void verifyViewEast();
 
 
-	void handleEvent(Events& e);
+	void handleEvent(std::shared_ptr<Event> e);
 	void handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
