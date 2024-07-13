@@ -31,7 +31,7 @@ Building* Wall2::cloneBuilding() const {
 }
 Resources Wall2::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 15000));
+	cost.plus(Resource("stone", 20000));
 	return cost;
 }
 uint32_t Wall2::getRegenerationSpeed() const {

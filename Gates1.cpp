@@ -31,7 +31,7 @@ Building* Gates1::cloneBuilding() const {
 }
 Resources Gates1::getCost() const {
     Resources cost;
-    cost.plus(Resource("wood", 15000));
+    cost.plus(Resource("wood", 10000));
     return cost;
 }
 uint32_t Gates1::getRegenerationSpeed() const {

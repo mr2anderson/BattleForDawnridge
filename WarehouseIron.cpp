@@ -39,7 +39,7 @@ Events WarehouseIron::newMove(uint32_t playerId) {
 }
 Resources WarehouseIron::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 20000));
+	cost.plus(Resource("stone", 10000));
 	return cost;
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {

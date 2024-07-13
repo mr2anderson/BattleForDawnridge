@@ -40,7 +40,7 @@ Events WarehouseGold::newMove(uint32_t playerId) {
 }
 Resources WarehouseGold::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 20000));
+	cost.plus(Resource("stone", 10000));
 	return cost;
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {

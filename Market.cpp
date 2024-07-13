@@ -32,7 +32,7 @@ Building* Market::cloneBuilding() const {
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 30000));
+	cost.plus(Resource("stone", 20000));
 	return cost;
 }
 std::string Market::getTextureName() const {
