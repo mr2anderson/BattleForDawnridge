@@ -20,10 +20,11 @@
 #include "BuildingShortInfo.hpp"
 #include "Textures.hpp"
 #include "Fonts.hpp"
+#include "ColorTheme.hpp"
 
 
 BuildingShortInfo::BuildingShortInfo(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const std::string& pictureName, const std::string& text) {
-	this->rect.setFillColor(sf::Color::Black);
+	this->rect.setFillColor(COLOR_THEME::UI_COLOR);
 	this->rect.setSize(sf::Vector2f(64 * sx, 64 * sy / 2));
 	this->rect.setPosition(64 * x, 64 * y + 64 * sy / 2);
 
@@ -37,7 +38,7 @@ BuildingShortInfo::BuildingShortInfo(uint32_t x, uint32_t y, uint32_t sx, uint32
 	this->text.setFillColor(sf::Color::White);
 	this->text.setOutlineColor(sf::Color::Black);
 	this->text.setOutlineThickness(1);
-	this->text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2 + (rect.getSize().x / 2 + this->text.getLocalBounds().width) / 2, (rect.getSize().y / 2 + this->text.getLocalBounds().height) / 2));
+	this->text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2, 0));
 }
 void BuildingShortInfo::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(this->rect, states);
