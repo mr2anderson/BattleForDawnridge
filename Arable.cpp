@@ -25,8 +25,8 @@
 
 Arable::Arable() = default;
 Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	HpSensitiveB(x, y, 1, 1, 2000, playerId, units),
-	Building(x, y, 1, 1, 2000, playerId, units) {
+	HpSensitiveB(x, y, 2, 2, 1000, playerId, units),
+	Building(x, y, 2, 2, 1000, playerId, units) {
 
 }
 Building* Arable::cloneBuilding() const {
@@ -43,7 +43,7 @@ Events Arable::newMove(uint32_t playerId) {
 	return Events();
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 2500)});
+	return Resources({ Resource("wood", 4000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -64,7 +64,7 @@ Events Arable::addFood() const {
 	Events response;
 	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("food_icon", "food", this->getX(), this->getY(), this->getSX(), this->getSY());
 	response.add(std::make_shared<CreateEEvent>(flyingE));
-	response.add(std::make_shared<AddResourceEvent>(Resource("food", 250)));
+	response.add(std::make_shared<AddResourceEvent>(Resource("food", 300)));
 	return response;
 }
 Events Arable::getSelectionW() {
