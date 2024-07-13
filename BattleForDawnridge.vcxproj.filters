@@ -1090,9 +1090,6 @@
     <ClInclude Include="RefreshMovementPointsEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="PathDoesNotExist.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
     <ClInclude Include="DisableCursorEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
@@ -1140,6 +1137,9 @@
     </ClInclude>
     <ClInclude Include="NextClueEvent.hpp">
       <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="DijkstraQueueElement.hpp">
+      <Filter>Header Files\goService</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1524,9 +1524,6 @@
     <ClCompile Include="RefreshMovementPointsEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="PathDoesNotExist.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
     <ClCompile Include="DisableCursorEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
@@ -1574,6 +1571,9 @@
     </ClCompile>
     <ClCompile Include="NextClueEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="DijkstraQueueElement.cpp">
+      <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

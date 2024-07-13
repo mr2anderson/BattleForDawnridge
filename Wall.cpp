@@ -35,8 +35,8 @@ Events Wall::newMove(uint32_t playerId) {
 bool Wall::warriorCanStay(uint32_t warriorPlayerId) const {
 	return false;
 }
-bool Wall::warriorCanMoveThrough(uint32_t warriorPlayerId) const {
-	return false;
+uint32_t Wall::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+	return WARRIOR_MOVEMENT_FORBIDDEN;
 }
 Events Wall::getSelectionW() {
 	Events response;

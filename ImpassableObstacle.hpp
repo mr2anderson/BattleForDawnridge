@@ -31,7 +31,7 @@ public:
 	Events newMove(uint32_t playerId) override;
 	bool exist() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	bool warriorCanMoveThrough(uint32_t warriorPlayerId) const override;
+	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 private:
 	Events getGameObjectResponse(uint32_t playerId) override;
 	Events getHorizontalSelectionWindow();

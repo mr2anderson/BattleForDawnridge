@@ -60,5 +60,5 @@ std::string Legioner::getBaseTextureName() const {
 	return "legioner";
 }
 uint32_t Legioner::getMovementPoints() const {
-	return 5;
+	return 6;
 }

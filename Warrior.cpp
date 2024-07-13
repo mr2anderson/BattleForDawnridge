@@ -100,7 +100,7 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 	}
 	return 0;
 }
-bool Warrior::canFitIn(uint32_t newX, uint32_t newY, bool stay) const {
+bool Warrior::canStay(uint32_t newX, uint32_t newY) const {
 	sf::IntRect thisRect;
 	thisRect.left = newX;
 	thisRect.top = newY;
@@ -109,17 +109,7 @@ bool Warrior::canFitIn(uint32_t newX, uint32_t newY, bool stay) const {
 
 	for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
 		GO* o = this->go->at(i);
-		if (o->exist()) {
-			if (stay) {
-				if (o->warriorCanStay(this->getPlayerId())) {
-					continue;
-				}
-			}
-			else {
-				if (o->warriorCanMoveThrough(this->getPlayerId())) {
-					continue;
-				}
-			}
+		if (o->exist() and !o->warriorCanStay(this->getPlayerId())) {
 			sf::IntRect goRect;
 			goRect.left = o->getX();
 			goRect.top = o->getY();
@@ -133,11 +123,39 @@ bool Warrior::canFitIn(uint32_t newX, uint32_t newY, bool stay) const {
 
 	return true;
 }
+uint32_t Warrior::getMovementCost(uint32_t newX, uint32_t newY) const {
+	sf::IntRect thisRect;
+	thisRect.left = newX;
+	thisRect.top = newY;
+	thisRect.width = this->getSX();
+	thisRect.height = this->getSY();
+
+	uint32_t cost = 1;
+
+	for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
+		GO* o = this->go->at(i);
+		if (o->exist()) {
+			sf::IntRect goRect;
+			goRect.left = o->getX();
+			goRect.top = o->getY();
+			goRect.width = o->getSX();
+			goRect.height = o->getSY();
+			if (thisRect.intersects(goRect)) {
+				cost = std::max(cost, o->getWarriorMovementCost(this->getPlayerId()));
+			}
+		}
+	}
+
+	return cost;
+}
 bool Warrior::warriorCanStay(uint32_t warriorPlayerId) const {
 	return false;
 }
-bool Warrior::warriorCanMoveThrough(uint32_t warriorPlayerId) const {
-	return (this->getPlayerId() == warriorPlayerId);
+uint32_t Warrior::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+	if (this->getPlayerId() == warriorPlayerId) {
+		return 1;
+	}
+	return WARRIOR_MOVEMENT_FORBIDDEN;
 }
 bool Warrior::highDrawingPriority() const {
 	return true;
@@ -206,7 +224,7 @@ std::vector<Move> Warrior::getMoves() {
 
 	for (uint32_t x = xMin; x <= xMax; x = x + 1) {
 		for (uint32_t y = yMin; y <= yMax; y = y + 1) {
-			g.set(x, y, this->canFitIn(x, y, true), this->canFitIn(x, y, false));
+			g.set(x, y, this->canStay(x, y), this->getMovementCost(x, y));
 		}
 	}
 

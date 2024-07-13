@@ -20,30 +20,38 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
+#include <concurrent_priority_queue.h>
 #include "MovementGraph.hpp"
-#include "PathDoesNotExist.hpp"
+#include "DijkstraQueueElement.hpp"
 
 
 MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
 	this->mapW = mapW;
 	this->mapH = mapH;
 }
-void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, bool canMoveThrough) {
-	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, canMoveThrough);
+void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, uint32_t movementCost) {
+	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, movementCost);
 }
 std::vector<Move> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
+	std::map<std::tuple<uint32_t, uint32_t>, uint64_t> dist;
 	std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist = this->bfs(std::make_tuple(x, y), movePoints, fromToStory);
+	this->djkstra(std::make_tuple(x, y), movePoints, dist, fromToStory);
 	
 	std::vector<Move> moves;
 	for (const auto& a : dist) {
-		if (this->fitTable[a.first].canStay) {
+		if (this->fitTable.at(a.first).canStay) {
 			Move move;
 			move.finalX = std::get<0>(a.first);
 			move.finalY = std::get<1>(a.first);
-			
+
+			bool ok = true;
+
 			std::tuple<uint32_t, uint32_t> current = a.first;
 			while (current != std::make_tuple(x, y)) {
+				if (fromToStory.find(current) == fromToStory.end()) {
+					ok = false;
+					break;
+				}
 				std::tuple<uint32_t, uint32_t> previous = fromToStory.at(current);
 				if (std::get<0>(current) > std::get<0>(previous)) {
 					move.route.push_back('e');
@@ -59,71 +67,73 @@ std::vector<Move> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t moveP
 				}
 				current = previous;
 			}
-			std::reverse(move.route.begin(), move.route.end());
 
-			moves.push_back(move);
+			if (ok) {
+				std::reverse(move.route.begin(), move.route.end());
+				moves.push_back(move);
+			}
 		}
 	}
 	return moves;
 }
-std::map<std::tuple<uint32_t, uint32_t>, uint32_t> MovementGraph::bfs(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>>& fromToStory) {
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
+void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, 
+	std::map<std::tuple<uint32_t, uint32_t>, uint64_t> &dist, 
+	std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>>& fromToStory) {
+
 	dist[s] = 0;
-	std::queue<std::tuple<uint32_t, uint32_t>> q;
-	q.push(s);
+
+	std::priority_queue<DijkstraQueueElement, std::vector<DijkstraQueueElement>, std::greater<DijkstraQueueElement>> q;
+	
+	q.emplace(0, s);
 
 	while (!q.empty()) {
-		std::tuple<uint32_t, uint32_t> v = q.front();
+		DijkstraQueueElement c = q.top();
 		q.pop();
-		uint32_t vx, vy;
-		std::tie(vx, vy) = v;
+		uint64_t dst = c.dst;
+		uint32_t vx = c.x;
+		uint32_t vy = c.y;
+		std::tuple<uint32_t, uint32_t> v = std::make_tuple(vx, vy);
 
 		if (dist.find(v) == dist.end()) {
 			dist[v] = std::numeric_limits<uint32_t>::max();
 		}
-		else if (dist[v] >= movePoints) {
+
+		if (dist[v] < dst or dst == movePoints) {
 			continue;
 		}
 
-		std::vector<std::tuple<uint32_t, uint32_t>> adj;
+		std::vector<DijkstraQueueElement> graph;
 		if (vx >= 1) {
 			auto to = std::make_tuple(vx - 1, vy);
-			if (this->fitTable[to].canMoveThrough) {
-				adj.push_back(to);
-			}
+			graph.emplace_back(this->fitTable.at(to).movementCost, to);
 		}
 		if (vy >= 1) {
 			auto to = std::make_tuple(vx, vy - 1);
-			if (this->fitTable[to].canMoveThrough) {
-				adj.push_back(to);
-			}
+			graph.emplace_back(this->fitTable.at(to).movementCost, to);
 		}
-		if (vx + 2 < this->mapW) {
+		if (vx + 1 < this->mapW) {
 			auto to = std::make_tuple(vx + 1, vy);
-			if (this->fitTable[to].canMoveThrough) {
-				adj.push_back(to);
-			}
+			graph.emplace_back(this->fitTable.at(to).movementCost, to);
 		}
-		if (vx + 2 < this->mapH) {
+		if (vy + 1 < this->mapH) {
 			auto to = std::make_tuple(vx, vy + 1);
-			if (this->fitTable[to].canMoveThrough) {
-				adj.push_back(to);
-			}
+			graph.emplace_back(this->fitTable.at(to).movementCost, to);
 		}
 
-		for (std::tuple<uint32_t, uint32_t> u : adj) {
+		for (DijkstraQueueElement e : graph) {
+			uint64_t len = e.dst;
+			std::tuple<uint32_t, uint32_t> u = std::make_tuple(e.x, e.y);
 
 			if (dist.find(u) == dist.end()) {
 				dist[u] = std::numeric_limits<uint32_t>::max();
 			}
 
-			if (dist[u] > dist[v] + 1) {
-				dist[u] = dist[v] + 1;
+			uint64_t nDst = dst + len;
+			if (nDst <= movePoints and nDst < dist[u]) {
+				dist[u] = nDst;
 				fromToStory[u] = v;
-				q.push(u);
+				q.emplace(nDst, u);
 			}
 		}
 	}
-
-	return dist;
 }

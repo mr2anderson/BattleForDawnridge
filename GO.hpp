@@ -17,6 +17,7 @@
  */
 
 
+#include <limits>
 #include "HorizontalSelectionWindow.hpp"
 
 
@@ -37,7 +38,7 @@ public:
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
 	virtual bool warriorCanStay(uint32_t warriorPlayerId) const = 0;
-	virtual bool warriorCanMoveThrough(uint32_t warriorPlayerId) const = 0;
+	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const = 0;
 	virtual bool exist() const = 0;
 	Events click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
 	bool intersects(GO* go) const;
@@ -53,6 +54,8 @@ protected:
 
 	virtual HorizontalSelectionWindowComponent getExitComponent() const;
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;
+
+	static constexpr uint32_t WARRIOR_MOVEMENT_FORBIDDEN = 10000;
 private:
 	uint32_t x, y;
 	uint32_t sx, sy;

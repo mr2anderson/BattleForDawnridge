@@ -17,7 +17,35 @@
  */
 
 
-#include "PathDoesNotExist.hpp"
+#include "DijkstraQueueElement.hpp"
 
 
-PathDoesNotExist::PathDoesNotExist() = default;
+DijkstraQueueElement::DijkstraQueueElement() = default;
+DijkstraQueueElement::DijkstraQueueElement(uint64_t dst, uint32_t x, uint32_t y) {
+	this->dst = dst;
+	this->x = x;
+	this->y = y;
+}
+DijkstraQueueElement::DijkstraQueueElement(uint64_t dst, std::tuple<uint32_t, uint32_t> p) : DijkstraQueueElement(dst, std::get<0>(p), std::get<1>(p)) {
+
+}
+bool operator>(DijkstraQueueElement a, DijkstraQueueElement b) {
+	if (a.dst > b.dst) {
+		return true;
+	}
+	if (a.dst < b.dst) {
+		return false;
+	}
+
+	if (a.x > b.x) {
+		return true;
+	}
+	if (a.x < b.x) {
+		return false;
+	}
+	
+	if (a.y > b.y) {
+		return true;
+	}
+	return false;
+}

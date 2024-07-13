@@ -45,5 +45,5 @@ protected:
 	virtual HorizontalSelectionWindowComponent getDestroyComponent();
 private:
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	bool warriorCanMoveThrough(uint32_t warriorPlayerId) const override;
+	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 };

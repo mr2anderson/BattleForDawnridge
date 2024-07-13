@@ -17,13 +17,16 @@
  */
 
 
+#include <cstdint>
+
+
 #pragma once
 
 
 struct FitTableElement {
 	FitTableElement();
-	FitTableElement(bool canStay, bool canMoveThrough);
+	FitTableElement(bool canStay, uint32_t movementCost);
 
 	bool canStay;
-	bool canMoveThrough;
+	uint32_t movementCost;
 };

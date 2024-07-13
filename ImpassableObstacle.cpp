@@ -35,8 +35,8 @@ bool ImpassableObstacle::exist() const {
 bool ImpassableObstacle::warriorCanStay(uint32_t warriorPlayerId) const {
 	return false;
 }
-bool ImpassableObstacle::warriorCanMoveThrough(uint32_t warriorPlayerId) const {
-	return false;
+uint32_t ImpassableObstacle::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+	return WARRIOR_MOVEMENT_FORBIDDEN;
 }
 Events ImpassableObstacle::getGameObjectResponse(uint32_t playerId) {
 	return this->getHorizontalSelectionWindow();

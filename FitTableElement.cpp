@@ -20,11 +20,8 @@
 #include "FitTableElement.hpp"
 
 
-FitTableElement::FitTableElement() {
-	this->canStay = false;
-	this->canMoveThrough = false;
-}
-FitTableElement::FitTableElement(bool canStay, bool canMoveThrough) {
+FitTableElement::FitTableElement() = default;
+FitTableElement::FitTableElement(bool canStay, uint32_t movementCost) {
 	this->canStay = canStay;
-	this->canMoveThrough = canMoveThrough;
+	this->movementCost = movementCost;
 }

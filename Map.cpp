@@ -51,6 +51,9 @@ Map::Map(const std::string &path) {
     int32_t y = -1;
     uint32_t x = 0;
     uint32_t currentPlayerId = 0;
+
+    std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> startSquads;
+
     while (std::getline(file, line)) {
         if (line == "  <data encoding=\"csv\">") {
             read = true;
@@ -75,10 +78,7 @@ Map::Map(const std::string &path) {
                 Castle* c = new Castle(x, y, this->players.at(currentPlayerId).getId(), this->getUnits());
                 c->setMaxHp();
                 this->add(c);
-                
-                this->add(new Legioner(x, y + c->getSY(), this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
-                this->add(new Infantryman(x + this->go->at(this->go->size() - 1)->getSX(), y + c->getSY(), this->players.at(currentPlayerId).getId(), this->getUnits(), this->getGO(), this->getW(), this->getH()));
-
+                startSquads.emplace_back(x, y + c->getSY(), this->players.at(currentPlayerId).getId());
                 currentPlayerId = currentPlayerId + 1;
             }
             else if (word == "4") {
@@ -104,6 +104,14 @@ Map::Map(const std::string &path) {
 
     this->w = x;
     this->h = y;
+
+    for (uint32_t i = 0; i < startSquads.size(); i = i + 1) {
+        uint32_t x = std::get<0>(startSquads.at(i));
+        uint32_t y = std::get<1>(startSquads.at(i));
+        uint32_t pid = std::get<2>(startSquads.at(i));
+        this->add(new Legioner(x, y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
+        this->add(new Infantryman(x + this->go->at(this->go->size() - 1)->getSX(), y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
+    }
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (uint8_t c = 0; c <= 1; c = c + 1) {

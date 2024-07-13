@@ -17,13 +17,20 @@
  */
 
 
-#include <stdexcept>
+#include <cstdint>
+#include <tuple>
 
 
 #pragma once
 
 
-class PathDoesNotExist : public std::exception {
-public:
-	PathDoesNotExist();
+struct DijkstraQueueElement {
+	DijkstraQueueElement();
+	DijkstraQueueElement(uint64_t dst, uint32_t x, uint32_t y);
+	DijkstraQueueElement(uint64_t dst, std::tuple<uint32_t, uint32_t> p);
+
+	friend bool operator>(DijkstraQueueElement a, DijkstraQueueElement b);
+
+	uint64_t dst;
+	uint32_t x, y;
 };

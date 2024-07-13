@@ -32,7 +32,7 @@ public:
 	virtual Events tryToCollect(uint32_t playerId, uint32_t value);
 	virtual std::string getResourceType() const = 0;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	bool warriorCanMoveThrough(uint32_t warriorPlayerId) const override;
+	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 private:
 	Events getGameObjectResponse(uint32_t playerId) override;
 	Events getSelectionWindow();
