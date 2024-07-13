@@ -29,13 +29,13 @@ Player::Player(uint32_t id) {
 uint32_t Player::getId() const {
 	return this->id;
 }
-bool operator==(Player a, Player b) {
+bool operator==(const Player &a, const Player &b) {
 	if (a.getId() == b.getId()) {
 		return true;
 	}
 	return false;
 }
-bool operator!=(Player a, Player b) {
+bool operator!=(const Player &a, const Player &b) {
 	return !(a == b);
 }
 void Player::addResource(const Resource& resource, uint32_t limit) {
