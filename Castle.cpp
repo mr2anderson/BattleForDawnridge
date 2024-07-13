@@ -43,7 +43,7 @@ Resources Castle::getLimit() const {
 }
 Resources Castle::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 80000));
+	cost.plus(Resource("stone", 50000));
 	return cost;
 }
 std::string Castle::getTextureName() const {
