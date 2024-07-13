@@ -33,7 +33,7 @@ Resources Legioner::getCost() const {
 	return Resources({ Resource("food", 5000), Resource("iron", 2500)});
 }
 uint32_t Legioner::getTimeToProduce() const {
-	return 5;
+	return 3;
 }
 std::string Legioner::getSoundName() const {
 	return "sword";

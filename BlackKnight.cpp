@@ -33,7 +33,7 @@ Resources BlackKnight::getCost() const {
 	return Resources({ Resource("food", 16000), Resource("iron", 8000)});
 }
 uint32_t BlackKnight::getTimeToProduce() const {
-	return 10;
+	return 5;
 }
 std::string BlackKnight::getSoundName() const {
 	return "sword";
