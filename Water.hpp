@@ -31,7 +31,7 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-    bool isLowObstacle(uint32_t bPlayerId) const override;
+    bool isLowObstacle() const override;
 
 	static const uint32_t TOTAL_ANIMATIONS;
 private:

@@ -39,7 +39,9 @@
 #include "Quarry.hpp"
 #include "Mine.hpp"
 #include "Wall1.hpp"
+#include "Gates1.hpp"
 #include "Wall2.hpp"
+#include "Gates2.hpp"
 #include "Road.hpp"
 #include "SoundQueue.hpp"
 #include "BuildingMode.hpp"
@@ -233,8 +235,14 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
     buildMenuSectionDefenceComponents.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, createBuildingModeEvent);
     createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates1>(0, 0, 0, this->map->getUnits(), this->map->getTobs()))));
+    buildMenuSectionDefenceComponents.emplace_back(Gates1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Gates1>()), true, true, createBuildingModeEvent);
+    createBuildingModeEvent = Events();
     createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
     buildMenuSectionDefenceComponents.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, createBuildingModeEvent);
+    createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates2>(0, 0, 0, this->map->getUnits(), this->map->getTobs()))));
+    buildMenuSectionDefenceComponents.emplace_back(Gates2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Gates2>()), true, true, createBuildingModeEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionDefenceComponents);
     Events createBuildWindowSectionDefenceEvent;

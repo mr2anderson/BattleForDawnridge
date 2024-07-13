@@ -38,7 +38,7 @@ bool Wall::warriorCanStay(uint32_t warriorPlayerId) const {
 uint32_t Wall::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return WARRIOR_MOVEMENT_FORBIDDEN;
 }
-bool Wall::isHighObstacle(uint32_t bPlayerId) const {
+bool Wall::isHighObstacle() const {
     return true;
 }
 Events Wall::getSelectionW() {
@@ -56,6 +56,9 @@ Events Wall::getSelectionW() {
 	return response;
 }
 Events Wall::getGameObjectResponse(uint32_t playerId) {
+    if (!this->exist()) {
+        return Events();
+    }
 	if (this->belongTo(playerId)) {
 		return this->getSelectionW();
 	}

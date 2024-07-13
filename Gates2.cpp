@@ -15,3 +15,38 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
+#include "Gates2.hpp"
+#include "Texts.hpp"
+
+
+Gates2::Gates2() = default;
+Gates2::Gates2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+        Gates(x, y, 1, 1, 160000, playerId, units, originsPtr),
+        Building(x, y, 1, 1, 40000, playerId, units) {
+
+}
+Building* Gates2::cloneBuilding() const {
+    return new Gates2(*this);
+}
+Resources Gates2::getCost() const {
+    Resources cost;
+    cost.plus(Resource("stone", 20000));
+    return cost;
+}
+uint32_t Gates2::getRegenerationSpeed() const {
+    return 40000;
+}
+std::string Gates2::getTextureName() const {
+    return "gates2";
+}
+std::string Gates2::getSoundName() const {
+    return "stone";
+}
+std::wstring Gates2::getDescription() const {
+    return *Texts::get()->get("gates2_description");
+}
+std::wstring Gates2::getUpperCaseReadableName() const {
+    return *Texts::get()->get("gates2_upper_case_readable_name");
+}

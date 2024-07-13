@@ -15,3 +15,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
+#include "TerritoryConductorB.hpp"
+
+
+#pragma once
+
+
+class Gates : public TerritoryConductorB {
+public:
+    Gates();
+    Gates(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);
+
+    Events newMove(uint32_t playerId) override;
+    bool warriorCanStay(uint32_t warriorPlayerId) const override;
+    uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+    bool isHighObstacle() const override;
+private:
+    uint32_t getRadius() const override;
+    Events getSelectionW();
+    Events getGameObjectResponse(uint32_t playerId) override;
+};

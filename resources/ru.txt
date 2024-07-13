@@ -905,3 +905,31 @@ other
 <DATA>
 Другое
 <\DATA>
+
+<ID>
+gates1_description
+<\ID>
+<DATA>
+Городские ворота — слабая часть любой стены, зато они позволяют пропускать Ваши войска, проводить дороги.
+<\DATA>
+
+<ID>
+gates_1_upper_case_readable_name
+<\ID>
+<DATA>
+ГОРОДСКИЕ ВОРОТА
+<\DATA>
+
+<ID>
+gates2_description
+<\ID>
+<DATA>
+Укрепленные городские ворота значительно лучше выдерживают осаду, чем обычные.
+<\DATA>
+
+<ID>
+gates2_upper_case_readable_name
+<\ID>
+<DATA>
+УКРЕПЛЕННЫЕ ГОРОДСКИЕ ВОРОТА
+<\DATA>

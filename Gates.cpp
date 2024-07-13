@@ -15,3 +15,65 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
+#include "Gates.hpp"
+
+
+Gates::Gates() = default;
+Gates::Gates(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+        TerritoryConductorB(x, y, sx, sy, maxHp, playerId, units, originsPtr),
+        Building(x, y, sx, sy, maxHp, playerId, units) {
+
+}
+Events Gates::newMove(uint32_t playerId) {
+    Events response;
+    if (this->belongTo(playerId) and this->exist()) {
+        return this->regenerate();
+    }
+    return response;
+}
+bool Gates::warriorCanStay(uint32_t warriorPlayerId) const {
+    return (warriorPlayerId == this->getPlayerId());
+}
+uint32_t Gates::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+    if (warriorPlayerId == this->getPlayerId()) {
+        return 1;
+    }
+    return WARRIOR_MOVEMENT_FORBIDDEN;
+}
+bool Gates::isHighObstacle() const {
+    return true;
+}
+uint32_t Gates::getRadius() const {
+    return 1;
+}
+Events Gates::getSelectionW() {
+    Events response;
+
+    std::vector<HorizontalSelectionWindowComponent> components;
+    components.push_back(this->getExitComponent());
+    components.push_back(this->getDescriptionComponent());
+    components.push_back(this->getHpInfoComponent());
+    components.push_back(this->getDestroyComponent());
+    if (this->repairing()) {
+        components.push_back(this->getBusyWithRepairingComponent());
+    }
+    if (this->works() and !this->connectedToTerritoryOriginB()) {
+        components.push_back(this->getNotConnectedComponent());
+    }
+
+    std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(this->getSoundName(), "click", components);
+    response.add(std::make_shared<CreateEEvent>(window));
+
+    return response;
+}
+Events Gates::getGameObjectResponse(uint32_t playerId) {
+    if (!this->exist()) {
+        return Events();
+    }
+    if (this->belongTo(playerId)) {
+        return this->getSelectionW() + this->getHighlightEvent();
+    }
+    return Events();
+}

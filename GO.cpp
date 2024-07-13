@@ -54,10 +54,10 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
-bool GO::isHighObstacle(uint32_t bPlayerId) const {
+bool GO::isHighObstacle() const {
     return false;
 }
-bool GO::isLowObstacle(uint32_t bPlayerId) const {
+bool GO::isLowObstacle() const {
     return false;
 }
 Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
