@@ -97,8 +97,8 @@ Events BuildingMode::getHighlightEvent() const {
 }
 bool BuildingMode::inMap() const {
 	return
-			(b->getX() + b->getSX() < this->mapW and
-			b->getY() + b->getSY() < this->mapH);
+			(b->getX() + b->getSX() - 1 < this->mapW and
+			b->getY() + b->getSY() - 1 < this->mapH);
 }
 bool BuildingMode::empty() const {
 	for (uint32_t i = 0; i < go->size(); i = i + 1) {
