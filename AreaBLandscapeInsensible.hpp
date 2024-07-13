@@ -17,28 +17,23 @@
  */
 
 
-#include "HpSensitiveB.hpp"
-#include "AreaBLandscapeInsensible.hpp"
-#include "ResourcePoint.hpp"
-#include "GOCollection.hpp"
+#include "AreaB.hpp"
 
 
 #pragma once
 
 
-class ResourceB : public HpSensitiveB, public AreaBLandscapeInsensible {
+class AreaBLandscapeInsensible : public AreaB {
 public:
-	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
+    AreaBLandscapeInsensible();
+    AreaBLandscapeInsensible(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 
-	Events newMove(uint32_t playerId) override;
-protected:
-	virtual std::string getResourceType() const = 0;
-	virtual uint32_t getCollectionSpeed() const = 0;
-private:
-	std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr;
-
-	Events tryToCollectResources();
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
+    bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) override;
+    Events getHighlightEvent() const override;
+    uint32_t getAreaXMin() const;
+    uint32_t getAreaXMax() const;
+    uint32_t getAreaYMin() const;
+    uint32_t getAreaYMax() const;
+    uint32_t getAreaWidth() const;
+    uint32_t getAreaHeight() const;
 };

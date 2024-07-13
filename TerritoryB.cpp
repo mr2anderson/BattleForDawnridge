@@ -22,12 +22,12 @@
 
 TerritoryB::TerritoryB() = default;
 TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t player, std::shared_ptr<GOCollection<Unit>> units) :
-	AreaB(x, y, sx, sy, maxHp, player, units),
+	AreaBLandscapeInsensible(x, y, sx, sy, maxHp, player, units),
 	HpSensitiveB(x, y, sx, sy, maxHp, player, units),
 	Building(x, y, sx, sy, maxHp, player, units) {
 
 }
-bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) const {
+bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) {
 	if (!this->works() or !this->belongTo(playerId)) {
 		return false;
 	}
@@ -37,5 +37,5 @@ Events TerritoryB::getHighlightEvent() const {
 	if (!this->works()) {
 		return Events();
 	}
-	return this->AreaB::getHighlightEvent();
+	return this->AreaBLandscapeInsensible::getHighlightEvent();
 }

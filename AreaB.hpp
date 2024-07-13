@@ -28,15 +28,9 @@ public:
 	AreaB();
 	AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 
-	bool inRadius(GO* go) const;
-	bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
-	virtual Events getHighlightEvent() const;
-	uint32_t getAreaXMin() const;
-	uint32_t getAreaXMax() const;
-	uint32_t getAreaYMin() const;
-	uint32_t getAreaYMax() const;
-	uint32_t getAreaWidth() const;
-	uint32_t getAreaHeight() const;
+	bool inRadius(GO* go);
+	virtual bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) = 0;
+	virtual Events getHighlightEvent() const = 0;
 protected:
 	virtual uint32_t getRadius() const = 0;
 

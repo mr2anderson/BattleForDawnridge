@@ -18,14 +18,14 @@
 
 
 #include "HpSensitiveB.hpp"
-#include "AreaB.hpp"
+#include "AreaBLandscapeInsensible.hpp"
 #include "Warrior.hpp"
 
 
 #pragma once
 
 
-class WarriorProducer : public HpSensitiveB, public AreaB {
+class WarriorProducer : public HpSensitiveB, public AreaBLandscapeInsensible {
 public:
 	WarriorProducer();
 	WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
@@ -54,7 +54,7 @@ private:
 	bool busy() const;
 	void drawCurrentProducingShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events handleCurrentProducing();
-	std::tuple<uint32_t, uint32_t> getNewWarriorPosition() const;
+	std::tuple<uint32_t, uint32_t> getNewWarriorPosition();
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

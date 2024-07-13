@@ -25,7 +25,7 @@
 ResourceB::ResourceB() = default;
 ResourceB::ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) :
 	HpSensitiveB(x, y, sx, sy, maxHp, playerId, units),
-	AreaB(x, y, sx, sy, maxHp, playerId, units),
+	AreaBLandscapeInsensible(x, y, sx, sy, maxHp, playerId, units),
 	Building(x, y, sx, sy, maxHp, playerId, units) {
 	this->resourcePointsPtr = resourcePointsPtr;
 }
@@ -44,7 +44,7 @@ Events ResourceB::tryToCollectResources() {
 
 	for (uint32_t i = 0; i < this->resourcePointsPtr->size(); i = i + 1) {
 		ResourcePoint* rp = this->resourcePointsPtr->at(i);
-		if (rp->exist() and this->inRadius(rp) and rp->getResourceType() == this->getResourceType()) {
+		if (rp->exist() and this->AreaB::inRadius(rp) and rp->getResourceType() == this->getResourceType()) {
 			responce.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), rp, this->getCollectionSpeed()));
 			break;
 		}

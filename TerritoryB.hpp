@@ -17,18 +17,18 @@
  */
 
 
-#include "AreaB.hpp"
+#include "AreaBLandscapeInsensible.hpp"
 #include "HpSensitiveB.hpp"
 
 
 #pragma once
 
 
-class TerritoryB : virtual public AreaB, virtual public HpSensitiveB {
+class TerritoryB : virtual public AreaBLandscapeInsensible, virtual public HpSensitiveB {
 public:
 	TerritoryB();
 	TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 
-	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) const;
+	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId);
 	Events getHighlightEvent() const override;
 };

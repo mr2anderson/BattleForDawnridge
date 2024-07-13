@@ -28,7 +28,7 @@ TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, ui
 	Building(x, y, sx, sy, maxHp, playerId, units) {
 	this->originsPtr = originsPtr;
 }
-bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) const {
+bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) {
 	if (!this->connectedToTerritoryOriginB()) {
 		return false;
 	}
