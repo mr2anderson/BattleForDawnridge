@@ -80,7 +80,7 @@ Events Arable::getSelectionW() {
 
 	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
 	Events windowEvent;
-    windowEvent.add(std::make_shared<PlaySoundEvent>("click"));
+    windowEvent.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	windowEvent.add(std::make_shared<CreateEEvent>(window));
 	return windowEvent;
 }
