@@ -31,4 +31,5 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
+    bool isHighObstacle(uint32_t bPlayerId) const override;
 };

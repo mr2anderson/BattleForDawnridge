@@ -26,7 +26,7 @@
 class Mine : public ResourceB {
 public:
 	Mine();
-	Mine(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
+	Mine(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	Building* cloneBuilding() const override;
 
 	Resources getCost() const override;

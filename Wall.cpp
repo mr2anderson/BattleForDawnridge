@@ -38,6 +38,9 @@ bool Wall::warriorCanStay(uint32_t warriorPlayerId) const {
 uint32_t Wall::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return WARRIOR_MOVEMENT_FORBIDDEN;
 }
+bool Wall::isHighObstacle(uint32_t bPlayerId) const {
+    return true;
+}
 Events Wall::getSelectionW() {
 	Events response;
 

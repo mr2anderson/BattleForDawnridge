@@ -176,13 +176,13 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->map->getUnits())));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Arable().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Arable>()), true, true, createBuildingModeEvent);
 	createBuildingModeEvent = Events();
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints(), this->map->getGO(), this->map->getW(), this->map->getH())));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, true, createBuildingModeEvent);
 	createBuildingModeEvent = Events();
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints(), this->map->getGO(), this->map->getW(), this->map->getH())));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Quarry>()), true, true, createBuildingModeEvent);
 	createBuildingModeEvent = Events();
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints(), this->map->getGO(), this->map->getW(), this->map->getH())));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Mine>()), true, true, createBuildingModeEvent);
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionResourceCollectors = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionResourceCollectorsComponents);

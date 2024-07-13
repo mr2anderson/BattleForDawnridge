@@ -35,3 +35,6 @@ std::string Mountains::getSoundName() const {
 std::wstring Mountains::getDescription() const {
 	return *Texts::get()->get("mountains_description");
 }
+bool Mountains::isHighObstacle(uint32_t bPlayerId) const {
+    return true;
+}

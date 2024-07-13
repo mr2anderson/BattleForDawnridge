@@ -38,3 +38,6 @@ std::string Water::getSoundName() const {
 std::wstring Water::getDescription() const {
 	return *Texts::get()->get("water_description");
 }
+bool Water::isLowObstacle(uint32_t bPlayerId) const {
+    return true;
+}

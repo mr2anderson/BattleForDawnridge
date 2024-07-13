@@ -39,6 +39,8 @@ public:
 	void setY(uint32_t newY);
 	virtual bool warriorCanStay(uint32_t warriorPlayerId) const = 0;
 	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const = 0;
+    virtual bool isHighObstacle(uint32_t bPlayerId) const;
+    virtual bool isLowObstacle(uint32_t bPlayerId) const;
 	virtual bool exist() const = 0;
 	Events click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
 	bool intersects(GO* go) const;
@@ -52,7 +54,7 @@ public:
 protected:
 	virtual Events getGameObjectResponse(uint32_t currentPlayerId) = 0;
 
-	virtual HorizontalSelectionWindowComponent getExitComponent() const;
+	virtual HorizontalSelectionWindowComponent getExitComponent();
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;
 
 	static constexpr uint32_t WARRIOR_MOVEMENT_FORBIDDEN = 10000;

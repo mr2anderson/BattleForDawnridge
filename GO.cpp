@@ -54,6 +54,12 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
+bool GO::isHighObstacle(uint32_t bPlayerId) const {
+    return false;
+}
+bool GO::isLowObstacle(uint32_t bPlayerId) const {
+    return false;
+}
 Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 64 * this->getX() and
 		mouseY >= 64 * this->getY() and
@@ -84,7 +90,7 @@ bool GO::highDrawingPriority() const {
 bool GO::highClickPriority() const {
 	return false;
 }
-HorizontalSelectionWindowComponent GO::getExitComponent() const {
+HorizontalSelectionWindowComponent GO::getExitComponent() {
 	HorizontalSelectionWindowComponent component = {
 		"exit_icon",
 		*Texts::get()->get("leave"),

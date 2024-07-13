@@ -23,8 +23,8 @@
 
 
 Sawmill::Sawmill() = default;
-Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) :
-	ResourceB(x, y, 2, 2, 5000, playerId, units, resourcePointsPtr),
+Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	ResourceB(x, y, 2, 2, 5000, playerId, units, resourcePointsPtr, go, mapW, mapH),
 	Building(x, y, 2, 2, 5000, playerId, units) {}
 Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);
@@ -50,7 +50,7 @@ uint32_t Sawmill::getCollectionSpeed() const {
 	return 1500;
 }
 uint32_t Sawmill::getRadius() const {
-	return 3;
+	return 4;
 }
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");

@@ -34,7 +34,7 @@ bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uin
 	}
 	return this->TerritoryB::allowBuilding(x, y, sx, sy, playerId);
 }
-Events TerritoryConductorB::getHighlightEvent() const {
+Events TerritoryConductorB::getHighlightEvent() {
 	if (!this->connectedToTerritoryOriginB()) {
 		return Events();
 	}

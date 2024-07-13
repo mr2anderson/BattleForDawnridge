@@ -18,7 +18,7 @@
 
 
 #include "HpSensitiveB.hpp"
-#include "AreaBLandscapeInsensible.hpp"
+#include "AreaBLandscapeSensible.hpp"
 #include "ResourcePoint.hpp"
 #include "GOCollection.hpp"
 
@@ -26,10 +26,10 @@
 #pragma once
 
 
-class ResourceB : public HpSensitiveB, public AreaBLandscapeInsensible {
+class ResourceB : public HpSensitiveB, public AreaBLandscapeSensible {
 public:
 	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr);
+	ResourceB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 
 	Events newMove(uint32_t playerId) override;
 protected:
@@ -38,6 +38,8 @@ protected:
 private:
 	std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr;
 
+    bool ignoreHighObstacles() const override;
+    bool ignoreLowObstacles() const override;
 	Events tryToCollectResources();
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;

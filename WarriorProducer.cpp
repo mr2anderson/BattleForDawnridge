@@ -30,11 +30,8 @@
 WarriorProducer::WarriorProducer() = default;
 WarriorProducer::WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
 	HpSensitiveB(x, y, sx, sy, maxHp, playerId, units),
-	AreaBLandscapeInsensible(x, y, sx, sy, maxHp, playerId, units),
+	AreaBLandscapeSensible(x, y, sx, sy, maxHp, playerId, units, go, mapW, mapH),
 	Building(x, y, sx, sy, maxHp, playerId, units) {
-	this->go = go;
-	this->mapW = mapW;
-	this->mapH = mapH;
 	this->producing = false;
 }
 void WarriorProducer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -68,15 +65,6 @@ Events WarriorProducer::newMove(uint32_t playerId) {
 		return response;
 	}
 	return Events();
-}
-std::shared_ptr<GOCollection<GO>> WarriorProducer::getGO() {
-	return this->go;
-}
-uint32_t WarriorProducer::getMapW() const {
-	return this->mapW;
-}
-uint32_t WarriorProducer::getMapH() const {
-	return this->mapH;
 }
 std::vector<HorizontalSelectionWindowComponent> WarriorProducer::getProduceComponents() {
 	std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce();
@@ -154,14 +142,19 @@ Events WarriorProducer::handleCurrentProducing() {
 	}
 }
 std::tuple<uint32_t, uint32_t> WarriorProducer::getNewWarriorPosition() {
-	for (uint32_t x = this->getAreaXMin(); x <= this->getAreaXMax(); x = x + 1) {
-		for (uint32_t y = this->getAreaYMin(); y <= this->getAreaYMax(); y = y + 1) {
-			if (this->inRadius(x, y, this->currentProducing->getSX(), this->currentProducing->getSY()) and this->currentProducing->canStay(x, y)) {
-				return std::make_tuple(x, y);
-			}
-		}
-	}
+    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable();
+    for (const auto &a : available) {
+        if (this->currentProducing->canStay(std::get<0>(a.first), std::get<1>(a.first))) {
+            return a.first;
+        }
+    }
 	throw CouldntFindNewWarriorPosition();
+}
+bool WarriorProducer::ignoreHighObstacles() const {
+    return false;
+}
+bool WarriorProducer::ignoreLowObstacles() const {
+    return false;
 }
 Events WarriorProducer::getSelectionW() {
 	std::vector<HorizontalSelectionWindowComponent> components;

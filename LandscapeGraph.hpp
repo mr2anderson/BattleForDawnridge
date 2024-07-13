@@ -17,23 +17,22 @@
  */
 
 
-#include "AreaB.hpp"
+#include <map>
+#include <tuple>
+#include <cstdint>
 
 
 #pragma once
 
 
-class AreaBLandscapeInsensible : public AreaB {
+class LandscapeGraph {
 public:
-    AreaBLandscapeInsensible();
-    AreaBLandscapeInsensible(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+    LandscapeGraph(uint32_t mapW, uint32_t mapH, const std::map<std::tuple<uint32_t, uint32_t>, bool> blocked);
 
-    bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) override;
-    Events getHighlightEvent() override;
-    uint32_t getAreaXMin() const;
-    uint32_t getAreaXMax() const;
-    uint32_t getAreaYMin() const;
-    uint32_t getAreaYMax() const;
-    uint32_t getAreaWidth() const;
-    uint32_t getAreaHeight() const;
+    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t l);
+private:
+    uint32_t mapW, mapH;
+    std::map<std::tuple<uint32_t, uint32_t>, bool> blocked;
+
+    void bfs(uint32_t x, uint32_t y, uint32_t l, std::map<std::tuple<uint32_t, uint32_t>, uint32_t> &dist);
 };

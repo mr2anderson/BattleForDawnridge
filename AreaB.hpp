@@ -30,10 +30,10 @@ public:
 
 	bool inRadius(GO* go);
 	virtual bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) = 0;
-	virtual Events getHighlightEvent() const = 0;
+	virtual Events getHighlightEvent() = 0;
 protected:
 	virtual uint32_t getRadius() const = 0;
 
-	HorizontalSelectionWindowComponent getExitComponent() const override;
+	HorizontalSelectionWindowComponent getExitComponent() override;
 	HorizontalSelectionWindowComponent getDestroyComponent() override;
 };

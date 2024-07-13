@@ -54,7 +54,7 @@ bool AreaBLandscapeInsensible::inRadius(uint32_t x, uint32_t y, uint32_t sx, uin
     }
     return true;
 }
-Events AreaBLandscapeInsensible::getHighlightEvent() const {
+Events AreaBLandscapeInsensible::getHighlightEvent() {
     Events gEvent;
     if (!this->exist()) {
         return gEvent;

@@ -28,7 +28,7 @@ AreaB::AreaB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, u
 bool AreaB::inRadius(GO *go) {
 	return this->inRadius(go->getX(), go->getY(), go->getSX(), go->getSY());
 }
-HorizontalSelectionWindowComponent AreaB::getExitComponent() const {
+HorizontalSelectionWindowComponent AreaB::getExitComponent() {
 	HorizontalSelectionWindowComponent component = this->Building::getExitComponent();
 	component.gEvent = component.gEvent + this->getHighlightEvent();
 	return component;
