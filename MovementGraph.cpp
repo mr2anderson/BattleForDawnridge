@@ -20,7 +20,6 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-#include <concurrent_priority_queue.h>
 #include "MovementGraph.hpp"
 #include "DijkstraQueueElement.hpp"
 

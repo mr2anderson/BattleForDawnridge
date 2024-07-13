@@ -51,7 +51,7 @@ bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
 	return true;
 }
 uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
-	return 2;
+	return 3;
 }
 Events ResourcePoint::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
