@@ -79,7 +79,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 						this->handleEvent(events);
 					}
 				}
-				if (!this->elements.empty()) {
+				else {
 					Events events = this->elements.front()->click();
 					this->handleEvent(events);
 				}
