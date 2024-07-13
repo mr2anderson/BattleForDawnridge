@@ -17,35 +17,7 @@
  */
 
 
-#include "Label.hpp"
+#include "NextClueEvent.hpp"
 
 
-#pragma once
-
-
-class ClueManager {
-public:
-    static ClueManager* get() {
-        if (ClueManager::singletone == nullptr) {
-            ClueManager::singletone = new ClueManager();
-        }
-        return ClueManager::singletone;
-    }
-
-    Label getClueLabel(uint32_t windowW, uint32_t windowH);
-    void nextClue();
-private:
-    ClueManager();
-    ClueManager(const ClueManager& copy);
-    static ClueManager* singletone;
-
-    uint32_t currentClue;
-    Label label;
-
-    static const uint32_t TOTAL_CLUES;
-    
-    static const uint32_t W;
-    static const uint32_t H;
-
-    void regenerateLabel();
-};
+NextClueEvent::NextClueEvent() = default;

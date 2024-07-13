@@ -26,6 +26,8 @@
 #include "SoundQueue.hpp"
 #include "ColorTheme.hpp"
 #include "ClueManager.hpp"
+#include "Label.hpp"
+#include "SoundQueue.hpp"
 
 
 PAKScreen* PAKScreen::singletone = nullptr;
@@ -45,6 +47,10 @@ bool PAKScreen::run(sf::RenderWindow &window) {
 				Music::get()->get("intro")->stop();
 				return true;
 			}
+			else if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Button::Left) {
+				Events events = this->nextClueButton.click();
+				this->handleEvent(events);
+			}
 		}
 		this->drawEverything(window);
 	}
@@ -62,11 +68,36 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
 	this->t.setOutlineColor(sf::Color::Black);
 	this->t.setOutlineThickness(2);
 	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 125);
+
+	Events nextClueButtonEvent;
+	nextClueButtonEvent.add(std::make_shared<PlaySoundEvent>("click"));
+	nextClueButtonEvent.add(std::make_shared<NextClueEvent>());
+
+	uint32_t nextClueButtonX = ClueManager::get()->getClueLabel(windowW, windowH).getX() + ClueManager::get()->getClueLabel(windowW, windowH).getW() - 200;
+	uint32_t nextClueButtonY = ClueManager::get()->getClueLabel(windowW, windowH).getY() - 30 - 10;
+	this->nextClueButton = Button(std::make_shared<Label>(nextClueButtonX, nextClueButtonY, 200, 30, *Texts::get()->get("next_clue")), nextClueButtonEvent);
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(sf::Color::Black);
 	window.draw(this->s);
 	window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(this->t);
+	window.draw(this->nextClueButton);
 	window.display();
+}
+void PAKScreen::handleEvent(Events& e) {
+	for (uint32_t i = 0; i < e.size(); i = i + 1) {
+		if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e.at(i))) {
+			this->handlePlaySoundEvent(playSoundEvent);
+		}
+		else if (std::shared_ptr<NextClueEvent> nextClueEvent = std::dynamic_pointer_cast<NextClueEvent>(e.at(i))) {
+			this->handleNextClueEvent(nextClueEvent);
+		}
+	}
+}
+void PAKScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
+	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
+}
+void PAKScreen::handleNextClueEvent(std::shared_ptr<NextClueEvent> e) {
+	ClueManager::get()->nextClue();
 }

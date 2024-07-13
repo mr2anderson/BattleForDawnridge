@@ -663,6 +663,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp" />
     <ClInclude Include="MovementGraph.hpp" />
     <ClInclude Include="Music.hpp" />
+    <ClInclude Include="NextClueEvent.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
     <ClInclude Include="PathDoesNotExist.hpp" />
     <ClInclude Include="PlainsGeneration.hpp" />
@@ -808,6 +809,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="MoveGameActionWindowUpEvent.cpp" />
     <ClCompile Include="MovementGraph.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="NextClueEvent.cpp" />
     <ClCompile Include="PAKScreen.cpp" />
     <ClCompile Include="PathDoesNotExist.cpp" />
     <ClCompile Include="PlainsGeneration.cpp" />

@@ -17,7 +17,9 @@
  */
 
 
-#include <SFML/Graphics.hpp>
+#include "Button.hpp"
+#include "PlaySoundEvent.hpp"
+#include "NextClueEvent.hpp"
 
 
 #pragma once
@@ -40,7 +42,12 @@ private:
 
 	sf::Sprite s;
 	sf::Text t;
+	Button nextClueButton;
 
 	void init(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
+
+	void handleEvent(Events& e);
+	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
+	void handleNextClueEvent(std::shared_ptr<NextClueEvent> e);
 };

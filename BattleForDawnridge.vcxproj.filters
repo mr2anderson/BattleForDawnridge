@@ -1138,6 +1138,9 @@
     <ClInclude Include="PlayerPointerColors.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
+    <ClInclude Include="NextClueEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1568,6 +1571,9 @@
     </ClCompile>
     <ClCompile Include="PlayerPointerColors.cpp">
       <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="NextClueEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

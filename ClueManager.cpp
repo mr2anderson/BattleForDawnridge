@@ -25,12 +25,27 @@
 ClueManager* ClueManager::singletone = nullptr;
 
 
+const uint32_t ClueManager::TOTAL_CLUES = 10;
+
+
+const uint32_t ClueManager::W = 475;
+const uint32_t ClueManager::H = 80;
+
+
 ClueManager::ClueManager() {
-	this->label = Label(0, 0, 450, 75, *Texts::get()->get("clue" + std::to_string(time(nullptr) % TOTAL_CLUES)));
+	this->currentClue = time(nullptr) % TOTAL_CLUES;
+	this->regenerateLabel();
 }
 Label ClueManager::getClueLabel(uint32_t windowW, uint32_t windowH) {
 	label.setX(windowW - label.getW() - 20);
 	label.setY(windowH - label.getH() - 20);
 
 	return label;
+}
+void ClueManager::nextClue() {
+	this->currentClue = (this->currentClue + 1) % TOTAL_CLUES;
+	this->regenerateLabel();
+}
+void ClueManager::regenerateLabel() {
+	this->label = Label(0, 0, W, H, *Texts::get()->get("clue" + std::to_string(this->currentClue)));
 }
