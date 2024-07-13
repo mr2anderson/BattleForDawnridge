@@ -154,10 +154,12 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	Events createConfirmReturnToMenuWindowEvent;
 	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
 
+
+
+
 	Events createBuildingModeEvent;
-
-
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
+    buildMenuSectionMainComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
 	createBuildingModeEvent = Events();
 	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getTobs())));
 	buildMenuSectionMainComponents.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, true, createBuildingModeEvent);
@@ -169,6 +171,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionResourceCollectorsComponents;
+    buildMenuSectionResourceCollectorsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
 	createBuildingModeEvent = Events();
 	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->map->getUnits())));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Arable().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Arable>()), true, true, createBuildingModeEvent);
@@ -189,6 +192,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionWarehousesComponents;
+    buildMenuSectionWarehousesComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
 	createBuildingModeEvent = Events();
 	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseFood>(0, 0, 0, this->map->getUnits())));
 	buildMenuSectionWarehousesComponents.emplace_back(WarehouseFood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseFood>()), true, true, createBuildingModeEvent);
@@ -211,34 +215,62 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 
-	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroops;
+	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
+    buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
+    createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH()))));
+    buildMenuSectionTroopsComponents.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, true, createBuildingModeEvent);
+
+    std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionTroopsComponents);
+    Events createBuildWindowSectionTroopsEvent;
+    createBuildWindowSectionTroopsEvent.add(std::make_shared<CreateEEvent>(buildWindowSectionTroops));
+
+
+
+    std::vector<HorizontalSelectionWindowComponent> buildMenuSectionDefenceComponents;
+    buildMenuSectionDefenceComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
+    createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
+    buildMenuSectionDefenceComponents.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, createBuildingModeEvent);
+    createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
+    buildMenuSectionDefenceComponents.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, createBuildingModeEvent);
+
+    std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionDefenceComponents);
+    Events createBuildWindowSectionDefenceEvent;
+    createBuildWindowSectionDefenceEvent.add(std::make_shared<CreateEEvent>(buildWindowSectionDefence));
+
+
+
+    std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
+    buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
+    createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
+    buildMenuSectionOtherComponents.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, createBuildingModeEvent);
+    createBuildingModeEvent = Events();
+    createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0, this->map->getUnits())));
+    buildMenuSectionOtherComponents.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, createBuildingModeEvent);
+
+    std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionOther = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionOtherComponents);
+    Events createBuildWindowSectionOtherEvent;
+    createBuildWindowSectionOtherEvent.add(std::make_shared<CreateEEvent>(buildWindowSectionOther));
 
 
 
     std::vector<HorizontalSelectionWindowComponent> buildMenuComponents;
     buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
-    
-    
-    
-    
-	createBuildingModeEvent = Events();
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
-    buildMenuComponents.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, createBuildingModeEvent);
-    createBuildingModeEvent = Events();
-	createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH()))));
-	buildMenuComponents.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, true, createBuildingModeEvent);
-	createBuildingModeEvent = Events();
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
-    buildMenuComponents.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, createBuildingModeEvent);
-    createBuildingModeEvent = Events();
-	createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
-	buildMenuComponents.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, createBuildingModeEvent);
-	createBuildingModeEvent = Events();
-    createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0, this->map->getUnits())));
-    buildMenuComponents.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, createBuildingModeEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("main"), true, false, createBuildWindowSectionMainEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("resource_collectors"), true, false, createBuildWindowSectionResourceCollectorsEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("warehouses"), true, false, createBuildWindowSectionWarehousesEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("troops"), true, false, createBuildWindowSectionTroopsEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("defence"), true, false, createBuildWindowSectionDefenceEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("other"), true, false, createBuildWindowSectionOtherEvent);
+
     std::shared_ptr<HorizontalSelectionWindow> buildWindow = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuComponents);
     Events buildEvent;
     buildEvent.add(std::make_shared<CreateEEvent>(buildWindow));
+
+
 
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
@@ -680,9 +712,9 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 	}
 	std::shared_ptr<WindowButton> w;
 	if (count == 1) {
-		Events returnToMenu;
-		returnToMenu.add(std::make_shared<ReturnToMenuEvent>());
-		w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("game_finished"), *Texts::get()->get("OK"), returnToMenu);
+		Events returnToMenuEvent;
+		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
+		w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("game_finished"), *Texts::get()->get("OK"), returnToMenuEvent);
 	}
 	else {
 		w = std::make_shared<WindowButton>("", "click", *Texts::get()->get("player_is_out"), *Texts::get()->get("OK"));
