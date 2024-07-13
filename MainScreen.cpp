@@ -154,56 +154,91 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	Events createConfirmReturnToMenuWindowEvent;
 	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
 
-    std::vector<HorizontalSelectionWindowComponent> components;
-    components.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
-    Events event;
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getTobs())));
-    components.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, true, event);
-    event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->map->getUnits())));
-    components.emplace_back(Arable().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Arable>()), true, true, event);
-    event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
-    components.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, true, event);
-    event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
-    components.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Quarry>()), true, true, event);
-    event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
-    components.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Mine>()), true, true, event);
-    event = Events();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseFood>(0, 0, 0, this->map->getUnits())));
-	components.emplace_back(WarehouseFood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseFood>()), true, true, event);
-	event = Events();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseWood>(0, 0, 0, this->map->getUnits())));
-	components.emplace_back(WarehouseWood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseWood>()), true, true, event);
-	event = Events();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseStone>(0, 0, 0, this->map->getUnits())));
-	components.emplace_back(WarehouseStone().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseStone>()), true, true, event);
-	event = Events();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseIron>(0, 0, 0, this->map->getUnits())));
-	components.emplace_back(WarehouseIron().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseIron>()), true, true, event);
-	event = Events();
-	event.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0, this->map->getUnits(), this->map->getTreasures())));
-	components.emplace_back(WarehouseGold().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseGold>()), true, true, event);
-	event = Events();
-    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
-    components.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, event);
-    event = Events();
-	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH()))));
-	components.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, true, event);
-	event = Events();
-    event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
-    components.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, event);
-    event = Events();
-	event.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
-	components.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, event);
-	event = Events();
-    event.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0, this->map->getUnits())));
-    components.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, event);
-    std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>("click", "click", components);
+	Events createBuildingModeEvent;
+
+
+	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getTobs())));
+	buildMenuSectionMainComponents.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, true, createBuildingModeEvent);
+
+	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionMain = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionMainComponents);
+	Events createBuildWindowSectionMainEvent;
+	createBuildWindowSectionMainEvent.add(std::make_shared<CreateEEvent>(buildWindowSectionMain));
+
+
+
+	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionResourceCollectorsComponents;
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->map->getUnits())));
+	buildMenuSectionResourceCollectorsComponents.emplace_back(Arable().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Arable>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
+	buildMenuSectionResourceCollectorsComponents.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
+	buildMenuSectionResourceCollectorsComponents.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Quarry>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints())));
+	buildMenuSectionResourceCollectorsComponents.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Mine>()), true, true, createBuildingModeEvent);
+
+	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionResourceCollectors = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionResourceCollectorsComponents);
+	Events createBuildWindowSectionResourceCollectorsEvent;
+	createBuildWindowSectionResourceCollectorsEvent.add(std::make_shared<CreateEEvent>(buildWindowSectionResourceCollectors));
+
+
+
+	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionWarehousesComponents;
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseFood>(0, 0, 0, this->map->getUnits())));
+	buildMenuSectionWarehousesComponents.emplace_back(WarehouseFood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseFood>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseWood>(0, 0, 0, this->map->getUnits())));
+	buildMenuSectionWarehousesComponents.emplace_back(WarehouseWood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseWood>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseStone>(0, 0, 0, this->map->getUnits())));
+	buildMenuSectionWarehousesComponents.emplace_back(WarehouseStone().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseStone>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseIron>(0, 0, 0, this->map->getUnits())));
+	buildMenuSectionWarehousesComponents.emplace_back(WarehouseIron().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseIron>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0, this->map->getUnits(), this->map->getTreasures())));
+	buildMenuSectionWarehousesComponents.emplace_back(WarehouseGold().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseGold>()), true, true, createBuildingModeEvent);
+	
+	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionWarehouses = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuSectionWarehousesComponents);
+	Events createBuildWindowSectionWarehousesEvent;
+	createBuildWindowSectionWarehousesEvent.add(std::make_shared<CreateEEvent>(buildWindowSectionWarehouses));
+
+
+
+	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroops;
+
+
+
+    std::vector<HorizontalSelectionWindowComponent> buildMenuComponents;
+    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, true, Events());
+    
+    
+    
+    
+	createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
+    buildMenuComponents.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, true, createBuildingModeEvent);
+    createBuildingModeEvent = Events();
+	createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH()))));
+	buildMenuComponents.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
+    buildMenuComponents.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, true, createBuildingModeEvent);
+    createBuildingModeEvent = Events();
+	createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
+	buildMenuComponents.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, true, createBuildingModeEvent);
+	createBuildingModeEvent = Events();
+    createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0, this->map->getUnits())));
+    buildMenuComponents.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, true, createBuildingModeEvent);
+    std::shared_ptr<HorizontalSelectionWindow> buildWindow = std::make_shared<HorizontalSelectionWindow>("click", "click", buildMenuComponents);
     Events buildEvent;
-    buildEvent.add(std::make_shared<CreateEEvent>(w));
+    buildEvent.add(std::make_shared<CreateEEvent>(buildWindow));
 
 	this->windowW = window.getSize().x;
 	this->windowH = window.getSize().y;
