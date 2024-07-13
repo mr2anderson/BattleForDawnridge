@@ -30,7 +30,7 @@ PlayerPointerColors::PlayerPointerColors() {
 	std::random_device rd;
 	std::mt19937 mersenne(rd());
 
-	std::vector<std::string> all = { "purple", "green", "blue", "black", "grey" };
+	std::vector<std::string> all = { "purple", "green", "blue", "grey" };
 	while (!all.empty()) {
 		uint32_t index = mersenne() % all.size();
 		if (index != all.size() - 1) {
