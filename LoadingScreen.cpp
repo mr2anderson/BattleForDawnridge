@@ -116,7 +116,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
                 "wall1", "wall2", "road", "mountains",
                 "arable", "black", "blue", "green", "grey",
-                "purple", "yellow", "warehouse_food", "warehouse_wood", "warehouse_stone",
+                "purple", "warehouse_food", "warehouse_wood", "warehouse_stone",
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2"}) {

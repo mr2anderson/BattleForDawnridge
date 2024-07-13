@@ -17,25 +17,29 @@
  */
 
 
-#include <array>
-#include "PlayerPointer.hpp"
-#include "Textures.hpp"
+#include <random>
+#include <unordered_map>
 #include "PlayerPointerColors.hpp"
 
 
-PlayerPointer::PlayerPointer(uint32_t side, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
-	this->side = side;
-	this->x = x;
-	this->y = y;
-	this->sx = sx;
-	this->sy = sy;
+
+PlayerPointerColors* PlayerPointerColors::singletone = nullptr;
+
+
+PlayerPointerColors::PlayerPointerColors() {
+	std::random_device rd;
+	std::mt19937 mersenne(rd());
+
+	std::vector<std::string> all = { "purple", "green", "blue", "black", "grey" };
+	while (!all.empty()) {
+		uint32_t index = mersenne() % all.size();
+		if (index != all.size() - 1) {
+			std::swap(all[index], all.back());
+		}
+		this->names.push_back(all.back());
+		all.pop_back();
+	}
 }
-void PlayerPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	std::string color = PlayerPointerColors::get()->getColorName(this->side);
-	sf::Sprite pointer;
-	pointer.setTexture(*Textures::get()->get(color));
-	float scale = std::max(0.5f, 64 * (float)this->sy / (float)pointer.getTexture()->getSize().y / 12);
-	pointer.setScale(scale, scale);
-	pointer.setPosition(64 * (this->x + this->sx) - pointer.getLocalBounds().width, 64 * this->y);
-	target.draw(pointer, states);
+std::string PlayerPointerColors::getColorName(uint32_t playerId) const {
+	return this->names.at(playerId - 1);
 }

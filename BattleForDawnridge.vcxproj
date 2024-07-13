@@ -668,6 +668,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="PlainsGeneration.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayerPointer.hpp" />
+    <ClInclude Include="PlayerPointerColors.hpp" />
     <ClInclude Include="Playlist.hpp" />
     <ClInclude Include="PlaySoundEvent.hpp" />
     <ClInclude Include="PopUpElement.hpp" />
@@ -812,6 +813,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="PlainsGeneration.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerPointer.cpp" />
+    <ClCompile Include="PlayerPointerColors.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="PlaySoundEvent.cpp" />
     <ClCompile Include="PopUpElement.cpp" />

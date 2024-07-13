@@ -1135,6 +1135,9 @@
     <ClInclude Include="Move.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerPointerColors.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1561,6 +1564,9 @@
       <Filter>Source Files\screensService</Filter>
     </ClCompile>
     <ClCompile Include="Move.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPointerColors.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>
