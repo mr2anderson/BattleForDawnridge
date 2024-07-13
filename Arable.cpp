@@ -43,7 +43,7 @@ Events Arable::newMove(uint32_t playerId) {
 	return Events();
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 4000)});
+	return Resources({ Resource("wood", 5000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -55,7 +55,7 @@ std::wstring Arable::getDescription() const {
 	return *Texts::get()->get("arable_description");
 }
 uint32_t Arable::getRegenerationSpeed() const {
-	return 1000;
+	return 500;
 }
 std::wstring Arable::getUpperCaseReadableName() const {
 	return *Texts::get()->get("arable_upper_case_readable_name");

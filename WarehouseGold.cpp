@@ -24,8 +24,8 @@
 
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Treasure>> treasures) :
-	ResourceStorageB(x, y, 2, 2, 20000, playerId, units),
-	Building(x, y, 2, 2, 20000, playerId, units) {
+	ResourceStorageB(x, y, 2, 2, 10000, playerId, units),
+	Building(x, y, 2, 2, 10000, playerId, units) {
 	this->treasures = treasures;
 }
 Building* WarehouseGold::cloneBuilding() const {
@@ -44,7 +44,7 @@ Resources WarehouseGold::getCost() const {
 	return cost;
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return 5000;
+	return 2500;
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";
@@ -67,7 +67,7 @@ Events WarehouseGold::collect() {
 	for (uint32_t i = 0; i < this->treasures->size(); i = i + 1) {
 		Treasure* t = this->treasures->at(i);
 		if (t->exist() and this->connectedTo(t)) {
-			events.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), t, 3000));
+			events.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), t, 2000));
 		}
 	}
 

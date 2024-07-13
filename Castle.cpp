@@ -23,10 +23,10 @@
 
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	TerritoryOriginB(x, y, 2, 2, 160000, playerId, units),
-	ResourceStorageB(x, y, 2, 2, 160000, playerId, units),
-	VictoryConditionB(x, y, 2, 2, 160000, playerId, units),
-	Building(x, y, 2, 2, 160000, playerId, units) {
+	TerritoryOriginB(x, y, 2, 2, 250000, playerId, units),
+	ResourceStorageB(x, y, 2, 2, 250000, playerId, units),
+	VictoryConditionB(x, y, 2, 2, 250000, playerId, units),
+	Building(x, y, 2, 2, 250000, playerId, units) {
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
@@ -59,7 +59,7 @@ Events Castle::destroy() {
 	return this->ResourceStorageB::destroy() + this->VictoryConditionB::destroy();
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return 20000;
+	return 50000;
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");

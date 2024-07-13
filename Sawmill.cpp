@@ -24,8 +24,8 @@
 
 Sawmill::Sawmill() = default;
 Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr) :
-	ResourceB(x, y, 2, 2, 10000, playerId, units, resourcePointsPtr),
-	Building(x, y, 2, 2, 10000, playerId, units) {}
+	ResourceB(x, y, 2, 2, 5000, playerId, units, resourcePointsPtr),
+	Building(x, y, 2, 2, 5000, playerId, units) {}
 Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);
 }
@@ -35,7 +35,7 @@ Resources Sawmill::getCost() const {
 	return cost;
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return 5000;
+	return 1750;
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";

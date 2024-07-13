@@ -23,8 +23,8 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	TradingB(x, y, 2, 2, 15000, playerId, units),
-	Building(x, y, 2, 2, 15000, playerId, units) {
+	TradingB(x, y, 2, 2, 10000, playerId, units),
+	Building(x, y, 2, 2, 10000, playerId, units) {
 
 }
 Building* Market::cloneBuilding() const {
@@ -32,7 +32,7 @@ Building* Market::cloneBuilding() const {
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 30000));
+	cost.plus(Resource("wood", 30000));
 	return cost;
 }
 std::string Market::getTextureName() const {
@@ -45,14 +45,14 @@ std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return 5000;
+	return 2500;
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
 }
 std::vector<Trade> Market::getTrades() const {
-	const uint32_t time = 6;
-	const uint32_t goldVolume = 6000;
+	const uint32_t time = 3;
+	const uint32_t goldVolume = 2000;
 
 	std::vector<Trade> trades;
 

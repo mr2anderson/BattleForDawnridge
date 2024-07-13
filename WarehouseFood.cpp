@@ -23,8 +23,8 @@
 
 WarehouseFood::WarehouseFood() = default;
 WarehouseFood::WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	ResourceStorageB(x, y, 2, 2, 20000, playerId, units),
-	Building(x, y, 2, 2, 20000, playerId, units) {
+	ResourceStorageB(x, y, 2, 2, 10000, playerId, units),
+	Building(x, y, 2, 2, 10000, playerId, units) {
 
 }
 Building* WarehouseFood::cloneBuilding() const {
@@ -43,7 +43,7 @@ Resources WarehouseFood::getCost() const {
 	return cost;
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {
-	return 5000;
+	return 2500;
 }
 std::string WarehouseFood::getTextureName() const {
 	return "warehouse_food";

@@ -23,8 +23,8 @@
 
 WarehouseIron::WarehouseIron() = default;
 WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	ResourceStorageB(x, y, 2, 2, 20000, playerId, units),
-	Building(x, y, 2, 2, 20000, playerId, units) {
+	ResourceStorageB(x, y, 2, 2, 10000, playerId, units),
+	Building(x, y, 2, 2, 10000, playerId, units) {
 
 }
 Building* WarehouseIron::cloneBuilding() const {
@@ -33,7 +33,7 @@ Building* WarehouseIron::cloneBuilding() const {
 Events WarehouseIron::newMove(uint32_t playerId) {
 	Events response;
 	if (this->belongTo(playerId) and this->exist()) {
-		return  this->regenerate();
+		return this->regenerate();
 	}
 	return response;
 }
@@ -43,7 +43,7 @@ Resources WarehouseIron::getCost() const {
 	return cost;
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
-	return 5;
+	return 2500;
 }
 std::string WarehouseIron::getTextureName() const {
 	return "warehouse_iron";
