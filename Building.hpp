@@ -46,4 +46,5 @@ protected:
 private:
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+    virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 };

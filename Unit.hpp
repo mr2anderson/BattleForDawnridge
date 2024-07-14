@@ -21,6 +21,7 @@
 #include "HPGO.hpp"
 #include "Resources.hpp"
 #include "GOCollection.hpp"
+#include "PlayerPointer.hpp"
 
 
 #pragma once
@@ -42,6 +43,7 @@ protected:
 	std::shared_ptr<GOCollection<Unit>> getUnits();
 	virtual bool isActiveConductor() const;
 	bool connectedTo(GO* go) const;
+    virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const = 0;
 private:
 	uint32_t playerId;
 	std::shared_ptr<GOCollection<Unit>> units;

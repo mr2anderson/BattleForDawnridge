@@ -41,6 +41,7 @@ public:
 	void setY(uint32_t newY);
 	virtual bool warriorCanStay(uint32_t warriorPlayerId) const = 0;
 	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const = 0;
+    virtual bool isUltraHighObstacle() const;
     virtual bool isHighObstacle() const;
     virtual bool isLowObstacle() const;
 	virtual bool exist() const = 0;

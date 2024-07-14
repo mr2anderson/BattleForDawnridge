@@ -49,6 +49,7 @@ private:
 	void drawCurrentProducingShortInfo(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events handleCurrentProducing();
 	std::tuple<uint32_t, uint32_t> getNewWarriorPosition();
+    bool ignoreUltraHighObstacles() const override;
     bool ignoreHighObstacles() const override;
     bool ignoreLowObstacles() const override;
 	Events getSelectionW();

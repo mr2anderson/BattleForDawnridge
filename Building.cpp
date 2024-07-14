@@ -21,6 +21,7 @@
 #include "PlaySoundEvent.hpp"
 #include "Texts.hpp"
 #include "FlyingE.hpp"
+#include "PlayerPointerCircle.hpp"
 
 
 Building::Building() = default;
@@ -79,4 +80,7 @@ bool Building::warriorCanStay(uint32_t warriorPlayerId) const {
 }
 uint32_t Building::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return 1;
+}
+std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
+    return std::make_shared<PlayerPointerCircle>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 }

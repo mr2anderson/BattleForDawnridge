@@ -17,23 +17,19 @@
  */
 
 
-#include <array>
 #include "PlayerPointer.hpp"
-#include "Textures.hpp"
 #include "PlayerPointerColors.hpp"
 
 
-PlayerPointer::PlayerPointer(uint32_t side, float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) {
-	this->side = side;
-	this->xInPixels = xInPixels;
-	this->yInPixels = yInPixels;
-	this->sx = sx;
-	this->sy = sy;
-}
-void PlayerPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	std::string color = PlayerPointerColors::get()->getColorName(this->side);
-	sf::Sprite pointer;
-	pointer.setTexture(*Textures::get()->get(color));
-	pointer.setPosition(this->xInPixels + 64 * this->sx - pointer.getLocalBounds().width, this->yInPixels);
-	target.draw(pointer, states);
+PlayerPointer::PlayerPointer() = default;
+void PlayerPointer::setSide(uint32_t side) {
+    if (side == PlayerPointerColors::get()->getBlueIndex()) {
+        this->setTypeBlue();
+    }
+    else if (side == PlayerPointerColors::get()->getGreenIndex()) {
+        this->setTypeGreen();
+    }
+    else if (side == PlayerPointerColors::get()->getPurpleIndex()) {
+        this->setTypePurple();
+    }
 }

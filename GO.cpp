@@ -60,6 +60,9 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
+bool GO::isUltraHighObstacle() const {
+    return false;
+}
 bool GO::isHighObstacle() const {
     return false;
 }

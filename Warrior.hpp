@@ -35,6 +35,8 @@ public:
 	Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	virtual Warrior* cloneWarrior() const = 0;
 
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
 	Events newMove(uint32_t playerId) override;
 	void refreshMovementPoints();
 	void startClickAnimation();
@@ -82,4 +84,5 @@ private:
 	void startAnimation(const std::string &type);
     AnimationState getCurrentAnimationState() const;
 	Events getGameObjectResponse(uint32_t playerId) override;
+    std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 };

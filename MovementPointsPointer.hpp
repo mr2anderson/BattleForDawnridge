@@ -17,24 +17,25 @@
  */
 
 
-#include "Mountains.hpp"
-#include "Texts.hpp"
+#include "PlayerPointer.hpp"
 
 
-Mountains::Mountains() = default;
-Mountains::Mountains(uint32_t x, uint32_t y) :
-	ImpassableObstacle(x, y, 1, 1) {
+#pragma once
 
-}
-std::string Mountains::getTextureName() const {
-	return "mountains";
-}
-std::string Mountains::getSoundName() const {
-	return "wind";
-}
-std::wstring Mountains::getDescription() const {
-	return *Texts::get()->get("mountains_description");
-}
-bool Mountains::isUltraHighObstacle() const {
-    return true;
-}
+
+class MovementPointsPointer : public PlayerPointer {
+public:
+    MovementPointsPointer(float xInPixels, float yInPixels, uint32_t value);
+
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+private:
+    sf::Text text;
+
+    static const sf::Color BLUE;
+    static const sf::Color GREEN;
+    static const sf::Color PURPLE;
+
+    void setTypeBlue() override;
+    void setTypeGreen() override;
+    void setTypePurple() override;
+};

@@ -39,6 +39,9 @@ Events ResourceB::newMove(uint32_t playerId) {
 	}
 	return Events();
 }
+bool ResourceB::ignoreUltraHighObstacles() const {
+    return false;
+}
 bool ResourceB::ignoreHighObstacles() const {
     return false;
 }

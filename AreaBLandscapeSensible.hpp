@@ -36,6 +36,7 @@ protected:
     uint32_t getMapH() const;
     std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable();
 
+    virtual bool ignoreUltraHighObstacles() const = 0;
     virtual bool ignoreHighObstacles() const = 0;
     virtual bool ignoreLowObstacles() const = 0;
 private:

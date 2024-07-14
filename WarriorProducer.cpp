@@ -150,6 +150,9 @@ std::tuple<uint32_t, uint32_t> WarriorProducer::getNewWarriorPosition() {
     }
 	throw CouldntFindNewWarriorPosition();
 }
+bool WarriorProducer::ignoreUltraHighObstacles() const {
+    return false;
+}
 bool WarriorProducer::ignoreHighObstacles() const {
     return false;
 }

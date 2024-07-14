@@ -17,7 +17,7 @@
  */
 
 
-#include <string>
+#include <cstdint>
 
 
 #pragma once
@@ -32,11 +32,13 @@ public:
         return PlayerPointerColors ::singletone;
     }
 
-    std::string getColorName(uint32_t playerId) const;
+    uint32_t getBlueIndex() const;
+    uint32_t getGreenIndex() const;
+    uint32_t getPurpleIndex() const;
 private:
     PlayerPointerColors();
     PlayerPointerColors(const PlayerPointerColors& copy);
     static PlayerPointerColors* singletone;
 
-    std::vector<std::string> names;
+    std::vector<uint32_t> indexes;
 };

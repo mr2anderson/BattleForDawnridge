@@ -30,6 +30,8 @@
 #include "WindowButton.hpp"
 #include "Texts.hpp"
 #include "CreateEEvent.hpp"
+#include "MovementPointsPointer.hpp"
+#include "PlayerPointerCircle.hpp"
 
 
 const uint32_t Warrior::MS_FOR_ANIMATION = 750;
@@ -45,6 +47,9 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std:
 	this->mapW = mapW;
 	this->mapH = mapH;
 	this->startClickAnimation();
+}
+void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    this->Unit::draw(target, states);
 }
 Events Warrior::newMove(uint32_t currentPlayerId) {
 	if (!this->exist() or !this->belongTo(currentPlayerId)) {
@@ -342,4 +347,10 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
         response.add(std::make_shared<CreateEEvent>(w));
     }
 	return response;
+}
+std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
+    if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
+        return std::make_shared<MovementPointsPointer>(this->getXInPixels(), this->getYInPixels(), this->movementPoints.value_or(this->getMovementPoints()));
+    }
+    return std::make_shared<PlayerPointerCircle>(this->getXInPixels(), this->getYInPixels(), 1, 1);
 }

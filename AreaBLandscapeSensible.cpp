@@ -74,8 +74,9 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaBLandscapeSensible::getAv
         if (!o->exist()) {
             continue;
         }
-        if ((!this->ignoreLowObstacles() and o->isLowObstacle()) or (!this->ignoreHighObstacles() and
-                                                                     o->isHighObstacle())) {
+        if ((!this->ignoreLowObstacles() and o->isLowObstacle()) or
+            (!this->ignoreHighObstacles() and o->isHighObstacle()) or
+            (!this->ignoreUltraHighObstacles() and o->isUltraHighObstacle())) {
             for (uint32_t x = o->getX(); x < o->getX() + o->getSX(); x = x + 1) {
                 for (uint32_t y = o->getY(); y < o->getY() + o->getSY(); y = y + 1) {
                     blocked[std::make_tuple(x, y)] = true;

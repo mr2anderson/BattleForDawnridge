@@ -38,6 +38,7 @@ protected:
 private:
 	std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr;
 
+    bool ignoreUltraHighObstacles() const override;
     bool ignoreHighObstacles() const override;
     bool ignoreLowObstacles() const override;
 	Events tryToCollectResources();

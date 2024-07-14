@@ -18,7 +18,6 @@
 
 
 #include <random>
-#include <unordered_map>
 #include "PlayerPointerColors.hpp"
 
 
@@ -30,16 +29,25 @@ PlayerPointerColors::PlayerPointerColors() {
 	std::random_device rd;
 	std::mt19937 mersenne(rd());
 
-	std::vector<std::string> all = { "purple", "green", "blue", "grey" };
+	std::vector<uint32_t> all;
+    for (uint32_t i = 1; i <= 3; i = i + 1) {
+        all.push_back(i);
+    }
 	while (!all.empty()) {
-		uint32_t index = mersenne() % all.size();
-		if (index != all.size() - 1) {
-			std::swap(all[index], all.back());
+		uint32_t it = mersenne() % all.size();
+		if (it != all.size() - 1) {
+			std::swap(all[it], all.back());
 		}
-		this->names.push_back(all.back());
+		this->indexes.push_back(all.back());
 		all.pop_back();
 	}
 }
-std::string PlayerPointerColors::getColorName(uint32_t playerId) const {
-	return this->names.at(playerId - 1);
+uint32_t PlayerPointerColors::getBlueIndex() const {
+    return this->indexes[0];
+}
+uint32_t PlayerPointerColors::getGreenIndex() const {
+    return this->indexes[1];
+}
+uint32_t PlayerPointerColors::getPurpleIndex() const {
+    return this->indexes[2];
 }
