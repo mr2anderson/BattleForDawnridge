@@ -21,6 +21,7 @@
 #include "PlaySoundEvent.hpp"
 #include "Texts.hpp"
 #include "ImageFlyingE.hpp"
+#include "HPFlyingE.hpp"
 #include "PlayerPointerCircle.hpp"
 
 
@@ -41,7 +42,7 @@ Events Building::destroy() {
 Events Building::regenerate() {
 	Events events;
 	if (this->getHP() < this->getMaxHP()) {
-		std::shared_ptr<FlyingE> element = std::make_shared<ImageFlyingE>("shield_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+		std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(this->getMaxHP(), this->getHP() + this->getRegenerationSpeed()), this->getMaxHP(), true, this->getX(), this->getY(), this->getSX(), this->getSY());
         events.add(std::make_shared<PlaySoundEvent>("regeneration"));
 		events.add(std::make_shared<CreateEEvent>(element));
 		events.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));

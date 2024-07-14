@@ -160,7 +160,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     Events endMoveEvent = clickSoundEvent;
 	endMoveEvent.add(std::make_shared<ChangeMoveEvent>());
 
-	std::shared_ptr<WindowTwoButtons> confirmEndMoveWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("confirm_end_move"), *Texts::get()->get("yes"), *Texts::get()->get("no"), endMoveEvent, Events());
+	std::shared_ptr<WindowTwoButtons> confirmEndMoveWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("confirm_end_move"), *Texts::get()->get("yes"), *Texts::get()->get("no"), endMoveEvent, clickSoundEvent);
 	Events createConfirmEndMoveWindowEvent = clickSoundEvent;
 	createConfirmEndMoveWindowEvent.add(std::make_shared<CreateEEvent>(confirmEndMoveWindow));
 
@@ -170,7 +170,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     Events returnToMenuEvent = clickSoundEvent;
 	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
 
-	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("confirm_return_to_menu"), *Texts::get()->get("yes"), *Texts::get()->get("no"), returnToMenuEvent, Events());
+	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("confirm_return_to_menu"), *Texts::get()->get("yes"), *Texts::get()->get("no"), returnToMenuEvent, clickSoundEvent);
 	Events createConfirmReturnToMenuWindowEvent = clickSoundEvent;
 	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
 

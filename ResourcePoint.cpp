@@ -40,7 +40,7 @@ Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 		value = this->getHP();
 	}
 
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
 
     response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
 	response.add(std::make_shared<CreateEEvent>(flyingE));

@@ -26,5 +26,8 @@ ImageFlyingE::ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t 
     sprite.setTexture(*Textures::get()->get(textureName));
     sprite.setScale(0.5f, 0.5f);
     sprite.setPosition(64 * x + sx * 64 / 2 - sprite.getGlobalBounds().width / 2, 64 * y + sy * 64 / 2 - sprite.getGlobalBounds().height / 2);
-    this->setSprite(sprite);
+    this->set(sprite);
+}
+void ImageFlyingE::setTransparentColor(float dt) {
+    this->getTPtr()->setColor(this->getTransparencyLevel(dt));
 }

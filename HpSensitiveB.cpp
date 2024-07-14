@@ -44,7 +44,7 @@ HorizontalSelectionWindowComponent HpSensitiveB::getBusyWithRepairingComponent()
 Events HpSensitiveB::regenerate() {
 	Events events = this->Building::regenerate();
 	if (this->getHP() != this->getMaxHP() and this->getHP() + this->getRegenerationSpeed() >= this->getMaxHP()) {
-		std::shared_ptr<FlyingE> element = std::make_shared<ImageFlyingE>("hammer_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+		std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("hammer_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
         events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 		events.add(std::make_shared<CreateEEvent>(element));
 	}

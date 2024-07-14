@@ -15,3 +15,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
+#include "FlyingE.hpp"
+
+
+#pragma once
+
+
+class HPFlyingE : public FlyingE<sf::Text> {
+public:
+    HPFlyingE(uint32_t current, uint32_t max, bool green, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+private:
+    void setTransparentColor(float dt) override;
+};

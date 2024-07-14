@@ -17,31 +17,71 @@
  */
 
 
+#include <cmath>
 #include "CameraDependentPopUpElement.hpp"
 
 
 #pragma once
 
 
-class FlyingE : public CameraDependentPopUpElement {
+template<typename T> class FlyingE : public CameraDependentPopUpElement {
 public:
-	FlyingE();
+	FlyingE() = default;
 
-	void run(uint32_t windowW, uint32_t windowH) override;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click() override;
-	void update() override;
+	void run(uint32_t windowW, uint32_t windowH) override {
+        this->clock.restart();
+        this->dst = windowH / 4;
+    }
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
+        target.draw(this->t, states);
+    }
+	Events click() override {
+        return Events();
+    }
+	void update() override {
+        float dt = this->clock.getElapsedTime().asSeconds();
+
+        this->setTransparentColor(dt);
+        this->setPosition(dt);
+
+        if (dt >= TIME) {
+            this->finish();
+        }
+    }
 protected:
-    void setSprite(const sf::Sprite &sprite1);
+    void set(const T &t1) {
+        this->t = t1;
+        this->startX = this->t.getPosition().x;
+        this->startY = this->t.getPosition().y;
+    }
+
+    virtual void setTransparentColor(float dt) = 0;
+    sf::Color getTransparencyLevel(float dt) const {
+        sf::Color color = sf::Color::White;
+        color.a = 255 - std::min(255.f, 255 * dt / TIME);
+        return color;
+    }
+    T* getTPtr() {
+        return &this->t;
+    }
 private:
-    sf::Sprite sprite;
-    float spriteStartX, spriteStartY;
+    T t;
+    float startX, startY;
 	sf::Clock clock;
 	float dst;
 
-	static const float TIME;
-	static const float V0;
+    static constexpr float TIME = 0.5;
+	static constexpr float V0 = 6;
 
-	sf::Color getTransparencyLevel(float t) const;
-	sf::Vector2f getPosition(float t) const;
+    void setPosition(float dt) {
+        this->t.setPosition(this->getPosition(dt));
+    }
+	sf::Vector2f getPosition(float dt) const {
+        float a = 2 * (this->dst - V0 * TIME) / std::pow(TIME, 2);
+
+        float currentX = this->startX;
+        float currentY = this->startY - V0 * dt - a * std::pow(dt, 2) / 2;
+
+        return sf::Vector2f(currentX, currentY);
+    }
 };

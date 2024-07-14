@@ -45,7 +45,7 @@ HorizontalSelectionWindowComponent VictoryConditionB::getVictoryConditionCompone
 }
 Events VictoryConditionB::addWood() const {
 	Events response;
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<ImageFlyingE>("wood_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("wood_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<PlaySoundEvent>("wood"));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<AddResourceEvent>(Resource("wood", 1000)));

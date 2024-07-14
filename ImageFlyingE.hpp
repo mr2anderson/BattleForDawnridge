@@ -23,7 +23,9 @@
 #pragma once
 
 
-class ImageFlyingE : public FlyingE {
+class ImageFlyingE : public FlyingE<sf::Sprite> {
 public:
     ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+private:
+    void setTransparentColor(float dt) override;
 };

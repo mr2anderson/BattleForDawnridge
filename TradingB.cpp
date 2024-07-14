@@ -98,7 +98,7 @@ Events TradingB::handleCurrentTrade() {
 		return Events();
 	}
 	Events responce;
-	std::shared_ptr<FlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
     responce.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	responce.add(std::make_shared<CreateEEvent>(element));
 	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
