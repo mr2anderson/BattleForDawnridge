@@ -40,11 +40,11 @@ uint32_t Mine::getMaxHP() const {
 }
 Resources Mine::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 21000));
+	cost.plus(Resource("wood", 10000));
 	return cost;
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return 1800;
+	return 2500;
 }
 std::string Mine::getTextureName() const {
 	return "mine";
@@ -56,7 +56,7 @@ std::string Mine::getResourceType() const {
 	return "iron";
 }
 uint32_t Mine::getCollectionSpeed() const {
-	return 3000;
+	return 1750;
 }
 uint32_t Mine::getRadius() const {
 	return 4;

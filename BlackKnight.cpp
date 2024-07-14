@@ -33,10 +33,10 @@ uint32_t BlackKnight::getMaxHP() const {
     return 3000;
 }
 Resources BlackKnight::getCost() const {
-	return Resources({ Resource("food", 20000), Resource("iron", 14400)});
+	return Resources({ Resource("food", 22000), Resource("iron", 12000)});
 }
 uint32_t BlackKnight::getTimeToProduce() const {
-	return 5;
+	return 12;
 }
 std::string BlackKnight::getSoundName() const {
 	return "sword";

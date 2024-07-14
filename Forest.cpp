@@ -32,7 +32,7 @@ uint32_t Forest::getSY() const {
     return 1;
 }
 uint32_t Forest::getMaxHP() const {
-    return 9000;
+    return 10500;
 }
 std::string Forest::getResourceType() const {
 	return "wood";

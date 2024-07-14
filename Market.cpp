@@ -37,11 +37,11 @@ uint32_t Market::getSY() const {
     return 2;
 }
 uint32_t Market::getMaxHP() const {
-    return 10000;
+    return 5000;
 }
 Resources Market::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 20000));
+	cost.plus(Resource("stone", 12500));
 	return cost;
 }
 std::string Market::getTextureName() const {
@@ -54,14 +54,14 @@ std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return 2500;
+	return 1250;
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
 }
 std::vector<Trade> Market::getTrades() const {
-	const uint32_t time = 3;
-	const uint32_t goldVolume = 2000;
+	const uint32_t time = 8;
+	const uint32_t goldVolume = 10000;
 
 	std::vector<Trade> trades;
 

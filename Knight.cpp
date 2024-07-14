@@ -33,10 +33,10 @@ uint32_t Knight::getMaxHP() const {
     return 2000;
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 10000), Resource("iron", 8000) });
+	return Resources({ Resource("food", 10000), Resource("iron", 5000) });
 }
 uint32_t Knight::getTimeToProduce() const {
-	return 4;
+	return 8;
 }
 std::string Knight::getSoundName() const {
 	return "sword";

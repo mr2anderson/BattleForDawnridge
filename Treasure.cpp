@@ -43,7 +43,7 @@ uint32_t Treasure::getSY() const {
     return 1;
 }
 uint32_t Treasure::getMaxHP() const {
-    return 60000;
+    return 50000;
 }
 std::string Treasure::getResourceType() const {
 	return "gold";

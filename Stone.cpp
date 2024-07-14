@@ -32,7 +32,7 @@ uint32_t Stone::getSY() const {
     return 1;
 }
 uint32_t Stone::getMaxHP() const {
-    return 9000;
+    return 10500;
 }
 std::string Stone::getResourceType() const {
 	return "stone";

@@ -52,7 +52,7 @@ Resources WarehouseWood::getCost() const {
 	return cost;
 }
 uint32_t WarehouseWood::getRegenerationSpeed() const {
-	return 2500;
+	return 1000;
 }
 std::string WarehouseWood::getTextureName() const {
 	return "warehouse_wood";
@@ -64,7 +64,7 @@ std::wstring WarehouseWood::getDescription() const {
 	return *Texts::get()->get("warehouse_wood_description");
 }
 Resources WarehouseWood::getLimit() const {
-	return Resources({ Resource("wood", 10000) });
+	return Resources({ Resource("wood", 20000) });
 }
 std::wstring WarehouseWood::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_wood_upper_case_readable_name");

@@ -40,11 +40,11 @@ uint32_t Quarry::getMaxHP() const {
 }
 Resources Quarry::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 21000));
+	cost.plus(Resource("wood", 10000));
 	return cost;
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return 1800;
+	return 25000;
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";
@@ -56,7 +56,7 @@ std::string Quarry::getResourceType() const {
 	return "stone";
 }
 uint32_t Quarry::getCollectionSpeed() const {
-	return 3000;
+	return 1750;
 }
 uint32_t Quarry::getRadius() const {
 	return 5;

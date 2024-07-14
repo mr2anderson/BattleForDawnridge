@@ -39,10 +39,10 @@ uint32_t Legioner::getMaxHP() const {
     return 1000;
 }
 Resources Legioner::getCost() const {
-	return Resources({ Resource("food", 5000), Resource("iron", 5000)});
+	return Resources({ Resource("food", 5000), Resource("iron", 2500)});
 }
 uint32_t Legioner::getTimeToProduce() const {
-	return 3;
+	return 5;
 }
 std::string Legioner::getSoundName() const {
 	return "sword";

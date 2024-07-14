@@ -36,7 +36,7 @@ uint32_t Wall1::getSY() const {
     return 1;
 }
 uint32_t Wall1::getMaxHP() const {
-    return 60000;
+    return 50000;
 }
 Resources Wall1::getCost() const {
 	Resources cost;
@@ -44,7 +44,7 @@ Resources Wall1::getCost() const {
 	return cost;
 }
 uint32_t Wall1::getRegenerationSpeed() const {
-	return 10000;
+	return 8500;
 }
 std::string Wall1::getTextureName() const {
 	return "wall1";

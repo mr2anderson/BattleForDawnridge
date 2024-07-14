@@ -41,7 +41,7 @@ uint32_t Barracks::getSY() const {
     return 2;
 }
 uint32_t Barracks::getMaxHP() const {
-    return 20000;
+    return 10000;
 }
 Resources Barracks::getCost() const {
 	return Resources({ Resource("stone", 20000) });
@@ -67,7 +67,7 @@ uint32_t Barracks::getRadius() const {
 	return 1;
 }
 uint32_t Barracks::getRegenerationSpeed() const {
-	return 5000;
+	return 2500;
 }
 std::wstring Barracks::getUpperCaseReadableName() const {
 	return *Texts::get()->get("barracks_upper_case_readable_name");

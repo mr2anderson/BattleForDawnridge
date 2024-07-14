@@ -37,7 +37,7 @@ uint32_t Gates2::getSY() const {
     return 1;
 }
 uint32_t Gates2::getMaxHP() const {
-    return 40000;
+    return 25000;
 }
 Resources Gates2::getCost() const {
     Resources cost;
@@ -45,7 +45,7 @@ Resources Gates2::getCost() const {
     return cost;
 }
 uint32_t Gates2::getRegenerationSpeed() const {
-    return 10000;
+    return 12500;
 }
 std::string Gates2::getTextureName() const {
     return "gates2";

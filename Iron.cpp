@@ -32,7 +32,7 @@ uint32_t Iron::getSY() const {
     return 1;
 }
 uint32_t Iron::getMaxHP() const {
-    return 9000;
+    return 10500;
 }
 std::string Iron::getResourceType() const {
 	return "iron";

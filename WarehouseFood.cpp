@@ -37,7 +37,7 @@ uint32_t WarehouseFood::getSY() const {
     return 2;
 }
 uint32_t WarehouseFood::getMaxHP() const {
-    return 10000;
+    return 5000;
 }
 Events WarehouseFood::newMove(uint32_t playerId) {
 	Events response;
@@ -52,7 +52,7 @@ Resources WarehouseFood::getCost() const {
 	return cost;
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {
-	return 2500;
+	return 1000;
 }
 std::string WarehouseFood::getTextureName() const {
 	return "warehouse_food";
@@ -64,7 +64,7 @@ std::wstring WarehouseFood::getDescription() const {
 	return *Texts::get()->get("warehouse_food_description");
 }
 Resources WarehouseFood::getLimit() const {
-	return Resources({ Resource("food", 10000) });
+	return Resources({ Resource("food", 20000) });
 }
 std::wstring WarehouseFood::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_food_upper_case_readable_name");

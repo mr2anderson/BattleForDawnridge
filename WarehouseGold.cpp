@@ -38,7 +38,7 @@ uint32_t WarehouseGold::getSY() const {
     return 2;
 }
 uint32_t WarehouseGold::getMaxHP() const {
-    return 10000;
+    return 5000;
 }
 Events WarehouseGold::newMove(uint32_t playerId) {
 	Events response;
@@ -53,7 +53,7 @@ Resources WarehouseGold::getCost() const {
 	return cost;
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return 2500;
+	return 1000;
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";
@@ -76,7 +76,7 @@ Events WarehouseGold::collect() {
 	for (uint32_t i = 0; i < this->treasures->size(); i = i + 1) {
 		Treasure* t = this->treasures->at(i);
 		if (t->exist() and this->connectedTo(t)) {
-			events.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), t, 2000));
+			events.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), t, 2500));
 		}
 	}
 

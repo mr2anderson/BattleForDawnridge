@@ -45,10 +45,10 @@ uint32_t Castle::getSY() const {
     return 2;
 }
 uint32_t Castle::getMaxHP() const {
-    return 80000;
+    return 50000;
 }
 Resources Castle::getLimit() const {
-	return Resources({ Resource("wood", 40000), Resource("stone", 10000)});
+	return Resources({ Resource("food", 20000), Resource("wood", 20000), Resource("stone", 20000)});
 }
 Resources Castle::getCost() const {
 	Resources cost;
@@ -68,7 +68,7 @@ Events Castle::destroy() {
 	return this->ResourceStorageB::destroy() + this->VictoryConditionB::destroy();
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return 20000;
+	return 10000;
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");
