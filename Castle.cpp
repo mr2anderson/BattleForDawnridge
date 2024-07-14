@@ -65,7 +65,7 @@ std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");
 }
 uint32_t Castle::getRadius() const {
-	return 2;
+	return 3;
 }
 Events Castle::getSelectionW() {
 	Events response;
