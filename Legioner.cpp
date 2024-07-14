@@ -30,7 +30,7 @@ Warrior* Legioner::cloneWarrior() const {
 	return new Legioner(*this);
 }
 Resources Legioner::getCost() const {
-	return Resources({ Resource("food", 5000), Resource("iron", 2500)});
+	return Resources({ Resource("food", 5000), Resource("iron", 5000)});
 }
 uint32_t Legioner::getTimeToProduce() const {
 	return 3;

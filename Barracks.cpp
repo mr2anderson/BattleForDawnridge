@@ -35,7 +35,7 @@ Building* Barracks::cloneBuilding() const {
 	return new Barracks(*this);
 }
 Resources Barracks::getCost() const {
-	return Resources({ Resource("stone", 30000) });
+	return Resources({ Resource("stone", 20000) });
 }
 std::string Barracks::getTextureName() const {
 	return "barracks";

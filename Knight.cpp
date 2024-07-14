@@ -30,7 +30,7 @@ Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 8000), Resource("iron", 4000) });
+	return Resources({ Resource("food", 10000), Resource("iron", 8000) });
 }
 uint32_t Knight::getTimeToProduce() const {
 	return 4;

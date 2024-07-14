@@ -30,7 +30,7 @@ Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
 }
 Resources BlackKnight::getCost() const {
-	return Resources({ Resource("food", 16000), Resource("iron", 8000)});
+	return Resources({ Resource("food", 20000), Resource("iron", 14400)});
 }
 uint32_t BlackKnight::getTimeToProduce() const {
 	return 5;
