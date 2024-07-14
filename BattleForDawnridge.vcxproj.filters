@@ -1141,6 +1141,45 @@
     <ClInclude Include="DijkstraQueueElement.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
+    <ClInclude Include="Animated.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationState.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaBLandscapeInsensible.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaBLandscapeSensible.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateAnimationEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseAnimationEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="HPFlyingE.hpp">
+      <Filter>Header Files\popUpElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageFlyingE.hpp">
+      <Filter>Header Files\popUpElements</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPointerCircle.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementPointsPointer.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveDoesNotExist.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="LandscapeGraph.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1470,9 +1509,6 @@
     <ClCompile Include="CameraIndependentPopUpElemenent.cpp">
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
-    <ClCompile Include="FlyingE.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
     <ClCompile Include="HorizontalSelectionWindow.cpp">
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
@@ -1573,6 +1609,45 @@
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="DijkstraQueueElement.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="Animated.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationState.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaBLandscapeInsensible.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaBLandscapeSensible.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseAnimationEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateAnimationEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="HPFlyingE.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageFlyingE.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPointerCircle.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementPointsPointer.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveDoesNotExist.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="LandscapeGraph.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>
