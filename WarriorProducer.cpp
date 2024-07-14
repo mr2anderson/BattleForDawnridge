@@ -23,7 +23,7 @@
 #include "TryToProduceEvent.hpp"
 #include "WarriorProducingFinishedEvent.hpp"
 #include "BuildingShortInfo.hpp"
-#include "FlyingE.hpp"
+#include "ImageFlyingE.hpp"
 #include "Texts.hpp"
 
 
@@ -121,7 +121,7 @@ Events WarriorProducer::handleCurrentProducing() {
 	}
 	Events response;
 	if (this->currentProducingMovesLeft != 0) {
-		std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("producing_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+		std::shared_ptr<FlyingE> flyingE = std::make_shared<ImageFlyingE>("producing_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
         response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));

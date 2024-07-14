@@ -20,7 +20,7 @@
 #include "ResourcePoint.hpp"
 #include "CreateEEvent.hpp"
 #include "Texts.hpp"
-#include "FlyingE.hpp"
+#include "ImageFlyingE.hpp"
 #include "CollectEvent.hpp"
 
 
@@ -40,7 +40,7 @@ Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 		value = this->getHP();
 	}
 
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
 
     response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
 	response.add(std::make_shared<CreateEEvent>(flyingE));

@@ -27,34 +27,31 @@ const float FlyingE::TIME = 0.5f;
 const float FlyingE::V0 = 64;
 
 
-FlyingE::FlyingE(const std::string& picture, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
-	this->picture = picture;
-	this->x = x;
-	this->y = y;
-	this->sx = sx;
-	this->sy = sy;
-}
+FlyingE::FlyingE() = default;
 void FlyingE::run(uint32_t windowW, uint32_t windowH) {
 	this->clock.restart();
 	this->dst = windowH / 4;
 }
 void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	float t = this->clock.getElapsedTime().asSeconds();
-
-	sf::Sprite sprite;
-	sprite.setScale(0.5, 0.5);
-	sprite.setTexture(*Textures::get()->get(this->picture));
-	sprite.setColor(this->getTransparencyLevel(t));
-	sprite.setPosition(this->getPosition(t));
 	target.draw(sprite, states);
 }
 Events FlyingE::click() {
 	return Events();
 }
 void FlyingE::update() {
+    float t = this->clock.getElapsedTime().asSeconds();
+
+    this->sprite.setColor(this->getTransparencyLevel(t));
+    this->sprite.setPosition(this->getPosition(t));
+
 	if (this->clock.getElapsedTime().asSeconds() >= TIME) {
 		this->finish();
 	}
+}
+void FlyingE::setSprite(const sf::Sprite &sprite1) {
+    this->sprite = sprite1;
+    this->spriteStartX = this->sprite.getPosition().x;
+    this->spriteStartY = this->sprite.getPosition().y;
 }
 sf::Color FlyingE::getTransparencyLevel(float t) const {
 	sf::Color color = sf::Color::White;
@@ -63,12 +60,9 @@ sf::Color FlyingE::getTransparencyLevel(float t) const {
 }
 sf::Vector2f FlyingE::getPosition(float t) const {
 	float a = 2 * (this->dst - V0 * TIME) / std::pow(TIME, 2);
-
-	float startX = 64 * this->x + 64 * (float)this->sx / 2 - 64 / 2 / 2;
-	float startY = 64 * this->y + 64 * (float)this->sy / 2 - 64 / 2 / 2;
 	
-	float currentX = startX;
-	float currentY = startY - V0 * t - a * std::pow(t, 2) / 2;
+	float currentX = this->spriteStartX;
+	float currentY = this->spriteStartY - V0 * t - a * std::pow(t, 2) / 2;
 
 	return sf::Vector2f(currentX, currentY);
 }

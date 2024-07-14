@@ -17,31 +17,14 @@
  */
 
 
-#include "CameraDependentPopUpElement.hpp"
+#include "ImageFlyingE.hpp"
+#include "Textures.hpp"
 
 
-#pragma once
-
-
-class FlyingE : public CameraDependentPopUpElement {
-public:
-	FlyingE();
-
-	void run(uint32_t windowW, uint32_t windowH) override;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click() override;
-	void update() override;
-protected:
-    void setSprite(const sf::Sprite &sprite1);
-private:
+ImageFlyingE::ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
     sf::Sprite sprite;
-    float spriteStartX, spriteStartY;
-	sf::Clock clock;
-	float dst;
-
-	static const float TIME;
-	static const float V0;
-
-	sf::Color getTransparencyLevel(float t) const;
-	sf::Vector2f getPosition(float t) const;
-};
+    sprite.setTexture(*Textures::get()->get(textureName));
+    sprite.setScale(0.5f, 0.5f);
+    sprite.setPosition(64 * x + sx * 64 / 2 - sprite.getGlobalBounds().width / 2, 64 * y + sy * 64 / 2 - sprite.getGlobalBounds().height / 2);
+    this->setSprite(sprite);
+}

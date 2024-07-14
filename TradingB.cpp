@@ -23,7 +23,7 @@
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 #include "BuildingShortInfo.hpp"
 #include "Texts.hpp"
-#include "FlyingE.hpp"
+#include "ImageFlyingE.hpp"
 
 
 TradingB::TradingB() = default;
@@ -98,12 +98,12 @@ Events TradingB::handleCurrentTrade() {
 		return Events();
 	}
 	Events responce;
-	std::shared_ptr<FlyingE> element = std::make_shared<FlyingE>("trade_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
     responce.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	responce.add(std::make_shared<CreateEEvent>(element));
 	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
 	if (this->currentTrade.movesLeft == 1) {
-		element = std::make_shared<FlyingE>(this->currentTrade.buy.type + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+		element = std::make_shared<ImageFlyingE>(this->currentTrade.buy.type + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
         responce.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 		responce.add(std::make_shared<CreateEEvent>(element));
 		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));

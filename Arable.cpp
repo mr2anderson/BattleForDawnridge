@@ -19,7 +19,7 @@
 
 #include "Arable.hpp"
 #include "Texts.hpp"
-#include "FlyingE.hpp"
+#include "ImageFlyingE.hpp"
 #include "AddResourceEvent.hpp"
 
 
@@ -62,7 +62,7 @@ std::wstring Arable::getUpperCaseReadableName() const {
 }
 Events Arable::addFood() const {
 	Events response;
-	std::shared_ptr<FlyingE> flyingE = std::make_shared<FlyingE>("food_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<FlyingE> flyingE = std::make_shared<ImageFlyingE>("food_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<PlaySoundEvent>("click"));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<AddResourceEvent>(Resource("food", 500)));

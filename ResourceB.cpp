@@ -19,7 +19,6 @@
 
 #include "ResourceB.hpp"
 #include "TryToCollectEvent.hpp"
-#include "FlyingE.hpp"
 
 
 ResourceB::ResourceB() = default;
