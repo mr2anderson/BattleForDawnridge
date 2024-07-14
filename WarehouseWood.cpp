@@ -46,6 +46,9 @@ Events WarehouseWood::newMove(uint32_t playerId) {
 	}
 	return response;
 }
+Defence WarehouseWood::getDefence() const {
+	return DEFENCE::STONE;
+}
 Resources WarehouseWood::getCost() const {
 	Resources cost;
 	cost.plus(Resource("stone", 10000));

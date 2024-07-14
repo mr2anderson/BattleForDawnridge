@@ -17,30 +17,28 @@
  */
 
 
-#include "TradingB.hpp"
+#include <string>
 
 
 #pragma once
 
 
-class Market : public TradingB {
+class Defence {
 public:
-	Market();
-	Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
-	Building* cloneBuilding() const override;
+	Defence(double cut, double stab, double crush);
 
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-	Defence getDefence() const override;
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	double getCut() const;
+	double getStab() const;
+	double getCrush() const;
+	std::wstring getReadable() const;
 private:
-	Trade currentTrade;
-
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
-	std::vector<Trade> getTrades() const override;
+	double cut, stab, crush;
 };
+
+
+
+namespace DEFENCE {
+	static Defence HUMAN = Defence(1, 1, 0.01);
+	static Defence WOOD = Defence(1, 0.25, 1);
+	static Defence STONE = Defence(0.1, 0.1, 1);
+}

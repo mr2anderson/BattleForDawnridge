@@ -17,30 +17,26 @@
  */
 
 
-#include "TradingB.hpp"
+#include <cstdint>
+#include "Defence.hpp"
 
 
 #pragma once
 
 
-class Market : public TradingB {
+class Damage {
 public:
-	Market();
-	Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
-	Building* cloneBuilding() const override;
+	Damage(uint32_t points, uint8_t type);
 
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-	Defence getDefence() const override;
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	uint32_t getHpLoss(Defence defence) const;
+	std::wstring getReadable() const;
+
+	enum TYPE {
+		CUT,
+		STAB,
+		CRUSH
+	};
 private:
-	Trade currentTrade;
-
-	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
-	std::vector<Trade> getTrades() const override;
+	uint32_t points;
+	uint8_t type;
 };

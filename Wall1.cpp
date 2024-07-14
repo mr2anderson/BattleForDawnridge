@@ -38,6 +38,9 @@ uint32_t Wall1::getSY() const {
 uint32_t Wall1::getMaxHP() const {
     return 50000;
 }
+Defence Wall1::getDefence() const {
+	return DEFENCE::WOOD;
+}
 Resources Wall1::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 7500));

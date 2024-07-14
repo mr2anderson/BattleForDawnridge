@@ -29,6 +29,9 @@ Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCo
 Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);
 }
+Defence Sawmill::getDefence() const {
+	return DEFENCE::WOOD;
+}
 Resources Sawmill::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 10000));

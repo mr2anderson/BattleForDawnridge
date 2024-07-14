@@ -30,6 +30,8 @@ public:
 	Warrior* cloneWarrior() const override;
 
     uint32_t getMaxHP() const override;
+	Damage getDamage() const override;
+	Defence getDefence() const override;
 	Resources getCost() const override;
 	uint32_t getTimeToProduce() const override;
 	std::string getSoundName() const override;

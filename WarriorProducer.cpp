@@ -77,6 +77,8 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducer::getProduceCompo
 		HorizontalSelectionWindowComponent component = {
 			w->getTextureName(),
 			w->getDescription() + L"\n" +
+			*Texts::get()->get("hp") + std::to_wstring(w->getMaxHP()) + L" (" + w->getDefence().getReadable() + L")\n" +
+			*Texts::get()->get("damage") + w->getDamage().getReadable() + L". " + *Texts::get()->get("movement_points") + std::to_wstring(w->getMovementPoints()) + L"\n" +
 			*Texts::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
 			true,
 			tryToProduceEvent + this->getHighlightEvent()

@@ -45,6 +45,9 @@ uint32_t Road::getSY() const {
 uint32_t Road::getMaxHP() const {
     return 500;
 }
+Defence Road::getDefence() const {
+	return DEFENCE::WOOD;
+}
 Resources Road::getCost() const {
 	Resources cost;
 	cost.plus(Resource("wood", 1000));

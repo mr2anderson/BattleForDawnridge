@@ -36,7 +36,6 @@ public:
 	uint32_t getHP() const;
 	void setMaxHp();
 	bool exist() const override;
-protected:
     virtual uint32_t getMaxHP() const = 0;
 private:
 	std::optional<uint32_t> currentHp;

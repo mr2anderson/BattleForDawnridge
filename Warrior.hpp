@@ -24,6 +24,7 @@
 #include "Animated.hpp"
 #include "MovementGraph.hpp"
 #include "AnimationState.hpp"
+#include "Damage.hpp"
 
 
 #pragma once
@@ -52,13 +53,13 @@ public:
     Events processCurrentAnimation() override;
 
 	virtual uint32_t getTimeToProduce() const = 0;
+	virtual Damage getDamage() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
 	virtual uint32_t getWalkingAnimationsNumberInSet() const = 0;
 	virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
-protected:
 	virtual uint32_t getMovementPoints() const = 0;
 private:
 	std::optional<uint32_t> movementPoints;

@@ -39,6 +39,9 @@ uint32_t Market::getSY() const {
 uint32_t Market::getMaxHP() const {
     return 5000;
 }
+Defence Market::getDefence() const {
+	return DEFENCE::STONE;
+}
 Resources Market::getCost() const {
 	Resources cost;
 	cost.plus(Resource("stone", 12500));

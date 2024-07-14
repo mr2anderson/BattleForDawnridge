@@ -38,7 +38,7 @@ BuildingShortInfo::BuildingShortInfo(float xInPixels, float yInPixels, uint32_t 
 	this->text.setFillColor(sf::Color::White);
 	this->text.setOutlineColor(sf::Color::Black);
 	this->text.setOutlineThickness(1);
-	this->text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2, 0));
+	this->text.setPosition(sprite.getPosition() + sf::Vector2f(rect.getSize().x / 2 + rect.getSize().x / 2 / 2 - this->text.getGlobalBounds().width / 2, rect.getSize().y / 2 - this->text.getGlobalBounds().height / 2));
 }
 void BuildingShortInfo::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(this->rect, states);

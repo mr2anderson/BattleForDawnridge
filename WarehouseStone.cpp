@@ -46,6 +46,9 @@ Events WarehouseStone::newMove(uint32_t playerId) {
 	}
 	return response;
 }
+Defence WarehouseStone::getDefence() const {
+	return DEFENCE::STONE;
+}
 Resources WarehouseStone::getCost() const {
 	Resources cost;
 	cost.plus(Resource("stone", 10000));

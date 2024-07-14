@@ -29,6 +29,7 @@ public:
 	Wall1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 	Building* cloneBuilding() const override;
 
+	Defence getDefence() const override;
 	Resources getCost() const override;
     uint32_t getSX() const override;
     uint32_t getSY() const override;

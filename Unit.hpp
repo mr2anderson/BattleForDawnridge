@@ -22,6 +22,7 @@
 #include "Resources.hpp"
 #include "GOCollection.hpp"
 #include "PlayerPointer.hpp"
+#include "Defence.hpp"
 
 
 #pragma once
@@ -38,6 +39,7 @@ public:
 	void changePlayer(uint32_t newPlayerId);
 	uint32_t getPlayerId() const;
 
+	virtual Defence getDefence() const = 0;
 	virtual Resources getCost() const = 0;
 protected:
 	std::shared_ptr<GOCollection<Unit>> getUnits();

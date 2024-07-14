@@ -1180,6 +1180,12 @@
     <ClInclude Include="LandscapeGraph.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
+    <ClInclude Include="Defence.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="Damage.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1648,6 +1654,12 @@
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="LandscapeGraph.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="Defence.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="Damage.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>

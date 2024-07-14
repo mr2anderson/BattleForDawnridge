@@ -315,7 +315,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -323,7 +323,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>4458; 4267; 4250; 4244</DisableSpecificWarnings>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -527,8 +528,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CouldntOpenTexture.hpp" />
     <ClInclude Include="CreateAnimationEvent.hpp" />
     <ClInclude Include="CreateEEvent.hpp" />
+    <ClInclude Include="Damage.hpp" />
     <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
+    <ClInclude Include="Defence.hpp" />
     <ClInclude Include="DestroyEvent.hpp" />
     <ClInclude Include="DijkstraQueueElement.hpp" />
     <ClInclude Include="DisableCursorEvent.hpp" />
@@ -784,8 +787,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CouldntOpenTexture.cpp" />
     <ClCompile Include="CreateAnimationEvent.cpp" />
     <ClCompile Include="CreateEEvent.cpp" />
+    <ClCompile Include="Damage.cpp" />
     <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
+    <ClCompile Include="Defence.cpp" />
     <ClCompile Include="DestroyEvent.cpp" />
     <ClCompile Include="DijkstraQueueElement.cpp" />
     <ClCompile Include="DisableCursorEvent.cpp" />

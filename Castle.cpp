@@ -50,6 +50,9 @@ uint32_t Castle::getMaxHP() const {
 Resources Castle::getLimit() const {
 	return Resources({ Resource("food", 20000), Resource("wood", 20000), Resource("stone", 20000)});
 }
+Defence Castle::getDefence() const {
+	return DEFENCE::STONE;
+}
 Resources Castle::getCost() const {
 	Resources cost;
 	cost.plus(Resource("stone", 50000));

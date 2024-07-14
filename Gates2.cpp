@@ -39,6 +39,9 @@ uint32_t Gates2::getSY() const {
 uint32_t Gates2::getMaxHP() const {
     return 25000;
 }
+Defence Gates2::getDefence() const {
+    return DEFENCE::STONE;
+}
 Resources Gates2::getCost() const {
     Resources cost;
     cost.plus(Resource("stone", 7500));
