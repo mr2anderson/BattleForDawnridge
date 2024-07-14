@@ -22,10 +22,10 @@
 
 
 TerritoryConductorB::TerritoryConductorB() = default;
-TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-	TerritoryB(x, y, sx, sy, maxHp, playerId, units),
-	ConductorB(x, y, sx, sy, maxHp, playerId, units),
-	Building(x, y, sx, sy, maxHp, playerId, units) {
+TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+	TerritoryB(x, y, playerId, units),
+	ConductorB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 	this->originsPtr = originsPtr;
 }
 bool TerritoryConductorB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) {

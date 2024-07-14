@@ -22,16 +22,25 @@
 
 Gates1::Gates1() = default;
 Gates1::Gates1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-        Gates(x, y, 1, 1, 40000, playerId, units, originsPtr),
-        Building(x, y, 1, 1, 40000, playerId, units) {
+        Gates(x, y, playerId, units, originsPtr),
+        Building(x, y, playerId, units) {
 
 }
 Building* Gates1::cloneBuilding() const {
     return new Gates1(*this);
 }
+uint32_t Gates1::getSX() const {
+    return 1;
+}
+uint32_t Gates1::getSY() const {
+    return 1;
+}
+uint32_t Gates1::getMaxHP() const {
+    return 40000;
+}
 Resources Gates1::getCost() const {
     Resources cost;
-    cost.plus(Resource("wood", 10000));
+    cost.plus(Resource("wood", 7500));
     return cost;
 }
 uint32_t Gates1::getRegenerationSpeed() const {

@@ -26,7 +26,7 @@
 class ImpassableObstacle : public GO {
 public:
 	ImpassableObstacle();
-	ImpassableObstacle(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	ImpassableObstacle(uint32_t x, uint32_t y);
 
 	Events newMove(uint32_t playerId) override;
 	bool exist() const override;

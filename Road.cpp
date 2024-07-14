@@ -23,8 +23,8 @@
 
 Road::Road() = default;
 Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-	TerritoryConductorB(x, y, 1, 1, 500, playerId, units, originsPtr),
-	Building(x, y, 1, 1, 500, playerId, units) {
+	TerritoryConductorB(x, y, playerId, units, originsPtr),
+	Building(x, y, playerId, units) {
 	
 }
 Building* Road::cloneBuilding() const {
@@ -35,6 +35,15 @@ Events Road::newMove(uint32_t playerId) {
 		return this->regenerate();
 	}
 	return Events();
+}
+uint32_t Road::getSX() const {
+    return 1;
+}
+uint32_t Road::getSY() const {
+    return 1;
+}
+uint32_t Road::getMaxHP() const {
+    return 500;
 }
 Resources Road::getCost() const {
 	Resources cost;

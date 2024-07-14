@@ -26,7 +26,7 @@
 class ResourcePoint : public HPGO {
 public:
 	ResourcePoint();
-	ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size);
+	ResourcePoint(uint32_t x, uint32_t y);
 
 	Events newMove(uint32_t playerId) override;
 	virtual Events tryToCollect(uint32_t playerId, uint32_t value);

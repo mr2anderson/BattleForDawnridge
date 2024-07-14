@@ -23,8 +23,14 @@
 
 Mountains::Mountains() = default;
 Mountains::Mountains(uint32_t x, uint32_t y) :
-	ImpassableObstacle(x, y, 1, 1) {
+	ImpassableObstacle(x, y) {
 
+}
+uint32_t Mountains::getSX() const {
+    return 1;
+}
+uint32_t Mountains::getSY() const {
+    return 1;
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";

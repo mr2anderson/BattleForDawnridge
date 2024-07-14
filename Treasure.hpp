@@ -30,7 +30,9 @@ public:
 
 	Events newMove(uint32_t playerId) override;
 	Events tryToCollect(uint32_t playerId, uint32_t value) override;
-
+    uint32_t getSX() const override;
+    uint32_t getSY() const override;
+    uint32_t getMaxHP() const override;
 	std::string getResourceType() const override;
 	std::string getSoundName() const override;
 private:

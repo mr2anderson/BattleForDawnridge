@@ -23,10 +23,9 @@
 
 
 HPGO::HPGO() = default;
-HPGO::HPGO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHP) :
-	GO(x, y, sx, sy) {
+HPGO::HPGO(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp) :
+	GO(x, y) {
 	this->currentHp = currentHp;
-	this->maxHp = maxHP;
 }
 void HPGO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->GO::draw(target, states);
@@ -35,39 +34,26 @@ void HPGO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	}
 }
 void HPGO::addHp(uint32_t n) {
-	this->currentHp = std::min(this->currentHp + n, this->maxHp);
+	this->currentHp = std::min(this->getHP() + n, this->getMaxHP());
 }
 void HPGO::subHp(uint32_t n) {
-	if (n >= this->currentHp) {
+	if (n >= this->getHP()) {
 		this->currentHp = 0;
 	}
 	else {
-		this->currentHp = this->currentHp - n;
+		this->currentHp = this->getHP() - n;
 	}
 }
 uint32_t HPGO::getHP() const {
-	return this->currentHp;
-}
-uint32_t HPGO::getMaxHP() const {
-	return this->maxHp;
-}
-void HPGO::changeCurrentHp(uint32_t newCurrentHp) {
-	this->currentHp = std::min(this->maxHp, newCurrentHp);
-}
-void HPGO::changeMaxHp(uint32_t newMaxHp) {
-	this->maxHp = newMaxHp;
-	this->currentHp = std::min(this->currentHp, this->maxHp);
+	return this->currentHp.value_or(this->getMaxHP());
 }
 void HPGO::setMaxHp() {
-	this->currentHp = this->maxHp;
-}
-std::wstring HPGO::getReadableHpInfo() const {
-	return *Texts::get()->get("hp") + std::to_wstring(this->getHP()) + *Texts::get()->get("slash") + std::to_wstring(this->getMaxHP());
+	this->currentHp = this->getMaxHP();
 }
 bool HPGO::exist() const {
-	return (this->currentHp != 0);
+	return (this->getHP() != 0);
 }
 void HPGO::drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const {
-	HPPointer bar(this->currentHp, this->maxHp, this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
+	HPPointer bar(this->getHP(), this->getMaxHP(), this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 	target.draw(bar, states);
 }

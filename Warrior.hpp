@@ -32,7 +32,7 @@
 class Warrior : public Unit, public Selectable, public Animated {
 public:
 	Warrior();
-	Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+	Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	virtual Warrior* cloneWarrior() const = 0;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
@@ -40,6 +40,8 @@ public:
 	Events newMove(uint32_t playerId) override;
 	void refreshMovementPoints();
 	void startClickAnimation();
+    uint32_t getSX() const override;
+    uint32_t getSY() const override;
 	std::string getTextureName() const override;
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
     uint32_t getCurrentAnimationMs() const;

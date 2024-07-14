@@ -23,20 +23,29 @@
 
 Gates2::Gates2() = default;
 Gates2::Gates2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-        Gates(x, y, 1, 1, 160000, playerId, units, originsPtr),
-        Building(x, y, 1, 1, 40000, playerId, units) {
+        Gates(x, y, playerId, units, originsPtr),
+        Building(x, y, playerId, units) {
 
 }
 Building* Gates2::cloneBuilding() const {
     return new Gates2(*this);
 }
+uint32_t Gates2::getSX() const {
+    return 1;
+}
+uint32_t Gates2::getSY() const {
+    return 1;
+}
+uint32_t Gates2::getMaxHP() const {
+    return 40000;
+}
 Resources Gates2::getCost() const {
     Resources cost;
-    cost.plus(Resource("stone", 25000));
+    cost.plus(Resource("stone", 7500));
     return cost;
 }
 uint32_t Gates2::getRegenerationSpeed() const {
-    return 40000;
+    return 10000;
 }
 std::string Gates2::getTextureName() const {
     return "gates2";

@@ -23,12 +23,21 @@
 
 WarehouseFood::WarehouseFood() = default;
 WarehouseFood::WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	ResourceStorageB(x, y, 2, 2, 10000, playerId, units),
-	Building(x, y, 2, 2, 10000, playerId, units) {
+	ResourceStorageB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 
 }
 Building* WarehouseFood::cloneBuilding() const {
 	return new WarehouseFood(*this);
+}
+uint32_t WarehouseFood::getSX() const {
+    return 2;
+}
+uint32_t WarehouseFood::getSY() const {
+    return 2;
+}
+uint32_t WarehouseFood::getMaxHP() const {
+    return 10000;
 }
 Events WarehouseFood::newMove(uint32_t playerId) {
 	Events response;

@@ -27,7 +27,7 @@
 class GO : public sf::Drawable {
 public:
 	GO();
-	GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	GO(uint32_t x, uint32_t y);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -35,8 +35,8 @@ public:
     float getYInPixels() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
-	uint32_t getSX() const;
-	uint32_t getSY() const;
+	virtual uint32_t getSX() const = 0;
+	virtual uint32_t getSY() const = 0;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
 	virtual bool warriorCanStay(uint32_t warriorPlayerId) const = 0;
@@ -65,7 +65,6 @@ protected:
 	static constexpr uint32_t WARRIOR_MOVEMENT_FORBIDDEN = 10000;
 private:
 	uint32_t x, y;
-	uint32_t sx, sy;
 
 	void drawTexture(sf::RenderTarget& target, sf::RenderStates states) const;
 };

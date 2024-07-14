@@ -26,8 +26,14 @@ const uint32_t Water::TOTAL_ANIMATIONS = 40;
 
 Water::Water() = default;
 Water::Water(uint32_t x, uint32_t y) :
-	ImpassableObstacle(x, y, 1, 1) {
+	ImpassableObstacle(x, y) {
 
+}
+uint32_t Water::getSY() const {
+    return 1;
+}
+uint32_t Water::getSX() const {
+    return 1;
 }
 std::string Water::getTextureName() const {
 	return "water" + std::to_string(this->clock.getElapsedTime().asMilliseconds() / (2 * 1000 / TOTAL_ANIMATIONS) % TOTAL_ANIMATIONS);

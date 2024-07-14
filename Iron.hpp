@@ -29,6 +29,9 @@ public:
 	Iron();
 	Iron(uint32_t x, uint32_t y);
 
+    uint32_t getSX() const override;
+    uint32_t getSY() const override;
+    uint32_t getMaxHP() const override;
 	std::string getResourceType() const override;
 	std::string getSoundName() const override;
 private:

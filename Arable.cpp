@@ -25,8 +25,8 @@
 
 Arable::Arable() = default;
 Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	HpSensitiveB(x, y, 2, 2, 1000, playerId, units),
-	Building(x, y, 2, 2, 1000, playerId, units) {
+	HpSensitiveB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 
 }
 Building* Arable::cloneBuilding() const {
@@ -42,6 +42,15 @@ Events Arable::newMove(uint32_t playerId) {
 	}
 	return Events();
 }
+uint32_t Arable::getSX() const {
+    return 2;
+}
+uint32_t Arable::getSY() const {
+    return 2;
+}
+uint32_t Arable::getMaxHP() const {
+    return 2000;
+}
 Resources Arable::getCost() const {
 	return Resources({ Resource("wood", 3500)});
 }
@@ -55,7 +64,7 @@ std::wstring Arable::getDescription() const {
 	return *Texts::get()->get("arable_description");
 }
 uint32_t Arable::getRegenerationSpeed() const {
-	return 500;
+	return 1000;
 }
 std::wstring Arable::getUpperCaseReadableName() const {
 	return *Texts::get()->get("arable_upper_case_readable_name");

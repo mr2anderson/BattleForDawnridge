@@ -37,8 +37,8 @@
 Warrior::Warrior() {
 	this->startClickAnimation();
 }
-Warrior::Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Unit(x, y, 1, 1, maxHp, maxHp, playerId, units) {
+Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	Unit(x, y, std::nullopt, playerId, units) {
 	this->movementPoints = std::nullopt;
 	this->go = go;
 	this->mapW = mapW;
@@ -62,6 +62,12 @@ void Warrior::refreshMovementPoints() {
 void Warrior::startClickAnimation() {
 	this->currentDirection = "e";
 	this->startAnimation("talking");
+}
+uint32_t Warrior::getSX() const {
+    return 1;
+}
+uint32_t Warrior::getSY() const {
+    return 1;
 }
 std::string Warrior::getTextureName() const {
 	std::string name = this->getBaseTextureName();

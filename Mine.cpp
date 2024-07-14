@@ -24,10 +24,19 @@
 
 Mine::Mine() = default;
 Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	ResourceB(x, y, 2, 2, 10000, playerId, units, resourcePointsPtr, go, mapW, mapH),
-	Building(x, y, 2, 2, 10000, playerId, units) {}
+	ResourceB(x, y,  playerId, units, resourcePointsPtr, go, mapW, mapH),
+	Building(x, y, playerId, units) {}
 Building* Mine::cloneBuilding() const {
 	return new Mine(*this);
+}
+uint32_t Mine::getSX() const {
+    return 2;
+}
+uint32_t Mine::getSY() const {
+    return 2;
+}
+uint32_t Mine::getMaxHP() const {
+    return 5000;
 }
 Resources Mine::getCost() const {
 	Resources cost;
@@ -35,7 +44,7 @@ Resources Mine::getCost() const {
 	return cost;
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return 5000;
+	return 1800;
 }
 std::string Mine::getTextureName() const {
 	return "mine";

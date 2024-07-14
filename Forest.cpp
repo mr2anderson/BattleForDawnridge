@@ -22,8 +22,17 @@
 
 
 Forest::Forest() = default;
-Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 9000) {
+Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
+}
+uint32_t Forest::getSX() const {
+    return 1;
+}
+uint32_t Forest::getSY() const {
+    return 1;
+}
+uint32_t Forest::getMaxHP() const {
+    return 9000;
 }
 std::string Forest::getResourceType() const {
 	return "wood";

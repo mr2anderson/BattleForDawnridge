@@ -24,12 +24,21 @@
 
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Treasure>> treasures) :
-	ResourceStorageB(x, y, 2, 2, 10000, playerId, units),
-	Building(x, y, 2, 2, 10000, playerId, units) {
+	ResourceStorageB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 	this->treasures = treasures;
 }
 Building* WarehouseGold::cloneBuilding() const {
 	return new WarehouseGold(*this);
+}
+uint32_t WarehouseGold::getSX() const {
+    return 2;
+}
+uint32_t WarehouseGold::getSY() const {
+    return 2;
+}
+uint32_t WarehouseGold::getMaxHP() const {
+    return 10000;
 }
 Events WarehouseGold::newMove(uint32_t playerId) {
 	Events response;

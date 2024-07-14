@@ -17,6 +17,7 @@
  */
 
 
+#include <optional>
 #include "GO.hpp"
 
 
@@ -26,21 +27,19 @@
 class HPGO : public GO {
 public:
 	HPGO();
-	HPGO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp);
+	HPGO(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void addHp(uint32_t n);
 	void subHp(uint32_t n);
 	uint32_t getHP() const;
-	uint32_t getMaxHP() const;
-	void changeCurrentHp(uint32_t newCurrentHp);
-	void changeMaxHp(uint32_t newMaxHp);
 	void setMaxHp();
-	std::wstring getReadableHpInfo() const;
 	bool exist() const override;
+protected:
+    virtual uint32_t getMaxHP() const = 0;
 private:
-	uint32_t currentHp, maxHp;
+	std::optional<uint32_t> currentHp;
 
 	void drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const;
 };

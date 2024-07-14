@@ -27,12 +27,21 @@
 
 Barracks::Barracks() = default;
 Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	WarriorProducer(x, y, 2, 2, 30000, playerId, units, go, mapW, mapH),
-	Building(x, y, 2, 2, 30000, playerId, units) {
+	WarriorProducer(x, y, playerId, units, go, mapW, mapH),
+	Building(x, y, playerId, units) {
 
 }
 Building* Barracks::cloneBuilding() const {
 	return new Barracks(*this);
+}
+uint32_t Barracks::getSX() const {
+    return 2;
+}
+uint32_t Barracks::getSY() const {
+    return 2;
+}
+uint32_t Barracks::getMaxHP() const {
+    return 20000;
 }
 Resources Barracks::getCost() const {
 	return Resources({ Resource("stone", 20000) });
@@ -58,7 +67,7 @@ uint32_t Barracks::getRadius() const {
 	return 1;
 }
 uint32_t Barracks::getRegenerationSpeed() const {
-	return 10000;
+	return 5000;
 }
 std::wstring Barracks::getUpperCaseReadableName() const {
 	return *Texts::get()->get("barracks_upper_case_readable_name");

@@ -24,11 +24,9 @@
 
 
 GO::GO() = default;
-GO::GO(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+GO::GO(uint32_t x, uint32_t y) {
 	this->x = x;
 	this->y = y;
-	this->sx = sx;
-	this->sy = sy;
 }
 void GO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!this->exist()) {
@@ -47,12 +45,6 @@ uint32_t GO::getX() const {
 }
 uint32_t GO::getY() const {
 	return this->y;
-}
-uint32_t GO::getSX() const {
-	return this->sx;
-}
-uint32_t GO::getSY() const {
-	return this->sy;
 }
 void GO::setX(uint32_t newX) {
 	this->x = newX;

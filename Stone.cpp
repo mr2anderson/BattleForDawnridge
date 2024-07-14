@@ -22,8 +22,17 @@
 
 
 Stone::Stone() = default;
-Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 9000) {
+Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
+}
+uint32_t Stone::getSX() const {
+    return 1;
+}
+uint32_t Stone::getSY() const {
+    return 1;
+}
+uint32_t Stone::getMaxHP() const {
+    return 9000;
 }
 std::string Stone::getResourceType() const {
 	return "stone";

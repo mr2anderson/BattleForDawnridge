@@ -25,7 +25,7 @@
 
 
 ResourcePoint::ResourcePoint() = default;
-ResourcePoint::ResourcePoint(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t size) : HPGO(x, y, sx, sy, size, size) {}
+ResourcePoint::ResourcePoint(uint32_t x, uint32_t y) : HPGO(x, y, std::nullopt) {}
 Events ResourcePoint::newMove(uint32_t playerId) {
 	return Events();
 }

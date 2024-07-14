@@ -23,19 +23,28 @@
 
 Wall2::Wall2() = default;
 Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	Wall(x, y, 1, 1, 240000, playerId, units) {
+	Wall(x, y, playerId, units) {
 
 }
 Building* Wall2::cloneBuilding() const {
 	return new Wall2(*this);
 }
+uint32_t Wall2::getSX() const {
+    return 1;
+}
+uint32_t Wall2::getSY() const {
+    return 1;
+}
+uint32_t Wall2::getMaxHP() const {
+    return 60000;
+}
 Resources Wall2::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 20000));
+	cost.plus(Resource("stone", 7500));
 	return cost;
 }
 uint32_t Wall2::getRegenerationSpeed() const {
-	return 30000;
+	return 10000;
 }
 std::string Wall2::getTextureName() const {
 	return "wall2";

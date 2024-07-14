@@ -27,9 +27,9 @@
 
 
 TradingB::TradingB() = default;
-TradingB::TradingB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	HpSensitiveB(x, y, sx, sy, maxHp, playerId, units),
-	Building(x, y, sx, sy, maxHp, playerId, units) {
+TradingB::TradingB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	HpSensitiveB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 
 }
 void TradingB::draw(sf::RenderTarget& target, sf::RenderStates states) const {

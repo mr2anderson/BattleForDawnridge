@@ -23,11 +23,14 @@
 
 BlackKnight::BlackKnight() = default;
 BlackKnight::BlackKnight(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Warrior(x, y, 3000, playerId, units, go, mapW, mapH) {
+	Warrior(x, y, playerId, units, go, mapW, mapH) {
 
 }
 Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
+}
+uint32_t BlackKnight::getMaxHP() const {
+    return 3000;
 }
 Resources BlackKnight::getCost() const {
 	return Resources({ Resource("food", 20000), Resource("iron", 14400)});

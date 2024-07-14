@@ -25,8 +25,8 @@
 
 
 AreaBLandscapeSensible::AreaBLandscapeSensible() = default;
-AreaBLandscapeSensible::AreaBLandscapeSensible(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-    AreaB(x, y, sx, sy, maxHp, playerId, units) {
+AreaBLandscapeSensible::AreaBLandscapeSensible(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+    AreaB(x, y, playerId, units) {
     this->go = go;
     this->mapW = mapW;
     this->mapH = mapH;

@@ -26,7 +26,7 @@
 class ConductorB : virtual public Building {
 public:
 	ConductorB();
-	ConductorB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	ConductorB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 private:
 	bool isActiveConductor() const override;
 };

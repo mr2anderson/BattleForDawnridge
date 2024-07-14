@@ -28,10 +28,10 @@
 
 
 WarriorProducer::WarriorProducer() = default;
-WarriorProducer::WarriorProducer(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	HpSensitiveB(x, y, sx, sy, maxHp, playerId, units),
-	AreaBLandscapeSensible(x, y, sx, sy, maxHp, playerId, units, go, mapW, mapH),
-	Building(x, y, sx, sy, maxHp, playerId, units) {
+WarriorProducer::WarriorProducer(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	HpSensitiveB(x, y, playerId, units),
+	AreaBLandscapeSensible(x, y, playerId, units, go, mapW, mapH),
+	Building(x, y, playerId, units) {
 	this->producing = false;
 }
 void WarriorProducer::draw(sf::RenderTarget& target, sf::RenderStates states) const {

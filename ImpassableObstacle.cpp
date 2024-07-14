@@ -22,8 +22,8 @@
 
 
 ImpassableObstacle::ImpassableObstacle() = default;
-ImpassableObstacle::ImpassableObstacle(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) :
-	GO(x, y, sx, sy) {
+ImpassableObstacle::ImpassableObstacle(uint32_t x, uint32_t y) :
+	GO(x, y) {
 
 }
 Events ImpassableObstacle::newMove(uint32_t playerId) {

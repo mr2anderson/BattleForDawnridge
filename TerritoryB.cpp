@@ -21,10 +21,10 @@
 
 
 TerritoryB::TerritoryB() = default;
-TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t player, std::shared_ptr<GOCollection<Unit>> units) :
-	AreaBLandscapeInsensible(x, y, sx, sy, maxHp, player, units),
-	HpSensitiveB(x, y, sx, sy, maxHp, player, units),
-	Building(x, y, sx, sy, maxHp, player, units) {
+TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t player, std::shared_ptr<GOCollection<Unit>> units) :
+	AreaBLandscapeInsensible(x, y, player, units),
+	HpSensitiveB(x, y, player, units),
+	Building(x, y, player, units) {
 
 }
 bool TerritoryB::allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) {

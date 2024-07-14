@@ -23,9 +23,9 @@
 
 
 AreaBLandscapeInsensible::AreaBLandscapeInsensible() = default;
-AreaBLandscapeInsensible::AreaBLandscapeInsensible(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-    AreaB(x, y, sx, sy, maxHp, playerId, units),
-    Building(x, y, sx, sy, maxHp, playerId, units) {
+AreaBLandscapeInsensible::AreaBLandscapeInsensible(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+    AreaB(x, y, playerId, units),
+    Building(x, y, playerId, units) {
 
 }
 bool AreaBLandscapeInsensible::inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
@@ -70,17 +70,11 @@ uint32_t AreaBLandscapeInsensible::getAreaXMin() const {
     }
     return 0;
 }
-uint32_t AreaBLandscapeInsensible::getAreaXMax() const {
-    return this->getX() + this->getSX() - 1 + this->getRadius();
-}
 uint32_t AreaBLandscapeInsensible::getAreaYMin() const {
     if (this->getY() >= this->getRadius()) {
         return this->getY() - this->getRadius();
     }
     return 0;
-}
-uint32_t AreaBLandscapeInsensible::getAreaYMax() const {
-    return this->getY() + this->getSY() - 1 + this->getRadius();
 }
 uint32_t AreaBLandscapeInsensible::getAreaWidth() const {
     return (this->getSX() + this->getRadius() + this->getX()) - this->getAreaXMin();

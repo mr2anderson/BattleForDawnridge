@@ -21,9 +21,9 @@
 
 
 Gates::Gates() = default;
-Gates::Gates(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-        TerritoryConductorB(x, y, sx, sy, maxHp, playerId, units, originsPtr),
-        Building(x, y, sx, sy, maxHp, playerId, units) {
+Gates::Gates(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+        TerritoryConductorB(x, y, playerId, units, originsPtr),
+        Building(x, y, playerId, units) {
 
 }
 Events Gates::newMove(uint32_t playerId) {

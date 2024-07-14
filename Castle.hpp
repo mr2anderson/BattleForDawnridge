@@ -32,6 +32,9 @@ public:
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;
+    uint32_t getSX() const override;
+    uint32_t getSY() const override;
+    uint32_t getMaxHP() const override;
 	Resources getLimit() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;

@@ -26,7 +26,7 @@
 class HpSensitiveB : virtual public Building {
 public:
 	HpSensitiveB();
-	HpSensitiveB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	HpSensitiveB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 
 	bool works() const override;
 protected:

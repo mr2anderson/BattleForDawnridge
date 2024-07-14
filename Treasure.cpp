@@ -22,7 +22,7 @@
 
 
 Treasure::Treasure() = default;
-Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y, 1, 1, 60000) {
+Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
 }
 Events Treasure::newMove(uint32_t playerId) {
@@ -35,6 +35,15 @@ Events Treasure::tryToCollect(uint32_t playerId, uint32_t value) {
 		return this->ResourcePoint::tryToCollect(playerId, value);
 	}
 	return Events();
+}
+uint32_t Treasure::getSX() const {
+    return 1;
+}
+uint32_t Treasure::getSY() const {
+    return 1;
+}
+uint32_t Treasure::getMaxHP() const {
+    return 60000;
 }
 std::string Treasure::getResourceType() const {
 	return "gold";

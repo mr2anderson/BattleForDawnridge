@@ -24,10 +24,19 @@
 
 Quarry::Quarry() = default;
 Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	ResourceB(x, y, 2, 2, 5000, playerId, units, resourcePointsPtr, go, mapW, mapH),
-	Building(x, y, 2, 2, 5000, playerId, units) {}
+	ResourceB(x, y, playerId, units, resourcePointsPtr, go, mapW, mapH),
+	Building(x, y, playerId, units) {}
 Building* Quarry::cloneBuilding() const {
 	return new Quarry(*this);
+}
+uint32_t Quarry::getSX() const {
+    return 2;
+}
+uint32_t Quarry::getSY() const {
+    return 2;
+}
+uint32_t Quarry::getMaxHP() const {
+    return 5000;
 }
 Resources Quarry::getCost() const {
 	Resources cost;
@@ -35,7 +44,7 @@ Resources Quarry::getCost() const {
 	return cost;
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return 1750;
+	return 1800;
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";

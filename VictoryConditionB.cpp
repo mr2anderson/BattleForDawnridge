@@ -25,8 +25,8 @@
 
 
 VictoryConditionB::VictoryConditionB() = default;
-VictoryConditionB::VictoryConditionB(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	Building(x, y, sx, sy, maxHp, playerId, units) {
+VictoryConditionB::VictoryConditionB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	Building(x, y, playerId, units) {
 
 }
 Events VictoryConditionB::destroy() {

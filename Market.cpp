@@ -23,12 +23,21 @@
 
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	TradingB(x, y, 2, 2, 10000, playerId, units),
-	Building(x, y, 2, 2, 10000, playerId, units) {
+	TradingB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 
 }
 Building* Market::cloneBuilding() const {
 	return new Market(*this);
+}
+uint32_t Market::getSX() const {
+    return 2;
+}
+uint32_t Market::getSY() const {
+    return 2;
+}
+uint32_t Market::getMaxHP() const {
+    return 10000;
 }
 Resources Market::getCost() const {
 	Resources cost;

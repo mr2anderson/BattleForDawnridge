@@ -23,8 +23,8 @@
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	HPGO(x, y, sx, sy, currentHp, maxHp) {
+Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+	HPGO(x, y, currentHp) {
 	this->playerId = playerId;
 	this->units = units;
 }

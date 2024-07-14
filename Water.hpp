@@ -28,6 +28,8 @@ public:
 	Water();
 	Water(uint32_t x, uint32_t y);
 
+    uint32_t getSX() const override;
+    uint32_t getSY() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;

@@ -23,12 +23,21 @@
 
 WarehouseStone::WarehouseStone() = default;
 WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	ResourceStorageB(x, y, 2, 2, 10000, playerId, units),
-	Building(x, y, 2, 2, 10000, playerId, units) {
+	ResourceStorageB(x, y, playerId, units),
+	Building(x, y, playerId, units) {
 
 }
 Building* WarehouseStone::cloneBuilding() const {
 	return new WarehouseStone(*this);
+}
+uint32_t WarehouseStone::getSX() const {
+    return 2;
+}
+uint32_t WarehouseStone::getSY() const {
+    return 2;
+}
+uint32_t WarehouseStone::getMaxHP() const {
+    return 10000;
 }
 Events WarehouseStone::newMove(uint32_t playerId) {
 	Events response;

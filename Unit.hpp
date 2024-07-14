@@ -30,7 +30,7 @@
 class Unit : public HPGO {
 public:
 	Unit();
-	Unit(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t currentHp, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
