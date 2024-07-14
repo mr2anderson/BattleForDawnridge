@@ -34,9 +34,6 @@
 #include "PlayerPointerCircle.hpp"
 
 
-const uint32_t Warrior::MS_FOR_ANIMATION = 750;
-
-
 Warrior::Warrior() {
 	this->startClickAnimation();
 }
@@ -106,6 +103,24 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 		return 0;
 	}
 	return 0;
+}
+uint32_t Warrior::getCurrentAnimationMs() const {
+    if (this->currentAnimation == "talking") {
+        return 750;
+    }
+    if (this->currentAnimation == "walking") {
+        return 400;
+    }
+    if (this->currentAnimation == "attack") {
+        return 600;
+    }
+    if (this->currentAnimation == "been hit") {
+        return 300;
+    }
+    if (this->currentAnimation == "tipping over") {
+        return 400;
+    }
+    return 0;
 }
 bool Warrior::canStay(uint32_t newX, uint32_t newY) const {
 	sf::IntRect thisRect;
@@ -308,7 +323,7 @@ float Warrior::getOffsetY() const {
     return 0;
 }
 float Warrior::getOffset() const {
-    return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)MS_FOR_ANIMATION;
+    return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)this->getCurrentAnimationMs();
 }
 void Warrior::startAnimation(const std::string &type) {
 	this->animationClock.restart();
@@ -317,7 +332,7 @@ void Warrior::startAnimation(const std::string &type) {
 AnimationState Warrior::getCurrentAnimationState() const {
     uint32_t ms = this->animationClock.getElapsedTime().asMilliseconds();
     uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->currentDirection);
-    uint32_t msForFrame = MS_FOR_ANIMATION / animationNumber;
+    uint32_t msForFrame = this->getCurrentAnimationMs() / animationNumber;
     uint32_t currentFrame = ms / msForFrame;
     if (currentFrame > animationNumber - 1) {
         return {animationNumber - 1, true};

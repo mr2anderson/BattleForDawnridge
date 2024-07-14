@@ -42,6 +42,7 @@ public:
 	void startClickAnimation();
 	std::string getTextureName() const override;
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
+    uint32_t getCurrentAnimationMs() const;
 	bool canStay(uint32_t newX, uint32_t newY) const;
 	uint32_t getMovementCost(uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
@@ -65,8 +66,6 @@ private:
 	std::string currentAnimation;
 	sf::Clock animationClock;
     std::queue<std::string> currentMovement;
-
-    static const uint32_t MS_FOR_ANIMATION;
 
 	bool highDrawingPriority() const override;
 	bool highClickPriority() const override;
