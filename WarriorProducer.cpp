@@ -112,7 +112,7 @@ void WarriorProducer::drawCurrentProducingShortInfo(sf::RenderTarget& target, sf
 	else {
 		text = "!";
 	}
-	BuildingShortInfo info(this->getX(), this->getY(), this->getSX(), this->getSY(), this->currentProducing->getTextureName(), text);
+	BuildingShortInfo info(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->currentProducing->getTextureName(), text);
 	target.draw(info, states);
 }
 Events WarriorProducer::handleCurrentProducing() {

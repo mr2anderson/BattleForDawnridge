@@ -33,10 +33,12 @@ public:
 	MovementGraph(uint32_t mapW, uint32_t mapH);
 
 	void set(uint32_t x, uint32_t y, bool canStay, uint32_t movementCost);
-	std::vector<Move> getMoves(uint32_t x, uint32_t y, uint32_t movePoints = std::numeric_limits<uint32_t>::max());
+    Move getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t movePoints);
+    std::vector<std::tuple<uint32_t, uint32_t>> getMoves(uint32_t x, uint32_t y, uint32_t movePoints);
 private:
 	uint32_t mapW, mapH;
 	std::map<std::tuple<uint32_t, uint32_t>, FitTableElement> fitTable;
 
+    static void REVERSE_QUEUE(std::queue<std::string> &q);
 	void djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, std::map<std::tuple<uint32_t, uint32_t>, uint64_t> &dist, std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> &fromToStory);
 };

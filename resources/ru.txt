@@ -940,3 +940,10 @@ gates2_upper_case_readable_name
 <DATA>
 УКРЕПЛЕННЫЕ ГОРОДСКИЕ ВОРОТА
 <\DATA>
+
+<ID>
+no_more_movement_points
+<\ID>
+<DATA>
+У этого воина не осталось очков хода
+<\DATA>

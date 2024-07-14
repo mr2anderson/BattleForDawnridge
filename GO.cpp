@@ -36,6 +36,12 @@ void GO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	}
 	this->drawTexture(target, states);
 }
+float GO::getXInPixels() const {
+    return 64 * this->x + this->getOffsetX();
+}
+float GO::getYInPixels() const {
+    return 64 * this->y + this->getOffsetY();
+}
 uint32_t GO::getX() const {
 	return this->x;
 }
@@ -90,6 +96,12 @@ bool GO::highDrawingPriority() const {
 bool GO::highClickPriority() const {
 	return false;
 }
+float GO::getOffsetX() const {
+    return 0;
+}
+float GO::getOffsetY() const {
+    return 0;
+}
 HorizontalSelectionWindowComponent GO::getExitComponent() {
     Events soundEvent;
     soundEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -113,7 +125,7 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
-	sprite.setPosition(sf::Vector2f(64 * this->getX(), 64 * this->getY()));
+	sprite.setPosition(sf::Vector2f(this->getXInPixels(), this->getYInPixels()));
 	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
 	target.draw(sprite, states);
 }

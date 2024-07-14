@@ -69,25 +69,27 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
-				if (this->element == nullptr) {
-                    if (this->events.empty() and this->allNewMoveEventsAdded()) {
-                        if (this->selected == nullptr) {
-                            this->addButtonClickEventToQueue();
-                            if (this->events.empty()) {
-                                this->addGameObjectClickEventToQueue();
+                if (!this->animation.has_value()) {
+                    if (this->element == nullptr) {
+                        if (this->events.empty() and this->allNewMoveEventsAdded()) {
+                            if (this->selected == nullptr) {
+                                this->addButtonClickEventToQueue();
+                                if (this->events.empty()) {
+                                    this->addGameObjectClickEventToQueue();
+                                }
+                            }
+                            else {
+                                std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
+                                Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64);
+                                this->addEvents(unselectEvent);
                             }
                         }
-                        else {
-                            std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-                            Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64);
-                            this->addEvents(unselectEvent);
-                        }
                     }
-				}
-				else {
-					Events elementClickEvent = this->element->click();
-					this->addEvents(elementClickEvent);
-				}
+                    else {
+                        Events elementClickEvent = this->element->click();
+                        this->addEvents(elementClickEvent);
+                    }
+                }
 			}
 		}
 		this->drawEverything(window);
@@ -98,6 +100,11 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 		if (this->element != nullptr) {
 			this->element->update();
 		}
+        if (this->animation.has_value()) {
+            Events animationEvent;
+            animationEvent = this->animation.value().process();
+            this->addEvents(animationEvent);
+        }
 		this->moveView();
         if (this->returnToMenu) {
 			this->prepareToReturnToMenu(window);
@@ -296,6 +303,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->curcorVisibility = true;
     this->element = nullptr;
+    this->animation = std::nullopt;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Texts::get()->get("new_move")), createConfirmEndMoveWindowEvent);
@@ -442,7 +450,7 @@ void MainScreen::addGameObjectClickEventToQueue() {
 }
 void MainScreen::processEvents() {
     while (!this->events.empty()) {
-        if (this->element != nullptr) {
+        if (this->element != nullptr and !this->animation.has_value()) {
             break;
         }
         this->handleEvent(this->events.front());
@@ -633,6 +641,12 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<DisableCursorEvent> disableCursorEvent = std::dynamic_pointer_cast<DisableCursorEvent>(e)) {
         this->handleDisableCursorEvent(disableCursorEvent);
     }
+    else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
+        this->handleCreateAnimationEvent(createAnimationEvent);
+    }
+    else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
+        this->handleCloseAnimationEvent(closeAnimationEvent);
+    }
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
 	TradingB* b = e->getBuilding();
@@ -805,4 +819,10 @@ void MainScreen::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e) {
 }
 void MainScreen::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e) {
 	this->curcorVisibility = false;
+}
+void MainScreen::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e) {
+    this->animation = e->getAnimation();
+}
+void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
+    this->animation = std::nullopt;
 }

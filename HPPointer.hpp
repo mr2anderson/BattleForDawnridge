@@ -28,11 +28,11 @@
 class HPPointer : public sf::Drawable {
 public:
 	HPPointer();
-	HPPointer(uint32_t current, uint32_t max, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	HPPointer(uint32_t current, uint32_t max, float xInPixels, float yInPixels, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
 	uint32_t current, max;
-	uint32_t x, y;
+	float xInPixels, yInPixels;
 	uint32_t sx, sy;
 };

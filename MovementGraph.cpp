@@ -17,11 +17,11 @@
  */
 
 
-#include <queue>
 #include <limits>
-#include <algorithm>
+#include <stack>
 #include "MovementGraph.hpp"
 #include "DijkstraQueueElement.hpp"
+#include "MoveDoesNotExist.hpp"
 
 
 MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
@@ -31,49 +31,68 @@ MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
 void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, uint32_t movementCost) {
 	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, movementCost);
 }
-std::vector<Move> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
+Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t movePoints) {
+    std::tuple<uint32_t, uint32_t> from = std::make_tuple(x1, y1);
+    std::tuple<uint32_t, uint32_t> to = std::make_tuple(x2, y2);
+
+    std::map<std::tuple<uint32_t, uint32_t>, uint64_t> dist;
+    std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
+    this->djkstra(from, movePoints, dist, fromToStory);
+
+    if (dist.find(to) == dist.end() or !this->fitTable[to].canStay) {
+        throw MoveDoesNotExist();
+    }
+
+    Move move;
+    move.finalX = x2;
+    move.finalY = y2;
+    move.dst = dist[to];
+
+    std::tuple<uint32_t, uint32_t> current = to;
+    while (current != from) {
+        std::tuple<uint32_t, uint32_t> previous = fromToStory.at(current);
+        if (std::get<0>(current) > std::get<0>(previous)) {
+            move.route.emplace("e");
+        }
+        else if (std::get<0>(current) < std::get<0>(previous)) {
+            move.route.emplace("w");
+        }
+        else if (std::get<1>(current) > std::get<1>(previous)) {
+            move.route.emplace("s");
+        }
+        else {
+            move.route.emplace("n");
+        }
+        current = previous;
+    }
+
+    REVERSE_QUEUE(move.route);
+
+    return move;
+}
+std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
 	std::map<std::tuple<uint32_t, uint32_t>, uint64_t> dist;
-	std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
+    std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
 	this->djkstra(std::make_tuple(x, y), movePoints, dist, fromToStory);
 	
-	std::vector<Move> moves;
+	std::vector<std::tuple<uint32_t, uint32_t>> moves;
 	for (const auto& a : dist) {
 		if (this->fitTable.at(a.first).canStay) {
-			Move move;
-			move.finalX = std::get<0>(a.first);
-			move.finalY = std::get<1>(a.first);
-
-			bool ok = true;
-
-			std::tuple<uint32_t, uint32_t> current = a.first;
-			while (current != std::make_tuple(x, y)) {
-				if (fromToStory.find(current) == fromToStory.end()) {
-					ok = false;
-					break;
-				}
-				std::tuple<uint32_t, uint32_t> previous = fromToStory.at(current);
-				if (std::get<0>(current) > std::get<0>(previous)) {
-					move.route.push_back('e');
-				}
-				else if (std::get<0>(current) < std::get<0>(previous)) {
-					move.route.push_back('w');
-				}
-				else if (std::get<0>(current) > std::get<0>(previous)) {
-					move.route.push_back('s');
-				}
-				else {
-					move.route.push_back('n');
-				}
-				current = previous;
-			}
-
-			if (ok) {
-				std::reverse(move.route.begin(), move.route.end());
-				moves.push_back(move);
-			}
+            moves.emplace_back(a.first);
 		}
 	}
 	return moves;
+}
+void MovementGraph::REVERSE_QUEUE(std::queue<std::string> &q) {
+    std::stack<std::string> s;
+    while (!q.empty()) {
+        s.push(q.front());
+        q.pop();
+    }
+    while (!s.empty()) {
+        q.push(s.top());
+        s.pop();
+    }
 }
 void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, 
 	std::map<std::tuple<uint32_t, uint32_t>, uint64_t> &dist, 
@@ -123,16 +142,18 @@ void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoint
 			uint64_t len = e.dst;
 			std::tuple<uint32_t, uint32_t> u = std::make_tuple(e.x, e.y);
 
-			if (dist.find(u) == dist.end()) {
-				dist[u] = std::numeric_limits<uint32_t>::max();
-			}
+            uint64_t nDst = dst + len;
+            if (nDst <= movePoints) {
+                if (dist.find(u) == dist.end()) {
+                    dist[u] = std::numeric_limits<uint32_t>::max();
+                }
 
-			uint64_t nDst = dst + len;
-			if (nDst <= movePoints and nDst < dist[u]) {
-				dist[u] = nDst;
-				fromToStory[u] = v;
-				q.emplace(nDst, u);
-			}
+                if (nDst < dist[u]) {
+                    dist[u] = nDst;
+                    fromToStory[u] = v;
+                    q.emplace(nDst, u);
+                }
+            }
 		}
 	}
 }

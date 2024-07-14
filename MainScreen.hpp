@@ -18,6 +18,7 @@
 
 
 #include <queue>
+#include <optional>
 #include "Map.hpp"
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"
@@ -46,6 +47,8 @@
 #include "RefreshMovementPointsEvent.hpp"
 #include "EnableCursorEvent.hpp"
 #include "DisableCursorEvent.hpp"
+#include "CreateAnimationEvent.hpp"
+#include "CloseAnimationEvent.hpp"
 
 
 #pragma once
@@ -70,6 +73,7 @@ private:
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerIndex;
 	std::shared_ptr<PopUpElement> element;
+    std::optional<Animation> animation;
     std::queue<std::shared_ptr<Event>> events;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
@@ -157,4 +161,6 @@ private:
 	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e);
 	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e);
 	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e);
+    void handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e);
+    void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
 };

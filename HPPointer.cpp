@@ -22,11 +22,11 @@
 
 
 HPPointer::HPPointer() = default;
-HPPointer::HPPointer(uint32_t current, uint32_t max, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+HPPointer::HPPointer(uint32_t current, uint32_t max, float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) {
 	this->current = current;
 	this->max = max;
-	this->x = x;
-	this->y = y;
+	this->xInPixels = xInPixels;
+	this->yInPixels = yInPixels;
 	this->sx = sx;
 	this->sy = sy;
 }
@@ -37,7 +37,7 @@ void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(64 * this->sx / 32, 64 * this->sy / 32));
-	rect.setPosition(64 * this->x + 64 * this->sx - rect.getSize().x - 1, 64 * this->y + 64 * this->sy / 6);
+	rect.setPosition(this->xInPixels + 64 * this->sx - rect.getSize().x - 1, this->yInPixels + 64 * this->sy / 6);
 	rect.setFillColor(sf::Color(red, green, blue));
 	target.draw(rect, states);
 }

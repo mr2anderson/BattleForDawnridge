@@ -26,11 +26,11 @@
 
 class PlayerPointer : public sf::Drawable {
 public:
-	PlayerPointer(uint32_t side, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	PlayerPointer(uint32_t side, float xInPixels, float yInPixels, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
 	uint32_t side;
-	uint32_t x, y;
+	float xInPixels, yInPixels;
 	uint32_t sx, sy;
 };

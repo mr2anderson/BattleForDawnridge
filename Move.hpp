@@ -17,7 +17,8 @@
  */
 
 
-#include <vector>
+#include <queue>
+#include <string>
 #include <cstdint>
 
 
@@ -28,5 +29,6 @@ struct Move {
 	Move();
 
 	uint32_t finalX, finalY;
-	std::vector<uint8_t> route;
+    uint32_t dst;
+	std::queue<std::string> route;
 };

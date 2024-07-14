@@ -21,19 +21,21 @@
 #include "Unit.hpp"
 #include "GOCollection.hpp"
 #include "Selectable.hpp"
-#include "Move.hpp"
+#include "Animated.hpp"
+#include "MovementGraph.hpp"
+#include "AnimationState.hpp"
 
 
 #pragma once
 
 
-class Warrior : public Unit, public Selectable {
+class Warrior : public Unit, public Selectable, public Animated {
 public:
 	Warrior();
 	Warrior(uint32_t x, uint32_t y, uint32_t maxHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	virtual Warrior* cloneWarrior() const = 0;
 
-	Events newMove(uint32_t playerId);
+	Events newMove(uint32_t playerId) override;
 	void refreshMovementPoints();
 	void startClickAnimation();
 	std::string getTextureName() const override;
@@ -42,6 +44,7 @@ public:
 	uint32_t getMovementCost(uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+    Events processCurrentAnimation() override;
 
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
@@ -59,6 +62,9 @@ private:
 	std::string currentDirection;
 	std::string currentAnimation;
 	sf::Clock animationClock;
+    std::queue<std::string> currentMovement;
+
+    static const uint32_t MS_FOR_ANIMATION;
 
 	bool highDrawingPriority() const override;
 	bool highClickPriority() const override;
@@ -66,7 +72,14 @@ private:
 	Events unselect(uint32_t x, uint32_t y) override;
 	Events unselect() override;
 	Events getMoveHighlightionEvent();
-	std::vector<Move> getMoves();
+	std::vector<std::tuple<uint32_t, uint32_t>> getMoves();
+    Move getMove(uint32_t x2, uint32_t y2);
+    MovementGraph buildMovementGraph();
+    Events processWalkingAnimation();
+    float getOffsetX() const override;
+    float getOffsetY() const override;
+    float getOffset() const;
 	void startAnimation(const std::string &type);
+    AnimationState getCurrentAnimationState() const;
 	Events getGameObjectResponse(uint32_t playerId) override;
 };

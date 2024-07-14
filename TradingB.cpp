@@ -90,7 +90,7 @@ bool TradingB::busy() const {
 	return this->currentTrade.movesLeft != 0;
 }
 void TradingB::drawCurrentTradeShortInfo(sf::RenderTarget& target, sf::RenderStates states) const {
-	BuildingShortInfo info(this->getX(), this->getY(), this->getSX(), this->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
+	BuildingShortInfo info(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
 	target.draw(info, states);
 }
 Events TradingB::handleCurrentTrade() {

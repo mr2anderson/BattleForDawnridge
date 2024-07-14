@@ -68,6 +68,6 @@ bool HPGO::exist() const {
 	return (this->currentHp != 0);
 }
 void HPGO::drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const {
-	HPPointer bar(this->currentHp, this->maxHp, this->getX(), this->getY(), this->getSX(), this->getSY());
+	HPPointer bar(this->currentHp, this->maxHp, this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 	target.draw(bar, states);
 }

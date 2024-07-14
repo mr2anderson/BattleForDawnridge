@@ -65,6 +65,6 @@ bool Unit::connectedTo(GO* go) const {
 	return g.connectedToDestination(this->getX(), this->getY(), this->getSX(), this->getSY());
 }
 void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const {
-	PlayerPointer pointer(this->getPlayerId(), this->getX(), this->getY(), this->getSX(), this->getSY());
+	PlayerPointer pointer(this->getPlayerId(), this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 	target.draw(pointer, states);
 }

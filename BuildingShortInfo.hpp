@@ -26,7 +26,7 @@
 
 class BuildingShortInfo : public sf::Drawable {
 public:
-	BuildingShortInfo(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, const std::string& pictureName, const std::string& text);
+	BuildingShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, const std::string& pictureName, const std::string& text);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:

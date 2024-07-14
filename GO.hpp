@@ -31,6 +31,8 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+    float getXInPixels() const;
+    float getYInPixels() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
 	uint32_t getSX() const;
@@ -53,6 +55,8 @@ public:
 	virtual std::wstring getDescription() const = 0;
 protected:
 	virtual Events getGameObjectResponse(uint32_t currentPlayerId) = 0;
+    virtual float getOffsetX() const;
+    virtual float getOffsetY() const;
 
 	virtual HorizontalSelectionWindowComponent getExitComponent();
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;
