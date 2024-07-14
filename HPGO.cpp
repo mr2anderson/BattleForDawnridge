@@ -62,7 +62,7 @@ void HPGO::setMaxHp() {
 	this->currentHp = this->maxHp;
 }
 std::wstring HPGO::getReadableHpInfo() const {
-	return *Texts::get()->get("points") + std::to_wstring(this->getHP()) + *Texts::get()->get("slash") + std::to_wstring(this->getMaxHP());
+	return *Texts::get()->get("hp") + std::to_wstring(this->getHP()) + *Texts::get()->get("slash") + std::to_wstring(this->getMaxHP());
 }
 bool HPGO::exist() const {
 	return (this->currentHp != 0);
