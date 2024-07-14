@@ -107,7 +107,7 @@ forest_description
 <\DATA>
 
 <ID>
-hp
+points
 <\ID>
 <DATA>
 Защита: 
@@ -946,4 +946,25 @@ no_more_movement_points
 <\ID>
 <DATA>
 У этого воина не осталось очков хода
+<\DATA>
+
+<ID>
+cut
+<\ID>
+<DATA>
+режущ. 
+<\DATA>
+
+<ID>
+stub
+<\ID>
+<DATA>
+колющ. 
+<\DATA>
+
+<ID>
+crush
+<\ID>
+<DATA>
+дробящ. 
 <\DATA>
