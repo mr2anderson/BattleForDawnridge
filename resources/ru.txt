@@ -858,6 +858,13 @@ clue15
 <\DATA>
 
 <ID>
+clue16
+<\ID>
+<DATA>
+Сперва займитесь добычей древесины.
+<\DATA>
+
+<ID>
 next_clue
 <\ID>
 <DATA>
