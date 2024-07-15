@@ -53,11 +53,11 @@ void Maps::generateThumbnail(const std::string& name) {
     renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 
     PlainsGeneration generation = PlainsGeneration(THUMBNAIL_SIZE / 64, THUMBNAIL_SIZE / 64);
-    for (uint32_t i = 0; i < THUMBNAIL_SIZE / 64; i = i + 64) {
-        for (uint32_t j = 0; j < THUMBNAIL_SIZE / 64; j = j + 64) {
+    for (uint32_t i = 0; i < THUMBNAIL_SIZE; i = i + 64) {
+        for (uint32_t j = 0; j < THUMBNAIL_SIZE; j = j + 64) {
             sf::Sprite sprite;
-            sprite.setTexture(*Textures::get()->get(std::to_string(generation.getType(i, j) + 1)));
-            sprite.setPosition(64 * i, THUMBNAIL_SIZE - 64 * j);
+            sprite.setTexture(*Textures::get()->get(std::to_string(generation.getType(i / 64, j / 64) + 1)));
+            sprite.setPosition(i, THUMBNAIL_SIZE - j - 64);
             renderTexture.draw(sprite);
         }
     }
@@ -66,7 +66,7 @@ void Maps::generateThumbnail(const std::string& name) {
     for (uint32_t i = 0; i < go->size(); i = i + 1) {
         GO* o = go->at(i);
         float x = o->getX() * sx;
-        float y = o->getY() * sy;
+        float y = (o->getY() + 1) * sy;
         sf::Sprite sprite;
         sprite.setTextureRect(o->getTextureRect());
         sprite.setTexture(*Textures::get()->get(o->getTextureName()));
