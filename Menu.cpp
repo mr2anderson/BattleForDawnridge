@@ -187,6 +187,18 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         false,
         Events()
     );
+    educationWindowComponents.emplace_back(
+        "forest_icon",
+        *Texts::get()->get("guide_movement_cost_system_description"),
+        false,
+        Events()
+    );
+    educationWindowComponents.emplace_back(
+        "water_icon",
+        *Texts::get()->get("guide_obstacle_system_description"),
+        false,
+        Events()
+    );
 
     std::shared_ptr<HorizontalSelectionWindow> educationWindow = std::make_shared<HorizontalSelectionWindow>(educationWindowComponents);
     Events createEducationWindowEvent = clickEvent;
