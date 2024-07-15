@@ -22,5 +22,5 @@
 
 const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
 const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_DARK = sf::Color(0, 0, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 50, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(50, 0, 0, 100);
+const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 20, 0, 100);
+const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(20, 0, 0, 100);
