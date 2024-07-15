@@ -30,7 +30,7 @@ MovementPointsPointer::MovementPointsPointer(float xInPixels, float yInPixels, u
     this->text.setFont(*Fonts::get()->get("1"));
     this->text.setCharacterSize(12);
     this->text.setString(std::to_string(value));
-    this->text.setPosition(xInPixels, yInPixels);
+    this->text.setPosition(xInPixels + 5, yInPixels);
 }
 void MovementPointsPointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(this->text, states);
