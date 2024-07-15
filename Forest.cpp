@@ -19,11 +19,12 @@
 
 #include "Forest.hpp"
 #include "Texts.hpp"
+#include "Textures.hpp"
 
 
 Forest::Forest() = default;
-Forest::Forest(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
-
+Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : ResourcePoint(x, y) {
+	this->type = type;
 }
 uint32_t Forest::getSX() const {
     return 1;
@@ -42,6 +43,12 @@ std::string Forest::getSoundName() const {
 }
 std::string Forest::getTextureName() const {
 	return "forest";
+}
+sf::IntRect Forest::getTextureRect() const {
+	uint32_t thisW = this->getSX() * 64;
+	uint32_t thisH = this->getSY() * 64;
+	uint32_t typesInOneLine = Textures::get()->get(this->getTextureName())->getSize().x / thisW;
+	return sf::IntRect(this->type % typesInOneLine * this->getSX() * 64, this->type / typesInOneLine * thisH, thisW, thisH);
 }
 std::wstring Forest::getDescription() const {
 	return *Texts::get()->get("forest_description");

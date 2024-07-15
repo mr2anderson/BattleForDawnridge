@@ -27,7 +27,7 @@
 class LabelWithImage : public RectangularUiElement {
 public:
     LabelWithImage();
-    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t h, const std::string &imageName, const std::wstring &message);
+    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t h, const std::string &imageName, const std::wstring &message, std::optional<sf::IntRect> rect);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

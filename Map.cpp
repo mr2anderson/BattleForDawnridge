@@ -48,7 +48,7 @@ Map::Map(const std::string &path) {
 
     std::string line;
     bool read = false;
-    int32_t y = -1;
+    uint32_t y = 0;
     uint32_t x = 0;
     uint32_t currentPlayerId = 0;
 
@@ -57,6 +57,7 @@ Map::Map(const std::string &path) {
     while (std::getline(file, line)) {
         if (line == "  <data encoding=\"csv\">") {
             read = true;
+            std::getline(file, line);
         }
         else if (line == "</data>") {
             break;
@@ -68,10 +69,11 @@ Map::Map(const std::string &path) {
         std::string word;
         x = -1;
         while (std::getline(ss, word, ',')) {
-            if (word == "3") {
-                this->add(new Forest(x, y));
+            uint32_t id = std::stoi(word);
+            if (id >= 257) {
+                this->add(new Forest(x, y, id - 257));
             }
-            else if (word == "1") {
+            else if (id == 1) {
                 this->players.resize(this->players.size() + 1);
                 this->players.back() = Player(this->players.size());
 
@@ -81,19 +83,19 @@ Map::Map(const std::string &path) {
                 startSquads.emplace_back(x, y + c->getSY(), this->players.at(currentPlayerId).getId());
                 currentPlayerId = currentPlayerId + 1;
             }
-            else if (word == "4") {
+            else if (id == 4) {
                 this->add(new Iron(x, y));
             }
-            else if (word == "6") {
+            else if (id == 6) {
                 this->add(new Stone(x, y));
             }
-            else if (word == "5") {
+            else if (id == 5) {
                 this->add(new Mountains(x, y));
             }
-            else if (word == "7") {
+            else if (id == 7) {
                 this->add(new Water(x, y));
             }
-            else if (word == "8") {
+            else if (id == 8) {
                 this->add(new Treasure(x, y));
             }
             x = x + 1;

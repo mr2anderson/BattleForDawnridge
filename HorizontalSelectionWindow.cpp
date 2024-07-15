@@ -40,11 +40,12 @@ void HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 			std::wstring message = this->components.at(i).message;
 			bool clickable = this->components.at(i).clickable;
 			Events onClick = this->components.at(i).gEvent;
+			std::optional<sf::IntRect> rect = this->components.at(i).rect;
 			if (clickable) {
 				onClick.add(std::make_shared<CloseWindowEvent>());
 			}
 
-			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message), onClick);
+			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message, rect), onClick);
 			this->buttons.at(i) = button;
 			if (button.getY() > (int32_t)(windowH / 2)) {
 				y = button.getY() - 10;

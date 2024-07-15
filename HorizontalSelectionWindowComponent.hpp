@@ -17,6 +17,8 @@
  */
 
 
+#include <optional>
+#include <SFML/Graphics.hpp>
 #include "Events.hpp"
 
 
@@ -25,10 +27,11 @@
 
 struct HorizontalSelectionWindowComponent {
 	HorizontalSelectionWindowComponent();
-	HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, Events gEvent);
+	HorizontalSelectionWindowComponent(const std::string& pictureName, const std::wstring& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect = std::nullopt);
 
 	std::string pictureName;
 	std::wstring message;
 	bool clickable;
 	Events gEvent;
+	std::optional<sf::IntRect> rect;
 };

@@ -91,6 +91,9 @@ bool GO::highDrawingPriority() const {
 bool GO::highClickPriority() const {
 	return false;
 }
+sf::IntRect GO::getTextureRect() const {
+	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());
+}
 float GO::getOffsetX() const {
     return 0;
 }
@@ -114,13 +117,15 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 		this->getTextureName(),
 		this->getDescription(),
 		false,
-		Events()
+		Events(),
+		this->getTextureRect()
 	};
 	return component;
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
 	sprite.setPosition(sf::Vector2f(this->getXInPixels(), this->getYInPixels()));
+	sprite.setTextureRect(this->getTextureRect());
 	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
 	target.draw(sprite, states);
 }

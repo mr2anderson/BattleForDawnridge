@@ -27,7 +27,7 @@
 class Forest : public ResourcePoint {
 public:
 	Forest();
-	Forest(uint32_t x, uint32_t y);
+	Forest(uint32_t x, uint32_t y, uint32_t type);
 
     uint32_t getSX() const override;
     uint32_t getSY() const override;
@@ -35,6 +35,9 @@ public:
 	std::string getResourceType() const override;
 	std::string getSoundName() const override;
 private:
+	uint32_t type;
+
 	std::string getTextureName() const override;
+	sf::IntRect getTextureRect() const override;
 	std::wstring getDescription() const override;
 };
