@@ -19,6 +19,7 @@
 
 #include "WarehouseWood.hpp"
 #include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;

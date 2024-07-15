@@ -18,6 +18,7 @@
 
 
 #include "Gates.hpp"
+#include "CreateEEvent.hpp"
 
 
 Gates::Gates() = default;

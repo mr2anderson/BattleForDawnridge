@@ -20,6 +20,7 @@
 #include "WarehouseGold.hpp"
 #include "Texts.hpp"
 #include "TryToCollectEvent.hpp"
+#include "CreateEEvent.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;

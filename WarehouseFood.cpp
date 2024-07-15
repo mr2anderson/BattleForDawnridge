@@ -19,6 +19,7 @@
 
 #include "WarehouseFood.hpp"
 #include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 WarehouseFood::WarehouseFood() = default;

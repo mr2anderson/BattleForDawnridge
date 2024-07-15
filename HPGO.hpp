@@ -19,6 +19,7 @@
 
 #include <optional>
 #include "GO.hpp"
+#include "HPPointer.hpp"
 
 
 #pragma once
@@ -37,6 +38,7 @@ public:
 	void setMaxHp();
 	bool exist() const override;
     virtual uint32_t getMaxHP() const = 0;
+	virtual std::shared_ptr<HPPointer> getHPPointer() const = 0;
 private:
 	std::optional<uint32_t> currentHp;
 

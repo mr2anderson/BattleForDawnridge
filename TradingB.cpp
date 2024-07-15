@@ -24,6 +24,8 @@
 #include "BuildingShortInfo.hpp"
 #include "Texts.hpp"
 #include "ImageFlyingE.hpp"
+#include "WindowButton.hpp"
+#include "CreateEEvent.hpp"
 
 
 TradingB::TradingB() = default;

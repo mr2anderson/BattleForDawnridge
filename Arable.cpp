@@ -21,6 +21,7 @@
 #include "Texts.hpp"
 #include "ImageFlyingE.hpp"
 #include "AddResourceEvent.hpp"
+#include "CreateEEvent.hpp"
 
 
 Arable::Arable() = default;

@@ -28,9 +28,9 @@ const sf::Color MovementPointsPointer::PURPLE = sf::Color(112, 0, 195);
 
 MovementPointsPointer::MovementPointsPointer(float xInPixels, float yInPixels, uint32_t value) {
     this->text.setFont(*Fonts::get()->get("1"));
-    this->text.setCharacterSize(10);
+    this->text.setCharacterSize(12);
     this->text.setString(std::to_string(value));
-    this->text.setPosition(xInPixels + 64 - this->text.getGlobalBounds().width, yInPixels);
+    this->text.setPosition(xInPixels, yInPixels);
 }
 void MovementPointsPointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(this->text, states);

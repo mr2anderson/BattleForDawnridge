@@ -20,6 +20,7 @@
 #include "HpSensitiveB.hpp"
 #include "Texts.hpp"
 #include "ImageFlyingE.hpp"
+#include "CreateEEvent.hpp"
 
 
 HpSensitiveB::HpSensitiveB() = default;

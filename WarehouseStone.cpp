@@ -19,6 +19,7 @@
 
 #include "WarehouseStone.hpp"
 #include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;

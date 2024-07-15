@@ -22,13 +22,12 @@
 
 
 HPPointer::HPPointer() = default;
-HPPointer::HPPointer(uint32_t current, uint32_t max, float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) {
-	this->current = current;
-	this->max = max;
+HPPointer::HPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation) {
 	this->xInPixels = xInPixels;
 	this->yInPixels = yInPixels;
 	this->sx = sx;
 	this->sy = sy;
+	this->orientation = orientation;
 }
 void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	uint32_t red = 255 - 255 * this->current / this->max;
@@ -37,7 +36,13 @@ void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(64 * this->sx / 32, 64 * this->sy / 32));
-	rect.setPosition(this->xInPixels + 64 * this->sx - rect.getSize().x - 1, this->yInPixels + 15);
+	rect.setPosition(this->xInPixels + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - rect.getSize().x - 1), this->yInPixels + 15);
 	rect.setFillColor(sf::Color(red, green, blue));
 	target.draw(rect, states);
+}
+void HPPointer::setCurrent(uint32_t current) {
+	this->current = current;
+}
+void HPPointer::setMax(uint32_t max) {
+	this->max = max;
 }

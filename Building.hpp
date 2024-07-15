@@ -18,11 +18,6 @@
 
 
 #include "Unit.hpp"
-#include "WindowButton.hpp"
-#include "CreateEEvent.hpp"
-#include "AddHpEvent.hpp"
-#include "WindowTwoButtons.hpp"
-#include "DestroyEvent.hpp"
 
 
 #pragma once
@@ -44,6 +39,7 @@ protected:
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 	virtual HorizontalSelectionWindowComponent getDestroyComponent();
 private:
+	std::shared_ptr<HPPointer> getHPPointer() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
     virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const override;

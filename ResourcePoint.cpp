@@ -54,6 +54,9 @@ bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
 uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return 3;
 }
+std::shared_ptr<HPPointer> ResourcePoint::getHPPointer() const {
+	return std::make_shared<HPPointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
+}
 Events ResourcePoint::getGameObjectResponse(uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();

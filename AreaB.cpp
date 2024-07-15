@@ -19,6 +19,9 @@
 
 #include "AreaB.hpp"
 #include "Texts.hpp"
+#include "DestroyEvent.hpp"
+#include "WindowTwoButtons.hpp"
+#include "CreateEEvent.hpp"
 
 
 AreaB::AreaB() = default;

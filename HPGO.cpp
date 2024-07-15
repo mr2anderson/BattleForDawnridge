@@ -18,7 +18,6 @@
 
 
 #include "HPGO.hpp"
-#include "HPPointer.hpp"
 #include "Texts.hpp"
 
 
@@ -54,6 +53,8 @@ bool HPGO::exist() const {
 	return (this->getHP() != 0);
 }
 void HPGO::drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const {
-	HPPointer bar(this->getHP(), this->getMaxHP(), this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
-	target.draw(bar, states);
+	std::shared_ptr<HPPointer> p = this->getHPPointer();
+	p->setCurrent(this->getHP());
+	p->setMax(this->getMaxHP());
+	target.draw(*p, states);
 }

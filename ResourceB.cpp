@@ -19,6 +19,7 @@
 
 #include "ResourceB.hpp"
 #include "TryToCollectEvent.hpp"
+#include "CreateEEvent.hpp"
 
 
 ResourceB::ResourceB() = default;

@@ -22,6 +22,8 @@
 #include "SubResourcesEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "Texts.hpp"
+#include "WindowButton.hpp"
+#include "CreateEEvent.hpp"
 
 
 BuildingMode::BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH) {

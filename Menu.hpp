@@ -24,6 +24,7 @@
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "CreateEEvent.hpp"
 
 
 #pragma once

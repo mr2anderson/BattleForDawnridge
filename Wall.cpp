@@ -18,6 +18,7 @@
 
 
 #include "Wall.hpp"
+#include "CreateEEvent.hpp"
 
 
 Wall::Wall() = default;

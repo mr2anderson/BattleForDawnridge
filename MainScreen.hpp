@@ -49,6 +49,9 @@
 #include "DisableCursorEvent.hpp"
 #include "CreateAnimationEvent.hpp"
 #include "CloseAnimationEvent.hpp"
+#include "AddHpEvent.hpp"
+#include "CreateEEvent.hpp"
+#include "DestroyEvent.hpp"
 
 
 #pragma once

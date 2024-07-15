@@ -25,6 +25,8 @@
 #include "BuildingShortInfo.hpp"
 #include "ImageFlyingE.hpp"
 #include "Texts.hpp"
+#include "CreateEEvent.hpp"
+#include "WindowButton.hpp"
 
 
 WarriorProducer::WarriorProducer() = default;

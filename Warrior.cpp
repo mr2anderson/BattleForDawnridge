@@ -369,9 +369,12 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
     }
 	return response;
 }
+std::shared_ptr<HPPointer> Warrior::getHPPointer() const {
+    return std::make_shared<HPPointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), HPPointer::ORIENTATION::LEFT_UP);
+}
 std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
         return std::make_shared<MovementPointsPointer>(this->getXInPixels(), this->getYInPixels(), this->movementPoints.value_or(this->getMovementPoints()));
     }
-    return std::make_shared<PlayerPointerCircle>(this->getXInPixels(), this->getYInPixels(), 1, 1);
+    return std::make_shared<PlayerPointerCircle>(this->getXInPixels(), this->getYInPixels(), 1, 1, PlayerPointerCircle::ORIENTATION::LEFT_UP);
 }

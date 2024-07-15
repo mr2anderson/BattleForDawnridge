@@ -23,6 +23,11 @@
 #include "ImageFlyingE.hpp"
 #include "HPFlyingE.hpp"
 #include "PlayerPointerCircle.hpp"
+#include "WindowButton.hpp"
+#include "CreateEEvent.hpp"
+#include "AddHpEvent.hpp"
+#include "WindowTwoButtons.hpp"
+#include "DestroyEvent.hpp"
 
 
 Building::Building() = default;
@@ -75,6 +80,9 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 		createVerify
 	};
 	return component;
+}
+std::shared_ptr<HPPointer> Building::getHPPointer() const {
+	return std::make_shared<HPPointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 }
 bool Building::warriorCanStay(uint32_t warriorPlayerId) const {
 	return true;

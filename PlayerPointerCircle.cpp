@@ -21,10 +21,11 @@
 #include "Textures.hpp"
 
 
-PlayerPointerCircle::PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) {
+PlayerPointerCircle::PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation) {
     this->xInPixels = xInPixels;
     this->yInPixels = yInPixels;
     this->sx = sx;
+    this->orientation = orientation;
 }
 void PlayerPointerCircle::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(this->sprite, states);
@@ -42,5 +43,5 @@ void PlayerPointerCircle::setTypePurple() {
     this->recalcPosition();
 }
 void PlayerPointerCircle::recalcPosition() {
-    this->sprite.setPosition(this->xInPixels + 64 * this->sx - this->sprite.getLocalBounds().width, this->yInPixels);
+    this->sprite.setPosition(this->xInPixels + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - this->sprite.getLocalBounds().width), this->yInPixels);
 }

@@ -19,6 +19,7 @@
 
 #include "Castle.hpp"
 #include "Texts.hpp"
+#include "CreateEEvent.hpp"
 
 
 Castle::Castle() = default;
