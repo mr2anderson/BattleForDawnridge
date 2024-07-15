@@ -46,7 +46,7 @@ void Label::setY(int32_t newY) {
 	this->rerenderNewPosition();
 }
 void Label::initText() {
-	this->text.setCharacterSize(13);
+	this->text.setCharacterSize(12);
 	this->text.setFillColor(sf::Color::White);
 	this->text.setOutlineColor(sf::Color::Black);
 	this->text.setOutlineThickness(1);
