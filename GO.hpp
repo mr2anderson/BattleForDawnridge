@@ -53,6 +53,7 @@ public:
 	virtual bool highClickPriority() const;
 	virtual std::string getTextureName() const = 0;
 	virtual sf::IntRect getTextureRect() const;
+	virtual sf::Color getTextureColor() const;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:

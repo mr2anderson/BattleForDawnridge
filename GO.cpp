@@ -94,6 +94,9 @@ bool GO::highClickPriority() const {
 sf::IntRect GO::getTextureRect() const {
 	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());
 }
+sf::Color GO::getTextureColor() const {
+	return sf::Color::White;
+}
 float GO::getOffsetX() const {
     return 0;
 }
@@ -127,5 +130,6 @@ void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sprite.setPosition(sf::Vector2f(this->getXInPixels(), this->getYInPixels()));
 	sprite.setTextureRect(this->getTextureRect());
 	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
+	sprite.setColor(this->getTextureColor());
 	target.draw(sprite, states);
 }

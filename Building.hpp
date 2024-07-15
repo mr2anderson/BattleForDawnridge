@@ -47,6 +47,7 @@ private:
 	uint32_t burningMovesLeft;
 	Fire fire;
 
+	sf::Color getTextureColor() const override;
 	std::shared_ptr<HPPointer> getHPPointer() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;

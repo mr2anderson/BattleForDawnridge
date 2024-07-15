@@ -120,6 +120,12 @@ Events Building::regenerate() {
 	}
 	return events;
 }
+sf::Color Building::getTextureColor() const {
+	if (this->burningMovesLeft == 0) {
+		return this->Unit::getTextureColor();
+	}
+	return sf::Color(50, 50, 50);
+}
 std::shared_ptr<HPPointer> Building::getHPPointer() const {
 	return std::make_shared<HPPointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 }
