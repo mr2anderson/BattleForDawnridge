@@ -36,18 +36,18 @@ uint32_t Gates1::getSY() const {
     return 1;
 }
 uint32_t Gates1::getMaxHP() const {
-    return 25000;
+    return 20000;
 }
 Defence Gates1::getDefence() const {
     return DEFENCE::WOOD;
 }
 Resources Gates1::getCost() const {
     Resources cost;
-    cost.plus(Resource("wood", 7500));
+    cost.plus(Resource("wood", 15000));
     return cost;
 }
 uint32_t Gates1::getRegenerationSpeed() const {
-    return 12500;
+    return this->getMaxHP() / 2;
 }
 std::string Gates1::getTextureName() const {
     return "gates1";

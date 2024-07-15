@@ -47,7 +47,7 @@ Resources Mine::getCost() const {
 	return cost;
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return 2500;
+	return this->getMaxHP() / 2;
 }
 std::string Mine::getTextureName() const {
 	return "mine";

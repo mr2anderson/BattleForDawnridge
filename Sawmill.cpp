@@ -47,7 +47,7 @@ uint32_t Sawmill::getMaxHP() const {
     return 5000;
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return 2500;
+	return this->getMaxHP() / 2;
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";

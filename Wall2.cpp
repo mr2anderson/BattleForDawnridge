@@ -36,18 +36,18 @@ uint32_t Wall2::getSY() const {
     return 1;
 }
 uint32_t Wall2::getMaxHP() const {
-    return 50000;
+    return 30000;
 }
 Defence Wall2::getDefence() const {
 	return DEFENCE::STONE;
 }
 Resources Wall2::getCost() const {
 	Resources cost;
-	cost.plus(Resource("stone", 7500));
+	cost.plus(Resource("stone", 15000));
 	return cost;
 }
 uint32_t Wall2::getRegenerationSpeed() const {
-	return 8500;
+	return this->getMaxHP() / 6;
 }
 std::string Wall2::getTextureName() const {
 	return "wall2";

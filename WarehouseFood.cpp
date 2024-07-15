@@ -37,7 +37,7 @@ uint32_t WarehouseFood::getSY() const {
     return 2;
 }
 uint32_t WarehouseFood::getMaxHP() const {
-    return 5000;
+    return 10000;
 }
 Events WarehouseFood::newMove(uint32_t playerId) {
 	Events response;
@@ -47,7 +47,7 @@ Events WarehouseFood::newMove(uint32_t playerId) {
 	return response;
 }
 Defence WarehouseFood::getDefence() const {
-	return DEFENCE::STONE;
+	return DEFENCE::WOOD;
 }
 Resources WarehouseFood::getCost() const {
 	Resources cost;
@@ -55,7 +55,7 @@ Resources WarehouseFood::getCost() const {
 	return cost;
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {
-	return 1000;
+	return this->getMaxHP() / 5;
 }
 std::string WarehouseFood::getTextureName() const {
 	return "warehouse_food";

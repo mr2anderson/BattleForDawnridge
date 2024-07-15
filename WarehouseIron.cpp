@@ -37,7 +37,7 @@ uint32_t WarehouseIron::getSY() const {
     return 2;
 }
 uint32_t WarehouseIron::getMaxHP() const {
-    return 5000;
+    return 10000;
 }
 Events WarehouseIron::newMove(uint32_t playerId) {
 	Events response;
@@ -47,7 +47,7 @@ Events WarehouseIron::newMove(uint32_t playerId) {
 	return response;
 }
 Defence WarehouseIron::getDefence() const {
-	return DEFENCE::STONE;
+	return DEFENCE::WOOD;
 }
 Resources WarehouseIron::getCost() const {
 	Resources cost;
@@ -55,7 +55,7 @@ Resources WarehouseIron::getCost() const {
 	return cost;
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
-	return 1000;
+	return this->getMaxHP() / 5;
 }
 std::string WarehouseIron::getTextureName() const {
 	return "warehouse_iron";

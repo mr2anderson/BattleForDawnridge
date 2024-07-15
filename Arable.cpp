@@ -55,7 +55,7 @@ Defence Arable::getDefence() const {
 	return DEFENCE::WOOD;
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 2500)});
+	return Resources({ Resource("wood", 5000)});
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -67,7 +67,7 @@ std::wstring Arable::getDescription() const {
 	return *Texts::get()->get("arable_description");
 }
 uint32_t Arable::getRegenerationSpeed() const {
-	return 500;
+	return this->getMaxHP() / 2;
 }
 std::wstring Arable::getUpperCaseReadableName() const {
 	return *Texts::get()->get("arable_upper_case_readable_name");
@@ -77,7 +77,7 @@ Events Arable::addFood() const {
 	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("food_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<PlaySoundEvent>("click"));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
-	response.add(std::make_shared<AddResourceEvent>(Resource("food", 500)));
+	response.add(std::make_shared<AddResourceEvent>(Resource("food", 875)));
 	return response;
 }
 Events Arable::getSelectionW() {

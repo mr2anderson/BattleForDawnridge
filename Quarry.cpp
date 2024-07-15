@@ -47,7 +47,7 @@ Resources Quarry::getCost() const {
 	return cost;
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return 25000;
+	return this->getMaxHP() / 2;
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";

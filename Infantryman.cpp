@@ -30,10 +30,10 @@ Warrior* Infantryman::cloneWarrior() const {
 	return new Infantryman(*this);
 }
 uint32_t Infantryman::getMaxHP() const {
-    return 5000;
+    return 10000;
 }
 Damage Infantryman::getDamage() const {
-	return { 1250, Damage::TYPE::CUT };
+	return { 2500, Damage::TYPE::CUT };
 }
 Defence Infantryman::getDefence() const {
 	return DEFENCE::HUMAN;

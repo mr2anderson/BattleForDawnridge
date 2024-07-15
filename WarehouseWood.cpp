@@ -47,7 +47,7 @@ Events WarehouseWood::newMove(uint32_t playerId) {
 	return response;
 }
 Defence WarehouseWood::getDefence() const {
-	return DEFENCE::STONE;
+	return DEFENCE::WOOD;
 }
 Resources WarehouseWood::getCost() const {
 	Resources cost;
@@ -55,7 +55,7 @@ Resources WarehouseWood::getCost() const {
 	return cost;
 }
 uint32_t WarehouseWood::getRegenerationSpeed() const {
-	return 1000;
+	return this->getMaxHP() / 5;
 }
 std::string WarehouseWood::getTextureName() const {
 	return "warehouse_wood";

@@ -50,11 +50,11 @@ Defence Road::getDefence() const {
 }
 Resources Road::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 1000));
+	cost.plus(Resource("wood", 1500));
 	return cost;
 }
 uint32_t Road::getRegenerationSpeed() const {
-	return 500;
+	return this->getMaxHP();
 }
 std::string Road::getTextureName() const {
 	return "road";
@@ -69,7 +69,7 @@ std::wstring Road::getUpperCaseReadableName() const {
 	return *Texts::get()->get("road_upper_case_readable_name");
 }
 uint32_t Road::getRadius() const {
-	return 3;
+	return 2;
 }
 Events Road::getSelectionW() {
 	Events response;

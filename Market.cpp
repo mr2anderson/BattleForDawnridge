@@ -40,7 +40,7 @@ uint32_t Market::getMaxHP() const {
     return 5000;
 }
 Defence Market::getDefence() const {
-	return DEFENCE::STONE;
+	return DEFENCE::WOOD;
 }
 Resources Market::getCost() const {
 	Resources cost;
@@ -57,30 +57,30 @@ std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return 1250;
+	return this->getMaxHP() / 4;
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
 }
 std::vector<Trade> Market::getTrades() const {
-	const uint32_t time = 8;
-	const uint32_t goldVolume = 10000;
+	const uint32_t time = 12;
+	const uint32_t goldVolume = 15000;
 
 	std::vector<Trade> trades;
 
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("food", 3 * goldVolume),
+		Resource("food", 2 * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("wood", 3 * goldVolume),
+		Resource("wood", 2 * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("stone", 3 * goldVolume),
+		Resource("stone", 2 * goldVolume),
 		time
 	);
 	trades.emplace_back(

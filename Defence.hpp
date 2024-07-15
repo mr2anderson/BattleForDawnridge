@@ -38,7 +38,7 @@ private:
 
 
 namespace DEFENCE {
-	static Defence HUMAN = Defence(1, 1, 0.01);
-	static Defence WOOD = Defence(1, 0.25, 1);
-	static Defence STONE = Defence(0.1, 0.1, 1);
+	static Defence HUMAN = Defence(1, 1, 0.1);
+	static Defence WOOD = Defence(1, 0.5, 1);
+	static Defence STONE = Defence(0.25, 0.1, 1);
 }

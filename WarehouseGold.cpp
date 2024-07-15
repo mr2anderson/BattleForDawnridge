@@ -38,7 +38,7 @@ uint32_t WarehouseGold::getSY() const {
     return 2;
 }
 uint32_t WarehouseGold::getMaxHP() const {
-    return 5000;
+    return 10000;
 }
 Events WarehouseGold::newMove(uint32_t playerId) {
 	Events response;
@@ -48,7 +48,7 @@ Events WarehouseGold::newMove(uint32_t playerId) {
 	return response;
 }
 Defence WarehouseGold::getDefence() const {
-	return DEFENCE::STONE;
+	return DEFENCE::WOOD;
 }
 Resources WarehouseGold::getCost() const {
 	Resources cost;
@@ -56,7 +56,7 @@ Resources WarehouseGold::getCost() const {
 	return cost;
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return 1000;
+	return this->getMaxHP() / 4;
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";
