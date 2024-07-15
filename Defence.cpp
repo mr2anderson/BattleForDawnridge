@@ -45,9 +45,9 @@ static std::wstring FORMAT_K(double a) {
 std::wstring Defence::getReadable() const {
 	std::wstring result;
 
-	result += *Texts::get()->get("cut") + L"[" + FORMAT_K(this->cut) + L"] ";
-	result += *Texts::get()->get("stab") + L"[" + FORMAT_K(this->stab) + L"] ";
-	result += *Texts::get()->get("crush") + L"[" + FORMAT_K(this->crush) + L"]";
+	result += *Texts::get()->get("cut") + FORMAT_K(this->cut) + L", ";
+	result += *Texts::get()->get("stab") + FORMAT_K(this->stab) + L", ";
+	result += *Texts::get()->get("crush") + FORMAT_K(this->crush);
 
 	return result;
 }

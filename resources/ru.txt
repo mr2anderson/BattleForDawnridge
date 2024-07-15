@@ -952,21 +952,21 @@ no_more_movement_points
 cut
 <\ID>
 <DATA>
-режущ
+режущий 
 <\DATA>
 
 <ID>
 stab
 <\ID>
 <DATA>
-колющ
+колющий 
 <\DATA>
 
 <ID>
 crush
 <\ID>
 <DATA>
-дробящ
+дробящий 
 <\DATA>
 
 <ID>

@@ -59,8 +59,6 @@ std::wstring Damage::getReadable() const {
 		break;
 	}
 	}
-	result += L"[";
 	result += std::to_wstring(this->points);
-	result += L"]";
 	return result;
 }
