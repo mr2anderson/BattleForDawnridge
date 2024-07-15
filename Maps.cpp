@@ -68,6 +68,7 @@ void Maps::generateThumbnail(const std::string& name) {
         float x = o->getX() * sx;
         float y = o->getY() * sy;
         sf::Sprite sprite;
+        sprite.setTextureRect(o->getTextureRect());
         sprite.setTexture(*Textures::get()->get(o->getTextureName()));
         sprite.setPosition(x, THUMBNAIL_SIZE - y);
         sprite.setScale(scaleX, scaleY);

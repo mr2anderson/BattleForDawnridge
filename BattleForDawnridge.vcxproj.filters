@@ -1186,6 +1186,9 @@
     <ClInclude Include="Damage.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
+    <ClInclude Include="TilesetHandler.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1660,6 +1663,9 @@
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="Damage.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="TilesetHandler.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>

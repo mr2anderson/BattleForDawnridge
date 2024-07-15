@@ -31,7 +31,6 @@
 #include "BlackKnight.hpp"
 #include "PlainsGeneration.hpp"
 #include "WindowButton.hpp"
-#include "Water.hpp"
 #include "CouldntOpenTexture.hpp"
 #include "CouldntOpenFont.hpp"
 #include "CouldntOpenSound.hpp"
@@ -115,7 +114,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "purple", "warehouse_food", "warehouse_wood", "warehouse_stone",
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
-                "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2"}) {
+                "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water"}) {
             Textures::get()->add(a, a + ".png");
         }
         Textures::get()->add("menu", "menu.jpg");
@@ -138,13 +137,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 0; i < Water::TOTAL_ANIMATIONS; i = i + 1) {
-            std::string s = std::to_string(i);
-            while (s.size() < 4) {
-                s = ('0' + s);
-            }
-            Textures::get()->add("water" + std::to_string(i), "water/" + s + ".png");
         }
     }
 	catch (CouldntOpenTexture &e) {

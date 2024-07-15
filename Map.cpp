@@ -73,8 +73,11 @@ Map::Map(const std::string &path) {
             if (id >= 257 and id < 281) {
                 this->add(new Forest(x, y, id - 257));
             }
-            else if (id >= 281) {
+            else if (id >= 281 and id < 296) {
                 this->add(new Mountains(x, y, id - 281));
+            }
+            else if (id >= 296) {
+                this->add(new Water(x, y, id - 296));
             }
             else if (id == 1) {
                 this->players.resize(this->players.size() + 1);
@@ -91,9 +94,6 @@ Map::Map(const std::string &path) {
             }
             else if (id == 6) {
                 this->add(new Stone(x, y));
-            }
-            else if (id == 7) {
-                this->add(new Water(x, y));
             }
             else if (id == 8) {
                 this->add(new Treasure(x, y));

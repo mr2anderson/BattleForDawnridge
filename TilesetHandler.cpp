@@ -17,24 +17,20 @@
  */
 
 
-#include "ImpassableObstacle.hpp"
+#include "TilesetHandler.hpp"
 
 
-#pragma once
+TilesetHandler* TilesetHandler::singletone = nullptr;
 
 
-class Water : public ImpassableObstacle {
-public:
-	Water();
-	Water(uint32_t x, uint32_t y, uint32_t type);
+sf::IntRect TilesetHandler::getTextureRect(uint32_t tileW, uint32_t tileH, uint32_t textureW, uint32_t type) {
+	uint32_t typesInOneLine = textureW / tileW;
 
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-	std::string getTextureName() const override;
-	sf::IntRect getTextureRect() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-    bool isLowObstacle() const override;
-private:
-	uint32_t type;
-};
+	sf::IntRect result;
+	result.left = type % typesInOneLine * tileW;
+	result.top = type / typesInOneLine * tileH;
+	result.width = tileW;
+	result.height = tileH;
+
+	return result;
+}

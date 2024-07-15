@@ -19,15 +19,14 @@
 
 #include "Water.hpp"
 #include "Texts.hpp"
-
-
-const uint32_t Water::TOTAL_ANIMATIONS = 40;
+#include "Textures.hpp"
+#include "TilesetHandler.hpp"
 
 
 Water::Water() = default;
-Water::Water(uint32_t x, uint32_t y) :
+Water::Water(uint32_t x, uint32_t y, uint32_t type) :
 	ImpassableObstacle(x, y) {
-
+	this->type = type;
 }
 uint32_t Water::getSY() const {
     return 1;
@@ -36,7 +35,10 @@ uint32_t Water::getSX() const {
     return 1;
 }
 std::string Water::getTextureName() const {
-	return "water" + std::to_string(this->clock.getElapsedTime().asMilliseconds() / (2 * 1000 / TOTAL_ANIMATIONS) % TOTAL_ANIMATIONS);
+	return "water";
+}
+sf::IntRect Water::getTextureRect() const {
+	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
 }
 std::string Water::getSoundName() const {
 	return "water";

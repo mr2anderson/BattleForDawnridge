@@ -20,6 +20,7 @@
 #include "Mountains.hpp"
 #include "Texts.hpp"
 #include "Textures.hpp"
+#include "TilesetHandler.hpp"
 
 
 Mountains::Mountains() = default;
@@ -37,10 +38,7 @@ std::string Mountains::getTextureName() const {
 	return "mountains";
 }
 sf::IntRect Mountains::getTextureRect() const {
-	uint32_t thisW = this->getSX() * 64;
-	uint32_t thisH = this->getSY() * 64;
-	uint32_t typesInOneLine = Textures::get()->get(this->getTextureName())->getSize().x / thisW;
-	return sf::IntRect(this->type % typesInOneLine * this->getSX() * 64, this->type / typesInOneLine * thisH, thisW, thisH);
+	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
 }
 std::string Mountains::getSoundName() const {
 	return "wind";

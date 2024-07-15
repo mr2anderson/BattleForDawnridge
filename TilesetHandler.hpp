@@ -17,24 +17,25 @@
  */
 
 
-#include "ImpassableObstacle.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class Water : public ImpassableObstacle {
+class TilesetHandler {
 public:
-	Water();
-	Water(uint32_t x, uint32_t y, uint32_t type);
+    static TilesetHandler* get() {
+        if (TilesetHandler::singletone == nullptr) {
+            TilesetHandler::singletone = new TilesetHandler();
+        }
+        return TilesetHandler::singletone;
+    }
 
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-	std::string getTextureName() const override;
-	sf::IntRect getTextureRect() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-    bool isLowObstacle() const override;
+    sf::IntRect getTextureRect(uint32_t tileW, uint32_t tileH, uint32_t textureW, uint32_t type);
 private:
-	uint32_t type;
+    TilesetHandler() = default;
+    TilesetHandler(const TilesetHandler& copy);
+    static TilesetHandler* singletone;
 };

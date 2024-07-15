@@ -20,6 +20,7 @@
 #include "Forest.hpp"
 #include "Texts.hpp"
 #include "Textures.hpp"
+#include "TilesetHandler.hpp"
 
 
 Forest::Forest() = default;
@@ -45,10 +46,7 @@ std::string Forest::getTextureName() const {
 	return "forest";
 }
 sf::IntRect Forest::getTextureRect() const {
-	uint32_t thisW = this->getSX() * 64;
-	uint32_t thisH = this->getSY() * 64;
-	uint32_t typesInOneLine = Textures::get()->get(this->getTextureName())->getSize().x / thisW;
-	return sf::IntRect(this->type % typesInOneLine * this->getSX() * 64, this->type / typesInOneLine * thisH, thisW, thisH);
+	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
 }
 std::wstring Forest::getDescription() const {
 	return *Texts::get()->get("forest_description");
