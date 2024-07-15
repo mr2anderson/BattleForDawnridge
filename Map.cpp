@@ -109,8 +109,8 @@ Map::Map(const std::string &path) {
         uint32_t x = std::get<0>(startSquads.at(i));
         uint32_t y = std::get<1>(startSquads.at(i));
         uint32_t pid = std::get<2>(startSquads.at(i));
-        this->add(new Legioner(x, y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
-        this->add(new Infantryman(x + this->go->at(this->go->size() - 1)->getSX(), y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
+        this->add(new Infantryman(x, y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
+        this->add(new Legioner(x + this->go->at(this->go->size() - 1)->getSX(), y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
     }
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {

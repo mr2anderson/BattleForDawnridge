@@ -45,7 +45,7 @@ uint32_t Knight::getTimeToProduce() const {
 	return 8;
 }
 std::string Knight::getSoundName() const {
-	return "sword";
+	return "knight";
 }
 std::wstring Knight::getDescription() const {
 	return *Texts::get()->get("knight_description");

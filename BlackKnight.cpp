@@ -45,7 +45,7 @@ uint32_t BlackKnight::getTimeToProduce() const {
 	return 12;
 }
 std::string BlackKnight::getSoundName() const {
-	return "sword";
+	return "breath";
 }
 std::wstring BlackKnight::getDescription() const {
 	return *Texts::get()->get("black_knight_description");
