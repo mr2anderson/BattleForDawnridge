@@ -42,7 +42,6 @@ private:
 
 	sf::Sprite s;
 	sf::Text t;
-	Button nextClueButton;
 
 	void init(uint32_t windowW, uint32_t windowH);
 	void drawEverything(sf::RenderWindow& window);
