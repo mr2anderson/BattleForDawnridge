@@ -49,7 +49,7 @@ Events WarehouseGold::newMove(uint32_t playerId) {
 	return response;
 }
 Defence WarehouseGold::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources WarehouseGold::getCost() const {
 	Resources cost;

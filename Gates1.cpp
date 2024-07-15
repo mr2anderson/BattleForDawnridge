@@ -39,7 +39,7 @@ uint32_t Gates1::getMaxHP() const {
     return 20000;
 }
 Defence Gates1::getDefence() const {
-    return DEFENCE::WOOD;
+    return Defence::WOOD;
 }
 Resources Gates1::getCost() const {
     Resources cost;

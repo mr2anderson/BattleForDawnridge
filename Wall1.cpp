@@ -39,7 +39,7 @@ uint32_t Wall1::getMaxHP() const {
     return 30000;
 }
 Defence Wall1::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Wall1::getCost() const {
 	Resources cost;

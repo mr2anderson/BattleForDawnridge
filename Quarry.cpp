@@ -39,7 +39,7 @@ uint32_t Quarry::getMaxHP() const {
     return 5000;
 }
 Defence Quarry::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Quarry::getCost() const {
 	Resources cost;

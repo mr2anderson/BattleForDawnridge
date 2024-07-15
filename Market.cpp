@@ -40,7 +40,7 @@ uint32_t Market::getMaxHP() const {
     return 5000;
 }
 Defence Market::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Market::getCost() const {
 	Resources cost;

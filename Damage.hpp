@@ -34,7 +34,8 @@ public:
 	enum TYPE {
 		CUT,
 		STAB,
-		CRUSH
+		CRUSH,
+        FLAME
 	};
 private:
 	uint32_t points;

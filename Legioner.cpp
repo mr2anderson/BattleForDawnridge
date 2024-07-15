@@ -42,7 +42,7 @@ Damage Legioner::getDamage() const {
 	return { 5000, Damage::TYPE::CUT };
 }
 Defence Legioner::getDefence() const {
-	return DEFENCE::HUMAN;
+	return Defence::HUMAN;
 }
 Resources Legioner::getCost() const {
 	return Resources({ Resource("food", 5000), Resource("iron", 5000)});

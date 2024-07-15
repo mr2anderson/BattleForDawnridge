@@ -40,6 +40,10 @@ uint32_t Damage::getHpLoss(Defence defence) const {
 				k = defence.getStab();
 				break;
 			}
+            case TYPE::FLAME: {
+                k = defence.getFlame();
+                break;
+            }
 	}
 	return k * this->points;
 }
@@ -58,6 +62,10 @@ std::wstring Damage::getReadable() const {
 		result += *Texts::get()->get("stab");
 		break;
 	}
+    case TYPE::FLAME: {
+        result += *Texts::get()->get("flame");
+        break;
+    }
 	}
 	result += std::to_wstring(this->points);
 	return result;

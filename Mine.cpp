@@ -39,7 +39,7 @@ uint32_t Mine::getMaxHP() const {
     return 5000;
 }
 Defence Mine::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Mine::getCost() const {
 	Resources cost;

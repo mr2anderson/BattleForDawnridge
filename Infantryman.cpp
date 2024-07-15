@@ -36,7 +36,7 @@ Damage Infantryman::getDamage() const {
 	return { 2500, Damage::TYPE::CUT };
 }
 Defence Infantryman::getDefence() const {
-	return DEFENCE::HUMAN;
+	return Defence::HUMAN;
 }
 Resources Infantryman::getCost() const {
 	return Resources({ Resource("food", 5000 )});

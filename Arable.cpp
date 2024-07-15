@@ -53,7 +53,7 @@ uint32_t Arable::getMaxHP() const {
 	return 1000;
 }
 Defence Arable::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Arable::getCost() const {
 	return Resources({ Resource("wood", 5000)});

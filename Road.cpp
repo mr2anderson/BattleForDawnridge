@@ -47,7 +47,7 @@ uint32_t Road::getMaxHP() const {
     return 500;
 }
 Defence Road::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Road::getCost() const {
 	Resources cost;

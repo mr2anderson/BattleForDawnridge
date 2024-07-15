@@ -1,1 +1,1 @@
-resources/ru.txt
+../resources/ru.txt

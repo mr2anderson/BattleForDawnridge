@@ -36,7 +36,7 @@ Damage Knight::getDamage() const {
 	return { 5000, Damage::TYPE::CUT };
 }
 Defence Knight::getDefence() const {
-	return DEFENCE::HUMAN;
+	return Defence::HUMAN;
 }
 Resources Knight::getCost() const {
 	return Resources({ Resource("food", 10000), Resource("iron", 10000) });

@@ -30,7 +30,7 @@ Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);
 }
 Defence Sawmill::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Sawmill::getCost() const {
 	Resources cost;

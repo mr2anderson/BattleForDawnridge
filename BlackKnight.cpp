@@ -36,7 +36,7 @@ Damage BlackKnight::getDamage() const {
 	return Damage(10000, Damage::TYPE::CUT);
 }
 Defence BlackKnight::getDefence() const {
-	return DEFENCE::HUMAN;
+	return Defence::HUMAN;
 }
 Resources BlackKnight::getCost() const {
 	return Resources({ Resource("food", 25000), Resource("iron", 25000)});

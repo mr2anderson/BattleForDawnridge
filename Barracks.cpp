@@ -44,7 +44,7 @@ uint32_t Barracks::getMaxHP() const {
     return 10000;
 }
 Defence Barracks::getDefence() const {
-	return DEFENCE::WOOD;
+	return Defence::WOOD;
 }
 Resources Barracks::getCost() const {
 	return Resources({ Resource("stone", 20000) });
