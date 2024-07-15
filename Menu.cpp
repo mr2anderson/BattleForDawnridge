@@ -32,6 +32,7 @@
 #include "Music.hpp"
 #include "UTFEncoder.hpp"
 #include "FirstTimeTipsTable.hpp"
+#include "LanguageAlreadyInUse.hpp"
 
 
 Menu* Menu::singletone = nullptr;
@@ -372,9 +373,15 @@ void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    Texts::get()->setDefaultPath(e->getLocaleFile());
-    FirstTimeTipsTable::get()->clear();
-    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("language_was_changed"), *Texts::get()->get("OK"), clickEvent);
+    std::shared_ptr<WindowButton> w;
+    try {
+        Texts::get()->setDefaultPath(e->getLocaleFile());
+        FirstTimeTipsTable::get()->clear();
+        w = std::make_shared<WindowButton>(*Texts::get()->get("language_was_changed"), *Texts::get()->get("OK"), clickEvent);
+    }
+    catch (LanguageAlreadyInUse&) {
+        w = std::make_shared<WindowButton>(*Texts::get()->get("language_already_in_use"), *Texts::get()->get("OK"), clickEvent);
+    }
     Events createWindowEvent = clickEvent;
     createWindowEvent.add(std::make_shared<CreateEEvent>(w));
     this->addEvents(createWindowEvent);

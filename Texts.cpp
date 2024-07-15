@@ -26,6 +26,7 @@
 #include "Root.hpp"
 #include "UTFEncoder.hpp"
 #include "CouldntOpenText.hpp"
+#include "LanguageAlreadyInUse.hpp"
 
 
 Texts* Texts::singletone = nullptr;
@@ -84,8 +85,12 @@ void Texts::load() {
     file.close();
 }
 void Texts::setDefaultPath(const std::string& path) {
+    if (ROOT + "/" + path == this->getPath()) {
+        throw LanguageAlreadyInUse();
+    }
+
     std::ofstream file(ROOT + "/language.txt");
-    file << ROOT << "/" << path;
+    file << (ROOT + "/" + path);
     file.close();
 }
 std::wstring* Texts::get(const std::string& name) {

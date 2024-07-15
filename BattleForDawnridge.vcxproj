@@ -665,6 +665,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
     <ClInclude Include="LandscapeGraph.hpp" />
+    <ClInclude Include="LanguageAlreadyInUse.hpp" />
     <ClInclude Include="Legioner.hpp" />
     <ClInclude Include="LoadingError.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
@@ -828,6 +829,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
     <ClCompile Include="LandscapeGraph.cpp" />
+    <ClCompile Include="LanguageAlreadyInUse.cpp" />
     <ClCompile Include="Legioner.cpp" />
     <ClCompile Include="LoadingError.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />

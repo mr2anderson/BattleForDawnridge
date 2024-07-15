@@ -1198,6 +1198,9 @@
     <ClInclude Include="FirstTimeTipsTable.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
+    <ClInclude Include="LanguageAlreadyInUse.hpp">
+      <Filter>Header Files\resourceExceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1685,6 +1688,9 @@
     </ClCompile>
     <ClCompile Include="FirstTimeTipsTable.cpp">
       <Filter>Source Files\screensService</Filter>
+    </ClCompile>
+    <ClCompile Include="LanguageAlreadyInUse.cpp">
+      <Filter>Source Files\resourceExceptions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
