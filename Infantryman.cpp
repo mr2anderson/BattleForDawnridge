@@ -53,7 +53,7 @@ std::wstring Infantryman::getDescription() const {
 uint32_t Infantryman::getTalkingAnimationsNumberInSet() const {
 	return 7;
 }
-uint32_t Infantryman::getWalkingAnimationsNumberInSet() const {
+uint32_t Infantryman::getRunningAnimationsNumberInSet() const {
 	return 8;
 }
 uint32_t Infantryman::getAttackAnimationsNumberInSet() const {

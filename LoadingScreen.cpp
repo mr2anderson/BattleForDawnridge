@@ -119,7 +119,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
             Textures::get()->add(a, a + ".png");
         }
         Textures::get()->add("menu", "menu.jpg");
-        for (const std::string& a : { "talking", "walking", "attack", "been hit", "tipping over"}) {
+        for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over"}) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
                 for (const std::tuple<std::string, uint32_t>& w : { 
                     std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)), 

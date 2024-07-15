@@ -56,7 +56,7 @@ public:
 	virtual Damage getDamage() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
-	virtual uint32_t getWalkingAnimationsNumberInSet() const = 0;
+	virtual uint32_t getRunningAnimationsNumberInSet() const = 0;
 	virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
@@ -79,7 +79,7 @@ private:
 	std::vector<std::tuple<uint32_t, uint32_t>> getMoves();
     Move getMove(uint32_t x2, uint32_t y2);
     MovementGraph buildMovementGraph();
-    Events processWalkingAnimation();
+    Events processRunningAnimation();
     float getOffsetX() const override;
     float getOffsetY() const override;
     float getOffset() const;

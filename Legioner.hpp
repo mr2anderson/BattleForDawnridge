@@ -40,7 +40,7 @@ public:
 	std::wstring getDescription() const override;
 private:
 	uint32_t getTalkingAnimationsNumberInSet() const override;
-	uint32_t getWalkingAnimationsNumberInSet() const override;
+	uint32_t getRunningAnimationsNumberInSet() const override;
 	uint32_t getAttackAnimationsNumberInSet() const override;
 	uint32_t getBeenHitAnimationsNumberInSet() const override;
 	uint32_t getTippingOverAnimationsNumberInSet() const override;

@@ -53,7 +53,7 @@ std::wstring BlackKnight::getDescription() const {
 uint32_t BlackKnight::getTalkingAnimationsNumberInSet() const {
 	return 9;
 }
-uint32_t BlackKnight::getWalkingAnimationsNumberInSet() const {
+uint32_t BlackKnight::getRunningAnimationsNumberInSet() const {
 	return 8;
 }
 uint32_t BlackKnight::getAttackAnimationsNumberInSet() const {

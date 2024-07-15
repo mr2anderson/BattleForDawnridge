@@ -59,7 +59,7 @@ std::wstring Legioner::getDescription() const {
 uint32_t Legioner::getTalkingAnimationsNumberInSet() const {
 	return 8;
 }
-uint32_t Legioner::getWalkingAnimationsNumberInSet() const {
+uint32_t Legioner::getRunningAnimationsNumberInSet() const {
 	return 8;
 }
 uint32_t Legioner::getAttackAnimationsNumberInSet() const {

@@ -20,7 +20,13 @@
 #include "Game.hpp"
 
 
-/*void process(std::string path) {
+
+/*#include "Infantryman.hpp"
+#include "Legioner.hpp"
+#include "Knight.hpp"
+#include "BlackKnight.hpp"
+#include "Root.hpp"
+void process(std::string path) {
 	sf::Image image;
 	image.loadFromFile(path);
 	for (uint32_t i = 0; i < image.getSize().x; i = i + 1) {
@@ -35,46 +41,23 @@
 	path.pop_back();
 	image.saveToFile(path + "png");
 }*/
+
+
+
+
 int main() {
-	/*for (const std::string& d : {"n", "s", "w", "e"}) {
-		for (uint32_t n = 0; n < 8; n = n + 1) {
-			std::string ns = std::to_string(n);
-			while (ns.size() < 4) {
-				ns = ('0' + ns);
+	/*for (const std::string& a : {"talking", "running", "attack", "been hit", "tipping over"}) {
+		for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
+			for (const std::tuple<std::string, uint32_t>& w : {
+				std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)) }) {
+				for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
+					std::string s = std::to_string(i);
+					while (s.size() < 4) {
+						s = ('0' + s);
+					}
+					process(ROOT + "/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".bmp");
+				}
 			}
-			process("resources/black_knight/walking " + d + ns + ".bmp");
-		}
-		for (uint32_t n = 0; n < 13; n = n + 1) {
-			std::string ns = std::to_string(n);
-			while (ns.size() < 4) {
-				ns = ('0' + ns);
-			}
-			process("resources/black_knight/attack " + d + ns + ".bmp");
-		}
-	}
-	for (uint32_t n = 0; n < 9; n = n + 1) {
-		std::string ns = std::to_string(n);
-		while (ns.size() < 4) {
-			ns = ('0' + ns);
-		}
-		process("resources/black_knight/talking e" + ns + ".bmp");
-	}
-	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-		for (uint32_t n = 0; n < 9; n = n + 1) {
-			std::string ns = std::to_string(n);
-			while (ns.size() < 4) {
-				ns = ('0' + ns);
-			}
-			process("resources/black_knight/been hit " + d + ns + ".bmp");
-		}
-	}
-	for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-		for (uint32_t n = 0; n < 9; n = n + 1) {
-			std::string ns = std::to_string(n);
-			while (ns.size() < 4) {
-				ns = ('0' + ns);
-			}
-			process("resources/black_knight/tipping over " + d + ns + ".bmp");
 		}
 	}*/
 	Game::get()->run();

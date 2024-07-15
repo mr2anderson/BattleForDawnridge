@@ -35,7 +35,7 @@
 
 
 Warrior::Warrior() {
-	this->startClickAnimation();
+    this->currentDirection = "e";
 }
 Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
 	Unit(x, y, std::nullopt, playerId, units) {
@@ -43,7 +43,8 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCo
 	this->go = go;
 	this->mapW = mapW;
 	this->mapH = mapH;
-	this->startClickAnimation();
+    this->currentDirection = "e";
+    this->startAnimation("talking");
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
@@ -60,8 +61,7 @@ void Warrior::refreshMovementPoints() {
 	this->movementPoints = this->getMovementPoints();
 }
 void Warrior::startClickAnimation() {
-	this->currentDirection = "e";
-	this->startAnimation("talking");
+    this->startAnimation("talking");
 }
 uint32_t Warrior::getSX() const {
     return 1;
@@ -79,14 +79,14 @@ std::string Warrior::getTextureName() const {
 }
 uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string &direction) const {
 	if (type == "talking") {
-		if (direction == "e") {
+		if (direction == "n" or direction == "s" or direction == "w" or direction == "e" or direction == "nw" or direction == "ne" or direction == "sw" or direction == "se") {
 			return this->getTalkingAnimationsNumberInSet();
 		}
 		return 0;
 	}
-	if (type == "walking") {
+	if (type == "running") {
 		if (direction == "n" or direction == "s" or direction == "w" or direction == "e") {
-			return this->getWalkingAnimationsNumberInSet();
+			return this->getRunningAnimationsNumberInSet();
 		}
 		return 0;
 	}
@@ -114,7 +114,7 @@ uint32_t Warrior::getCurrentAnimationMs() const {
     if (this->currentAnimation == "talking") {
         return 750;
     }
-    if (this->currentAnimation == "walking") {
+    if (this->currentAnimation == "running") {
         return 400;
     }
     if (this->currentAnimation == "attack") {
@@ -186,8 +186,8 @@ uint32_t Warrior::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return WARRIOR_MOVEMENT_FORBIDDEN;
 }
 Events Warrior::processCurrentAnimation() {
-    if (currentAnimation == "walking") {
-        return this->processWalkingAnimation();
+    if (currentAnimation == "running") {
+        return this->processRunningAnimation();
     }
     return Events();
 }
@@ -207,7 +207,7 @@ Events Warrior::unselect(uint32_t x, uint32_t y) {
         Move move = this->getMove(x, y);
         events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
         this->currentMovement = move.route;
-        this->startAnimation("walking");
+        this->startAnimation("running");
         this->currentDirection = move.route.front();
         this->movementPoints = this->movementPoints.value() - move.dst;
         events.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
@@ -273,7 +273,7 @@ MovementGraph Warrior::buildMovementGraph() {
 
     return g;
 }
-Events Warrior::processWalkingAnimation() {
+Events Warrior::processRunningAnimation() {
     Events events;
 
     if (this->getCurrentAnimationState().finished) {
@@ -293,10 +293,10 @@ Events Warrior::processWalkingAnimation() {
         events.add(std::make_shared<CloseAnimationEvent>());
 
         if (this->currentMovement.empty()) {
-            this->startClickAnimation();
+            this->startAnimation("talking");
         }
         else {
-            this->startAnimation("walking");
+            this->startAnimation("running");
             this->currentDirection = this->currentMovement.front();
             events.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
         }
