@@ -63,7 +63,7 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 }
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     try {
-        Fonts::get()->add("1", "1.otf");
+        Fonts::get()->add("1", "1.ttf");
         Textures::get()->add("loading_screen", "loading_screen.jpg");
     }
 	catch (CouldntOpenFont &e) {
