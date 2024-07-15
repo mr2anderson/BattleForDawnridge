@@ -31,6 +31,7 @@
 #include "Textures.hpp"
 #include "Music.hpp"
 #include "UTFEncoder.hpp"
+#include "FirstTimeTipsTable.hpp"
 
 
 Menu* Menu::singletone = nullptr;
@@ -282,6 +283,16 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
     this->background.setTexture(*Textures::get()->get("menu"));
     this->background.setPosition(windowW - this->background.getLocalBounds().width, windowH - this->background.getLocalBounds().height);
+
+
+
+    if (!FirstTimeTipsTable::get()->wasDisplayed("welcome")) {
+        FirstTimeTipsTable::get()->markAsDisplayed("welcome");
+        std::shared_ptr<WindowButton> welcomeWindow = std::make_shared<WindowButton>(*Texts::get()->get("welcome"), *Texts::get()->get("OK"), clickEvent);
+        Events createWelcomeWindowEvent = clickEvent;
+        createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
+        this->addEvents(createWelcomeWindowEvent);
+    }
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear(sf::Color::Black);
@@ -362,6 +373,7 @@ void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
     Texts::get()->setDefaultPath(e->getLocaleFile());
+    FirstTimeTipsTable::get()->clear();
     std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("language_was_changed"), *Texts::get()->get("OK"), clickEvent);
     Events createWindowEvent = clickEvent;
     createWindowEvent.add(std::make_shared<CreateEEvent>(w));

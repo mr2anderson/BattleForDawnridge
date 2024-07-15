@@ -638,6 +638,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Fire.hpp" />
+    <ClInclude Include="FirstTimeTipsTable.hpp" />
     <ClInclude Include="FitTableElement.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="Fonts.hpp" />
@@ -802,6 +803,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FirstTimeTipsTable.cpp" />
     <ClCompile Include="FitTableElement.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Forest.cpp" />
