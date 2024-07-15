@@ -17,7 +17,28 @@
  */
 
 
+#include <array>
+#include <optional>
 #include "Resources.hpp"
+
+
+bool Resources::mapCmp::operator()(const std::string& a, const std::string& b) const {
+	std::array<std::string, 4> priorities = { "food", "wood", "stone", "iron" };
+	std::optional<uint32_t> aPriority = std::nullopt;
+	std::optional<uint32_t> bPriority = std::nullopt;
+	for (uint32_t i = 0; i < priorities.size(); i = i + 1) {
+		if (priorities[i] == a) {
+			aPriority = i;
+		}
+		if (priorities[i] == b) {
+			bPriority = i;
+		}
+	}
+	if (aPriority.has_value() and bPriority.has_value()) {
+		return aPriority < bPriority;
+	}
+	return a < b;
+}
 
 
 Resources::Resources() = default;

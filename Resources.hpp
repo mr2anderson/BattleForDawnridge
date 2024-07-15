@@ -17,7 +17,7 @@
  */
 
 
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include "Resource.hpp"
 
@@ -41,5 +41,9 @@ public:
 	std::wstring getReadableInfo() const;
 	friend bool operator>=(const Resources& a, const Resources& b);
 private:
-	std::unordered_map<std::string, int32_t> map;
+	struct mapCmp {
+		bool operator()(const std::string& a, const std::string& b) const;
+	};
+
+	std::map<std::string, int32_t, mapCmp> map;
 };
