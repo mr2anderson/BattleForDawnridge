@@ -17,19 +17,13 @@
  */
 
 
-#include "Building.hpp"
+
+#include "DecreaseBurningMovesLeftEvent.hpp"
 
 
-#pragma once
-
-
-class HpSensitiveB : virtual public Building {
-public:
-	HpSensitiveB();
-	HpSensitiveB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
-
-	bool works() const override;
-protected:
-	bool repairing() const;
-	HorizontalSelectionWindowComponent getBusyWithRepairingComponent() const;
-};
+DecreaseBurningMovesLeftEvent::DecreaseBurningMovesLeftEvent(Building* b) {
+	this->b = b;
+}
+Building* DecreaseBurningMovesLeftEvent::getBuilding() {
+	return this->b;
+}

@@ -647,6 +647,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
         this->handleCloseAnimationEvent(closeAnimationEvent);
     }
+	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
+		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent);
+	}
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
 	TradingB* b = e->getBuilding();
@@ -825,4 +828,7 @@ void MainScreen::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent
 }
 void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
     this->animation = std::nullopt;
+}
+void MainScreen::handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e) {
+	e->getBuilding()->decreaseBurningMovesLeft();
 }

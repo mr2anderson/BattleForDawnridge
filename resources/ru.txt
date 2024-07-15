@@ -1066,3 +1066,17 @@ education
 <DATA>
 Обучение
 <\DATA>
+
+<ID>
+everything_is_alright
+<\ID>
+<DATA>
+Все в порядке
+<\DATA>
+
+<ID>
+building_on_fire
+<\ID>
+<DATA>
+В здании пожар! Строительство невозможно. Число ходов до конца пожара: 
+<\DATA>

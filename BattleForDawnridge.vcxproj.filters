@@ -1189,6 +1189,12 @@
     <ClInclude Include="TilesetHandler.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
+    <ClInclude Include="DecreaseBurningMovesLeftEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1666,6 +1672,12 @@
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="TilesetHandler.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseBurningMovesLeftEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
   </ItemGroup>

@@ -18,6 +18,7 @@
 
 
 #include "Unit.hpp"
+#include "Fire.hpp"
 
 
 #pragma once
@@ -29,16 +30,23 @@ public:
 	Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
 	virtual Building* cloneBuilding() const = 0;
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 	virtual bool works() const;
 	virtual Events destroy();
+	void burn();
+	void decreaseBurningMovesLeft();
 protected:
 	virtual uint32_t getRegenerationSpeed() const = 0;
 	virtual std::wstring getUpperCaseReadableName() const = 0;
 
-	virtual Events regenerate();
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 	virtual HorizontalSelectionWindowComponent getDestroyComponent();
+	Events regenerate();
 private:
+	uint32_t burningMovesLeft;
+	Fire fire;
+
 	std::shared_ptr<HPPointer> getHPPointer() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;

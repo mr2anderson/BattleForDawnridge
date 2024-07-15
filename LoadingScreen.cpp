@@ -39,6 +39,7 @@
 #include "CouldntOpenMap.hpp"
 #include "UTFEncoder.hpp"
 #include "ClueManager.hpp"
+#include "Fire.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -139,6 +140,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
         }
+        for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
+            Textures::get()->add("fire" + std::to_string(i), "fire/" + std::to_string(i) + ".png");
+        }
     }
 	catch (CouldntOpenTexture &e) {
         loadingError(&e, window);
@@ -148,7 +152,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
-                                      "destroy", "sword", "breath", "knight"}) {
+                                      "destroy", "sword", "breath", "knight", "fire"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }

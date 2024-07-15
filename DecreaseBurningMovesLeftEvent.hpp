@@ -17,19 +17,21 @@
  */
 
 
-#include "Building.hpp"
+#include <memory>
+#include "Event.hpp"
 
 
 #pragma once
 
 
-class HpSensitiveB : virtual public Building {
-public:
-	HpSensitiveB();
-	HpSensitiveB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+class Building;
 
-	bool works() const override;
-protected:
-	bool repairing() const;
-	HorizontalSelectionWindowComponent getBusyWithRepairingComponent() const;
+
+class DecreaseBurningMovesLeftEvent : public Event {
+public:
+	DecreaseBurningMovesLeftEvent(Building* b);
+
+	Building* getBuilding();
+private:
+	Building* b;
 };

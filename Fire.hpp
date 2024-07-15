@@ -17,19 +17,24 @@
  */
 
 
-#include "Building.hpp"
+#include <SFML/Graphics.hpp>
 
 
 #pragma once
 
 
-class HpSensitiveB : virtual public Building {
+class Fire : public sf::Drawable {
 public:
-	HpSensitiveB();
-	HpSensitiveB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Fire();
+	Fire(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
-	bool works() const override;
-protected:
-	bool repairing() const;
-	HorizontalSelectionWindowComponent getBusyWithRepairingComponent() const;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	static const uint32_t TOTAL_FRAMES;
+private:
+	float x, y;
+	float scaleX, scaleY;
+	sf::Clock animationClock;
+
+	uint32_t getCurrentFrame() const;
 };

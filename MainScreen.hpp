@@ -52,6 +52,7 @@
 #include "AddHpEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "DestroyEvent.hpp"
+#include "DecreaseBurningMovesLeftEvent.hpp"
 
 
 #pragma once
@@ -166,4 +167,5 @@ private:
 	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e);
     void handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e);
     void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
+	void handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e);
 };
