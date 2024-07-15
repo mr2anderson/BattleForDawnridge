@@ -19,12 +19,13 @@
 
 #include "Mountains.hpp"
 #include "Texts.hpp"
+#include "Textures.hpp"
 
 
 Mountains::Mountains() = default;
-Mountains::Mountains(uint32_t x, uint32_t y) :
+Mountains::Mountains(uint32_t x, uint32_t y, uint32_t type) :
 	ImpassableObstacle(x, y) {
-
+	this->type = type;
 }
 uint32_t Mountains::getSX() const {
     return 1;
@@ -34,6 +35,12 @@ uint32_t Mountains::getSY() const {
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";
+}
+sf::IntRect Mountains::getTextureRect() const {
+	uint32_t thisW = this->getSX() * 64;
+	uint32_t thisH = this->getSY() * 64;
+	uint32_t typesInOneLine = Textures::get()->get(this->getTextureName())->getSize().x / thisW;
+	return sf::IntRect(this->type % typesInOneLine * this->getSX() * 64, this->type / typesInOneLine * thisH, thisW, thisH);
 }
 std::string Mountains::getSoundName() const {
 	return "wind";

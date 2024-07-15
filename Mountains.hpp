@@ -26,12 +26,15 @@
 class Mountains : public ImpassableObstacle {
 public:
 	Mountains();
-	Mountains(uint32_t x, uint32_t y);
+	Mountains(uint32_t x, uint32_t y, uint32_t type);
 
     uint32_t getSX() const override;
     uint32_t getSY() const override;
 	std::string getTextureName() const override;
+	sf::IntRect getTextureRect() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
     bool isUltraHighObstacle() const override;
+private:
+	uint32_t type;
 };

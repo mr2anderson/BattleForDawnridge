@@ -70,8 +70,11 @@ Map::Map(const std::string &path) {
         x = -1;
         while (std::getline(ss, word, ',')) {
             uint32_t id = std::stoi(word);
-            if (id >= 257) {
+            if (id >= 257 and id < 281) {
                 this->add(new Forest(x, y, id - 257));
+            }
+            else if (id >= 281) {
+                this->add(new Mountains(x, y, id - 281));
             }
             else if (id == 1) {
                 this->players.resize(this->players.size() + 1);
@@ -88,9 +91,6 @@ Map::Map(const std::string &path) {
             }
             else if (id == 6) {
                 this->add(new Stone(x, y));
-            }
-            else if (id == 5) {
-                this->add(new Mountains(x, y));
             }
             else if (id == 7) {
                 this->add(new Water(x, y));
