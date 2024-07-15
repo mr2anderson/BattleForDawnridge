@@ -176,6 +176,12 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         Events()
     );
     educationWindowComponents.emplace_back(
+        "fire1",
+        *Texts::get()->get("guide_fire_system_description"),
+        false,
+        Events()
+    );
+    educationWindowComponents.emplace_back(
         "warehouse_food",
         *Texts::get()->get("guide_storage_system_description"),
         false,
