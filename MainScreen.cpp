@@ -71,10 +71,10 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 			if (event.type == sf::Event::MouseButtonPressed) {
                 if (!this->animation.has_value()) {
                     if (this->element == nullptr) {
-                        if (this->events.empty() and this->allNewMoveEventsAdded()) {
+                        if (this->baseEvents.empty() and this->allNewMoveEventsAdded()) {
                             if (this->selected == nullptr and event.mouseButton.button == sf::Mouse::Button::Left) {
                                 this->addButtonClickEventToQueue();
-                                if (this->events.empty()) {
+                                if (this->baseEvents.empty()) {
                                     this->addGameObjectClickEventToQueue();
                                 }
                             }
@@ -96,7 +96,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 		Playlist::get()->update();
 		this->removeFinishedElement();
         this->addNewMoveEvent();
-        this->processEvents();
+        this->processBaseEvents();
 		if (this->element != nullptr) {
 			this->element->update();
 		}
@@ -384,7 +384,7 @@ void MainScreen::removeFinishedElement() {
 }
 void MainScreen::addNewMoveEvent() {
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
-		if (this->element != nullptr or !this->events.empty()) {
+		if (this->element != nullptr or !this->baseEvents.empty()) {
 			break;
 		}
 		Events newMoveEvent = this->map->getGO()->at(this->currentGOIndexNewMoveEvent)->newMove(this->getCurrentPlayer()->getId());
@@ -445,18 +445,23 @@ void MainScreen::addGameObjectClickEventToQueue() {
 		}
 	}
 }
-void MainScreen::processEvents() {
-    while (!this->events.empty()) {
-        if (this->element != nullptr and !this->animation.has_value()) {
+void MainScreen::processBaseEvents() {
+    while (!this->baseEvents.empty()) {
+        if (this->element != nullptr or this->animation.has_value()) {
             break;
         }
-        this->handleEvent(this->events.front());
-        this->events.pop();
+        this->handleBaseEvent(this->baseEvents.front());
+        this->baseEvents.pop();
     }
 }
 void MainScreen::addEvents(Events &e) {
-    for (uint32_t i = 0; i < e.size(); i = i + 1) {
-        this->events.push(e.at(i));
+	for (uint32_t i = 0; i < e.size(); i = i + 1) {
+		if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e.at(i))) { // handling close animation event out of queue cuz active animation stops processing events in queue
+			this->handleCloseAnimationEvent(closeAnimationEvent);
+		}
+		else {
+			this->baseEvents.push(e.at(i));
+		}
     }
 }
 void MainScreen::prepareToReturnToMenu(sf::RenderWindow& window) {
@@ -553,7 +558,7 @@ void MainScreen::verifyViewEast() {
 
 
 
-void MainScreen::handleEvent(std::shared_ptr<Event> e) {
+void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
     if (std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::dynamic_pointer_cast<TryToTradeEvent>(e)) {
         this->handleTryToTradeEvent(tryToTradeEvent);
     }
@@ -623,8 +628,8 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<UnselectEvent> unselectEvent = std::dynamic_pointer_cast<UnselectEvent>(e)) {
         this->handleUnselectEvent(unselectEvent);
     }
-    else if (std::shared_ptr<StartWarriorClickAnimationEvent> startWarriorClickAnimationEvent = std::dynamic_pointer_cast<StartWarriorClickAnimationEvent>(e)) {
-        this->handleStartWarriorClickAnimationEvent(startWarriorClickAnimationEvent);
+    else if (std::shared_ptr<StartWarriorAnimationEvent> startWarriorAnimationEvent = std::dynamic_pointer_cast<StartWarriorAnimationEvent>(e)) {
+        this->handleStartWarriorAnimationEvent(startWarriorAnimationEvent);
     }
     else if (std::shared_ptr<TryToCollectEvent> tryToCollectEvent = std::dynamic_pointer_cast<TryToCollectEvent>(e)) {
         this->handleTryToCollectEvent(tryToCollectEvent);
@@ -641,9 +646,6 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
         this->handleCreateAnimationEvent(createAnimationEvent);
     }
-    else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
-        this->handleCloseAnimationEvent(closeAnimationEvent);
-    }
 	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
 		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent);
 	}
@@ -655,6 +657,15 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	}
 	else if (std::shared_ptr<ChangeWarriorDirectionEvent> changeWarriorDirectionEvent = std::dynamic_pointer_cast<ChangeWarriorDirectionEvent>(e)) {
 		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent);
+	}
+	else if (std::shared_ptr<TryToRaiseDragonEvent> tryToRaiseDragonEvent = std::dynamic_pointer_cast<TryToRaiseDragonEvent>(e)) {
+		this->handleTryToRaiseDragonEvent(tryToRaiseDragonEvent);
+	}
+	else if (std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> decreaseDragonRecoverMovesLeftEvent = std::dynamic_pointer_cast<DecreaseDragonRecoverMovesLeftEvent>(e)) {
+		this->handleDecreaseDragonRecoverMovesLeftEvent(decreaseDragonRecoverMovesLeftEvent);
+	}
+	else if (std::shared_ptr<ResetDragonRecoverMovesLeftEvent> resetDragonRecoverMovesLeftEvent = std::dynamic_pointer_cast<ResetDragonRecoverMovesLeftEvent>(e)) {
+		this->handleResetDragonRecoverMovesLeftEvent(resetDragonRecoverMovesLeftEvent);
 	}
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
@@ -803,8 +814,8 @@ void MainScreen::handleSelectEvent(std::shared_ptr<SelectEvent> e) {
 void MainScreen::handleUnselectEvent(std::shared_ptr<UnselectEvent> e) {
 	this->selected = nullptr;
 }
-void MainScreen::handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e) {
-	e->getWarrior()->startClickAnimation();
+void MainScreen::handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e) {
+	e->getWarrior()->startAnimation(e->getAnimation());
 }
 void MainScreen::handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e) {
 	uint32_t id = e->getPlayerId();
@@ -845,4 +856,27 @@ void MainScreen::handleSetFireEvent(std::shared_ptr<SetFireEvent> e) {
 }
 void MainScreen::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e) {
 	e->getWarrior()->changeDirection(e->getDirection());
+}
+void MainScreen::handleTryToRaiseDragonEvent(std::shared_ptr<TryToRaiseDragonEvent> e) {
+	if (this->getCurrentPlayer()->getResources() >= e->getDragon()->getCost()) {
+		Events subResourcesEvent;
+		subResourcesEvent.add(std::make_shared<SubResourcesEvent>(e->getDragon()->getCost()));
+		subResourcesEvent = subResourcesEvent + e->getCave()->setDragon(e->getDragon()->clone());
+		this->addEvents(subResourcesEvent);
+	}
+	else {
+		Events clickEvent;
+		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resource_for_dragon"), *Texts::get()->get("OK"), clickEvent);
+		Events unableToRaiseDragonEvent = clickEvent;
+		unableToRaiseDragonEvent.add(std::make_shared<CreateEEvent>(w));
+		this->addEvents(unableToRaiseDragonEvent);
+	}
+}
+void MainScreen::handleDecreaseDragonRecoverMovesLeftEvent(std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> e) {
+	e->getDragon()->decreaseRecoverMovesLeft();
+}
+void MainScreen::handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDragonRecoverMovesLeftEvent> e) {
+	e->getDragon()->resetRecoverMoves();
 }

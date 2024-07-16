@@ -1060,9 +1060,6 @@
     <ClInclude Include="SelectEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="StartWarriorClickAnimationEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
     <ClInclude Include="Infantryman.hpp">
       <Filter>Header Files\go</Filter>
     </ClInclude>
@@ -1209,6 +1206,39 @@
     </ClInclude>
     <ClInclude Include="Selectable.hpp">
       <Filter>Header Files\screensService</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="DragonCave.hpp">
+      <Filter>Header Files\go</Filter>
+    </ClInclude>
+    <ClInclude Include="DragonFlame.hpp">
+      <Filter>Header Files\popUpElements</Filter>
+    </ClInclude>
+    <ClInclude Include="RedDragon.hpp">
+      <Filter>Header Files\goService</Filter>
+    </ClInclude>
+    <ClInclude Include="DragonFlamePreview.hpp">
+      <Filter>Header Files\popUpElementsService</Filter>
+    </ClInclude>
+    <ClInclude Include="TryToRaiseDragonEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseDragonRecoverMovesLeftEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetDragonRecoverMovesLeftEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="StartWarriorAnimationEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="RedDragonFlame.hpp">
+      <Filter>Header Files\popUpElementsService</Filter>
+    </ClInclude>
+    <ClInclude Include="RedDragonFlamePreview.hpp">
+      <Filter>Header Files\popUpElementsService</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1506,9 +1536,6 @@
     <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
     <ClCompile Include="CouldntFindNewWarriorPosition.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
@@ -1519,9 +1546,6 @@
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="SelectEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="StartWarriorClickAnimationEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="Infantryman.cpp">
@@ -1709,6 +1733,42 @@
     </ClCompile>
     <ClCompile Include="Selectable.cpp">
       <Filter>Source Files\screensService</Filter>
+    </ClCompile>
+    <ClCompile Include="DragonCave.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
+      <Filter>Source Files\go</Filter>
+    </ClCompile>
+    <ClCompile Include="DragonFlame.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="RedDragon.cpp">
+      <Filter>Source Files\goService</Filter>
+    </ClCompile>
+    <ClCompile Include="DragonFlamePreview.cpp">
+      <Filter>Source Files\popUpElementsService</Filter>
+    </ClCompile>
+    <ClCompile Include="TryToRaiseDragonEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseDragonRecoverMovesLeftEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetDragonRecoverMovesLeftEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWarriorAnimationEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="RedDragonFlame.cpp">
+      <Filter>Source Files\popUpElements</Filter>
+    </ClCompile>
+    <ClCompile Include="RedDragonFlamePreview.cpp">
+      <Filter>Source Files\popUpElementsService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

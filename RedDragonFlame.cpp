@@ -17,30 +17,17 @@
  */
 
 
-#include "SoundQueue.hpp"
+#include "RedDragonFlame.hpp"
+#include "RedDragonFlamePreview.hpp"
 
 
-SoundQueue *SoundQueue::singletone = nullptr;
-
-
-void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
-    this->removeOldSounds();
-    /*if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
-        this->data.back().stop();
-        this->data.pop_back();
-    }*/
-    this->data.emplace_back();
-    this->data.back().setBuffer(*soundbuffer);
-    this->data.back().play();
+RedDragonFlame::RedDragonFlame() = default;
+std::shared_ptr<DragonFlamePreview> RedDragonFlame::getPreviewType() const {
+	return std::make_shared<RedDragonFlamePreview>();
 }
-void SoundQueue::clear() {
-    for (auto& sound : this->data) {
-        sound.stop();
-    }
-    this->data.clear();
+uint32_t RedDragonFlame::getRadius() const {
+	return 5;
 }
-void SoundQueue::removeOldSounds() {
-    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
-        this->data.erase(this->data.begin());
-    }
+float RedDragonFlame::getAnimationTime() const {
+	return 2;
 }

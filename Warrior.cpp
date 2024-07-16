@@ -19,7 +19,6 @@
 
 #include "Warrior.hpp"
 #include "SelectEvent.hpp"
-#include "StartWarriorClickAnimationEvent.hpp"
 #include "ChangeHighlightEvent.hpp"
 #include "RefreshMovementPointsEvent.hpp"
 #include "ColorTheme.hpp"
@@ -37,6 +36,7 @@
 #include "Textures.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
 #include "FirstTimeTipsTable.hpp"
+#include "StartWarriorAnimationEvent.hpp"
 
 
 Warrior::Warrior() {
@@ -70,17 +70,20 @@ Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
         response.add(std::make_shared<ChangeWarriorDirectionEvent>(this, direction.value()));
     }
 
+    response.add(std::make_shared<PlaySoundEvent>("ouch"));
+
+    if (hpPointsAfterOperation == 0) {
+        response.add(std::make_shared<StartWarriorAnimationEvent>(this, "tipping over"));
+    }
+    else {
+        response.add(std::make_shared<StartWarriorAnimationEvent>(this, "been hit"));
+    }
+
     std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
-    response.add(std::make_shared<SubHpEvent>(this, this->getHP() - hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0)));
+    response.add(std::make_shared<SubHpEvent>(this, this->getHP() - (hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0))));
 
-    if (hpPointsAfterOperation == 0) {
-        this->startAnimation("tipping over");
-    }
-    else {
-        this->startAnimation("been hit");
-    }
     response.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
 
     return response;
@@ -98,9 +101,6 @@ Events Warrior::newMove(uint32_t currentPlayerId) {
 }
 void Warrior::refreshMovementPoints() {
 	this->movementPoints = this->getMovementPoints();
-}
-void Warrior::startClickAnimation() {
-    this->startAnimation("talking");
 }
 uint32_t Warrior::getSX() const {
     return 1;
@@ -235,6 +235,10 @@ Events Warrior::processCurrentAnimation() {
         return this->processTippingOverAnimation();
     }
     return Events();
+}
+void Warrior::startAnimation(const std::string& type) {
+    this->animationClock.restart();
+    this->currentAnimation = type;
 }
 bool Warrior::highDrawingPriority() const {
 	return true;
@@ -395,10 +399,6 @@ float Warrior::getOffsetY() const {
 float Warrior::getOffset() const {
     return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)this->getCurrentAnimationMs();
 }
-void Warrior::startAnimation(const std::string &type) {
-	this->animationClock.restart();
-	this->currentAnimation = type;
-}
 AnimationState Warrior::getCurrentAnimationState() const {
     uint32_t ms = this->animationClock.getElapsedTime().asMilliseconds();
     uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->currentDirection);
@@ -418,7 +418,7 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 	}
 	Events response;
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-	response.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
+    response.add(std::make_shared<StartWarriorAnimationEvent>(this, "talking"));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
         Events selectThisEvent = this->getMoveHighlightionEvent();
         selectThisEvent.add(std::make_shared<SelectEvent>(this));

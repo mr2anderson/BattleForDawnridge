@@ -56,23 +56,25 @@ Events Building::hit(Damage d, const std::optional<std::string> &direction) {
 	}
 
 	Events response;
-	
-	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY());
-	response.add(std::make_shared<CreateEEvent>(hpFlyingE));
-	
-	response.add(std::make_shared<SubHpEvent>(this, dPoints));
+
+	if (hpPointsAfterOperation == 0) {
+		response.add(std::make_shared<PlaySoundEvent>("destroy"));
+	}
+	else {
+		response.add(std::make_shared<PlaySoundEvent>("fire"));
+	}
 
 	if (hpPointsAfterOperation == 0) {
 		response.add(std::make_shared<DestroyEvent>(this));
 	}
 	else {
-		response.add(std::make_shared<PlaySoundEvent>("fire"));
-
-		std::shared_ptr<ImageFlyingE> fireFlyingE = std::make_shared<ImageFlyingE>("fire1", this->getX(), this->getY(), this->getSX(), this->getSY());
-		response.add(std::make_shared<CreateEEvent>(fireFlyingE));
-
 		response.add(std::make_shared<SetFireEvent>(this));
 	}
+	
+	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY());
+	response.add(std::make_shared<CreateEEvent>(hpFlyingE));
+	
+	response.add(std::make_shared<SubHpEvent>(this, dPoints));
 
 	return response;
 }
@@ -81,9 +83,7 @@ bool Building::works() const {
 }
 Events Building::destroy() {
 	this->subHp(this->getHP());
-	Events soundEvent;
-	soundEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
-	return soundEvent;
+	return Events();
 }
 void Building::setFire() {
 	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
@@ -146,9 +146,6 @@ Events Building::regenerate() {
 		}
 	}
 	else {
-		std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("fire1", this->getX(), this->getY(), this->getSX(), this->getSY());
-		events.add(std::make_shared<PlaySoundEvent>("fire"));
-		events.add(std::make_shared<CreateEEvent>(element));
 		events.add(std::make_shared<DecreaseBurningMovesLeftEvent>(this));
 	}
 	return events;

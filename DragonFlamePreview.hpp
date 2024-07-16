@@ -17,12 +17,23 @@
  */
 
 
-#include "StartWarriorClickAnimationEvent.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
+#include <vector>
 
 
-StartWarriorClickAnimationEvent::StartWarriorClickAnimationEvent(Warrior* w) {
-	this->w = w;
-}
-Warrior* StartWarriorClickAnimationEvent::getWarrior() {
-	return this->w;
-}
+#pragma once
+
+
+class DragonFlamePreview : public sf::Drawable {
+public:
+	DragonFlamePreview();
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	void addCellUnderTheFlame(uint32_t x, uint32_t y);
+protected:
+	virtual sf::Color getPreviewCellColor() const = 0;
+private:
+	std::vector<sf::RectangleShape> rects;
+};

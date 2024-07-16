@@ -160,7 +160,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
-                                      "destroy", "sword", "breath", "knight", "fire"}) {
+                                      "destroy", "sword", "breath", "knight", "fire",
+                                      "red_dragon_info", "red_dragon_attack", "ouch"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }

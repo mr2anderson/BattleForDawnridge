@@ -17,30 +17,16 @@
  */
 
 
-#include "SoundQueue.hpp"
+#include "TryToRaiseDragonEvent.hpp"
 
 
-SoundQueue *SoundQueue::singletone = nullptr;
-
-
-void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
-    this->removeOldSounds();
-    /*if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
-        this->data.back().stop();
-        this->data.pop_back();
-    }*/
-    this->data.emplace_back();
-    this->data.back().setBuffer(*soundbuffer);
-    this->data.back().play();
+TryToRaiseDragonEvent::TryToRaiseDragonEvent(DragonCave *cave, std::shared_ptr<Dragon> dragon) {
+	this->cave = cave;
+	this->dragon = dragon;
 }
-void SoundQueue::clear() {
-    for (auto& sound : this->data) {
-        sound.stop();
-    }
-    this->data.clear();
+DragonCave* TryToRaiseDragonEvent::getCave() {
+	return this->cave;
 }
-void SoundQueue::removeOldSounds() {
-    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
-        this->data.erase(this->data.begin());
-    }
+std::shared_ptr<Dragon> TryToRaiseDragonEvent::getDragon() {
+	return this->dragon;
 }

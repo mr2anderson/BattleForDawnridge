@@ -17,30 +17,22 @@
  */
 
 
-#include "SoundQueue.hpp"
+#include "DragonFlamePreview.hpp"
 
 
-SoundQueue *SoundQueue::singletone = nullptr;
-
-
-void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
-    this->removeOldSounds();
-    /*if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
-        this->data.back().stop();
-        this->data.pop_back();
-    }*/
-    this->data.emplace_back();
-    this->data.back().setBuffer(*soundbuffer);
-    this->data.back().play();
+DragonFlamePreview::DragonFlamePreview() = default;
+void DragonFlamePreview::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	for (uint32_t i = 0; i < this->rects.size(); i = i + 1) {
+		target.draw(this->rects.at(i));
+	}
 }
-void SoundQueue::clear() {
-    for (auto& sound : this->data) {
-        sound.stop();
-    }
-    this->data.clear();
-}
-void SoundQueue::removeOldSounds() {
-    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
-        this->data.erase(this->data.begin());
-    }
+void DragonFlamePreview::addCellUnderTheFlame(uint32_t x, uint32_t y) {
+	sf::RectangleShape rect;
+	rect.setPosition(64 * x + 1, 64 * y + 1);
+	rect.setFillColor(this->getPreviewCellColor());
+	rect.setOutlineColor(sf::Color::Black);
+	rect.setOutlineThickness(1);
+	rect.setSize(sf::Vector2f(64 - 2, 64 - 2));
+
+	this->rects.push_back(rect);
 }

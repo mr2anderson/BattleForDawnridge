@@ -27,6 +27,7 @@ Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOColl
 	TerritoryOriginB(x, y, playerId, units),
 	ResourceStorageB(x, y,  playerId, units),
 	VictoryConditionB(x, y, playerId, units),
+	DragonCave(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 }
 Building* Castle::cloneBuilding() const {
@@ -35,7 +36,7 @@ Building* Castle::cloneBuilding() const {
 Events Castle::newMove(uint32_t playerId) {
 	Events response;
 	if (this->belongTo(playerId) and this->exist()) {
-		return this->regenerate() + this->addWood();
+		return this->regenerate() + this->processDecreaseDragonRecoverMovesLeft() + this->addWood();
 	}
 	return response;
 }
@@ -89,6 +90,9 @@ Events Castle::getSelectionW() {
 	components.push_back(this->getResourceStorageComponent());
 	components.push_back(this->getDestroyComponent());
 
+	std::vector<HorizontalSelectionWindowComponent> dragonCaveComponents = this->getDragonCaveComponents();
+	components.insert(components.end(), dragonCaveComponents.begin(), dragonCaveComponents.end());
+
 	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
     response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(window));
@@ -103,4 +107,14 @@ Events Castle::getGameObjectResponse(uint32_t playerId) {
 		return this->getHighlightEvent() + this->getSelectionW();
 	}
 	return Events();
+}
+HorizontalSelectionWindowComponent Castle::getRaiseComponent(std::shared_ptr<Dragon> newDragon) {
+	HorizontalSelectionWindowComponent component = this->DragonCave::getRaiseComponent(newDragon);
+	component.gEvent = this->getHighlightEvent() + component.gEvent;
+	return component;
+}
+HorizontalSelectionWindowComponent Castle::getAttackComponent() {
+	HorizontalSelectionWindowComponent component = this->DragonCave::getAttackComponent();
+	component.gEvent = this->getHighlightEvent() + component.gEvent;
+	return component;
 }

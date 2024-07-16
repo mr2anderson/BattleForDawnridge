@@ -17,20 +17,12 @@
  */
 
 
-#include "Event.hpp"
+#include "ResetDragonRecoverMovesLeftEvent.hpp"
 
 
-#pragma once
-
-
-class Warrior;
-
-
-class StartWarriorClickAnimationEvent : public Event {
-public:
-	StartWarriorClickAnimationEvent(Warrior* w);
-
-	Warrior* getWarrior();
-private:
-	Warrior* w;
-};
+ResetDragonRecoverMovesLeftEvent::ResetDragonRecoverMovesLeftEvent(Dragon* dragon) {
+	this->dragon = dragon;
+}
+Dragon* ResetDragonRecoverMovesLeftEvent::getDragon() {
+	return this->dragon;
+}

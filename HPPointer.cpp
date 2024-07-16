@@ -35,9 +35,11 @@ void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	uint32_t blue = 0;
 
 	sf::RectangleShape rect;
-	rect.setSize(sf::Vector2f(64 * this->sx / 32, 64 * this->sy / 32));
+	rect.setSize(sf::Vector2f(4, 4));
 	rect.setPosition(this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 15 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - rect.getSize().x - 1), this->yInPixels + (this->orientation == ORIENTATION::RIGHT_UP) * 15);
 	rect.setFillColor(sf::Color(red, green, blue));
+	rect.setOutlineThickness(1);
+	rect.setOutlineColor(sf::Color::Black);
 	target.draw(rect, states);
 }
 void HPPointer::setCurrent(uint32_t current) {

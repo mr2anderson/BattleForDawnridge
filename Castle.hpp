@@ -20,12 +20,13 @@
 #include "TerritoryOriginB.hpp"
 #include "ResourceStorageB.hpp"
 #include "VictoryConditionB.hpp"
+#include "DragonCave.hpp"
 
 
 #pragma once
 
 
-class Castle : public TerritoryOriginB, public ResourceStorageB, public VictoryConditionB {
+class Castle : public TerritoryOriginB, public ResourceStorageB, public VictoryConditionB, public DragonCave {
 public:
 	Castle();
 	Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
@@ -48,4 +49,6 @@ private:
 	uint32_t getRadius() const override;
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;
+	HorizontalSelectionWindowComponent getRaiseComponent(std::shared_ptr<Dragon> newDragon) override;
+	HorizontalSelectionWindowComponent getAttackComponent() override;
 };

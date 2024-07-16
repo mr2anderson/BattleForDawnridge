@@ -17,30 +17,12 @@
  */
 
 
-#include "SoundQueue.hpp"
+#include "DecreaseDragonRecoverMovesLeftEvent.hpp"
 
 
-SoundQueue *SoundQueue::singletone = nullptr;
-
-
-void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
-    this->removeOldSounds();
-    /*if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
-        this->data.back().stop();
-        this->data.pop_back();
-    }*/
-    this->data.emplace_back();
-    this->data.back().setBuffer(*soundbuffer);
-    this->data.back().play();
+DecreaseDragonRecoverMovesLeftEvent::DecreaseDragonRecoverMovesLeftEvent(Dragon* dragon) {
+	this->dragon = dragon;
 }
-void SoundQueue::clear() {
-    for (auto& sound : this->data) {
-        sound.stop();
-    }
-    this->data.clear();
-}
-void SoundQueue::removeOldSounds() {
-    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
-        this->data.erase(this->data.begin());
-    }
+Dragon* DecreaseDragonRecoverMovesLeftEvent::getDragon() {
+	return this->dragon;
 }

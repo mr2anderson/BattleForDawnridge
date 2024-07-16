@@ -41,7 +41,6 @@ public:
 	void changeDirection(const std::string& newDirection);
 	Events newMove(uint32_t playerId) override;
 	void refreshMovementPoints();
-	void startClickAnimation();
     uint32_t getSX() const override;
     uint32_t getSY() const override;
 	std::string getTextureName() const override;
@@ -52,6 +51,7 @@ public:
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
     Events processCurrentAnimation() override;
+	void startAnimation(const std::string& type);
 
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual Damage getDamage() const = 0;
@@ -85,7 +85,7 @@ private:
     float getOffsetX() const override;
     float getOffsetY() const override;
     float getOffset() const;
-	void startAnimation(const std::string &type);
+
     AnimationState getCurrentAnimationState() const;
 	Events getGameObjectResponse(uint32_t playerId) override;
 	std::shared_ptr<HPPointer> getHPPointer() const override;

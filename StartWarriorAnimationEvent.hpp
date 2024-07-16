@@ -17,30 +17,23 @@
  */
 
 
-#include "SoundQueue.hpp"
+#include <string>
+#include "Event.hpp"
 
 
-SoundQueue *SoundQueue::singletone = nullptr;
+#pragma once
 
 
-void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
-    this->removeOldSounds();
-    /*if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
-        this->data.back().stop();
-        this->data.pop_back();
-    }*/
-    this->data.emplace_back();
-    this->data.back().setBuffer(*soundbuffer);
-    this->data.back().play();
-}
-void SoundQueue::clear() {
-    for (auto& sound : this->data) {
-        sound.stop();
-    }
-    this->data.clear();
-}
-void SoundQueue::removeOldSounds() {
-    while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
-        this->data.erase(this->data.begin());
-    }
-}
+class Warrior;
+
+
+class StartWarriorAnimationEvent : public Event {
+public:
+	StartWarriorAnimationEvent(Warrior* w, const std::string& animation);
+
+	Warrior* getWarrior();
+	std::string getAnimation() const;
+private:
+	Warrior* w;
+	std::string animation;
+};

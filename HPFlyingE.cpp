@@ -31,7 +31,7 @@ HPFlyingE::HPFlyingE(uint32_t current, uint32_t max, bool green, uint32_t x, uin
     else {
         text.setFillColor(sf::Color::Red);
     }
-    text.setCharacterSize(12 + 2 * sx);
+    text.setCharacterSize(15);
     text.setPosition(64 * x + 64 * sx / 2 - text.getGlobalBounds().width / 2, 64 * y + 64 * sy / 2 - text.getGlobalBounds().height / 2);
     this->set(text);
 }

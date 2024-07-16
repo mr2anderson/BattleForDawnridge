@@ -39,7 +39,7 @@
 #include "WarriorProducingFinishedEvent.hpp"
 #include "SelectEvent.hpp"
 #include "UnselectEvent.hpp"
-#include "StartWarriorClickAnimationEvent.hpp"
+#include "StartWarriorAnimationEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "ResourceStorageBDestroyedEvent.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
@@ -56,6 +56,9 @@
 #include "SubHpEvent.hpp"
 #include "SetFireEvent.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
+#include "TryToRaiseDragonEvent.hpp"
+#include "DecreaseDragonRecoverMovesLeftEvent.hpp"
+#include "ResetDragonRecoverMovesLeftEvent.hpp"
 
 
 #pragma once
@@ -81,7 +84,7 @@ private:
 	uint32_t currentPlayerIndex;
 	std::shared_ptr<PopUpElement> element;
     std::optional<Animation> animation;
-    std::queue<std::shared_ptr<Event>> events;
+    std::queue<std::shared_ptr<Event>> baseEvents;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
@@ -120,7 +123,7 @@ private:
 	Resources getResourcesLimit();
 	void addButtonClickEventToQueue();
 	void addGameObjectClickEventToQueue();
-    void processEvents();
+    void processBaseEvents();
     void addEvents(Events &e);
 	void prepareToReturnToMenu(sf::RenderWindow& window);
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
@@ -139,7 +142,7 @@ private:
 	void verifyViewEast();
 
 
-	void handleEvent(std::shared_ptr<Event> e);
+	void handleBaseEvent(std::shared_ptr<Event> e);
 	void handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
@@ -163,7 +166,7 @@ private:
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
 	void handleSelectEvent(std::shared_ptr<SelectEvent> w);
 	void handleUnselectEvent(std::shared_ptr<UnselectEvent> w);
-	void handleStartWarriorClickAnimationEvent(std::shared_ptr<StartWarriorClickAnimationEvent> e);
+	void handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e);
 	void handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e);
 	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e);
 	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e);
@@ -174,4 +177,7 @@ private:
 	void handleSubHpEvent(std::shared_ptr<SubHpEvent> e);
 	void handleSetFireEvent(std::shared_ptr<SetFireEvent> e);
 	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e);
+	void handleTryToRaiseDragonEvent(std::shared_ptr<TryToRaiseDragonEvent> e);
+	void handleDecreaseDragonRecoverMovesLeftEvent(std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> e);
+	void handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDragonRecoverMovesLeftEvent> e);
 };
