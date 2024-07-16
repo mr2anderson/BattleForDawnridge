@@ -100,7 +100,7 @@ Events RedDragon::doAttack(uint32_t centerX, uint32_t centerY) {
 		}
 
 		if (contains) {
-			result = result + u->hit(Damage(5000 * (u->getHP() != 1), Damage::TYPE::FLAME), std::nullopt); // preventing destroying new buildings (would be too imbalance)
+			result = result + u->hit(Damage(10000 * (u->getHP() != 1), Damage::TYPE::FLAME), std::nullopt); // preventing destroying new buildings (would be too imbalance)
 		}
 	}
 	return result;
