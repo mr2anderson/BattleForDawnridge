@@ -709,10 +709,9 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCur
 }
 void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
-		std::shared_ptr<BuildingMode> bm = std::make_shared<BuildingMode>(e->getBuilding(), this->view, this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()->getId(), this->map->getW(), this->map->getH());
-        Events createBmEvent = bm->getHighlightEvent();
-        createBmEvent.add(std::make_shared<CreateEEvent>(bm));
-        this->addEvents(createBmEvent);
+		BuildingMode* bm = new BuildingMode(e->getBuilding(), this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()->getId(), this->map->getW(), this->map->getH());
+		Events bmStartEvent = bm->start();
+		this->addEvents(bmStartEvent);
 	}
 	else {
         Events clickEvent;

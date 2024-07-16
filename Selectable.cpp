@@ -25,9 +25,6 @@
 Events Selectable::unselect(uint32_t x, uint32_t y, uint8_t button) {
 	return this->getOnUnselectEvents();
 }
-Events Selectable::unselect() {
-	return this->getOnUnselectEvents();
-}
 std::shared_ptr<sf::Drawable> Selectable::getSelectablePointer(std::tuple<uint32_t, uint32_t> mousePos) const {
 	return this->getSelectablePointer(std::get<0>(mousePos), std::get<1>(mousePos));
 }

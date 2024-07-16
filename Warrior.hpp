@@ -75,7 +75,6 @@ private:
 	bool highClickPriority() const override;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
 	Events unselect(uint32_t x, uint32_t y, uint8_t button) override;
-	Events unselect() override;
 	Events getMoveHighlightionEvent();
 	std::vector<std::tuple<uint32_t, uint32_t>> getMoves();
     Move getMove(uint32_t x2, uint32_t y2);

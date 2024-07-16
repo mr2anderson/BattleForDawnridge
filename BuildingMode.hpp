@@ -17,36 +17,34 @@
  */
 
 
-#include "CameraDependentPopUpElement.hpp"
 #include "TerritoryB.hpp"
 #include "GOCollection.hpp"
+#include "Selectable.hpp"
 
 
 #pragma once
 
 
-class BuildingMode : public CameraDependentPopUpElement {
+class BuildingMode : public Selectable {
 public:
-	BuildingMode(std::shared_ptr<Building> b, std::shared_ptr<sf::View> view, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH);
-	~BuildingMode();
+	BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH);
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	void run(uint32_t windowW2, uint32_t windowH2) override;
-	void update() override;
-	Events click() override;
-    Events getHighlightEvent() const;
+	Events start();
 private:
-	Building* b;
+	std::shared_ptr<const Building> b;
 	std::shared_ptr<sf::View> view;
 	uint32_t windowW, windowH;
 	std::shared_ptr<GOCollection<GO>> go;
 	std::shared_ptr<GOCollection<TerritoryB>> tb;
 	uint32_t playerId;
 	uint32_t mapW, mapH;
-	bool returnedPtr;
 
-	bool inMap() const;
-	bool empty() const;
-	bool controlled() const;
+	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
+	Events unselect(uint32_t x, uint32_t y, uint8_t button) override;
+
+	Events getHighlightEvent() const;
+
+	bool inMap(Building *clonedB) const;
+	bool empty(Building *clonedB) const;
+	bool controlled(Building *clonedB) const;
 };

@@ -23,10 +23,12 @@
 #include "Events.hpp"
 
 
+#pragma once
+
+
 class Selectable {
 public:
 	virtual Events unselect(uint32_t x, uint32_t y, uint8_t button);
-	virtual Events unselect();
 	virtual std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const = 0;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(std::tuple<uint32_t, uint32_t> mousePos) const;
 private:

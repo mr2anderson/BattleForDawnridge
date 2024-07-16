@@ -266,9 +266,6 @@ Events Warrior::unselect(uint32_t x, uint32_t y, uint8_t button) {
 
     return events;
 }
-Events Warrior::unselect() {
-	return this->Selectable::unselect() + this->getMoveHighlightionEvent();
-}
 Events Warrior::getMoveHighlightionEvent() {
 	Events event;
 
