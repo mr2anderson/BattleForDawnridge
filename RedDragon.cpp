@@ -59,7 +59,7 @@ std::string RedDragon::getInfoSoundName() const {
 	return "red_dragon_info";
 }
 std::string RedDragon::getAttackSoundName() const {
-	return "red_dragon_info";
+	return "red_dragon_attack";
 }
 std::shared_ptr<DragonFlame> RedDragon::getFlameType() const {
 	return std::make_shared<RedDragonFlame>();

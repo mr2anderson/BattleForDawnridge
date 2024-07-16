@@ -26,7 +26,9 @@
 #include "CreateEEvent.hpp"
 #include "SelectEvent.hpp"
 #include "ImageFlyingE.hpp"
+#include "WindowTwoButtons.hpp"
 #include "DecreaseDragonRecoverMovesLeftEvent.hpp"
+#include "FirstTimeTipsTable.hpp"
 
 
 DragonCave::DragonCave() = default;
@@ -87,8 +89,15 @@ std::vector<HorizontalSelectionWindowComponent> DragonCave::getDragonCaveCompone
 	return components;
 }
 HorizontalSelectionWindowComponent DragonCave::getRaiseComponent(std::shared_ptr<Dragon> newDragon) {
+	Events clickEvent;
+	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
 	Events raiseEvent;
 	raiseEvent.add(std::make_shared<TryToRaiseDragonEvent>(this, newDragon));
+
+	std::shared_ptr<WindowTwoButtons> w = std::make_shared<WindowTwoButtons>(*Texts::get()->get("raise_dragon_verify"), *Texts::get()->get("yes"), *Texts::get()->get("no"), raiseEvent, clickEvent);
+	Events raiseEventVerify = clickEvent;
+	raiseEventVerify.add(std::make_shared<CreateEEvent>(w));
 
 	HorizontalSelectionWindowComponent component;
 	component = {
@@ -99,13 +108,25 @@ HorizontalSelectionWindowComponent DragonCave::getRaiseComponent(std::shared_ptr
 		*Texts::get()->get("cost") + newDragon->getCost().getReadableInfo(),
 
 		true,
-		raiseEvent
+		raiseEventVerify
 	};
 	return component;
 }
 HorizontalSelectionWindowComponent DragonCave::getAttackComponent() {
 	Events attackEvent;
 	attackEvent.add(std::make_shared<SelectEvent>(this->dragon));
+
+	Events componentEvent;
+
+	if (FirstTimeTipsTable::get()->wasDisplayed("dragon_guide")) {
+		componentEvent = attackEvent;
+	}
+	else {
+		FirstTimeTipsTable::get()->markAsDisplayed("dragon_guide");
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("dragon_guide"), *Texts::get()->get("OK"), attackEvent);
+		componentEvent.add(std::make_shared<PlaySoundEvent>("click"));
+		componentEvent.add(std::make_shared<CreateEEvent>(w));
+	}
 
 	HorizontalSelectionWindowComponent component;
 	component = {
@@ -115,7 +136,7 @@ HorizontalSelectionWindowComponent DragonCave::getAttackComponent() {
 		this->dragon->getDescriptionText(),
 
 		true,
-		attackEvent
+		componentEvent
 	};
 	return component;
 }
