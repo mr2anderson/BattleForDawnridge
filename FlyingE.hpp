@@ -69,7 +69,7 @@ private:
 	sf::Clock clock;
 	float dst;
 
-    static constexpr float TIME = 0.75;
+    static constexpr float TIME = 0.625;
 
     void setPosition(float dt) {
         this->t.setPosition(this->getPosition(dt));

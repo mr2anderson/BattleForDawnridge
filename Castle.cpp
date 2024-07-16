@@ -55,9 +55,7 @@ Defence Castle::getDefence() const {
 	return Defence::STONE;
 }
 Resources Castle::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 60000));
-	return cost;
+	return Resources();
 }
 std::string Castle::getTextureName() const {
 	return "castle";

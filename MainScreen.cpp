@@ -273,9 +273,6 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     createBuildingModeEvent = clickSoundEvent;
     createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
     buildMenuSectionOtherComponents.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, createBuildingModeEvent);
-    createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Castle>(0, 0, 0, this->map->getUnits())));
-    buildMenuSectionOtherComponents.emplace_back(Castle().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Castle>()), true, createBuildingModeEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionOther = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionOtherComponents);
     Events createBuildWindowSectionOtherEvent = clickSoundEvent;
