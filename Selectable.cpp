@@ -19,24 +19,17 @@
 
 #include "Selectable.hpp"
 #include "UnselectEvent.hpp"
-#include "Textures.hpp"
 #include "EnableCursorEvent.hpp"
 
 
-Events Selectable::unselect(uint32_t x, uint32_t y) {
+Events Selectable::unselect(uint32_t x, uint32_t y, uint8_t button) {
 	return this->getOnUnselectEvents();
 }
 Events Selectable::unselect() {
 	return this->getOnUnselectEvents();
 }
-sf::Sprite Selectable::getSprite(uint32_t mouseX, uint32_t mouseY) {
-	sf::Sprite sprite;
-	sprite.setPosition(mouseX, mouseY);
-	sprite.setTexture(*Textures::get()->get(this->getSelectableTextureName()));
-	return sprite;
-}
-sf::Sprite Selectable::getSprite(std::tuple<uint32_t, uint32_t> mousePos) {
-	return this->getSprite(std::get<0>(mousePos), std::get<1>(mousePos));
+std::shared_ptr<sf::Drawable> Selectable::getSelectablePointer(std::tuple<uint32_t, uint32_t> mousePos) const {
+	return this->getSelectablePointer(std::get<0>(mousePos), std::get<1>(mousePos));
 }
 Events Selectable::getOnUnselectEvents() {
 	Events events;

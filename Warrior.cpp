@@ -34,6 +34,7 @@
 #include "PlayerPointerCircle.hpp"
 #include "HPFlyingE.hpp"
 #include "SubHpEvent.hpp"
+#include "Textures.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
 
 
@@ -240,11 +241,14 @@ bool Warrior::highDrawingPriority() const {
 bool Warrior::highClickPriority() const {
 	return true;
 }
-std::string Warrior::getSelectableTextureName() const {
-	return "hand";
+std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
+    sf::Sprite sprite;
+    sprite.setTexture(*Textures::get()->get("hand"));
+    sprite.setPosition(mouseX, mouseY);
+    return std::make_shared<sf::Sprite>(sprite);
 }
-Events Warrior::unselect(uint32_t x, uint32_t y) {
-	Events events = this->Selectable::unselect(x, y) + this->getMoveHighlightionEvent();
+Events Warrior::unselect(uint32_t x, uint32_t y, uint8_t button) {
+	Events events = this->Selectable::unselect(x, y, button) + this->getMoveHighlightionEvent();
 
     try {
         Move move = this->getMove(x, y);

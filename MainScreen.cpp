@@ -80,7 +80,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
                             }
                             else {
                                 std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-                                Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64);
+                                Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64, sf::Mouse::Left);
                                 this->addEvents(unselectEvent);
                             }
                         }
@@ -332,7 +332,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.draw(*this->map);
 	this->drawHighlightion(window);
 	if (this->selected != nullptr) {
-		window.draw(this->selected->getSprite(this->getMousePositionBasedOnView()));
+		window.draw(*this->selected->getSelectablePointer(this->getMousePositionBasedOnView()));
 	}
 	if (this->element != nullptr) {
 		if (!this->element->isCameraDependent()) {
