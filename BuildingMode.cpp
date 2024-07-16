@@ -26,6 +26,7 @@
 #include "CreateEEvent.hpp"
 #include "Textures.hpp"
 #include "SelectEvent.hpp"
+#include "FirstTimeTipsTable.hpp"
 
 
 BuildingMode::BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH) {
@@ -38,9 +39,22 @@ BuildingMode::BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<GO
 	this->mapH = mapH;
 }
 Events BuildingMode::start() {
-	Events events = this->getHighlightEvent();
+	Events events;
 
-	events.add(std::make_shared<SelectEvent>(this));
+	Events startEvent = this->getHighlightEvent();
+	startEvent.add(std::make_shared<SelectEvent>(this));
+
+	if (FirstTimeTipsTable::get()->wasDisplayed("building_mode_guide")) {
+		events = events + startEvent;
+	}
+	else {
+		FirstTimeTipsTable::get()->markAsDisplayed("building_mode_guide");
+
+		startEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+		std::shared_ptr<WindowButton> buildingModeGuide = std::make_shared<WindowButton>(*Texts::get()->get("building_mode_guide"), *Texts::get()->get("OK"), startEvent);
+		events.add(std::make_shared<CreateEEvent>(buildingModeGuide));
+	}
 
 	return events;
 }
