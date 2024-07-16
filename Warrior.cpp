@@ -36,6 +36,7 @@
 #include "SubHpEvent.hpp"
 #include "Textures.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
+#include "FirstTimeTipsTable.hpp"
 
 
 Warrior::Warrior() {
@@ -422,9 +423,21 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<StartWarriorClickAnimationEvent>(this));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
-        response = response + this->getMoveHighlightionEvent();
-        response.add(std::make_shared<SelectEvent>(this));
-        response.add(std::make_shared<DisableCursorEvent>());
+        Events selectThisEvent = this->getMoveHighlightionEvent();
+        selectThisEvent.add(std::make_shared<SelectEvent>(this));
+        selectThisEvent.add(std::make_shared<DisableCursorEvent>());
+
+        if (FirstTimeTipsTable::get()->wasDisplayed("warrior_selection_guide")) {
+            response = response + selectThisEvent;
+        }
+        else {
+            FirstTimeTipsTable::get()->markAsDisplayed("warrior_selection_guide");
+
+            selectThisEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Texts::get()->get("warrior_selection_guide"), *Texts::get()->get("OK"), selectThisEvent);
+            response.add(std::make_shared<CreateEEvent>(warriorSelectionGuide));
+        }
     }
     else {
         Events clickSoundEvent;
