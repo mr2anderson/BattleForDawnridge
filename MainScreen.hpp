@@ -59,6 +59,7 @@
 #include "TryToRaiseDragonEvent.hpp"
 #include "DecreaseDragonRecoverMovesLeftEvent.hpp"
 #include "ResetDragonRecoverMovesLeftEvent.hpp"
+#include "BuildingMode.hpp"
 
 
 #pragma once
@@ -88,6 +89,7 @@ private:
 	uint32_t move = 0;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
+    BuildingMode bm;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
 	Selectable* selected;

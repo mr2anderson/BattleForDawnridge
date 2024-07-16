@@ -76,7 +76,7 @@ std::wstring Arable::getUpperCaseReadableName() const {
 Events Arable::addFood() const {
 	Events response;
 	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("food_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
-    response.add(std::make_shared<PlaySoundEvent>("click"));
+    response.add(std::make_shared<PlaySoundEvent>("food"));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<AddResourceEvent>(Resource("food", 875)));
 	return response;

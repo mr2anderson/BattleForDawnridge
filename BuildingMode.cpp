@@ -29,9 +29,9 @@
 #include "FirstTimeTipsTable.hpp"
 
 
+BuildingMode::BuildingMode() = default;
 BuildingMode::BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH) {
 	this->b = b;
-	this->view = view;
 	this->go = go;
 	this->tb = tb;
 	this->playerId = playerId;
@@ -70,7 +70,6 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
 	if (button == sf::Mouse::Button::Right) {
-		delete this;
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + clickSoundEvent;
 	}
 
@@ -84,7 +83,6 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("not_in_map"), *Texts::get()->get("OK"), clickSoundEvent);
 		Events uiEvent = clickSoundEvent;
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
-		delete this;
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->empty(clonedB)) {
@@ -92,7 +90,6 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("place_occupied"), *Texts::get()->get("OK"), clickSoundEvent);
 		Events uiEvent = clickSoundEvent;
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
-		delete this;
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + uiEvent;
 	}
 	if (!this->controlled(clonedB)) {
@@ -100,7 +97,6 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"), clickSoundEvent);
 		Events uiEvent = clickSoundEvent;
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
-		delete this;
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + uiEvent;
 	}
 
@@ -109,7 +105,6 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 	gEvent.add(std::make_shared<BuildEvent>(clonedB));
 	gEvent.add(std::make_shared<SubResourcesEvent>(clonedB->getCost()));
 
-	delete this;
 	return this->Selectable::unselect(x, y, button) + gEvent;
 }
 Events BuildingMode::getHighlightEvent() const {

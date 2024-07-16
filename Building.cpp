@@ -82,8 +82,10 @@ bool Building::works() const {
 	return this->exist();
 }
 Events Building::destroy() {
+    Events response;
+    response.add(std::make_shared<PlaySoundEvent>("destroy"));
 	this->subHp(this->getHP());
-	return Events();
+	return response;
 }
 void Building::setFire() {
 	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
