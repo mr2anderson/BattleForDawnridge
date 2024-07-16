@@ -23,7 +23,6 @@
 TerritoryB::TerritoryB() = default;
 TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t player, std::shared_ptr<GOCollection<Unit>> units) :
 	AreaBLandscapeInsensible(x, y, player, units),
-	HpSensitiveB(x, y, player, units),
 	Building(x, y, player, units) {
 
 }

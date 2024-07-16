@@ -17,7 +17,12 @@
  */
 
 
-#include "Root.hpp"
+#include "SetFireEvent.hpp"
 
 
-const std::string ROOT = "resources";
+SetFireEvent::SetFireEvent(Building* b) {
+	this->b = b;
+}
+Building* SetFireEvent::getBuilding() {
+	return this->b;
+}

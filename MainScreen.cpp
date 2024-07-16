@@ -650,6 +650,15 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
 		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent);
 	}
+	else if (std::shared_ptr<SubHpEvent> subHpEvent = std::dynamic_pointer_cast<SubHpEvent>(e)) {
+		this->handleSubHpEvent(subHpEvent);
+	}
+	else if (std::shared_ptr<SetFireEvent> setFireEvent = std::dynamic_pointer_cast<SetFireEvent>(e)) {
+		this->handleSetFireEvent(setFireEvent);
+	}
+	else if (std::shared_ptr<ChangeWarriorDirectionEvent> changeWarriorDirectionEvent = std::dynamic_pointer_cast<ChangeWarriorDirectionEvent>(e)) {
+		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent);
+	}
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
 	TradingB* b = e->getBuilding();
@@ -831,4 +840,13 @@ void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> 
 }
 void MainScreen::handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e) {
 	e->getBuilding()->decreaseBurningMovesLeft();
+}
+void MainScreen::handleSubHpEvent(std::shared_ptr<SubHpEvent> e) {
+	e->getHPGO()->subHp(e->getValue());
+}
+void MainScreen::handleSetFireEvent(std::shared_ptr<SetFireEvent> e) {
+	e->getBuilding()->setFire();
+}
+void MainScreen::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e) {
+	e->getWarrior()->changeDirection(e->getDirection());
 }

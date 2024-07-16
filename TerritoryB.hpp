@@ -18,13 +18,12 @@
 
 
 #include "AreaBLandscapeInsensible.hpp"
-#include "HpSensitiveB.hpp"
 
 
 #pragma once
 
 
-class TerritoryB : virtual public AreaBLandscapeInsensible, virtual public HpSensitiveB {
+class TerritoryB : public AreaBLandscapeInsensible {
 public:
 	TerritoryB();
 	TerritoryB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);

@@ -47,7 +47,7 @@ Resources Gates1::getCost() const {
     return cost;
 }
 uint32_t Gates1::getRegenerationSpeed() const {
-    return this->getMaxHP() / 2;
+    return this->getMaxHP() / 5;
 }
 std::string Gates1::getTextureName() const {
     return "gates1";

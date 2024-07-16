@@ -17,7 +17,16 @@
  */
 
 
-#include "Root.hpp"
+#include "ChangeWarriorDirectionEvent.hpp"
 
 
-const std::string ROOT = "resources";
+ChangeWarriorDirectionEvent::ChangeWarriorDirectionEvent(Warrior* w, const std::string& direction) {
+	this->w = w;
+	this->direction = direction;
+}
+Warrior* ChangeWarriorDirectionEvent::getWarrior() {
+	return this->w;
+}
+std::string ChangeWarriorDirectionEvent::getDirection() const {
+	return this->direction;
+}

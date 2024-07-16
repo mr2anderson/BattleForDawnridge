@@ -32,6 +32,9 @@
 #include "CreateEEvent.hpp"
 #include "MovementPointsPointer.hpp"
 #include "PlayerPointerCircle.hpp"
+#include "HPFlyingE.hpp"
+#include "SubHpEvent.hpp"
+#include "ChangeWarriorDirectionEvent.hpp"
 
 
 Warrior::Warrior() {
@@ -49,9 +52,43 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCo
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
 }
+Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
+    uint32_t dPoints = d.getHpLoss(this->getDefence());
+    uint32_t hpPointsAfterOperation;
+    if (dPoints >= this->getHP()) {
+        hpPointsAfterOperation = 0;
+    }
+    else {
+        hpPointsAfterOperation = this->getHP() - dPoints;
+    }
+
+    Events response;
+
+    if (direction.has_value()) {
+        response.add(std::make_shared<ChangeWarriorDirectionEvent>(this, direction.value()));
+    }
+
+    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
+    response.add(std::make_shared<CreateEEvent>(hpFlyingE));
+
+    response.add(std::make_shared<SubHpEvent>(this, this->getHP() - hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0)));
+
+    if (hpPointsAfterOperation == 0) {
+        this->startAnimation("tipping over");
+    }
+    else {
+        this->startAnimation("been hit");
+    }
+    response.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
+
+    return response;
+}
+void Warrior::changeDirection(const std::string& newDirection) {
+    this->currentDirection = newDirection;
+}
 Events Warrior::newMove(uint32_t currentPlayerId) {
-	if (!this->exist() or !this->belongTo(currentPlayerId)) {
-		Events events;
+	if (this->exist() and this->belongTo(currentPlayerId)) {
+        Events events;
 		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
 		return events;
 	}
@@ -121,10 +158,10 @@ uint32_t Warrior::getCurrentAnimationMs() const {
         return 600;
     }
     if (this->currentAnimation == "been hit") {
-        return 300;
+        return 500;
     }
     if (this->currentAnimation == "tipping over") {
-        return 400;
+        return 600;
     }
     return 0;
 }
@@ -188,6 +225,12 @@ uint32_t Warrior::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 Events Warrior::processCurrentAnimation() {
     if (currentAnimation == "running") {
         return this->processRunningAnimation();
+    }
+    if (currentAnimation == "been hit") {
+        return this->processBeenHitAnimation();
+    }
+    if (currentAnimation == "tipping over") {
+        return this->processTippingOverAnimation();
     }
     return Events();
 }
@@ -300,6 +343,25 @@ Events Warrior::processRunningAnimation() {
             this->currentDirection = this->currentMovement.front();
             events.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
         }
+    }
+
+    return events;
+}
+Events Warrior::processBeenHitAnimation() {
+    Events events;
+
+    if (this->getCurrentAnimationState().finished) {
+        events.add(std::make_shared<CloseAnimationEvent>());
+    }
+
+    return events;
+}
+Events Warrior::processTippingOverAnimation() {
+    Events events;
+
+    if (this->getCurrentAnimationState().finished) {
+        events.add(std::make_shared<CloseAnimationEvent>());
+        events.add(std::make_shared<SubHpEvent>(this, 1));
     }
 
     return events;

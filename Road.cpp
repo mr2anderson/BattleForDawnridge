@@ -25,6 +25,7 @@
 Road::Road() = default;
 Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
 	TerritoryConductorB(x, y, playerId, units, originsPtr),
+	HpSensitiveB(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 	
 }
@@ -83,10 +84,8 @@ Events Road::getSelectionW() {
 	if (this->repairing()) {
 		components.push_back(this->getBusyWithRepairingComponent());
 	}
-	if (this->works()) {
-		if (!this->connectedToTerritoryOriginB()) {
-			components.push_back(this->getNotConnectedComponent());
-		}
+	if (this->works() and !this->connectedToTerritoryOriginB()) {
+		components.push_back(this->getNotConnectedComponent());
 	}
 
 	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);

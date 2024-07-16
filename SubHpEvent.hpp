@@ -17,7 +17,23 @@
  */
 
 
-#include "Root.hpp"
+#include <cstdint>
+#include "Event.hpp"
 
 
-const std::string ROOT = "resources";
+#pragma once
+
+
+class HPGO;
+
+
+class SubHpEvent : public Event {
+public:
+	SubHpEvent(HPGO* hpgo, uint32_t value);
+
+	HPGO* getHPGO();
+	uint32_t getValue() const;
+private:
+	HPGO* hpgo;
+	uint32_t value;
+};

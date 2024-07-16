@@ -509,6 +509,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Castle.hpp" />
     <ClInclude Include="ChangeHighlightEvent.hpp" />
     <ClInclude Include="ChangeMoveEvent.hpp" />
+    <ClInclude Include="ChangeWarriorDirectionEvent.hpp" />
     <ClInclude Include="ChooseLanguageEvent.hpp" />
     <ClInclude Include="CloseAnimationEvent.hpp" />
     <ClInclude Include="CloseWindowEvent.hpp" />
@@ -709,11 +710,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Sawmill.hpp" />
     <ClInclude Include="Selectable.hpp" />
     <ClInclude Include="SelectEvent.hpp" />
+    <ClInclude Include="SetFireEvent.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
     <ClInclude Include="StartGameEvent.hpp" />
     <ClInclude Include="StartWarriorClickAnimationEvent.hpp" />
     <ClInclude Include="Stone.hpp" />
+    <ClInclude Include="SubHpEvent.hpp" />
     <ClInclude Include="SubResourceEvent.hpp" />
     <ClInclude Include="SubResourcesEvent.hpp" />
     <ClInclude Include="TerritoryB.hpp" />
@@ -773,6 +776,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Castle.cpp" />
     <ClCompile Include="ChangeHighlightEvent.cpp" />
     <ClCompile Include="ChangeMoveEvent.cpp" />
+    <ClCompile Include="ChangeWarriorDirectionEvent.cpp" />
     <ClCompile Include="ChooseLanguageEvent.cpp" />
     <ClCompile Include="CloseAnimationEvent.cpp" />
     <ClCompile Include="CloseWindowEvent.cpp" />
@@ -874,11 +878,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Sawmill.cpp" />
     <ClCompile Include="Selectable.cpp" />
     <ClCompile Include="SelectEvent.cpp" />
+    <ClCompile Include="SetFireEvent.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="StartGameEvent.cpp" />
     <ClCompile Include="StartWarriorClickAnimationEvent.cpp" />
     <ClCompile Include="Stone.cpp" />
+    <ClCompile Include="SubHpEvent.cpp" />
     <ClCompile Include="SubResourceEvent.cpp" />
     <ClCompile Include="SubResourcesEvent.cpp" />
     <ClCompile Include="TerritoryB.cpp" />

@@ -18,12 +18,13 @@
 
 
 #include "TerritoryConductorB.hpp"
+#include "HpSensitiveB.hpp"
 
 
 #pragma once
 
 
-class Road : public TerritoryConductorB {
+class Road : public TerritoryConductorB, public HpSensitiveB {
 public:
 	Road();
 	Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);

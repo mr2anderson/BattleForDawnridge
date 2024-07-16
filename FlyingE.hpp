@@ -17,7 +17,6 @@
  */
 
 
-#include <cmath>
 #include "CameraDependentPopUpElement.hpp"
 
 
@@ -30,7 +29,7 @@ public:
 
 	void run(uint32_t windowW, uint32_t windowH) override {
         this->clock.restart();
-        this->dst = windowH / 4;
+        this->dst = 128;
     }
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
         target.draw(this->t, states);
@@ -70,17 +69,16 @@ private:
 	sf::Clock clock;
 	float dst;
 
-    static constexpr float TIME = 0.5;
-	static constexpr float V0 = 6;
+    static constexpr float TIME = 0.75;
 
     void setPosition(float dt) {
         this->t.setPosition(this->getPosition(dt));
     }
 	sf::Vector2f getPosition(float dt) const {
-        float a = 2 * (this->dst - V0 * TIME) / std::pow(TIME, 2);
+        float v = this->dst / TIME;
 
         float currentX = this->startX;
-        float currentY = this->startY - V0 * dt - a * std::pow(dt, 2) / 2;
+        float currentY = this->startY - v * dt;
 
         return sf::Vector2f(currentX, currentY);
     }

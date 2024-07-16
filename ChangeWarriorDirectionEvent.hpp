@@ -17,7 +17,23 @@
  */
 
 
-#include "Root.hpp"
+#include <string>
+#include "Event.hpp"
 
 
-const std::string ROOT = "resources";
+#pragma once
+
+
+class Warrior;
+
+
+class ChangeWarriorDirectionEvent : public Event {
+public:
+	ChangeWarriorDirectionEvent(Warrior* w, const std::string& direction);
+
+	Warrior* getWarrior();
+	std::string getDirection() const;
+private:
+	Warrior* w;
+	std::string direction;
+};

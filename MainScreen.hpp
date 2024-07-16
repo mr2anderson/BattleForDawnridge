@@ -53,6 +53,9 @@
 #include "CreateEEvent.hpp"
 #include "DestroyEvent.hpp"
 #include "DecreaseBurningMovesLeftEvent.hpp"
+#include "SubHpEvent.hpp"
+#include "SetFireEvent.hpp"
+#include "ChangeWarriorDirectionEvent.hpp"
 
 
 #pragma once
@@ -168,4 +171,7 @@ private:
     void handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e);
     void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
 	void handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e);
+	void handleSubHpEvent(std::shared_ptr<SubHpEvent> e);
+	void handleSetFireEvent(std::shared_ptr<SetFireEvent> e);
+	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e);
 };

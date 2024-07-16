@@ -90,9 +90,6 @@ Events Castle::getSelectionW() {
 	components.push_back(this->getVictoryConditionComponent());
 	components.push_back(this->getResourceStorageComponent());
 	components.push_back(this->getDestroyComponent());
-	if (this->repairing()) {
-		components.push_back(this->getBusyWithRepairingComponent());
-	}
 
 	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
     response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));

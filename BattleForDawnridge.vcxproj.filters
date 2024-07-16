@@ -1201,6 +1201,15 @@
     <ClInclude Include="LanguageAlreadyInUse.hpp">
       <Filter>Header Files\resourceExceptions</Filter>
     </ClInclude>
+    <ClInclude Include="SubHpEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="SetFireEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeWarriorDirectionEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1691,6 +1700,15 @@
     </ClCompile>
     <ClCompile Include="LanguageAlreadyInUse.cpp">
       <Filter>Source Files\resourceExceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="SubHpEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="SetFireEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeWarriorDirectionEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

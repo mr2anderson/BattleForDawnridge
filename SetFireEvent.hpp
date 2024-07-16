@@ -17,7 +17,20 @@
  */
 
 
-#include "Root.hpp"
+#include "Event.hpp"
 
 
-const std::string ROOT = "resources";
+#pragma once
+
+
+class Building;
+
+
+class SetFireEvent : public Event {
+public:
+	SetFireEvent(Building* b);
+
+	Building* getBuilding();
+private:
+	Building* b;
+};

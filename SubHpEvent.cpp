@@ -17,7 +17,16 @@
  */
 
 
-#include "Root.hpp"
+#include "SubHpEvent.hpp"
 
 
-const std::string ROOT = "resources";
+SubHpEvent::SubHpEvent(HPGO* hpgo, uint32_t value) {
+	this->hpgo = hpgo;
+	this->value = value;
+}
+HPGO* SubHpEvent::getHPGO() {
+	return this->hpgo;
+}
+uint32_t SubHpEvent::getValue() const {
+	return this->value;
+}

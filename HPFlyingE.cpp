@@ -23,7 +23,7 @@
 
 HPFlyingE::HPFlyingE(uint32_t current, uint32_t max, bool green, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
     sf::Text text;
-    text.setFont(*Fonts::get()->get("1"));
+    text.setFont(*Fonts::get()->get("bold"));
     text.setString(std::to_string(current) + " / " + std::to_string(max));
     if (green) {
         text.setFillColor(sf::Color::Green);
@@ -31,7 +31,7 @@ HPFlyingE::HPFlyingE(uint32_t current, uint32_t max, bool green, uint32_t x, uin
     else {
         text.setFillColor(sf::Color::Red);
     }
-    text.setCharacterSize(6 + 4 * std::min(sx, sy));
+    text.setCharacterSize(12 + 2 * sx);
     text.setPosition(64 * x + 64 * sx / 2 - text.getGlobalBounds().width / 2, 64 * y + 64 * sy / 2 - text.getGlobalBounds().height / 2);
     this->set(text);
 }

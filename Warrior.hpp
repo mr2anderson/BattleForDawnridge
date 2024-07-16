@@ -17,7 +17,6 @@
  */
 
 
-#include <optional>
 #include "Unit.hpp"
 #include "GOCollection.hpp"
 #include "Selectable.hpp"
@@ -38,6 +37,8 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+	Events hit(Damage d, const std::optional<std::string> &direction) override;
+	void changeDirection(const std::string& newDirection);
 	Events newMove(uint32_t playerId) override;
 	void refreshMovementPoints();
 	void startClickAnimation();
@@ -80,6 +81,8 @@ private:
     Move getMove(uint32_t x2, uint32_t y2);
     MovementGraph buildMovementGraph();
     Events processRunningAnimation();
+	Events processBeenHitAnimation();
+	Events processTippingOverAnimation();
     float getOffsetX() const override;
     float getOffsetY() const override;
     float getOffset() const;

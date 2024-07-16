@@ -32,9 +32,10 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	Events hit(Damage d, const std::optional<std::string> &direction) override;
 	virtual bool works() const;
 	virtual Events destroy();
-	void burn();
+	void setFire();
 	void decreaseBurningMovesLeft();
 protected:
 	virtual uint32_t getRegenerationSpeed() const = 0;

@@ -30,6 +30,8 @@
 #include "DestroyEvent.hpp"
 #include "ImageFlyingE.hpp"
 #include "DecreaseBurningMovesLeftEvent.hpp"
+#include "SubHpEvent.hpp"
+#include "SetFireEvent.hpp"
 
 
 Building::Building() = default;
@@ -43,6 +45,37 @@ void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		target.draw(this->fire, states);
 	}
 }
+Events Building::hit(Damage d, const std::optional<std::string> &direction) {
+	uint32_t dPoints = d.getHpLoss(this->getDefence());
+	uint32_t hpPointsAfterOperation;
+	if (dPoints >= this->getHP()) {
+		hpPointsAfterOperation = 0;
+	}
+	else {
+		hpPointsAfterOperation = this->getHP() - dPoints;
+	}
+
+	Events response;
+	
+	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY());
+	response.add(std::make_shared<CreateEEvent>(hpFlyingE));
+	
+	response.add(std::make_shared<SubHpEvent>(this, dPoints));
+
+	if (hpPointsAfterOperation == 0) {
+		response.add(std::make_shared<DestroyEvent>(this));
+	}
+	else {
+		response.add(std::make_shared<PlaySoundEvent>("fire"));
+
+		std::shared_ptr<ImageFlyingE> fireFlyingE = std::make_shared<ImageFlyingE>("fire1", this->getX(), this->getY(), this->getSX(), this->getSY());
+		response.add(std::make_shared<CreateEEvent>(fireFlyingE));
+
+		response.add(std::make_shared<SetFireEvent>(this));
+	}
+
+	return response;
+}
 bool Building::works() const {
 	return this->exist();
 }
@@ -52,9 +85,9 @@ Events Building::destroy() {
 	soundEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
 	return soundEvent;
 }
-void Building::burn() {
+void Building::setFire() {
 	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
-	this->burningMovesLeft = 4;
+	this->burningMovesLeft = 5;
 }
 void Building::decreaseBurningMovesLeft() {
 	this->burningMovesLeft = this->burningMovesLeft - 1;
@@ -124,7 +157,7 @@ sf::Color Building::getTextureColor() const {
 	if (this->burningMovesLeft == 0) {
 		return this->Unit::getTextureColor();
 	}
-	return sf::Color(50, 50, 50);
+	return sf::Color(100, 100, 100);
 }
 std::shared_ptr<HPPointer> Building::getHPPointer() const {
 	return std::make_shared<HPPointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());

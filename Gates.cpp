@@ -57,10 +57,7 @@ Events Gates::getSelectionW() {
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getHpInfoComponent());
     components.push_back(this->getDestroyComponent());
-    if (this->repairing()) {
-        components.push_back(this->getBusyWithRepairingComponent());
-    }
-    if (this->works() and !this->connectedToTerritoryOriginB()) {
+    if (!this->connectedToTerritoryOriginB()) {
         components.push_back(this->getNotConnectedComponent());
     }
 
