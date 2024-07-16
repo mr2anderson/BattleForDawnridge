@@ -27,13 +27,13 @@ FirstTimeTipsTable* FirstTimeTipsTable::singletone = nullptr;
 
 
 static std::string GET_LOCAL_ROOT() {
-	return ROOT + "/first_time_tips";
+	return USERDATA_ROOT + "/first_time_tips";
 }
 static bool LOCAL_ROOT_EXIST() {
 	return std::filesystem::is_directory(GET_LOCAL_ROOT());
 }
 static void CREATE_LOCAL_ROOT() {
-	std::filesystem::create_directory(GET_LOCAL_ROOT());
+	std::filesystem::create_directories(GET_LOCAL_ROOT());
 }
 static std::string GET_PATH(const std::string& id) {
 	return GET_LOCAL_ROOT() + "/" + id + ".txt";

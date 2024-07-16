@@ -20,4 +20,5 @@
 #include "Root.hpp"
 
 
-const std::string ROOT = "resources";
+const std::string DATA_ROOT = "resources";
+const std::string USERDATA_ROOT = "userdata";

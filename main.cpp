@@ -55,7 +55,7 @@ int main() {
 					while (s.size() < 4) {
 						s = ('0' + s);
 					}
-					process(ROOT + "/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".bmp");
+					process(DATA_ROOT + "/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".bmp");
 				}
 			}
 		}

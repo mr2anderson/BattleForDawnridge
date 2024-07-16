@@ -22,6 +22,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 #include "Texts.hpp"
 #include "Root.hpp"
 #include "UTFEncoder.hpp"
@@ -33,7 +34,7 @@ Texts* Texts::singletone = nullptr;
 
 
 void Texts::load() {
-    std::string path = this->getPath();
+    std::string path = DATA_ROOT + "/" + this->getPath();
     std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenText(path);
@@ -85,12 +86,16 @@ void Texts::load() {
     file.close();
 }
 void Texts::setDefaultPath(const std::string& path) {
-    if (ROOT + "/" + path == this->getPath()) {
+    if (path == this->getPath()) {
         throw LanguageAlreadyInUse();
     }
 
-    std::ofstream file(ROOT + "/language.txt");
-    file << (ROOT + "/" + path);
+    if (!std::filesystem::is_directory(USERDATA_ROOT)) {
+        std::filesystem::create_directories(USERDATA_ROOT);
+    }
+
+    std::ofstream file(USERDATA_ROOT + "/language.txt");
+    file << path;
     file.close();
 }
 std::wstring* Texts::get(const std::string& name) {
@@ -101,12 +106,12 @@ std::wstring* Texts::get(const std::string& name) {
     return &it->second;
 }
 std::string Texts::getPath() const {
-    std::ifstream file(ROOT + "/language.txt");
+    std::ifstream file(USERDATA_ROOT + "/language.txt");
     if (file.is_open()) {
         std::string path;
         std::getline(file, path);
         file.close();
         return path;
     }
-    return ROOT + "/en.txt";
+    return "en.txt";
 }

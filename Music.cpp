@@ -27,7 +27,7 @@ Music *Music::singletone = nullptr;
 
 
 void Music::add(const std::string& name, const std::string& path) {
-    if (!this->music[name].openFromFile(std::string(ROOT) + "/" + path)) {
+    if (!this->music[name].openFromFile(std::string(DATA_ROOT) + "/" + path)) {
         throw CouldntOpenMusic(path);
     }
 }

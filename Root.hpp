@@ -23,4 +23,5 @@
 #pragma once
 
 
-extern const std::string ROOT;
+extern const std::string DATA_ROOT;
+extern const std::string USERDATA_ROOT;

@@ -41,7 +41,7 @@ Map::Map(const std::string &path) {
     this->vcbs = std::make_shared<GOCollection<VictoryConditionB>>();
     this->treasures = std::make_shared<GOCollection<Treasure>>();
 
-    std::ifstream file(ROOT + "/" + path);
+    std::ifstream file(DATA_ROOT + "/" + path);
     if (!file.is_open()) {
         throw CouldntOpenMap(path);
     }
