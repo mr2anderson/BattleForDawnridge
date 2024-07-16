@@ -55,8 +55,9 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 	Events clickSoundEvent;
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	if (button != sf::Mouse::Button::Left) {
-		return clickSoundEvent;
+	if (button == sf::Mouse::Button::Right) {
+		delete this;
+		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + clickSoundEvent;
 	}
 
 	Building* clonedB = this->b->cloneBuilding();
