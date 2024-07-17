@@ -88,6 +88,6 @@ private:
 
     AnimationState getCurrentAnimationState() const;
 	Events getGameObjectResponse(uint32_t playerId) override;
-	std::shared_ptr<HPPointer> getHPPointer() const override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
+	uint8_t getHPPointerOrientation() const override;
 };

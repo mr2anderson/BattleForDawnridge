@@ -18,7 +18,10 @@
 
 
 
+#include <sstream>
+#include <iomanip>
 #include "HPPointer.hpp"
+#include "Fonts.hpp"
 
 
 HPPointer::HPPointer() = default;
@@ -29,18 +32,32 @@ HPPointer::HPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy,
 	this->sy = sy;
 	this->orientation = orientation;
 }
+static std::string FORMAT_FLOAT(double a) {
+	std::stringstream ss;
+	ss << std::setprecision(8) << std::noshowpoint << a;
+	return ss.str();
+}
 void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	uint32_t red = 255 - 255 * this->current / this->max;
 	uint32_t green = 255 * this->current / this->max;
 	uint32_t blue = 0;
 
-	sf::RectangleShape rect;
-	rect.setSize(sf::Vector2f(4, 4));
-	rect.setPosition(this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 15 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - rect.getSize().x - 1), this->yInPixels + (this->orientation == ORIENTATION::RIGHT_UP) * 15);
-	rect.setFillColor(sf::Color(red, green, blue));
-	rect.setOutlineThickness(1);
-	rect.setOutlineColor(sf::Color::Black);
-	target.draw(rect, states);
+	std::string str;
+	str += FORMAT_FLOAT((float)this->current / 1000);
+	str += "k";
+
+	sf::Text text;
+	text.setFillColor(sf::Color(red, green, blue));
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(1);
+	text.setFont(*Fonts::get()->get("1"));
+	text.setCharacterSize(6 + 2 * this->sx);
+	text.setString(str);
+	text.setPosition(
+		this->xInPixels + 64 * this->sx / 2 - text.getGlobalBounds().width / 2, 
+		this->yInPixels + 5 + (this->orientation == ORIENTATION::DOWN) * (64 * this->sy - 2 * 5 - text.getGlobalBounds().height));
+
+	target.draw(text, states);
 }
 void HPPointer::setCurrent(uint32_t current) {
 	this->current = current;

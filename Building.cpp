@@ -33,6 +33,7 @@
 #include "SubHpEvent.hpp"
 #include "SetFireEvent.hpp"
 #include "FocusOnEvent.hpp"
+#include "HPPointer.hpp"
 
 
 Building::Building() = default;
@@ -94,6 +95,9 @@ void Building::setFire() {
 }
 void Building::decreaseBurningMovesLeft() {
 	this->burningMovesLeft = this->burningMovesLeft - 1;
+}
+uint8_t Building::getHPPointerOrientation() const {
+	return HPPointer::ORIENTATION::UP;
 }
 HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 	std::string textureName;
@@ -159,9 +163,6 @@ sf::Color Building::getTextureColor() const {
 		return this->Unit::getTextureColor();
 	}
 	return sf::Color(100, 100, 100);
-}
-std::shared_ptr<HPPointer> Building::getHPPointer() const {
-	return std::make_shared<HPPointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
 }
 bool Building::warriorCanStay(uint32_t warriorPlayerId) const {
 	return true;

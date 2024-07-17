@@ -27,18 +27,18 @@
 
 class HPPointer : public sf::Drawable {
 public:
-	enum ORIENTATION {
-		LEFT_UP,
-		RIGHT_UP
-	};
-
 	HPPointer();
-	HPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation = ORIENTATION::RIGHT_UP);
+	HPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void setCurrent(uint32_t current);
 	void setMax(uint32_t current);
+
+	enum ORIENTATION {
+		UP,
+		DOWN
+	};
 private:
 	uint32_t current, max;
 	float xInPixels, yInPixels;

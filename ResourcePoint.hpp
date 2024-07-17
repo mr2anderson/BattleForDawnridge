@@ -34,7 +34,7 @@ public:
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 private:
-	std::shared_ptr<HPPointer> getHPPointer() const override;
+	uint8_t getHPPointerOrientation() const override;
 	Events getGameObjectResponse(uint32_t playerId) override;
 	Events getSelectionWindow();
 	HorizontalSelectionWindowComponent getResourceLeftComponent() const;
