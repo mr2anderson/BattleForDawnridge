@@ -23,17 +23,13 @@
 #pragma once
 
 
-class MovementPointsPointer : public PlayerPointer {
+class WarriorPlayerPointer : public PlayerPointer {
 public:
-    MovementPointsPointer(float xInPixels, float yInPixels, uint32_t value);
+    WarriorPlayerPointer(float xInPixels, float yInPixels, uint32_t value);
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 private:
-    sf::Text text;
-
-    static const sf::Color BLUE;
-    static const sf::Color GREEN;
-    static const sf::Color PURPLE;
+    sf::Sprite sprite;
 
     void setTypeBlue() override;
     void setTypeGreen() override;

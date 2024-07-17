@@ -688,7 +688,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp" />
     <ClInclude Include="MovementGraph.hpp" />
-    <ClInclude Include="MovementPointsPointer.hpp" />
+    <ClInclude Include="WarriorPlayerPointer.hpp" />
     <ClInclude Include="Music.hpp" />
     <ClInclude Include="NextClueEvent.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
@@ -867,7 +867,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="MoveGameActionWindowDownEvent.cpp" />
     <ClCompile Include="MoveGameActionWindowUpEvent.cpp" />
     <ClCompile Include="MovementGraph.cpp" />
-    <ClCompile Include="MovementPointsPointer.cpp" />
+    <ClCompile Include="WarriorPlayerPointer.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="NextClueEvent.cpp" />
     <ClCompile Include="PAKScreen.cpp" />

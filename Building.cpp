@@ -73,7 +73,7 @@ Events Building::hit(Damage d, const std::optional<std::string> &direction) {
 		response.add(std::make_shared<SetFireEvent>(this));
 	}
 	
-	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, false, this->getX(), this->getY(), this->getSX(), this->getSY());
 	response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 	
 	response.add(std::make_shared<SubHpEvent>(this, dPoints));
@@ -142,7 +142,7 @@ Events Building::regenerate() {
 	if (this->burningMovesLeft == 0) {
 		if (this->getHP() < this->getMaxHP()) {
 			events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
-			std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(this->getMaxHP(), this->getHP() + this->getRegenerationSpeed()), this->getMaxHP(), true, this->getX(), this->getY(), this->getSX(), this->getSY());
+			std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(this->getMaxHP(), this->getHP() + this->getRegenerationSpeed()), true, this->getX(), this->getY(), this->getSX(), this->getSY());
 			events.add(std::make_shared<PlaySoundEvent>("regeneration"));
 			events.add(std::make_shared<CreateEEvent>(element));
 			events.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));

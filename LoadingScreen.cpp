@@ -116,7 +116,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
-                "forest_icon", "water_icon", "red_dragon"}) {
+                "forest_icon", "water_icon", "red_dragon", "warrior_purple", "warrior_green", "warrior_blue"}) {
             Textures::get()->add(a, a + ".png");
         }
         Textures::get()->add("menu", "menu.jpg");

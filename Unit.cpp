@@ -29,10 +29,10 @@ Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t p
 	this->units = units;
 }
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	this->HPGO::draw(target, states);
 	if (this->exist() and this->getPlayerId() != 0) {
 		this->drawPlayerPointer(target, states);
 	}
+	this->HPGO::draw(target, states);
 }
 bool Unit::belongTo(uint32_t playerId) const {
 	return (this->playerId == playerId);

@@ -1162,7 +1162,7 @@
     <ClInclude Include="PlayerPointerCircle.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="MovementPointsPointer.hpp">
+    <ClInclude Include="WarriorPlayerPointer.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="MoveDoesNotExist.hpp">
@@ -1692,7 +1692,7 @@
     <ClCompile Include="PlayerPointerCircle.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
-    <ClCompile Include="MovementPointsPointer.cpp">
+    <ClCompile Include="WarriorPlayerPointer.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="MoveDoesNotExist.cpp">

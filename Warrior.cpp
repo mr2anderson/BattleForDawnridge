@@ -29,7 +29,7 @@
 #include "WindowButton.hpp"
 #include "Texts.hpp"
 #include "CreateEEvent.hpp"
-#include "MovementPointsPointer.hpp"
+#include "WarriorPlayerPointer.hpp"
 #include "PlayerPointerCircle.hpp"
 #include "HPFlyingE.hpp"
 #include "SubHpEvent.hpp"
@@ -80,7 +80,7 @@ Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
         response.add(std::make_shared<StartWarriorAnimationEvent>(this, "been hit"));
     }
 
-    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, this->getMaxHP(), false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
+    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
     response.add(std::make_shared<SubHpEvent>(this, this->getHP() - (hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0))));
@@ -447,10 +447,7 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 	return response;
 }
 std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
-    if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
-        return std::make_shared<MovementPointsPointer>(this->getXInPixels(), this->getYInPixels(), this->movementPoints.value_or(this->getMovementPoints()));
-    }
-    return std::make_shared<PlayerPointerCircle>(this->getXInPixels(), this->getYInPixels(), 1, 1, PlayerPointerCircle::ORIENTATION::LEFT_UP);
+    return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels(), this->movementPoints.value_or(this->getMovementPoints()));
 }
 uint8_t Warrior::getHPPointerOrientation() const {
     return HPPointer::ORIENTATION::DOWN;

@@ -32,19 +32,10 @@ HPPointer::HPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy,
 	this->sy = sy;
 	this->orientation = orientation;
 }
-static std::string FORMAT_FLOAT(double a) {
-	std::stringstream ss;
-	ss << std::setprecision(8) << std::noshowpoint << a;
-	return ss.str();
-}
 void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t red = 255 - 255 * this->current / this->max;
-	uint32_t green = 255 * this->current / this->max;
+	uint32_t red = 127 - 127 * this->current / this->max;
+	uint32_t green = 127 * this->current / this->max;
 	uint32_t blue = 0;
-
-	std::string str;
-	str += FORMAT_FLOAT((float)this->current / 1000);
-	str += "k";
 
 	sf::Text text;
 	text.setFillColor(sf::Color(red, green, blue));
@@ -52,7 +43,7 @@ void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	text.setOutlineThickness(1);
 	text.setFont(*Fonts::get()->get("1"));
 	text.setCharacterSize(6 + 2 * this->sx);
-	text.setString(str);
+	text.setString(this->getCurrentHpFormatted());
 	text.setPosition(
 		this->xInPixels + 64 * this->sx / 2 - text.getGlobalBounds().width / 2, 
 		this->yInPixels + 5 + (this->orientation == ORIENTATION::DOWN) * (64 * this->sy - 2 * 5 - text.getGlobalBounds().height));
@@ -64,4 +55,10 @@ void HPPointer::setCurrent(uint32_t current) {
 }
 void HPPointer::setMax(uint32_t max) {
 	this->max = max;
+}
+std::string HPPointer::getCurrentHpFormatted() const {
+	double d = (double)this->current / 1000;
+	std::stringstream ss;
+	ss << std::fixed << std::setprecision(1) << d;
+	return ss.str() + "k";
 }

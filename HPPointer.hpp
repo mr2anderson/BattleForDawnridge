@@ -44,4 +44,6 @@ private:
 	float xInPixels, yInPixels;
 	uint32_t sx, sy;
 	uint8_t orientation;
+
+	std::string getCurrentHpFormatted() const;
 };
