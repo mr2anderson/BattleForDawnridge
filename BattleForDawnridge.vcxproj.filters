@@ -1240,6 +1240,9 @@
     <ClInclude Include="RedDragonFlamePreview.hpp">
       <Filter>Header Files\popUpElementsService</Filter>
     </ClInclude>
+    <ClInclude Include="FocusOnEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1769,6 +1772,9 @@
     </ClCompile>
     <ClCompile Include="RedDragonFlamePreview.cpp">
       <Filter>Source Files\popUpElementsService</Filter>
+    </ClCompile>
+    <ClCompile Include="FocusOnEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

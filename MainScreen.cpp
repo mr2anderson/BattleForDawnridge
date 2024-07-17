@@ -401,9 +401,8 @@ void MainScreen::changeMove() {
 	this->totalGONewMoveEvents = this->map->getGO()->size();
 	do {
 		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
-	} while (!this->playerIsActive.at(this->currentPlayerIndex));
-	this->updatePlayerViewPoint();
-	this->highlightTable.clear();
+	}
+	while (!this->playerIsActive.at(this->currentPlayerIndex));
 }
 Player* MainScreen::getCurrentPlayer() {
 	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
@@ -487,19 +486,6 @@ void MainScreen::moveView() {
 	}
 	else if (p.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		this->moveViewToSouth();
-	}
-}
-void MainScreen::updatePlayerViewPoint() {
-	std::shared_ptr<GOCollection<VictoryConditionB>> vcbs = this->map->getVcbs();
-	for (uint32_t i = 0; i < vcbs->size(); i = i + 1) {
-		VictoryConditionB* vcb = vcbs->at(i);
-		if (vcb->exist() and vcb->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			this->view->setCenter(64 * vcb->getX(), 64 * vcb->getY());
-			this->verifyViewNorth();
-			this->verifyViewSouth();
-			this->verifyViewWest();
-			this->verifyViewEast();
-		}
 	}
 }
 
@@ -666,6 +652,9 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
 	}
 	else if (std::shared_ptr<ResetDragonRecoverMovesLeftEvent> resetDragonRecoverMovesLeftEvent = std::dynamic_pointer_cast<ResetDragonRecoverMovesLeftEvent>(e)) {
 		this->handleResetDragonRecoverMovesLeftEvent(resetDragonRecoverMovesLeftEvent);
+	}
+	else if (std::shared_ptr<FocusOnEvent> focusOnEvent = std::dynamic_pointer_cast<FocusOnEvent>(e)) {
+		this->handleFocusOnEvent(focusOnEvent);
 	}
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
@@ -879,4 +868,11 @@ void MainScreen::handleDecreaseDragonRecoverMovesLeftEvent(std::shared_ptr<Decre
 }
 void MainScreen::handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDragonRecoverMovesLeftEvent> e) {
 	e->getDragon()->resetRecoverMoves();
+}
+void MainScreen::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e) {
+	this->view->setCenter(64 * e->getX() + 64 * e->getSX() / 2, 64 * e->getY() + 64 * e->getSY() / 2);
+	this->verifyViewNorth();
+	this->verifyViewSouth();
+	this->verifyViewWest();
+	this->verifyViewEast();
 }

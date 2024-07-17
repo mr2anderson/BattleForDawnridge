@@ -26,6 +26,7 @@
 #include "ImageFlyingE.hpp"
 #include "WindowButton.hpp"
 #include "CreateEEvent.hpp"
+#include "FocusOnEvent.hpp"
 
 
 TradingB::TradingB() = default;
@@ -101,6 +102,7 @@ Events TradingB::handleCurrentTrade() {
 	}
 	Events responce;
 	std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+	responce.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
     responce.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	responce.add(std::make_shared<CreateEEvent>(element));
 	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));

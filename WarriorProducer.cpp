@@ -27,6 +27,7 @@
 #include "Texts.hpp"
 #include "CreateEEvent.hpp"
 #include "WindowButton.hpp"
+#include "FocusOnEvent.hpp"
 
 
 WarriorProducer::WarriorProducer() = default;
@@ -126,6 +127,8 @@ Events WarriorProducer::handleCurrentProducing() {
 	Events response;
 	if (this->currentProducingMovesLeft != 0) {
 		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("producing_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+
+		response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
         response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
@@ -138,7 +141,14 @@ Events WarriorProducer::handleCurrentProducing() {
 		std::tie(x, y) = this->getNewWarriorPosition();
 		this->currentProducing->setX(x);
 		this->currentProducing->setY(y);
+
+		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->currentProducing->getTextureName(), this->getX(), this->getY(), this->getSX(), this->getSY());
+
+		response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+		response.add(std::make_shared<CreateEEvent>(flyingE));
+		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<WarriorProducingFinishedEvent>(this, this->currentProducing));
+
 		return response;
 	}
 	catch (CouldntFindNewWarriorPosition& e) {

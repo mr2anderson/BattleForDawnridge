@@ -22,6 +22,7 @@
 #include "Texts.hpp"
 #include "ImageFlyingE.hpp"
 #include "CollectEvent.hpp"
+#include "FocusOnEvent.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;
@@ -42,6 +43,7 @@ Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 
 	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
 
+	response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
     response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	response.add(std::make_shared<CollectEvent>(this, value));

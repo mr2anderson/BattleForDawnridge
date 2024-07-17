@@ -32,6 +32,7 @@
 #include "DecreaseBurningMovesLeftEvent.hpp"
 #include "SubHpEvent.hpp"
 #include "SetFireEvent.hpp"
+#include "FocusOnEvent.hpp"
 
 
 Building::Building() = default;
@@ -136,6 +137,7 @@ Events Building::regenerate() {
 	Events events;
 	if (this->burningMovesLeft == 0) {
 		if (this->getHP() < this->getMaxHP()) {
+			events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
 			std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(this->getMaxHP(), this->getHP() + this->getRegenerationSpeed()), this->getMaxHP(), true, this->getX(), this->getY(), this->getSX(), this->getSY());
 			events.add(std::make_shared<PlaySoundEvent>("regeneration"));
 			events.add(std::make_shared<CreateEEvent>(element));

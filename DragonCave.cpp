@@ -29,6 +29,7 @@
 #include "WindowTwoButtons.hpp"
 #include "DecreaseDragonRecoverMovesLeftEvent.hpp"
 #include "FirstTimeTipsTable.hpp"
+#include "FocusOnEvent.hpp"
 
 
 DragonCave::DragonCave() = default;
@@ -63,6 +64,7 @@ Events DragonCave::processDecreaseDragonRecoverMovesLeft() {
 	Events events;
 
 	if (this->dragon != nullptr and this->dragon->getRecoverMovesLeft() > 0) {
+		events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
 		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->dragon->getTextureName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 		events.add(std::make_shared<PlaySoundEvent>(this->dragon->getInfoSoundName()));
 		events.add(std::make_shared<CreateEEvent>(flyingE));

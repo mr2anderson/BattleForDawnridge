@@ -647,6 +647,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="FirstTimeTipsTable.hpp" />
     <ClInclude Include="FitTableElement.hpp" />
     <ClInclude Include="FlyingE.hpp" />
+    <ClInclude Include="FocusOnEvent.hpp" />
     <ClInclude Include="Fonts.hpp" />
     <ClInclude Include="Forest.hpp" />
     <ClInclude Include="Game.hpp" />
@@ -825,6 +826,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="FirstTimeTipsTable.cpp" />
     <ClCompile Include="FitTableElement.cpp" />
     <ClCompile Include="DragonFlame.cpp" />
+    <ClCompile Include="FocusOnEvent.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Game.cpp" />

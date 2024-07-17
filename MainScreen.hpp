@@ -60,6 +60,7 @@
 #include "DecreaseDragonRecoverMovesLeftEvent.hpp"
 #include "ResetDragonRecoverMovesLeftEvent.hpp"
 #include "BuildingMode.hpp"
+#include "FocusOnEvent.hpp"
 
 
 #pragma once
@@ -130,7 +131,6 @@ private:
 	void prepareToReturnToMenu(sf::RenderWindow& window);
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
 	void moveView();
-	void updatePlayerViewPoint();
 
 
 
@@ -182,4 +182,5 @@ private:
 	void handleTryToRaiseDragonEvent(std::shared_ptr<TryToRaiseDragonEvent> e);
 	void handleDecreaseDragonRecoverMovesLeftEvent(std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> e);
 	void handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDragonRecoverMovesLeftEvent> e);
+	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e);
 };
