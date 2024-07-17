@@ -181,7 +181,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
     buildMenuSectionMainComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getTobs())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH(), this->map->getTobs())));
 	buildMenuSectionMainComponents.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, createBuildingModeEvent);
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionMain = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionMainComponents);
@@ -253,13 +253,13 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
     buildMenuSectionDefenceComponents.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, createBuildingModeEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates1>(0, 0, 0, this->map->getUnits(), this->map->getTobs()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates1>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH(), this->map->getTobs()))));
     buildMenuSectionDefenceComponents.emplace_back(Gates1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Gates1>()), true, createBuildingModeEvent);
     createBuildingModeEvent = clickSoundEvent;
     createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
     buildMenuSectionDefenceComponents.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, createBuildingModeEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates2>(0, 0, 0, this->map->getUnits(), this->map->getTobs()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates2>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH(), this->map->getTobs()))));
     buildMenuSectionDefenceComponents.emplace_back(Gates2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Gates2>()), true, createBuildingModeEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionDefenceComponents);

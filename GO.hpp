@@ -41,9 +41,9 @@ public:
 	void setY(uint32_t newY);
 	virtual bool warriorCanStay(uint32_t warriorPlayerId) const = 0;
 	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const = 0;
-    virtual bool isUltraHighObstacle() const;
-    virtual bool isHighObstacle() const;
-    virtual bool isLowObstacle() const;
+    virtual bool isUltraHighObstacle(uint32_t playerId) const;
+    virtual bool isHighObstacle(uint32_t playerId) const;
+    virtual bool isLowObstacle(uint32_t playerId) const;
 	virtual bool exist() const = 0;
 	Events click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
 	bool intersects(GO* go) const;

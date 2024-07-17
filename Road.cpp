@@ -23,8 +23,8 @@
 
 
 Road::Road() = default;
-Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-	TerritoryConductorB(x, y, playerId, units, originsPtr),
+Road::Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+	TerritoryConductorB(x, y, playerId, units, go, mapW, mapH, originsPtr),
 	HpSensitiveB(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 	
@@ -71,7 +71,7 @@ std::wstring Road::getUpperCaseReadableName() const {
 	return *Texts::get()->get("road_upper_case_readable_name");
 }
 uint32_t Road::getRadius() const {
-	return 2;
+	return 4;
 }
 Events Road::getSelectionW() {
 	Events response;

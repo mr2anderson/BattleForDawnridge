@@ -29,7 +29,7 @@
 class Castle : public TerritoryOriginB, public ResourceStorageB, public VictoryConditionB, public DragonCave {
 public:
 	Castle();
-	Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;

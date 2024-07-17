@@ -21,8 +21,8 @@
 
 
 Gates1::Gates1() = default;
-Gates1::Gates1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-        Gates(x, y, playerId, units, originsPtr),
+Gates1::Gates1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+        Gates(x, y, playerId, units, go, mapW, mapH, originsPtr),
         Building(x, y, playerId, units) {
 
 }

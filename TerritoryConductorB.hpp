@@ -28,7 +28,7 @@
 class TerritoryConductorB : public TerritoryB, public ConductorB {
 public:
 	TerritoryConductorB();
-	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);
+	TerritoryConductorB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);
 	
 	bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId) override;
 	Events getHighlightEvent() override;

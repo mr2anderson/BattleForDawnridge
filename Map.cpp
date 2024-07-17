@@ -52,7 +52,7 @@ Map::Map(const std::string &path) {
     uint32_t x = 0;
     uint32_t currentPlayerId = 0;
 
-    std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> startSquads;
+    std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> startPositions;
 
     while (std::getline(file, line)) {
         if (line == "  <data encoding=\"csv\">") {
@@ -83,10 +83,7 @@ Map::Map(const std::string &path) {
                 this->players.resize(this->players.size() + 1);
                 this->players.back() = Player(this->players.size());
 
-                Castle* c = new Castle(x, y, this->players.at(currentPlayerId).getId(), this->getUnits());
-                c->setMaxHp();
-                this->add(c);
-                startSquads.emplace_back(x, y + c->getSY(), this->players.at(currentPlayerId).getId());
+                startPositions.emplace_back(x, y, this->players.at(currentPlayerId).getId());
                 currentPlayerId = currentPlayerId + 1;
             }
             else if (id == 4) {
@@ -107,12 +104,17 @@ Map::Map(const std::string &path) {
     this->w = x;
     this->h = y;
 
-    for (uint32_t i = 0; i < startSquads.size(); i = i + 1) {
-        uint32_t x = std::get<0>(startSquads.at(i));
-        uint32_t y = std::get<1>(startSquads.at(i));
-        uint32_t pid = std::get<2>(startSquads.at(i));
-        this->add(new Infantryman(x, y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
-        this->add(new Legioner(x + this->go->at(this->go->size() - 1)->getSX(), y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
+    for (uint32_t i = 0; i < startPositions.size(); i = i + 1) {
+        uint32_t x = std::get<0>(startPositions.at(i));
+        uint32_t y = std::get<1>(startPositions.at(i));
+        uint32_t pid = std::get<2>(startPositions.at(i));
+
+        Castle* c = new Castle(x, y, pid, this->getUnits(), this->getGO(), this->getW(), this->getH());
+        c->setMaxHp();
+        this->add(c);
+
+        this->add(new Infantryman(x, y + c->getSY(), pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
+        this->add(new Legioner(x + this->go->at(this->go->size() - 1)->getSX(), y + c->getSY(), pid, this->getUnits(), this->getGO(), this->getW(), this->getH()));
     }
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {

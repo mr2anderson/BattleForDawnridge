@@ -21,8 +21,8 @@
 
 
 TerritoryB::TerritoryB() = default;
-TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t player, std::shared_ptr<GOCollection<Unit>> units) :
-	AreaBLandscapeInsensible(x, y, player, units),
+TerritoryB::TerritoryB(uint32_t x, uint32_t y, uint32_t player, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	AreaBLandscapeSensible(x, y, player, units, go, mapW, mapH),
 	Building(x, y, player, units) {
 
 }
@@ -36,5 +36,14 @@ Events TerritoryB::getHighlightEvent() {
 	if (!this->works()) {
 		return Events();
 	}
-	return this->AreaBLandscapeInsensible::getHighlightEvent();
+	return this->AreaBLandscapeSensible::getHighlightEvent();
+}
+bool TerritoryB::ignoreUltraHighObstacles() const {
+	return false;
+}
+bool TerritoryB::ignoreHighObstacles() const {
+	return false;
+}
+bool TerritoryB::ignoreLowObstacles() const {
+	return false;
 }

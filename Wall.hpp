@@ -31,7 +31,7 @@ public:
 	Events newMove(uint32_t playerId) override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
-    bool isHighObstacle() const override;
+    bool isHighObstacle(uint32_t playerId) const override;
 private:
 	Events getSelectionW();
 	Events getGameObjectResponse(uint32_t playerId) override;

@@ -22,8 +22,8 @@
 
 
 Gates::Gates() = default;
-Gates::Gates(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
-        TerritoryConductorB(x, y, playerId, units, originsPtr),
+Gates::Gates(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+        TerritoryConductorB(x, y, playerId, units, go, mapW, mapH, originsPtr),
         Building(x, y, playerId, units) {
 
 }
@@ -43,8 +43,8 @@ uint32_t Gates::getWarriorMovementCost(uint32_t warriorPlayerId) const {
     }
     return WARRIOR_MOVEMENT_FORBIDDEN;
 }
-bool Gates::isHighObstacle() const {
-    return true;
+bool Gates::isHighObstacle(uint32_t playerId) const {
+    return (playerId != this->getPlayerId());
 }
 uint32_t Gates::getRadius() const {
     return 1;

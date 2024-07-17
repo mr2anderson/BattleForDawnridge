@@ -34,7 +34,7 @@ public:
 	sf::IntRect getTextureRect() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-    bool isLowObstacle() const override;
+    bool isLowObstacle(uint32_t playerId) const override;
 private:
 	uint32_t type;
 };

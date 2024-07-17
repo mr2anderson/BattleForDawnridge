@@ -23,8 +23,8 @@
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
-	TerritoryOriginB(x, y, playerId, units),
+Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+	TerritoryOriginB(x, y, playerId, units, go, mapW, mapH),
 	ResourceStorageB(x, y,  playerId, units),
 	VictoryConditionB(x, y, playerId, units),
 	DragonCave(x, y, playerId, units),
@@ -77,7 +77,7 @@ std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");
 }
 uint32_t Castle::getRadius() const {
-	return 2;
+	return 4;
 }
 Events Castle::getSelectionW() {
 	Events response;

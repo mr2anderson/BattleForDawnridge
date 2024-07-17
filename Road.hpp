@@ -27,7 +27,7 @@
 class Road : public TerritoryConductorB, public HpSensitiveB {
 public:
 	Road();
-	Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);
+	Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;
