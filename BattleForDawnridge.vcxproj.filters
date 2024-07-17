@@ -970,7 +970,7 @@
     <ClInclude Include="ReturnToMenuEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="GOCollection.hpp">
+    <ClInclude Include="Collection.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
     <ClInclude Include="WindowTwoButtons.hpp">

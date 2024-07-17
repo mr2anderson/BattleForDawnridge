@@ -23,7 +23,7 @@
 
 
 ResourceStorageB::ResourceStorageB() = default;
-ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+ResourceStorageB::ResourceStorageB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	Building(x, y, playerId, units) {
 
 }

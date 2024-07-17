@@ -43,7 +43,7 @@
 Warrior::Warrior() {
     this->currentDirection = "e";
 }
-Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
 	Unit(x, y, std::nullopt, playerId, units) {
 	this->movementPoints = std::nullopt;
 	this->go = go;

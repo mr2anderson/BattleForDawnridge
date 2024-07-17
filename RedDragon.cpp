@@ -23,7 +23,7 @@
 
 
 RedDragon::RedDragon() = default;
-RedDragon::RedDragon(std::shared_ptr<GOCollection<Unit>> units, uint32_t playerId) : Dragon(playerId) {
+RedDragon::RedDragon(std::shared_ptr<Collection<Unit>> units, uint32_t playerId) : Dragon(playerId) {
 	this->units = units;
 }
 Dragon* RedDragon::clone() const {

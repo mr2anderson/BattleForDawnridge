@@ -20,7 +20,7 @@
 #include "HpSensitiveB.hpp"
 #include "AreaBLandscapeSensible.hpp"
 #include "ResourcePoint.hpp"
-#include "GOCollection.hpp"
+#include "Collection.hpp"
 
 
 #pragma once
@@ -29,14 +29,14 @@
 class ResourceB : public HpSensitiveB, public AreaBLandscapeSensible {
 public:
 	ResourceB();
-	ResourceB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+	ResourceB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
 
 	Events newMove(uint32_t playerId) override;
 protected:
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;
 private:
-	std::shared_ptr<GOCollection<ResourcePoint>> resourcePointsPtr;
+	std::shared_ptr<Collection<ResourcePoint>> resourcePointsPtr;
 
     bool ignoreUltraHighObstacles() const override;
     bool ignoreHighObstacles() const override;

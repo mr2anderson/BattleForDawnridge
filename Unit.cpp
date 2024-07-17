@@ -23,7 +23,7 @@
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	HPGO(x, y, currentHp) {
 	this->playerId = playerId;
 	this->units = units;
@@ -43,7 +43,7 @@ void Unit::changePlayer(uint32_t newPlayerId) {
 uint32_t Unit::getPlayerId() const {
 	return this->playerId;
 }
-std::shared_ptr<GOCollection<Unit>> Unit::getUnits() {
+std::shared_ptr<Collection<Unit>> Unit::getUnits() {
 	return this->units;
 }
 bool Unit::isActiveConductor() const {

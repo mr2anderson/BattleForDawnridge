@@ -28,7 +28,7 @@
 class TradingB : public HpSensitiveB {
 public:
 	TradingB();
-	TradingB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	TradingB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

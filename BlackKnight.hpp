@@ -26,7 +26,7 @@
 class BlackKnight : public Warrior {
 public:
 	BlackKnight();
-	BlackKnight(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+	BlackKnight(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
 	Warrior* cloneWarrior() const override;
 
     uint32_t getMaxHP() const override;

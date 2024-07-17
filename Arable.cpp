@@ -26,7 +26,7 @@
 
 
 Arable::Arable() = default;
-Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	HpSensitiveB(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 

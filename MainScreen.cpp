@@ -414,7 +414,7 @@ Player* MainScreen::getCurrentPlayer() {
 }
 Resources MainScreen::getResourcesLimit() {
 	Resources limit;
-	std::shared_ptr<GOCollection<ResourceStorageB>> rsbs = this->map->getRsbs();
+	std::shared_ptr<Collection<ResourceStorageB>> rsbs = this->map->getRsbs();
 	for (uint32_t i = 0; i < rsbs->size(); i = i + 1) {
 		ResourceStorageB* rsb = rsbs->at(i);
 		if (rsb->exist() and rsb->getPlayerId() == this->getCurrentPlayer()->getId()) {
@@ -825,7 +825,7 @@ void MainScreen::handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceSt
 	this->map->getPlayer(e->getPlayerId() - 1)->limitResources(this->getResourcesLimit());
 }
 void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e) {
-	std::shared_ptr<GOCollection<VictoryConditionB>> vcbs = this->map->getVcbs();
+	std::shared_ptr<Collection<VictoryConditionB>> vcbs = this->map->getVcbs();
 	for (uint32_t i = 0; i < vcbs->size(); i = i + 1) {
 		VictoryConditionB* vcb = vcbs->at(i);
 		if (vcb->getPlayerId() == e->getPlayerId() and vcb->exist()) {

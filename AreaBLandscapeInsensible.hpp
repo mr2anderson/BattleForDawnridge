@@ -26,7 +26,7 @@
 class AreaBLandscapeInsensible : public AreaB {
 public:
     AreaBLandscapeInsensible();
-    AreaBLandscapeInsensible(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+    AreaBLandscapeInsensible(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 
     bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) override;
     Events getHighlightEvent() override;

@@ -26,7 +26,7 @@
 class Market : public TradingB {
 public:
 	Market();
-	Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 	Building* cloneBuilding() const override;
 
     uint32_t getSX() const override;

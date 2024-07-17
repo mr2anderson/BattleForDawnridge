@@ -32,7 +32,7 @@
 
 
 BuildingMode::BuildingMode() = default;
-BuildingMode::BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH) {
+BuildingMode::BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<Collection<GO>> go, std::shared_ptr<Collection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH) {
 	this->b = b;
 	this->go = go;
 	this->tb = tb;

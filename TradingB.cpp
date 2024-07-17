@@ -30,7 +30,7 @@
 
 
 TradingB::TradingB() = default;
-TradingB::TradingB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+TradingB::TradingB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	HpSensitiveB(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 

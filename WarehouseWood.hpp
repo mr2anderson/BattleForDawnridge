@@ -26,7 +26,7 @@
 class WarehouseWood : public ResourceStorageB {
 public:
 	WarehouseWood();
-	WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;

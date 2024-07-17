@@ -26,12 +26,12 @@
 class AreaBLandscapeSensible : public AreaB {
 public:
     AreaBLandscapeSensible();
-    AreaBLandscapeSensible(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+    AreaBLandscapeSensible(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
 
     bool inRadius(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) override;
     Events getHighlightEvent() override;
 protected:
-    std::shared_ptr<GOCollection<GO>> getGO();
+    std::shared_ptr<Collection<GO>> getGO();
     uint32_t getMapW() const;
     uint32_t getMapH() const;
     std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable();
@@ -40,7 +40,7 @@ protected:
     virtual bool ignoreHighObstacles() const = 0;
     virtual bool ignoreLowObstacles() const = 0;
 private:
-    std::shared_ptr<GOCollection<GO>> go;
+    std::shared_ptr<Collection<GO>> go;
     uint32_t mapW, mapH;
     uint64_t prevHash;
     std::map<std::tuple<uint32_t, uint32_t>, uint32_t> prevAvailable;

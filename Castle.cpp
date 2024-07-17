@@ -23,7 +23,7 @@
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH) :
+Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
 	TerritoryOriginB(x, y, playerId, units, go, mapW, mapH),
 	ResourceStorageB(x, y,  playerId, units),
 	VictoryConditionB(x, y, playerId, units),

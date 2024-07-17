@@ -26,7 +26,7 @@
 class TerritoryB : public AreaBLandscapeSensible {
 public:
 	TerritoryB();
-	TerritoryB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+	TerritoryB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
 
 	virtual bool allowBuilding(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId);
 	Events getHighlightEvent() override;

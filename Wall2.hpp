@@ -26,7 +26,7 @@
 class Wall2 : public Wall {
 public:
 	Wall2();
-	Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 	Building* cloneBuilding() const override;
 
 	Defence getDefence() const override;

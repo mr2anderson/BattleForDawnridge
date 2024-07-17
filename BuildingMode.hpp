@@ -18,7 +18,7 @@
 
 
 #include "TerritoryB.hpp"
-#include "GOCollection.hpp"
+#include "Collection.hpp"
 #include "Selectable.hpp"
 
 
@@ -28,14 +28,14 @@
 class BuildingMode : public Selectable {
 public:
     BuildingMode();
-	BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<GOCollection<GO>> go, std::shared_ptr<GOCollection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH);
+	BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<Collection<GO>> go, std::shared_ptr<Collection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH);
 
 	Events start();
 private:
 	std::shared_ptr<const Building> b;
 	uint32_t windowW, windowH;
-	std::shared_ptr<GOCollection<GO>> go;
-	std::shared_ptr<GOCollection<TerritoryB>> tb;
+	std::shared_ptr<Collection<GO>> go;
+	std::shared_ptr<Collection<TerritoryB>> tb;
 	uint32_t playerId;
 	uint32_t mapW, mapH;
 

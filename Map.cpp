@@ -32,14 +32,14 @@
 
 
 Map::Map(const std::string &path) {
-    this->go = std::make_shared<GOCollection<GO>>();
-    this->resourcePoints = std::make_shared<GOCollection<ResourcePoint>>();
-    this->units = std::make_shared<GOCollection<Unit>>();
-    this->tbs = std::make_shared<GOCollection<TerritoryB>>();
-    this->tobs = std::make_shared<GOCollection<TerritoryOriginB>>();
-    this->rsbs = std::make_shared<GOCollection<ResourceStorageB>>();
-    this->vcbs = std::make_shared<GOCollection<VictoryConditionB>>();
-    this->treasures = std::make_shared<GOCollection<Treasure>>();
+    this->go = std::make_shared<Collection<GO>>();
+    this->resourcePoints = std::make_shared<Collection<ResourcePoint>>();
+    this->units = std::make_shared<Collection<Unit>>();
+    this->tbs = std::make_shared<Collection<TerritoryB>>();
+    this->tobs = std::make_shared<Collection<TerritoryOriginB>>();
+    this->rsbs = std::make_shared<Collection<ResourceStorageB>>();
+    this->vcbs = std::make_shared<Collection<VictoryConditionB>>();
+    this->treasures = std::make_shared<Collection<Treasure>>();
 
     std::ifstream file(DATA_ROOT + "/" + path);
     if (!file.is_open()) {
@@ -139,28 +139,28 @@ uint32_t Map::getPlayersNumber() const {
 Player* Map::getPlayer(uint32_t i) {
     return &this->players.at(i);
 }
-std::shared_ptr<GOCollection<GO>> Map::getGO() {
+std::shared_ptr<Collection<GO>> Map::getGO() {
     return this->go;
 }
-std::shared_ptr<GOCollection<Unit>> Map::getUnits() {
+std::shared_ptr<Collection<Unit>> Map::getUnits() {
     return this->units;
 }
-std::shared_ptr<GOCollection<ResourcePoint>> Map::getResourcePoints() {
+std::shared_ptr<Collection<ResourcePoint>> Map::getResourcePoints() {
     return this->resourcePoints;
 }
-std::shared_ptr<GOCollection<TerritoryB>> Map::getTbs() {
+std::shared_ptr<Collection<TerritoryB>> Map::getTbs() {
     return this->tbs;
 }
-std::shared_ptr<GOCollection<TerritoryOriginB>> Map::getTobs() {
+std::shared_ptr<Collection<TerritoryOriginB>> Map::getTobs() {
     return this->tobs;
 }
-std::shared_ptr<GOCollection<ResourceStorageB>> Map::getRsbs() {
+std::shared_ptr<Collection<ResourceStorageB>> Map::getRsbs() {
     return this->rsbs;
 }
-std::shared_ptr<GOCollection<VictoryConditionB>> Map::getVcbs() {
+std::shared_ptr<Collection<VictoryConditionB>> Map::getVcbs() {
     return this->vcbs;
 }
-std::shared_ptr<GOCollection<Treasure>> Map::getTreasures() {
+std::shared_ptr<Collection<Treasure>> Map::getTreasures() {
     return this->treasures;
 }
 void Map::add(GO *object) {

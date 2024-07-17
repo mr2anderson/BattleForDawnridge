@@ -22,7 +22,7 @@
 
 
 TerritoryConductorB::TerritoryConductorB() = default;
-TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<GOCollection<TerritoryOriginB>> originsPtr) :
+TerritoryConductorB::TerritoryConductorB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<Collection<TerritoryOriginB>> originsPtr) :
 	TerritoryB(x, y, playerId, units, go, mapW, mapH),
 	ConductorB(x, y, playerId, units),
 	Building(x, y, playerId, units) {

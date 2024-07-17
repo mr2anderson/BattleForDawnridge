@@ -62,7 +62,7 @@ void Maps::generateThumbnail(const std::string& name) {
         }
     }
 
-    std::shared_ptr<GOCollection<GO>> go = map->getGO();
+    std::shared_ptr<Collection<GO>> go = map->getGO();
     for (uint32_t i = 0; i < go->size(); i = i + 1) {
         GO* o = go->at(i);
         float x = o->getX() * sx;

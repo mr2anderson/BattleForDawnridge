@@ -657,7 +657,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="HorizontalSelectionWindow.hpp" />
     <ClInclude Include="HorizontalSelectionWindowComponent.hpp" />
     <ClInclude Include="GO.hpp" />
-    <ClInclude Include="GOCollection.hpp" />
+    <ClInclude Include="Collection.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
     <ClInclude Include="HPFlyingE.hpp" />
     <ClInclude Include="HPPointer.hpp" />

@@ -27,7 +27,7 @@
 class DragonCave : virtual public Building {
 public:
 	DragonCave();
-	DragonCave(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	DragonCave(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 	~DragonCave();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

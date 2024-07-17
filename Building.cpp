@@ -37,7 +37,7 @@
 
 
 Building::Building() = default;
-Building::Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+Building::Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	Unit(x, y, 1, playerId, units) {
 	this->burningMovesLeft = 0;
 }

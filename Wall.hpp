@@ -26,7 +26,7 @@
 class Wall : public Building {
 public:
 	Wall();
-	Wall(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Wall(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 
 	Events newMove(uint32_t playerId) override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;

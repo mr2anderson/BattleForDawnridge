@@ -22,7 +22,7 @@
 
 
 Wall2::Wall2() = default;
-Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	Wall(x, y, playerId, units) {
 
 }

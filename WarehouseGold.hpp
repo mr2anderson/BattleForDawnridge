@@ -27,7 +27,7 @@
 class WarehouseGold : public ResourceStorageB {
 public:
 	WarehouseGold();
-	WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Treasure>> treasures);
+	WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<Treasure>> treasures);
 	Building* cloneBuilding() const override;
 
 	Events newMove(uint32_t playerId) override;
@@ -41,7 +41,7 @@ public:
 	std::wstring getDescription() const override;
 	Resources getLimit() const override;
 private:
-	std::shared_ptr<GOCollection<Treasure>> treasures;
+	std::shared_ptr<Collection<Treasure>> treasures;
 
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;

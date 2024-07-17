@@ -26,7 +26,7 @@
 class VictoryConditionB : virtual public Building {
 public:
 	VictoryConditionB();
-	VictoryConditionB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	VictoryConditionB(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 
 	Events destroy() override;
 protected:

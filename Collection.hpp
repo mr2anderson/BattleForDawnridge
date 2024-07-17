@@ -26,9 +26,9 @@
 class GO;
 
 
-template <typename T> class GOCollection {
+template <typename T> class Collection {
 public:
-	GOCollection() = default;
+	Collection() = default;
 
 	void push(T* t) {
 		this->data.push_back(t);
@@ -45,10 +45,10 @@ private:
 
 
 
-template <> class GOCollection<GO> {
+template <> class Collection<GO> {
 public:
-	GOCollection() = default;
-	~GOCollection() {
+	Collection() = default;
+	~Collection() {
 		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
 			delete this->data.at(i);
 		}

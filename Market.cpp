@@ -22,7 +22,7 @@
 
 
 Market::Market() = default;
-Market::Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units) :
+Market::Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
 	TradingB(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 

@@ -27,7 +27,7 @@
 class Building : public Unit {
 public:
 	Building();
-	Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 	virtual Building* cloneBuilding() const = 0;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -18,7 +18,7 @@
 
 
 #include "Unit.hpp"
-#include "GOCollection.hpp"
+#include "Collection.hpp"
 #include "Selectable.hpp"
 #include "Animated.hpp"
 #include "MovementGraph.hpp"
@@ -32,7 +32,7 @@
 class Warrior : public Unit, public Selectable, public Animated {
 public:
 	Warrior();
-	Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<GO>> go, uint32_t mapW, uint32_t mapH);
+	Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
 	virtual Warrior* cloneWarrior() const = 0;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
@@ -64,7 +64,7 @@ public:
 	virtual uint32_t getMovementPoints() const = 0;
 private:
 	std::optional<uint32_t> movementPoints;
-	std::shared_ptr<GOCollection<GO>> go;
+	std::shared_ptr<Collection<GO>> go;
 	uint32_t mapW, mapH;
 	std::string currentDirection;
 	std::string currentAnimation;

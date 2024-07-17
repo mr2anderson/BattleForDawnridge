@@ -20,7 +20,7 @@
 
 #include "HPGO.hpp"
 #include "Resources.hpp"
-#include "GOCollection.hpp"
+#include "Collection.hpp"
 #include "PlayerPointer.hpp"
 #include "Defence.hpp"
 #include "Damage.hpp"
@@ -32,7 +32,7 @@
 class Unit : public HPGO {
 public:
 	Unit();
-	Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units);
+	Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -44,13 +44,13 @@ public:
 	virtual Defence getDefence() const = 0;
 	virtual Resources getCost() const = 0;
 protected:
-	std::shared_ptr<GOCollection<Unit>> getUnits();
+	std::shared_ptr<Collection<Unit>> getUnits();
 	virtual bool isActiveConductor() const;
 	bool connectedTo(GO* go) const;
     virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const = 0;
 private:
 	uint32_t playerId;
-	std::shared_ptr<GOCollection<Unit>> units;
+	std::shared_ptr<Collection<Unit>> units;
 
 	void drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const;
 };

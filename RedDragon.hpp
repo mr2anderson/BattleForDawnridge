@@ -19,7 +19,7 @@
 
 #include "Dragon.hpp"
 #include "Unit.hpp"
-#include "GOCollection.hpp"
+#include "Collection.hpp"
 
 
 #pragma once
@@ -28,7 +28,7 @@
 class RedDragon : public Dragon {
 public:
 	RedDragon();
-	RedDragon(std::shared_ptr<GOCollection<Unit>> units, uint32_t playerId);
+	RedDragon(std::shared_ptr<Collection<Unit>> units, uint32_t playerId);
 	Dragon* clone() const override;
 
 	std::wstring getDescriptionText() const override;
@@ -40,7 +40,7 @@ public:
 	uint32_t getRecoverTime() const override;
 	std::string getInfoSoundName() const override;
 private:
-	std::shared_ptr<GOCollection<Unit>> units;
+	std::shared_ptr<Collection<Unit>> units;
 
 	std::string getAttackSoundName() const override;
 	std::shared_ptr<DragonFlame> getFlameType() const override;

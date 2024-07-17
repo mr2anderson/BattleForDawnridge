@@ -24,7 +24,7 @@
 
 
 WarehouseGold::WarehouseGold() = default;
-WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GOCollection<Unit>> units, std::shared_ptr<GOCollection<Treasure>> treasures) :
+WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<Treasure>> treasures) :
 	ResourceStorageB(x, y, playerId, units),
 	Building(x, y, playerId, units) {
 	this->treasures = treasures;

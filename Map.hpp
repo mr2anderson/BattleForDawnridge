@@ -23,7 +23,7 @@
 #include "Castle.hpp"
 #include "TerritoryB.hpp"
 #include "TerritoryOriginB.hpp"
-#include "GOCollection.hpp"
+#include "Collection.hpp"
 #include "Player.hpp"
 #include "VictoryConditionB.hpp"
 #include "Treasure.hpp"
@@ -42,25 +42,25 @@ public:
     uint32_t getH() const;
     uint32_t getPlayersNumber() const;
     Player* getPlayer(uint32_t i);
-    std::shared_ptr<GOCollection<GO>> getGO();
-    std::shared_ptr<GOCollection<ResourcePoint>> getResourcePoints();
-    std::shared_ptr<GOCollection<Unit>> getUnits();
-    std::shared_ptr<GOCollection<TerritoryB>> getTbs();
-    std::shared_ptr<GOCollection<TerritoryOriginB>> getTobs();
-    std::shared_ptr<GOCollection<ResourceStorageB>> getRsbs();
-    std::shared_ptr<GOCollection<VictoryConditionB>> getVcbs();
-    std::shared_ptr<GOCollection<Treasure>> getTreasures();
+    std::shared_ptr<Collection<GO>> getGO();
+    std::shared_ptr<Collection<ResourcePoint>> getResourcePoints();
+    std::shared_ptr<Collection<Unit>> getUnits();
+    std::shared_ptr<Collection<TerritoryB>> getTbs();
+    std::shared_ptr<Collection<TerritoryOriginB>> getTobs();
+    std::shared_ptr<Collection<ResourceStorageB>> getRsbs();
+    std::shared_ptr<Collection<VictoryConditionB>> getVcbs();
+    std::shared_ptr<Collection<Treasure>> getTreasures();
 
     void add(GO* object);
 private:
     uint32_t w, h;
     std::vector<Player> players;
-    std::shared_ptr<GOCollection<GO>> go;
-    std::shared_ptr<GOCollection<ResourcePoint>> resourcePoints;
-    std::shared_ptr<GOCollection<Unit>> units;
-    std::shared_ptr<GOCollection<TerritoryB>> tbs;
-    std::shared_ptr<GOCollection<TerritoryOriginB>> tobs;
-    std::shared_ptr<GOCollection<ResourceStorageB>> rsbs;
-    std::shared_ptr<GOCollection<VictoryConditionB>> vcbs;
-    std::shared_ptr<GOCollection<Treasure>> treasures;
+    std::shared_ptr<Collection<GO>> go;
+    std::shared_ptr<Collection<ResourcePoint>> resourcePoints;
+    std::shared_ptr<Collection<Unit>> units;
+    std::shared_ptr<Collection<TerritoryB>> tbs;
+    std::shared_ptr<Collection<TerritoryOriginB>> tobs;
+    std::shared_ptr<Collection<ResourceStorageB>> rsbs;
+    std::shared_ptr<Collection<VictoryConditionB>> vcbs;
+    std::shared_ptr<Collection<Treasure>> treasures;
 };
