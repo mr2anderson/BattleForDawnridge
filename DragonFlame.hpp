@@ -17,14 +17,14 @@
  */
 
 
-#include "CameraDependentPopUpElement.hpp"
+#include "CameraIndependentPopUpElement.hpp"
 #include "DragonFlamePreview.hpp"
 
 
 #pragma once
 
 
-class DragonFlame : public CameraDependentPopUpElement {
+class DragonFlame : public CameraIndependentPopUpElement {
 public:
 	DragonFlame();
 
@@ -47,6 +47,8 @@ protected:
 	virtual float getAnimationTime() const = 0;
 private:
 	uint32_t centerX, centerY;
+
+	uint32_t windowW, windowH;
 	sf::Clock timer;
 
 	sf::Color getCurrentColor() const;

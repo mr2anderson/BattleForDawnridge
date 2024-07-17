@@ -23,18 +23,16 @@
 
 DragonFlame::DragonFlame() = default;
 void DragonFlame::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	for (uint32_t x = this->getXMin(); x <= this->getXMax(); x = x + 1) {
-		for (uint32_t y = this->getYMin(); y <= this->getYMax(); y = y + 1) {
-			sf::RectangleShape shape;
-			shape.setPosition(64 * x, 64 * y);
-			shape.setSize(sf::Vector2f(64, 64));
-			shape.setFillColor(this->getCurrentColor());
-			target.draw(shape, states);
-		}
-	}
+	sf::RectangleShape rect;
+	rect.setPosition(0, 0);
+	rect.setSize(sf::Vector2f(this->windowW, this->windowH));
+	rect.setFillColor(this->getCurrentColor());
+	target.draw(rect, states);
 }
 void DragonFlame::run(uint32_t windowW, uint32_t windowH) {
 	this->timer.restart();
+	this->windowW = windowW;
+	this->windowH = windowH;
 }
 Events DragonFlame::click() {
 	return Events();
