@@ -64,6 +64,7 @@ MainScreen* MainScreen::singletone = nullptr;
 
 
 bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
+	window.setMouseCursorVisible(true);
     this->init(mapPtr, window);
 	sf::Event event{};
 	for (; ;) {

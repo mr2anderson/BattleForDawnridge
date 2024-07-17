@@ -45,4 +45,5 @@ private:
 	void setNormalScreen(sf::RenderWindow& window);
 	bool loadAll(sf::RenderWindow &window);
     void loadingError(LoadingError *e, sf::RenderWindow &window);
+	void setCursor(sf::RenderWindow& window);
 };

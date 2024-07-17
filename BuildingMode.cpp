@@ -27,6 +27,8 @@
 #include "Textures.hpp"
 #include "SelectEvent.hpp"
 #include "FirstTimeTipsTable.hpp"
+#include "EnableCursorEvent.hpp"
+#include "DisableCursorEvent.hpp"
 
 
 BuildingMode::BuildingMode() = default;
@@ -43,6 +45,7 @@ Events BuildingMode::start() {
 
 	Events startEvent = this->getHighlightEvent();
 	startEvent.add(std::make_shared<SelectEvent>(this));
+	startEvent.add(std::make_shared<DisableCursorEvent>());
 
 	if (FirstTimeTipsTable::get()->wasDisplayed("building_mode_guide")) {
 		events = events + startEvent;
@@ -82,6 +85,7 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("not_in_map"), *Texts::get()->get("OK"), clickSoundEvent);
 		Events uiEvent = clickSoundEvent;
+		uiEvent.add(std::make_shared<EnableCursorEvent>());
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + uiEvent;
 	}
@@ -89,6 +93,7 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("place_occupied"), *Texts::get()->get("OK"), clickSoundEvent);
 		Events uiEvent = clickSoundEvent;
+		uiEvent.add(std::make_shared<EnableCursorEvent>());
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + uiEvent;
 	}
@@ -96,12 +101,14 @@ Events BuildingMode::unselect(uint32_t x, uint32_t y, uint8_t button) {
 		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"), clickSoundEvent);
 		Events uiEvent = clickSoundEvent;
+		uiEvent.add(std::make_shared<EnableCursorEvent>());
 		uiEvent.add(std::make_shared<CreateEEvent>(w));
 		return this->Selectable::unselect(x, y, button) + this->getHighlightEvent() + uiEvent;
 	}
 
 	Events gEvent = this->getHighlightEvent();
 	gEvent.add(std::make_shared<PlaySoundEvent>(clonedB->getSoundName()));
+	gEvent.add(std::make_shared<EnableCursorEvent>());
 	gEvent.add(std::make_shared<BuildEvent>(clonedB));
 	gEvent.add(std::make_shared<SubResourcesEvent>(clonedB->getCost()));
 

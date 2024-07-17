@@ -39,6 +39,7 @@ Menu* Menu::singletone = nullptr;
 
 
 std::shared_ptr<Map> Menu::run(sf::RenderWindow& window) {
+    window.setMouseCursorVisible(true);
     this->init(window.getSize().x, window.getSize().y);
 	sf::Event event{};
 	for (; ;) {

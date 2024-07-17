@@ -46,6 +46,8 @@ LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
 bool LoadingScreen::run(sf::RenderWindow &window) {
+    window.setMouseCursorVisible(false);
+
 	this->setBaseScreen(window);
 	if (!this->loadBase(window)) {
         return false;
@@ -55,6 +57,8 @@ bool LoadingScreen::run(sf::RenderWindow &window) {
 	if (!this->loadAll(window)) {
         return false;
     }
+
+    this->setCursor(window);
 
     return true;
 }
@@ -116,7 +120,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
-                "forest_icon", "water_icon", "red_dragon", "warrior_purple", "warrior_green", "warrior_blue"}) {
+                "forest_icon", "water_icon", "red_dragon", "warrior_purple", "warrior_green", "warrior_blue",
+                "cursor"}) {
             Textures::get()->add(a, a + ".png");
         }
         Textures::get()->add("menu", "menu.jpg");
@@ -209,5 +214,15 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
         window.draw(s);
         window.draw(element);
         window.display();
+    }
+}
+void LoadingScreen::setCursor(sf::RenderWindow& window) {
+    sf::Texture* cursorTexture = Textures::get()->get("cursor");
+    sf::Image image = cursorTexture->copyToImage();
+    const sf::Uint8* pixels = image.getPixelsPtr();
+
+    sf::Cursor cursor;
+    if (cursor.loadFromPixels(pixels, image.getSize(), sf::Vector2u(0, 0))) {
+        window.setMouseCursor(cursor);
     }
 }
