@@ -49,7 +49,7 @@ Map::Map(const std::string &path) {
     std::string line;
     bool read = false;
     uint32_t y = 0;
-    uint32_t x = 0;
+    uint32_t x;
     uint32_t currentPlayerId = 0;
 
     std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> startPositions;
@@ -67,7 +67,7 @@ Map::Map(const std::string &path) {
         }
         std::stringstream ss(line);
         std::string word;
-        x = -1;
+        x = 0;
         while (std::getline(ss, word, ',')) {
             uint32_t id = std::stoi(word);
             if (id >= 257 and id < 281) {
