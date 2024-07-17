@@ -30,19 +30,19 @@ Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
 uint32_t Knight::getMaxHP() const {
-    return 20000;
+    return 15000;
 }
 Damage Knight::getDamage() const {
-	return { 5000, Damage::TYPE::CUT };
+	return { 3500, Damage::TYPE::CUT };
 }
 Defence Knight::getDefence() const {
 	return Defence::HUMAN;
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 10000), Resource("iron", 10000) });
+	return Resources({ Resource("food", 7500), Resource("iron", 7500) });
 }
 uint32_t Knight::getTimeToProduce() const {
-	return 8;
+	return 6;
 }
 std::string Knight::getSoundName() const {
 	return "knight";

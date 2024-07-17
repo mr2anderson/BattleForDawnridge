@@ -89,7 +89,7 @@ Events Building::destroy() {
 }
 void Building::setFire() {
 	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
-	this->burningMovesLeft = 5;
+	this->burningMovesLeft = 3;
 }
 void Building::decreaseBurningMovesLeft() {
 	this->burningMovesLeft = this->burningMovesLeft - 1;

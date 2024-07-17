@@ -63,8 +63,8 @@ std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
 }
 std::vector<Trade> Market::getTrades() const {
-	const uint32_t time = 12;
-	const uint32_t goldVolume = 15000;
+	const uint32_t time = 4;
+	const uint32_t goldVolume = 5000;
 
 	std::vector<Trade> trades;
 

@@ -47,13 +47,13 @@ std::string RedDragon::getTextureName() const {
 Resources RedDragon::getCost() const {
 	Resources cost;
 
-	cost.plus(Resource("food", 50000));
-	cost.plus(Resource("iron", 50000));
+	cost.plus(Resource("food", 40000));
+	cost.plus(Resource("iron", 40000));
 
 	return cost;
 }
 uint32_t RedDragon::getRecoverTime() const {
-	return 10;
+	return 6;
 }
 std::string RedDragon::getInfoSoundName() const {
 	return "red_dragon_info";
@@ -100,7 +100,7 @@ Events RedDragon::doAttack(uint32_t centerX, uint32_t centerY) {
 		}
 
 		if (contains) {
-			result = result + u->hit(Damage(10000 * (u->getHP() != 1), Damage::TYPE::FLAME), std::nullopt); // preventing destroying new buildings (would be too imbalance)
+			result = result + u->hit(Damage(5000 * (u->getHP() != 1), Damage::TYPE::FLAME), std::nullopt); // preventing destroying new buildings (would be too imbalance)
 		}
 	}
 	return result;

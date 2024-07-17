@@ -30,19 +30,19 @@ Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
 }
 uint32_t BlackKnight::getMaxHP() const {
-    return 30000;
+    return 15000;
 }
 Damage BlackKnight::getDamage() const {
-	return Damage(10000, Damage::TYPE::CUT);
+	return Damage(5000, Damage::TYPE::CUT);
 }
 Defence BlackKnight::getDefence() const {
 	return Defence::HUMAN;
 }
 Resources BlackKnight::getCost() const {
-	return Resources({ Resource("food", 25000), Resource("iron", 25000)});
+	return Resources({ Resource("food", 12000), Resource("iron", 12000)});
 }
 uint32_t BlackKnight::getTimeToProduce() const {
-	return 12;
+	return 9;
 }
 std::string BlackKnight::getSoundName() const {
 	return "breath";

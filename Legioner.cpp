@@ -39,7 +39,7 @@ uint32_t Legioner::getMaxHP() const {
     return 10000;
 }
 Damage Legioner::getDamage() const {
-	return { 5000, Damage::TYPE::CUT };
+	return { 3500, Damage::TYPE::CUT };
 }
 Defence Legioner::getDefence() const {
 	return Defence::HUMAN;
@@ -48,7 +48,7 @@ Resources Legioner::getCost() const {
 	return Resources({ Resource("food", 5000), Resource("iron", 5000)});
 }
 uint32_t Legioner::getTimeToProduce() const {
-	return 5;
+	return 4;
 }
 std::string Legioner::getSoundName() const {
 	return "sword";
