@@ -25,7 +25,7 @@
 
 namespace COLOR_THEME {
     extern const sf::Color UI_COLOR;
-    extern const sf::Color CELL_COLOR_HIGHLIGHTED_DARK;
+    extern const sf::Color CELL_COLOR_HIGHLIGHTED_BLUE;
     extern const sf::Color CELL_COLOR_HIGHLIGHTED_GREEN;
     extern const sf::Color CELL_COLOR_HIGHLIGHTED_RED;
 }

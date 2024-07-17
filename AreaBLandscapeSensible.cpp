@@ -48,7 +48,7 @@ Events AreaBLandscapeSensible::getHighlightEvent() {
 
     Events events;
     for (const auto &a : available) {
-        events.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_DARK, std::get<0>(a.first), std::get<1>(a.first), 1, 1));
+        events.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE, std::get<0>(a.first), std::get<1>(a.first), 1, 1));
     }
 
     return events;
