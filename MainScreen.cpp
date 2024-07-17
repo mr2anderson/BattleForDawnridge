@@ -69,7 +69,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed) {
-                if (!this->animation.has_value()) {
+                if (!this->animation.has_value() and this->viewMovingQueue.empty()) {
                     if (this->element == nullptr) {
                         if (this->baseEvents.empty() and this->allNewMoveEventsAdded()) {
                             if (this->selected == nullptr and event.mouseButton.button == sf::Mouse::Button::Left) {
@@ -446,7 +446,7 @@ void MainScreen::addGameObjectClickEventToQueue() {
 }
 void MainScreen::processBaseEvents() {
     while (!this->baseEvents.empty()) {
-        if (this->element != nullptr or this->animation.has_value()) {
+        if (this->element != nullptr or this->animation.has_value() or !this->viewMovingQueue.empty()) {
             break;
         }
         this->handleBaseEvent(this->baseEvents.front());
@@ -474,65 +474,139 @@ std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView() const {
 	return std::make_tuple(mouseX, mouseY);
 }
 void MainScreen::moveView() {
-	auto p = sf::Mouse::getPosition();
-	if (p.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		this->moveViewToWest();
+	if (this->viewMovingQueue.empty()) {
+		auto p = sf::Mouse::getPosition();
+		if (p.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			this->moveViewToWest();
+		}
+		else if (p.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			this->moveViewToEast();
+		}
+		if (p.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			this->moveViewToNorth();
+		}
+		else if (p.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			this->moveViewToSouth();
+		}
 	}
-	else if (p.x > this->windowW - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		this->moveViewToEast();
-	}
-	if (p.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		this->moveViewToNorth();
-	}
-	else if (p.y > this->windowH - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		this->moveViewToSouth();
-	}
-}
+	else {
+		uint32_t currentX, currentY;
+		std::tie(currentX, currentY) = this->viewMovingQueue.front();
 
+		uint32_t viewX = this->view->getCenter().x;
+		uint32_t viewY = this->view->getCenter().y;
 
+		bool horizontalOk = false;
+		bool verticalOk = false;
 
+		if (currentX < viewX) {
+			horizontalOk = horizontalOk or !this->moveViewToWest(currentX);
+		}
+		else if (currentX > viewX) {
+			horizontalOk = horizontalOk or !this->moveViewToEast(currentX);
+		}
+		else {
+			horizontalOk = true;
+		}
 
+		if (currentY < viewY) {
+			verticalOk = verticalOk or !this->moveViewToNorth(currentY);
+		}
+		else if (currentY > viewY) {
+			verticalOk = verticalOk or !this->moveViewToSouth(currentY);
+		}
+		else {
+			verticalOk = true;
+		}
 
-
-
-
-
-
-void MainScreen::moveViewToNorth() {
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, 10));
-	this->verifyViewNorth();
-}
-void MainScreen::moveViewToSouth() {
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, 10));
-	this->verifyViewSouth();
-}
-void MainScreen::moveViewToWest() {
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(10, 0));
-	this->verifyViewWest();
-}
-void MainScreen::moveViewToEast() {
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(10, 0));
-	this->verifyViewEast();
-}
-void MainScreen::verifyViewNorth() {
-	if (this->view->getCenter().y < this->windowH / 2) {
-		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, this->windowH / 2));
-	}
-}
-void MainScreen::verifyViewSouth() {
-	if (this->view->getCenter().y > 64 * this->plains.getH() - this->windowH / 2) {
-		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, 64 * this->plains.getH() - this->windowH / 2));
-	}
-}
-void MainScreen::verifyViewWest() {
-	if (this->view->getCenter().x < this->windowW / 2) {
-		this->view->setCenter(sf::Vector2f(this->windowW / 2, this->view->getCenter().y));
+		if (horizontalOk and verticalOk) {
+			this->viewMovingQueue.pop();
+		}
 	}
 }
-void MainScreen::verifyViewEast() {
-	if (this->view->getCenter().x > 64 * this->plains.getW() - this->windowW / 2) {
-		this->view->setCenter(sf::Vector2f(64 * this->plains.getW() - this->windowW / 2, this->view->getCenter().y));
+
+
+
+
+
+
+
+
+static float VIEW_MOVING_DELTA = 10;
+static float VIEW_MOVING_BIG_DELTA = 1.25f * VIEW_MOVING_DELTA;
+
+
+bool MainScreen::moveViewToNorth(uint32_t border) {
+	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
+	return this->verifyViewNorth() and this->verifyViewNorth(border);
+}
+bool MainScreen::moveViewToNorth() {
+	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, VIEW_MOVING_DELTA));
+	return this->verifyViewNorth();
+}
+bool MainScreen::moveViewToSouth(uint32_t border) {
+	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
+	return this->verifyViewSouth() and this->verifyViewSouth(border);
+}
+bool MainScreen::moveViewToSouth() {
+	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, VIEW_MOVING_DELTA));
+	return this->verifyViewSouth();
+}
+bool MainScreen::moveViewToWest(uint32_t border) {
+	this->view->setCenter(this->view->getCenter() - sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
+	return this->verifyViewWest() and this->verifyViewWest(border);
+}
+bool MainScreen::moveViewToWest() {
+	this->view->setCenter(this->view->getCenter() - sf::Vector2f(VIEW_MOVING_DELTA, 0));
+	return this->verifyViewWest();
+}
+bool MainScreen::moveViewToEast(uint32_t border) {
+	this->view->setCenter(this->view->getCenter() + sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
+	return this->verifyViewEast() and this->verifyViewEast(border);
+}
+bool MainScreen::moveViewToEast() {
+	this->view->setCenter(this->view->getCenter() + sf::Vector2f(VIEW_MOVING_DELTA, 0));
+	return this->verifyViewEast();
+}
+bool MainScreen::verifyViewNorth(uint32_t border) {
+	if (this->view->getCenter().y < border) {
+		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, border));
+		return false;
 	}
+	return true;
+}
+bool MainScreen::verifyViewNorth() {
+	return this->verifyViewNorth(this->windowH / 2);
+}
+bool MainScreen::verifyViewSouth(uint32_t border) {
+	if (this->view->getCenter().y > border) {
+		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, border));
+		return false;
+	}
+	return true;
+}
+bool MainScreen::verifyViewSouth() {
+	return this->verifyViewSouth(64 * this->plains.getH() - this->windowH / 2);
+}
+bool MainScreen::verifyViewWest(uint32_t border) {
+	if (this->view->getCenter().x < border) {
+		this->view->setCenter(sf::Vector2f(border, this->view->getCenter().y));
+		return false;
+	}
+	return true;
+}
+bool MainScreen::verifyViewWest() {
+	return this->verifyViewWest(this->windowW / 2);
+}
+bool MainScreen::verifyViewEast(uint32_t border) {
+	if (this->view->getCenter().x > border) {
+		this->view->setCenter(sf::Vector2f(border, this->view->getCenter().y));
+		return false;
+	}
+	return true;
+}
+bool MainScreen::verifyViewEast() {
+	return this->verifyViewEast(64 * this->plains.getW() - this->windowW / 2);
 }
 
 
@@ -870,9 +944,7 @@ void MainScreen::handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDra
 	e->getDragon()->resetRecoverMoves();
 }
 void MainScreen::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e) {
-	this->view->setCenter(64 * e->getX() + 64 * e->getSX() / 2, 64 * e->getY() + 64 * e->getSY() / 2);
-	this->verifyViewNorth();
-	this->verifyViewSouth();
-	this->verifyViewWest();
-	this->verifyViewEast();
+	this->viewMovingQueue.emplace(
+		64 * e->getX() + 64 * e->getSX() / 2,
+		64 * e->getY() + 64 * e->getSY() / 2);
 }

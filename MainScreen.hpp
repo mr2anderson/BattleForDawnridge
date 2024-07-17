@@ -87,6 +87,7 @@ private:
 	std::shared_ptr<PopUpElement> element;
     std::optional<Animation> animation;
     std::queue<std::shared_ptr<Event>> baseEvents;
+	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
@@ -133,15 +134,23 @@ private:
 	void moveView();
 
 
+	bool moveViewToNorth(uint32_t border);
+	bool moveViewToNorth();
+	bool moveViewToSouth(uint32_t border);
+	bool moveViewToSouth();
+	bool moveViewToWest(uint32_t border);
+	bool moveViewToWest();
+	bool moveViewToEast(uint32_t border);
+	bool moveViewToEast();
 
-	void moveViewToNorth();
-	void moveViewToSouth();
-	void moveViewToWest();
-	void moveViewToEast();
-	void verifyViewNorth();
-	void verifyViewSouth();
-	void verifyViewWest();
-	void verifyViewEast();
+	bool verifyViewNorth(uint32_t border);
+	bool verifyViewNorth();
+	bool verifyViewSouth(uint32_t border);
+	bool verifyViewSouth();
+	bool verifyViewWest(uint32_t border);
+	bool verifyViewWest();
+	bool verifyViewEast(uint32_t border);
+	bool verifyViewEast();
 
 
 	void handleBaseEvent(std::shared_ptr<Event> e);
