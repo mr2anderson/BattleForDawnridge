@@ -150,14 +150,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     }
 
     try {
-        Fonts::get()->add("bold", "bold.ttf");
-    }
-    catch (CouldntOpenFont &e) {
-        loadingError(&e, window);
-        return false;
-    }
-
-    try {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",

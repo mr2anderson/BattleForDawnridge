@@ -21,25 +21,17 @@
 #include "Fonts.hpp"
 
 
-HPFlyingE::HPFlyingE(uint32_t current, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
-    std::string c;
-    if (plus) {
-        c = "+";
-    }
-    else {
-        c = "-";
-    }
-
+HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
     sf::Text text;
-    text.setFont(*Fonts::get()->get("bold"));
-    text.setString(c + std::to_string(current));
+    text.setFont(*Fonts::get()->get("1"));
+    text.setString(std::to_string(delta));
     if (plus) {
-        text.setFillColor(sf::Color(0, 127, 0));
+        text.setFillColor(sf::Color(0, 255, 0));
     }
     else {
-        text.setFillColor(sf::Color(127, 0, 0));
+        text.setFillColor(sf::Color(255, 0, 0));
     }
-    text.setCharacterSize(15);
+    text.setCharacterSize(18);
     text.setPosition(64 * x + 64 * sx / 2 - text.getGlobalBounds().width / 2, 64 * y + 64 * sy / 2 - text.getGlobalBounds().height / 2);
     this->set(text);
 }

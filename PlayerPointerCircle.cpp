@@ -43,5 +43,7 @@ void PlayerPointerCircle::setTypePurple() {
     this->recalcPosition();
 }
 void PlayerPointerCircle::recalcPosition() {
-    this->sprite.setPosition(this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 5 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - this->sprite.getLocalBounds().width), this->yInPixels);
+    this->sprite.setPosition(
+        this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 5 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - this->sprite.getLocalBounds().width),
+        this->yInPixels - this->sprite.getGlobalBounds().height);
 }

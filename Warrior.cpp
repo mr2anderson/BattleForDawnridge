@@ -80,7 +80,7 @@ Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
         response.add(std::make_shared<StartWarriorAnimationEvent>(this, "been hit"));
     }
 
-    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(hpPointsAfterOperation, false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
+    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(dPoints, false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
     response.add(std::make_shared<SubHpEvent>(this, this->getHP() - (hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0))));

@@ -42,7 +42,7 @@ void HPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1);
 	text.setFont(*Fonts::get()->get("1"));
-	text.setCharacterSize(6 + 2 * this->sx);
+	text.setCharacterSize(8 + 2 * this->sx);
 	text.setString(this->getCurrentHpFormatted());
 	text.setPosition(
 		this->xInPixels + 64 * this->sx / 2 - text.getGlobalBounds().width / 2, 
@@ -60,5 +60,12 @@ std::string HPPointer::getCurrentHpFormatted() const {
 	double d = (double)this->current / 1000;
 	std::stringstream ss;
 	ss << std::fixed << std::setprecision(1) << d;
-	return ss.str() + "k";
+
+	std::string s = ss.str();
+	if (s.back() == '0') {
+		s.pop_back();
+		s.pop_back();
+	}
+
+	return s + "k";
 }

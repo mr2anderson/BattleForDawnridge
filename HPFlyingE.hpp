@@ -25,7 +25,7 @@
 
 class HPFlyingE : public FlyingE<sf::Text> {
 public:
-    HPFlyingE(uint32_t current, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+    HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 private:
     void setTransparentColor(float dt) override;
 };
