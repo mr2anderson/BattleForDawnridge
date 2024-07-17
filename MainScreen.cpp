@@ -72,16 +72,20 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
                 if (!this->animation.has_value() and this->viewMovingQueue.empty()) {
                     if (this->element == nullptr) {
                         if (this->baseEvents.empty() and this->allNewMoveEventsAdded()) {
-                            if (this->selected == nullptr and event.mouseButton.button == sf::Mouse::Button::Left) {
-                                this->addButtonClickEventToQueue();
-                                if (this->baseEvents.empty()) {
-                                    this->addGameObjectClickEventToQueue();
-                                }
+                            if (this->selected == nullptr) {
+								if (event.mouseButton.button == sf::Mouse::Button::Left) {
+									this->addButtonClickEventToQueue();
+									if (this->baseEvents.empty()) {
+										this->addGameObjectClickEventToQueue();
+									}
+								}
                             }
-                            else if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
-                                std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-                                Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
-                                this->addEvents(unselectEvent);
+                            else {
+								if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
+									std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
+									Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
+									this->addEvents(unselectEvent);
+								}
                             }
                         }
                     }
