@@ -42,10 +42,10 @@ Building::Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<GO
 	this->burningMovesLeft = 0;
 }
 void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	this->Unit::draw(target, states);
 	if (this->exist() and this->burningMovesLeft > 0) {
 		target.draw(this->fire, states);
 	}
+	this->Unit::draw(target, states);
 }
 Events Building::hit(Damage d, const std::optional<std::string> &direction) {
 	uint32_t dPoints = d.getHpLoss(this->getDefence());
