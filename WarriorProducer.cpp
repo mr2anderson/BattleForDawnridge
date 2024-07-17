@@ -145,8 +145,8 @@ Events WarriorProducer::handleCurrentProducing() {
 		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->currentProducing->getTextureName(), this->getX(), this->getY(), this->getSX(), this->getSY());
 
 		response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
-		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
+		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<WarriorProducingFinishedEvent>(this, this->currentProducing));
 
 		return response;
