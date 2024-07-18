@@ -71,7 +71,7 @@ Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t b
 	Events clickSoundEvent;
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	Events exitEvent = clickSoundEvent;
+	Events exitEvent;
 	exitEvent.add(std::make_shared<UnselectEvent>());
 	exitEvent.add(std::make_shared<EnableCursorEvent>());
 	exitEvent.add(std::make_shared<ResetHighlightEvent>());
@@ -88,18 +88,21 @@ Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t b
 	if (!this->inMap(state, clonedB)) {
 		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("not_in_map"), *Texts::get()->get("OK"), clickSoundEvent);
+		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
 	if (!this->empty(state, clonedB)) {
 		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("place_occupied"), *Texts::get()->get("OK"), clickSoundEvent);
+		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
 	if (!this->controlled(state, clonedB)) {
 		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"), clickSoundEvent);
+		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}

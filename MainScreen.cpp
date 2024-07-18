@@ -797,7 +797,6 @@ void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
 }
 void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
 	Building* b = e->getBuilding();
-	b->changePlayer(this->getCurrentPlayer()->getId());
 	this->map->add(b);
 }
 void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
