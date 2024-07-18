@@ -262,7 +262,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
     std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
-    buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, Events());
+    buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<Market>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionOther = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionOtherComponents);
