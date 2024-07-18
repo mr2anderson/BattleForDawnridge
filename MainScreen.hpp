@@ -108,7 +108,6 @@ private:
 	void initMoveCtr();
 	void initSelectable();
 	void initGraphics(sf::RenderWindow &window);
-	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
 
 
 	void drawEverything(sf::RenderWindow& window);
