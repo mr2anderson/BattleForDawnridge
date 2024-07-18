@@ -23,9 +23,6 @@
 #pragma once
 
 
-class GO;
-
-
 template <typename T> class Collection {
 public:
 	Collection() = default;
@@ -39,30 +36,9 @@ public:
 	T* at(uint32_t i) {
 		return this->data.at(i);
 	}
-private:
-	std::vector<T*> data;
-};
-
-
-
-template <> class Collection<GO> {
-public:
-	Collection() = default;
-	~Collection() {
-		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
-			delete this->data.at(i);
-		}
-	}
-
-	void push(GO* go) {
-		this->data.push_back(go);
-	}
-	uint32_t size() const {
-		return this->data.size();
-	}
-	GO* at(uint32_t i) {
+	const T* at(uint32_t i) const {
 		return this->data.at(i);
 	}
 private:
-	std::vector<GO*> data;
+	std::vector<T*> data;
 };

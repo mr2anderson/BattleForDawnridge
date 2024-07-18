@@ -17,16 +17,16 @@
  */
 
 
-#include "Wall.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Wall2 : public Wall {
+class Wall2 : public Building {
 public:
 	Wall2();
-	Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
+	Wall2(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
 	Defence getDefence() const override;
@@ -37,7 +37,6 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
 };

@@ -24,24 +24,11 @@
 const uint32_t PlainsGeneration::TOTAL_PLAINS = 5;
 
 
-PlainsGeneration::PlainsGeneration() = default;
-PlainsGeneration::PlainsGeneration(uint32_t w, uint32_t h) {
-	std::random_device rd;
-	std::mt19937 mersenne(rd());
-	this->data.resize(w);
-	for (uint32_t i = 0; i < w; i = i + 1) {
-		this->data.at(i).resize(h);
-		for (uint32_t j = 0; j < h; j = j + 1) {
-			this->data.at(i).at(j) = mersenne() % TOTAL_PLAINS;
-		}
-	}
+PlainsGeneration::PlainsGeneration() {
+	std::random_device rd1, rd2;
+	this->s1 = rd1();
+	this->s2 = rd2();
 }
 uint32_t PlainsGeneration::getType(uint32_t i, uint32_t j) const {
-	return this->data.at(i).at(j);
-}
-uint32_t PlainsGeneration::getW() const {
-	return this->data.size();
-}
-uint32_t PlainsGeneration::getH() const {
-	return this->data.at(0).size();
+	return (i * this->s1 + j * this->s2) % TOTAL_PLAINS;
 }

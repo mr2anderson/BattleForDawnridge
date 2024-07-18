@@ -25,7 +25,7 @@ Treasure::Treasure() = default;
 Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
 }
-Events Treasure::newMove(uint32_t playerId) {
+Events Treasure::newMove(MapState *state, uint32_t playerId) {
 	this->alreadyCollected = false;
 	return Events();
 }

@@ -18,7 +18,7 @@
 
 
 #include "Event.hpp"
-#include "Animation.hpp"
+#include "SuspendingAnimation.hpp"
 
 
 #pragma once
@@ -26,9 +26,9 @@
 
 class CreateAnimationEvent : public Event {
 public:
-    CreateAnimationEvent(Animation animation);
+    CreateAnimationEvent(SuspendingAnimation animation);
 
-    Animation getAnimation() const;
+    SuspendingAnimation getAnimation() const;
 private:
-    Animation animation;
+    SuspendingAnimation animation;
 };

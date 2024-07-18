@@ -17,20 +17,18 @@
  */
 
 
-#include "TerritoryConductorB.hpp"
-#include "HpSensitiveB.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Road : public TerritoryConductorB, public HpSensitiveB {
+class Road : public Building {
 public:
 	Road();
-	Road(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<Collection<TerritoryOriginB>> originsPtr);
+	Road(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
-	Events newMove(uint32_t playerId) override;
     uint32_t getSX() const override;
     uint32_t getSY() const override;
     uint32_t getMaxHP() const override;
@@ -39,10 +37,6 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	uint32_t getRadius() const override;
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
 };

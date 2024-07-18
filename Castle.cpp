@@ -18,27 +18,23 @@
 
 
 #include "Castle.hpp"
+#include "CastleTerritoryExpanderSpec.hpp"
+#include "WarehouseBeginSpec.hpp"
+#include "VictoryConditionSpec.hpp"
+#include "WoodGeneratorSpec.hpp"
 #include "Texts.hpp"
-#include "CreateEEvent.hpp"
 
 
 Castle::Castle() = default;
-Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	TerritoryOriginB(x, y, playerId, units, go, mapW, mapH),
-	ResourceStorageB(x, y,  playerId, units),
-	VictoryConditionB(x, y, playerId, units),
-	DragonCave(x, y, playerId, units),
-	Building(x, y, playerId, units) {
+Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new CastleTerritoryExpanderSpec());
+	this->addSpec(new WoodGeneratorSpec());
+	this->addSpec(new WarehouseBeginSpec());
+	this->addSpec(new VictoryConditionSpec());
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
-}
-Events Castle::newMove(uint32_t playerId) {
-	Events response;
-	if (this->belongTo(playerId) and this->exist()) {
-		return this->regenerate() + this->processDecreaseDragonRecoverMovesLeft() + this->addWood();
-	}
-	return response;
 }
 uint32_t Castle::getSX() const {
     return 2;
@@ -48,9 +44,6 @@ uint32_t Castle::getSY() const {
 }
 uint32_t Castle::getMaxHP() const {
     return 40000;
-}
-Resources Castle::getLimit() const {
-	return Resources({ Resource("food", 20000), Resource("wood", 20000), Resource("stone", 20000)});
 }
 Defence Castle::getDefence() const {
 	return Defence::STONE;
@@ -67,54 +60,9 @@ std::string Castle::getSoundName() const {
 std::wstring Castle::getDescription() const {
 	return *Texts::get()->get("castle_description");
 }
-Events Castle::destroy() {
-	return this->ResourceStorageB::destroy() + this->VictoryConditionB::destroy();
-}
 uint32_t Castle::getRegenerationSpeed() const {
 	return this->getMaxHP() / 8;
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");
-}
-uint32_t Castle::getRadius() const {
-	return 4;
-}
-Events Castle::getSelectionW() {
-	Events response;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getVictoryConditionComponent());
-	components.push_back(this->getResourceStorageComponent());
-	components.push_back(this->getDestroyComponent());
-
-	std::vector<HorizontalSelectionWindowComponent> dragonCaveComponents = this->getDragonCaveComponents();
-	components.insert(components.end(), dragonCaveComponents.begin(), dragonCaveComponents.end());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
-    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-	response.add(std::make_shared<CreateEEvent>(window));
-
-	return response;
-}
-Events Castle::getGameObjectResponse(uint32_t playerId) {
-	if (!this->exist()) {
-		return Events();
-	}
-	if (this->belongTo(playerId)) {
-		return this->getHighlightEvent() + this->getSelectionW();
-	}
-	return Events();
-}
-HorizontalSelectionWindowComponent Castle::getRaiseComponent(std::shared_ptr<Dragon> newDragon) {
-	HorizontalSelectionWindowComponent component = this->DragonCave::getRaiseComponent(newDragon);
-	component.gEvent = this->getHighlightEvent() + component.gEvent;
-	return component;
-}
-HorizontalSelectionWindowComponent Castle::getAttackComponent() {
-	HorizontalSelectionWindowComponent component = this->DragonCave::getAttackComponent();
-	component.gEvent = this->getHighlightEvent() + component.gEvent;
-	return component;
 }

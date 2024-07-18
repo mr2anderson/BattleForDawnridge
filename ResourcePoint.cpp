@@ -28,7 +28,7 @@
 
 ResourcePoint::ResourcePoint() = default;
 ResourcePoint::ResourcePoint(uint32_t x, uint32_t y) : HPGO(x, y, std::nullopt) {}
-Events ResourcePoint::newMove(uint32_t playerId) {
+Events ResourcePoint::newMove(MapState *state, uint32_t playerId) {
 	return Events();
 }
 Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
@@ -60,7 +60,7 @@ uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 uint8_t ResourcePoint::getHPPointerOrientation() const {
 	return HPPointer::ORIENTATION::UP;
 }
-Events ResourcePoint::getGameObjectResponse(uint32_t playerId) {
+Events ResourcePoint::getResponse(MapState *state, uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
 	}

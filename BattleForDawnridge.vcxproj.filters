@@ -43,9 +43,6 @@
     <Filter Include="Source Files\popUpElementsService">
       <UniqueIdentifier>{f34a6c02-8ead-432d-9a5b-9885717ee1c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\go">
-      <UniqueIdentifier>{88464c3d-d482-485e-8615-44125f54fe6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\goService">
       <UniqueIdentifier>{2c4407a5-0af1-4272-a9c8-8e5cfb7fc1db}</UniqueIdentifier>
     </Filter>
@@ -64,9 +61,6 @@
     <Filter Include="Source Files\screensService">
       <UniqueIdentifier>{4122d082-f484-401c-ac26-a5e02a0a398d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\go">
-      <UniqueIdentifier>{f0df99e1-4746-48f3-8792-47cc03ec8175}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\goService">
       <UniqueIdentifier>{1df6272c-8fba-4d6d-b6e0-204afa49a90d}</UniqueIdentifier>
     </Filter>
@@ -75,6 +69,48 @@
     </Filter>
     <Filter Include="Header Files\screensService">
       <UniqueIdentifier>{f5abc0af-dfb2-4a18-a981-ee14ef02ec55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\buildingSpecs">
+      <UniqueIdentifier>{efa08ba6-6744-4a51-a65e-15d92ab9d0db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\buildingSpecs">
+      <UniqueIdentifier>{a21f9451-3cbf-4bf2-85a1-3479647c85ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\map">
+      <UniqueIdentifier>{c934bc1f-6f2d-4182-9a59-88725c9e44c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\map">
+      <UniqueIdentifier>{66c97742-c517-413f-ad57-979e7d1343f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\buildings">
+      <UniqueIdentifier>{2ac8f5cf-7c15-40c0-a315-da58113b65bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\warriors">
+      <UniqueIdentifier>{ee4571c9-94fe-44a3-9b2c-b73fc3ac6653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\resourcePoints">
+      <UniqueIdentifier>{66563fd7-5b8b-4c53-9ebe-40ce0cf44b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\buildings">
+      <UniqueIdentifier>{2b134260-65d4-4d71-9267-230d53fc527b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\warriors">
+      <UniqueIdentifier>{ceaf18f4-8cbd-47d8-b8e8-35ceade079cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resourcePoints">
+      <UniqueIdentifier>{303b147c-f62b-4933-82e1-060e17c16086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\otherGOs">
+      <UniqueIdentifier>{c01e514e-192a-4d65-9a76-7913fae9ccc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\otherGOs">
+      <UniqueIdentifier>{b1efd4f1-83f3-4a0f-ac89-4bedfa013475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\baseGOs">
+      <UniqueIdentifier>{2edf0bd6-6f12-405c-803e-621c82b9481f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\baseGOs">
+      <UniqueIdentifier>{f0df99e1-4746-48f3-8792-47cc03ec8175}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -721,14 +757,8 @@
     <ClInclude Include="AddResourcesEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="AreaB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="BuildEvent.hpp">
       <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="Building.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="Button.hpp">
       <Filter>Header Files\simpleUiElements</Filter>
@@ -739,10 +769,7 @@
     <ClInclude Include="CameraIndependentPopUpElement.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
-    <ClInclude Include="Castle.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeHighlightEvent.hpp">
+    <ClInclude Include="SetHighlightEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="ChangeMoveEvent.hpp">
@@ -802,9 +829,6 @@
     <ClInclude Include="Fonts.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
-    <ClInclude Include="Forest.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="HorizontalSelectionWindow.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
@@ -812,7 +836,7 @@
       <Filter>Header Files\popUpElementsService</Filter>
     </ClInclude>
     <ClInclude Include="GO.hpp">
-      <Filter>Header Files\go</Filter>
+      <Filter>Header Files\baseGOs</Filter>
     </ClInclude>
     <ClInclude Include="HighlightTable.hpp">
       <Filter>Header Files\screensService</Filter>
@@ -821,16 +845,10 @@
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="HPGO.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="HpSensitiveB.hpp">
-      <Filter>Header Files\go</Filter>
+      <Filter>Header Files\baseGOs</Filter>
     </ClInclude>
     <ClInclude Include="Image.hpp">
       <Filter>Header Files\simpleUiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Iron.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="LabelWithImage.hpp">
       <Filter>Header Files\simpleUiElements</Filter>
@@ -847,35 +865,20 @@
     <ClInclude Include="MainScreen.hpp">
       <Filter>Header Files\screens</Filter>
     </ClInclude>
-    <ClInclude Include="Map.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
     <ClInclude Include="Maps.hpp">
       <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Market.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="Menu.hpp">
       <Filter>Header Files\screens</Filter>
     </ClInclude>
-    <ClInclude Include="Mine.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="Music.hpp">
       <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Mountains.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="PlainsGeneration.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
     <ClInclude Include="PAKScreen.hpp">
       <Filter>Header Files\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.hpp">
-      <Filter>Header Files\screensService</Filter>
     </ClInclude>
     <ClInclude Include="Playlist.hpp">
       <Filter>Header Files\screensService</Filter>
@@ -886,26 +889,11 @@
     <ClInclude Include="PopUpElement.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
-    <ClInclude Include="Quarry.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="RectangularUIElement.hpp">
       <Filter>Header Files\simpleUiElements</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourcePoint.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="Root.hpp">
       <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Road.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Sawmill.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="SoundQueue.hpp">
       <Filter>Header Files\screensService</Filter>
@@ -916,23 +904,11 @@
     <ClInclude Include="StartGameEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="Stone.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="SubResourceEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="SubResourcesEvent.hpp">
       <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="TerritoryB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="TerritoryConductorB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="TerritoryOriginB.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="Texts.hpp">
       <Filter>Header Files\resources</Filter>
@@ -943,23 +919,14 @@
     <ClInclude Include="Trade.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
     <ClInclude Include="WindowButton.hpp">
       <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall1.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="UTFEncoder.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="Unit.hpp">
-      <Filter>Header Files\go</Filter>
+      <Filter>Header Files\baseGOs</Filter>
     </ClInclude>
     <ClInclude Include="TryToTradeEvent.hpp">
       <Filter>Header Files\events</Filter>
@@ -970,44 +937,14 @@
     <ClInclude Include="ReturnToMenuEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="Collection.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
     <ClInclude Include="WindowTwoButtons.hpp">
       <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Water.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Arable.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall2.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="ResourceBar.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
     <ClInclude Include="PlayerPointer.hpp">
       <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceStorageB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseWood.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseFood.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseGold.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseIron.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseStone.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp">
       <Filter>Header Files\events</Filter>
@@ -1027,17 +964,8 @@
     <ClInclude Include="ResourceStorageBDestroyedEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="VictoryConditionB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="WindowButtonImage.hpp">
       <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="WarriorProducer.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Warrior.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="TryToProduceEvent.hpp">
       <Filter>Header Files\events</Filter>
@@ -1051,26 +979,11 @@
     <ClInclude Include="CouldntFindNewWarriorPosition.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="Barracks.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="BuildingShortInfo.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="SelectEvent.hpp">
       <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="Infantryman.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Knight.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="TradingB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Treasure.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="UnselectEvent.hpp">
       <Filter>Header Files\events</Filter>
@@ -1087,35 +1000,11 @@
     <ClInclude Include="EnableCursorEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="ImpassableObstacle.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Gates.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Gates1.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Gates2.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
     <ClInclude Include="TryToCollectEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="FitTableElement.hpp">
       <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="ConductorB.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="Legioner.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackKnight.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="ClueManager.hpp">
       <Filter>Header Files\screensService</Filter>
@@ -1132,20 +1021,14 @@
     <ClInclude Include="DijkstraQueueElement.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="Animated.hpp">
+    <ClInclude Include="IWithSuspendingAnimation.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.hpp">
+    <ClInclude Include="SuspendingAnimation.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="AnimationState.hpp">
       <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="AreaBLandscapeInsensible.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="AreaBLandscapeSensible.hpp">
-      <Filter>Header Files\go</Filter>
     </ClInclude>
     <ClInclude Include="CreateAnimationEvent.hpp">
       <Filter>Header Files\events</Filter>
@@ -1204,44 +1087,218 @@
     <ClInclude Include="BuildingMode.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
-    <ClInclude Include="Selectable.hpp">
+    <ClInclude Include="ISelectable.hpp">
       <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="Dragon.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="DragonCave.hpp">
-      <Filter>Header Files\go</Filter>
-    </ClInclude>
-    <ClInclude Include="DragonFlame.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="RedDragon.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="DragonFlamePreview.hpp">
-      <Filter>Header Files\popUpElementsService</Filter>
-    </ClInclude>
-    <ClInclude Include="TryToRaiseDragonEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="DecreaseDragonRecoverMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="ResetDragonRecoverMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="StartWarriorAnimationEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="RedDragonFlame.hpp">
-      <Filter>Header Files\popUpElementsService</Filter>
-    </ClInclude>
-    <ClInclude Include="RedDragonFlamePreview.hpp">
-      <Filter>Header Files\popUpElementsService</Filter>
-    </ClInclude>
     <ClInclude Include="FocusOnEvent.hpp">
       <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="IBuildingSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaResourcePointCollectorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="IWarehouseSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaControllerSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorProducerSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryConditionSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryExpanderSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="IResourceGeneratorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapState.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Players.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Arable.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Castle.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Gates1.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Gates2.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Market.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Quarry.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Road.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Sawmill.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall1.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall2.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseFood.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGold.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseIron.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseStone.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseWood.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackKnight.hpp">
+      <Filter>Header Files\warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantryman.hpp">
+      <Filter>Header Files\warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.hpp">
+      <Filter>Header Files\warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="Legioner.hpp">
+      <Filter>Header Files\warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="Warrior.hpp">
+      <Filter>Header Files\warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Forest.hpp">
+      <Filter>Header Files\resourcePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Iron.hpp">
+      <Filter>Header Files\resourcePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Stone.hpp">
+      <Filter>Header Files\resourcePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Treasure.hpp">
+      <Filter>Header Files\resourcePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcePoint.hpp">
+      <Filter>Header Files\resourcePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Mountains.hpp">
+      <Filter>Header Files\otherGOs</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.hpp">
+      <Filter>Header Files\otherGOs</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSize.hpp">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetHighlightEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="TradingSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseFoodSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseBeginSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseIronSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseStoneSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseWoodSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGoldSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="GatesSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="FoodGeneratorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodGeneratorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodCollectorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneCollectorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="IronCollectorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryOriginSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryConductorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleTerritoryExpanderSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="BarracksSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1260,25 +1317,16 @@
     <ClCompile Include="AddResourceEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="AreaB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="BuildEvent.cpp">
       <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="Building.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
     </ClCompile>
-    <ClCompile Include="Castle.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="CollectEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeHighlightEvent.cpp">
+    <ClCompile Include="SetHighlightEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="ChangeMoveEvent.cpp">
@@ -1332,29 +1380,14 @@
     <ClCompile Include="Fonts.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="Forest.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="HorizontalSelectionWindowComponent.cpp">
       <Filter>Source Files\popUpElementsService</Filter>
-    </ClCompile>
-    <ClCompile Include="GO.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="HPPointer.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
-    <ClCompile Include="HPGO.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="HpSensitiveB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
-    </ClCompile>
-    <ClCompile Include="Iron.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="Label.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
@@ -1374,17 +1407,8 @@
     <ClCompile Include="Maps.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="Market.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files\screens</Filter>
-    </ClCompile>
-    <ClCompile Include="Mine.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Mountains.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="Music.cpp">
       <Filter>Source Files\resources</Filter>
@@ -1395,29 +1419,8 @@
     <ClCompile Include="PlaySoundEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="Quarry.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="RectangularUiElement.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourcePoint.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Road.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Sawmill.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="Root.cpp">
       <Filter>Source Files\resources</Filter>
@@ -1428,29 +1431,11 @@
     <ClCompile Include="StartGameEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="Stone.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="SubResourceEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="SubResourcesEvent.cpp">
       <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="TerritoryB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="TerritoryConductorB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="TerritoryOriginB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall1.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="UTFEncoder.cpp">
       <Filter>Source Files\resources</Filter>
@@ -1476,35 +1461,8 @@
     <ClCompile Include="WindowTwoButtons.cpp">
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
-    <ClCompile Include="Water.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Arable.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall2.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerPointer.cpp">
       <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceStorageB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseFood.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseWood.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseStone.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseIron.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseGold.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="MoveGameActionWindowUpEvent.cpp">
       <Filter>Source Files\events</Filter>
@@ -1524,15 +1482,6 @@
     <ClCompile Include="ResourceStorageBDestroyedEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="VictoryConditionB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarriorProducer.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Warrior.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="TryToProduceEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
@@ -1542,20 +1491,11 @@
     <ClCompile Include="CouldntFindNewWarriorPosition.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
-    <ClCompile Include="Barracks.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="BuildingShortInfo.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="SelectEvent.cpp">
       <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="Infantryman.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Knight.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="CameraDependentPopUpElement.cpp">
       <Filter>Source Files\popUpElements</Filter>
@@ -1581,13 +1521,7 @@
     <ClCompile Include="HighlightTable.cpp">
       <Filter>Source Files\screensService</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
     <ClCompile Include="PlainsGeneration.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
       <Filter>Source Files\screensService</Filter>
     </ClCompile>
     <ClCompile Include="Playlist.cpp">
@@ -1595,12 +1529,6 @@
     </ClCompile>
     <ClCompile Include="ResourceBar.cpp">
       <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="TradingB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Treasure.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="UnselectEvent.cpp">
       <Filter>Source Files\events</Filter>
@@ -1617,35 +1545,11 @@
     <ClCompile Include="EnableCursorEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="ImpassableObstacle.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Gates.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Gates1.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="Gates2.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="ConductorB.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
     <ClCompile Include="TryToCollectEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="FitTableElement.cpp">
       <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="Legioner.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackKnight.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="ClueManager.cpp">
       <Filter>Source Files\screensService</Filter>
@@ -1662,20 +1566,11 @@
     <ClCompile Include="DijkstraQueueElement.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
-    <ClCompile Include="Animated.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
+    <ClCompile Include="SuspendingAnimation.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="AnimationState.cpp">
       <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="AreaBLandscapeInsensible.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="AreaBLandscapeSensible.cpp">
-      <Filter>Source Files\go</Filter>
     </ClCompile>
     <ClCompile Include="CloseAnimationEvent.cpp">
       <Filter>Source Files\events</Filter>
@@ -1734,47 +1629,224 @@
     <ClCompile Include="BuildingMode.cpp">
       <Filter>Source Files\screensService</Filter>
     </ClCompile>
-    <ClCompile Include="Selectable.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="DragonCave.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
-      <Filter>Source Files\go</Filter>
-    </ClCompile>
-    <ClCompile Include="DragonFlame.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="Dragon.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="RedDragon.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="DragonFlamePreview.cpp">
-      <Filter>Source Files\popUpElementsService</Filter>
-    </ClCompile>
-    <ClCompile Include="TryToRaiseDragonEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="DecreaseDragonRecoverMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="ResetDragonRecoverMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
     <ClCompile Include="StartWarriorAnimationEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="RedDragonFlame.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="RedDragonFlamePreview.cpp">
-      <Filter>Source Files\popUpElementsService</Filter>
-    </ClCompile>
     <ClCompile Include="FocusOnEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaResourcePointCollectorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="IResourceGeneratorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryExpanderSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryConditionSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="IWarehouseSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducerSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapState.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Players.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSize.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetHighlightEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="Arable.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Castle.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Gates1.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Gates2.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantryman.cpp">
+      <Filter>Source Files\warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files\warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="Legioner.cpp">
+      <Filter>Source Files\warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="Warrior.cpp">
+      <Filter>Source Files\warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackKnight.cpp">
+      <Filter>Source Files\warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="Forest.cpp">
+      <Filter>Source Files\resourcePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Iron.cpp">
+      <Filter>Source Files\resourcePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Treasure.cpp">
+      <Filter>Source Files\resourcePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Stone.cpp">
+      <Filter>Source Files\resourcePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseWood.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseFood.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGold.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseIron.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseStone.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall2.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall1.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Sawmill.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Road.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Quarry.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcePoint.cpp">
+      <Filter>Source Files\resourcePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Market.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Source Files\otherGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="Mountains.cpp">
+      <Filter>Source Files\otherGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine.cpp">
+      <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="GO.cpp">
+      <Filter>Source Files\baseGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="HPGO.cpp">
+      <Filter>Source Files\baseGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Source Files\baseGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="TradingSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="IBuildingSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseFoodSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseWoodSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseStoneSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseIronSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGoldSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseBeginSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="GatesSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodGeneratorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodGeneratorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaControllerSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodCollectorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneCollectorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="IronCollectorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryOriginSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryConductorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleTerritoryExpanderSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="BarracksSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

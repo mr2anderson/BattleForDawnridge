@@ -17,34 +17,29 @@
  */
 
 
-#include "TerritoryB.hpp"
 #include "Collection.hpp"
-#include "Selectable.hpp"
+#include "ISelectable.hpp"
 
 
 #pragma once
 
 
-class BuildingMode : public Selectable {
+class BuildingMode : public ISelectable {
 public:
     BuildingMode();
-	BuildingMode(std::shared_ptr<const Building> b, std::shared_ptr<Collection<GO>> go, std::shared_ptr<Collection<TerritoryB>> tb, uint32_t playerId, uint32_t mapW, uint32_t mapH);
+	BuildingMode(std::shared_ptr<const Building> b, uint32_t playerId);
 
-	Events start();
+	Events start(MapState *state);
 private:
 	std::shared_ptr<const Building> b;
-	uint32_t windowW, windowH;
-	std::shared_ptr<Collection<GO>> go;
-	std::shared_ptr<Collection<TerritoryB>> tb;
 	uint32_t playerId;
-	uint32_t mapW, mapH;
 
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
-	Events unselect(uint32_t x, uint32_t y, uint8_t button) override;
+	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
 
-	Events getHighlightEvent() const;
+	Events getHighlightEvent(MapState *state) const;
 
-	bool inMap(Building *clonedB) const;
-	bool empty(Building *clonedB) const;
-	bool controlled(Building *clonedB) const;
+	bool inMap(MapState* state, Building *clonedB) const;
+	bool empty(MapState* state, Building *clonedB) const;
+	bool controlled(MapState* state, Building *clonedB) const;
 };

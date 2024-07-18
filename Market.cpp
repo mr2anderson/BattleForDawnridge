@@ -18,14 +18,14 @@
 
 
 #include "Market.hpp"
+#include "MarketSpec.hpp"
 #include "Texts.hpp"
 
 
 Market::Market() = default;
-Market::Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
-	TradingB(x, y, playerId, units),
-	Building(x, y, playerId, units) {
-
+Market::Market(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new MarketSpec());
 }
 Building* Market::cloneBuilding() const {
 	return new Market(*this);
@@ -61,33 +61,4 @@ uint32_t Market::getRegenerationSpeed() const {
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");
-}
-std::vector<Trade> Market::getTrades() const {
-	const uint32_t time = 4;
-	const uint32_t goldVolume = 5000;
-
-	std::vector<Trade> trades;
-
-	trades.emplace_back(
-		Resource("gold", goldVolume),
-		Resource("food", 2 * goldVolume),
-		time
-	);
-	trades.emplace_back(
-		Resource("gold", goldVolume),
-		Resource("wood", 2 * goldVolume),
-		time
-	);
-	trades.emplace_back(
-		Resource("gold", goldVolume),
-		Resource("stone", 2 * goldVolume),
-		time
-	);
-	trades.emplace_back(
-		Resource("gold", goldVolume),
-		Resource("iron", goldVolume),
-		time
-	);
-
-	return trades;
 }

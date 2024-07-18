@@ -19,13 +19,15 @@
 
 
 #include "Mine.hpp"
+#include "IronCollectorSpec.hpp"
 #include "Texts.hpp"
 
 
 Mine::Mine() = default;
-Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	ResourceB(x, y,  playerId, units, resourcePointsPtr, go, mapW, mapH),
-	Building(x, y, playerId, units) {}
+Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new IronCollectorSpec());
+}
 Building* Mine::cloneBuilding() const {
 	return new Mine(*this);
 }
@@ -54,15 +56,6 @@ std::string Mine::getTextureName() const {
 }
 std::string Mine::getSoundName() const {
 	return "iron";
-}
-std::string Mine::getResourceType() const {
-	return "iron";
-}
-uint32_t Mine::getCollectionSpeed() const {
-	return 1750;
-}
-uint32_t Mine::getRadius() const {
-	return 4;
 }
 std::wstring Mine::getDescription() const {
 	return *Texts::get()->get("mine_description");

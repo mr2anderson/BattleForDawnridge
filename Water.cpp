@@ -21,11 +21,12 @@
 #include "Texts.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
+#include "CreateEEvent.hpp"
 
 
 Water::Water() = default;
 Water::Water(uint32_t x, uint32_t y, uint32_t type) :
-	ImpassableObstacle(x, y) {
+	GO(x, y) {
 	this->type = type;
 }
 uint32_t Water::getSY() const {
@@ -48,4 +49,24 @@ std::wstring Water::getDescription() const {
 }
 bool Water::isLowObstacle(uint32_t playerId) const {
     return true;
+}
+bool Water::warriorCanStay(uint32_t warriorPlayerId) const {
+	return false;
+}
+uint32_t Water::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+	return GO::WARRIOR_MOVEMENT_FORBIDDEN;
+}
+Events Water::getResponse(MapState* state, uint32_t playerId) {
+	std::vector<HorizontalSelectionWindowComponent> components;
+
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+
+	std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
+
+	Events event;
+	event.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+	event.add(std::make_shared<CreateEEvent>(w));
+
+	return event;
 }

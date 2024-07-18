@@ -20,12 +20,12 @@
 #include "TryToProduceEvent.hpp"
 
 
-TryToProduceEvent::TryToProduceEvent(WarriorProducer* producer, std::shared_ptr<Warrior> warrior) {
-	this->producer = producer;
+TryToProduceEvent::TryToProduceEvent(WarriorProducerSpec* spec, std::shared_ptr<Warrior> warrior) {
+	this->spec = spec;
 	this->warrior = warrior;
 }
-WarriorProducer* TryToProduceEvent::getProducer() {
-	return this->producer;
+WarriorProducerSpec* TryToProduceEvent::getSpec() {
+	return this->spec;
 }
 std::shared_ptr<Warrior> TryToProduceEvent::getWarrior() {
 	return this->warrior;

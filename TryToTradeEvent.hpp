@@ -24,16 +24,18 @@
 #pragma once
 
 
-class TradingB;
+class TradingSpec;
 
 
 class TryToTradeEvent : public Event {
 public:
-	TryToTradeEvent(TradingB* market, const Trade& trade);
+	TryToTradeEvent(TradingSpec* spec, const std::string &soundName, const Trade& trade);
 
-	TradingB* getBuilding();
+	TradingSpec* getSpec();
+	std::string getSoundName() const;
 	Trade getTrade() const;
 private:
-	TradingB* market;
+	TradingSpec* spec;
+	std::string soundName;
 	Trade trade;
 };

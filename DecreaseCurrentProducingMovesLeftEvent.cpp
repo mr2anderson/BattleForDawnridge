@@ -20,9 +20,9 @@
 #include "DecreaseCurrentProducingMovesLeftEvent.hpp"
 
 
-DecreaseCurrentProducingMovesLeftEvent::DecreaseCurrentProducingMovesLeftEvent(WarriorProducer* b) {
-	this->b = b;
+DecreaseCurrentProducingMovesLeftEvent::DecreaseCurrentProducingMovesLeftEvent(WarriorProducerSpec* spec) {
+	this->spec = spec;
 }
-WarriorProducer* DecreaseCurrentProducingMovesLeftEvent::getBuilding() {
-	return this->b;
+WarriorProducerSpec* DecreaseCurrentProducingMovesLeftEvent::getSpec() {
+	return this->spec;
 }

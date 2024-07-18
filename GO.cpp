@@ -21,6 +21,7 @@
 #include "Textures.hpp"
 #include "Texts.hpp"
 #include "CreateEEvent.hpp"
+#include "ResetHighlightEvent.hpp"
 
 
 GO::GO() = default;
@@ -61,12 +62,15 @@ bool GO::isHighObstacle(uint32_t playerId) const {
 bool GO::isLowObstacle(uint32_t playerId) const {
     return false;
 }
-Events GO::click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
+bool GO::exist() const {
+	return true;
+}
+Events GO::click(MapState *state, uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 64 * this->getX() and
 		mouseY >= 64 * this->getY() and
 		mouseX < 64 * (this->getX() + this->getSX()) and
 		mouseY < 64 * (this->getY() + this->getSY())) {
-		return this->getGameObjectResponse(currentPlayerId);
+		return this->getResponse(state, currentPlayerId);
 	}
 	return Events();
 }
@@ -84,6 +88,9 @@ bool GO::intersects(GO* go) const {
 	rect2.height = go->getSY();
 
 	return rect1.intersects(rect2);
+}
+Events GO::newMove(MapState* state, uint32_t currentPlayerId) {
+	return Events();
 }
 bool GO::highDrawingPriority() const {
 	return false;
@@ -103,15 +110,16 @@ float GO::getOffsetX() const {
 float GO::getOffsetY() const {
     return 0;
 }
-HorizontalSelectionWindowComponent GO::getExitComponent() {
-    Events soundEvent;
-    soundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+HorizontalSelectionWindowComponent GO::getExitComponent() const {
+    Events exitEvent;
+    exitEvent.add(std::make_shared<PlaySoundEvent>("click"));
+	exitEvent.add(std::make_shared<ResetHighlightEvent>());
 
 	HorizontalSelectionWindowComponent component = {
 		"exit_icon",
 		*Texts::get()->get("leave"),
 		true,
-		soundEvent
+		exitEvent
 	};
 	return component;
 }

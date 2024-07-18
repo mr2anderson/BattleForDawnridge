@@ -28,7 +28,7 @@
 #include "ChangeMoveEvent.hpp"
 #include "ReturnToMenuEvent.hpp"
 #include "SubResourcesEvent.hpp"
-#include "ChangeHighlightEvent.hpp"
+#include "SetHighlightEvent.hpp"
 #include "TryToTradeEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "SubResourceEvent.hpp"
@@ -56,11 +56,10 @@
 #include "SubHpEvent.hpp"
 #include "SetFireEvent.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
-#include "TryToRaiseDragonEvent.hpp"
-#include "DecreaseDragonRecoverMovesLeftEvent.hpp"
-#include "ResetDragonRecoverMovesLeftEvent.hpp"
 #include "BuildingMode.hpp"
 #include "FocusOnEvent.hpp"
+#include "ResetHighlightEvent.hpp"
+#include "Button.hpp"
 
 
 #pragma once
@@ -85,7 +84,7 @@ private:
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerIndex;
 	std::shared_ptr<PopUpElement> element;
-    std::optional<Animation> animation;
+    std::optional<SuspendingAnimation> animation;
     std::queue<std::shared_ptr<Event>> baseEvents;
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	uint32_t move = 0;
@@ -94,7 +93,7 @@ private:
     BuildingMode bm;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
-	Selectable* selected;
+	ISelectable* selected;
 
     bool returnToMenu;
 	bool curcorVisibility;
@@ -108,7 +107,6 @@ private:
 	void initCurrentPlayerIndex();
 	void initMoveCtr();
 	void initSelectable();
-    void initPlains();
 	void initGraphics(sf::RenderWindow &window);
 	static std::wstring GET_BUILD_DESCRIPTION(std::unique_ptr<Building> b);
 
@@ -159,7 +157,7 @@ private:
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e);
 	void handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e);
-	void handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent> e);
+	void handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e);
 	void handleCollectEvent(std::shared_ptr<CollectEvent> e);
 	void handleAddHpEvent(std::shared_ptr<AddHpEvent> e);
 	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e);
@@ -188,8 +186,6 @@ private:
 	void handleSubHpEvent(std::shared_ptr<SubHpEvent> e);
 	void handleSetFireEvent(std::shared_ptr<SetFireEvent> e);
 	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e);
-	void handleTryToRaiseDragonEvent(std::shared_ptr<TryToRaiseDragonEvent> e);
-	void handleDecreaseDragonRecoverMovesLeftEvent(std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> e);
-	void handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDragonRecoverMovesLeftEvent> e);
 	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e);
+	void handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e);
 };

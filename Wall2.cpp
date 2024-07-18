@@ -18,13 +18,14 @@
 
 
 #include "Wall2.hpp"
+#include "WallSpec.hpp"
 #include "Texts.hpp"
 
 
 Wall2::Wall2() = default;
-Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
-	Wall(x, y, playerId, units) {
-
+Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new WallSpec());
 }
 Building* Wall2::cloneBuilding() const {
 	return new Wall2(*this);

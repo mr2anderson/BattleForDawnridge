@@ -28,14 +28,14 @@ public:
 	ResourcePoint();
 	ResourcePoint(uint32_t x, uint32_t y);
 
-	Events newMove(uint32_t playerId) override;
+	Events newMove(MapState *state, uint32_t playerId) override;
 	virtual Events tryToCollect(uint32_t playerId, uint32_t value);
 	virtual std::string getResourceType() const = 0;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 private:
 	uint8_t getHPPointerOrientation() const override;
-	Events getGameObjectResponse(uint32_t playerId) override;
+	Events getResponse(MapState *state, uint32_t playerId) override;
 	Events getSelectionWindow();
 	HorizontalSelectionWindowComponent getResourceLeftComponent() const;
 };

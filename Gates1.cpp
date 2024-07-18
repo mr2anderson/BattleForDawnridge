@@ -16,15 +16,16 @@
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "Gates1.hpp"
+#include "GatesSpec.hpp"
 #include "Texts.hpp"
 
 
 Gates1::Gates1() = default;
-Gates1::Gates1(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<Collection<TerritoryOriginB>> originsPtr) :
-        Gates(x, y, playerId, units, go, mapW, mapH, originsPtr),
-        Building(x, y, playerId, units) {
-
+Gates1::Gates1(uint32_t x, uint32_t y, uint32_t playerId) :
+        Building(x, y, playerId) {
+    this->addSpec(new GatesSpec());
 }
 Building* Gates1::cloneBuilding() const {
     return new Gates1(*this);

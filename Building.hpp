@@ -19,6 +19,7 @@
 
 #include "Unit.hpp"
 #include "Fire.hpp"
+#include "IBuildingSpec.hpp"
 
 
 #pragma once
@@ -27,30 +28,46 @@
 class Building : public Unit {
 public:
 	Building();
-	Building(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
+	Building(uint32_t x, uint32_t y, uint32_t playerId);
+	Building(const Building& building);
+	~Building();
 	virtual Building* cloneBuilding() const = 0;
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Events hit(Damage d, const std::optional<std::string> &direction) override;
-	virtual bool works() const;
-	virtual Events destroy();
-	void setFire();
+	Events getHighlightEvent(MapState *state) const;
+	Resources getLimit() const;
+	bool isVictoryCondition() const;
+	bool isOrigin() const;
+	bool isActiveConductor() const;
+	bool allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	Events destroy(MapState *state);
 	void decreaseBurningMovesLeft();
+	void setFire();
 protected:
+	void addSpec(IBuildingSpec* spec);
 	virtual uint32_t getRegenerationSpeed() const = 0;
 	virtual std::wstring getUpperCaseReadableName() const = 0;
-
-	uint8_t getHPPointerOrientation() const override;
-	HorizontalSelectionWindowComponent getHpInfoComponent() const;
-	virtual HorizontalSelectionWindowComponent getDestroyComponent();
-	Events regenerate();
 private:
 	uint32_t burningMovesLeft;
 	Fire fire;
+	std::vector<IBuildingSpec*> specs;
 
+	bool isUltraHighObstacle(uint32_t playerId) const override;
+	bool isHighObstacle(uint32_t playerId) const override;
+	bool isLowObstacle(uint32_t playerId) const override;
+	bool connectedTo(MapState* state, GO* go) const;
+	bool connectedToOrigin(MapState* state) const;
+	uint8_t getHPPointerOrientation() const override;
+	HorizontalSelectionWindowComponent getHpInfoComponent() const;
+	HorizontalSelectionWindowComponent getDestroyComponent();
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const;
+	Events hit(Damage d, const std::optional<std::string>& direction) override;
+	Events newMove(MapState* state, uint32_t playerId) override;
+	bool works() const;
+	Events processRegeneration();
+	Events getResponse(MapState* state, uint32_t playerId);
 	sf::Color getTextureColor() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
-    virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
+    std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 };

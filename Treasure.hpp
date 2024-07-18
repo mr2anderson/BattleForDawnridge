@@ -28,7 +28,7 @@ public:
 	Treasure();
 	Treasure(uint32_t x, uint32_t y);
 
-	Events newMove(uint32_t playerId) override;
+	Events newMove(MapState *state, uint32_t playerId) override;
 	Events tryToCollect(uint32_t playerId, uint32_t value) override;
     uint32_t getSX() const override;
     uint32_t getSY() const override;

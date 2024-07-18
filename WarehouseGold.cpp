@@ -18,16 +18,14 @@
 
 
 #include "WarehouseGold.hpp"
+#include "WarehouseGoldSpec.hpp"
 #include "Texts.hpp"
-#include "TryToCollectEvent.hpp"
-#include "CreateEEvent.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
-WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<Treasure>> treasures) :
-	ResourceStorageB(x, y, playerId, units),
-	Building(x, y, playerId, units) {
-	this->treasures = treasures;
+WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new WarehouseGoldSpec()); // TODO Treasure collection
 }
 Building* WarehouseGold::cloneBuilding() const {
 	return new WarehouseGold(*this);
@@ -40,13 +38,6 @@ uint32_t WarehouseGold::getSY() const {
 }
 uint32_t WarehouseGold::getMaxHP() const {
     return 10000;
-}
-Events WarehouseGold::newMove(uint32_t playerId) {
-	Events response;
-	if (this->belongTo(playerId) and this->exist()) {
-		return this->regenerate() + this->collect();
-	}
-	return response;
 }
 Defence WarehouseGold::getDefence() const {
 	return Defence::WOOD;
@@ -68,43 +59,6 @@ std::string WarehouseGold::getSoundName() const {
 std::wstring WarehouseGold::getDescription() const {
 	return *Texts::get()->get("warehouse_gold_description");
 }
-Resources WarehouseGold::getLimit() const {
-	return Resources({ Resource("gold", 10000) });
-}
 std::wstring WarehouseGold::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_gold_upper_case_readable_name");
-}
-Events WarehouseGold::collect() {
-	Events events;
-
-	for (uint32_t i = 0; i < this->treasures->size(); i = i + 1) {
-		Treasure* t = this->treasures->at(i);
-		if (t->exist() and this->connectedTo(t)) {
-			events.add(std::make_shared<TryToCollectEvent>(this->getPlayerId(), t, 2500));
-		}
-	}
-
-	return events;
-}
-Events WarehouseGold::getSelectionW() {
-	Events response;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getResourceStorageComponent());
-	components.push_back(this->getDestroyComponent());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
-    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-	response.add(std::make_shared<CreateEEvent>(window));
-
-	return response;
-}
-Events WarehouseGold::getGameObjectResponse(uint32_t playerId) {
-	if (this->exist() and this->belongTo(playerId)) {
-		return this->getSelectionW();
-	}
-	return Events();
 }

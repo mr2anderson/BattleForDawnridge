@@ -18,15 +18,13 @@
 
 
 #include "Unit.hpp"
-#include "ConductionGraph.hpp"
 
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
+Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId) :
 	HPGO(x, y, currentHp) {
 	this->playerId = playerId;
-	this->units = units;
 }
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (this->exist() and this->getPlayerId() != 0) {
@@ -42,26 +40,6 @@ void Unit::changePlayer(uint32_t newPlayerId) {
 }
 uint32_t Unit::getPlayerId() const {
 	return this->playerId;
-}
-std::shared_ptr<Collection<Unit>> Unit::getUnits() {
-	return this->units;
-}
-bool Unit::isActiveConductor() const {
-	return false;
-}
-bool Unit::connectedTo(GO* go) const {
-	ConductionGraph g;
-
-	for (uint32_t i = 0; i < this->units->size(); i = i + 1) {
-		Unit* u = this->units->at(i);
-		if (u->isActiveConductor() and u->getPlayerId() == this->getPlayerId()) {
-			g.addConductor(u->getX(), u->getY(), u->getSX(), u->getSY());
-		}
-	}
-
-	g.addDestination(go->getX(), go->getY(), go->getSX(), go->getSY());
-
-	return g.connectedToDestination(this->getX(), this->getY(), this->getSX(), this->getSY());
 }
 void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const {
 	std::shared_ptr<PlayerPointer> ptr = this->getPlayerPointer();

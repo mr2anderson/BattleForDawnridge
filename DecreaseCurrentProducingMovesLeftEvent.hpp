@@ -17,20 +17,21 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
 #pragma once
 
 
-class WarriorProducer;
+class WarriorProducerSpec;
 
 
 class DecreaseCurrentProducingMovesLeftEvent : public Event {
 public:
-	DecreaseCurrentProducingMovesLeftEvent(WarriorProducer* b);
+	DecreaseCurrentProducingMovesLeftEvent(WarriorProducerSpec* spec);
 
-	WarriorProducer* getBuilding();
+	WarriorProducerSpec* getSpec();
 private:
-	WarriorProducer* b;
+	WarriorProducerSpec* spec;
 };

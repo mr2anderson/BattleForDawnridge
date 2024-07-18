@@ -208,12 +208,6 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         false,
         Events()
     );
-    educationWindowComponents.emplace_back(
-        "red_dragon",
-        *Texts::get()->get("guide_dragon_system_description"),
-        false,
-        Events()
-    );
 
     std::shared_ptr<HorizontalSelectionWindow> educationWindow = std::make_shared<HorizontalSelectionWindow>(educationWindowComponents);
     Events createEducationWindowEvent = clickEvent;

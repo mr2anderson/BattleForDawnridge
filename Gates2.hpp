@@ -17,16 +17,16 @@
  */
 
 
-#include "Gates.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Gates2 : public Gates {
+class Gates2 : public Building {
 public:
     Gates2();
-    Gates2(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH, std::shared_ptr<Collection<TerritoryOriginB>> originsPtr);
+    Gates2(uint32_t x, uint32_t y, uint32_t playerId);
     Building* cloneBuilding() const override;
 
     uint32_t getSX() const override;

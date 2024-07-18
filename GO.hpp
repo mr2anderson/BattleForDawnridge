@@ -17,8 +17,8 @@
  */
 
 
-#include <limits>
 #include "HorizontalSelectionWindow.hpp"
+#include "MapState.hpp"
 
 
 #pragma once
@@ -44,11 +44,11 @@ public:
     virtual bool isUltraHighObstacle(uint32_t playerId) const;
     virtual bool isHighObstacle(uint32_t playerId) const;
     virtual bool isLowObstacle(uint32_t playerId) const;
-	virtual bool exist() const = 0;
-	Events click(uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
+	virtual bool exist() const;
+	Events click(MapState *state, uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
 	bool intersects(GO* go) const;
 
-	virtual Events newMove(uint32_t currentPlayerId) = 0;
+	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
 	virtual bool highDrawingPriority() const;
 	virtual bool highClickPriority() const;
 	virtual std::string getTextureName() const = 0;
@@ -57,11 +57,11 @@ public:
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:
-	virtual Events getGameObjectResponse(uint32_t currentPlayerId) = 0;
+	virtual Events getResponse(MapState *state, uint32_t currentPlayerId) = 0;
     virtual float getOffsetX() const;
     virtual float getOffsetY() const;
 
-	virtual HorizontalSelectionWindowComponent getExitComponent();
+	HorizontalSelectionWindowComponent getExitComponent() const;
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;
 
 	static constexpr uint32_t WARRIOR_MOVEMENT_FORBIDDEN = 10000;

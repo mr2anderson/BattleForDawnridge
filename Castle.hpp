@@ -17,38 +17,26 @@
  */
 
 
-#include "TerritoryOriginB.hpp"
-#include "ResourceStorageB.hpp"
-#include "VictoryConditionB.hpp"
-#include "DragonCave.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Castle : public TerritoryOriginB, public ResourceStorageB, public VictoryConditionB, public DragonCave {
+class Castle : public Building {
 public:
 	Castle();
-	Castle(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
+	Castle(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
-	Events newMove(uint32_t playerId) override;
     uint32_t getSX() const override;
     uint32_t getSY() const override;
     uint32_t getMaxHP() const override;
-	Resources getLimit() const override;
 	Defence getDefence() const override;
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-	Events destroy() override;
-private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	uint32_t getRadius() const override;
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
-	HorizontalSelectionWindowComponent getRaiseComponent(std::shared_ptr<Dragon> newDragon) override;
-	HorizontalSelectionWindowComponent getAttackComponent() override;
 };

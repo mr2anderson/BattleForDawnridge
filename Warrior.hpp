@@ -19,8 +19,8 @@
 
 #include "Unit.hpp"
 #include "Collection.hpp"
-#include "Selectable.hpp"
-#include "Animated.hpp"
+#include "ISelectable.hpp"
+#include "IWithSuspendingAnimation.hpp"
 #include "MovementGraph.hpp"
 #include "AnimationState.hpp"
 #include "Damage.hpp"
@@ -29,25 +29,25 @@
 #pragma once
 
 
-class Warrior : public Unit, public Selectable, public Animated {
+class Warrior : public Unit, public ISelectable, public IWithSuspendingAnimation {
 public:
 	Warrior();
-	Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH);
+	Warrior(uint32_t x, uint32_t y, uint32_t playerId);
 	virtual Warrior* cloneWarrior() const = 0;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	Events hit(Damage d, const std::optional<std::string> &direction) override;
 	void changeDirection(const std::string& newDirection);
-	Events newMove(uint32_t playerId) override;
+	Events newMove(MapState *state, uint32_t playerId) override;
 	void refreshMovementPoints();
     uint32_t getSX() const override;
     uint32_t getSY() const override;
 	std::string getTextureName() const override;
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
     uint32_t getCurrentAnimationMs() const;
-	bool canStay(uint32_t newX, uint32_t newY) const;
-	uint32_t getMovementCost(uint32_t newX, uint32_t newY) const;
+	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
+	uint32_t getMovementCost(MapState *state, uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
     Events processCurrentAnimation() override;
@@ -64,8 +64,6 @@ public:
 	virtual uint32_t getMovementPoints() const = 0;
 private:
 	std::optional<uint32_t> movementPoints;
-	std::shared_ptr<Collection<GO>> go;
-	uint32_t mapW, mapH;
 	std::string currentDirection;
 	std::string currentAnimation;
 	sf::Clock animationClock;
@@ -74,11 +72,11 @@ private:
 	bool highDrawingPriority() const override;
 	bool highClickPriority() const override;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
-	Events unselect(uint32_t x, uint32_t y, uint8_t button) override;
-	Events getMoveHighlightionEvent();
-	std::vector<std::tuple<uint32_t, uint32_t>> getMoves();
-    Move getMove(uint32_t x2, uint32_t y2);
-    MovementGraph buildMovementGraph();
+	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
+	Events getMoveHighlightionEvent(MapState *state);
+	std::vector<std::tuple<uint32_t, uint32_t>> getMoves(MapState *state);
+    Move getMove(MapState *state, uint32_t x2, uint32_t y2);
+    MovementGraph buildMovementGraph(MapState *state);
     Events processRunningAnimation();
 	Events processBeenHitAnimation();
 	Events processTippingOverAnimation();
@@ -87,7 +85,7 @@ private:
     float getOffset() const;
 
     AnimationState getCurrentAnimationState() const;
-	Events getGameObjectResponse(uint32_t playerId) override;
+	Events getResponse(MapState *state, uint32_t playerId) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 	uint8_t getHPPointerOrientation() const override;
 };

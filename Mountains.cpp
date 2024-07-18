@@ -21,11 +21,12 @@
 #include "Texts.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
+#include "CreateEEvent.hpp"
 
 
 Mountains::Mountains() = default;
 Mountains::Mountains(uint32_t x, uint32_t y, uint32_t type) :
-	ImpassableObstacle(x, y) {
+	GO(x, y) {
 	this->type = type;
 }
 uint32_t Mountains::getSX() const {
@@ -48,4 +49,24 @@ std::wstring Mountains::getDescription() const {
 }
 bool Mountains::isUltraHighObstacle(uint32_t playerId) const {
     return true;
+}
+bool Mountains::warriorCanStay(uint32_t warriorPlayerId) const {
+	return false;
+}
+uint32_t Mountains::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+	return GO::WARRIOR_MOVEMENT_FORBIDDEN;
+}
+Events Mountains::getResponse(MapState* state, uint32_t playerId) {
+	std::vector<HorizontalSelectionWindowComponent> components;
+
+	components.push_back(this->getExitComponent());
+	components.push_back(this->getDescriptionComponent());
+
+	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
+
+	Events event;
+	event.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+	event.add(std::make_shared<CreateEEvent>(window));
+
+	return event;
 }

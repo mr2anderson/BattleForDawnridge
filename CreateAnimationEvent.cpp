@@ -20,9 +20,9 @@
 #include "CreateAnimationEvent.hpp"
 
 
-CreateAnimationEvent::CreateAnimationEvent(Animation animation) {
+CreateAnimationEvent::CreateAnimationEvent(SuspendingAnimation animation) {
     this->animation = animation;
 }
-Animation CreateAnimationEvent::getAnimation() const {
+SuspendingAnimation CreateAnimationEvent::getAnimation() const {
     return this->animation;
 }

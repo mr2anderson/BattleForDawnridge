@@ -17,16 +17,16 @@
  */
 
 
-#include "TradingB.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Market : public TradingB {
+class Market : public Building {
 public:
 	Market();
-	Market(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
+	Market(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
 
     uint32_t getSX() const override;
@@ -37,10 +37,6 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-private:
-	Trade currentTrade;
-
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	std::vector<Trade> getTrades() const override;
 };

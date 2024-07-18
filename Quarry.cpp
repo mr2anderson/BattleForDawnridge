@@ -19,13 +19,15 @@
 
 
 #include "Quarry.hpp"
+#include "StoneCollectorSpec.hpp"
 #include "Texts.hpp"
 
 
 Quarry::Quarry() = default;
-Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	ResourceB(x, y, playerId, units, resourcePointsPtr, go, mapW, mapH),
-	Building(x, y, playerId, units) {}
+Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new StoneCollectorSpec());
+}
 Building* Quarry::cloneBuilding() const {
 	return new Quarry(*this);
 }
@@ -54,15 +56,6 @@ std::string Quarry::getTextureName() const {
 }
 std::string Quarry::getSoundName() const {
 	return "stone";
-}
-std::string Quarry::getResourceType() const {
-	return "stone";
-}
-uint32_t Quarry::getCollectionSpeed() const {
-	return 1750;
-}
-uint32_t Quarry::getRadius() const {
-	return 5;
 }
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");

@@ -23,14 +23,14 @@
 #pragma once
 
 
-class Selectable;
+class ISelectable;
 
 
 class SelectEvent : public Event {
 public:
-	SelectEvent(Selectable* s);
+	SelectEvent(ISelectable* s);
 
-	Selectable* getSelectable();
+	ISelectable* getSelectable();
 private:
-	Selectable* s;
+	ISelectable* s;
 };

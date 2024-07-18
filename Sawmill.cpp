@@ -19,13 +19,15 @@
 
 
 #include "Sawmill.hpp"
+#include "WoodCollectorSpec.hpp"
 #include "Texts.hpp"
 
 
 Sawmill::Sawmill() = default;
-Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<ResourcePoint>> resourcePointsPtr, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	ResourceB(x, y, playerId, units, resourcePointsPtr, go, mapW, mapH),
-	Building(x, y, playerId, units) {}
+Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new WoodCollectorSpec());
+}
 Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);
 }
@@ -54,15 +56,6 @@ std::string Sawmill::getTextureName() const {
 }
 std::string Sawmill::getSoundName() const {
 	return "wood";
-}
-std::string Sawmill::getResourceType() const {
-	return "wood";
-}
-uint32_t Sawmill::getCollectionSpeed() const {
-	return 1750;
-}
-uint32_t Sawmill::getRadius() const {
-	return 5;
 }
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");

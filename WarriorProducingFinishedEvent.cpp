@@ -20,12 +20,12 @@
 #include "WarriorProducingFinishedEvent.hpp"
 
 
-WarriorProducingFinishedEvent::WarriorProducingFinishedEvent(WarriorProducer* producer, std::shared_ptr<Warrior> warrior) {
-	this->producer = producer;
+WarriorProducingFinishedEvent::WarriorProducingFinishedEvent(WarriorProducerSpec* spec, std::shared_ptr<Warrior> warrior) {
+	this->spec = spec;
 	this->warrior = warrior;
 }
-WarriorProducer* WarriorProducingFinishedEvent::getProducer() {
-	return this->producer;
+WarriorProducerSpec* WarriorProducingFinishedEvent::getSpec() {
+	return this->spec;
 }
 std::shared_ptr<Warrior> WarriorProducingFinishedEvent::getWarrior() {
 	return this->warrior;

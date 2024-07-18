@@ -21,6 +21,7 @@
 #include "Maps.hpp"
 #include "PlainsGeneration.hpp"
 #include "Textures.hpp"
+#include "GO.hpp"
 
 
 Maps* Maps::singletone = nullptr;
@@ -44,7 +45,7 @@ std::shared_ptr<Map> Maps::load(const std::string& name) {
 void Maps::generateThumbnail(const std::string& name) {
     std::shared_ptr<Map> map = this->load(name);
 
-    float sx = std::min((float)THUMBNAIL_SIZE / (float)map->getW(), (float)THUMBNAIL_SIZE / (float)map->getH());
+    float sx = std::min((float)THUMBNAIL_SIZE / (float)map->getStatePtr()->getMapSizePtr()->getWidth(), (float)THUMBNAIL_SIZE / (float)map->getStatePtr()->getMapSizePtr()->getHeight());
     float sy = sx;
     float scaleX = sx / 64.f;
     float scaleY = scaleX;
@@ -52,7 +53,7 @@ void Maps::generateThumbnail(const std::string& name) {
     sf::RenderTexture renderTexture;
     renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 
-    PlainsGeneration generation = PlainsGeneration(THUMBNAIL_SIZE / 64, THUMBNAIL_SIZE / 64);
+    PlainsGeneration generation;
     for (uint32_t i = 0; i < THUMBNAIL_SIZE; i = i + 64) {
         for (uint32_t j = 0; j < THUMBNAIL_SIZE; j = j + 64) {
             sf::Sprite sprite;
@@ -62,14 +63,13 @@ void Maps::generateThumbnail(const std::string& name) {
         }
     }
 
-    std::shared_ptr<Collection<GO>> go = map->getGO();
-    for (uint32_t i = 0; i < go->size(); i = i + 1) {
-        GO* o = go->at(i);
-        float x = o->getX() * sx;
-        float y = (o->getY() + 1) * sy;
+    for (uint32_t i = 0; i < map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = map->getStatePtr()->getCollectionsPtr()->getGO(i);
+        float x = go->getX() * sx;
+        float y = (go->getY() + 1) * sy;
         sf::Sprite sprite;
-        sprite.setTextureRect(o->getTextureRect());
-        sprite.setTexture(*Textures::get()->get(o->getTextureName()));
+        sprite.setTextureRect(go->getTextureRect());
+        sprite.setTexture(*Textures::get()->get(go->getTextureName()));
         sprite.setPosition(x, THUMBNAIL_SIZE - y);
         sprite.setScale(scaleX, scaleY);
         renderTexture.draw(sprite);

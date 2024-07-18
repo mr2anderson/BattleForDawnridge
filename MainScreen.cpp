@@ -49,6 +49,10 @@
 #include "WindowButton.hpp"
 #include "Textures.hpp"
 #include "Texts.hpp"
+#include "TradingSpec.hpp"
+#include "ResourcePoint.hpp"
+#include "WarriorProducerSpec.hpp"
+#include "Warrior.hpp"
 
 
 
@@ -84,7 +88,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
                             else {
 								if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
 									std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-									Events unselectEvent = this->selected->unselect(std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
+									Events unselectEvent = this->selected->unselect(this->map->getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
 									this->addEvents(unselectEvent);
 								}
                             }
@@ -134,7 +138,6 @@ void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 	this->initCurrentPlayerIndex();
     this->initMoveCtr();
 	this->initSelectable();
-    this->initPlains();
     this->initGraphics(window);
 	this->changeMove();
 }
@@ -142,7 +145,7 @@ void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
     this->map = mapPtr;
 }
 void MainScreen::initPlayerIsActiveTable() {
-	this->playerIsActive.resize(this->map->getPlayersNumber(), true);
+	this->playerIsActive.resize(this->map->getStatePtr()->getPlayersPtr()->total(), true);
 }
 void MainScreen::initCurrentPlayerIndex() {
 	this->currentPlayerIndex = 0;
@@ -152,9 +155,6 @@ void MainScreen::initMoveCtr() {
 }
 void MainScreen::initSelectable() {
 	this->selected = nullptr;
-}
-void MainScreen::initPlains() {
-    this->plains = PlainsGeneration(this->map->getW(), this->map->getH());
 }
 void MainScreen::initGraphics(sf::RenderWindow &window) {
     Events clickSoundEvent;
@@ -186,7 +186,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
     buildMenuSectionMainComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH(), this->map->getTobs())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Road>(0, 0, 0)));
 	buildMenuSectionMainComponents.emplace_back(Road().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Road>()), true, createBuildingModeEvent);
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionMain = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionMainComponents);
@@ -198,16 +198,16 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionResourceCollectorsComponents;
     buildMenuSectionResourceCollectorsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0, this->map->getUnits())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Arable>(0, 0, 0)));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Arable().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Arable>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints(), this->map->getGO(), this->map->getW(), this->map->getH())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Sawmill>(0, 0, 0)));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Sawmill().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Sawmill>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints(), this->map->getGO(), this->map->getW(), this->map->getH())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Quarry>(0, 0, 0)));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Quarry().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Quarry>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0, this->map->getUnits(), this->map->getResourcePoints(), this->map->getGO(), this->map->getW(), this->map->getH())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<Mine>(0, 0, 0)));
 	buildMenuSectionResourceCollectorsComponents.emplace_back(Mine().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Mine>()), true, createBuildingModeEvent);
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionResourceCollectors = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionResourceCollectorsComponents);
@@ -219,19 +219,19 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionWarehousesComponents;
     buildMenuSectionWarehousesComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseFood>(0, 0, 0, this->map->getUnits())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseFood>(0, 0, 0)));
 	buildMenuSectionWarehousesComponents.emplace_back(WarehouseFood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseFood>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseWood>(0, 0, 0, this->map->getUnits())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseWood>(0, 0, 0)));
 	buildMenuSectionWarehousesComponents.emplace_back(WarehouseWood().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseWood>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseStone>(0, 0, 0, this->map->getUnits())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseStone>(0, 0, 0)));
 	buildMenuSectionWarehousesComponents.emplace_back(WarehouseStone().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseStone>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseIron>(0, 0, 0, this->map->getUnits())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseIron>(0, 0, 0)));
 	buildMenuSectionWarehousesComponents.emplace_back(WarehouseIron().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseIron>()), true, createBuildingModeEvent);
 	createBuildingModeEvent = clickSoundEvent;
-	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0, this->map->getUnits(), this->map->getTreasures())));
+	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<WarehouseGold>(0, 0, 0)));
 	buildMenuSectionWarehousesComponents.emplace_back(WarehouseGold().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<WarehouseGold>()), true, createBuildingModeEvent);
 	
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionWarehouses = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionWarehousesComponents);
@@ -243,7 +243,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
     buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Barracks>(0, 0, 0))));
     buildMenuSectionTroopsComponents.emplace_back(Barracks().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Barracks>()), true, createBuildingModeEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>( buildMenuSectionTroopsComponents);
@@ -255,16 +255,16 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     std::vector<HorizontalSelectionWindowComponent> buildMenuSectionDefenceComponents;
     buildMenuSectionDefenceComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0, this->map->getUnits()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall1>(0, 0, 0))));
     buildMenuSectionDefenceComponents.emplace_back(Wall1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall1>()), true, createBuildingModeEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates1>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH(), this->map->getTobs()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates1>(0, 0, 0))));
     buildMenuSectionDefenceComponents.emplace_back(Gates1().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Gates1>()), true, createBuildingModeEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0, this->map->getUnits()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Wall2>(0, 0, 0))));
     buildMenuSectionDefenceComponents.emplace_back(Wall2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Wall2>()), true, createBuildingModeEvent);
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates2>(0, 0, 0, this->map->getUnits(), this->map->getGO(), this->map->getW(), this->map->getH(), this->map->getTobs()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Gates2>(0, 0, 0))));
     buildMenuSectionDefenceComponents.emplace_back(Gates2().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Gates2>()), true, createBuildingModeEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionDefenceComponents);
@@ -276,7 +276,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
     buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, Events());
     createBuildingModeEvent = clickSoundEvent;
-    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0, this->map->getUnits()))));
+    createBuildingModeEvent.add((std::make_shared<TryToBuildEvent>(std::make_shared<Market>(0, 0, 0))));
     buildMenuSectionOtherComponents.emplace_back(Market().getTextureName(), GET_BUILD_DESCRIPTION(std::make_unique<Market>()), true, createBuildingModeEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionOther = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionOtherComponents);
@@ -334,7 +334,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.draw(*this->map);
 	this->drawHighlightion(window);
 	if (this->selected != nullptr) {
-		window.draw(*this->selected->getSelectablePointer(this->getMousePositionBasedOnView()));
+		window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView()), std::get<1>(this->getMousePositionBasedOnView())));
 	}
 	if (this->element != nullptr) {
 		if (!this->element->isCameraDependent()) {
@@ -356,8 +356,8 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	window.draw(bar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
-	for (uint32_t i = 0; i < this->plains.getW(); i = i + 1) {
-		for (uint32_t j = 0; j < this->plains.getH(); j = j + 1) {
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getMapSizePtr()->getWidth(); i = i + 1) {
+		for (uint32_t j = 0; j < this->map->getStatePtr()->getMapSizePtr()->getHeight(); j = j + 1) {
 			sf::Sprite s;
 			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
 			s.setPosition(64 * i, 64 * j);
@@ -392,7 +392,7 @@ void MainScreen::addNewMoveEvent() {
 		if (this->element != nullptr or !this->baseEvents.empty()) {
 			break;
 		}
-		Events newMoveEvent = this->map->getGO()->at(this->currentGOIndexNewMoveEvent)->newMove(this->getCurrentPlayer()->getId());
+		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
 	}
@@ -403,24 +403,25 @@ bool MainScreen::allNewMoveEventsAdded() const {
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
 	this->currentGOIndexNewMoveEvent = 0;
-	this->totalGONewMoveEvents = this->map->getGO()->size();
+	this->totalGONewMoveEvents = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
 	do {
-		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getPlayersNumber();
+		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getStatePtr()->getPlayersPtr()->total();
 	}
 	while (!this->playerIsActive.at(this->currentPlayerIndex));
 }
 Player* MainScreen::getCurrentPlayer() {
-	return this->map->getPlayer((this->move + 1) % this->map->getPlayersNumber());
+	return this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr((this->move + 1) % this->map->getStatePtr()->getPlayersPtr()->total() + 1);
 }
 Resources MainScreen::getResourcesLimit() {
 	Resources limit;
-	std::shared_ptr<Collection<ResourceStorageB>> rsbs = this->map->getRsbs();
-	for (uint32_t i = 0; i < rsbs->size(); i = i + 1) {
-		ResourceStorageB* rsb = rsbs->at(i);
-		if (rsb->exist() and rsb->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			limit.plus(rsb->getLimit());
+	
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			limit.plus(b->getLimit());
 		}
 	}
+
 	return limit;
 }
 void MainScreen::addButtonClickEventToQueue() {
@@ -437,10 +438,10 @@ void MainScreen::addGameObjectClickEventToQueue() {
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
 
 	for (int8_t c = 1; c >= 0; c = c - 1) {
-		for (uint32_t i = 0; i < this->map->getGO()->size(); i = i + 1) {
-			GO* go = this->map->getGO()->at(i);
+		for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+			GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i);
 			if (go->highClickPriority() == c) {
-				Events gor = go->click(this->getCurrentPlayer()->getId(), mouseX, mouseY);
+				Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), mouseX, mouseY);
 				if (!gor.empty()) {
 					this->addEvents(gor);
 					return;
@@ -591,7 +592,7 @@ bool MainScreen::verifyViewSouth(uint32_t border) {
 	return true;
 }
 bool MainScreen::verifyViewSouth() {
-	return this->verifyViewSouth(64 * this->plains.getH() - this->windowH / 2);
+	return this->verifyViewSouth(64 * this->map->getStatePtr()->getMapSizePtr()->getHeight() - this->windowH / 2);
 }
 bool MainScreen::verifyViewWest(uint32_t border) {
 	if (this->view->getCenter().x < border) {
@@ -611,7 +612,7 @@ bool MainScreen::verifyViewEast(uint32_t border) {
 	return true;
 }
 bool MainScreen::verifyViewEast() {
-	return this->verifyViewEast(64 * this->plains.getW() - this->windowW / 2);
+	return this->verifyViewEast(64 * this->map->getStatePtr()->getMapSizePtr()->getWidth() - this->windowW / 2);
 }
 
 
@@ -639,8 +640,8 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<SubResourcesEvent> subResourcesEvent = std::dynamic_pointer_cast<SubResourcesEvent>(e)) {
         this->handleSubResourcesEvent(subResourcesEvent);
     }
-    else if (std::shared_ptr<ChangeHighlightEvent> changeHighlightEvent = std::dynamic_pointer_cast<ChangeHighlightEvent>(e)) {
-        this->handleChangeHighlightEvent(changeHighlightEvent);
+    else if (std::shared_ptr<SetHighlightEvent> changeHighlightEvent = std::dynamic_pointer_cast<SetHighlightEvent>(e)) {
+        this->handleSetHighlightEvent(changeHighlightEvent);
     }
     else if (std::shared_ptr<CollectEvent> collectEvent = std::dynamic_pointer_cast<CollectEvent>(e)) {
         this->handleCollectEvent(collectEvent);
@@ -723,24 +724,19 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<ChangeWarriorDirectionEvent> changeWarriorDirectionEvent = std::dynamic_pointer_cast<ChangeWarriorDirectionEvent>(e)) {
 		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent);
 	}
-	else if (std::shared_ptr<TryToRaiseDragonEvent> tryToRaiseDragonEvent = std::dynamic_pointer_cast<TryToRaiseDragonEvent>(e)) {
-		this->handleTryToRaiseDragonEvent(tryToRaiseDragonEvent);
-	}
-	else if (std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> decreaseDragonRecoverMovesLeftEvent = std::dynamic_pointer_cast<DecreaseDragonRecoverMovesLeftEvent>(e)) {
-		this->handleDecreaseDragonRecoverMovesLeftEvent(decreaseDragonRecoverMovesLeftEvent);
-	}
-	else if (std::shared_ptr<ResetDragonRecoverMovesLeftEvent> resetDragonRecoverMovesLeftEvent = std::dynamic_pointer_cast<ResetDragonRecoverMovesLeftEvent>(e)) {
-		this->handleResetDragonRecoverMovesLeftEvent(resetDragonRecoverMovesLeftEvent);
-	}
 	else if (std::shared_ptr<FocusOnEvent> focusOnEvent = std::dynamic_pointer_cast<FocusOnEvent>(e)) {
 		this->handleFocusOnEvent(focusOnEvent);
 	}
+	else if (std::shared_ptr<ResetHighlightEvent> resetHighlightEvent = std::dynamic_pointer_cast<ResetHighlightEvent>(e)) {
+		this->handleResetHighlightEvent(resetHighlightEvent);
+	}
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
-	TradingB* b = e->getBuilding();
+	TradingSpec* b = e->getSpec();
+	std::string soundName = e->getSoundName();
 	Trade t = e->getTrade();
 	if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
-		Events tradeEvent = b->doTrade(t);
+		Events tradeEvent = b->doTrade(soundName, t);
 		this->addEvents(tradeEvent);
 	}
 	else {
@@ -765,7 +761,7 @@ void MainScreen::handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e) {
 void MainScreen::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e) {
 	this->getCurrentPlayer()->subResources(e->getResources());
 }
-void MainScreen::handleChangeHighlightEvent(std::shared_ptr<ChangeHighlightEvent> e) {
+void MainScreen::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e) {
 	this->highlightTable.mark(*e);
 }
 void MainScreen::handleCollectEvent(std::shared_ptr<CollectEvent> e) {
@@ -781,12 +777,12 @@ void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
 	go->addHp(n);
 }
 void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e) {
-	e->getBuilding()->decreaseCurrentTradeMovesLeft();
+	e->getSpec()->decreaseCurrentTradeMovesLeft();
 }
 void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
-		this->bm = BuildingMode(e->getBuilding(), this->map->getGO(), this->map->getTbs(), this->getCurrentPlayer()->getId(), this->map->getW(), this->map->getH());
-		Events bmStartEvent = bm.start();
+		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
+		Events bmStartEvent = bm.start(this->map->getStatePtr());
 		this->addEvents(bmStartEvent);
 	}
 	else {
@@ -818,17 +814,16 @@ void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
 	this->returnToMenu = true;
 }
 void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
-	Events destroyBuildingEvent = e->getBuilding()->destroy();
+	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map->getStatePtr());
 	this->addEvents(destroyBuildingEvent);
 }
 void MainScreen::handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e) {
-	this->map->getPlayer(e->getPlayerId() - 1)->limitResources(this->getResourcesLimit());
+	this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(this->getResourcesLimit());
 }
 void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e) {
-	std::shared_ptr<Collection<VictoryConditionB>> vcbs = this->map->getVcbs();
-	for (uint32_t i = 0; i < vcbs->size(); i = i + 1) {
-		VictoryConditionB* vcb = vcbs->at(i);
-		if (vcb->getPlayerId() == e->getPlayerId() and vcb->exist()) {
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		if (b->getPlayerId() == e->getPlayerId() and b->exist() and b->isVictoryCondition()) {
 			return;
 		}
 	}
@@ -853,13 +848,13 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 	this->handleCreatePopUpElementEvent(createW);
 }
 void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
-	e->getBuilding()->decreaseCurrentProducingMovesLeft();
+	e->getSpec()->decreaseCurrentProducingMovesLeft();
 }
 void MainScreen::handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getWarrior()->getCost()) {
 		Events subResourcesEvent;
 		subResourcesEvent.add(std::make_shared<SubResourcesEvent>(e->getWarrior()->getCost()));
-        subResourcesEvent = subResourcesEvent + e->getProducer()->startProducing(e->getWarrior());
+        subResourcesEvent = subResourcesEvent + e->getSpec()->startProducing(e->getWarrior());
 		this->addEvents(subResourcesEvent);
 	}
 	else {
@@ -873,7 +868,7 @@ void MainScreen::handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e) {
 	}
 }
 void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e) {
-	e->getProducer()->stopProducing();
+	e->getSpec()->stopProducing();
 	this->map->add(e->getWarrior()->cloneWarrior());
 }
 void MainScreen::handleSelectEvent(std::shared_ptr<SelectEvent> e) {
@@ -925,31 +920,11 @@ void MainScreen::handleSetFireEvent(std::shared_ptr<SetFireEvent> e) {
 void MainScreen::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e) {
 	e->getWarrior()->changeDirection(e->getDirection());
 }
-void MainScreen::handleTryToRaiseDragonEvent(std::shared_ptr<TryToRaiseDragonEvent> e) {
-	if (this->getCurrentPlayer()->getResources() >= e->getDragon()->getCost()) {
-		Events subResourcesEvent;
-		subResourcesEvent.add(std::make_shared<SubResourcesEvent>(e->getDragon()->getCost()));
-		subResourcesEvent = subResourcesEvent + e->getCave()->setDragon(e->getDragon()->clone());
-		this->addEvents(subResourcesEvent);
-	}
-	else {
-		Events clickEvent;
-		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resource_for_dragon"), *Texts::get()->get("OK"), clickEvent);
-		Events unableToRaiseDragonEvent = clickEvent;
-		unableToRaiseDragonEvent.add(std::make_shared<CreateEEvent>(w));
-		this->addEvents(unableToRaiseDragonEvent);
-	}
-}
-void MainScreen::handleDecreaseDragonRecoverMovesLeftEvent(std::shared_ptr<DecreaseDragonRecoverMovesLeftEvent> e) {
-	e->getDragon()->decreaseRecoverMovesLeft();
-}
-void MainScreen::handleResetDragonRecoverMovesLeftEvent(std::shared_ptr<ResetDragonRecoverMovesLeftEvent> e) {
-	e->getDragon()->resetRecoverMoves();
-}
 void MainScreen::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e) {
 	this->viewMovingQueue.emplace(
 		64 * e->getX() + 64 * e->getSX() / 2,
 		64 * e->getY() + 64 * e->getSY() / 2);
+}
+void MainScreen::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e) {
+	this->highlightTable.clear();
 }

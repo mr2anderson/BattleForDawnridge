@@ -18,15 +18,14 @@
 
 
 #include "WarehouseWood.hpp"
+#include "WarehouseWoodSpec.hpp"
 #include "Texts.hpp"
-#include "CreateEEvent.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;
-WarehouseWood::WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
-	ResourceStorageB(x, y, playerId, units),
-	Building(x, y, playerId, units) {
-
+WarehouseWood::WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new WarehouseWoodSpec());
 }
 Building* WarehouseWood::cloneBuilding() const {
 	return new WarehouseWood(*this);
@@ -39,13 +38,6 @@ uint32_t WarehouseWood::getSY() const {
 }
 uint32_t WarehouseWood::getMaxHP() const {
     return 10000;
-}
-Events WarehouseWood::newMove(uint32_t playerId) {
-	Events response;
-	if (this->belongTo(playerId) and this->exist()) {
-		return  this->regenerate();
-	}
-	return response;
 }
 Defence WarehouseWood::getDefence() const {
 	return Defence::WOOD;
@@ -67,31 +59,6 @@ std::string WarehouseWood::getSoundName() const {
 std::wstring WarehouseWood::getDescription() const {
 	return *Texts::get()->get("warehouse_wood_description");
 }
-Resources WarehouseWood::getLimit() const {
-	return Resources({ Resource("wood", 20000) });
-}
 std::wstring WarehouseWood::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_wood_upper_case_readable_name");
-}
-Events WarehouseWood::getSelectionW() {
-	Events response;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getResourceStorageComponent());
-	components.push_back(this->getDestroyComponent());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
-    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-	response.add(std::make_shared<CreateEEvent>(window));
-
-	return response;
-}
-Events WarehouseWood::getGameObjectResponse(uint32_t playerId) {
-	if (this->exist() and this->belongTo(playerId)) {
-		return this->getSelectionW();
-	}
-	return Events();
 }

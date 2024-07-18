@@ -24,17 +24,17 @@
 #pragma once
 
 
-class WarriorProducer;
+class WarriorProducerSpec;
 class Warrior;
 
 
 class TryToProduceEvent : public Event {
 public:
-	TryToProduceEvent(WarriorProducer* producer, std::shared_ptr<Warrior> warrior);
+	TryToProduceEvent(WarriorProducerSpec* spec, std::shared_ptr<Warrior> warrior);
 
-	WarriorProducer* getProducer();
+	WarriorProducerSpec* getSpec();
 	std::shared_ptr<Warrior> getWarrior();
 private:
-	WarriorProducer* producer;
+	WarriorProducerSpec* spec;
 	std::shared_ptr<Warrior> warrior;
 };

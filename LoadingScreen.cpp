@@ -46,8 +46,6 @@ LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
 bool LoadingScreen::run(sf::RenderWindow &window) {
-    window.setMouseCursorVisible(false);
-
 	this->setBaseScreen(window);
 	if (!this->loadBase(window)) {
         return false;
@@ -120,7 +118,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
-                "forest_icon", "water_icon", "red_dragon", "warrior_purple", "warrior_green", "warrior_blue",
+                "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor"}) {
             Textures::get()->add(a, a + ".png");
         }
@@ -158,7 +156,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "red_dragon_info", "red_dragon_attack", "ouch"}) {
+                                      "ouch"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }

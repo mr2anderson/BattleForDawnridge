@@ -18,18 +18,14 @@
 
 
 #include "Barracks.hpp"
-#include "Infantryman.hpp"
-#include "Legioner.hpp"
-#include "Knight.hpp"
-#include "BlackKnight.hpp"
+#include "BarracksSpec.hpp"
 #include "Texts.hpp"
 
 
 Barracks::Barracks() = default;
-Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	WarriorProducer(x, y, playerId, units, go, mapW, mapH),
-	Building(x, y, playerId, units) {
-
+Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new BarracksSpec());
 }
 Building* Barracks::cloneBuilding() const {
 	return new Barracks(*this);
@@ -57,17 +53,6 @@ std::string Barracks::getSoundName() const {
 }
 std::wstring Barracks::getDescription() const {
 	return *Texts::get()->get("barracks_description");
-}
-std::vector<std::shared_ptr<Warrior>> Barracks::getWarriorsToProduce() {
-	std::vector<std::shared_ptr<Warrior>> warriors;
-	warriors.push_back(std::make_shared<Infantryman>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
-	warriors.push_back(std::make_shared<Legioner>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
-	warriors.push_back(std::make_shared<Knight>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
-	warriors.push_back(std::make_shared<BlackKnight>(0, 0, this->getPlayerId(), this->getUnits(), this->getGO(), this->getMapW(), this->getMapH()));
-	return warriors;
-}
-uint32_t Barracks::getRadius() const {
-	return 1;
 }
 uint32_t Barracks::getRegenerationSpeed() const {
 	return this->getMaxHP() / 4;

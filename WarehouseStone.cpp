@@ -18,15 +18,14 @@
 
 
 #include "WarehouseStone.hpp"
+#include "WarehouseStoneSpec.hpp"
 #include "Texts.hpp"
-#include "CreateEEvent.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;
-WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
-	ResourceStorageB(x, y, playerId, units),
-	Building(x, y, playerId, units) {
-
+WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y, playerId) {
+	this->addSpec(new WarehouseStoneSpec());
 }
 Building* WarehouseStone::cloneBuilding() const {
 	return new WarehouseStone(*this);
@@ -39,13 +38,6 @@ uint32_t WarehouseStone::getSY() const {
 }
 uint32_t WarehouseStone::getMaxHP() const {
     return 10000;
-}
-Events WarehouseStone::newMove(uint32_t playerId) {
-	Events response;
-	if (this->belongTo(playerId) and this->exist()) {
-		return  this->regenerate();
-	}
-	return response;
 }
 Defence WarehouseStone::getDefence() const {
 	return Defence::WOOD;
@@ -67,31 +59,6 @@ std::string WarehouseStone::getSoundName() const {
 std::wstring WarehouseStone::getDescription() const {
 	return *Texts::get()->get("warehouse_stone_description");
 }
-Resources WarehouseStone::getLimit() const {
-	return Resources({ Resource("stone", 20000) });
-}
 std::wstring WarehouseStone::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_stone_upper_case_readable_name");
-}
-Events WarehouseStone::getSelectionW() {
-	Events response;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getResourceStorageComponent());
-	components.push_back(this->getDestroyComponent());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
-    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-	response.add(std::make_shared<CreateEEvent>(window));
-
-	return response;
-}
-Events WarehouseStone::getGameObjectResponse(uint32_t playerId) {
-	if (this->exist() and this->belongTo(playerId)) {
-		return this->getSelectionW();
-	}
-	return Events();
 }

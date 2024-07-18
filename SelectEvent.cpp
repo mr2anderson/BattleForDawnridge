@@ -20,9 +20,9 @@
 #include "SelectEvent.hpp"
 
 
-SelectEvent::SelectEvent(Selectable* s) {
+SelectEvent::SelectEvent(ISelectable* s) {
 	this->s = s;
 }
-Selectable* SelectEvent::getSelectable() {
+ISelectable* SelectEvent::getSelectable() {
 	return this->s;
 }

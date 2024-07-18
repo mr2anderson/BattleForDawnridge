@@ -17,7 +17,6 @@
  */
 
 
-#include <vector>
 #include <cstdint>
 
 
@@ -27,13 +26,10 @@
 class PlainsGeneration {
 public:
 	PlainsGeneration();
-	PlainsGeneration(uint32_t w, uint32_t h);
 
 	uint32_t getType(uint32_t i, uint32_t j) const;
-	uint32_t getW() const;
-	uint32_t getH() const;
 
 	static const uint32_t TOTAL_PLAINS;
 private:
-	std::vector<std::vector<uint32_t>> data;
+	uint32_t s1, s2;
 };

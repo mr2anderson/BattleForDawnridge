@@ -18,15 +18,14 @@
 
 
 #include "WarehouseIron.hpp"
+#include "WarehouseIronSpec.hpp"
 #include "Texts.hpp"
-#include "CreateEEvent.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;
-WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units) :
-	ResourceStorageB(x, y, playerId, units),
-	Building(x, y,playerId, units) {
-
+WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId) :
+	Building(x, y,playerId) {
+	this->addSpec(new WarehouseIronSpec());
 }
 Building* WarehouseIron::cloneBuilding() const {
 	return new WarehouseIron(*this);
@@ -39,13 +38,6 @@ uint32_t WarehouseIron::getSY() const {
 }
 uint32_t WarehouseIron::getMaxHP() const {
     return 10000;
-}
-Events WarehouseIron::newMove(uint32_t playerId) {
-	Events response;
-	if (this->belongTo(playerId) and this->exist()) {
-		return this->regenerate();
-	}
-	return response;
 }
 Defence WarehouseIron::getDefence() const {
 	return Defence::WOOD;
@@ -67,31 +59,6 @@ std::string WarehouseIron::getSoundName() const {
 std::wstring WarehouseIron::getDescription() const {
 	return *Texts::get()->get("warehouse_iron_description");
 }
-Resources WarehouseIron::getLimit() const {
-	return Resources({ Resource("iron", 10000) });
-}
 std::wstring WarehouseIron::getUpperCaseReadableName() const {
 	return *Texts::get()->get("warehouse_iron_upper_case_readable_name");
-}
-Events WarehouseIron::getSelectionW() {
-	Events response;
-
-	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getResourceStorageComponent());
-	components.push_back(this->getDestroyComponent());
-
-	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
-    response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-	response.add(std::make_shared<CreateEEvent>(window));
-
-	return response;
-}
-Events WarehouseIron::getGameObjectResponse(uint32_t playerId) {
-	if (this->exist() and this->belongTo(playerId)) {
-		return this->getSelectionW();
-	}
-	return Events();
 }

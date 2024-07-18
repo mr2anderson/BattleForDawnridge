@@ -17,20 +17,23 @@
  */
 
 
+#include <string>
 #include "Event.hpp"
 
 
 #pragma once
 
 
-class TradingB;
+class TradingSpec;
 
 
 class DecreaseCurrentTradeMovesLeftEvent : public Event {
 public:
-	DecreaseCurrentTradeMovesLeftEvent(TradingB *m);
+	DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec, const std::string &soundName);
 
-	TradingB* getBuilding();
+	TradingSpec* getSpec();
+	std::string getSoundName() const;
 private:
-	TradingB* m;
+	TradingSpec* spec;
+	std::string soundName;
 };

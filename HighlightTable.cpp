@@ -24,19 +24,11 @@ HighlightTable::HighlightTable() = default;
 void HighlightTable::clear() {
 	this->data.clear();
 }
-void HighlightTable::mark(ChangeHighlightEvent e) {
-	const Unit* u = e.getUnit();
+void HighlightTable::mark(SetHighlightEvent e) {
 	for (uint32_t dx = 0; dx < e.getSX(); dx = dx + 1) {
 		for (uint32_t dy = 0; dy < e.getSY(); dy = dy + 1) {
 			std::tuple<uint32_t, uint32_t, uint8_t, uint8_t, uint8_t, uint8_t> key = std::make_tuple(e.getX() + dx, e.getY() + dy, e.getColor().r, e.getColor().g, e.getColor().b, e.getColor().a);
-			std::map<const Unit*, bool> byUnits = this->data[key];
-			if (byUnits.find(u) == byUnits.end()) {
-				byUnits[u] = true;
-			}
-			else {
-				byUnits.erase(u);
-			}
-			this->data[key] = byUnits;
+			this->data[key] = true;
 		}
 	}
 }
@@ -44,7 +36,7 @@ std::vector<sf::RectangleShape> HighlightTable::getRects() const {
 	std::vector<sf::RectangleShape> rects;
 	rects.reserve(this->data.size());
 	for (const auto& p : this->data) {
-		if (!p.second.empty()) {
+		if (p.second) {
 			sf::RectangleShape rect;
 			rect.setSize(sf::Vector2f(64, 64));
 			rect.setPosition(64 * std::get<0>(p.first), 64 * std::get<1>(p.first));

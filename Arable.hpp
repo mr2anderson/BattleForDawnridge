@@ -18,19 +18,17 @@
 
 
 
-#include "HpSensitiveB.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Arable : public HpSensitiveB {
+class Arable : public Building {
 public:
 	Arable();
-	Arable(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units);
+	Arable(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* cloneBuilding() const override;
-
-	Events newMove(uint32_t playerId) override;
     uint32_t getSX() const override;
     uint32_t getSY() const override;
     uint32_t getMaxHP() const override;
@@ -39,10 +37,6 @@ public:
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
-private:
 	uint32_t getRegenerationSpeed() const override;
 	std::wstring getUpperCaseReadableName() const override;
-	Events addFood() const;
-	Events getSelectionW();
-	Events getGameObjectResponse(uint32_t playerId) override;
 };

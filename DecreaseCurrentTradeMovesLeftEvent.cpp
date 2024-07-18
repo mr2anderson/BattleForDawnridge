@@ -20,9 +20,13 @@
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 
 
-DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(TradingB* m) {
-	this->m = m;
+DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec, const std::string &soundName) {
+	this->spec = spec;
+	this->soundName = soundName;
 }
-TradingB* DecreaseCurrentTradeMovesLeftEvent::getBuilding() {
-	return this->m;
+TradingSpec* DecreaseCurrentTradeMovesLeftEvent::getSpec() {
+	return this->spec;
+}
+std::string DecreaseCurrentTradeMovesLeftEvent::getSoundName() const {
+	return this->soundName;
 }

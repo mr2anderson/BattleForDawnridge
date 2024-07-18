@@ -20,12 +20,16 @@
 #include "TryToTradeEvent.hpp"
 
 
-TryToTradeEvent::TryToTradeEvent(TradingB* market, const Trade& trade) {
-	this->market = market;
+TryToTradeEvent::TryToTradeEvent(TradingSpec* spec, const std::string &soundName, const Trade& trade) {
+	this->spec = spec;
+	this->soundName = soundName;
 	this->trade = trade;
 }
-TradingB* TryToTradeEvent::getBuilding() {
-	return this->market;
+TradingSpec* TryToTradeEvent::getSpec() {
+	return this->spec;
+}
+std::string TryToTradeEvent::getSoundName() const {
+	return this->soundName;
 }
 Trade TryToTradeEvent::getTrade() const {
 	return this->trade;

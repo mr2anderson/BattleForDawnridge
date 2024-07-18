@@ -17,16 +17,8 @@
  */
 
 
-#include "GO.hpp"
-#include "ResourcePoint.hpp"
-#include "Unit.hpp"
-#include "Castle.hpp"
-#include "TerritoryB.hpp"
-#include "TerritoryOriginB.hpp"
-#include "Collection.hpp"
-#include "Player.hpp"
-#include "VictoryConditionB.hpp"
-#include "Treasure.hpp"
+#include <SFML/Graphics.hpp>
+#include "MapState.hpp"
 
 
 #pragma once
@@ -35,32 +27,11 @@
 class Map : public sf::Drawable {
 public:
     Map(const std::string &path);
+    ~Map();
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-    uint32_t getW() const;
-    uint32_t getH() const;
-    uint32_t getPlayersNumber() const;
-    Player* getPlayer(uint32_t i);
-    std::shared_ptr<Collection<GO>> getGO();
-    std::shared_ptr<Collection<ResourcePoint>> getResourcePoints();
-    std::shared_ptr<Collection<Unit>> getUnits();
-    std::shared_ptr<Collection<TerritoryB>> getTbs();
-    std::shared_ptr<Collection<TerritoryOriginB>> getTobs();
-    std::shared_ptr<Collection<ResourceStorageB>> getRsbs();
-    std::shared_ptr<Collection<VictoryConditionB>> getVcbs();
-    std::shared_ptr<Collection<Treasure>> getTreasures();
-
+    MapState* getStatePtr();
     void add(GO* object);
 private:
-    uint32_t w, h;
-    std::vector<Player> players;
-    std::shared_ptr<Collection<GO>> go;
-    std::shared_ptr<Collection<ResourcePoint>> resourcePoints;
-    std::shared_ptr<Collection<Unit>> units;
-    std::shared_ptr<Collection<TerritoryB>> tbs;
-    std::shared_ptr<Collection<TerritoryOriginB>> tobs;
-    std::shared_ptr<Collection<ResourceStorageB>> rsbs;
-    std::shared_ptr<Collection<VictoryConditionB>> vcbs;
-    std::shared_ptr<Collection<Treasure>> treasures;
+    MapState state;
 };

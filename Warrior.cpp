@@ -19,7 +19,7 @@
 
 #include "Warrior.hpp"
 #include "SelectEvent.hpp"
-#include "ChangeHighlightEvent.hpp"
+#include "SetHighlightEvent.hpp"
 #include "RefreshMovementPointsEvent.hpp"
 #include "ColorTheme.hpp"
 #include "DisableCursorEvent.hpp"
@@ -38,17 +38,18 @@
 #include "FirstTimeTipsTable.hpp"
 #include "StartWarriorAnimationEvent.hpp"
 #include "HPPointer.hpp"
+#include "UnselectEvent.hpp"
+#include "ResetHighlightEvent.hpp"
+#include "EnableCursorEvent.hpp"
 
 
 Warrior::Warrior() {
     this->currentDirection = "e";
+    this->startAnimation("talking");
 }
-Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId, std::shared_ptr<Collection<Unit>> units, std::shared_ptr<Collection<GO>> go, uint32_t mapW, uint32_t mapH) :
-	Unit(x, y, std::nullopt, playerId, units) {
+Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
+	Unit(x, y, std::nullopt, playerId) {
 	this->movementPoints = std::nullopt;
-	this->go = go;
-	this->mapW = mapW;
-	this->mapH = mapH;
     this->currentDirection = "e";
     this->startAnimation("talking");
 }
@@ -80,19 +81,19 @@ Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
         response.add(std::make_shared<StartWarriorAnimationEvent>(this, "been hit"));
     }
 
-    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(dPoints, false, this->getX(), this->getY(), this->getSX(), this->getSY()); // TODO
+    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(dPoints, false, this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
     response.add(std::make_shared<SubHpEvent>(this, this->getHP() - (hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0))));
 
-    response.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
+    response.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
 
     return response;
 }
 void Warrior::changeDirection(const std::string& newDirection) {
     this->currentDirection = newDirection;
 }
-Events Warrior::newMove(uint32_t currentPlayerId) {
+Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
 	if (this->exist() and this->belongTo(currentPlayerId)) {
         Events events;
 		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
@@ -168,21 +169,21 @@ uint32_t Warrior::getCurrentAnimationMs() const {
     }
     return 0;
 }
-bool Warrior::canStay(uint32_t newX, uint32_t newY) const {
+bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 	sf::IntRect thisRect;
 	thisRect.left = newX;
 	thisRect.top = newY;
 	thisRect.width = this->getSX();
 	thisRect.height = this->getSY();
 
-	for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
-		GO* o = this->go->at(i);
-		if (o->exist() and !o->warriorCanStay(this->getPlayerId())) {
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = state->getCollectionsPtr()->getGO(i);
+		if (go->exist() and !go->warriorCanStay(this->getPlayerId())) {
 			sf::IntRect goRect;
-			goRect.left = o->getX();
-			goRect.top = o->getY();
-			goRect.width = o->getSX();
-			goRect.height = o->getSY();
+			goRect.left = go->getX();
+			goRect.top = go->getY();
+			goRect.width = go->getSX();
+			goRect.height = go->getSY();
 			if (thisRect.intersects(goRect)) {
 				return false;
 			}
@@ -191,7 +192,7 @@ bool Warrior::canStay(uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
-uint32_t Warrior::getMovementCost(uint32_t newX, uint32_t newY) const {
+uint32_t Warrior::getMovementCost(MapState *state, uint32_t newX, uint32_t newY) const {
 	sf::IntRect thisRect;
 	thisRect.left = newX;
 	thisRect.top = newY;
@@ -200,16 +201,16 @@ uint32_t Warrior::getMovementCost(uint32_t newX, uint32_t newY) const {
 
 	uint32_t cost = 1;
 
-	for (uint32_t i = 0; i < this->go->size(); i = i + 1) {
-		GO* o = this->go->at(i);
-		if (o->exist()) {
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = state->getCollectionsPtr()->getGO(i);
+		if (go->exist()) {
 			sf::IntRect goRect;
-			goRect.left = o->getX();
-			goRect.top = o->getY();
-			goRect.width = o->getSX();
-			goRect.height = o->getSY();
+			goRect.left = go->getX();
+			goRect.top = go->getY();
+			goRect.width = go->getSX();
+			goRect.height = go->getSY();
 			if (thisRect.intersects(goRect)) {
-				cost = std::max(cost, o->getWarriorMovementCost(this->getPlayerId()));
+				cost = std::max(cost, go->getWarriorMovementCost(this->getPlayerId()));
 			}
 		}
 	}
@@ -253,17 +254,20 @@ std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uin
     sprite.setPosition(mouseX, mouseY);
     return std::make_shared<sf::Sprite>(sprite);
 }
-Events Warrior::unselect(uint32_t x, uint32_t y, uint8_t button) {
-	Events events = this->Selectable::unselect(x, y, button) + this->getMoveHighlightionEvent();
+Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
+    Events events;
+    events.add(std::make_shared<UnselectEvent>());
+    events.add(std::make_shared<ResetHighlightEvent>());
+    events.add(std::make_shared<EnableCursorEvent>());
 
     try {
-        Move move = this->getMove(x, y);
+        Move move = this->getMove(state, x, y);
         events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
         this->currentMovement = move.route;
         this->startAnimation("running");
         this->currentDirection = move.route.front();
         this->movementPoints = this->movementPoints.value() - move.dst;
-        events.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
+        events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
     }
 	catch (MoveDoesNotExist&) {
 
@@ -271,26 +275,26 @@ Events Warrior::unselect(uint32_t x, uint32_t y, uint8_t button) {
 
     return events;
 }
-Events Warrior::getMoveHighlightionEvent() {
+Events Warrior::getMoveHighlightionEvent(MapState *state) {
 	Events event;
 
-	std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves();
+	std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves(state);
 
 	for (uint32_t i = 0; i < moves.size(); i = i + 1) {
 		std::tuple<uint32_t, uint32_t> move = moves.at(i);
-		event.add(std::make_shared<ChangeHighlightEvent>(this, COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, std::get<0>(move), std::get<1>(move), this->getSX(), this->getSY()));
+		event.add(std::make_shared<SetHighlightEvent>(COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, std::get<0>(move), std::get<1>(move), this->getSX(), this->getSY()));
 	}
 
 	return event;
 }
-std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves() {
-	return this->buildMovementGraph().getMoves(this->getX(), this->getY(), this->movementPoints.value());
+std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves(MapState *state) {
+	return this->buildMovementGraph(state).getMoves(this->getX(), this->getY(), this->movementPoints.value());
 }
-Move Warrior::getMove(uint32_t x2, uint32_t y2) {
-    return this->buildMovementGraph().getMove(this->getX(), this->getY(), x2, y2, this->movementPoints.value());
+Move Warrior::getMove(MapState *state, uint32_t x2, uint32_t y2) {
+    return this->buildMovementGraph(state).getMove(this->getX(), this->getY(), x2, y2, this->movementPoints.value());
 }
-MovementGraph Warrior::buildMovementGraph() {
-    MovementGraph g(this->mapW, this->mapH);
+MovementGraph Warrior::buildMovementGraph(MapState *state) {
+    MovementGraph g(state->getMapSizePtr()->getWidth(), state->getMapSizePtr()->getHeight());
 
     if (!this->movementPoints.has_value()) {
         this->movementPoints = this->getMovementPoints();
@@ -312,12 +316,12 @@ MovementGraph Warrior::buildMovementGraph() {
         yMin = this->getY() - this->movementPoints.value();
     }
 
-    uint32_t xMax = std::min(this->mapW - this->getSX(), this->getX() + this->movementPoints.value());
-    uint32_t yMax = std::min(this->mapH - this->getSY(), this->getY() + this->movementPoints.value());
+    uint32_t xMax = std::min(state->getMapSizePtr()->getWidth() - this->getSX(), this->getX() + this->movementPoints.value());
+    uint32_t yMax = std::min(state->getMapSizePtr()->getHeight() - this->getSY(), this->getY() + this->movementPoints.value());
 
     for (uint32_t x = xMin; x <= xMax; x = x + 1) {
         for (uint32_t y = yMin; y <= yMax; y = y + 1) {
-            g.set(x, y, this->canStay(x, y), this->getMovementCost(x, y));
+            g.set(x, y, this->canStay(state, x, y), this->getMovementCost(state, x, y));
         }
     }
 
@@ -348,7 +352,7 @@ Events Warrior::processRunningAnimation() {
         else {
             this->startAnimation("running");
             this->currentDirection = this->currentMovement.front();
-            events.add(std::make_shared<CreateAnimationEvent>(Animation(this)));
+            events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
         }
     }
 
@@ -410,7 +414,7 @@ AnimationState Warrior::getCurrentAnimationState() const {
     }
     return {currentFrame, false};
 }
-Events Warrior::getGameObjectResponse(uint32_t playerId) {
+Events Warrior::getResponse(MapState *state, uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
 	}
@@ -421,7 +425,7 @@ Events Warrior::getGameObjectResponse(uint32_t playerId) {
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     response.add(std::make_shared<StartWarriorAnimationEvent>(this, "talking"));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
-        Events selectThisEvent = this->getMoveHighlightionEvent();
+        Events selectThisEvent = this->getMoveHighlightionEvent(state);
         selectThisEvent.add(std::make_shared<SelectEvent>(this));
         selectThisEvent.add(std::make_shared<DisableCursorEvent>());
 

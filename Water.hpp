@@ -17,13 +17,13 @@
  */
 
 
-#include "ImpassableObstacle.hpp"
+#include "GO.hpp"
 
 
 #pragma once
 
 
-class Water : public ImpassableObstacle {
+class Water : public GO {
 public:
 	Water();
 	Water(uint32_t x, uint32_t y, uint32_t type);
@@ -35,6 +35,10 @@ public:
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
     bool isLowObstacle(uint32_t playerId) const override;
+	bool warriorCanStay(uint32_t warriorPlayerId) const override;
+	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 private:
 	uint32_t type;
+
+	Events getResponse(MapState* state, uint32_t playerId) override;
 };
