@@ -20,16 +20,17 @@
 #include "IWarehouseSpec.hpp"
 #include "ResourceStorageBDestroyedEvent.hpp"
 #include "Texts.hpp"
+#include "Building.hpp"
 
 
-Events IWarehouseSpec::getEventOnDestroy(MapState *state, uint32_t playerId) const {
+Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *state) const {
 	Events event;
 
-	event.add(std::make_shared<ResourceStorageBDestroyedEvent>(playerId));
+	event.add(std::make_shared<ResourceStorageBDestroyedEvent>(building->getPlayerId()));
 
 	return event;
 }
-std::vector<HorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(const Building *building, MapState* state) {
 	HorizontalSelectionWindowComponent component = {
 		"resources_icon",
 		*Texts::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),

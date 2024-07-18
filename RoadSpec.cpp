@@ -27,6 +27,6 @@ IBuildingSpec* RoadSpec::clone() const {
 bool RoadSpec::conductsIfNotWork() const {
 	return false;
 }
-uint32_t RoadSpec::getTerritoryExpandingRadius() const {
+uint32_t RoadSpec::getRadius() const {
 	return 4;
 }

@@ -30,6 +30,7 @@
 #include "CouldntFindNewWarriorPosition.hpp"
 #include "TryToProduceEvent.hpp"
 #include "ResetHighlightEvent.hpp"
+#include "Building.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -52,16 +53,16 @@ void WarriorProducerSpec::decreaseCurrentProducingMovesLeft() {
 void WarriorProducerSpec::stopProducing() {
 	this->producing = false;
 }
-Events WarriorProducerSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string& soundName, bool works) {
-	if (!works or !this->producing) {
+Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
+	if (!b->works() or !this->producing) {
 		return Events();
 	}
 
 	Events response;
 	if (this->currentProducingMovesLeft != 0) {
-		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("producing_icon", x, y, sx, sy);
+		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("producing_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 
-		response.add(std::make_shared<FocusOnEvent>(x, y, sx, sy));
+		response.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
@@ -71,13 +72,13 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32
 	}
 	try {
 		uint32_t newX, newY;
-		std::tie(newX, newY) = this->getNewWarriorPosition(x, y, sx, sy, playerId, state);
+		std::tie(newX, newY) = this->getNewWarriorPosition(b->getX(), b->getY(), b->getSX(), b->getSY(), b->getPlayerId(), state);
 		this->currentProducing->setX(newX);
 		this->currentProducing->setY(newY);
 
-		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->currentProducing->getTextureName(), x, y, sx, sy);
+		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->currentProducing->getTextureName(), b->getX(), b->getY(), b->getSX(), b->getSY());
 
-		response.add(std::make_shared<FocusOnEvent>(x, y, sx, sy));
+		response.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<WarriorProducingFinishedEvent>(this, this->currentProducing));
@@ -88,10 +89,10 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32
 		return response;
 	}
 }
-std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponents(MapState* state, uint32_t playerId, const std::string& soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponents(const Building *b, MapState* state) {
 	std::vector<HorizontalSelectionWindowComponent> components;
 
-	if (works) {
+	if (b->works()) {
 		if (this->producing) {
 			std::wstring text;
 			if (this->currentProducingMovesLeft > 0) {
@@ -108,7 +109,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 			);
 		}
 		else {
-			std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce(playerId);
+			std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce(b->getPlayerId());
 			for (uint32_t i = 0; i < toProduce.size(); i = i + 1) {
 				std::shared_ptr<Warrior> w = toProduce.at(i);
 				Events tryToProduceEvent;
@@ -137,7 +138,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 
 	return components;
 }
-std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) const {
+std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Building *b) const {
 	if (!this->producing) {
 		return std::nullopt;
 	}
@@ -150,7 +151,7 @@ std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(float xInPixe
 		text = "!";
 	}
 
-	return BuildingShortInfo(xInPixels, yInPixels, sx, sy, this->currentProducing->getTextureName(), text);
+	return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), this->currentProducing->getTextureName(), text);
 }
 uint32_t WarriorProducerSpec::getRadius() const {
 	return 1;

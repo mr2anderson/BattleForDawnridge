@@ -17,13 +17,6 @@
  */
 
 
-#include "TerritoryExpanderSpec.hpp"
+#include "IBuildingSpec.hpp"
 
 
-TerritoryExpanderSpec::TerritoryExpanderSpec() = default;
-bool TerritoryExpanderSpec::allowBuilding(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, bool works, bool connectedToOrigin, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
-	return this->inRadius(state, x1, y1, sx1, sy1, playerId, x2, y2, sx2, sy2);
-}
-uint32_t TerritoryExpanderSpec::getRadius() const {
-	return this->getTerritoryExpandingRadius();
-}

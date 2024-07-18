@@ -123,12 +123,12 @@ Events BuildingMode::getHighlightEvent(MapState *state) const {
 	}
 	return result;
 }
-bool BuildingMode::inMap(MapState *state, Building *clonedB) const {
+bool BuildingMode::inMap(MapState *state, const Building *clonedB) const {
 	return
 			(clonedB->getX() + clonedB->getSX() - 1 < state->getMapSizePtr()->getWidth() and
 			clonedB->getY() + clonedB->getSY() - 1 < state->getMapSizePtr()->getHeight());
 }
-bool BuildingMode::empty(MapState* state, Building *clonedB) const {
+bool BuildingMode::empty(MapState* state, const Building *clonedB) const {
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		GO* go = state->getCollectionsPtr()->getGO(i);
 		if (!go->exist()) {
@@ -140,7 +140,7 @@ bool BuildingMode::empty(MapState* state, Building *clonedB) const {
 	}
 	return true;
 }
-bool BuildingMode::controlled(MapState* state, Building *clonedB) const {
+bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
 	uint32_t x = clonedB->getX();
 	uint32_t y = clonedB->getY();
 	uint32_t sx = clonedB->getSX();

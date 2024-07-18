@@ -30,9 +30,9 @@ public:
 	Events startProducing(std::shared_ptr<Warrior> w);
 	void decreaseCurrentProducingMovesLeft();
 	void stopProducing();
-	Events getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string& soundName, bool works) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string& soundName, bool works, bool connectedToOrigin) override;
-	std::optional<BuildingShortInfo> getShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) const override;
+	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
+	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	uint32_t getRadius() const override;
 	virtual std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) = 0;
 private:

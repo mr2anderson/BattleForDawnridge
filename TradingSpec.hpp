@@ -28,11 +28,11 @@ class TradingSpec : public IBuildingSpec {
 public:
 	TradingSpec();
 
-	Events doTrade(const std::string &soundName, const Trade& trade);
+	Events doTrade(const Building *b, const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
-	Events getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) override;
-	std::optional<BuildingShortInfo> getShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) const override;
+	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
+	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	virtual std::vector<Trade> getTrades() const = 0;
 private:
 	Trade currentTrade;

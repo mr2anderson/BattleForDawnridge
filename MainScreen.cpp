@@ -732,11 +732,11 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
 	}
 }
 void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
-	TradingSpec* b = e->getSpec();
-	std::string soundName = e->getSoundName();
+	const Building* b = e->getBuilding();
+	TradingSpec* s = e->getSpec();
 	Trade t = e->getTrade();
 	if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
-		Events tradeEvent = b->doTrade(soundName, t);
+		Events tradeEvent = s->doTrade(b, t);
 		this->addEvents(tradeEvent);
 	}
 	else {

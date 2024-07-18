@@ -492,6 +492,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddResourcesEvent.hpp" />
     <ClInclude Include="BarracksSpec.hpp" />
     <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
+    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp" />
     <ClInclude Include="FoodGeneratorSpec.hpp" />
     <ClInclude Include="GatesSpec.hpp" />
     <ClInclude Include="IronCollectorSpec.hpp" />
@@ -694,7 +695,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="IResourceGeneratorSpec.hpp" />
     <ClInclude Include="AreaResourcePointCollectorSpec.hpp" />
     <ClInclude Include="TerritoryConductorSpec.hpp" />
-    <ClInclude Include="TerritoryExpanderSpec.hpp" />
     <ClInclude Include="TerritoryOriginSpec.hpp" />
     <ClInclude Include="TradingSpec.hpp" />
     <ClInclude Include="VictoryConditionSpec.hpp" />
@@ -778,6 +778,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AreaControllerSpec.cpp" />
     <ClCompile Include="BarracksSpec.cpp" />
     <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
+    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp" />
     <ClCompile Include="FoodGeneratorSpec.cpp" />
     <ClCompile Include="GatesSpec.cpp" />
     <ClCompile Include="IBuildingSpec.cpp" />
@@ -879,7 +880,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="IResourceGeneratorSpec.cpp" />
     <ClCompile Include="AreaResourcePointCollectorSpec.cpp" />
     <ClCompile Include="TerritoryConductorSpec.cpp" />
-    <ClCompile Include="TerritoryExpanderSpec.cpp" />
     <ClCompile Include="TerritoryOriginSpec.cpp" />
     <ClCompile Include="TradingSpec.cpp" />
     <ClCompile Include="VictoryConditionSpec.cpp" />

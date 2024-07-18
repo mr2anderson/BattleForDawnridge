@@ -17,19 +17,19 @@
  */
 
 
-#include "TerritoryExpanderSpec.hpp"
+#include "AreaControllerSpec.hpp"
 
 
 #pragma once
 
 
-class TerritoryConductorSpec : public TerritoryExpanderSpec {
+class TerritoryConductorSpec : public AreaControllerSpec {
 public:
 	TerritoryConductorSpec();
 
-	std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string& soundName, bool works, bool connectedToOrigin) override;
-	Events getHighlightEvent(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, bool works, bool connectedToOrigin) override;
-	bool allowBuilding(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, bool works, bool connectedToOrigin, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) override;
-	bool isActiveConductor(bool works) const override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
+	Events getHighlightEvent(const Building* building, MapState* state) override;
+	bool allowBuilding(const Building* building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) override;
+	bool isActiveConductor(const Building* building) const override;
 	virtual bool conductsIfNotWork() const = 0;
 };

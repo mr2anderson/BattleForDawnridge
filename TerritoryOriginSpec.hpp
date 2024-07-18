@@ -17,15 +17,16 @@
  */
 
 
-#include "TerritoryExpanderSpec.hpp"
+#include "AreaControllerSpec.hpp"
 
 
 #pragma once
 
 
-class TerritoryOriginSpec : public TerritoryExpanderSpec {
+class TerritoryOriginSpec : public AreaControllerSpec {
 public:
 	TerritoryOriginSpec();
 
+	bool allowBuilding(const Building* building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) override;
 	bool isOrigin() const override;
 };

@@ -24,6 +24,6 @@ CastleTerritoryExpanderSpec::CastleTerritoryExpanderSpec() = default;
 IBuildingSpec* CastleTerritoryExpanderSpec::clone() const {
 	return new CastleTerritoryExpanderSpec(*this);
 }
-uint32_t CastleTerritoryExpanderSpec::getTerritoryExpandingRadius() const {
+uint32_t CastleTerritoryExpanderSpec::getRadius() const {
 	return 4;
 }

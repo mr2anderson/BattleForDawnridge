@@ -24,12 +24,12 @@ WallSpec::WallSpec() = default;
 IBuildingSpec* WallSpec::clone() const {
 	return new WallSpec(*this);
 }
-uint32_t WallSpec::getWarriorMovementCost(uint32_t thisPlayerId, uint32_t playerId) const {
+uint32_t WallSpec::getWarriorMovementCost(const Building *b, uint32_t playerId) const {
 	return 10000;
 }
-bool WallSpec::warriorCanStay(uint32_t thisPlayerId, uint32_t playerId) const {
+bool WallSpec::warriorCanStay(const Building *b, uint32_t playerId) const {
 	return false;
 }
-bool WallSpec::isHighObstacle(uint32_t thisPlayerId, uint32_t playerId) const {
+bool WallSpec::isHighObstacle(const Building *b, uint32_t playerId) const {
 	return true;
 }

@@ -25,6 +25,6 @@
 
 class IWarehouseSpec : public IBuildingSpec {
 public:
-	Events getEventOnDestroy(MapState* state, uint32_t playerId) const override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) override;
+	Events getEventOnDestroy(const Building* building, MapState* state) const override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 };

@@ -39,7 +39,7 @@ private:
 
 	Events getHighlightEvent(MapState *state) const;
 
-	bool inMap(MapState* state, Building *clonedB) const;
-	bool empty(MapState* state, Building *clonedB) const;
-	bool controlled(MapState* state, Building *clonedB) const;
+	bool inMap(MapState* state, const Building *clonedB) const;
+	bool empty(MapState* state, const Building *clonedB) const;
+	bool controlled(MapState* state, const Building *clonedB) const;
 };

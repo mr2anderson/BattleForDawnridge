@@ -22,7 +22,7 @@
 #include "SetHighlightEvent.hpp"
 #include "ColorTheme.hpp"
 #include "LandscapeGraph.hpp"
-#include "GO.hpp"
+#include "Building.hpp"
 
 
 AreaControllerSpec::AreaControllerSpec() {
@@ -59,8 +59,8 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvaila
 
     return result;
 }
-Events AreaControllerSpec::getHighlightEvent(MapState *state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, bool works, bool connectedToOrigin) {
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(x, y, sx, sy, playerId, state);
+Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state) {
+    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     Events events;
     for (const auto& a : available) {
@@ -69,8 +69,8 @@ Events AreaControllerSpec::getHighlightEvent(MapState *state, uint32_t x, uint32
 
     return events;
 }
-bool AreaControllerSpec::inRadius(MapState *state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(x1, y1, sx1, sy1, playerId, state);
+bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
+    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     for (uint32_t x = x2; x < x2 + sx2; x = x + 1) {
         for (uint32_t y = y2; y < y2 + sy2; y = y + 1) {

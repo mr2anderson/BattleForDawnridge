@@ -17,17 +17,4 @@
  */
 
 
-#include "AreaControllerSpec.hpp"
-
-
-#pragma once
-
-
-class TerritoryExpanderSpec : public AreaControllerSpec {
-public:
-	TerritoryExpanderSpec();
-
-	bool allowBuilding(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, bool works, bool connectedToOrigin, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) override;
-	uint32_t getRadius() const override;
-	virtual uint32_t getTerritoryExpandingRadius() const = 0;
-};
+#include "IConductionResourcePointCollectorSpec.hpp"

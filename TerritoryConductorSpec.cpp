@@ -19,11 +19,12 @@
 
 #include "TerritoryConductorSpec.hpp"
 #include "Texts.hpp"
+#include "Building.hpp"
 
 
 TerritoryConductorSpec::TerritoryConductorSpec() = default;
-std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getComponents(MapState* state, uint32_t playerId, const std::string& soundName, bool works, bool connectedToOrigin) {
-	if (!works and !this->conductsIfNotWork()) {
+std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
+	if (!building->works() and !this->conductsIfNotWork()) {
 		HorizontalSelectionWindowComponent component = {
 			"hammer_icon",
 			*Texts::get()->get("does_not_expand_territory_if_hp_isnt_full"),
@@ -32,7 +33,7 @@ std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getCompo
 		};
 		return { component };
 	}
-	if (!connectedToOrigin) {
+	if (!building->connectedToOrigin(state)) {
 		HorizontalSelectionWindowComponent component = {
 			"road",
 			*Texts::get()->get("does_not_lead_to_city_center"),
@@ -43,18 +44,18 @@ std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getCompo
 	}
 	return {};
 }
-Events TerritoryConductorSpec::getHighlightEvent(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, bool works, bool connectedToOrigin) {
-	if (!connectedToOrigin or (!works and !this->conductsIfNotWork())) {
+Events TerritoryConductorSpec::getHighlightEvent(const Building* building, MapState* state) {
+	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
 		return Events();
 	}
-	return this->TerritoryExpanderSpec::getHighlightEvent(state, x, y, sx, sy, playerId, works, connectedToOrigin);
+	return this->AreaControllerSpec::getHighlightEvent(building, state);
 }
-bool TerritoryConductorSpec::allowBuilding(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, bool works, bool connectedToOrigin, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
-	if (!connectedToOrigin or (!works and !this->conductsIfNotWork())) {
+bool TerritoryConductorSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
+	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
 		return false;
 	}
-	return this->TerritoryExpanderSpec::allowBuilding(state, x1, y1, sx1, sy1, playerId, works, connectedToOrigin, x2, y2, sx2, sy2);
+	return this->AreaControllerSpec::inRadius(building, state, x2, y2, sx2, sy2);
 }
-bool TerritoryConductorSpec::isActiveConductor(bool works) const {
-	return this->conductsIfNotWork() or works;
+bool TerritoryConductorSpec::isActiveConductor(const Building *building) const {
+	return this->conductsIfNotWork() or building->works();
 }

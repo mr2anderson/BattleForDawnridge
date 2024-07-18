@@ -28,5 +28,5 @@ public:
 	CastleTerritoryExpanderSpec();
 	IBuildingSpec* clone() const override;
 
-	uint32_t getTerritoryExpandingRadius() const override;
+	uint32_t getRadius() const override;
 };

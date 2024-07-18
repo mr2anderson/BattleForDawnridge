@@ -21,19 +21,19 @@
 
 
 
-Events IBuildingSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works) {
+Events IBuildingSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
 	return Events();
 }
-Events IBuildingSpec::getHighlightEvent(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, bool works, bool connectedToOrigin) {
+Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* state) {
 	return Events();
 }
-Events IBuildingSpec::getEventOnDestroy(MapState* state, uint32_t playerId) const {
+Events IBuildingSpec::getEventOnDestroy(const Building *building, MapState* state) const {
 	return Events();
 }
-std::vector<HorizontalSelectionWindowComponent> IBuildingSpec::getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> IBuildingSpec::getComponents(const Building *building, MapState* state) {
 	return std::vector<HorizontalSelectionWindowComponent>();
 }
-std::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) const {
+std::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *building) const {
 	return std::nullopt;
 }
 Resources IBuildingSpec::getLimit() const {
@@ -42,27 +42,27 @@ Resources IBuildingSpec::getLimit() const {
 bool IBuildingSpec::isVictoryCondition() const {
 	return false;
 }
-bool IBuildingSpec::allowBuilding(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, bool works, bool connectedToOrigin, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
+bool IBuildingSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
 	return false;
 }
 bool IBuildingSpec::isOrigin() const {
 	return false;
 }
-bool IBuildingSpec::isActiveConductor(bool works) const {
+bool IBuildingSpec::isActiveConductor(const Building *building) const {
 	return false;
 }
-uint32_t IBuildingSpec::getWarriorMovementCost(uint32_t thisPlayerId, uint32_t playerId) const {
+uint32_t IBuildingSpec::getWarriorMovementCost(const Building *building, uint32_t playerId) const {
 	return 1;
 }
-bool IBuildingSpec::warriorCanStay(uint32_t thisPlayerId, uint32_t playerId) const {
+bool IBuildingSpec::warriorCanStay(const Building *building, uint32_t playerId) const {
 	return true;
 }
-bool IBuildingSpec::isUltraHighObstacle(uint32_t thisPlayerId, uint32_t playerId) const {
+bool IBuildingSpec::isUltraHighObstacle(const Building *building, uint32_t playerId) const {
 	return false;
 }
-bool IBuildingSpec::isHighObstacle(uint32_t thisPlayerId, uint32_t playerId) const {
+bool IBuildingSpec::isHighObstacle(const Building *building, uint32_t playerId) const {
 	return false;
 }
-bool IBuildingSpec::isLowObstacle(uint32_t thisPlayerId, uint32_t playerId) const {
+bool IBuildingSpec::isLowObstacle(const Building *building, uint32_t playerId) const {
 	return false;
 }

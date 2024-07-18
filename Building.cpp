@@ -59,7 +59,7 @@ Events Building::getHighlightEvent(MapState *state) const {
 
 	bool connected = this->connectedToOrigin(state);
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(state, this->getX(), this->getY(), this->getSX(), this->getSY(), this->getPlayerId(), this->works(), connected);
+		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(this, state);
 	}
 
 	return highlightEvent;
@@ -93,92 +93,17 @@ bool Building::isOrigin() const {
 }
 bool Building::isActiveConductor() const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isActiveConductor(this->works())) {
+		if (this->specs.at(i)->isActiveConductor(this)) {
 			return true;
 		}
 	}
 
 	return false;
 }
-bool Building::allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
-	bool c = this->connectedToOrigin(state);
-
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->allowBuilding(state, this->getX(), this->getY(), this->getSX(), this->getSY(), this->getPlayerId(), this->works(), c, x, y, sx, sy)) {
-			return true;
-		}
-	}
-
-	return false;
+bool Building::works() const {
+	return (this->getHP() == this->getMaxHP());
 }
-Events Building::destroy(MapState *state) {
-    Events response;
-    response.add(std::make_shared<PlaySoundEvent>("destroy"));
-	response.add(std::make_shared<SubHpEvent>(this, this->getHP()));
-
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		response = response + this->specs.at(i)->getEventOnDestroy(state, this->getPlayerId());
-	}
-
-	return response;
-}
-void Building::decreaseBurningMovesLeft() {
-	this->burningMovesLeft = this->burningMovesLeft - 1;
-}
-void Building::setFire() {
-	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
-	this->burningMovesLeft = 3;
-}
-void Building::addSpec(IBuildingSpec* spec) {
-	this->specs.push_back(spec);
-}
-uint32_t Building::getWarriorMovementCost(uint32_t playerId) const {
-	uint32_t cost = 1;
-
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		uint32_t specMovementCost = this->specs.at(i)->getWarriorMovementCost(this->getPlayerId(), playerId);
-		cost = std::max(cost, specMovementCost);
-	}
-
-	return cost;
-}
-bool Building::warriorCanStay(uint32_t playerId) const {
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (!this->specs.at(i)->warriorCanStay(this->getPlayerId(), playerId)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-bool Building::isUltraHighObstacle(uint32_t playerId) const {
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isUltraHighObstacle(this->getPlayerId(), playerId)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-bool Building::isHighObstacle(uint32_t playerId) const {
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isHighObstacle(this->getPlayerId(), playerId)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-bool Building::isLowObstacle(uint32_t playerId) const {
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isLowObstacle(this->getPlayerId(), playerId)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-bool Building::connectedTo(MapState *state, GO* go) const {
+bool Building::connectedTo(MapState* state, GO* go) const {
 	ConductionGraph g;
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
@@ -199,6 +124,82 @@ bool Building::connectedToOrigin(MapState* state) const {
 			if (this->connectedTo(state, b)) {
 				return true;
 			}
+		}
+	}
+
+	return false;
+}
+bool Building::allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		if (this->specs.at(i)->allowBuilding(this, state, x, y, sx, sy)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+Events Building::destroy(MapState *state) {
+    Events response;
+    response.add(std::make_shared<PlaySoundEvent>("destroy"));
+	response.add(std::make_shared<SubHpEvent>(this, this->getHP()));
+
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		response = response + this->specs.at(i)->getEventOnDestroy(this, state);
+	}
+
+	return response;
+}
+void Building::decreaseBurningMovesLeft() {
+	this->burningMovesLeft = this->burningMovesLeft - 1;
+}
+void Building::setFire() {
+	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
+	this->burningMovesLeft = 3;
+}
+void Building::addSpec(IBuildingSpec* spec) {
+	this->specs.push_back(spec);
+}
+uint32_t Building::getWarriorMovementCost(uint32_t playerId) const {
+	uint32_t cost = 1;
+
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		uint32_t specMovementCost = this->specs.at(i)->getWarriorMovementCost(this, playerId);
+		cost = std::max(cost, specMovementCost);
+	}
+
+	return cost;
+}
+bool Building::warriorCanStay(uint32_t playerId) const {
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		if (!this->specs.at(i)->warriorCanStay(this, playerId)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+bool Building::isUltraHighObstacle(uint32_t playerId) const {
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		if (this->specs.at(i)->isUltraHighObstacle(this, playerId)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+bool Building::isHighObstacle(uint32_t playerId) const {
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		if (this->specs.at(i)->isHighObstacle(this, playerId)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+bool Building::isLowObstacle(uint32_t playerId) const {
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		if (this->specs.at(i)->isLowObstacle(this, playerId)) {
+			return true;
 		}
 	}
 
@@ -257,7 +258,7 @@ void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		std::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
+		std::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this);
 		if (bsi.has_value()) {
 			target.draw(bsi.value(), states);
 		}
@@ -304,13 +305,10 @@ Events Building::newMove(MapState* state, uint32_t playerId) {
 	Events event = this->processRegeneration();
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		event = event + this->specs.at(i)->getActiveNewMoveEvent(this->getX(), this->getY(), this->getSX(), this->getSY(), state, this->getPlayerId(), this->getSoundName(), this->works());
+		event = event + this->specs.at(i)->getActiveNewMoveEvent(this, state);
 	}
 
 	return event;
-}
-bool Building::works() const {
-	return (this->getHP() == this->getMaxHP());
 }
 Events Building::processRegeneration() {
 	Events events;
@@ -346,7 +344,7 @@ Events Building::getResponse(MapState *state, uint32_t playerId) {
 
 	bool connected = this->connectedToOrigin(state);
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(state, playerId, this->getSoundName(), this->works(), connected);
+		std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
 		components.insert(components.end(), specComponents.begin(), specComponents.end());
 	}
 

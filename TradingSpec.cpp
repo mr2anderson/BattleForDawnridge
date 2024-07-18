@@ -28,10 +28,11 @@
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "TryToTradeEvent.hpp"
+#include "Building.hpp"
 
 
 TradingSpec::TradingSpec() = default;
-Events TradingSpec::doTrade(const std::string &soundName, const Trade& trade) {
+Events TradingSpec::doTrade(const Building *b, const Trade& trade) {
 	Events clickSoundEvent;
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
@@ -39,7 +40,7 @@ Events TradingSpec::doTrade(const std::string &soundName, const Trade& trade) {
 
 	Events response;
 
-	response.add(std::make_shared<PlaySoundEvent>(soundName));
+	response.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
 
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(
 		*Texts::get()->get("trade_started") + L'\n' +
@@ -53,26 +54,26 @@ Events TradingSpec::doTrade(const std::string &soundName, const Trade& trade) {
 void TradingSpec::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 }
-Events TradingSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works) {
-	if (!works or !this->busy()) {
+Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
+	if (!b->works() or !this->busy()) {
 		return Events();
 	}
 
 	Events responce;
 
-	responce.add(std::make_shared<FocusOnEvent>(x, y, sx, sy));
+	responce.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 
-	responce.add(std::make_shared<PlaySoundEvent>(soundName));
+	responce.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
 
-	std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", x, y, sx, sy);
+	std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 	responce.add(std::make_shared<CreateEEvent>(element));
 
-	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this, soundName));
+	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
 
 	if (this->currentTrade.movesLeft == 1) {
-		responce.add(std::make_shared<PlaySoundEvent>(soundName));
+		responce.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
 
-		element = std::make_shared<ImageFlyingE>(this->currentTrade.buy.type + "_icon", x, y, sx, sy);
+		element = std::make_shared<ImageFlyingE>(this->currentTrade.buy.type + "_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 		responce.add(std::make_shared<CreateEEvent>(element));
 
 		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));
@@ -94,10 +95,10 @@ static HorizontalSelectionWindowComponent GET_TRADE_COMPONENT(std::shared_ptr<Tr
 
 	return component;
 }
-std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const Building *b, MapState* state) {
 	std::vector<HorizontalSelectionWindowComponent> components;
 
-	if (works) {
+	if (b->works()) {
 		if (this->busy()) {
 			components.emplace_back(
 				"trade_icon",
@@ -109,7 +110,7 @@ std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(MapSt
 		else {
 			std::vector<Trade> trades = this->getTrades();
 			for (const auto& trade : trades) {
-				std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(this, soundName, trade);
+				std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(b, this, trade);
 				components.push_back(GET_TRADE_COMPONENT(tryToTradeEvent));
 			}
 		}
@@ -125,9 +126,9 @@ std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(MapSt
 
 	return components;
 }
-std::optional<BuildingShortInfo> TradingSpec::getShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) const {
+std::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) const {
 	if (this->busy()) {
-		return BuildingShortInfo(xInPixels, yInPixels, sx, sy, this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
+		return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
 	}
 	return std::nullopt;
 }

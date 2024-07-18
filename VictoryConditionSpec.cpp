@@ -20,20 +20,21 @@
 #include "VictoryCOnditionSpec.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
 #include "Texts.hpp"
+#include "Building.hpp"
 
 
 VictoryConditionSpec::VictoryConditionSpec() = default;
 IBuildingSpec* VictoryConditionSpec::clone() const {
 	return new VictoryConditionSpec(*this);
 }
-Events VictoryConditionSpec::getEventOnDestroy(MapState* state, uint32_t playerId) const {
+Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* state) const {
 	Events event;
 
-	event.add(std::make_shared<VictoryConditionBDestroyedEvent>(playerId));
+	event.add(std::make_shared<VictoryConditionBDestroyedEvent>(b->getPlayerId()));
 
 	return event;
 }
-std::vector<HorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
 	HorizontalSelectionWindowComponent component = {
 		"star_icon",
 		*Texts::get()->get("victory_condition_building_description"),

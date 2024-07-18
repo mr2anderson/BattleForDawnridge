@@ -29,8 +29,8 @@ public:
 	AreaControllerSpec();
 
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state);
-	Events getHighlightEvent(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, bool works, bool connectedToOrigin) override;
-	bool inRadius(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
+	Events getHighlightEvent(const Building *building, MapState* state) override;
+	bool inRadius(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
 	virtual bool ignoreUltraHighObstacles() const;
 	virtual bool ignoreHighObstacles() const;
 	virtual bool ignoreLowObstacles() const;

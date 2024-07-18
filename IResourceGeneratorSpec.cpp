@@ -24,27 +24,28 @@
 #include "FocusOnEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "Texts.hpp"
+#include "Building.hpp"
 
 
-Events IResourceGeneratorSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works) {
-	if (!works) {
+Events IResourceGeneratorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
+	if (!building->works()) {
 		return Events();
 	}
 
 	Events event;
 
-	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getProduct().type + "_icon", x, y, sx, sy);
-	event.add(std::make_shared<FocusOnEvent>(x, y, sx, sy));
+	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getProduct().type + "_icon", building->getX(), building->getY(), building->getSX(), building->getSY());
+	event.add(std::make_shared<FocusOnEvent>(building->getX(), building->getY(), building->getSX(), building->getSY()));
 	event.add(std::make_shared<PlaySoundEvent>(this->getProduct().type));
 	event.add(std::make_shared<CreateEEvent>(flyingE));
 	event.add(std::make_shared<AddResourceEvent>(this->getProduct()));
 
 	return event;
 }
-std::vector<HorizontalSelectionWindowComponent> IResourceGeneratorSpec::getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> IResourceGeneratorSpec::getComponents(const Building *building, MapState* state) {
 	HorizontalSelectionWindowComponent component;
 
-	if (works) {
+	if (building->works()) {
 		component = {
 			this->getProduct().type + "_icon",
 			*Texts::get()->get("this_building_produces_resources_every_move") + this->getProduct().getReadableInfo(),

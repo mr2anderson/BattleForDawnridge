@@ -29,5 +29,5 @@ public:
 	IBuildingSpec* clone() const override;
 
 	bool conductsIfNotWork() const override;
-	uint32_t getTerritoryExpandingRadius() const override;
+	uint32_t getRadius() const override;
 };

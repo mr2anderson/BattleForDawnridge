@@ -20,13 +20,9 @@
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 
 
-DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec, const std::string &soundName) {
+DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec) {
 	this->spec = spec;
-	this->soundName = soundName;
 }
 TradingSpec* DecreaseCurrentTradeMovesLeftEvent::getSpec() {
 	return this->spec;
-}
-std::string DecreaseCurrentTradeMovesLeftEvent::getSoundName() const {
-	return this->soundName;
 }

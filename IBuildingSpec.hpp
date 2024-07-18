@@ -26,23 +26,26 @@
 #pragma once
 
 
+class Building;
+
+
 class IBuildingSpec {
 public:
 	virtual IBuildingSpec* clone() const = 0;
 
-	virtual Events getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works);
-	virtual Events getHighlightEvent(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, bool works, bool connectedToOrigin);
-	virtual Events getEventOnDestroy(MapState* state, uint32_t playerId) const;
-	virtual std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin);
-	virtual std::optional<BuildingShortInfo> getShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) const;
+	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);
+	virtual Events getHighlightEvent(const Building *building, MapState* state);
+	virtual Events getEventOnDestroy(const Building *building, MapState* state) const;
+	virtual std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
+	virtual std::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
 	virtual Resources getLimit() const;
 	virtual bool isVictoryCondition() const;
-	virtual bool allowBuilding(MapState* state, uint32_t x1, uint32_t y1, uint32_t sx1, uint32_t sy1, uint32_t playerId, bool works, bool connectedToOrigin, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
+	virtual bool allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
 	virtual bool isOrigin() const;
-	virtual bool isActiveConductor(bool works) const;
-	virtual uint32_t getWarriorMovementCost(uint32_t thisPlayerId, uint32_t playerId) const;
-	virtual bool warriorCanStay(uint32_t thisPlayerId, uint32_t playerId) const;
-	virtual bool isUltraHighObstacle(uint32_t thisPlayerId, uint32_t playerId) const;
-	virtual bool isHighObstacle(uint32_t thisPlayerId, uint32_t playerId) const;
-	virtual bool isLowObstacle(uint32_t thisPlayerId, uint32_t playerId) const;
+	virtual bool isActiveConductor(const Building *building) const;
+	virtual uint32_t getWarriorMovementCost(const Building *building, uint32_t playerId) const;
+	virtual bool warriorCanStay(const Building *building, uint32_t playerId) const;
+	virtual bool isUltraHighObstacle(const Building *building, uint32_t playerId) const;
+	virtual bool isHighObstacle(const Building *building, uint32_t playerId) const;
+	virtual bool isLowObstacle(const Building *building, uint32_t playerId) const;
 };

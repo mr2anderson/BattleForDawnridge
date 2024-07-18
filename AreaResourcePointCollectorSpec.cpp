@@ -21,11 +21,12 @@
 #include "ResourcePoint.hpp"
 #include "TryToCollectEvent.hpp"
 #include "Texts.hpp"
+#include "Building.hpp"
 
 
 AreaResourcePointCollectorSpec::AreaResourcePointCollectorSpec() = default;
-Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works) {
-	if (!works) {
+Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
+	if (!building->works()) {
 		return Events();
 	}
 
@@ -33,18 +34,18 @@ Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(uint32_t x, uint32_
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
 		ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
-		if (rp->exist() and this->inRadius(state, x, y, sx, sy, playerId, rp->getX(), rp->getY(), rp->getSX(), rp->getSY()) and rp->getResourceType() == this->getResourceType()) {
-			responce.add(std::make_shared<TryToCollectEvent>(playerId, rp, this->getCollectionSpeed()));
+		if (rp->exist() and this->inRadius(building, state, rp->getX(), rp->getY(), rp->getSX(), rp->getSY()) and rp->getResourceType() == this->getResourceType()) {
+			responce.add(std::make_shared<TryToCollectEvent>(building->getPlayerId(), rp, this->getCollectionSpeed()));
 			break;
 		}
 	}
 
 	return responce;
 }
-std::vector<HorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) {
+std::vector<HorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::getComponents(const Building *building, MapState* state) {
 	HorizontalSelectionWindowComponent component;
 
-	if (works) {
+	if (building->works()) {
 		component = {
 			this->getResourceType() + "_icon",
 			*Texts::get()->get("this_building_collects_resources_from_resource_points") + std::to_wstring(this->getCollectionSpeed()),

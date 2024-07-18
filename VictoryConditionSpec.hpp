@@ -28,7 +28,7 @@ public:
 	VictoryConditionSpec();
 	IBuildingSpec* clone() const override;
 
-	Events getEventOnDestroy(MapState* state, uint32_t playerId) const override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) override;
+	Events getEventOnDestroy(const Building *b, MapState* state) const override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
 	bool isVictoryCondition() const override;
 };

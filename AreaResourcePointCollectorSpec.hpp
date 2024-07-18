@@ -27,8 +27,8 @@ class AreaResourcePointCollectorSpec : public AreaControllerSpec {
 public:
 	AreaResourcePointCollectorSpec();
 
-	Events getActiveNewMoveEvent(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, MapState* state, uint32_t playerId, const std::string &soundName, bool works) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(MapState* state, uint32_t playerId, const std::string &soundName, bool works, bool connectedToOrigin) override;
+	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	uint32_t getRadius() const override;
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;

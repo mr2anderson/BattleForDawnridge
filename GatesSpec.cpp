@@ -27,6 +27,6 @@ IBuildingSpec* GatesSpec::clone() const {
 bool GatesSpec::conductsIfNotWork() const {
 	return true;
 }
-uint32_t GatesSpec::getTerritoryExpandingRadius() const {
+uint32_t GatesSpec::getRadius() const {
 	return 1;
 }

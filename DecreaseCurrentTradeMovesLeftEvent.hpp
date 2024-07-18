@@ -17,7 +17,6 @@
  */
 
 
-#include <string>
 #include "Event.hpp"
 
 
@@ -29,11 +28,9 @@ class TradingSpec;
 
 class DecreaseCurrentTradeMovesLeftEvent : public Event {
 public:
-	DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec, const std::string &soundName);
+	DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec);
 
 	TradingSpec* getSpec();
-	std::string getSoundName() const;
 private:
 	TradingSpec* spec;
-	std::string soundName;
 };

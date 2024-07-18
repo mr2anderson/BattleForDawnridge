@@ -38,6 +38,9 @@ public:
 	bool isVictoryCondition() const;
 	bool isOrigin() const;
 	bool isActiveConductor() const;
+	bool works() const;
+	bool connectedTo(MapState* state, GO* go) const;
+	bool connectedToOrigin(MapState* state) const;
 	bool allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	Events destroy(MapState *state);
 	void decreaseBurningMovesLeft();
@@ -54,8 +57,6 @@ private:
 	bool isUltraHighObstacle(uint32_t playerId) const override;
 	bool isHighObstacle(uint32_t playerId) const override;
 	bool isLowObstacle(uint32_t playerId) const override;
-	bool connectedTo(MapState* state, GO* go) const;
-	bool connectedToOrigin(MapState* state) const;
 	uint8_t getHPPointerOrientation() const override;
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 	HorizontalSelectionWindowComponent getDestroyComponent();
@@ -63,7 +64,6 @@ private:
 	void drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events hit(Damage d, const std::optional<std::string>& direction) override;
 	Events newMove(MapState* state, uint32_t playerId) override;
-	bool works() const;
 	Events processRegeneration();
 	Events getResponse(MapState* state, uint32_t playerId);
 	sf::Color getTextureColor() const override;
