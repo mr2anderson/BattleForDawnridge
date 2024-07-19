@@ -37,7 +37,7 @@ uint32_t Wall1::getSY() const {
     return 1;
 }
 uint32_t Wall1::getMaxHP() const {
-    return 30000;
+    return 20000;
 }
 Defence Wall1::getDefence() const {
 	return Defence::WOOD;

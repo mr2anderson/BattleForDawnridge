@@ -36,10 +36,10 @@ uint32_t Legioner::getSY() const {
     return 1;
 }
 uint32_t Legioner::getMaxHP() const {
-    return 10000;
+    return 5000;
 }
 Damage Legioner::getDamage() const {
-	return { 3500, Damage::TYPE::CUT };
+	return { 2500, Damage::TYPE::CUT };
 }
 Defence Legioner::getDefence() const {
 	return Defence::HUMAN;

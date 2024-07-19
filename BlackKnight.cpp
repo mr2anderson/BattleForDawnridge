@@ -30,7 +30,7 @@ Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
 }
 uint32_t BlackKnight::getMaxHP() const {
-    return 15000;
+    return 7500;
 }
 Damage BlackKnight::getDamage() const {
 	return Damage(5000, Damage::TYPE::CUT);
