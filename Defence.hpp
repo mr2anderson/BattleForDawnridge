@@ -26,17 +26,16 @@
 class Defence {
 public:
     Defence();
-	Defence(double cut, double stab, double crush, double flame);
+	Defence(double cut, double stab, double crush);
 
 	double getCut() const;
 	double getStab() const;
 	double getCrush() const;
-    double getFlame() const;
 	std::wstring getReadable() const;
 
     static const Defence HUMAN;
     static const Defence WOOD;
     static const Defence STONE;
 private:
-	double cut, stab, crush, flame;
+	double cut, stab, crush;
 };

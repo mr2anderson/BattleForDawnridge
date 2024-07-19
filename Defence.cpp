@@ -23,17 +23,16 @@
 #include "Texts.hpp"
 
 
-const Defence Defence::HUMAN = Defence(1, 1, 0.1, 0.5);
-const Defence Defence::WOOD = Defence(1, 0.5, 1, 0.01);
-const Defence Defence::STONE = Defence(0.25, 0.1, 1, 0.01);
+const Defence Defence::HUMAN = Defence(1, 1, 0.1);
+const Defence Defence::WOOD = Defence(1, 0.5, 1);
+const Defence Defence::STONE = Defence(0.25, 0.1, 1);
 
 
 Defence::Defence() = default;
-Defence::Defence(double cut, double stab, double crush, double flame) {
+Defence::Defence(double cut, double stab, double crush) {
 	this->cut = cut;
 	this->stab = stab;
 	this->crush = crush;
-    this->flame = flame;
 }
 double Defence::getCut() const {
 	return this->cut;
@@ -43,9 +42,6 @@ double Defence::getStab() const {
 }
 double Defence::getCrush() const {
 	return this->crush;
-}
-double Defence::getFlame() const {
-    return this->flame;
 }
 static std::wstring FORMAT_K(double a) {
 	std::wstringstream ss;
@@ -57,8 +53,7 @@ std::wstring Defence::getReadable() const {
 
 	result += *Texts::get()->get("cut") + FORMAT_K(this->cut) + L", ";
 	result += *Texts::get()->get("stab") + FORMAT_K(this->stab) + L", ";
-	result += *Texts::get()->get("crush") + FORMAT_K(this->crush) + L", ";
-    result += *Texts::get()->get("flame") + FORMAT_K(this->flame);
+	result += *Texts::get()->get("crush") + FORMAT_K(this->crush) + L"";
 
 	return result;
 }

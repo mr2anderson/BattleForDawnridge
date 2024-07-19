@@ -963,13 +963,6 @@ crush
 <\DATA>
 
 <ID>
-flame
-<\ID>
-<DATA>
-пламенный 
-<\DATA>
-
-<ID>
 damage
 <\ID>
 <DATA>

@@ -35,7 +35,6 @@ public:
 		CUT,
 		STAB,
 		CRUSH,
-        FLAME
 	};
 private:
 	uint32_t points;
