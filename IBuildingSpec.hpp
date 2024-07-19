@@ -31,6 +31,8 @@ class Building;
 
 class IBuildingSpec {
 public:
+    virtual ~IBuildingSpec();
+
 	virtual IBuildingSpec* clone() const = 0;
 
 	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);

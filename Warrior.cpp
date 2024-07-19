@@ -407,6 +407,29 @@ float Warrior::getOffsetY() const {
 float Warrior::getOffset() const {
     return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)this->getCurrentAnimationMs();
 }
+HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
+    return {
+        "helmet",
+        *Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
+        *Texts::get()->get("damage") + this->getDamage().getReadable(),
+        false,
+        Events()
+    };
+}
+Events Warrior::getSelectionWindow() const {
+    std::vector<HorizontalSelectionWindowComponent> components;
+    components.push_back(this->getExitComponent());
+    components.push_back(this->getDescriptionComponent());
+    components.push_back(this->getWarriorInfoComponent());
+
+    std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
+
+    Events events;
+    events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+    events.add(std::make_shared<CreateEEvent>(w));
+
+    return events;
+}
 AnimationState Warrior::getCurrentAnimationState() const {
     uint32_t ms = this->animationClock.getElapsedTime().asMilliseconds();
     uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->currentDirection);
@@ -417,13 +440,18 @@ AnimationState Warrior::getCurrentAnimationState() const {
     }
     return {currentFrame, false};
 }
-Events Warrior::getResponse(MapState *state, uint32_t playerId) {
+Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist()) {
 		return Events();
 	}
 	if (!this->belongTo(playerId)) {
 		return Events();
 	}
+
+    if (button == sf::Mouse::Button::Right) {
+        return this->getSelectionWindow();
+    }
+
 	Events response;
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     response.add(std::make_shared<StartWarriorAnimationEvent>(this, "talking"));

@@ -56,7 +56,11 @@ bool Water::warriorCanStay(uint32_t warriorPlayerId) const {
 uint32_t Water::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return GO::WARRIOR_MOVEMENT_FORBIDDEN;
 }
-Events Water::getResponse(MapState* state, uint32_t playerId) {
+Events Water::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
+    if (button == sf::Mouse::Button::Right) {
+        return Events();
+    }
+
 	std::vector<HorizontalSelectionWindowComponent> components;
 
 	components.push_back(this->getExitComponent());

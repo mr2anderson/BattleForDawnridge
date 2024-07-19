@@ -65,12 +65,12 @@ bool GO::isLowObstacle(uint32_t playerId) const {
 bool GO::exist() const {
 	return true;
 }
-Events GO::click(MapState *state, uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY) {
+Events GO::click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint32_t mouseX, uint32_t mouseY) {
 	if (mouseX >= 64 * this->getX() and
 		mouseY >= 64 * this->getY() and
 		mouseX < 64 * (this->getX() + this->getSX()) and
 		mouseY < 64 * (this->getY() + this->getSY())) {
-		return this->getResponse(state, currentPlayerId);
+		return this->getResponse(state, currentPlayerId, button);
 	}
 	return Events();
 }

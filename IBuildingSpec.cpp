@@ -21,6 +21,7 @@
 
 
 
+IBuildingSpec::~IBuildingSpec() = default;
 Events IBuildingSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
 	return Events();
 }

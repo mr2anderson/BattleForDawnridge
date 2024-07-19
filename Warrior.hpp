@@ -83,9 +83,11 @@ private:
     float getOffsetX() const override;
     float getOffsetY() const override;
     float getOffset() const;
+    HorizontalSelectionWindowComponent getWarriorInfoComponent() const;
+    Events getSelectionWindow() const;
 
     AnimationState getCurrentAnimationState() const;
-	Events getResponse(MapState *state, uint32_t playerId) override;
+	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;
 };

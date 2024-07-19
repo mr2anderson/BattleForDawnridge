@@ -45,7 +45,7 @@ public:
     virtual bool isHighObstacle(uint32_t playerId) const;
     virtual bool isLowObstacle(uint32_t playerId) const;
 	virtual bool exist() const;
-	Events click(MapState *state, uint32_t currentPlayerId, uint32_t mouseX, uint32_t mouseY);
+	Events click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint32_t mouseX, uint32_t mouseY);
 	bool intersects(GO* go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
@@ -57,7 +57,7 @@ public:
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 protected:
-	virtual Events getResponse(MapState *state, uint32_t currentPlayerId) = 0;
+	virtual Events getResponse(MapState *state, uint32_t currentPlayerId, uint32_t button) = 0;
     virtual float getOffsetX() const;
     virtual float getOffsetY() const;
 

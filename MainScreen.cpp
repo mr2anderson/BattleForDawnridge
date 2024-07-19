@@ -75,27 +75,29 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 			if (event.type == sf::Event::MouseButtonPressed) {
                 if (!this->animation.has_value() and this->viewMovingQueue.empty()) {
                     if (this->element == nullptr) {
-                        if (this->baseEvents.empty() and this->allNewMoveEventsAdded()) {
-                            if (this->selected == nullptr) {
-								if (event.mouseButton.button == sf::Mouse::Button::Left) {
-									this->addButtonClickEventToQueue();
-									if (this->baseEvents.empty()) {
-										this->addGameObjectClickEventToQueue();
-									}
-								}
-                            }
-                            else {
-								if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
-									std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
-									Events unselectEvent = this->selected->unselect(this->map->getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
-									this->addEvents(unselectEvent);
-								}
+                        if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
+                            if (this->baseEvents.empty() and this->allNewMoveEventsAdded()) {
+                                if (this->selected == nullptr) {
+                                    if (event.mouseButton.button == sf::Mouse::Button::Left) {
+                                        this->addButtonClickEventToQueue();
+                                    }
+                                    if (this->baseEvents.empty()) {
+                                        this->addGameObjectClickEventToQueue(event.mouseButton.button);
+                                    }
+                                }
+                                else {
+                                    std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView();
+                                    Events unselectEvent = this->selected->unselect(this->map->getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
+                                    this->addEvents(unselectEvent);
+                                }
                             }
                         }
                     }
-                    else if (event.mouseButton.button == sf::Mouse::Button::Left) {
-                        Events elementClickEvent = this->element->click();
-                        this->addEvents(elementClickEvent);
+                    else  {
+                        if (event.mouseButton.button == sf::Mouse::Button::Left) {
+                            Events elementClickEvent = this->element->click();
+                            this->addEvents(elementClickEvent);
+                        }
                     }
                 }
 			}
@@ -416,7 +418,7 @@ void MainScreen::addButtonClickEventToQueue() {
 		}
 	}
 }
-void MainScreen::addGameObjectClickEventToQueue() {
+void MainScreen::addGameObjectClickEventToQueue(uint8_t button) {
 	uint32_t mouseX, mouseY;
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
 
@@ -424,7 +426,7 @@ void MainScreen::addGameObjectClickEventToQueue() {
 		for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 			GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i);
 			if (go->highClickPriority() == c) {
-				Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), mouseX, mouseY);
+				Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
 				if (!gor.empty()) {
 					this->addEvents(gor);
 					return;

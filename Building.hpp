@@ -65,7 +65,7 @@ private:
 	Events hit(Damage d, const std::optional<std::string>& direction) override;
 	Events newMove(MapState* state, uint32_t playerId) override;
 	Events processRegeneration();
-	Events getResponse(MapState* state, uint32_t playerId);
+	Events getResponse(MapState *state, uint32_t playerId, uint32_t button);
 	sf::Color getTextureColor() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;

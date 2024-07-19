@@ -40,5 +40,5 @@ public:
 private:
 	uint32_t type;
 
-	Events getResponse(MapState* state, uint32_t playerId) override;
+	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
 };

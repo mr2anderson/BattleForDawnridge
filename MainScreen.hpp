@@ -119,7 +119,7 @@ private:
 	void changeMove();
 	Player* getCurrentPlayer();
 	void addButtonClickEventToQueue();
-	void addGameObjectClickEventToQueue();
+	void addGameObjectClickEventToQueue(uint8_t button);
     void processBaseEvents();
     void addEvents(Events &e);
 	void prepareToReturnToMenu(sf::RenderWindow& window);

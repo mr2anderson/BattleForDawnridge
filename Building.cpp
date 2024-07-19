@@ -58,7 +58,6 @@ Building::~Building() {
 Events Building::getHighlightEvent(MapState *state) const {
 	Events highlightEvent;
 
-	bool connected = this->connectedToOrigin(state);
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
 		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(this, state);
 	}
@@ -338,8 +337,8 @@ Events Building::processRegeneration() {
 	}
 	return events;
 }
-Events Building::getResponse(MapState *state, uint32_t playerId) {
-	if (!this->belongTo(playerId) or !this->exist()) {
+Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
+	if (!this->belongTo(playerId) or !this->exist() or button == sf::Mouse::Right) {
 		return Events();
 	}
 
