@@ -18,7 +18,6 @@
 
 
 #include "HPGO.hpp"
-#include "HPPointer.hpp"
 
 
 HPGO::HPGO() = default;
@@ -28,9 +27,6 @@ HPGO::HPGO(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp) :
 }
 void HPGO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->GO::draw(target, states);
-	if (this->exist()) {
-		this->drawHpBar(target, states);
-	}
 }
 void HPGO::addHp(uint32_t n) {
 	this->currentHp = std::min(this->getHP() + n, this->getMaxHP());
@@ -51,12 +47,4 @@ void HPGO::setMaxHp() {
 }
 bool HPGO::exist() const {
 	return (this->getHP() != 0);
-}
-void HPGO::drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const {
-	HPPointer p(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHPPointerOrientation());
-
-	p.setCurrent(this->getHP());
-	p.setMax(this->getMaxHP());
-
-	target.draw(p, states);
 }

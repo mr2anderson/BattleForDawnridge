@@ -55,6 +55,9 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
+    if (this->exist()) {
+        this->drawHPPointer(target, states);
+    }
 }
 Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
     uint32_t dPoints = d.getHpLoss(this->getDefence());
@@ -453,6 +456,9 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId) {
 std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
     return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels(), this->movementPoints.value_or(this->getMovementPoints()));
 }
-uint8_t Warrior::getHPPointerOrientation() const {
-    return HPPointer::ORIENTATION::DOWN;
+void Warrior::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const {
+    HPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), HPPointer::ORIENTATION::DOWN);
+    pointer.setCurrent(this->getHP());
+    pointer.setMax(this->getMaxHP());
+    target.draw(pointer, states);
 }

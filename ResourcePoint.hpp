@@ -34,7 +34,6 @@ public:
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
 private:
-	uint8_t getHPPointerOrientation() const override;
 	Events getResponse(MapState *state, uint32_t playerId) override;
 	Events getSelectionWindow();
 	HorizontalSelectionWindowComponent getResourceLeftComponent() const;

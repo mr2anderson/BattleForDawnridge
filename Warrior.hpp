@@ -87,5 +87,5 @@ private:
     AnimationState getCurrentAnimationState() const;
 	Events getResponse(MapState *state, uint32_t playerId) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
-	uint8_t getHPPointerOrientation() const override;
+	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;
 };

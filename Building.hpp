@@ -57,11 +57,11 @@ private:
 	bool isUltraHighObstacle(uint32_t playerId) const override;
 	bool isHighObstacle(uint32_t playerId) const override;
 	bool isLowObstacle(uint32_t playerId) const override;
-	uint8_t getHPPointerOrientation() const override;
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 	HorizontalSelectionWindowComponent getDestroyComponent();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const;
+	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events hit(Damage d, const std::optional<std::string>& direction) override;
 	Events newMove(MapState* state, uint32_t playerId) override;
 	Events processRegeneration();

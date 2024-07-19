@@ -36,6 +36,7 @@
 #include "HPPointer.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "ConductionGraph.hpp"
+#include "HPPointer.hpp"
 
 
 Building::Building() = default;
@@ -205,9 +206,6 @@ bool Building::isLowObstacle(uint32_t playerId) const {
 
 	return false;
 }
-uint8_t Building::getHPPointerOrientation() const {
-	return HPPointer::ORIENTATION::UP;
-}
 HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 	std::string textureName;
 	std::wstring secondLine;
@@ -250,11 +248,14 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	return component;
 }
 void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	if (this->exist() and this->burningMovesLeft > 0) {
-		target.draw(this->fire, states);
-	}
 	this->Unit::draw(target, states);
-	this->drawShortInfos(target, states);
+	if (this->exist()) {
+		if (this->burningMovesLeft > 0) {
+			target.draw(this->fire, states);
+		}
+		this->drawShortInfos(target, states);
+		this->drawHPPointer(target, states);
+	}
 }
 void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
@@ -263,6 +264,12 @@ void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states)
 			target.draw(bsi.value(), states);
 		}
 	}
+}
+void Building::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const {
+	HPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), HPPointer::ORIENTATION::UP);
+	pointer.setCurrent(this->getHP());
+	pointer.setMax(this->getMaxHP());
+	target.draw(pointer, states);
 }
 Events Building::hit(Damage d, const std::optional<std::string>& direction) {
 	uint32_t dPoints = d.getHpLoss(this->getDefence());

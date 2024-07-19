@@ -37,9 +37,6 @@ bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
 uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	return 3;
 }
-uint8_t ResourcePoint::getHPPointerOrientation() const {
-	return HPPointer::ORIENTATION::UP;
-}
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId) {
 	if (!this->exist()) {
 		return Events();
