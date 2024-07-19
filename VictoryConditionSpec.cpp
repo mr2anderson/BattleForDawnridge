@@ -17,7 +17,7 @@
  */
 
 
-#include "VictoryCOnditionSpec.hpp"
+#include "VictoryConditionSpec.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
 #include "Texts.hpp"
 #include "Building.hpp"

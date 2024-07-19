@@ -17,6 +17,7 @@
  */
 
 
+#include <cstdio>
 #include "LoadingScreen.hpp"
 #include "Textures.hpp"
 #include "Fonts.hpp"
@@ -56,7 +57,9 @@ bool LoadingScreen::run(sf::RenderWindow &window) {
         return false;
     }
 
-    this->setCursor(window);
+    #if defined(_WIN32) // Unix does not support coloured cursors
+        this->setCursor(window);
+    #endif
 
     return true;
 }
