@@ -17,26 +17,20 @@
  */
 
 
-#include "Event.hpp"
-#include "Trade.hpp"
+#include "StartWarriorProducingEvent.hpp"
 
 
-#pragma once
-
-
-class Building;
-class TradingSpec;
-
-
-class TryToTradeEvent : public Event {
-public:
-	TryToTradeEvent(const Building *b, TradingSpec* spec, const Trade& trade);
-
-	const Building* getBuilding();
-	TradingSpec* getSpec();
-	Trade getTrade() const;
-private:
-	const Building* b;
-	TradingSpec* spec;
-	Trade trade;
-};
+StartWarriorProducingEvent::StartWarriorProducingEvent(const Building* b, WarriorProducerSpec* spec, std::shared_ptr<Warrior> w) {
+	this->b = b;
+	this->spec = spec;
+	this->w = w;
+}
+const Building* StartWarriorProducingEvent::getBuilding() const {
+	return this->b;
+}
+WarriorProducerSpec* StartWarriorProducingEvent::getSpec() {
+	return this->spec;
+}
+std::shared_ptr<Warrior> StartWarriorProducingEvent::getWarrior() {
+	return this->w;
+}

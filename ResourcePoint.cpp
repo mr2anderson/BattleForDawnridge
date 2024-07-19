@@ -20,9 +20,6 @@
 #include "ResourcePoint.hpp"
 #include "CreateEEvent.hpp"
 #include "Texts.hpp"
-#include "ImageFlyingE.hpp"
-#include "CollectEvent.hpp"
-#include "FocusOnEvent.hpp"
 #include "HPPointer.hpp"
 
 
@@ -31,25 +28,8 @@ ResourcePoint::ResourcePoint(uint32_t x, uint32_t y) : HPGO(x, y, std::nullopt) 
 Events ResourcePoint::newMove(MapState *state, uint32_t playerId) {
 	return Events();
 }
-Events ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
-	if (value == 0) {
-		return Events();
-	}
-
-	Events response;
-
-	if (value > this->getHP()) {
-		value = this->getHP();
-	}
-
-	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getResourceType() + "_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
-
-	response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
-    response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
-	response.add(std::make_shared<CreateEEvent>(flyingE));
-	response.add(std::make_shared<CollectEvent>(this, value));
-
-	return response;
+uint32_t ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
+	return std::min(this->getHP(), value);
 }
 bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
 	return true;

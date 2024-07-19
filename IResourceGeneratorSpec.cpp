@@ -32,13 +32,25 @@ Events IResourceGeneratorSpec::getActiveNewMoveEvent(const Building *building, M
 		return Events();
 	}
 
+	Resources limit;
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == building->getPlayerId()) {
+			limit.plus(b->getLimit());
+		}
+	}
+
+	if (limit.get(this->getProduct().type) == state->getPlayersPtr()->getPlayerPtr(building->getPlayerId())->getResource(this->getProduct().type)) {
+		return Events();
+	}
+
 	Events event;
 
 	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getProduct().type + "_icon", building->getX(), building->getY(), building->getSX(), building->getSY());
 	event.add(std::make_shared<FocusOnEvent>(building->getX(), building->getY(), building->getSX(), building->getSY()));
 	event.add(std::make_shared<PlaySoundEvent>(this->getProduct().type));
 	event.add(std::make_shared<CreateEEvent>(flyingE));
-	event.add(std::make_shared<AddResourceEvent>(this->getProduct()));
+	event.add(std::make_shared<AddResourceEvent>(this->getProduct(), limit));
 
 	return event;
 }

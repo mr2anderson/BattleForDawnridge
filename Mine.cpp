@@ -19,14 +19,14 @@
 
 
 #include "Mine.hpp"
-#include "IronCollectorSpec.hpp"
+#include "MineSpec.hpp"
 #include "Texts.hpp"
 
 
 Mine::Mine() = default;
 Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new IronCollectorSpec());
+	this->addSpec(new MineSpec());
 }
 Building* Mine::cloneBuilding() const {
 	return new Mine(*this);

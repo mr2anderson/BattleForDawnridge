@@ -18,15 +18,23 @@
 
 
 #include "IWarehouseSpec.hpp"
-#include "ResourceStorageBDestroyedEvent.hpp"
 #include "Texts.hpp"
 #include "Building.hpp"
+#include "AddResourcesEvent.hpp"
 
 
 Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *state) const {
 	Events event;
 
-	event.add(std::make_shared<ResourceStorageBDestroyedEvent>(building->getPlayerId()));
+	Resources newLimit;
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b != building) {
+			newLimit.plus(b->getLimit());
+		}
+	}
+
+	event.add(std::make_shared<AddResourcesEvent>(Resources(), newLimit));
 
 	return event;
 }

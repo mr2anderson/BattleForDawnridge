@@ -17,24 +17,18 @@
  */
 
 
-#include <memory>
-#include "Event.hpp"
+#include "AreaResourcePointCollectorSpec.hpp"
 
 
 #pragma once
 
 
-class WarriorProducerSpec;
-class Warrior;
-
-
-class TryToProduceEvent : public Event {
+class MineSpec : public AreaResourcePointCollectorSpec {
 public:
-	TryToProduceEvent(WarriorProducerSpec* spec, std::shared_ptr<Warrior> warrior);
+	MineSpec();
+	IBuildingSpec* clone() const override;
 
-	WarriorProducerSpec* getSpec();
-	std::shared_ptr<Warrior> getWarrior();
-private:
-	WarriorProducerSpec* spec;
-	std::shared_ptr<Warrior> warrior;
+	std::string getResourceType() const override;
+	uint32_t getCollectionSpeed() const override;
+	uint32_t getCollectionRadius() const override;
 };

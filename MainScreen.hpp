@@ -23,27 +23,21 @@
 #include "HighlightTable.hpp"
 #include "PlainsGeneration.hpp"
 #include "AddResourcesEvent.hpp"
-#include "TryToBuildEvent.hpp"
 #include "BuildEvent.hpp"
 #include "ChangeMoveEvent.hpp"
 #include "ReturnToMenuEvent.hpp"
 #include "SubResourcesEvent.hpp"
 #include "SetHighlightEvent.hpp"
-#include "TryToTradeEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "SubResourceEvent.hpp"
-#include "CollectEvent.hpp"
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 #include "DecreaseCurrentProducingMovesLeftEvent.hpp"
-#include "TryToProduceEvent.hpp"
 #include "WarriorProducingFinishedEvent.hpp"
 #include "SelectEvent.hpp"
 #include "UnselectEvent.hpp"
 #include "StartWarriorAnimationEvent.hpp"
 #include "PlaySoundEvent.hpp"
-#include "ResourceStorageBDestroyedEvent.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
-#include "TryToCollectEvent.hpp"
 #include "RefreshMovementPointsEvent.hpp"
 #include "EnableCursorEvent.hpp"
 #include "DisableCursorEvent.hpp"
@@ -60,6 +54,9 @@
 #include "FocusOnEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "Button.hpp"
+#include "DoTradeEvent.hpp"
+#include "StartWarriorProducingEvent.hpp"
+#include "TryToBuildEvent.hpp"
 
 
 #pragma once
@@ -121,7 +118,6 @@ private:
 	bool allNewMoveEventsAdded() const;
 	void changeMove();
 	Player* getCurrentPlayer();
-	Resources getResourcesLimit();
 	void addButtonClickEventToQueue();
 	void addGameObjectClickEventToQueue();
     void processBaseEvents();
@@ -151,31 +147,25 @@ private:
 
 
 	void handleBaseEvent(std::shared_ptr<Event> e);
-	void handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e);
 	void handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e);
 	void handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e);
-	void handleCollectEvent(std::shared_ptr<CollectEvent> e);
 	void handleAddHpEvent(std::shared_ptr<AddHpEvent> e);
 	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e);
-	void handleTryToBuild(std::shared_ptr<TryToBuildEvent> e);
 	void handleBuild(std::shared_ptr<BuildEvent> e);
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
 	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e);
 	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
 	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
 	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
-	void handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e);
 	void handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e);
 	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e);
-	void handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e);
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
 	void handleSelectEvent(std::shared_ptr<SelectEvent> w);
 	void handleUnselectEvent(std::shared_ptr<UnselectEvent> w);
 	void handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e);
-	void handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e);
 	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e);
 	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e);
 	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e);
@@ -187,4 +177,7 @@ private:
 	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e);
 	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e);
 	void handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e);
+	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e);
+	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e);
+	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e);
 };

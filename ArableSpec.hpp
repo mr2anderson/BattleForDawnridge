@@ -17,18 +17,16 @@
  */
 
 
-#include "AreaResourcePointCollectorSpec.hpp"
+#include "IResourceGeneratorSpec.hpp"
 
 
 #pragma once
 
 
-class StoneCollectorSpec : public AreaResourcePointCollectorSpec {
+class ArableSpec : public IResourceGeneratorSpec {
 public:
-	StoneCollectorSpec();
+	ArableSpec();
 	IBuildingSpec* clone() const override;
-
-	std::string getResourceType() const override;
-	uint32_t getCollectionSpeed() const override;
-	uint32_t getCollectionRadius() const override;
+	
+	Resource getProduct() const override;
 };

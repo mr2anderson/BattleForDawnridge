@@ -17,23 +17,19 @@
  */
 
 
-#include <cstdint>
-#include "Event.hpp"
+#include "QuarrySpec.hpp"
 
 
-#pragma once
-
-
-class ResourcePoint;
-
-
-class CollectEvent : public Event {
-public:
-	CollectEvent(ResourcePoint* rp, uint32_t n);
-
-	ResourcePoint* getRp();
-	uint32_t getN() const;
-private:
-	ResourcePoint* rp;
-	uint32_t n;
-};
+QuarrySpec::QuarrySpec() = default;
+IBuildingSpec* QuarrySpec::clone() const {
+	return new QuarrySpec(*this);
+}
+std::string QuarrySpec::getResourceType() const {
+	return "stone";
+}
+uint32_t QuarrySpec::getCollectionSpeed() const {
+	return 1750;
+}
+uint32_t QuarrySpec::getCollectionRadius() const {
+	return 5;
+}

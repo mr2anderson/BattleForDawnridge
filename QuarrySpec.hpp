@@ -17,20 +17,18 @@
  */
 
 
-#include "TryToTradeEvent.hpp"
+#include "AreaResourcePointCollectorSpec.hpp"
 
 
-TryToTradeEvent::TryToTradeEvent(const Building *b, TradingSpec* spec, const Trade& trade) {
-	this->b = b;
-	this->spec = spec;
-	this->trade = trade;
-}
-const Building* TryToTradeEvent::getBuilding() {
-	return this->b;
-}
-TradingSpec* TryToTradeEvent::getSpec() {
-	return this->spec;
-}
-Trade TryToTradeEvent::getTrade() const {
-	return this->trade;
-}
+#pragma once
+
+
+class QuarrySpec : public AreaResourcePointCollectorSpec {
+public:
+	QuarrySpec();
+	IBuildingSpec* clone() const override;
+
+	std::string getResourceType() const override;
+	uint32_t getCollectionSpeed() const override;
+	uint32_t getCollectionRadius() const override;
+};

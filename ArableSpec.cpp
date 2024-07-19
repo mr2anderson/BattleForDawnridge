@@ -17,12 +17,13 @@
  */
 
 
-#include "ResourceStorageBDestroyedEvent.hpp"
+#include "ArableSpec.hpp"
 
 
-ResourceStorageBDestroyedEvent::ResourceStorageBDestroyedEvent(uint32_t playerId) {
-	this->playerId = playerId;
+ArableSpec::ArableSpec() = default;
+IBuildingSpec* ArableSpec::clone() const {
+	return new ArableSpec(*this);
 }
-uint32_t ResourceStorageBDestroyedEvent::getPlayerId() const {
-	return this->playerId;
+Resource ArableSpec::getProduct() const {
+	return { "food", 875 };
 }

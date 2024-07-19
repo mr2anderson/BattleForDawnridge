@@ -19,14 +19,14 @@
 
 
 #include "Quarry.hpp"
-#include "StoneCollectorSpec.hpp"
+#include "QuarrySpec.hpp"
 #include "Texts.hpp"
 
 
 Quarry::Quarry() = default;
 Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new StoneCollectorSpec());
+	this->addSpec(new QuarrySpec());
 }
 Building* Quarry::cloneBuilding() const {
 	return new Quarry(*this);

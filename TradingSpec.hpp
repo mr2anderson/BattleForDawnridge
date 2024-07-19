@@ -38,4 +38,5 @@ private:
 	Trade currentTrade;
 
 	bool busy() const;
+	HorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade);
 };

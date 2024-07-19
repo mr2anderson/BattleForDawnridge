@@ -27,8 +27,8 @@
 #include "ImageFlyingE.hpp"
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 #include "AddResourceEvent.hpp"
-#include "TryToTradeEvent.hpp"
 #include "Building.hpp"
+#include "DoTradeEvent.hpp"
 
 
 TradingSpec::TradingSpec() = default;
@@ -76,24 +76,18 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 		element = std::make_shared<ImageFlyingE>(this->currentTrade.buy.type + "_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 		responce.add(std::make_shared<CreateEEvent>(element));
 
-		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy));
+		Resources limit;
+		for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+			Building* warehouse = state->getCollectionsPtr()->getBuilding(i);
+			if (warehouse->exist() and warehouse->getPlayerId() == b->getPlayerId()) {
+				limit.plus(warehouse->getLimit());
+			}
+		}
+
+		responce.add(std::make_shared<AddResourceEvent>(this->currentTrade.buy, limit));
 	}
 
 	return responce;
-}
-static HorizontalSelectionWindowComponent GET_TRADE_COMPONENT(std::shared_ptr<TryToTradeEvent> e) {
-	Events events;
-	events.add(e);
-
-	HorizontalSelectionWindowComponent component = {
-		e->getTrade().buy.type + "_icon",
-		*Texts::get()->get("buy") + e->getTrade().buy.getReadableInfo() +
-		*Texts::get()->get("for") + e->getTrade().sell.getReadableInfo(),
-		true,
-		events
-	};
-
-	return component;
 }
 std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const Building *b, MapState* state) {
 	std::vector<HorizontalSelectionWindowComponent> components;
@@ -108,10 +102,10 @@ std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const
 			);
 		}
 		else {
+			Resources playerResources = state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources();
 			std::vector<Trade> trades = this->getTrades();
 			for (const auto& trade : trades) {
-				std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::make_shared<TryToTradeEvent>(b, this, trade);
-				components.push_back(GET_TRADE_COMPONENT(tryToTradeEvent));
+				components.push_back(this->getTradeComponent(b, playerResources, trade));
 			}
 		}
 	}
@@ -134,4 +128,28 @@ std::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) co
 }
 bool TradingSpec::busy() const {
 	return this->currentTrade.movesLeft > 0;
+}
+HorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade) {
+	Events events;
+	if (playerResources.get(trade.sell.type) >= trade.sell.n) {
+		events.add(std::make_shared<DoTradeEvent>(b, this, trade));
+	}
+	else {
+		Events clickEvent;
+		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"), clickEvent);
+		events = events + clickEvent;
+		events.add(std::make_shared<CreateEEvent>(w));
+	}
+
+	HorizontalSelectionWindowComponent component = {
+		trade.buy.type + "_icon",
+		*Texts::get()->get("buy") + trade.buy.getReadableInfo() +
+		*Texts::get()->get("for") + trade.sell.getReadableInfo(),
+		true,
+		events
+	};
+
+	return component;
 }

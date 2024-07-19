@@ -28,9 +28,10 @@
 #include "DecreaseCurrentProducingMovesLeftEvent.hpp"
 #include "WarriorProducingFinishedEvent.hpp"
 #include "CouldntFindNewWarriorPosition.hpp"
-#include "TryToProduceEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "Building.hpp"
+#include "SubResourcesEvent.hpp"
+#include "StartWarriorProducingEvent.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -41,7 +42,10 @@ Events WarriorProducerSpec::startProducing(std::shared_ptr<Warrior> w) {
 	this->currentProducingMovesLeft = w->getTimeToProduce();
 	this->producing = true;
 
-	std::shared_ptr<WindowButton> producingStartedWindow = std::make_shared<WindowButton>(*Texts::get()->get("producing_started") + std::to_wstring(this->currentProducingMovesLeft), *Texts::get()->get("OK"));
+	Events clickSoundEvent;
+	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+	std::shared_ptr<WindowButton> producingStartedWindow = std::make_shared<WindowButton>(*Texts::get()->get("producing_started") + std::to_wstring(this->currentProducingMovesLeft), *Texts::get()->get("OK"), clickSoundEvent);
 	Events response;
 	response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(producingStartedWindow));
@@ -112,9 +116,23 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 			std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce(b->getPlayerId());
 			for (uint32_t i = 0; i < toProduce.size(); i = i + 1) {
 				std::shared_ptr<Warrior> w = toProduce.at(i);
-				Events tryToProduceEvent;
-				tryToProduceEvent.add(std::make_shared<ResetHighlightEvent>());
-				tryToProduceEvent.add(std::make_shared<TryToProduceEvent>(this, w));
+
+				Events produceEvent;
+				produceEvent.add(std::make_shared<ResetHighlightEvent>());
+				
+				if (state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources() >= w->getCost()) {
+					produceEvent.add(std::make_shared<SubResourcesEvent>(w->getCost()));
+					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this, w));
+				}
+				else {
+					Events clickEvent;
+					clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_producing"), *Texts::get()->get("OK"), clickEvent);
+					produceEvent = produceEvent + clickEvent;
+					produceEvent.add(std::make_shared<CreateEEvent>(w));
+				}
+
 				components.emplace_back(
 					w->getTextureName(),
 					w->getDescription() + L"\n" +
@@ -122,7 +140,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 					*Texts::get()->get("damage") + w->getDamage().getReadable() + L". " + *Texts::get()->get("movement_points") + std::to_wstring(w->getMovementPoints()) + L"\n" +
 					*Texts::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
 					true,
-					tryToProduceEvent
+					produceEvent
 				);
 			}
 		}

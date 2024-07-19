@@ -336,8 +336,18 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 }
 void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	ResourceBar bar;
+
 	bar.setResources(this->getCurrentPlayer()->getResources());
-	bar.setLimit(this->getResourcesLimit());
+
+	Resources limit;
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			limit.plus(b->getLimit());
+		}
+	}
+	bar.setLimit(limit);
+
 	window.draw(bar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
@@ -396,18 +406,6 @@ void MainScreen::changeMove() {
 }
 Player* MainScreen::getCurrentPlayer() {
 	return this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr((this->move + 1) % this->map->getStatePtr()->getPlayersPtr()->total() + 1);
-}
-Resources MainScreen::getResourcesLimit() {
-	Resources limit;
-	
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			limit.plus(b->getLimit());
-		}
-	}
-
-	return limit;
 }
 void MainScreen::addButtonClickEventToQueue() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
@@ -610,10 +608,7 @@ bool MainScreen::verifyViewEast() {
 
 
 void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
-    if (std::shared_ptr<TryToTradeEvent> tryToTradeEvent = std::dynamic_pointer_cast<TryToTradeEvent>(e)) {
-        this->handleTryToTradeEvent(tryToTradeEvent);
-    }
-    else if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
+    if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
         this->handleAddResourceEvent(addResourceEvent);
     }
     else if (std::shared_ptr<SubResourceEvent> subResourceEvent = std::dynamic_pointer_cast<SubResourceEvent>(e)) {
@@ -628,17 +623,11 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<SetHighlightEvent> changeHighlightEvent = std::dynamic_pointer_cast<SetHighlightEvent>(e)) {
         this->handleSetHighlightEvent(changeHighlightEvent);
     }
-    else if (std::shared_ptr<CollectEvent> collectEvent = std::dynamic_pointer_cast<CollectEvent>(e)) {
-        this->handleCollectEvent(collectEvent);
-    }
     else if (std::shared_ptr<AddHpEvent> addHpEvent = std::dynamic_pointer_cast<AddHpEvent>(e)) {
         this->handleAddHpEvent(addHpEvent);
     }
     else if (std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> decreaseCurrentTradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentTradeMovesLeftEvent>(e)) {
         this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent);
-    }
-    else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
-        this->handleTryToBuild(tryToBuildEvent);
     }
     else if (std::shared_ptr<BuildEvent> buildEvent = std::dynamic_pointer_cast<BuildEvent>(e)) {
         this->handleBuild(buildEvent);
@@ -658,17 +647,11 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
         this->handleDestroyEvent(destroyEvent);
     }
-    else if (std::shared_ptr<ResourceStorageBDestroyedEvent> resourceStorageBDestroyedEvent = std::dynamic_pointer_cast<ResourceStorageBDestroyedEvent>(e)) {
-        this->handleResourceStorageBDestroyedEvent(resourceStorageBDestroyedEvent);
-    }
     else if (std::shared_ptr<VictoryConditionBDestroyedEvent> victoryConditionBDestroyedEvent = std::dynamic_pointer_cast<VictoryConditionBDestroyedEvent>(e)) {
         this->handleVictoryConditionBDestroyedEvent(victoryConditionBDestroyedEvent);
     }
     else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e)) {
         this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent);
-    }
-    else if (std::shared_ptr<TryToProduceEvent> tryToProduceEvent = std::dynamic_pointer_cast<TryToProduceEvent>(e)) {
-        this->handleTryToProduceEvent(tryToProduceEvent);
     }
     else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e)) {
         this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent);
@@ -681,9 +664,6 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
     }
     else if (std::shared_ptr<StartWarriorAnimationEvent> startWarriorAnimationEvent = std::dynamic_pointer_cast<StartWarriorAnimationEvent>(e)) {
         this->handleStartWarriorAnimationEvent(startWarriorAnimationEvent);
-    }
-    else if (std::shared_ptr<TryToCollectEvent> tryToCollectEvent = std::dynamic_pointer_cast<TryToCollectEvent>(e)) {
-        this->handleTryToCollectEvent(tryToCollectEvent);
     }
     else if (std::shared_ptr<RefreshMovementPointsEvent> refreshMovementPointsEvent = std::dynamic_pointer_cast<RefreshMovementPointsEvent>(e)) {
         this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent);
@@ -715,46 +695,30 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<ResetHighlightEvent> resetHighlightEvent = std::dynamic_pointer_cast<ResetHighlightEvent>(e)) {
 		this->handleResetHighlightEvent(resetHighlightEvent);
 	}
-}
-void MainScreen::handleTryToTradeEvent(std::shared_ptr<TryToTradeEvent> e) {
-	const Building* b = e->getBuilding();
-	TradingSpec* s = e->getSpec();
-	Trade t = e->getTrade();
-	if (this->getCurrentPlayer()->getResource(t.sell.type) >= t.sell.n) {
-		Events tradeEvent = s->doTrade(b, t);
-		this->addEvents(tradeEvent);
+	else if (std::shared_ptr<DoTradeEvent> doTradeEvent = std::dynamic_pointer_cast<DoTradeEvent>(e)) {
+		this->handleDoTradeEvent(doTradeEvent);
 	}
-	else {
-        Events clickEvent;
-        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-        Events unableToTradeEvent = clickEvent;
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"), clickEvent);
-        unableToTradeEvent.add(std::make_shared<CreateEEvent>(w));
-        this->addEvents(unableToTradeEvent);
+	else if (std::shared_ptr<StartWarriorProducingEvent> startWarriorProducingEvent = std::dynamic_pointer_cast<StartWarriorProducingEvent>(e)) {
+		this->handleStartWarriorProducingEvent(startWarriorProducingEvent);
+	}
+	else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
+		this->handleTryToBuildEvent(tryToBuildEvent);
 	}
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
-	this->getCurrentPlayer()->addResource(e->getResource(), this->getResourcesLimit().get(e->getResource().type));
+	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
 }
 void MainScreen::handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e) {
 	this->getCurrentPlayer()->subResource(e->getResource());
 }
 void MainScreen::handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e) {
-	this->getCurrentPlayer()->addResources(e->getResources(), this->getResourcesLimit());
+	this->getCurrentPlayer()->addResources(e->getResources(), e->getLimit());
 }
 void MainScreen::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e) {
 	this->getCurrentPlayer()->subResources(e->getResources());
 }
 void MainScreen::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e) {
 	this->highlightTable.mark(*e);
-}
-void MainScreen::handleCollectEvent(std::shared_ptr<CollectEvent> e) {
-	ResourcePoint* resourcePoint = e->getRp();
-	uint32_t n = e->getN();
-	resourcePoint->subHp(n);
-	std::shared_ptr<AddResourceEvent> addResourceEvent = std::make_shared<AddResourceEvent>(Resource(resourcePoint->getResourceType(), n));
-	this->handleAddResourceEvent(addResourceEvent);
 }
 void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
 	HPGO* go = e->getHPGO();
@@ -763,22 +727,6 @@ void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
 }
 void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e) {
 	e->getSpec()->decreaseCurrentTradeMovesLeft();
-}
-void MainScreen::handleTryToBuild(std::shared_ptr<TryToBuildEvent> e) {
-	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
-		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
-		Events bmStartEvent = bm.start(this->map->getStatePtr());
-		this->addEvents(bmStartEvent);
-	}
-	else {
-        Events clickEvent;
-        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"), clickEvent);
-        Events unableToBuildEvent;
-        unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
-		this->addEvents(unableToBuildEvent);
-	}
 }
 void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
 	Building* b = e->getBuilding();
@@ -800,9 +748,6 @@ void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
 void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map->getStatePtr());
 	this->addEvents(destroyBuildingEvent);
-}
-void MainScreen::handleResourceStorageBDestroyedEvent(std::shared_ptr<ResourceStorageBDestroyedEvent> e) {
-	this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(this->getResourcesLimit());
 }
 void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e) {
 	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
@@ -834,23 +779,6 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
 	e->getSpec()->decreaseCurrentProducingMovesLeft();
 }
-void MainScreen::handleTryToProduceEvent(std::shared_ptr<TryToProduceEvent> e) {
-	if (this->getCurrentPlayer()->getResources() >= e->getWarrior()->getCost()) {
-		Events subResourcesEvent;
-		subResourcesEvent.add(std::make_shared<SubResourcesEvent>(e->getWarrior()->getCost()));
-        subResourcesEvent = subResourcesEvent + e->getSpec()->startProducing(e->getWarrior());
-		this->addEvents(subResourcesEvent);
-	}
-	else {
-        Events clickEvent;
-        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_producing"), *Texts::get()->get("OK"), clickEvent);
-        Events unableToProduceEvent = clickEvent;
-        unableToProduceEvent.add(std::make_shared<CreateEEvent>(w));
-		this->addEvents(unableToProduceEvent);
-	}
-}
 void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e) {
 	e->getSpec()->stopProducing();
 	this->map->add(e->getWarrior()->cloneWarrior());
@@ -863,19 +791,6 @@ void MainScreen::handleUnselectEvent(std::shared_ptr<UnselectEvent> e) {
 }
 void MainScreen::handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e) {
 	e->getWarrior()->startAnimation(e->getAnimation());
-}
-void MainScreen::handleTryToCollectEvent(std::shared_ptr<TryToCollectEvent> e) {
-	uint32_t id = e->getPlayerId();
-	ResourcePoint* rp = e->getResourcePoint();
-	uint32_t value = e->getValue();
-
-	uint32_t limit = this->getResourcesLimit().get(rp->getResourceType()) - this->getCurrentPlayer()->getResource(rp->getResourceType());
-	if (value > limit) {
-		value = limit;
-	}
-
-	Events tryToCollectEvent = rp->tryToCollect(id, value);
-	this->addEvents(tryToCollectEvent);
 }
 void MainScreen::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e) {
 	e->getWarrior()->refreshMovementPoints();
@@ -911,4 +826,26 @@ void MainScreen::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e) {
 }
 void MainScreen::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e) {
 	this->highlightTable.clear();
+}
+void MainScreen::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e) {
+	e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
+}
+void MainScreen::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e) {
+	e->getSpec()->startProducing(e->getWarrior());
+}
+void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
+	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
+		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
+		Events bmStartEvent = bm.start(this->map->getStatePtr());
+		this->addEvents(bmStartEvent);
+	}
+	else {
+		Events clickEvent;
+		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"), clickEvent);
+		Events unableToBuildEvent;
+		unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
+		this->addEvents(unableToBuildEvent);
+	}
 }

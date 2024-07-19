@@ -19,7 +19,7 @@
 
 
 #include "Event.hpp"
-#include "Resource.hpp"
+#include "Resources.hpp"
 
 
 #pragma once
@@ -27,9 +27,11 @@
 
 class AddResourceEvent : public Event {
 public:
-	AddResourceEvent(const Resource& resource);
+	AddResourceEvent(const Resource& resource, const Resources &limit);
 
 	Resource getResource() const;
+	Resources getLimit() const;
 private:
 	Resource resource;
+	Resources limit;
 };

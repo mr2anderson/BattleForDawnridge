@@ -29,12 +29,12 @@ Events Treasure::newMove(MapState *state, uint32_t playerId) {
 	this->alreadyCollected = false;
 	return Events();
 }
-Events Treasure::tryToCollect(uint32_t playerId, uint32_t value) {
+uint32_t Treasure::tryToCollect(uint32_t playerId, uint32_t value) {
 	if (!this->alreadyCollected) {
 		this->alreadyCollected = true;
 		return this->ResourcePoint::tryToCollect(playerId, value);
 	}
-	return Events();
+	return 0;
 }
 uint32_t Treasure::getSX() const {
     return 1;

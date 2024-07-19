@@ -20,9 +20,13 @@
 #include "AddResourceEvent.hpp"
 
 
-AddResourceEvent::AddResourceEvent(const Resource& resource) {
+AddResourceEvent::AddResourceEvent(const Resource& resource, const Resources &limit) {
 	this->resource = resource;
+	this->limit = limit;
 }
 Resource AddResourceEvent::getResource() const {
 	return this->resource;
+}
+Resources AddResourceEvent::getLimit() const {
+	return this->limit;
 }

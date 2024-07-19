@@ -17,18 +17,20 @@
  */
 
 
-#include "AreaResourcePointCollectorSpec.hpp"
+#include "DoTradeEvent.hpp"
 
 
-#pragma once
-
-
-class IronCollectorSpec : public AreaResourcePointCollectorSpec {
-public:
-	IronCollectorSpec();
-	IBuildingSpec* clone() const override;
-
-	std::string getResourceType() const override;
-	uint32_t getCollectionSpeed() const override;
-	uint32_t getCollectionRadius() const override;
-};
+DoTradeEvent::DoTradeEvent(const Building* b, TradingSpec* spec, const Trade& trade) {
+	this->building = b;
+	this->spec = spec;
+	this->trade = trade;
+}
+const Building* DoTradeEvent::getBuilding() const {
+	return this->building;
+}
+TradingSpec* DoTradeEvent::getSpec() {
+	return this->spec;
+}
+Trade DoTradeEvent::getTrade() const {
+	return this->trade;
+}

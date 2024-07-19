@@ -17,19 +17,26 @@
  */
 
 
-#include "StoneCollectorSpec.hpp"
+#include "Event.hpp"
+#include "Trade.hpp"
 
 
-StoneCollectorSpec::StoneCollectorSpec() = default;
-IBuildingSpec* StoneCollectorSpec::clone() const {
-	return new StoneCollectorSpec(*this);
-}
-std::string StoneCollectorSpec::getResourceType() const {
-	return "stone";
-}
-uint32_t StoneCollectorSpec::getCollectionSpeed() const {
-	return 1750;
-}
-uint32_t StoneCollectorSpec::getCollectionRadius() const {
-	return 5;
-}
+#pragma once
+
+
+class Building;
+class TradingSpec;
+
+
+class DoTradeEvent : public Event {
+public:
+	DoTradeEvent(const Building* b, TradingSpec* spec, const Trade& trade);
+
+	const Building* getBuilding() const;
+	TradingSpec* getSpec();
+	Trade getTrade() const;
+private:
+	const Building* building;
+	TradingSpec* spec;
+	Trade trade;
+};

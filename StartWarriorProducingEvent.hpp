@@ -17,13 +17,27 @@
  */
 
 
-#include "FoodGeneratorSpec.hpp"
+#include <memory>
+#include "Event.hpp"
 
 
-FoodGeneratorSpec::FoodGeneratorSpec() = default;
-IBuildingSpec* FoodGeneratorSpec::clone() const {
-	return new FoodGeneratorSpec(*this);
-}
-Resource FoodGeneratorSpec::getProduct() const {
-	return { "food", 875 };
-}
+#pragma once
+
+
+class Building;
+class WarriorProducerSpec;
+class Warrior;
+
+
+class StartWarriorProducingEvent : public Event {
+public:
+	StartWarriorProducingEvent(const Building* b, WarriorProducerSpec* spec, std::shared_ptr<Warrior> w);
+
+	const Building* getBuilding() const;
+	WarriorProducerSpec* getSpec();
+	std::shared_ptr<Warrior> getWarrior();
+private:
+	const Building* b;
+	WarriorProducerSpec* spec;
+	std::shared_ptr<Warrior> w;
+};

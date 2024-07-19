@@ -29,7 +29,7 @@ public:
 	ResourcePoint(uint32_t x, uint32_t y);
 
 	Events newMove(MapState *state, uint32_t playerId) override;
-	virtual Events tryToCollect(uint32_t playerId, uint32_t value);
+	virtual uint32_t tryToCollect(uint32_t playerId, uint32_t value);
 	virtual std::string getResourceType() const = 0;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;

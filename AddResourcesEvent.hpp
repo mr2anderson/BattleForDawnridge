@@ -26,9 +26,10 @@
 
 class AddResourcesEvent : public Event {
 public:
-	AddResourcesEvent(const Resources& resources);
+	AddResourcesEvent(const Resources& resources, const Resources &limit);
 
 	Resources getResources() const;
+	Resources getLimit() const;
 private:
-	Resources resources;
+	Resources resources, limit;
 };

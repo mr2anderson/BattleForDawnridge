@@ -18,14 +18,14 @@
 
 
 #include "Arable.hpp"
-#include "FoodGeneratorSpec.hpp"
+#include "ArableSpec.hpp"
 #include "Texts.hpp"
 
 
 Arable::Arable() = default;
 Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new FoodGeneratorSpec());
+	this->addSpec(new ArableSpec());
 }
 Building* Arable::cloneBuilding() const {
 	return new Arable(*this);

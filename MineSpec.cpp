@@ -17,19 +17,19 @@
  */
 
 
-#include "IronCollectorSpec.hpp"
+#include "MineSpec.hpp"
 
 
-IronCollectorSpec::IronCollectorSpec() = default;
-IBuildingSpec* IronCollectorSpec::clone() const {
-	return new IronCollectorSpec(*this);
+MineSpec::MineSpec() = default;
+IBuildingSpec* MineSpec::clone() const {
+	return new MineSpec(*this);
 }
-std::string IronCollectorSpec::getResourceType() const {
+std::string MineSpec::getResourceType() const {
 	return "iron";
 }
-uint32_t IronCollectorSpec::getCollectionSpeed() const {
+uint32_t MineSpec::getCollectionSpeed() const {
 	return 1750;
 }
-uint32_t IronCollectorSpec::getCollectionRadius() const {
+uint32_t MineSpec::getCollectionRadius() const {
 	return 4;
 }

@@ -19,9 +19,13 @@
 
 #include "AreaResourcePointCollectorSpec.hpp"
 #include "ResourcePoint.hpp"
-#include "TryToCollectEvent.hpp"
 #include "Texts.hpp"
 #include "Building.hpp"
+#include "FocusOnEvent.hpp"
+#include "ImageFlyingE.hpp"
+#include "CreateEEvent.hpp"
+#include "SubHpEvent.hpp"
+#include "AddResourceEvent.hpp"
 
 
 AreaResourcePointCollectorSpec::AreaResourcePointCollectorSpec() = default;
@@ -30,17 +34,47 @@ Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bui
 		return Events();
 	}
 
-	Events responce;
+	Resources limit;
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == building->getPlayerId()) {
+			limit.plus(b->getLimit());
+		}
+	}
+
+	uint32_t leftSpace = limit.get(this->getResourceType()) - state->getPlayersPtr()->getPlayerPtr(building->getPlayerId())->getResource(this->getResourceType());
+
+	uint32_t left = std::min(this->getCollectionSpeed(), leftSpace);
+
+	std::vector<std::tuple<ResourcePoint*, uint32_t>> src;
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
 		ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
 		if (rp->exist() and this->inRadius(building, state, rp->getX(), rp->getY(), rp->getSX(), rp->getSY()) and rp->getResourceType() == this->getResourceType()) {
-			responce.add(std::make_shared<TryToCollectEvent>(building->getPlayerId(), rp, this->getCollectionSpeed()));
-			break;
+			uint32_t got = rp->tryToCollect(building->getPlayerId(), left);
+			if (got != 0) {
+				src.emplace_back(rp, got);
+				left = left - got;
+			}
 		}
 	}
 
-	return responce;
+	if (src.empty()) {
+		return Events();
+	}
+
+	std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getResourceType() + "_icon", building->getX(), building->getY(), building->getSX(), building->getSY());
+
+	Events response;
+	response.add(std::make_shared<FocusOnEvent>(building->getX(), building->getY(), building->getSX(), building->getSY()));
+	response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
+	response.add(std::make_shared<CreateEEvent>(flyingE));
+	for (uint32_t i = 0; i < src.size(); i = i + 1) {
+		response.add(std::make_shared<SubHpEvent>(std::get<ResourcePoint*>(src.at(i)), std::get<uint32_t>(src.at(i))));
+		response.add(std::make_shared<AddResourceEvent>(Resource(this->getResourceType(), std::get<uint32_t>(src.at(i))), limit));
+	}
+
+	return response;
 }
 std::vector<HorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::getComponents(const Building *building, MapState* state) {
 	HorizontalSelectionWindowComponent component;
