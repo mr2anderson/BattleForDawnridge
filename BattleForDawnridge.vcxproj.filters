@@ -990,7 +990,7 @@
     <ClInclude Include="EnableCursorEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="FitTableElement.hpp">
+    <ClInclude Include="MovementGraphElement.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="ClueManager.hpp">
@@ -1529,7 +1529,7 @@
     <ClCompile Include="EnableCursorEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="FitTableElement.cpp">
+    <ClCompile Include="MovementGraphElement.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="ClueManager.cpp">

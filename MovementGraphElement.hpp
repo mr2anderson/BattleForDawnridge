@@ -23,10 +23,11 @@
 #pragma once
 
 
-struct FitTableElement {
-	FitTableElement();
-	FitTableElement(bool canStay, uint32_t movementCost);
+struct MovementGraphElement {
+	MovementGraphElement();
+	MovementGraphElement(bool canStay, bool canAttack, uint32_t movementCost);
 
 	bool canStay;
+	bool canAttack;
 	uint32_t movementCost;
 };
