@@ -28,8 +28,11 @@ MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
 	this->mapW = mapW;
 	this->mapH = mapH;
 }
-void MovementGraph::set(uint32_t x, uint32_t y, bool canStay, uint32_t movementCost) {
-	this->fitTable[std::make_tuple(x, y)] = FitTableElement(canStay, movementCost);
+void MovementGraph::setCantStay(uint32_t x, uint32_t y) {
+	this->fitTable[std::make_tuple(x, y)].canStay = false;
+}
+void MovementGraph::updateMovementCost(uint32_t x, uint32_t y, uint32_t movementCost) {
+	this->fitTable[std::make_tuple(x, y)].movementCost = std::max(this->fitTable[std::make_tuple(x, y)].movementCost, movementCost);
 }
 Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t movePoints) {
     std::tuple<uint32_t, uint32_t> from = std::make_tuple(x1, y1);
@@ -77,7 +80,7 @@ std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, 
 	
 	std::vector<std::tuple<uint32_t, uint32_t>> moves;
 	for (const auto& a : dist) {
-		if (this->fitTable.at(a.first).canStay) {
+		if (this->fitTable[a.first].canStay) {
             moves.emplace_back(a.first);
 		}
 	}
@@ -123,19 +126,19 @@ void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoint
 		std::vector<DijkstraQueueElement> graph;
 		if (vx >= 1) {
 			auto to = std::make_tuple(vx - 1, vy);
-			graph.emplace_back(this->fitTable.at(to).movementCost, to);
+			graph.emplace_back(this->fitTable[to].movementCost, to);
 		}
 		if (vy >= 1) {
 			auto to = std::make_tuple(vx, vy - 1);
-			graph.emplace_back(this->fitTable.at(to).movementCost, to);
+			graph.emplace_back(this->fitTable[to].movementCost, to);
 		}
 		if (vx + 1 < this->mapW) {
 			auto to = std::make_tuple(vx + 1, vy);
-			graph.emplace_back(this->fitTable.at(to).movementCost, to);
+			graph.emplace_back(this->fitTable[to].movementCost, to);
 		}
 		if (vy + 1 < this->mapH) {
 			auto to = std::make_tuple(vx, vy + 1);
-			graph.emplace_back(this->fitTable.at(to).movementCost, to);
+			graph.emplace_back(this->fitTable[to].movementCost, to);
 		}
 
 		for (DijkstraQueueElement e : graph) {

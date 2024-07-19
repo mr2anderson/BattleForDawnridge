@@ -41,6 +41,7 @@
 #include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "EnableCursorEvent.hpp"
+#include <iostream>
 
 
 Warrior::Warrior() {
@@ -302,29 +303,20 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
     if (!this->movementPoints.has_value()) {
         this->movementPoints = this->getMovementPoints();
     }
-
-    uint32_t xMin;
-    if (this->movementPoints >= this->getX()) {
-        xMin = 0;
-    }
-    else {
-        xMin = this->getX() - this->movementPoints.value();
-    }
-
-    uint32_t yMin;
-    if (this->movementPoints >= this->getY()) {
-        yMin = 0;
-    }
-    else {
-        yMin = this->getY() - this->movementPoints.value();
-    }
-
-    uint32_t xMax = std::min(state->getMapSizePtr()->getWidth() - this->getSX(), this->getX() + this->movementPoints.value());
-    uint32_t yMax = std::min(state->getMapSizePtr()->getHeight() - this->getSY(), this->getY() + this->movementPoints.value());
-
-    for (uint32_t x = xMin; x <= xMax; x = x + 1) {
-        for (uint32_t y = yMin; y <= yMax; y = y + 1) {
-            g.set(x, y, this->canStay(state, x, y), this->getMovementCost(state, x, y));
+    
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = state->getCollectionsPtr()->getGO(i);
+        if (go->exist()) {
+            for (uint32_t x = go->getX(); x < go->getX() + go->getSX(); x = x + 1) {
+                for (uint32_t y = go->getY(); y < go->getY() + go->getSY(); y = y + 1) {
+                    if (!go->warriorCanStay(this->getPlayerId())) {
+                        g.setCantStay(x, y);
+                    }
+                    if (go->getWarriorMovementCost(this->getPlayerId()) != 1) {
+                        g.updateMovementCost(x, y, go->getWarriorMovementCost(this->getPlayerId()));
+                    }
+                }
+            }
         }
     }
 

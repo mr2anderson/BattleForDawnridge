@@ -20,7 +20,10 @@
 #include "FitTableElement.hpp"
 
 
-FitTableElement::FitTableElement() = default;
+FitTableElement::FitTableElement() {
+	this->canStay = true;
+	this->movementCost = 1;
+}
 FitTableElement::FitTableElement(bool canStay, uint32_t movementCost) {
 	this->canStay = canStay;
 	this->movementCost = movementCost;
