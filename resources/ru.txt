@@ -284,13 +284,6 @@ gold_number
 <\DATA>
 
 <ID>
-bracket_right
-<\ID>
-<DATA>
-)
-<\DATA>
-
-<ID>
 road_description
 <\ID>
 <DATA>
@@ -1085,8 +1078,8 @@ building_on_fire
 welcome
 <\ID>
 <DATA>
-Добро пожаловать в Battle for Dawnridge!
-Похоже, что Вы впервые зашли в игру (по крайней мере на этом языке). Чтобы быстрее освоиться, советуем прочитать раздел «Обучение»
+Милорд, добро пожаловать в Battle for Dawnridge!
+Чтобы быстрее освоиться, советуем прочитать раздел «Обучение»
 <\DATA>
 
 <ID>

@@ -39,6 +39,4 @@ public:
     virtual uint32_t getMaxHP() const = 0;
 private:
 	std::optional<uint32_t> currentHp;
-
-	void drawHpBar(sf::RenderTarget& target, sf::RenderStates states) const;
 };

@@ -33,7 +33,7 @@ std::wstring Resource::getReadableInfo() const {
 	}
 
 	result = result + *Texts::get()->get(this->type + "_number");
-	result = result + std::to_wstring(this->n) + *Texts::get()->get("bracket_right");
+	result = result + std::to_wstring(this->n) + L")";
 
 	return result;
 }
