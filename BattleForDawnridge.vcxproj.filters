@@ -273,6 +273,8 @@
     <None Include="extlibs\bin\x86\openal32.dll">
       <Filter>Libraries</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib">
@@ -781,9 +783,6 @@
     <ClInclude Include="CloseMenuEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="CollectEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
     <ClInclude Include="ColorTheme.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
@@ -928,9 +927,6 @@
     <ClInclude Include="Unit.hpp">
       <Filter>Header Files\baseGOs</Filter>
     </ClInclude>
-    <ClInclude Include="TryToTradeEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
     <ClInclude Include="TryToBuildEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
@@ -961,14 +957,8 @@
     <ClInclude Include="VictoryConditionBDestroyedEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceStorageBDestroyedEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
     <ClInclude Include="WindowButtonImage.hpp">
       <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="TryToProduceEvent.hpp">
-      <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp">
       <Filter>Header Files\events</Filter>
@@ -998,9 +988,6 @@
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="EnableCursorEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="TryToCollectEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
     <ClInclude Include="FitTableElement.hpp">
@@ -1112,9 +1099,6 @@
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="VictoryConditionSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="TerritoryExpanderSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="IResourceGeneratorSpec.hpp">
@@ -1258,28 +1242,16 @@
     <ClInclude Include="WarehouseWoodSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="WarehouseGoldSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
     <ClInclude Include="WallSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="GatesSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="FoodGeneratorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
     <ClInclude Include="WoodGeneratorSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="WoodCollectorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="StoneCollectorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="IronCollectorSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="MarketSpec.hpp">
@@ -1299,6 +1271,30 @@
     </ClInclude>
     <ClInclude Include="BarracksSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="DoTradeEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArableSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MineSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuarrySpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartWarriorProducingEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGoldCollectorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1322,9 +1318,6 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\simpleUiElements</Filter>
-    </ClCompile>
-    <ClCompile Include="CollectEvent.cpp">
-      <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="SetHighlightEvent.cpp">
       <Filter>Source Files\events</Filter>
@@ -1443,9 +1436,6 @@
     <ClCompile Include="TryToBuildEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
-    <ClCompile Include="TryToTradeEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
     <ClCompile Include="Trade.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
@@ -1477,12 +1467,6 @@
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="VictoryConditionBDestroyedEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceStorageBDestroyedEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="TryToProduceEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp">
@@ -1543,9 +1527,6 @@
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="EnableCursorEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="TryToCollectEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
     <ClCompile Include="FitTableElement.cpp">
@@ -1642,9 +1623,6 @@
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="IResourceGeneratorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="TerritoryExpanderSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="VictoryConditionSpec.cpp">
@@ -1800,9 +1778,6 @@
     <ClCompile Include="WarehouseIronSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseGoldSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
     <ClCompile Include="WarehouseBeginSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
@@ -1812,9 +1787,6 @@
     <ClCompile Include="GatesSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="FoodGeneratorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
     <ClCompile Include="WoodGeneratorSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
@@ -1822,12 +1794,6 @@
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="WoodCollectorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="StoneCollectorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="IronCollectorSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="MarketSpec.cpp">
@@ -1847,6 +1813,30 @@
     </ClCompile>
     <ClCompile Include="BarracksSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="DoTradeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArableSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MineSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuarrySpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWarriorProducingEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGoldCollectorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGoldWarehouseSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
