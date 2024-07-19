@@ -29,20 +29,23 @@ MovementGraph::MovementGraph(uint32_t mapW, uint32_t mapH) {
 	this->mapH = mapH;
 }
 void MovementGraph::setCantStay(uint32_t x, uint32_t y) {
-	this->fitTable[std::make_tuple(x, y)].canStay = false;
+	this->table[std::make_tuple(x, y)].canStay = false;
+}
+void MovementGraph::setCanAttack(uint32_t x, uint32_t y) {
+	this->table[std::make_tuple(x, y)].canAttack = true;
 }
 void MovementGraph::updateMovementCost(uint32_t x, uint32_t y, uint32_t movementCost) {
-	this->fitTable[std::make_tuple(x, y)].movementCost = std::max(this->fitTable[std::make_tuple(x, y)].movementCost, movementCost);
+	this->table[std::make_tuple(x, y)].movementCost = std::max(this->table[std::make_tuple(x, y)].movementCost, movementCost);
 }
 Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t movePoints) {
     std::tuple<uint32_t, uint32_t> from = std::make_tuple(x1, y1);
     std::tuple<uint32_t, uint32_t> to = std::make_tuple(x2, y2);
 
-    std::map<std::tuple<uint32_t, uint32_t>, uint64_t> dist;
+    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
     std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
     this->djkstra(from, movePoints, dist, fromToStory);
 
-    if (dist.find(to) == dist.end() or !this->fitTable[to].canStay) {
+    if (dist.find(to) == dist.end() or !this->table[to].canStay) {
         throw MoveDoesNotExist();
     }
 
@@ -74,13 +77,13 @@ Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, 
     return move;
 }
 std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
-	std::map<std::tuple<uint32_t, uint32_t>, uint64_t> dist;
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
     std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
 	this->djkstra(std::make_tuple(x, y), movePoints, dist, fromToStory);
 	
 	std::vector<std::tuple<uint32_t, uint32_t>> moves;
 	for (const auto& a : dist) {
-		if (this->fitTable[a.first].canStay) {
+		if (this->table[a.first].canStay) {
             moves.emplace_back(a.first);
 		}
 	}
@@ -98,7 +101,7 @@ void MovementGraph::REVERSE_QUEUE(std::queue<std::string> &q) {
     }
 }
 void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, 
-	std::map<std::tuple<uint32_t, uint32_t>, uint64_t> &dist, 
+	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> &dist, 
 	std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>>& fromToStory) {
 
 	dist[s] = 0;
@@ -110,7 +113,7 @@ void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoint
 	while (!q.empty()) {
 		DijkstraQueueElement c = q.top();
 		q.pop();
-		uint64_t dst = c.dst;
+		uint32_t dst = c.dst;
 		uint32_t vx = c.x;
 		uint32_t vy = c.y;
 		std::tuple<uint32_t, uint32_t> v = std::make_tuple(vx, vy);
@@ -126,26 +129,26 @@ void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoint
 		std::vector<DijkstraQueueElement> graph;
 		if (vx >= 1) {
 			auto to = std::make_tuple(vx - 1, vy);
-			graph.emplace_back(this->fitTable[to].movementCost, to);
+			graph.emplace_back(this->table[to].movementCost, to);
 		}
 		if (vy >= 1) {
 			auto to = std::make_tuple(vx, vy - 1);
-			graph.emplace_back(this->fitTable[to].movementCost, to);
+			graph.emplace_back(this->table[to].movementCost, to);
 		}
 		if (vx + 1 < this->mapW) {
 			auto to = std::make_tuple(vx + 1, vy);
-			graph.emplace_back(this->fitTable[to].movementCost, to);
+			graph.emplace_back(this->table[to].movementCost, to);
 		}
 		if (vy + 1 < this->mapH) {
 			auto to = std::make_tuple(vx, vy + 1);
-			graph.emplace_back(this->fitTable[to].movementCost, to);
+			graph.emplace_back(this->table[to].movementCost, to);
 		}
 
 		for (DijkstraQueueElement e : graph) {
-			uint64_t len = e.dst;
+			uint32_t len = e.dst;
 			std::tuple<uint32_t, uint32_t> u = std::make_tuple(e.x, e.y);
 
-            uint64_t nDst = dst + len;
+            uint32_t nDst = dst + len;
             if (nDst <= movePoints) {
                 if (dist.find(u) == dist.end()) {
                     dist[u] = std::numeric_limits<uint32_t>::max();

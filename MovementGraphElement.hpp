@@ -17,14 +17,17 @@
  */
 
 
-#include "FitTableElement.hpp"
+#include <cstdint>
 
 
-FitTableElement::FitTableElement() {
-	this->canStay = true;
-	this->movementCost = 1;
-}
-FitTableElement::FitTableElement(bool canStay, uint32_t movementCost) {
-	this->canStay = canStay;
-	this->movementCost = movementCost;
-}
+#pragma once
+
+
+struct MovementGraphElement {
+	MovementGraphElement();
+	MovementGraphElement(bool canStay, bool canAttack, uint32_t movementCost);
+
+	bool canStay;
+	bool canAttack;
+	uint32_t movementCost;
+};
