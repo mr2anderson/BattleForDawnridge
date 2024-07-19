@@ -1160,3 +1160,24 @@ does_not_train_if_hp_isnt_full
 <DATA>
 Не ведет обучение, если защита не максимальна
 <\DATA>
+
+<ID>
+this_building_collects_resources_from_conducted_resource_points
+<\ID>
+<DATA>
+Это здание добывает ресурсы из точек, к которым ведут дороги. Скорость добычи с одной точки: 
+<\DATA>
+
+<ID>
+no_conducted_resource_points
+<\ID>
+<DATA>
+Сейчас дороги не ведут ни к одной из точек
+<\DATA>
+
+<ID>
+conducted_resource_points_number
+<\ID>
+<DATA>
+Число точек, с которых ведется добыча: 
+<\DATA>

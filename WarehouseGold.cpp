@@ -18,14 +18,16 @@
 
 
 #include "WarehouseGold.hpp"
-#include "WarehouseGoldSpec.hpp"
+#include "WarehouseGoldWarehouseSpec.hpp"
+#include "WarehouseGoldCollectorSpec.hpp"
 #include "Texts.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WarehouseGoldSpec()); // TODO Treasure collection
+	this->addSpec(new WarehouseGoldWarehouseSpec());
+	this->addSpec(new WarehouseGoldCollectorSpec());
 }
 Building* WarehouseGold::cloneBuilding() const {
 	return new WarehouseGold(*this);

@@ -17,16 +17,16 @@
  */
 
 
-#include "WarehouseGoldSpec.hpp"
+#include "WarehouseGoldCollectorSpec.hpp"
 
 
-WarehouseGoldSpec::WarehouseGoldSpec() = default;
-IBuildingSpec* WarehouseGoldSpec::clone() const {
-	return new WarehouseGoldSpec(*this);
+WarehouseGoldCollectorSpec::WarehouseGoldCollectorSpec() = default;
+IBuildingSpec* WarehouseGoldCollectorSpec::clone() const {
+	return new WarehouseGoldCollectorSpec(*this);
 }
-Resources WarehouseGoldSpec::getLimit() const {
-	Resources limit;
-	limit.plus(Resource("gold", 10000));
-
-	return limit;
+uint32_t WarehouseGoldCollectorSpec::getCollectionSpeed() const {
+	return 2500;
+}
+std::string WarehouseGoldCollectorSpec::getResourceType() const {
+	return "gold";
 }

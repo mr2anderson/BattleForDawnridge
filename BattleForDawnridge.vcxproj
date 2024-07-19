@@ -703,7 +703,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="WallSpec.hpp" />
     <ClInclude Include="WarehouseBeginSpec.hpp" />
     <ClInclude Include="WarehouseFoodSpec.hpp" />
-    <ClInclude Include="WarehouseGoldSpec.hpp" />
+    <ClInclude Include="WarehouseGoldCollectorSpec.hpp" />
+    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp" />
     <ClInclude Include="WarehouseIronSpec.hpp" />
     <ClInclude Include="IWarehouseSpec.hpp" />
     <ClInclude Include="WarehouseStoneSpec.hpp" />
@@ -885,7 +886,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="WallSpec.cpp" />
     <ClCompile Include="WarehouseBeginSpec.cpp" />
     <ClCompile Include="WarehouseFoodSpec.cpp" />
-    <ClCompile Include="WarehouseGoldSpec.cpp" />
+    <ClCompile Include="WarehouseGoldCollectorSpec.cpp" />
+    <ClCompile Include="WarehouseGoldWarehouseSpec.cpp" />
     <ClCompile Include="WarehouseIronSpec.cpp" />
     <ClCompile Include="IWarehouseSpec.cpp" />
     <ClCompile Include="WarehouseStoneSpec.cpp" />

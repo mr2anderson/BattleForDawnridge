@@ -17,16 +17,16 @@
  */
 
 
-#include "IWarehouseSpec.hpp"
+#include "WarehouseGoldWarehouseSpec.hpp"
 
 
-#pragma once
+WarehouseGoldWarehouseSpec::WarehouseGoldWarehouseSpec() = default;
+IBuildingSpec* WarehouseGoldWarehouseSpec::clone() const {
+	return new WarehouseGoldWarehouseSpec(*this);
+}
+Resources WarehouseGoldWarehouseSpec::getLimit() const {
+	Resources limit;
+	limit.plus(Resource("gold", 10000));
 
-
-class WarehouseGoldSpec : public IWarehouseSpec {
-public:
-	WarehouseGoldSpec();
-	IBuildingSpec* clone() const override;
-
-	Resources getLimit() const override;
-};
+	return limit;
+}

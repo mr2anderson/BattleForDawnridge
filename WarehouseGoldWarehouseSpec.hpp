@@ -17,16 +17,16 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include "IWarehouseSpec.hpp"
 
 
 #pragma once
 
 
-class IConductionResourcePointCollectorSpec : public IBuildingSpec {
+class WarehouseGoldWarehouseSpec : public IWarehouseSpec {
 public:
-	Events getActiveNewMoveEvent(const Building* building, MapState* state) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	virtual std::string getResourceType() const = 0;
-	virtual uint32_t getCollectionSpeed() const = 0;
+	WarehouseGoldWarehouseSpec();
+	IBuildingSpec* clone() const override;
+
+	Resources getLimit() const override;
 };
