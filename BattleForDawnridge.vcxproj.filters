@@ -1272,29 +1272,29 @@
     <ClInclude Include="BarracksSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="DoTradeEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArableSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MineSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QuarrySpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StartWarriorProducingEvent.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="WarehouseGoldCollectorSpec.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="StartWarriorProducingEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="QuarrySpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="MineSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ArableSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="DoTradeEvent.hpp">
+      <Filter>Header Files\events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1817,26 +1817,26 @@
     <ClCompile Include="DoTradeEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ArableSpec.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="MineSpec.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="QuarrySpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StartWarriorProducingEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="WarehouseGoldCollectorSpec.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="WarehouseGoldWarehouseSpec.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWarriorProducingEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
