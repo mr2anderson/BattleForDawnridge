@@ -37,7 +37,7 @@ uint32_t Resin::getSY() const {
 	return 1;
 }
 uint32_t Resin::getMaxHP() const {
-	return 15000;
+	return 5000;
 }
 Defence Resin::getDefence() const {
 	return Defence::STONE;
