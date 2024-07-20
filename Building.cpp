@@ -279,14 +279,13 @@ void Building::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) 
 	pointer.setMax(this->getMaxHP());
 	target.draw(pointer, states);
 }
-Events Building::hit(Damage d, const std::optional<std::string>& direction) {
-	uint32_t dPoints = d.getHpLoss(this->getDefence());
+Events Building::hit(uint32_t d, const std::optional<std::string>& direction) {
 	uint32_t hpPointsAfterOperation;
-	if (dPoints >= this->getHP()) {
+	if (d >= this->getHP()) {
 		hpPointsAfterOperation = 0;
 	}
 	else {
-		hpPointsAfterOperation = this->getHP() - dPoints;
+		hpPointsAfterOperation = this->getHP() - d;
 	}
 
 	Events response;
@@ -305,10 +304,10 @@ Events Building::hit(Damage d, const std::optional<std::string>& direction) {
 		response.add(std::make_shared<SetFireEvent>(this));
 	}
 
-	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(dPoints, false, this->getX(), this->getY(), this->getSX(), this->getSY());
+	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
 	response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
-	response.add(std::make_shared<SubHpEvent>(this, dPoints));
+	response.add(std::make_shared<SubHpEvent>(this, d));
 
 	return response;
 }

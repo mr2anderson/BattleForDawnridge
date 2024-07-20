@@ -501,10 +501,12 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="IConductionResourcePointCollectorSpec.hpp" />
     <ClInclude Include="ArableSpec.hpp" />
     <ClInclude Include="GatesSpec.hpp" />
+    <ClInclude Include="KillNextTurnEvent.hpp" />
     <ClInclude Include="MineSpec.hpp" />
     <ClInclude Include="IWithSuspendingAnimation.hpp" />
     <ClInclude Include="MarketSpec.hpp" />
     <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
+    <ClInclude Include="RevertKillNextTurnEvent.hpp" />
     <ClInclude Include="RoadSpec.hpp" />
     <ClInclude Include="QuarrySpec.hpp" />
     <ClInclude Include="StartWarriorProducingEvent.hpp" />
@@ -790,9 +792,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="ArableSpec.cpp" />
     <ClCompile Include="GatesSpec.cpp" />
     <ClCompile Include="IBuildingSpec.cpp" />
+    <ClCompile Include="KillNextTurnEvent.cpp" />
     <ClCompile Include="MineSpec.cpp" />
     <ClCompile Include="MarketSpec.cpp" />
     <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
+    <ClCompile Include="RevertKillNextTurnEvent.cpp" />
     <ClCompile Include="RoadSpec.cpp" />
     <ClCompile Include="QuarrySpec.cpp" />
     <ClCompile Include="StartWarriorProducingEvent.cpp" />

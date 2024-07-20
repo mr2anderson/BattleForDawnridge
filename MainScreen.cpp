@@ -726,6 +726,12 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
 		this->handleTryToBuildEvent(tryToBuildEvent);
 	}
+	else if (std::shared_ptr<KillNextTurnEvent> killNextTurnEvent = std::dynamic_pointer_cast<KillNextTurnEvent>(e)) {
+		this->handleKillNextTurnEvent(killNextTurnEvent);
+	}
+	else if (std::shared_ptr<RevertKillNextTurnEvent> revertKillNextTurnEvent = std::dynamic_pointer_cast<RevertKillNextTurnEvent>(e)) {
+		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent);
+	}
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -872,4 +878,12 @@ void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
 		unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
 		this->addEvents(unableToBuildEvent);
 	}
+}
+void MainScreen::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e) {
+	Events events = e->getWarrior()->killNextTurn();
+	this->addEvents(events);
+}
+void MainScreen::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e) {
+	Events events = e->getWarrior()->revertKillNextTurn();
+	this->addEvents(events);
 }

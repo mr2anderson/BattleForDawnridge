@@ -41,7 +41,9 @@
 #include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "EnableCursorEvent.hpp"
-#include <iostream>
+#include "KillNextTurnEvent.hpp"
+#include "RevertKillNextTurnEvent.hpp"
+#include "WindowTwoButtons.hpp"
 
 
 Warrior::Warrior() {
@@ -53,6 +55,7 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
 	this->movementPoints = std::nullopt;
     this->currentDirection = "e";
     this->startAnimation("talking");
+    this->toKill = false;
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
@@ -60,14 +63,13 @@ void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         this->drawHPPointer(target, states);
     }
 }
-Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
-    uint32_t dPoints = d.getHpLoss(this->getDefence());
+Events Warrior::hit(uint32_t d, const std::optional<std::string> &direction) {
     uint32_t hpPointsAfterOperation;
-    if (dPoints >= this->getHP()) {
+    if (d >= this->getHP()) {
         hpPointsAfterOperation = 0;
     }
     else {
-        hpPointsAfterOperation = this->getHP() - dPoints;
+        hpPointsAfterOperation = this->getHP() - d;
     }
 
     Events response;
@@ -85,7 +87,7 @@ Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
         response.add(std::make_shared<StartWarriorAnimationEvent>(this, "been hit"));
     }
 
-    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(dPoints, false, this->getX(), this->getY(), this->getSX(), this->getSY());
+    std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
     response.add(std::make_shared<SubHpEvent>(this, this->getHP() - (hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0))));
@@ -94,13 +96,45 @@ Events Warrior::hit(Damage d, const std::optional<std::string> &direction) {
 
     return response;
 }
+Events Warrior::killNextTurn() {
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("will_be_killed_on_next_turn"), *Texts::get()->get("OK"), clickSoundEvent);
+
+    Events event = clickSoundEvent;
+    event.add(std::make_shared<CreateEEvent>(w));
+
+    this->toKill = true;
+
+    return event;
+}
+Events Warrior::revertKillNextTurn() {
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("wont_be_killed_on_next_turn"), *Texts::get()->get("OK"), clickSoundEvent);
+
+    Events event = clickSoundEvent;
+    event.add(std::make_shared<CreateEEvent>(w));
+
+    this->toKill = false;
+
+    return event;
+}
 void Warrior::changeDirection(const std::string& newDirection) {
     this->currentDirection = newDirection;
 }
 Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
 	if (this->exist() and this->belongTo(currentPlayerId)) {
         Events events;
+
 		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
+
+        if (this->toKill) {
+            events = events + this->hit(this->getHP(), std::nullopt);
+        }
+
 		return events;
 	}
 	return Events();
@@ -399,6 +433,39 @@ float Warrior::getOffsetY() const {
 float Warrior::getOffset() const {
     return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)this->getCurrentAnimationMs();
 }
+HorizontalSelectionWindowComponent Warrior::getKillComponent() {
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    Events killNextTurnEvent = clickSoundEvent;
+    killNextTurnEvent.add(std::make_shared<KillNextTurnEvent>(this));
+
+    std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("verify_kill"), *Texts::get()->get("yes"), *Texts::get()->get("no"), killNextTurnEvent, clickSoundEvent);
+
+    Events killNextTurnEventVerify = clickSoundEvent;
+    killNextTurnEventVerify.add(std::make_shared<CreateEEvent>(verifyWindow));
+
+    return {
+        "skull",
+        *Texts::get()->get("kill"),
+        true,
+        killNextTurnEventVerify
+    };
+}
+HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
+    Events clickSoundEvent;
+    clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    Events revertKillNextTurnEvent = clickSoundEvent;
+    revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this));
+
+    return {
+        "skull",
+        *Texts::get()->get("revert_kill"),
+        true,
+        revertKillNextTurnEvent
+    };
+}
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
         "helmet",
@@ -409,11 +476,17 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
         Events()
     };
 }
-Events Warrior::getSelectionWindow() const {
+Events Warrior::getSelectionWindow() {
     std::vector<HorizontalSelectionWindowComponent> components;
     components.push_back(this->getExitComponent());
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getWarriorInfoComponent());
+    if (this->toKill) {
+        components.push_back(this->getRevertKillComponent());
+    }
+    else {
+        components.push_back(this->getKillComponent());
+    }
 
     std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
 

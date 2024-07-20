@@ -37,7 +37,9 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-	Events hit(Damage d, const std::optional<std::string> &direction) override;
+	Events hit(uint32_t d, const std::optional<std::string> &direction) override;
+	Events killNextTurn();
+	Events revertKillNextTurn();
 	void changeDirection(const std::string& newDirection);
 	Events newMove(MapState *state, uint32_t playerId) override;
 	void refreshMovementPoints();
@@ -69,6 +71,7 @@ private:
 	std::string currentAnimation;
 	sf::Clock animationClock;
     std::queue<std::string> currentMovement;
+	bool toKill;
 
 	bool highDrawingPriority() const override;
 	bool highClickPriority() const override;
@@ -84,8 +87,10 @@ private:
     float getOffsetX() const override;
     float getOffsetY() const override;
     float getOffset() const;
+	HorizontalSelectionWindowComponent getKillComponent();
+	HorizontalSelectionWindowComponent getRevertKillComponent();
     HorizontalSelectionWindowComponent getWarriorInfoComponent() const;
-    Events getSelectionWindow() const;
+    Events getSelectionWindow();
 
     AnimationState getCurrentAnimationState() const;
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;

@@ -57,6 +57,8 @@
 #include "DoTradeEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
 #include "TryToBuildEvent.hpp"
+#include "KillNextTurnEvent.hpp"
+#include "RevertKillNextTurnEvent.hpp"
 
 
 #pragma once
@@ -180,4 +182,6 @@ private:
 	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e);
 	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e);
 	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e);
+	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e);
+	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e);
 };

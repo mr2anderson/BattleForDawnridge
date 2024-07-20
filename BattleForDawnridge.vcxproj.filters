@@ -1308,6 +1308,12 @@
     <ClInclude Include="House.hpp">
       <Filter>Header Files\buildings</Filter>
     </ClInclude>
+    <ClInclude Include="KillNextTurnEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="RevertKillNextTurnEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1861,6 +1867,12 @@
     </ClCompile>
     <ClCompile Include="House.cpp">
       <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="KillNextTurnEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="RevertKillNextTurnEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
