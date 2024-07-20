@@ -44,6 +44,7 @@
 #include "KillNextTurnEvent.hpp"
 #include "RevertKillNextTurnEvent.hpp"
 #include "WindowTwoButtons.hpp"
+#include "DecreaseRageModeMovesLeftEvent.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -59,6 +60,7 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->currentDirection = "e";
     this->startAnimation("talking");
     this->toKill = false;
+    this->rageModeMovesLeft = 0;
     std::random_device rd;
     this->footstepsRandomSrc = std::mt19937(rd());
 }
@@ -127,6 +129,12 @@ Events Warrior::revertKillNextTurn() {
 
     return event;
 }
+void Warrior::enableRageMode() {
+    this->rageModeMovesLeft = 2;
+}
+void Warrior::decreaseRageModeMovesLeft() {
+    this->rageModeMovesLeft = this->rageModeMovesLeft - 1;
+}
 void Warrior::changeDirection(const std::string& newDirection) {
     this->currentDirection = newDirection;
 }
@@ -135,6 +143,10 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
         Events events;
 
 		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
+
+        if (this->rageModeMovesLeft > 0) {
+            events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this));
+        }
 
         if (this->toKill) {
             events = events + this->hit(this->getHP(), std::nullopt);
@@ -284,6 +296,12 @@ Events Warrior::processCurrentAnimation() {
 void Warrior::startAnimation(const std::string& type) {
     this->animationClock.restart();
     this->currentAnimation = type;
+}
+Damage Warrior::getDamage() const {
+    return (1 + 0.5 * (this->rageModeMovesLeft > 0)) * this->getBaseDamage();
+}
+Defence Warrior::getDefence() const {
+    return (1 + 0.5 * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
 }
 bool Warrior::highDrawingPriority() const {
 	return true;
@@ -443,6 +461,24 @@ float Warrior::getOffsetY() const {
 float Warrior::getOffset() const {
     return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)this->getCurrentAnimationMs();
 }
+sf::Color Warrior::getTextureColor() const {
+    if (this->rageModeMovesLeft > 0) {
+        return sf::Color(75, 0, 130);
+    }
+    return this->Unit::getTextureColor();
+}
+float Warrior::getScale() const {
+    return 1 + 0.1 * (this->rageModeMovesLeft > 0);
+}
+HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
+    return {
+        "rage_spell",
+        *Texts::get()->get("rage_spell_description") + L"\n" +
+        *Texts::get()->get("moves_left") + std::to_wstring(this->rageModeMovesLeft),
+        false,
+        Events()
+    };
+}
 HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -481,6 +517,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
         "helmet",
         *Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
         *Texts::get()->get("damage") + this->getDamage().getReadable() + L"\n" +
+        *Texts::get()->get("movement_points") + std::to_wstring(this->movementPoints.value_or(this->getMovementPoints())) + L" / " + std::to_wstring(this->getMovementPoints()) + L"\n" +
         *Texts::get()->get("population") + std::to_wstring(this->getPopulation()),
         false,
         Events()
@@ -491,6 +528,9 @@ Events Warrior::getSelectionWindow() {
     components.push_back(this->getExitComponent());
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getWarriorInfoComponent());
+    if (this->rageModeMovesLeft > 0) {
+        components.push_back(this->getRageModeComponent());
+    }
     if (this->toKill) {
         components.push_back(this->getRevertKillComponent());
     }

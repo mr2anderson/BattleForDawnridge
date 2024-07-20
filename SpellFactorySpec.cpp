@@ -17,26 +17,18 @@
  */
 
 
-#include <string>
+#include "SpellFactorySpec.hpp"
+#include "RageSpell.hpp"
 
 
-#pragma once
+SpellFactorySpec::SpellFactorySpec() = default;
+IBuildingSpec* SpellFactorySpec::clone() const {
+	return new SpellFactorySpec(*this);
+}
+std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_t playerId) const {
+	std::vector<std::shared_ptr<Spell>> toProduce;
 
+	toProduce.push_back(std::make_shared<RageSpell>(playerId));
 
-class Defence {
-public:
-    Defence();
-	Defence(double cut, double stab, double crush);
-
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
-private:
-	double cut, stab, crush;
-};
+	return toProduce;
+}

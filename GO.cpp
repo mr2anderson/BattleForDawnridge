@@ -110,6 +110,9 @@ float GO::getOffsetX() const {
 float GO::getOffsetY() const {
     return 0;
 }
+float GO::getScale() const {
+	return 1;
+}
 HorizontalSelectionWindowComponent GO::getExitComponent() const {
     Events exitEvent;
     exitEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -135,7 +138,10 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
-	sprite.setPosition(sf::Vector2f(this->getXInPixels(), this->getYInPixels()));
+	sprite.setScale(this->getScale(), this->getScale());
+	float scaleBonusX = 64 * this->getSX() * (this->getScale() - 1);
+	float scaleBonusY = 64 * this->getSY() * (this->getScale() - 1);
+	sprite.setPosition(sf::Vector2f(this->getXInPixels() - scaleBonusX , this->getYInPixels() - scaleBonusY));
 	sprite.setTextureRect(this->getTextureRect());
 	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
 	sprite.setColor(this->getTextureColor());

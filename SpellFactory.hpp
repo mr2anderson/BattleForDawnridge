@@ -17,26 +17,26 @@
  */
 
 
-#include <string>
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class Defence {
+class SpellFactory : public Building {
 public:
-    Defence();
-	Defence(double cut, double stab, double crush);
+	SpellFactory();
+	SpellFactory(uint32_t x, uint32_t y, uint32_t playerId);
+	Building* cloneBuilding() const override;
 
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
-private:
-	double cut, stab, crush;
+	Defence getDefence() const override;
+	Resources getCost() const override;
+	uint32_t getSX() const override;
+	uint32_t getSY() const override;
+	uint32_t getMaxHP() const override;
+	std::string getTextureName() const override;
+	std::string getSoundName() const override;
+	std::wstring getDescription() const override;
+	uint32_t getRegenerationSpeed() const override;
+	std::wstring getUpperCaseReadableName() const override;
 };

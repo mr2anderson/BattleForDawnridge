@@ -17,26 +17,24 @@
  */
 
 
-#include <string>
+#include "Spell.hpp"
 
 
 #pragma once
 
 
-class Defence {
+class RageSpell : public Spell {
 public:
-    Defence();
-	Defence(double cut, double stab, double crush);
-
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
+	RageSpell(uint32_t playerId);
 private:
-	double cut, stab, crush;
+	Spell* clone() const override;
+
+	std::wstring getDescription() const override;
+	std::string getTextureName() const override;
+	Resources getCost() const override;
+	uint32_t getCreationTime() const override;
+	sf::Color getPreviewColor() const override;
+	uint32_t getRadius() const override;
+	std::string getSoundName() const override;
+	Events changeMap(MapState* state, uint32_t centerX, uint32_t centerY) override;
 };

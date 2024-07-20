@@ -17,26 +17,16 @@
  */
 
 
-#include <string>
+#include "SetSpellEvent.hpp"
 
 
-#pragma once
-
-
-class Defence {
-public:
-    Defence();
-	Defence(double cut, double stab, double crush);
-
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
-private:
-	double cut, stab, crush;
-};
+SetSpellEvent::SetSpellEvent(SpellProducerSpec* spec, std::shared_ptr<Spell> spell) {
+	this->spec = spec;
+	this->spell = spell;
+}
+SpellProducerSpec* SetSpellEvent::getSpec() {
+	return this->spec;
+}
+std::shared_ptr<Spell> SetSpellEvent::getSpell() {
+	return this->spell;
+}

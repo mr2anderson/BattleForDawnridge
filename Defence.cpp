@@ -34,6 +34,9 @@ Defence::Defence(double cut, double stab, double crush) {
 	this->stab = stab;
 	this->crush = crush;
 }
+Defence operator*(double k, Defence defence) {
+	return Defence(defence.cut * (2 - k), defence.stab * (2 - k), defence.crush * (2 - k));
+}
 double Defence::getCut() const {
 	return this->cut;
 }

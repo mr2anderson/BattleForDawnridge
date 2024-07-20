@@ -17,26 +17,20 @@
  */
 
 
-#include <string>
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class Defence {
+class SpellPreview : public sf::Drawable {
 public:
-    Defence();
-	Defence(double cut, double stab, double crush);
+	SpellPreview(uint32_t radius, sf::Color color, uint32_t centerX, uint32_t centerY);
 
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-	double cut, stab, crush;
+	uint32_t radius;
+	sf::Color color;
+	uint32_t centerX, centerY;
 };

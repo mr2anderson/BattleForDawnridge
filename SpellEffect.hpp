@@ -17,26 +17,19 @@
  */
 
 
-#include <string>
+#include "CameraDependentPopUpElement.hpp"
 
 
-#pragma once
-
-
-class Defence {
+class SpellEffect : public CameraDependentPopUpElement {
 public:
-    Defence();
-	Defence(double cut, double stab, double crush);
+    SpellEffect(const std::string &textureName, uint32_t x, uint32_t y);
 
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
+    void run(uint32_t windowW, uint32_t windowH) override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    Events click() override;
+    void update() override;
 private:
-	double cut, stab, crush;
+    sf::Sprite sprite;
+    float startX, startY;
+    sf::Clock clock;
 };

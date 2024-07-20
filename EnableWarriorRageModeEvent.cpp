@@ -17,26 +17,12 @@
  */
 
 
-#include <string>
+#include "EnableWarriorRageModeEvent.hpp"
 
 
-#pragma once
-
-
-class Defence {
-public:
-    Defence();
-	Defence(double cut, double stab, double crush);
-
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
-private:
-	double cut, stab, crush;
-};
+EnableWarriorRageModeEvent::EnableWarriorRageModeEvent(Warrior *w) {
+	this->w = w;
+}
+Warrior* EnableWarriorRageModeEvent::getWarrior() {
+	return this->w;
+}

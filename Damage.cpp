@@ -25,6 +25,9 @@ Damage::Damage(uint32_t points, uint8_t type) {
 	this->points = points;
 	this->type = type;
 }
+Damage operator*(double k, Damage damage) {
+	return Damage(damage.points * k, damage.type);
+}
 uint32_t Damage::getHpLoss(Defence defence) const {
 	double k;
 	switch (this->type) {

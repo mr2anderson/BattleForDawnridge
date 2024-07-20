@@ -32,10 +32,10 @@ Warrior* Knight::cloneWarrior() const {
 uint32_t Knight::getMaxHP() const {
     return 7500;
 }
-Damage Knight::getDamage() const {
+Damage Knight::getBaseDamage() const {
 	return { 2500, Damage::TYPE::CUT };
 }
-Defence Knight::getDefence() const {
+Defence Knight::getBaseDefence() const {
 	return Defence::HUMAN;
 }
 Resources Knight::getCost() const {

@@ -24,7 +24,7 @@
 ImageFlyingE::ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get()->get(textureName));
-    sprite.setScale(0.5f, 0.5f);
+    sprite.setScale(32 / sprite.getLocalBounds().width, 32 / sprite.getLocalBounds().height);
     sprite.setPosition(64 * x + sx * 64 / 2 - sprite.getGlobalBounds().width / 2, 64 * y + sy * 64 / 2 - sprite.getGlobalBounds().height / 2);
 
     this->set(sprite);

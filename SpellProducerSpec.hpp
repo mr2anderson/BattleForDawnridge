@@ -17,26 +17,23 @@
  */
 
 
-#include <string>
+#include "IBuildingSpec.hpp"
+#include "Spell.hpp"
 
 
 #pragma once
 
 
-class Defence {
+class SpellProducerSpec : public IBuildingSpec {
 public:
-    Defence();
-	Defence(double cut, double stab, double crush);
+	SpellProducerSpec();
+	~SpellProducerSpec() override;
 
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
+	Events getActiveNewMoveEvent(const Building* building, MapState* state) override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
+	std::optional<BuildingShortInfo> getShortInfo(const Building* building) const override;
+	void setSpell(std::shared_ptr<Spell> newSpell);
+	virtual std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const = 0;
 private:
-	double cut, stab, crush;
+	Spell* spell;
 };

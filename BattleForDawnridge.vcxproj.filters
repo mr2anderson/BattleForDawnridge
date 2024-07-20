@@ -112,6 +112,12 @@
     <Filter Include="Header Files\baseGOs">
       <UniqueIdentifier>{f0df99e1-4746-48f3-8792-47cc03ec8175}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\spells">
+      <UniqueIdentifier>{aec4d8ed-3e37-4686-8378-357ceb456dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\spells">
+      <UniqueIdentifier>{e46ea897-6fe5-443b-a887-e2c856bb863a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="extlibs\bin\x64\sfml-audio-2.dll">
@@ -1321,6 +1327,45 @@
     <ClInclude Include="Resin.hpp">
       <Filter>Header Files\buildings</Filter>
     </ClInclude>
+    <ClInclude Include="SpellProducerSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellFactorySpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.hpp">
+      <Filter>Header Files\spells</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellEffect.hpp">
+      <Filter>Header Files\spells</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellPreview.hpp">
+      <Filter>Header Files\spells</Filter>
+    </ClInclude>
+    <ClInclude Include="RageSpell.hpp">
+      <Filter>Header Files\spells</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="MarkSpellAsUsedEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="SetSpellEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="UseSpellEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="EnableWarriorRageModeEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellFactory.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1889,6 +1934,48 @@
     </ClCompile>
     <ClCompile Include="PAKScreen.cpp">
       <Filter>Source Files\screensService</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellProducerSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellFactorySpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>Source Files\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellEffect.cpp">
+      <Filter>Source Files\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellPreview.cpp">
+      <Filter>Source Files\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="RageSpell.cpp">
+      <Filter>Source Files\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="MarkSpellAsUsedEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="SetSpellEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="UseSpellEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="ISelectable.cpp">
+      <Filter>Source Files\screensService</Filter>
+    </ClCompile>
+    <ClCompile Include="EnableWarriorRageModeEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellFactory.cpp">
+      <Filter>Source Files\buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

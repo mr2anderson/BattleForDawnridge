@@ -59,6 +59,12 @@
 #include "TryToBuildEvent.hpp"
 #include "KillNextTurnEvent.hpp"
 #include "RevertKillNextTurnEvent.hpp"
+#include "DecreaseSpellCreationMovesLeftEvent.hpp"
+#include "SetSpellEvent.hpp"
+#include "UseSpellEvent.hpp"
+#include "MarkSpellAsUsedEvent.hpp"
+#include "EnableWarriorRageModeEvent.hpp"
+#include "DecreaseRageModeMovesLeftEvent.hpp"
 
 
 #pragma once
@@ -184,4 +190,10 @@ private:
 	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e);
 	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e);
 	void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
+	void handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e);
+	void handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e);
+	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e);
+	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e);
+	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e);
+	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e);
 };

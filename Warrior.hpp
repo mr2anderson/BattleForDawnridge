@@ -41,6 +41,8 @@ public:
 	Events hit(uint32_t d, const std::optional<std::string> &direction) override;
 	Events killNextTurn();
 	Events revertKillNextTurn();
+	void enableRageMode();
+	void decreaseRageModeMovesLeft();
 	void changeDirection(const std::string& newDirection);
 	Events newMove(MapState *state, uint32_t playerId) override;
 	void refreshMovementPoints();
@@ -55,19 +57,23 @@ public:
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
     Events processCurrentAnimation() override;
 	void startAnimation(const std::string& type);
+	Damage getDamage() const;
+	Defence getDefence() const override;
 
 	virtual uint32_t getTimeToProduce() const = 0;
-	virtual Damage getDamage() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
 	virtual uint32_t getRunningAnimationsNumberInSet() const = 0;
 	virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
-	virtual uint32_t getMovementPoints() const = 0;
 	virtual uint32_t getPopulation() const = 0;
+	virtual uint32_t getMovementPoints() const = 0;
 
 	static const uint32_t TOTAL_FOOTSTEPS;
+protected:
+	virtual Damage getBaseDamage() const = 0;
+	virtual Defence getBaseDefence() const = 0;
 private:
 	std::optional<uint32_t> movementPoints;
 	std::string currentDirection;
@@ -77,6 +83,7 @@ private:
 	sf::Clock footstepsClock;
 	std::mt19937 footstepsRandomSrc;
 	bool toKill;
+	uint32_t rageModeMovesLeft;
 
 	bool highDrawingPriority() const override;
 	bool highClickPriority() const override;
@@ -92,6 +99,9 @@ private:
     float getOffsetX() const override;
     float getOffsetY() const override;
     float getOffset() const;
+	sf::Color getTextureColor() const override;
+	float getScale() const override;
+	HorizontalSelectionWindowComponent getRageModeComponent() const;
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
     HorizontalSelectionWindowComponent getWarriorInfoComponent() const;

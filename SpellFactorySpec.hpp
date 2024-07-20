@@ -17,26 +17,16 @@
  */
 
 
-#include <string>
+#include "SpellProducerSpec.hpp"
 
 
 #pragma once
 
 
-class Defence {
+class SpellFactorySpec : public SpellProducerSpec {
 public:
-    Defence();
-	Defence(double cut, double stab, double crush);
+	SpellFactorySpec();
+	IBuildingSpec* clone() const override;
 
-	friend Defence operator*(double k, Defence defence);
-	double getCut() const;
-	double getStab() const;
-	double getCrush() const;
-	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
-private:
-	double cut, stab, crush;
+	std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const override;
 };

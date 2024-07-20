@@ -60,6 +60,7 @@ protected:
 	virtual Events getResponse(MapState *state, uint32_t currentPlayerId, uint32_t button) = 0;
     virtual float getOffsetX() const;
     virtual float getOffsetY() const;
+	virtual float getScale() const;
 
 	HorizontalSelectionWindowComponent getExitComponent() const;
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;

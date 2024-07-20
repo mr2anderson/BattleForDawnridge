@@ -55,6 +55,9 @@
 #include "Warrior.hpp"
 #include "House.hpp"
 #include "Resin.hpp"
+#include "Spell.hpp"
+#include "SpellProducerSpec.hpp"
+#include "SpellFactory.hpp"
 
 
 
@@ -270,6 +273,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
     buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<Market>());
+	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionOther = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionOtherComponents);
     Events createBuildWindowSectionOtherEvent = clickSoundEvent;
@@ -738,6 +742,24 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
 		this->handleCloseAnimationEvent(closeAnimationEvent);
 	}
+	else if (std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> decreaseSpellCreationMovesLeftEvent = std::dynamic_pointer_cast<DecreaseSpellCreationMovesLeftEvent>(e)) {
+		this->handleDecreaseSpellCreationMovesLeftEvent(decreaseSpellCreationMovesLeftEvent);
+	}
+	else if (std::shared_ptr<SetSpellEvent> setSpellEvent = std::dynamic_pointer_cast<SetSpellEvent>(e)) {
+		this->handleSetSpellEvent(setSpellEvent);
+	}
+	else if (std::shared_ptr<UseSpellEvent> useSpellEvent = std::dynamic_pointer_cast<UseSpellEvent>(e)) {
+		this->handleUseSpellEvent(useSpellEvent);
+	}
+	else if (std::shared_ptr<MarkSpellAsUsedEvent> markSpellAsUsedEvent = std::dynamic_pointer_cast<MarkSpellAsUsedEvent>(e)) {
+		this->handleMarkSpellAsUsedEvent(markSpellAsUsedEvent);
+	}
+	else if (std::shared_ptr<EnableWarriorRageModeEvent> enableWarriorRageModeEvent = std::dynamic_pointer_cast<EnableWarriorRageModeEvent>(e)) {
+		this->handleEnableWarriorRageModeEvent(enableWarriorRageModeEvent);
+	}
+	else if (std::shared_ptr<DecreaseRageModeMovesLeftEvent> decreaseRageModeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseRageModeMovesLeftEvent>(e)) {
+		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent);
+	}
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -892,4 +914,23 @@ void MainScreen::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTur
 }
 void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
 	this->animation = std::nullopt;
+}
+void MainScreen::handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e) {
+	e->getSpell()->decreaseCreationMovesLeft();
+}
+void MainScreen::handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e) {
+	e->getSpec()->setSpell(e->getSpell());
+}
+void MainScreen::handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e) {
+	Events events = e->getSpell()->use();
+	this->addEvents(events);
+}
+void MainScreen::handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e) {
+	e->getSpell()->markAsUsed();
+}
+void MainScreen::handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e) {
+	e->getWarrior()->enableRageMode();
+}
+void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e) {
+	e->getWarrior()->decreaseRageModeMovesLeft();
 }

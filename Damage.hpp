@@ -28,6 +28,7 @@ class Damage {
 public:
 	Damage(uint32_t points, uint8_t type);
 
+	friend Damage operator*(double k, Damage damage);
 	uint32_t getHpLoss(Defence defence) const;
 	std::wstring getReadable() const;
 
