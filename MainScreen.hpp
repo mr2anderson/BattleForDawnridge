@@ -65,6 +65,7 @@
 #include "MarkSpellAsUsedEvent.hpp"
 #include "EnableWarriorRageModeEvent.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
+#include "CreateEffectEvent.hpp"
 
 
 #pragma once
@@ -92,7 +93,7 @@ private:
     std::optional<SuspendingAnimation> animation;
     std::queue<std::shared_ptr<Event>> events;
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
-	uint32_t move = 0;
+	uint32_t move;
 	HighlightTable highlightTable;
 	PlainsGeneration plains;
     BuildingMode bm;
@@ -196,4 +197,5 @@ private:
 	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e);
 	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e);
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e);
+	void handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e);
 };

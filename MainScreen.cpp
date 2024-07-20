@@ -58,6 +58,7 @@
 #include "Spell.hpp"
 #include "SpellProducerSpec.hpp"
 #include "SpellFactory.hpp"
+#include "Effect.hpp"
 
 
 
@@ -448,7 +449,7 @@ void MainScreen::addGameObjectClickEventToQueue(uint8_t button) {
 	uint32_t mouseX, mouseY;
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
 
-	for (uint8_t priority : {GO::PRIORITY::HIGH, GO::PRIORITY::DEFAULT, GO::PRIORITY::LOW}) {
+	for (uint8_t priority : {GO::PRIORITY::HIGHEST, GO::PRIORITY::HIGH, GO::PRIORITY::DEFAULT, GO::PRIORITY::LOW}) {
 		for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 			GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i);
 			if (go->getClickPriority() == priority) {
@@ -760,6 +761,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<DecreaseRageModeMovesLeftEvent> decreaseRageModeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseRageModeMovesLeftEvent>(e)) {
 		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent);
 	}
+	else if (std::shared_ptr<CreateEffectEvent> createEffectEvent = std::dynamic_pointer_cast<CreateEffectEvent>(e)) {
+		this->handleCreateEffectEvent(createEffectEvent);
+	}
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -933,4 +937,7 @@ void MainScreen::handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorR
 }
 void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e) {
 	e->getWarrior()->decreaseRageModeMovesLeft();
+}
+void MainScreen::handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e) {
+	this->map->add(e->getEffect());
 }

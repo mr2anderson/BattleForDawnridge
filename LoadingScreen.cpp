@@ -42,6 +42,7 @@
 #include "ClueManager.hpp"
 #include "Fire.hpp"
 #include "House.hpp"
+#include "PoisonFog.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -123,7 +124,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
-                "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell"}) {
+                "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell"}) {
             Textures::get()->add(a, a + ".png");
         }
         Textures::get()->add("menu", "menu.jpg");
@@ -150,6 +151,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("house" + std::to_string(i), "house/" + std::to_string(i) + ".png");
         }
+        for (uint32_t i = 1; i <= PoisonFog::TOTAL_TYPES; i = i + 1) {
+            Textures::get()->add("poison_fog" + std::to_string(i), "poison_fog/" + std::to_string(i) + ".png");
+        }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
             Textures::get()->add("fire" + std::to_string(i), "fire/" + std::to_string(i) + ".png");
         }
@@ -163,7 +167,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell"}) {
+                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {

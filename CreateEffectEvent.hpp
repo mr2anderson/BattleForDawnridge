@@ -17,48 +17,20 @@
  */
 
 
-
-#include "Collection.hpp"
+#include "Event.hpp"
 
 
 #pragma once
 
 
-class GO;
 class Effect;
-class ResourcePoint;
-class Building;
-class Warrior;
 
 
-class Collections {
+class CreateEffectEvent : public Event {
 public:
-	Collections();
+	CreateEffectEvent(Effect* effect);
 
-	void addToGOs(GO* go);
-	void addToEffects(Effect* effect);
-	void addToRPs(ResourcePoint* rp);
-	void addToBuildings(Building* b);
-	void addToWarriors(Warrior* w);
-
-	uint32_t totalGOs() const;
-	uint32_t totalEffects() const;
-	uint32_t totalRPs() const;
-	uint32_t totalBuildings() const;
-	uint32_t totalWarriors() const;
-
-	GO* getGO(uint32_t i);
-	Effect* getEffect(uint32_t i);
-	ResourcePoint* getRP(uint32_t i);
-	Building* getBuilding(uint32_t i);
-	Warrior* getWarrior(uint32_t i);
-
-
-	const GO* getGO(uint32_t i) const;
+	Effect* getEffect();
 private:
-	Collection<GO> gos;
-	Collection<Effect> effects;
-	Collection<ResourcePoint> rps;
-	Collection<Building> buildings;
-	Collection<Warrior> warriors;
+	Effect* effect;
 };

@@ -17,20 +17,24 @@
  */
 
 
-#include "SpellFactorySpec.hpp"
-#include "RageSpell.hpp"
-#include "PoisonSpell.hpp"
+#include "Spell.hpp"
 
 
-SpellFactorySpec::SpellFactorySpec() = default;
-IBuildingSpec* SpellFactorySpec::clone() const {
-	return new SpellFactorySpec(*this);
-}
-std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_t playerId) const {
-	std::vector<std::shared_ptr<Spell>> toProduce;
+#pragma once
 
-	toProduce.push_back(std::make_shared<RageSpell>(playerId));
-	toProduce.push_back(std::make_shared<PoisonSpell>(playerId));
 
-	return toProduce;
-}
+class PoisonSpell : public Spell {
+public:
+	PoisonSpell(uint32_t playerId);
+private:
+	Spell* clone() const override;
+
+	std::wstring getDescription() const override;
+	std::string getTextureName() const override;
+	Resources getCost() const override;
+	uint32_t getCreationTime() const override;
+	sf::Color getPreviewColor() const override;
+	uint32_t getRadius() const override;
+	std::string getSoundName() const override;
+	Events changeMap(MapState* state, uint32_t centerX, uint32_t centerY) override;
+};

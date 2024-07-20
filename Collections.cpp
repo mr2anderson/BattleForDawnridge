@@ -26,6 +26,9 @@ Collections::Collections() = default;
 void Collections::addToGOs(GO* go) {
 	this->gos.push(go);
 }
+void Collections::addToEffects(Effect* effect) {
+	this->effects.push(effect);
+}
 void Collections::addToRPs(ResourcePoint* rp) {
 	this->rps.push(rp);
 }
@@ -40,6 +43,9 @@ void Collections::addToWarriors(Warrior* w) {
 uint32_t Collections::totalGOs() const {
 	return this->gos.size();
 }
+uint32_t Collections::totalEffects() const {
+	return this->effects.size();
+}
 uint32_t Collections::totalRPs() const {
 	return this->rps.size();
 }
@@ -53,6 +59,9 @@ uint32_t Collections::totalWarriors() const {
 
 GO* Collections::getGO(uint32_t i) {
 	return this->gos.at(i);
+}
+Effect* Collections::getEffect(uint32_t i) {
+	return this->effects.at(i);
 }
 ResourcePoint* Collections::getRP(uint32_t i) {
 	return this->rps.at(i);

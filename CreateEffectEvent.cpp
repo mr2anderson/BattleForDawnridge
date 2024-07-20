@@ -17,20 +17,12 @@
  */
 
 
-#include "SpellFactorySpec.hpp"
-#include "RageSpell.hpp"
-#include "PoisonSpell.hpp"
+#include "CreateEffectEvent.hpp"
 
 
-SpellFactorySpec::SpellFactorySpec() = default;
-IBuildingSpec* SpellFactorySpec::clone() const {
-	return new SpellFactorySpec(*this);
+CreateEffectEvent::CreateEffectEvent(Effect* effect) {
+	this->effect = effect;
 }
-std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_t playerId) const {
-	std::vector<std::shared_ptr<Spell>> toProduce;
-
-	toProduce.push_back(std::make_shared<RageSpell>(playerId));
-	toProduce.push_back(std::make_shared<PoisonSpell>(playerId));
-
-	return toProduce;
+Effect* CreateEffectEvent::getEffect() {
+	return this->effect;
 }

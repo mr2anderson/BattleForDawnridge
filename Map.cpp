@@ -35,6 +35,7 @@
 #include "Infantryman.hpp"
 #include "Legioner.hpp"
 #include "Treasure.hpp"
+#include "Effect.hpp"
 
 
 Map::Map(const std::string &path) {
@@ -110,7 +111,7 @@ Map::~Map() {
     }
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (uint8_t priority : {GO::PRIORITY::LOW, GO::PRIORITY::DEFAULT, GO::PRIORITY::HIGH}) {
+    for (uint8_t priority : {GO::PRIORITY::LOW, GO::PRIORITY::DEFAULT, GO::PRIORITY::HIGH, GO::PRIORITY::HIGHEST}) {
         for (uint32_t i = 0; i < this->state.getCollectionsPtr()->totalGOs(); i = i + 1) {
             const GO* go = this->state.getCollectionsPtr()->getGO(i);
             if (go->getDrawingPriority() == priority) {
@@ -125,6 +126,9 @@ MapState* Map::getStatePtr() {
 void Map::add(GO *object) {
     this->state.getCollectionsPtr()->addToGOs(object);
 
+    if (Effect* effect = dynamic_cast<Effect*>(object)) {
+        this->state.getCollectionsPtr()->addToEffects(effect);
+    }
     if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
         this->state.getCollectionsPtr()->addToRPs(rp);
     }

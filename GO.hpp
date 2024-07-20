@@ -39,8 +39,8 @@ public:
 	virtual uint32_t getSY() const = 0;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
-	virtual bool warriorCanStay(uint32_t warriorPlayerId) const = 0;
-	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const = 0;
+	virtual bool warriorCanStay(uint32_t warriorPlayerId) const;
+	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const;
     virtual bool isUltraHighObstacle(uint32_t playerId) const;
     virtual bool isHighObstacle(uint32_t playerId) const;
     virtual bool isLowObstacle(uint32_t playerId) const;
@@ -60,7 +60,8 @@ public:
 	enum PRIORITY {
 		LOW,
 		DEFAULT,
-		HIGH
+		HIGH,
+		HIGHEST
 	};
 protected:
 	virtual Events getResponse(MapState *state, uint32_t currentPlayerId, uint32_t button) = 0;

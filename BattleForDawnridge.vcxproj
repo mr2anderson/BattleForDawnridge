@@ -493,6 +493,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="BarracksSpec.hpp" />
     <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
+    <ClInclude Include="CreateEffectEvent.hpp" />
     <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp" />
     <ClInclude Include="DoTradeEvent.hpp" />
@@ -511,6 +512,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="IMovementSpeedDecreaserSpec.hpp" />
     <ClInclude Include="PoisonFog.hpp" />
+    <ClInclude Include="PoisonSpell.hpp" />
     <ClInclude Include="RageSpell.hpp" />
     <ClInclude Include="Resin.hpp" />
     <ClInclude Include="ResinSpec.hpp" />
@@ -801,6 +803,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="BarracksSpec.cpp" />
     <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
+    <ClCompile Include="CreateEffectEvent.cpp" />
     <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp" />
     <ClCompile Include="DoTradeEvent.cpp" />
@@ -820,6 +823,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="IMovementSpeedDecreaserSpec.cpp" />
     <ClCompile Include="PoisonFog.cpp" />
+    <ClCompile Include="PoisonSpell.cpp" />
     <ClCompile Include="RageSpell.cpp" />
     <ClCompile Include="Resin.cpp" />
     <ClCompile Include="ResinSpec.cpp" />

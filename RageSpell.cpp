@@ -47,7 +47,7 @@ sf::Color RageSpell::getPreviewColor() const {
 	return sf::Color(75, 0, 130, 30);
 }
 uint32_t RageSpell::getRadius() const {
-	return 1;
+	return 2;
 }
 std::string RageSpell::getSoundName() const {
 	return "rage_spell";

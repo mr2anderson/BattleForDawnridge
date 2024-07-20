@@ -1372,6 +1372,12 @@
     <ClInclude Include="PoisonFog.hpp">
       <Filter>Header Files\otherGOs</Filter>
     </ClInclude>
+    <ClInclude Include="CreateEffectEvent.hpp">
+      <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="PoisonSpell.hpp">
+      <Filter>Header Files\spells</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1988,6 +1994,12 @@
     </ClCompile>
     <ClCompile Include="PoisonFog.cpp">
       <Filter>Source Files\otherGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateEffectEvent.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="PoisonSpell.cpp">
+      <Filter>Source Files\spells</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
