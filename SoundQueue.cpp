@@ -23,6 +23,9 @@
 SoundQueue *SoundQueue::singletone = nullptr;
 
 
+SoundQueue::SoundQueue() {
+    this->lastDeleted = true;
+}
 void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
     this->removeOldSounds();
     /*if (!this->data.empty() and this->prevSound.getElapsedTime().asMilliseconds() < 250) {
@@ -32,15 +35,22 @@ void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
     this->data.emplace_back();
     this->data.back().setBuffer(*soundbuffer);
     this->data.back().play();
+    this->lastDeleted = false;
 }
 void SoundQueue::clear() {
     for (auto& sound : this->data) {
         sound.stop();
     }
     this->data.clear();
+    this->lastDeleted = true;
+}
+bool SoundQueue::lastFinished() {
+    this->removeOldSounds();
+    return this->lastDeleted;
 }
 void SoundQueue::removeOldSounds() {
     while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {
         this->data.erase(this->data.begin());
+        this->lastDeleted = true;
     }
 }

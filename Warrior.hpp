@@ -17,6 +17,7 @@
  */
 
 
+#include <random>
 #include "Unit.hpp"
 #include "Collection.hpp"
 #include "ISelectable.hpp"
@@ -65,12 +66,16 @@ public:
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
 	virtual uint32_t getMovementPoints() const = 0;
 	virtual uint32_t getPopulation() const = 0;
+
+	static const uint32_t TOTAL_FOOTSTEPS;
 private:
 	std::optional<uint32_t> movementPoints;
 	std::string currentDirection;
 	std::string currentAnimation;
 	sf::Clock animationClock;
     std::queue<std::string> currentMovement;
+	sf::Clock footstepsClock;
+	std::mt19937 footstepsRandomSrc;
 	bool toKill;
 
 	bool highDrawingPriority() const override;

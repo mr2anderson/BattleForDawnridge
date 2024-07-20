@@ -1431,9 +1431,6 @@
     <ClCompile Include="Music.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="PAKScreen.cpp">
-      <Filter>Source Files\screens</Filter>
-    </ClCompile>
     <ClCompile Include="PlaySoundEvent.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
@@ -1889,6 +1886,9 @@
     </ClCompile>
     <ClCompile Include="DoTradeEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="PAKScreen.cpp">
+      <Filter>Source Files\screensService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

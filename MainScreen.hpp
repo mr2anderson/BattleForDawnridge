@@ -84,7 +84,7 @@ private:
 	uint32_t currentPlayerIndex;
 	std::shared_ptr<PopUpElement> element;
     std::optional<SuspendingAnimation> animation;
-    std::queue<std::shared_ptr<Event>> baseEvents;
+    std::queue<std::shared_ptr<Event>> events;
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	uint32_t move = 0;
 	HighlightTable highlightTable;
@@ -148,7 +148,7 @@ private:
 	bool verifyViewEast();
 
 
-	void handleBaseEvent(std::shared_ptr<Event> e);
+	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e);
@@ -172,7 +172,6 @@ private:
 	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e);
 	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e);
     void handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e);
-    void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
 	void handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e);
 	void handleSubHpEvent(std::shared_ptr<SubHpEvent> e);
 	void handleSetFireEvent(std::shared_ptr<SetFireEvent> e);
@@ -184,4 +183,5 @@ private:
 	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e);
 	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e);
 	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e);
+	void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
 };

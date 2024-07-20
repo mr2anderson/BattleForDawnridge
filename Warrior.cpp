@@ -46,6 +46,9 @@
 #include "WindowTwoButtons.hpp"
 
 
+const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
+
+
 Warrior::Warrior() {
     this->currentDirection = "e";
     this->startAnimation("talking");
@@ -56,6 +59,8 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->currentDirection = "e";
     this->startAnimation("talking");
     this->toKill = false;
+    std::random_device rd;
+    this->footstepsRandomSrc = std::mt19937(rd());
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
@@ -358,6 +363,11 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
 }
 Events Warrior::processRunningAnimation() {
     Events events;
+
+    if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 100) {
+        events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(this->footstepsRandomSrc() % TOTAL_FOOTSTEPS + 1), true));
+        this->footstepsClock.restart();
+    }
 
     if (this->getCurrentAnimationState().finished) {
         if (this->currentMovement.front() == "e") {

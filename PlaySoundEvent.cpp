@@ -20,9 +20,13 @@
 #include "PlaySoundEvent.hpp"
 
 
-PlaySoundEvent::PlaySoundEvent(const std::string& soundName) {
+PlaySoundEvent::PlaySoundEvent(const std::string& soundName, bool urgen) {
 	this->soundName = soundName;
+	this->urgent = urgent;
 }
 std::string PlaySoundEvent::getSoundName() const {
 	return this->soundName;
+}
+bool PlaySoundEvent::isUrgent() const {
+	return this->urgent;
 }

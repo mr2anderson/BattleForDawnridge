@@ -26,9 +26,11 @@
 
 class PlaySoundEvent : public Event {
 public:
-	PlaySoundEvent(const std::string& soundName);
+	PlaySoundEvent(const std::string& soundName, bool urgent = false);
 
 	std::string getSoundName() const;
+	bool isUrgent() const override;
 private:
 	std::string soundName;
+	bool urgent;
 };

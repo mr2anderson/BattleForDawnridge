@@ -21,3 +21,6 @@
 
 
 CloseAnimationEvent::CloseAnimationEvent() = default;
+bool CloseAnimationEvent::isUrgent() const {
+	return true;
+}

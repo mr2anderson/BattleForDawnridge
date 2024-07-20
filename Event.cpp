@@ -22,3 +22,6 @@
 
 Event::Event() = default;
 Event::~Event() = default;
+bool Event::isUrgent() const {
+	return false;
+}

@@ -24,4 +24,6 @@ class Event {
 public:
 	Event();
     virtual ~Event();
+
+	virtual bool isUrgent() const;
 };

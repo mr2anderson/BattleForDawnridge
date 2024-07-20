@@ -78,12 +78,12 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
                 if (!this->animation.has_value() and this->viewMovingQueue.empty()) {
                     if (this->element == nullptr) {
                         if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
-                            if (this->baseEvents.empty() and this->allNewMoveEventsAdded()) {
+                            if (this->events.empty() and this->allNewMoveEventsAdded()) {
                                 if (this->selected == nullptr) {
                                     if (event.mouseButton.button == sf::Mouse::Button::Left) {
                                         this->addButtonClickEventToQueue();
                                     }
-                                    if (this->baseEvents.empty()) {
+                                    if (this->events.empty()) {
                                         this->addGameObjectClickEventToQueue(event.mouseButton.button);
                                     }
                                 }
@@ -408,7 +408,7 @@ void MainScreen::removeFinishedElement() {
 }
 void MainScreen::addNewMoveEvent() {
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
-		if (this->element != nullptr or !this->baseEvents.empty()) {
+		if (this->element != nullptr or !this->events.empty()) {
 			break;
 		}
 		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
@@ -458,21 +458,22 @@ void MainScreen::addGameObjectClickEventToQueue(uint8_t button) {
 	}
 }
 void MainScreen::processBaseEvents() {
-    while (!this->baseEvents.empty()) {
+    while (!this->events.empty()) {
         if (this->element != nullptr or this->animation.has_value() or !this->viewMovingQueue.empty()) {
             break;
         }
-        this->handleBaseEvent(this->baseEvents.front());
-        this->baseEvents.pop();
+        this->handleEvent(this->events.front());
+        this->events.pop();
     }
 }
 void MainScreen::addEvents(Events &e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
-		if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e.at(i))) { // handling close animation event out of queue cuz active animation stops processing events in queue
-			this->handleCloseAnimationEvent(closeAnimationEvent);
+		std::shared_ptr<Event> event = e.at(i);
+		if (event->isUrgent()) {
+			this->handleEvent(event);
 		}
 		else {
-			this->baseEvents.push(e.at(i));
+			this->events.push(event);
 		}
     }
 }
@@ -631,7 +632,7 @@ bool MainScreen::verifyViewEast() {
 
 
 
-void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
+void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
         this->handleAddResourceEvent(addResourceEvent);
     }
@@ -734,6 +735,9 @@ void MainScreen::handleBaseEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<RevertKillNextTurnEvent> revertKillNextTurnEvent = std::dynamic_pointer_cast<RevertKillNextTurnEvent>(e)) {
 		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent);
 	}
+	else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
+		this->handleCloseAnimationEvent(closeAnimationEvent);
+	}
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -834,9 +838,6 @@ void MainScreen::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e)
 void MainScreen::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e) {
     this->animation = e->getAnimation();
 }
-void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
-    this->animation = std::nullopt;
-}
 void MainScreen::handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e) {
 	e->getBuilding()->decreaseBurningMovesLeft();
 }
@@ -888,4 +889,7 @@ void MainScreen::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e) {
 void MainScreen::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e) {
 	Events events = e->getWarrior()->revertKillNextTurn();
 	this->addEvents(events);
+}
+void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
+	this->animation = std::nullopt;
 }

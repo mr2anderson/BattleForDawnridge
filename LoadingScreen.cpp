@@ -166,6 +166,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "ouch", "bottles", "gurgle"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
+        for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
+            Sounds::get()->add("footsteps" + std::to_string(i), "footsteps/" + std::to_string(i) + ".ogg");
+        }
     }
     catch (CouldntOpenSound &e) {
         loadingError(&e, window);

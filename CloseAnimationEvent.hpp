@@ -26,4 +26,6 @@
 class CloseAnimationEvent : public Event {
 public:
     CloseAnimationEvent();
+
+    bool isUrgent() const override;
 };
