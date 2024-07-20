@@ -273,8 +273,6 @@
     <None Include="extlibs\bin\x86\openal32.dll">
       <Filter>Libraries</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib">
@@ -1841,9 +1839,6 @@
     <ClCompile Include="BarracksSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="DoTradeEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ArableSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
@@ -1891,6 +1886,9 @@
     </ClCompile>
     <ClCompile Include="Resin.cpp">
       <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="DoTradeEvent.cpp">
+      <Filter>Source Files\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
