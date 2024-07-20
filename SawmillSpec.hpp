@@ -17,19 +17,18 @@
  */
 
 
-#include "WoodCollectorSpec.hpp"
+#include "AreaResourcePointCollectorSpec.hpp"
 
 
-WoodCollectorSpec::WoodCollectorSpec() = default;
-IBuildingSpec* WoodCollectorSpec::clone() const {
-	return new WoodCollectorSpec(*this);
-}
-std::string WoodCollectorSpec::getResourceType() const {
-	return "wood";
-}
-uint32_t WoodCollectorSpec::getCollectionSpeed() const {
-	return 1750;
-}
-uint32_t WoodCollectorSpec::getCollectionRadius() const {
-	return 5;
-}
+#pragma once
+
+
+class SawmillSpec : public AreaResourcePointCollectorSpec {
+public:
+	SawmillSpec();
+	IBuildingSpec* clone() const override;
+
+	std::string getResourceType() const override;
+	uint32_t getCollectionSpeed() const override;
+	uint32_t getCollectionRadius() const override;
+};

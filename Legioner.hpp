@@ -46,4 +46,5 @@ private:
 	uint32_t getTippingOverAnimationsNumberInSet() const override;
 	std::string getBaseTextureName() const override;
 	uint32_t getMovementPoints() const override;
+	uint32_t getPopulation() const override;
 };

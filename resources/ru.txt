@@ -1174,3 +1174,53 @@ conducted_resource_points_number
 <DATA>
 Число точек, с которых ведется добыча: 
 <\DATA>
+
+<ID>
+population
+<\ID>
+<DATA>
+Занимаемое пространство: 
+<\DATA>
+
+<ID>
+population_limit
+<\ID>
+<DATA>
+НЕДОСТАТОЧНО МЕСТА
+Постройте дома, чтобы иметь возможность начать обучение
+<\DATA>
+
+<ID>
+guide_population_limit_system_description
+<\ID>
+<DATA>
+Каждому воину и осадному орудию необходимо место для размещения. Например, жилой дом. Если у Вас не будет хватать места, то Вы не сможете обучать армию.
+<\DATA>
+
+<ID>
+this_building_increases_population_limit
+<\ID>
+<DATA>
+Это здание позволяет размещать Ваши войска. Увеличение лимита: 
+<\DATA>
+
+<ID>
+does_not_increase_population_limit_if_hp_isnt_full
+<\ID>
+<DATA>
+Нельзя разместить войска здесь, пока защита не максимальна
+<\DATA>
+
+<ID>
+house_description
+<\ID>
+<DATA>
+Жилой дом — место размещения Ваших войск
+<\DATA>
+
+<ID>
+house_upper_case_readable_name
+<\ID>
+<DATA>
+ЖИЛОЙ ДОМ
+<\DATA>

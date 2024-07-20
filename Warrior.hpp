@@ -62,6 +62,7 @@ public:
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
 	virtual uint32_t getMovementPoints() const = 0;
+	virtual uint32_t getPopulation() const = 0;
 private:
 	std::optional<uint32_t> movementPoints;
 	std::string currentDirection;

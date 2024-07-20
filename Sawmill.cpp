@@ -19,14 +19,14 @@
 
 
 #include "Sawmill.hpp"
-#include "WoodCollectorSpec.hpp"
+#include "SawmillSpec.hpp"
 #include "Texts.hpp"
 
 
 Sawmill::Sawmill() = default;
 Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WoodCollectorSpec());
+	this->addSpec(new SawmillSpec());
 }
 Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);

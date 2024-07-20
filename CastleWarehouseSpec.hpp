@@ -17,18 +17,16 @@
  */
 
 
-#include "WarehouseBeginSpec.hpp"
+#include "IWarehouseSpec.hpp"
 
 
-WarehouseBeginSpec::WarehouseBeginSpec() = default;
-IBuildingSpec* WarehouseBeginSpec::clone() const {
-	return new WarehouseBeginSpec(*this);
-}
-Resources WarehouseBeginSpec::getLimit() const {
-	Resources limit;
-	limit.plus(Resource("food", 20000));
-	limit.plus(Resource("wood", 20000));
-	limit.plus(Resource("stone", 20000));
+#pragma once
 
-	return limit;
-}
+
+class CastleWarehouseSpec : public IWarehouseSpec {
+public:
+	CastleWarehouseSpec();
+	IBuildingSpec* clone() const override;
+
+	Resources getLimit() const override;
+};

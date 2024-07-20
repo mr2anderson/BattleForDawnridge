@@ -17,16 +17,30 @@
  */
 
 
-#include "IResourceGeneratorSpec.hpp"
+#include "Building.hpp"
 
 
 #pragma once
 
 
-class WoodGeneratorSpec : public IResourceGeneratorSpec {
+class House : public Building {
 public:
-	WoodGeneratorSpec();
-	IBuildingSpec* clone() const override;
+	House();
+	House(uint32_t x, uint32_t y, uint32_t playerId);
+	Building* cloneBuilding() const override;
 
-	Resource getProduct() const override;
+	uint32_t getSX() const override;
+	uint32_t getSY() const override;
+	uint32_t getMaxHP() const override;
+	Defence getDefence() const override;
+	Resources getCost() const override;
+	std::string getTextureName() const override;
+	std::string getSoundName() const override;
+	std::wstring getDescription() const override;
+	uint32_t getRegenerationSpeed() const override;
+	std::wstring getUpperCaseReadableName() const override;
+
+	static const uint32_t TOTAL_TYPES;
+private:
+	uint32_t type;
 };

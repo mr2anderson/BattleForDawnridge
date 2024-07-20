@@ -53,6 +53,7 @@
 #include "ResourcePoint.hpp"
 #include "WarriorProducerSpec.hpp"
 #include "Warrior.hpp"
+#include "House.hpp"
 
 
 
@@ -206,6 +207,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
     buildMenuSectionMainComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<Road>());
+	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<House>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionMain = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionMainComponents);
 	Events createBuildWindowSectionMainEvent = clickSoundEvent;
@@ -349,6 +351,24 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 		}
 	}
 	bar.setLimit(limit);
+
+	uint32_t population = 0;
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+		Warrior* w = this->map->getStatePtr()->getCollectionsPtr()->getWarrior(i);
+		if (w->exist() and w->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			population = population + w->getPopulation();
+		}
+	}
+	bar.setPopulation(population);
+
+	uint32_t populationLimit = 0;
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			populationLimit = populationLimit + b->getPopulationLimit();
+		}
+	}
+	bar.setPopulationLimit(populationLimit);
 
 	window.draw(bar);
 }
@@ -830,10 +850,12 @@ void MainScreen::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> 
 	this->highlightTable.clear();
 }
 void MainScreen::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e) {
-	e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
+	Events events = e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
+	this->addEvents(events);
 }
 void MainScreen::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e) {
-	e->getSpec()->startProducing(e->getWarrior());
+	Events events = e->getSpec()->startProducing(e->getWarrior());
+	this->addEvents(events);
 }
 void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {

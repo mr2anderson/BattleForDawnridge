@@ -73,6 +73,15 @@ Resources Building::getLimit() const {
 
 	return limit;
 }
+uint32_t Building::getPopulationLimit() const {
+	uint32_t populationLimit = 0;
+
+	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+		populationLimit = populationLimit + this->specs.at(i)->getPopulationLimit(this);
+	}
+
+	return populationLimit;
+}
 bool Building::isVictoryCondition() const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
 		if (this->specs.at(i)->isVictoryCondition()) {

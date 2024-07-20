@@ -35,6 +35,7 @@ public:
 
 	Events getHighlightEvent(MapState *state) const;
 	Resources getLimit() const;
+	uint32_t getPopulationLimit() const;
 	bool isVictoryCondition() const;
 	bool isOrigin() const;
 	bool isActiveConductor() const;

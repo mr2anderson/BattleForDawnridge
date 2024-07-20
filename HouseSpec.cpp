@@ -17,13 +17,13 @@
  */
 
 
-#include "WoodGeneratorSpec.hpp"
+#include "HouseSpec.hpp"
 
 
-WoodGeneratorSpec::WoodGeneratorSpec() = default;
-IBuildingSpec* WoodGeneratorSpec::clone() const {
-	return new WoodGeneratorSpec(*this);
+HouseSpec::HouseSpec() = default;
+IBuildingSpec* HouseSpec::clone() const {
+	return new HouseSpec(*this);
 }
-Resource WoodGeneratorSpec::getProduct() const {
-	return { "wood", 1000 };
+uint32_t HouseSpec::getActivePopulationLimit() const {
+	return 3;
 }

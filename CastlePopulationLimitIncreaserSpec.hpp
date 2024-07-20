@@ -17,25 +17,16 @@
  */
 
 
-#include <SFML/Graphics.hpp>
-#include "Resources.hpp"
+#include "IPopulationLimitIncreaserSpec.hpp"
 
 
 #pragma once
 
 
-class ResourceBar : public sf::Drawable {
+class CastlePopulationLimitIncreaserSpec : public IPopulationLimitIncreaserSpec {
 public:
-	ResourceBar();
+	CastlePopulationLimitIncreaserSpec();
+	IBuildingSpec* clone() const override;
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void setResources(const Resources& resources);
-	void setLimit(const Resources& limit);
-	void setPopulation(uint32_t population);
-	void setPopulationLimit(uint32_t populationLimit);
-private:
-	Resources resources, limit;
-	uint32_t population, populationLimit;
-
-	void drawEverything(sf::RenderTarget& target, sf::RenderStates states) const;
+	uint32_t getActivePopulationLimit() const override;
 };

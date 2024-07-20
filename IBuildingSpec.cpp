@@ -40,6 +40,9 @@ std::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *bui
 Resources IBuildingSpec::getLimit() const {
 	return Resources();
 }
+uint32_t IBuildingSpec::getPopulationLimit(const Building *building) const {
+	return 0;
+}
 bool IBuildingSpec::isVictoryCondition() const {
 	return false;
 }

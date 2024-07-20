@@ -114,17 +114,30 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 		}
 		else {
 			std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce(b->getPlayerId());
+
+			uint32_t population = 0;
+			for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+				Warrior* w = state->getCollectionsPtr()->getWarrior(i);
+				if (w->exist() and w->getPlayerId() == b->getPlayerId()) {
+					population = population + w->getPopulation();
+				}
+			}
+
+			uint32_t populationLimit = 0;
+			for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+				Building* populationLimitIncreaser = state->getCollectionsPtr()->getBuilding(i);
+				if (populationLimitIncreaser->exist() and populationLimitIncreaser->getPlayerId() == b->getPlayerId()) {
+					populationLimit = populationLimit + populationLimitIncreaser->getPopulationLimit();
+				}
+			}
+
 			for (uint32_t i = 0; i < toProduce.size(); i = i + 1) {
 				std::shared_ptr<Warrior> w = toProduce.at(i);
 
 				Events produceEvent;
 				produceEvent.add(std::make_shared<ResetHighlightEvent>());
 				
-				if (state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources() >= w->getCost()) {
-					produceEvent.add(std::make_shared<SubResourcesEvent>(w->getCost()));
-					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this, w));
-				}
-				else {
+				if (!(state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources() >= w->getCost())) {
 					Events clickEvent;
 					clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
@@ -132,13 +145,25 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 					produceEvent = produceEvent + clickEvent;
 					produceEvent.add(std::make_shared<CreateEEvent>(w));
 				}
+				else if (population + w->getPopulation() > populationLimit) {
+					Events clickEvent;
+					clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("population_limit"), *Texts::get()->get("OK"), clickEvent);
+					produceEvent = produceEvent + clickEvent;
+					produceEvent.add(std::make_shared<CreateEEvent>(w));
+				}
+				else {
+					produceEvent.add(std::make_shared<SubResourcesEvent>(w->getCost()));
+					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this, w));
+				}
 
 				components.emplace_back(
 					w->getTextureName(),
 					w->getDescription() + L"\n" +
 					*Texts::get()->get("hp") + std::to_wstring(w->getMaxHP()) + L" (" + w->getDefence().getReadable() + L")\n" +
 					*Texts::get()->get("damage") + w->getDamage().getReadable() + L". " + *Texts::get()->get("movement_points") + std::to_wstring(w->getMovementPoints()) + L"\n" +
-					*Texts::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
+					*Texts::get()->get("population") + std::to_wstring(w->getPopulation()) + L". " +  *Texts::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
 					true,
 					produceEvent
 				);

@@ -1230,7 +1230,7 @@
     <ClInclude Include="WarehouseFoodSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="WarehouseBeginSpec.hpp">
+    <ClInclude Include="CastleWarehouseSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="WarehouseIronSpec.hpp">
@@ -1248,10 +1248,10 @@
     <ClInclude Include="GatesSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="WoodGeneratorSpec.hpp">
+    <ClInclude Include="CastleWoodGeneratorSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="WoodCollectorSpec.hpp">
+    <ClInclude Include="SawmillSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="MarketSpec.hpp">
@@ -1295,6 +1295,18 @@
     </ClInclude>
     <ClInclude Include="DoTradeEvent.hpp">
       <Filter>Header Files\events</Filter>
+    </ClInclude>
+    <ClInclude Include="IPopulationLimitIncreaserSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="House.hpp">
+      <Filter>Header Files\buildings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1778,7 +1790,7 @@
     <ClCompile Include="WarehouseIronSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseBeginSpec.cpp">
+    <ClCompile Include="CastleWarehouseSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="WallSpec.cpp">
@@ -1787,13 +1799,13 @@
     <ClCompile Include="GatesSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="WoodGeneratorSpec.cpp">
+    <ClCompile Include="CastleWoodGeneratorSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="AreaControllerSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="WoodCollectorSpec.cpp">
+    <ClCompile Include="SawmillSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="MarketSpec.cpp">
@@ -1837,6 +1849,18 @@
     </ClCompile>
     <ClCompile Include="StartWarriorProducingEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="IPopulationLimitIncreaserSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="House.cpp">
+      <Filter>Source Files\buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

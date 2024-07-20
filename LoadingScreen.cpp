@@ -41,6 +41,7 @@
 #include "UTFEncoder.hpp"
 #include "ClueManager.hpp"
 #include "Fire.hpp"
+#include "House.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -146,6 +147,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
         }
+        for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
+            Textures::get()->add("house" + std::to_string(i), "house/" + std::to_string(i) + ".png");
+        }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
             Textures::get()->add("fire" + std::to_string(i), "fire/" + std::to_string(i) + ".png");
         }
@@ -159,7 +163,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch"}) {
+                                      "ouch", "bottles"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }

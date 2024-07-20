@@ -77,3 +77,6 @@ std::string Legioner::getBaseTextureName() const {
 uint32_t Legioner::getMovementPoints() const {
 	return 6;
 }
+uint32_t Legioner::getPopulation() const {
+	return 1;
+}

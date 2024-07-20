@@ -17,25 +17,18 @@
  */
 
 
-#include <SFML/Graphics.hpp>
-#include "Resources.hpp"
+#include "CastleWarehouseSpec.hpp"
 
 
-#pragma once
+CastleWarehouseSpec::CastleWarehouseSpec() = default;
+IBuildingSpec* CastleWarehouseSpec::clone() const {
+	return new CastleWarehouseSpec(*this);
+}
+Resources CastleWarehouseSpec::getLimit() const {
+	Resources limit;
+	limit.plus(Resource("food", 20000));
+	limit.plus(Resource("wood", 20000));
+	limit.plus(Resource("stone", 20000));
 
-
-class ResourceBar : public sf::Drawable {
-public:
-	ResourceBar();
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void setResources(const Resources& resources);
-	void setLimit(const Resources& limit);
-	void setPopulation(uint32_t population);
-	void setPopulationLimit(uint32_t populationLimit);
-private:
-	Resources resources, limit;
-	uint32_t population, populationLimit;
-
-	void drawEverything(sf::RenderTarget& target, sf::RenderStates states) const;
-};
+	return limit;
+}

@@ -71,3 +71,6 @@ std::string BlackKnight::getBaseTextureName() const {
 uint32_t BlackKnight::getMovementPoints() const {
 	return 4;
 }
+uint32_t BlackKnight::getPopulation() const {
+	return 1;
+}

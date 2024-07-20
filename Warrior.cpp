@@ -403,7 +403,8 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
         "helmet",
         *Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
-        *Texts::get()->get("damage") + this->getDamage().getReadable(),
+        *Texts::get()->get("damage") + this->getDamage().getReadable() + L"\n" +
+        *Texts::get()->get("population") + std::to_wstring(this->getPopulation()),
         false,
         Events()
     };

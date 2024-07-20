@@ -17,16 +17,15 @@
  */
 
 
-#include "IWarehouseSpec.hpp"
+#include "IBuildingSpec.hpp"
 
 
 #pragma once
 
 
-class WarehouseBeginSpec : public IWarehouseSpec {
+class IPopulationLimitIncreaserSpec : public IBuildingSpec {
 public:
-	WarehouseBeginSpec();
-	IBuildingSpec* clone() const override;
-
-	Resources getLimit() const override;
+	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
+	uint32_t getPopulationLimit(const Building* building) const override;
+	virtual uint32_t getActivePopulationLimit() const = 0;
 };

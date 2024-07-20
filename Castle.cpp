@@ -19,9 +19,10 @@
 
 #include "Castle.hpp"
 #include "CastleTerritoryExpanderSpec.hpp"
-#include "WarehouseBeginSpec.hpp"
+#include "CastleWarehouseSpec.hpp"
 #include "VictoryConditionSpec.hpp"
-#include "WoodGeneratorSpec.hpp"
+#include "CastleWoodGeneratorSpec.hpp"
+#include "CastlePopulationLimitIncreaserSpec.hpp"
 #include "Texts.hpp"
 
 
@@ -29,9 +30,10 @@ Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new CastleTerritoryExpanderSpec());
-	this->addSpec(new WoodGeneratorSpec());
-	this->addSpec(new WarehouseBeginSpec());
+	this->addSpec(new CastleWoodGeneratorSpec());
+	this->addSpec(new CastleWarehouseSpec());
 	this->addSpec(new VictoryConditionSpec());
+	this->addSpec(new CastlePopulationLimitIncreaserSpec());
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);

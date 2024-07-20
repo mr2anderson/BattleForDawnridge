@@ -34,6 +34,12 @@ void ResourceBar::setResources(const Resources& resources) {
 void ResourceBar::setLimit(const Resources& limit) {
 	this->limit = limit;
 }
+void ResourceBar::setPopulation(uint32_t population) {
+	this->population = population;
+}
+void ResourceBar::setPopulationLimit(uint32_t populationLimit) {
+	this->populationLimit = populationLimit;
+}
 void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
@@ -44,16 +50,26 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	target.draw(rect, states);
 
 	std::array<std::string, 5> res = { "food", "wood", "stone", "iron", "gold" };
-	for (uint32_t i = 0; i < 5; i = i + 1) {
+	for (uint32_t i = 0; i < 6; i = i + 1) {
 		sf::Sprite sprite;
-		sprite.setTexture(*Textures::get()->get(res.at(i) + "_icon"));
-		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 5, rect.getPosition().y));
+		if (i == 5) {
+			sprite.setTexture(*Textures::get()->get("helmet"));
+		}
+		else {
+			sprite.setTexture(*Textures::get()->get(res.at(i) + "_icon"));
+		}
+		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 6, rect.getPosition().y));
 		sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
 		target.draw(sprite, states);
 
 		sf::Text text;
 		text.setFont(*Fonts::get()->get("1"));
-		text.setString(std::to_string(this->resources.get(res.at(i))) + " / " + std::to_string(this->limit.get(res.at(i))));
+		if (i == 5) {
+			text.setString(std::to_wstring(this->population) + L" / " + std::to_wstring(this->populationLimit));
+		}
+		else {
+			text.setString(std::to_string(this->resources.get(res.at(i))) + " / " + std::to_string(this->limit.get(res.at(i))));
+		}
 		text.setCharacterSize(16);
 		text.setFillColor(sf::Color::White);
 		text.setOutlineColor(sf::Color::Black);

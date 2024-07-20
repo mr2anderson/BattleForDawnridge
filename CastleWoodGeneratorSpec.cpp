@@ -17,18 +17,13 @@
  */
 
 
-#include "AreaResourcePointCollectorSpec.hpp"
+#include "CastleWoodGeneratorSpec.hpp"
 
 
-#pragma once
-
-
-class WoodCollectorSpec : public AreaResourcePointCollectorSpec {
-public:
-	WoodCollectorSpec();
-	IBuildingSpec* clone() const override;
-
-	std::string getResourceType() const override;
-	uint32_t getCollectionSpeed() const override;
-	uint32_t getCollectionRadius() const override;
-};
+CastleWoodGeneratorSpec::CastleWoodGeneratorSpec() = default;
+IBuildingSpec* CastleWoodGeneratorSpec::clone() const {
+	return new CastleWoodGeneratorSpec(*this);
+}
+Resource CastleWoodGeneratorSpec::getProduct() const {
+	return { "wood", 1000 };
+}

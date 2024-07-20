@@ -493,14 +493,18 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddResourceEvent.hpp" />
     <ClInclude Include="AddResourcesEvent.hpp" />
     <ClInclude Include="BarracksSpec.hpp" />
+    <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
     <ClInclude Include="DoTradeEvent.hpp" />
+    <ClInclude Include="House.hpp" />
+    <ClInclude Include="HouseSpec.hpp" />
     <ClInclude Include="IConductionResourcePointCollectorSpec.hpp" />
     <ClInclude Include="ArableSpec.hpp" />
     <ClInclude Include="GatesSpec.hpp" />
     <ClInclude Include="MineSpec.hpp" />
     <ClInclude Include="IWithSuspendingAnimation.hpp" />
     <ClInclude Include="MarketSpec.hpp" />
+    <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="RoadSpec.hpp" />
     <ClInclude Include="QuarrySpec.hpp" />
     <ClInclude Include="StartWarriorProducingEvent.hpp" />
@@ -703,7 +707,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="TryToBuildEvent.hpp" />
     <ClInclude Include="VictoryConditionSpec.hpp" />
     <ClInclude Include="WallSpec.hpp" />
-    <ClInclude Include="WarehouseBeginSpec.hpp" />
+    <ClInclude Include="CastleWarehouseSpec.hpp" />
     <ClInclude Include="WarehouseFoodSpec.hpp" />
     <ClInclude Include="WarehouseGoldCollectorSpec.hpp" />
     <ClInclude Include="WarehouseGoldWarehouseSpec.hpp" />
@@ -768,8 +772,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="WindowButton.hpp" />
     <ClInclude Include="WindowButtonImage.hpp" />
     <ClInclude Include="WindowTwoButtons.hpp" />
-    <ClInclude Include="WoodCollectorSpec.hpp" />
-    <ClInclude Include="WoodGeneratorSpec.hpp" />
+    <ClInclude Include="SawmillSpec.hpp" />
+    <ClInclude Include="CastleWoodGeneratorSpec.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddHpEvent.cpp" />
@@ -777,14 +781,18 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AddResourcesEvent.cpp" />
     <ClCompile Include="AreaControllerSpec.cpp" />
     <ClCompile Include="BarracksSpec.cpp" />
+    <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
     <ClCompile Include="DoTradeEvent.cpp" />
+    <ClCompile Include="House.cpp" />
+    <ClCompile Include="HouseSpec.cpp" />
     <ClCompile Include="IConductionResourcePointCollectorSpec.cpp" />
     <ClCompile Include="ArableSpec.cpp" />
     <ClCompile Include="GatesSpec.cpp" />
     <ClCompile Include="IBuildingSpec.cpp" />
     <ClCompile Include="MineSpec.cpp" />
     <ClCompile Include="MarketSpec.cpp" />
+    <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="RoadSpec.cpp" />
     <ClCompile Include="QuarrySpec.cpp" />
     <ClCompile Include="StartWarriorProducingEvent.cpp" />
@@ -886,7 +894,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="TryToBuildEvent.cpp" />
     <ClCompile Include="VictoryConditionSpec.cpp" />
     <ClCompile Include="WallSpec.cpp" />
-    <ClCompile Include="WarehouseBeginSpec.cpp" />
+    <ClCompile Include="CastleWarehouseSpec.cpp" />
     <ClCompile Include="WarehouseFoodSpec.cpp" />
     <ClCompile Include="WarehouseGoldCollectorSpec.cpp" />
     <ClCompile Include="WarehouseGoldWarehouseSpec.cpp" />
@@ -950,8 +958,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowButtonImage.cpp" />
     <ClCompile Include="WindowTwoButtons.cpp" />
-    <ClCompile Include="WoodCollectorSpec.cpp" />
-    <ClCompile Include="WoodGeneratorSpec.cpp" />
+    <ClCompile Include="SawmillSpec.cpp" />
+    <ClCompile Include="CastleWoodGeneratorSpec.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

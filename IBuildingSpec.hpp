@@ -41,6 +41,7 @@ public:
 	virtual std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
 	virtual std::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
 	virtual Resources getLimit() const;
+	virtual uint32_t getPopulationLimit(const Building *building) const;
 	virtual bool isVictoryCondition() const;
 	virtual bool allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
 	virtual bool isOrigin() const;
