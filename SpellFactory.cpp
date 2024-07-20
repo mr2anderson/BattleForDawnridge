@@ -56,7 +56,6 @@ std::wstring SpellFactory::getDescription() const {
 	return *Texts::get()->get("spell_factory_description");
 }
 uint32_t SpellFactory::getRegenerationSpeed() const {
-	return this->getMaxHP() / 1;
 	return this->getMaxHP() / 4;
 }
 std::wstring SpellFactory::getUpperCaseReadableName() const {
