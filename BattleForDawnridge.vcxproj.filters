@@ -1366,6 +1366,12 @@
     <ClInclude Include="SpellFactory.hpp">
       <Filter>Header Files\buildings</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.hpp">
+      <Filter>Header Files\otherGOs</Filter>
+    </ClInclude>
+    <ClInclude Include="PoisonFog.hpp">
+      <Filter>Header Files\otherGOs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1976,6 +1982,12 @@
     </ClCompile>
     <ClCompile Include="SpellFactory.cpp">
       <Filter>Source Files\buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Source Files\otherGOs</Filter>
+    </ClCompile>
+    <ClCompile Include="PoisonFog.cpp">
+      <Filter>Source Files\otherGOs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

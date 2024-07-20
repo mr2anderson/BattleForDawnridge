@@ -49,13 +49,19 @@ public:
 	bool intersects(GO* go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
-	virtual bool highDrawingPriority() const;
-	virtual bool highClickPriority() const;
+	virtual uint8_t getDrawingPriority() const;
+	virtual uint8_t getClickPriority() const;
 	virtual std::string getTextureName() const = 0;
 	virtual sf::IntRect getTextureRect() const;
 	virtual sf::Color getTextureColor() const;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
+
+	enum PRIORITY {
+		LOW,
+		DEFAULT,
+		HIGH
+	};
 protected:
 	virtual Events getResponse(MapState *state, uint32_t currentPlayerId, uint32_t button) = 0;
     virtual float getOffsetX() const;
@@ -64,8 +70,6 @@ protected:
 
 	HorizontalSelectionWindowComponent getExitComponent() const;
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;
-
-	static constexpr uint32_t WARRIOR_MOVEMENT_FORBIDDEN = 10000;
 private:
 	uint32_t x, y;
 

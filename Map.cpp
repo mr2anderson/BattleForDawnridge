@@ -110,10 +110,10 @@ Map::~Map() {
     }
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (uint8_t c = 0; c <= 1; c = c + 1) {
+    for (uint8_t priority : {GO::PRIORITY::LOW, GO::PRIORITY::DEFAULT, GO::PRIORITY::HIGH}) {
         for (uint32_t i = 0; i < this->state.getCollectionsPtr()->totalGOs(); i = i + 1) {
             const GO* go = this->state.getCollectionsPtr()->getGO(i);
-            if (go->highDrawingPriority() == (bool)c) {
+            if (go->getDrawingPriority() == priority) {
                 target.draw(*go, states);
             }
         }

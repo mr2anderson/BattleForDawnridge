@@ -279,7 +279,7 @@ uint32_t Warrior::getWarriorMovementCost(uint32_t warriorPlayerId) const {
 	if (this->getPlayerId() == warriorPlayerId) {
 		return 1;
 	}
-	return WARRIOR_MOVEMENT_FORBIDDEN;
+    return 10000;
 }
 Events Warrior::processCurrentAnimation() {
     if (currentAnimation == "running") {
@@ -303,11 +303,11 @@ Damage Warrior::getDamage() const {
 Defence Warrior::getDefence() const {
     return (1 + 0.5 * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
 }
-bool Warrior::highDrawingPriority() const {
-	return true;
+uint8_t Warrior::getDrawingPriority() const {
+    return GO::PRIORITY::HIGH;
 }
-bool Warrior::highClickPriority() const {
-	return true;
+uint8_t Warrior::getClickPriority() const {
+    return GO::PRIORITY::HIGH;
 }
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;

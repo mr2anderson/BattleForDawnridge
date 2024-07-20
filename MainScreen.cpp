@@ -448,10 +448,10 @@ void MainScreen::addGameObjectClickEventToQueue(uint8_t button) {
 	uint32_t mouseX, mouseY;
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
 
-	for (int8_t c = 1; c >= 0; c = c - 1) {
+	for (uint8_t priority : {GO::PRIORITY::HIGH, GO::PRIORITY::DEFAULT, GO::PRIORITY::LOW}) {
 		for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 			GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i);
-			if (go->highClickPriority() == c) {
+			if (go->getClickPriority() == priority) {
 				Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
 				if (!gor.empty()) {
 					this->addEvents(gor);

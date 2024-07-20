@@ -496,6 +496,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp" />
     <ClInclude Include="DoTradeEvent.hpp" />
+    <ClInclude Include="Effect.hpp" />
     <ClInclude Include="EnableWarriorRageModeEvent.hpp" />
     <ClInclude Include="House.hpp" />
     <ClInclude Include="HouseSpec.hpp" />
@@ -509,6 +510,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="MarketSpec.hpp" />
     <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="IMovementSpeedDecreaserSpec.hpp" />
+    <ClInclude Include="PoisonFog.hpp" />
     <ClInclude Include="RageSpell.hpp" />
     <ClInclude Include="Resin.hpp" />
     <ClInclude Include="ResinSpec.hpp" />
@@ -802,6 +804,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp" />
     <ClCompile Include="DoTradeEvent.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EnableWarriorRageModeEvent.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="HouseSpec.cpp" />
@@ -816,6 +819,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="MarketSpec.cpp" />
     <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="IMovementSpeedDecreaserSpec.cpp" />
+    <ClCompile Include="PoisonFog.cpp" />
     <ClCompile Include="RageSpell.cpp" />
     <ClCompile Include="Resin.cpp" />
     <ClCompile Include="ResinSpec.cpp" />

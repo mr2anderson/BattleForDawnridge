@@ -85,8 +85,8 @@ private:
 	bool toKill;
 	uint32_t rageModeMovesLeft;
 
-	bool highDrawingPriority() const override;
-	bool highClickPriority() const override;
+	uint8_t getDrawingPriority() const override;
+	uint8_t getClickPriority() const override;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
 	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
 	Events getMoveHighlightionEvent(MapState *state);

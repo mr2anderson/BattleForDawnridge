@@ -92,11 +92,11 @@ bool GO::intersects(GO* go) const {
 Events GO::newMove(MapState* state, uint32_t currentPlayerId) {
 	return Events();
 }
-bool GO::highDrawingPriority() const {
-	return false;
+uint8_t GO::getDrawingPriority() const {
+	return PRIORITY::DEFAULT;
 }
-bool GO::highClickPriority() const {
-	return false;
+uint8_t GO::getClickPriority() const {
+	return PRIORITY::DEFAULT;
 }
 sf::IntRect GO::getTextureRect() const {
 	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());
