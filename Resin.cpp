@@ -48,7 +48,7 @@ Resources Resin::getCost() const {
 	return cost;
 }
 uint32_t Resin::getRegenerationSpeed() const {
-	return this->getMaxHP() / 5;
+	return this->getMaxHP() / 4;
 }
 std::string Resin::getTextureName() const {
 	return "resin";
