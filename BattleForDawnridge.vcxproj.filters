@@ -1314,6 +1314,15 @@
     <ClInclude Include="RevertKillNextTurnEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
+    <ClInclude Include="IMovementSpeedDecreaserSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ResinSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Resin.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1873,6 +1882,15 @@
     </ClCompile>
     <ClCompile Include="RevertKillNextTurnEvent.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="IMovementSpeedDecreaserSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="ResinSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="Resin.cpp">
+      <Filter>Source Files\buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

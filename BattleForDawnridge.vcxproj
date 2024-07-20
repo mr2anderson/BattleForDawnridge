@@ -506,6 +506,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="IWithSuspendingAnimation.hpp" />
     <ClInclude Include="MarketSpec.hpp" />
     <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
+    <ClInclude Include="IMovementSpeedDecreaserSpec.hpp" />
+    <ClInclude Include="Resin.hpp" />
+    <ClInclude Include="ResinSpec.hpp" />
     <ClInclude Include="RevertKillNextTurnEvent.hpp" />
     <ClInclude Include="RoadSpec.hpp" />
     <ClInclude Include="QuarrySpec.hpp" />
@@ -796,6 +799,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="MineSpec.cpp" />
     <ClCompile Include="MarketSpec.cpp" />
     <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
+    <ClCompile Include="IMovementSpeedDecreaserSpec.cpp" />
+    <ClCompile Include="Resin.cpp" />
+    <ClCompile Include="ResinSpec.cpp" />
     <ClCompile Include="RevertKillNextTurnEvent.cpp" />
     <ClCompile Include="RoadSpec.cpp" />
     <ClCompile Include="QuarrySpec.cpp" />

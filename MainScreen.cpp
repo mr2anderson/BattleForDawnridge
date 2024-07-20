@@ -54,6 +54,7 @@
 #include "WarriorProducerSpec.hpp"
 #include "Warrior.hpp"
 #include "House.hpp"
+#include "Resin.hpp"
 
 
 
@@ -258,6 +259,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall2>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates2>());
+	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Resin>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionDefenceComponents);
     Events createBuildWindowSectionDefenceEvent = clickSoundEvent;

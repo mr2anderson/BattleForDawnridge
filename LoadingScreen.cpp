@@ -123,7 +123,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
-                "cursor", "helmet", "skull"}) {
+                "cursor", "helmet", "skull", "resin"}) {
             Textures::get()->add(a, a + ".png");
         }
         Textures::get()->add("menu", "menu.jpg");
@@ -163,7 +163,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch", "bottles"}) {
+                                      "ouch", "bottles", "gurgle"}) {
             Sounds::get()->add(a, a + ".ogg");
         }
     }
