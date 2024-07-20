@@ -31,10 +31,10 @@ Building* Resin::cloneBuilding() const {
 	return new Resin(*this);
 }
 uint32_t Resin::getSX() const {
-	return 2;
+	return 1;
 }
 uint32_t Resin::getSY() const {
-	return 2;
+	return 1;
 }
 uint32_t Resin::getMaxHP() const {
 	return 15000;
@@ -44,7 +44,7 @@ Defence Resin::getDefence() const {
 }
 Resources Resin::getCost() const {
 	Resources cost;
-	cost.plus(Resource("wood", 7500));
+	cost.plus(Resource("wood", 1875));
 	return cost;
 }
 uint32_t Resin::getRegenerationSpeed() const {
