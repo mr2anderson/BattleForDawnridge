@@ -21,6 +21,7 @@
 #include "Texts.hpp"
 
 
+Damage::Damage() = default;
 Damage::Damage(uint32_t points, uint8_t type) {
 	this->points = points;
 	this->type = type;

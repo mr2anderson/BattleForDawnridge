@@ -20,6 +20,7 @@
 #include "Arable.hpp"
 #include "ArableSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Arable::Arable() = default;
@@ -31,19 +32,19 @@ Building* Arable::cloneBuilding() const {
 	return new Arable(*this);
 }
 uint32_t Arable::getSX() const {
-    return 2;
+	return Balance::get()->getInt("arable_sx");
 }
 uint32_t Arable::getSY() const {
-    return 2;
+	return Balance::get()->getInt("arable_sy");
 }
 uint32_t Arable::getMaxHP() const {
-	return 1000;
+	return Balance::get()->getInt("arable_max_hp");
 }
 Defence Arable::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("arable_defence");
 }
 Resources Arable::getCost() const {
-	return Resources({ Resource("wood", 5000)});
+	return Balance::get()->getResources("arable_cost");
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -55,7 +56,7 @@ std::wstring Arable::getDescription() const {
 	return *Texts::get()->get("arable_description");
 }
 uint32_t Arable::getRegenerationSpeed() const {
-	return this->getMaxHP() / 2;
+	return Balance::get()->getInt("arable_regeneration_speed");
 }
 std::wstring Arable::getUpperCaseReadableName() const {
 	return *Texts::get()->get("arable_upper_case_readable_name");

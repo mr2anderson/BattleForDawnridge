@@ -20,6 +20,7 @@
 #include "Gates2.hpp"
 #include "GatesSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Gates2::Gates2() = default;
@@ -31,24 +32,22 @@ Building* Gates2::cloneBuilding() const {
     return new Gates2(*this);
 }
 uint32_t Gates2::getSX() const {
-    return 1;
+    return Balance::get()->getInt("gates2_sx");
 }
 uint32_t Gates2::getSY() const {
-    return 1;
+    return Balance::get()->getInt("gates2_sy");
 }
 uint32_t Gates2::getMaxHP() const {
-    return 15000;
+    return Balance::get()->getInt("gates2_max_hp");
 }
 Defence Gates2::getDefence() const {
-    return Defence::STONE;
+    return Balance::get()->getDefence("gates2_defence");
 }
 Resources Gates2::getCost() const {
-    Resources cost;
-    cost.plus(Resource("stone", 30000));
-    return cost;
+    return Balance::get()->getResources("gates2_cost");
 }
 uint32_t Gates2::getRegenerationSpeed() const {
-    return this->getMaxHP() / 6;
+    return Balance::get()->getInt("gates2_regeneration_speed");
 }
 std::string Gates2::getTextureName() const {
     return "gates2";

@@ -26,6 +26,7 @@
 
 class Damage {
 public:
+	Damage();
 	Damage(uint32_t points, uint8_t type);
 
 	friend Damage operator*(double k, Damage damage);

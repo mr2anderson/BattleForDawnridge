@@ -18,15 +18,14 @@
 
 
 #include "Player.hpp"
+#include "Balance.hpp"
 
 
 
 Player::Player() = default;
 Player::Player(uint32_t id) {
 	this->id = id;
-	this->resources.plus(Resource("food", 20000));
-	this->resources.plus(Resource("wood", 20000));
-	this->resources.plus(Resource("stone", 20000));
+	this->resources = Balance::get()->getResources("start_resources");
 }
 uint32_t Player::getId() const {
 	return this->id;

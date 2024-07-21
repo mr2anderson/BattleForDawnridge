@@ -27,7 +27,7 @@ Effect::Effect() = default;
 Effect::Effect(uint32_t x, uint32_t y, uint32_t playerId) : HPGO(x, y, std::nullopt) {
 	this->playerId = playerId;
 }
-uint32_t Effect::getSX() const {
+uint32_t Effect::getSX() const { // Config file is not used cuz engine supports only (1, 1) effects
 	return 1;
 }
 uint32_t Effect::getSY() const {

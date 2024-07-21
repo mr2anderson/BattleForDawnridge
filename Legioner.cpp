@@ -19,6 +19,7 @@
 
 #include "Legioner.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Legioner::Legioner() = default;
@@ -29,26 +30,20 @@ Legioner::Legioner(uint32_t x, uint32_t y, uint32_t playerId) :
 Warrior* Legioner::cloneWarrior() const {
 	return new Legioner(*this);
 }
-uint32_t Legioner::getSX() const {
-    return 1;
-}
-uint32_t Legioner::getSY() const {
-    return 1;
-}
 uint32_t Legioner::getMaxHP() const {
-    return 5000;
+	return Balance::get()->getInt("legioner_max_hp");
 }
 Damage Legioner::getBaseDamage() const {
-	return { 2500, Damage::TYPE::CUT };
+	return Balance::get()->getDamage("legioner_damage");
 }
 Defence Legioner::getBaseDefence() const {
-	return Defence::HUMAN;
+	return Balance::get()->getDefence("legioner_defence");
 }
 Resources Legioner::getCost() const {
-	return Resources({ Resource("food", 5000), Resource("iron", 5000)});
+	return Balance::get()->getResources("legioner_cost");
 }
 uint32_t Legioner::getTimeToProduce() const {
-	return 4;
+	return Balance::get()->getInt("legioner_time_to_produce");
 }
 std::string Legioner::getSoundName() const {
 	return "sword";
@@ -75,8 +70,8 @@ std::string Legioner::getBaseTextureName() const {
 	return "legioner";
 }
 uint32_t Legioner::getMovementPoints() const {
-	return 6;
+	return Balance::get()->getInt("legioner_movement_points");
 }
 uint32_t Legioner::getPopulation() const {
-	return 1;
+	return Balance::get()->getInt("legioner_population");
 }

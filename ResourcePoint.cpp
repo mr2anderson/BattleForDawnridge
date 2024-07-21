@@ -21,6 +21,7 @@
 #include "CreateEEvent.hpp"
 #include "Texts.hpp"
 #include "HPPointer.hpp"
+#include "Balance.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;
@@ -35,7 +36,7 @@ bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
 	return true;
 }
 uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
-	return 3;
+	return Balance::get()->getInt("resource_point_warrior_movement_cost");
 }
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist() or button == sf::Mouse::Button::Right) {

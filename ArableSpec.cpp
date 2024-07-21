@@ -18,6 +18,7 @@
 
 
 #include "ArableSpec.hpp"
+#include "Balance.hpp"
 
 
 ArableSpec::ArableSpec() = default;
@@ -25,5 +26,5 @@ IBuildingSpec* ArableSpec::clone() const {
 	return new ArableSpec(*this);
 }
 Resource ArableSpec::getProduct() const {
-	return { "food", 875 };
+	return Balance::get()->getResource("arable_product");
 }

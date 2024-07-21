@@ -37,6 +37,7 @@
 #include "ResetHighlightEvent.hpp"
 #include "ConductionGraph.hpp"
 #include "HPPointer.hpp"
+#include "Balance.hpp"
 
 
 Building::Building() = default;
@@ -163,7 +164,7 @@ void Building::decreaseBurningMovesLeft() {
 }
 void Building::setFire() {
 	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
-	this->burningMovesLeft = 3;
+	this->burningMovesLeft = Balance::get()->getInt("fire_lifetime");
 }
 void Building::addSpec(IBuildingSpec* spec) {
 	this->specs.push_back(spec);

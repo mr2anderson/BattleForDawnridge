@@ -20,6 +20,7 @@
 #include "WarehouseIron.hpp"
 #include "WarehouseIronSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;
@@ -31,24 +32,22 @@ Building* WarehouseIron::cloneBuilding() const {
 	return new WarehouseIron(*this);
 }
 uint32_t WarehouseIron::getSX() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_iron_sx");
 }
 uint32_t WarehouseIron::getSY() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_iron_sy");
 }
 uint32_t WarehouseIron::getMaxHP() const {
-    return 10000;
+	return Balance::get()->getInt("warehouse_iron_max_hp");
 }
 Defence WarehouseIron::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("warehouse_iron_defence");
 }
 Resources WarehouseIron::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 10000));
-	return cost;
+	return Balance::get()->getResources("warehouse_iron_cost");
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
-	return this->getMaxHP() / 5;
+	return Balance::get()->getInt("warehouse_iron_regeneration_speed");
 }
 std::string WarehouseIron::getTextureName() const {
 	return "warehouse_iron";

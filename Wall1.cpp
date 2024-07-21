@@ -20,6 +20,7 @@
 #include "Wall1.hpp"
 #include "WallSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Wall1::Wall1() = default;
@@ -31,24 +32,22 @@ Building* Wall1::cloneBuilding() const {
 	return new Wall1(*this);
 }
 uint32_t Wall1::getSX() const {
-    return 1;
+    return Balance::get()->getInt("wall1_sx");
 }
 uint32_t Wall1::getSY() const {
-    return 1;
+	return Balance::get()->getInt("wall1_sy");
 }
 uint32_t Wall1::getMaxHP() const {
-    return 20000;
+	return Balance::get()->getInt("wall1_max_hp");
 }
 Defence Wall1::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("wall1_defence");
 }
 Resources Wall1::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 7500));
-	return cost;
+	return Balance::get()->getResources("wall1_cost");
 }
 uint32_t Wall1::getRegenerationSpeed() const {
-	return this->getMaxHP() / 6;
+	return Balance::get()->getInt("wall1_regeneration_speed");
 }
 std::string Wall1::getTextureName() const {
 	return "wall1";

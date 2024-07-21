@@ -18,6 +18,7 @@
 
 
 #include "CastleTerritoryExpanderSpec.hpp"
+#include "Balance.hpp"
 
 
 CastleTerritoryExpanderSpec::CastleTerritoryExpanderSpec() = default;
@@ -25,5 +26,5 @@ IBuildingSpec* CastleTerritoryExpanderSpec::clone() const {
 	return new CastleTerritoryExpanderSpec(*this);
 }
 uint32_t CastleTerritoryExpanderSpec::getRadius() const {
-	return 4;
+	return Balance::get()->getInt("castle_radius");
 }

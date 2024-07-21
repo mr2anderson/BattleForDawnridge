@@ -24,6 +24,7 @@
 #include "CastleWoodGeneratorSpec.hpp"
 #include "CastlePopulationLimitIncreaserSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Castle::Castle() = default;
@@ -39,16 +40,16 @@ Building* Castle::cloneBuilding() const {
 	return new Castle(*this);
 }
 uint32_t Castle::getSX() const {
-    return 2;
+	return Balance::get()->getInt("castle_sx");
 }
 uint32_t Castle::getSY() const {
-    return 2;
+	return Balance::get()->getInt("castle_sy");
 }
 uint32_t Castle::getMaxHP() const {
-    return 40000;
+	return Balance::get()->getInt("castle_max_hp");
 }
 Defence Castle::getDefence() const {
-	return Defence::STONE;
+	return Balance::get()->getDefence("castle_defence");
 }
 Resources Castle::getCost() const {
 	return Resources();
@@ -63,7 +64,7 @@ std::wstring Castle::getDescription() const {
 	return *Texts::get()->get("castle_description");
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return this->getMaxHP() / 8;
+	return Balance::get()->getInt("castle_regeneration_speed");
 }
 std::wstring Castle::getUpperCaseReadableName() const {
 	return *Texts::get()->get("castle_upper_case_readable_name");

@@ -21,6 +21,7 @@
 #include "Sawmill.hpp"
 #include "SawmillSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Sawmill::Sawmill() = default;
@@ -32,24 +33,22 @@ Building* Sawmill::cloneBuilding() const {
 	return new Sawmill(*this);
 }
 Defence Sawmill::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("sawmill_defence");
 }
 Resources Sawmill::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 10000));
-	return cost;
+	return Balance::get()->getResources("sawmill_cost");
 }
 uint32_t Sawmill::getSX() const {
-    return 2;
+	return Balance::get()->getInt("sawmill_sx");
 }
 uint32_t Sawmill::getSY() const {
-    return 2;
+	return Balance::get()->getInt("sawmill_sy");
 }
 uint32_t Sawmill::getMaxHP() const {
-    return 5000;
+	return Balance::get()->getInt("sawmill_max_hp");
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return this->getMaxHP() / 2;
+	return Balance::get()->getInt("sawmill_regeneration_speed");
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";

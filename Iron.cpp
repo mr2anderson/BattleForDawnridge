@@ -19,6 +19,7 @@
 
 #include "Iron.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Iron::Iron() = default;
@@ -26,13 +27,13 @@ Iron::Iron(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
 }
 uint32_t Iron::getSX() const {
-    return 1;
+	return Balance::get()->getInt("iron_sx");
 }
 uint32_t Iron::getSY() const {
-    return 1;
+	return Balance::get()->getInt("iron_sy");
 }
 uint32_t Iron::getMaxHP() const {
-    return 10500;
+	return Balance::get()->getInt("iron_max_hp");
 }
 std::string Iron::getResourceType() const {
 	return "iron";

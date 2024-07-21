@@ -24,6 +24,7 @@
 #include "PoisonFog.hpp"
 #include "CreateEffectEvent.hpp"
 #include "SubHpEvent.hpp"
+#include "Balance.hpp"
 
 
 PoisonSpell::PoisonSpell(uint32_t playerId) : Spell(playerId) {
@@ -33,24 +34,22 @@ Spell* PoisonSpell::clone() const {
 	return new PoisonSpell(*this);
 }
 std::wstring PoisonSpell::getDescription() const {
-	return *Texts::get()->get("poison_spell_description") + std::to_wstring(PoisonFog::DAMAGE);
+	return *Texts::get()->get("poison_spell_description") + std::to_wstring(Balance::get()->getInt("poison_fog_damage"));
 }
 std::string PoisonSpell::getTextureName() const {
 	return "poison_spell";
 }
 Resources PoisonSpell::getCost() const {
-	Resources cost;
-	cost.plus(Resource("iron", 15000));
-	return cost;
+	return Balance::get()->getResources("poison_spell_cost");
 }
 uint32_t PoisonSpell::getCreationTime() const {
-	return 4;
+	return Balance::get()->getInt("poison_spell_creation_time");
 }
 sf::Color PoisonSpell::getPreviewColor() const {
 	return sf::Color(50, 30, 0, 50);
 }
 uint32_t PoisonSpell::getRadius() const {
-	return 2;
+	return Balance::get()->getInt("poison_spell_radius");
 }
 std::string PoisonSpell::getSoundName() const {
 	return "poison_fog";

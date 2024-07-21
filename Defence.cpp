@@ -23,11 +23,6 @@
 #include "Texts.hpp"
 
 
-const Defence Defence::HUMAN = Defence(1, 1, 0.1);
-const Defence Defence::WOOD = Defence(1, 0.5, 1);
-const Defence Defence::STONE = Defence(0.25, 0.1, 1);
-
-
 Defence::Defence() = default;
 Defence::Defence(double cut, double stab, double crush) {
 	this->cut = cut;

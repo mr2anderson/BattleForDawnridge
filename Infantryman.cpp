@@ -19,6 +19,7 @@
 
 #include "Infantryman.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Infantryman::Infantryman() = default;
@@ -30,19 +31,19 @@ Warrior* Infantryman::cloneWarrior() const {
 	return new Infantryman(*this);
 }
 uint32_t Infantryman::getMaxHP() const {
-    return 5000;
+	return Balance::get()->getInt("infantryman_max_hp");
 }
 Damage Infantryman::getBaseDamage() const {
-	return { 1250, Damage::TYPE::CUT };
+	return Balance::get()->getDamage("infantryman_damage");
 }
 Defence Infantryman::getBaseDefence() const {
-	return Defence::HUMAN;
+	return Balance::get()->getDefence("infantryman_defence");
 }
 Resources Infantryman::getCost() const {
-	return Resources({ Resource("food", 5000 )});
+	return Balance::get()->getResources("infantryman_cost");
 }
 uint32_t Infantryman::getTimeToProduce() const {
-	return 3;
+	return Balance::get()->getInt("infantryman_time_to_produce");
 }
 std::string Infantryman::getSoundName() const {
 	return "hooray";
@@ -69,8 +70,8 @@ std::string Infantryman::getBaseTextureName() const {
 	return "infantryman";
 }
 uint32_t Infantryman::getMovementPoints() const {
-	return 6;
+	return Balance::get()->getInt("infantryman_movement_points");
 }
 uint32_t Infantryman::getPopulation() const {
-	return 1;
+	return Balance::get()->getInt("infantryman_population");
 }

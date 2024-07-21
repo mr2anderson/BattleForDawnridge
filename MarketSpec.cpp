@@ -18,6 +18,7 @@
 
 
 #include "MarketSpec.hpp"
+#include "Balance.hpp"
 
 
 MarketSpec::MarketSpec() = default;
@@ -25,29 +26,29 @@ IBuildingSpec* MarketSpec::clone() const {
 	return new MarketSpec(*this);
 }
 std::vector<Trade> MarketSpec::getTrades() const {
-	const uint32_t time = 4;
-	const uint32_t goldVolume = 5000;
+	const uint32_t time = Balance::get()->getInt("market_trade_time");
+	const uint32_t goldVolume = Balance::get()->getInt("market_gold_volume");
 
 	std::vector<Trade> trades;
 
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("food", 2 * goldVolume),
+		Resource("food", Balance::get()->getInt("market_food_k") * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("wood", 2 * goldVolume),
+		Resource("wood", Balance::get()->getInt("market_wood_k") * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("stone", 2 * goldVolume),
+		Resource("stone", Balance::get()->getInt("market_stone_k") * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("iron", goldVolume),
+		Resource("iron", Balance::get()->getInt("market_iron_k") * goldVolume),
 		time
 	);
 

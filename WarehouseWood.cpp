@@ -20,6 +20,7 @@
 #include "WarehouseWood.hpp"
 #include "WarehouseWoodSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;
@@ -31,24 +32,22 @@ Building* WarehouseWood::cloneBuilding() const {
 	return new WarehouseWood(*this);
 }
 uint32_t WarehouseWood::getSX() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_wood_sx");
 }
 uint32_t WarehouseWood::getSY() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_wood_sy");
 }
 uint32_t WarehouseWood::getMaxHP() const {
-    return 10000;
+	return Balance::get()->getInt("warehouse_wood_max_hp");
 }
 Defence WarehouseWood::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("warehouse_wood_defence");
 }
 Resources WarehouseWood::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 10000));
-	return cost;
+	return Balance::get()->getResources("warehouse_wood_cost");
 }
 uint32_t WarehouseWood::getRegenerationSpeed() const {
-	return this->getMaxHP() / 5;
+	return Balance::get()->getInt("warehouse_wood_regeneration_speed");
 }
 std::string WarehouseWood::getTextureName() const {
 	return "warehouse_wood";

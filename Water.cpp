@@ -22,6 +22,7 @@
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
+#include "Balance.hpp"
 
 
 Water::Water() = default;
@@ -30,10 +31,10 @@ Water::Water(uint32_t x, uint32_t y, uint32_t type) :
 	this->type = type;
 }
 uint32_t Water::getSY() const {
-    return 1;
+	return Balance::get()->getInt("water_sx");
 }
 uint32_t Water::getSX() const {
-    return 1;
+	return Balance::get()->getInt("water_sy");
 }
 std::string Water::getTextureName() const {
 	return "water";

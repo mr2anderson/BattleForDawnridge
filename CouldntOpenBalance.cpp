@@ -17,20 +17,12 @@
  */
 
 
-#include "QuarrySpec.hpp"
-#include "Balance.hpp"
+#include "CouldntOpenBalance.hpp"
 
 
-QuarrySpec::QuarrySpec() = default;
-IBuildingSpec* QuarrySpec::clone() const {
-	return new QuarrySpec(*this);
+CouldntOpenBalance::CouldntOpenBalance(const std::string& path) : CouldntOpen(path) {
+
 }
-std::string QuarrySpec::getResourceType() const {
-	return "stone";
-}
-uint32_t QuarrySpec::getCollectionSpeed() const {
-	return Balance::get()->getInt("quarry_collection_speed");
-}
-uint32_t QuarrySpec::getCollectionRadius() const {
-	return Balance::get()->getInt("quarry_collection_radius");
+std::string CouldntOpenBalance::getUpperCaseResourceReadableName() const {
+	return "BALANCE";
 }

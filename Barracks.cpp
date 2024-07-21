@@ -20,6 +20,7 @@
 #include "Barracks.hpp"
 #include "BarracksSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Barracks::Barracks() = default;
@@ -31,19 +32,19 @@ Building* Barracks::cloneBuilding() const {
 	return new Barracks(*this);
 }
 uint32_t Barracks::getSX() const {
-    return 2;
+	return Balance::get()->getInt("barracks_sx");
 }
 uint32_t Barracks::getSY() const {
-    return 2;
+	return Balance::get()->getInt("barracks_sy");
 }
 uint32_t Barracks::getMaxHP() const {
-    return 10000;
+	return Balance::get()->getInt("barracks_max_hp");
 }
 Defence Barracks::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("barracks_defence");
 }
 Resources Barracks::getCost() const {
-	return Resources({ Resource("stone", 20000) });
+	return Balance::get()->getResources("barracks_cost");
 }
 std::string Barracks::getTextureName() const {
 	return "barracks";
@@ -55,7 +56,7 @@ std::wstring Barracks::getDescription() const {
 	return *Texts::get()->get("barracks_description");
 }
 uint32_t Barracks::getRegenerationSpeed() const {
-	return this->getMaxHP() / 4;
+	return Balance::get()->getInt("barracks_regeneration_speed");
 }
 std::wstring Barracks::getUpperCaseReadableName() const {
 	return *Texts::get()->get("barracks_upper_case_readable_name");

@@ -21,6 +21,7 @@
 #include "EnableWarriorRageModeEvent.hpp"
 #include "Texts.hpp"
 #include "Warrior.hpp"
+#include "Balance.hpp"
 
 
 RageSpell::RageSpell(uint32_t playerId) : Spell(playerId) {
@@ -36,18 +37,16 @@ std::string RageSpell::getTextureName() const {
 	return "rage_spell";
 }
 Resources RageSpell::getCost() const {
-	Resources cost;
-	cost.plus(Resource("iron", 20000));
-	return cost;
+	return Balance::get()->getResources("rage_spell_cost");
 }
 uint32_t RageSpell::getCreationTime() const {
-	return 6;
+	return Balance::get()->getInt("rage_spell_creation_time");
 }
 sf::Color RageSpell::getPreviewColor() const {
 	return sf::Color(75, 0, 130, 30);
 }
 uint32_t RageSpell::getRadius() const {
-	return 2;
+	return Balance::get()->getInt("rage_spell_radius");
 }
 std::string RageSpell::getSoundName() const {
 	return "rage_spell";

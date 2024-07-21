@@ -1378,6 +1378,12 @@
     <ClInclude Include="PoisonSpell.hpp">
       <Filter>Header Files\spells</Filter>
     </ClInclude>
+    <ClInclude Include="Balance.hpp">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenBalance.hpp">
+      <Filter>Header Files\resourceExceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -2000,6 +2006,12 @@
     </ClCompile>
     <ClCompile Include="PoisonSpell.cpp">
       <Filter>Source Files\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="Balance.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenBalance.cpp">
+      <Filter>Source Files\resourceExceptions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

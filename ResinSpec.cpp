@@ -18,6 +18,7 @@
 
 
 #include "ResinSpec.hpp"
+#include "Balance.hpp"
 
 
 ResinSpec::ResinSpec() = default;
@@ -25,5 +26,5 @@ IBuildingSpec* ResinSpec::clone() const {
 	return new ResinSpec(*this);
 }
 uint32_t ResinSpec::getMovementSpeedDecreasingEffectStrength() const {
-	return 4;
+	return Balance::get()->getInt("resin_effect_strength");
 }

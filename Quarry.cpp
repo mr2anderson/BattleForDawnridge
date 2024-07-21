@@ -21,6 +21,7 @@
 #include "Quarry.hpp"
 #include "QuarrySpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Quarry::Quarry() = default;
@@ -32,24 +33,22 @@ Building* Quarry::cloneBuilding() const {
 	return new Quarry(*this);
 }
 uint32_t Quarry::getSX() const {
-    return 2;
+	return Balance::get()->getInt("quarry_sx");
 }
 uint32_t Quarry::getSY() const {
-    return 2;
+	return Balance::get()->getInt("quarry_sy");
 }
 uint32_t Quarry::getMaxHP() const {
-    return 5000;
+	return Balance::get()->getInt("quarry_max_hp");
 }
 Defence Quarry::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("quarry_defence");
 }
 Resources Quarry::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 10000));
-	return cost;
+	return Balance::get()->getResources("quarry_cost");
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return this->getMaxHP() / 2;
+	return Balance::get()->getInt("quarry_regeneration_speed");
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";

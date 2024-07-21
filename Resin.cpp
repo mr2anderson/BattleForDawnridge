@@ -20,6 +20,7 @@
 #include "Resin.hpp"
 #include "ResinSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Resin::Resin() = default;
@@ -31,24 +32,22 @@ Building* Resin::cloneBuilding() const {
 	return new Resin(*this);
 }
 uint32_t Resin::getSX() const {
-	return 1;
+	return Balance::get()->getInt("resin_sx");
 }
 uint32_t Resin::getSY() const {
-	return 1;
+	return Balance::get()->getInt("resin_sy");
 }
 uint32_t Resin::getMaxHP() const {
-	return 5000;
+	return Balance::get()->getInt("resin_max_hp");
 }
 Defence Resin::getDefence() const {
-	return Defence::STONE;
+	return Balance::get()->getDefence("resin_defence");
 }
 Resources Resin::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 1875));
-	return cost;
+	return Balance::get()->getResources("resin_cost");
 }
 uint32_t Resin::getRegenerationSpeed() const {
-	return this->getMaxHP() / 4;
+	return Balance::get()->getInt("resin_regeneration_speed");
 }
 std::string Resin::getTextureName() const {
 	return "resin";

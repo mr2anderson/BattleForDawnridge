@@ -22,6 +22,8 @@
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
+#include "Mountains.hpp"
+#include "Balance.hpp"
 
 
 Mountains::Mountains() = default;
@@ -30,10 +32,10 @@ Mountains::Mountains(uint32_t x, uint32_t y, uint32_t type) :
 	this->type = type;
 }
 uint32_t Mountains::getSX() const {
-    return 1;
+	return Balance::get()->getInt("mountains_sx");
 }
 uint32_t Mountains::getSY() const {
-    return 1;
+	return Balance::get()->getInt("mountains_sy");
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";

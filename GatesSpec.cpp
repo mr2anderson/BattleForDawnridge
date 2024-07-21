@@ -18,6 +18,7 @@
 
 
 #include "GatesSpec.hpp"
+#include "Balance.hpp"
 
 
 GatesSpec::GatesSpec() = default;
@@ -28,5 +29,5 @@ bool GatesSpec::conductsIfNotWork() const {
 	return true;
 }
 uint32_t GatesSpec::getRadius() const {
-	return 1;
+	return Balance::get()->getInt("balance_radius");
 }

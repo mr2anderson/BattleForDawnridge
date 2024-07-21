@@ -33,10 +33,6 @@ public:
 	double getStab() const;
 	double getCrush() const;
 	std::wstring getReadable() const;
-
-    static const Defence HUMAN;
-    static const Defence WOOD;
-    static const Defence STONE;
 private:
 	double cut, stab, crush;
 };

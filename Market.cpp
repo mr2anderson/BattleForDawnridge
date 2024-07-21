@@ -20,6 +20,7 @@
 #include "Market.hpp"
 #include "MarketSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Market::Market() = default;
@@ -31,21 +32,19 @@ Building* Market::cloneBuilding() const {
 	return new Market(*this);
 }
 uint32_t Market::getSX() const {
-    return 2;
+	return Balance::get()->getInt("market_sx");
 }
 uint32_t Market::getSY() const {
-    return 2;
+	return Balance::get()->getInt("market_sy");
 }
 uint32_t Market::getMaxHP() const {
-    return 5000;
+	return Balance::get()->getInt("market_max_hp");
 }
 Defence Market::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("market_defence");
 }
 Resources Market::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 12500));
-	return cost;
+	return Balance::get()->getResources("market_cost");
 }
 std::string Market::getTextureName() const {
 	return "market";
@@ -57,7 +56,7 @@ std::wstring Market::getDescription() const {
 	return *Texts::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return this->getMaxHP() / 4;
+	return Balance::get()->getInt("market_regeneration_speed");
 }
 std::wstring Market::getUpperCaseReadableName() const {
 	return *Texts::get()->get("market_upper_case_readable_name");

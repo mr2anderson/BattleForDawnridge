@@ -21,6 +21,7 @@
 #include "WarehouseGoldWarehouseSpec.hpp"
 #include "WarehouseGoldCollectorSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
@@ -33,24 +34,22 @@ Building* WarehouseGold::cloneBuilding() const {
 	return new WarehouseGold(*this);
 }
 uint32_t WarehouseGold::getSX() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_gold_sx");
 }
 uint32_t WarehouseGold::getSY() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_gold_sy");
 }
 uint32_t WarehouseGold::getMaxHP() const {
-    return 10000;
+	return Balance::get()->getInt("warehouse_gold_max_hp");
 }
 Defence WarehouseGold::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("warehouse_gold_defence");
 }
 Resources WarehouseGold::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 10000));
-	return cost;
+	return Balance::get()->getResources("warehouse_gold_cost");
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return this->getMaxHP() / 4;
+	return Balance::get()->getInt("warehouse_gold_regeneration_speed");
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";

@@ -18,6 +18,7 @@
 
 
 #include "CastlePopulationLimitIncreaserSpec.hpp"
+#include "Balance.hpp"
 
 
 CastlePopulationLimitIncreaserSpec::CastlePopulationLimitIncreaserSpec() = default;
@@ -25,5 +26,5 @@ IBuildingSpec* CastlePopulationLimitIncreaserSpec::clone() const {
 	return new CastlePopulationLimitIncreaserSpec(*this);
 }
 uint32_t CastlePopulationLimitIncreaserSpec::getActivePopulationLimit() const {
-	return 3;
+	return Balance::get()->getInt("castle_population_limit");
 }

@@ -20,6 +20,7 @@
 #include "SpellFactory.hpp"
 #include "Texts.hpp"
 #include "SpellFactorySpec.hpp"
+#include "Balance.hpp"
 
 
 SpellFactory::SpellFactory() = default;
@@ -30,21 +31,19 @@ SpellFactory::Building* SpellFactory::cloneBuilding() const {
 	return new SpellFactory(*this);
 }
 Defence SpellFactory::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("spell_factory_defence");
 }
 Resources SpellFactory::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 20000));
-	return cost;
+	return Balance::get()->getResources("spell_factory_cost");
 }
 uint32_t SpellFactory::getSX() const {
-	return 2;
+	return Balance::get()->getInt("spell_factory_sx");
 }
 uint32_t SpellFactory::getSY() const {
-	return 2;
+	return Balance::get()->getInt("spell_factory_sy");
 }
 uint32_t SpellFactory::getMaxHP() const {
-	return 10000;
+	return Balance::get()->getInt("spell_factory_max_hp");
 }
 std::string SpellFactory::getTextureName() const {
 	return "spell_factory";
@@ -56,7 +55,7 @@ std::wstring SpellFactory::getDescription() const {
 	return *Texts::get()->get("spell_factory_description");
 }
 uint32_t SpellFactory::getRegenerationSpeed() const {
-	return this->getMaxHP() / 4;
+	return Balance::get()->getInt("spell_factory_regeneration_speed");
 }
 std::wstring SpellFactory::getUpperCaseReadableName() const {
 	return *Texts::get()->get("spell_factory_upper_case_readable_name");

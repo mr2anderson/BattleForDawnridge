@@ -19,6 +19,7 @@
 
 #include "Stone.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Stone::Stone() = default;
@@ -26,13 +27,13 @@ Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
 }
 uint32_t Stone::getSX() const {
-    return 1;
+	return Balance::get()->getInt("stone_sx");
 }
 uint32_t Stone::getSY() const {
-    return 1;
+	return Balance::get()->getInt("stone_sy");
 }
 uint32_t Stone::getMaxHP() const {
-    return 10500;
+	return Balance::get()->getInt("stone_max_hp");
 }
 std::string Stone::getResourceType() const {
 	return "stone";

@@ -19,6 +19,7 @@
 
 #include "Knight.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Knight::Knight() = default;
@@ -30,19 +31,19 @@ Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
 uint32_t Knight::getMaxHP() const {
-    return 7500;
+	return Balance::get()->getInt("knight_max_hp");
 }
 Damage Knight::getBaseDamage() const {
-	return { 2500, Damage::TYPE::CUT };
+	return Balance::get()->getDamage("knight_damage");
 }
 Defence Knight::getBaseDefence() const {
-	return Defence::HUMAN;
+	return Balance::get()->getDefence("knight_defence");
 }
 Resources Knight::getCost() const {
-	return Resources({ Resource("food", 7500), Resource("iron", 7500) });
+	return Balance::get()->getResources("knight_cost");
 }
 uint32_t Knight::getTimeToProduce() const {
-	return 6;
+	return Balance::get()->getInt("knight_time_to_produce");
 }
 std::string Knight::getSoundName() const {
 	return "knight";
@@ -69,8 +70,8 @@ std::string Knight::getBaseTextureName() const {
 	return "knight";
 }
 uint32_t Knight::getMovementPoints() const {
-	return 4;
+	return Balance::get()->getInt("knight_movement_points");
 }
 uint32_t Knight::getPopulation() const {
-	return 1;
+	return Balance::get()->getInt("knight_population");
 }

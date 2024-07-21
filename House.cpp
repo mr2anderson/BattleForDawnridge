@@ -21,6 +21,7 @@
 #include "House.hpp"
 #include "HouseSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 const uint32_t House::TOTAL_TYPES = 16;
@@ -41,21 +42,19 @@ Building* House::cloneBuilding() const {
 	return new House(*this);
 }
 uint32_t House::getSX() const {
-	return 2;
+	return Balance::get()->getInt("house_sx");
 }
 uint32_t House::getSY() const {
-	return 2;
+	return Balance::get()->getInt("house_sy");
 }
 uint32_t House::getMaxHP() const {
-	return 5000;
+	return Balance::get()->getInt("house_max_hp");
 }
 Defence House::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("house_defence");
 }
 Resources House::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 15000));
-	return cost;
+	return Balance::get()->getResources("house_cost");
 }
 std::string House::getTextureName() const {
 	return "house" + std::to_string(this->type);
@@ -67,7 +66,7 @@ std::wstring House::getDescription() const {
 	return *Texts::get()->get("house_description");
 }
 uint32_t House::getRegenerationSpeed() const {
-	return this->getMaxHP() / 2;
+	return Balance::get()->getInt("house_regeneration_speed");
 }
 std::wstring House::getUpperCaseReadableName() const {
 	return *Texts::get()->get("house_upper_case_readable_name");

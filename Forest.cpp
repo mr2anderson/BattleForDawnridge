@@ -21,6 +21,7 @@
 #include "Texts.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
+#include "Balance.hpp"
 
 
 Forest::Forest() = default;
@@ -28,13 +29,13 @@ Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : ResourcePoint(x, y) {
 	this->type = type;
 }
 uint32_t Forest::getSX() const {
-    return 1;
+	return Balance::get()->getInt("forest_sx");
 }
 uint32_t Forest::getSY() const {
-    return 1;
+	return Balance::get()->getInt("forest_sy");
 }
 uint32_t Forest::getMaxHP() const {
-    return 10500;
+	return Balance::get()->getInt("forest_max_hp");
 }
 std::string Forest::getResourceType() const {
 	return "wood";

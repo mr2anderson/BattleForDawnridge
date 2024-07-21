@@ -19,6 +19,7 @@
 
 #include "BlackKnight.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 BlackKnight::BlackKnight() = default;
@@ -30,19 +31,19 @@ Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
 }
 uint32_t BlackKnight::getMaxHP() const {
-    return 7500;
+	return Balance::get()->getInt("black_knight_max_hp");
 }
 Damage BlackKnight::getBaseDamage() const {
-	return Damage(5000, Damage::TYPE::CUT);
+	return Balance::get()->getDamage("black_knight_damage");
 }
 Defence BlackKnight::getBaseDefence() const {
-	return Defence::HUMAN;
+	return Balance::get()->getDefence("black_knight_defence");
 }
 Resources BlackKnight::getCost() const {
-	return Resources({ Resource("food", 12000), Resource("iron", 12000)});
+	return Balance::get()->getResources("black_knight_cost");
 }
 uint32_t BlackKnight::getTimeToProduce() const {
-	return 9;
+	return Balance::get()->getInt("black_knight_time_to_produce");
 }
 std::string BlackKnight::getSoundName() const {
 	return "breath";
@@ -69,8 +70,8 @@ std::string BlackKnight::getBaseTextureName() const {
 	return "black_knight";
 }
 uint32_t BlackKnight::getMovementPoints() const {
-	return 4;
+	return Balance::get()->getInt("black_knight_movement_points");
 }
 uint32_t BlackKnight::getPopulation() const {
-	return 1;
+	return Balance::get()->getInt("black_knight_population");
 }

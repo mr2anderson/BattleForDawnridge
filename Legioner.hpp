@@ -29,8 +29,6 @@ public:
 	Legioner(uint32_t x, uint32_t y, uint32_t playerId);
 	Warrior* cloneWarrior() const override;
 
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
     uint32_t getMaxHP() const override;
 	Damage getBaseDamage() const override;
 	Defence getBaseDefence() const override;

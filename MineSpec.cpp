@@ -18,6 +18,7 @@
 
 
 #include "MineSpec.hpp"
+#include "Balance.hpp"
 
 
 MineSpec::MineSpec() = default;
@@ -28,8 +29,8 @@ std::string MineSpec::getResourceType() const {
 	return "iron";
 }
 uint32_t MineSpec::getCollectionSpeed() const {
-	return 1750;
+	return Balance::get()->getInt("mine_collection_speed");
 }
 uint32_t MineSpec::getCollectionRadius() const {
-	return 4;
+	return Balance::get()->getInt("mine_collection_radius");
 }

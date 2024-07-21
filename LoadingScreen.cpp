@@ -43,6 +43,8 @@
 #include "Fire.hpp"
 #include "House.hpp"
 #include "PoisonFog.hpp"
+#include "Balance.hpp"
+#include "CouldntOpenBalance.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -187,6 +189,15 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         }
     }
 	catch (CouldntOpenMusic &e) {
+        loadingError(&e, window);
+        return false;
+    }
+
+
+    try {
+        Balance::get()->load();
+    }
+    catch (CouldntOpenBalance& e) {
         loadingError(&e, window);
         return false;
     }

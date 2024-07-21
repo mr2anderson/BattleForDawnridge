@@ -23,10 +23,10 @@
 #include "Warrior.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
+#include "Balance.hpp"
 
 
 const uint32_t PoisonFog::TOTAL_TYPES = 1;
-const uint32_t PoisonFog::DAMAGE = 1800;
 
 
 PoisonFog::PoisonFog() = default;
@@ -46,10 +46,10 @@ std::string PoisonFog::getSoundName() const {
 	return "poison_fog";
 }
 std::wstring PoisonFog::getDescription() const {
-	return *Texts::get()->get("poison_fog_description") + std::to_wstring(DAMAGE);
+	return *Texts::get()->get("poison_fog_description") + std::to_wstring(Balance::get()->getInt("poison_fog_damage"));
 }
 uint32_t PoisonFog::getLifetime() const {
-	return 4;
+	return Balance::get()->getInt("poison_fog_lifetime");
 }
 Events PoisonFog::getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const {
 	Events events;
@@ -57,7 +57,7 @@ Events PoisonFog::getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerI
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
 		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == currentPlayerId and w->getX() == this->getX() and w->getY() == this->getY()) {
-			events = events + w->hit(DAMAGE, std::nullopt);
+			events = events + w->hit(Balance::get()->getInt("poison_fog_damage"), std::nullopt);
 		}
 	}
 

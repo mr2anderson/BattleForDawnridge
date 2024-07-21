@@ -35,7 +35,6 @@ public:
 	uint32_t getLifetime() const override;
 
 	static const uint32_t TOTAL_TYPES;
-	static const uint32_t DAMAGE;
 private:
 	uint32_t type;
 	sf::Clock animationClock;

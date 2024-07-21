@@ -18,6 +18,7 @@
 
 
 #include "CastleWarehouseSpec.hpp"
+#include "Balance.hpp"
 
 
 CastleWarehouseSpec::CastleWarehouseSpec() = default;
@@ -25,10 +26,5 @@ IBuildingSpec* CastleWarehouseSpec::clone() const {
 	return new CastleWarehouseSpec(*this);
 }
 Resources CastleWarehouseSpec::getLimit() const {
-	Resources limit;
-	limit.plus(Resource("food", 20000));
-	limit.plus(Resource("wood", 20000));
-	limit.plus(Resource("stone", 20000));
-
-	return limit;
+	return Balance::get()->getResources("castle_resources");
 }

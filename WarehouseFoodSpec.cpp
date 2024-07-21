@@ -18,6 +18,7 @@
 
 
 #include "WarehouseFoodSpec.hpp"
+#include "Balance.hpp"
 
 
 
@@ -26,8 +27,5 @@ IBuildingSpec* WarehouseFoodSpec::clone() const {
 	return new WarehouseFoodSpec(*this);
 }
 Resources WarehouseFoodSpec::getLimit() const {
-	Resources limit;
-	limit.plus(Resource("food", 20000));
-
-	return limit;
+	return Balance::get()->getResources("warehouse_food_limit");
 }

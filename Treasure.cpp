@@ -19,6 +19,7 @@
 
 #include "Treasure.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Treasure::Treasure() = default;
@@ -37,13 +38,13 @@ uint32_t Treasure::tryToCollect(uint32_t playerId, uint32_t value) {
 	return 0;
 }
 uint32_t Treasure::getSX() const {
-    return 1;
+	return Balance::get()->getInt("treasure_sx");
 }
 uint32_t Treasure::getSY() const {
-    return 1;
+	return Balance::get()->getInt("treasure_sy");
 }
 uint32_t Treasure::getMaxHP() const {
-    return 50000;
+	return Balance::get()->getInt("treasure_max_hp");
 }
 std::string Treasure::getResourceType() const {
 	return "gold";

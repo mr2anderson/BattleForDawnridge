@@ -20,6 +20,7 @@
 #include "Road.hpp"
 #include "RoadSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Road::Road() = default;
@@ -31,24 +32,22 @@ Building* Road::cloneBuilding() const {
 	return new Road(*this);
 }
 uint32_t Road::getSX() const {
-    return 1;
+	return Balance::get()->getInt("road_sx");
 }
 uint32_t Road::getSY() const {
-    return 1;
+	return Balance::get()->getInt("road_sy");
 }
 uint32_t Road::getMaxHP() const {
-    return 500;
+	return Balance::get()->getInt("road_max_hp");
 }
 Defence Road::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("road_defence");
 }
 Resources Road::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 1500));
-	return cost;
+	return Balance::get()->getResources("road_cost");
 }
 uint32_t Road::getRegenerationSpeed() const {
-	return this->getMaxHP();
+	return Balance::get()->getInt("road_regeneration_speed");
 }
 std::string Road::getTextureName() const {
 	return "road";

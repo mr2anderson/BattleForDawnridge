@@ -45,6 +45,7 @@
 #include "RevertKillNextTurnEvent.hpp"
 #include "WindowTwoButtons.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
+#include "Balance.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -130,7 +131,7 @@ Events Warrior::revertKillNextTurn() {
     return event;
 }
 void Warrior::enableRageMode() {
-    this->rageModeMovesLeft = 2;
+    this->rageModeMovesLeft = Balance::get()->getInt("rage_mode_lifetime");
 }
 void Warrior::decreaseRageModeMovesLeft() {
     this->rageModeMovesLeft = this->rageModeMovesLeft - 1;
@@ -159,7 +160,7 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
 void Warrior::refreshMovementPoints() {
 	this->movementPoints = this->getMovementPoints();
 }
-uint32_t Warrior::getSX() const {
+uint32_t Warrior::getSX() const { // Config file is not used cuz engine supports only (1, 1) warriors
     return 1;
 }
 uint32_t Warrior::getSY() const {
@@ -298,10 +299,10 @@ void Warrior::startAnimation(const std::string& type) {
     this->currentAnimation = type;
 }
 Damage Warrior::getDamage() const {
-    return (1 + 0.5 * (this->rageModeMovesLeft > 0)) * this->getBaseDamage();
+    return (1 + Balance::get()->getDouble("rage_mode_damage_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDamage();
 }
 Defence Warrior::getDefence() const {
-    return (1 + 0.5 * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
+    return (1 + Balance::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
 }
 uint8_t Warrior::getDrawingPriority() const {
     return GO::PRIORITY::HIGH;

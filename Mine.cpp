@@ -21,6 +21,7 @@
 #include "Mine.hpp"
 #include "MineSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 Mine::Mine() = default;
@@ -32,24 +33,22 @@ Building* Mine::cloneBuilding() const {
 	return new Mine(*this);
 }
 uint32_t Mine::getSX() const {
-    return 2;
+	return Balance::get()->getInt("mine_sx");
 }
 uint32_t Mine::getSY() const {
-    return 2;
+	return Balance::get()->getInt("mine_sy");
 }
 uint32_t Mine::getMaxHP() const {
-    return 5000;
+	return Balance::get()->getInt("mine_max_hp");
 }
 Defence Mine::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("mine_defence");
 }
 Resources Mine::getCost() const {
-	Resources cost;
-	cost.plus(Resource("wood", 10000));
-	return cost;
+	return Balance::get()->getResources("mine_cost");
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return this->getMaxHP() / 2;
+	return Balance::get()->getInt("mine_regeneration_speed");
 }
 std::string Mine::getTextureName() const {
 	return "mine";

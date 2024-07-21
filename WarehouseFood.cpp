@@ -20,6 +20,7 @@
 #include "WarehouseFood.hpp"
 #include "WarehouseFoodSpec.hpp"
 #include "Texts.hpp"
+#include "Balance.hpp"
 
 
 WarehouseFood::WarehouseFood() = default;
@@ -31,24 +32,22 @@ Building* WarehouseFood::cloneBuilding() const {
 	return new WarehouseFood(*this);
 }
 uint32_t WarehouseFood::getSX() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_food_sx");
 }
 uint32_t WarehouseFood::getSY() const {
-    return 2;
+	return Balance::get()->getInt("warehouse_food_sy");
 }
 uint32_t WarehouseFood::getMaxHP() const {
-    return 10000;
+	return Balance::get()->getInt("warehouse_food_max_hp");
 }
 Defence WarehouseFood::getDefence() const {
-	return Defence::WOOD;
+	return Balance::get()->getDefence("warehouse_food_defence");
 }
 Resources WarehouseFood::getCost() const {
-	Resources cost;
-	cost.plus(Resource("stone", 10000));
-	return cost;
+	return Balance::get()->getResources("warehouse_food_cost");
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {
-	return this->getMaxHP() / 5;
+	return Balance::get()->getInt("warehouse_food_regeneration_speed");
 }
 std::string WarehouseFood::getTextureName() const {
 	return "warehouse_food";

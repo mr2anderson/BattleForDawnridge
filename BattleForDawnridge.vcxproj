@@ -490,9 +490,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddHpEvent.hpp" />
     <ClInclude Include="AddResourceEvent.hpp" />
     <ClInclude Include="AddResourcesEvent.hpp" />
+    <ClInclude Include="Balance.hpp" />
     <ClInclude Include="BarracksSpec.hpp" />
     <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
+    <ClInclude Include="CouldntOpenBalance.hpp" />
     <ClInclude Include="CreateEffectEvent.hpp" />
     <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp" />
@@ -800,9 +802,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AddResourceEvent.cpp" />
     <ClCompile Include="AddResourcesEvent.cpp" />
     <ClCompile Include="AreaControllerSpec.cpp" />
+    <ClCompile Include="Balance.cpp" />
     <ClCompile Include="BarracksSpec.cpp" />
     <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
+    <ClCompile Include="CouldntOpenBalance.cpp" />
     <ClCompile Include="CreateEffectEvent.cpp" />
     <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp" />
