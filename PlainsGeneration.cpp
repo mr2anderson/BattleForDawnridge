@@ -30,5 +30,5 @@ PlainsGeneration::PlainsGeneration() {
 	this->s2 = rd2();
 }
 uint32_t PlainsGeneration::getType(uint32_t i, uint32_t j) const {
-	return (i * this->s1 + j * this->s2) % TOTAL_PLAINS;
+	return (i * this->s1 + j * this->s2) % TOTAL_PLAINS + 1;
 }

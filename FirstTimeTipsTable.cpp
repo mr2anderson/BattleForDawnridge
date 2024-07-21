@@ -36,7 +36,7 @@ static void CREATE_LOCAL_ROOT() {
 	std::filesystem::create_directories(GET_LOCAL_ROOT());
 }
 static std::string GET_PATH(const std::string& id) {
-	return GET_LOCAL_ROOT() + "/" + id + ".txt";
+	return GET_LOCAL_ROOT() + "/" + id + ".cfg";
 }
 
 

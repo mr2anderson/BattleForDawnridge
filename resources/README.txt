@@ -1,0 +1,1 @@
+If you delete this file, VS SFML template won't work xD

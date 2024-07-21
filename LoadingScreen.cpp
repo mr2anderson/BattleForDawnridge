@@ -71,8 +71,8 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 }
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     try {
-        Fonts::get()->add("1", "1.ttf");
-        Textures::get()->add("loading_screen", "loading_screen.jpg");
+        Fonts::get()->add("1", "fonts/1.ttf");
+        Textures::get()->add("loading_screen", "images/loading_screen.jpg");
     }
 	catch (CouldntOpenFont &e) {
         return false;
@@ -125,9 +125,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell"}) {
-            Textures::get()->add(a, a + ".png");
+            Textures::get()->add(a, "images/" + a + ".png");
         }
-        Textures::get()->add("menu", "menu.jpg");
+        Textures::get()->add("menu", "images/menu.jpg");
         for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over"}) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
                 for (const std::tuple<std::string, uint32_t>& w : { 
@@ -140,22 +140,22 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                         while (s.size() < 4) {
                             s = ('0' + s);
                         }
-                        Textures::get()->add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
+                        Textures::get()->add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), "images/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
                     }
                 }
             }
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
-            Textures::get()->add(std::to_string(i), std::to_string(i) + ".png");
+            Textures::get()->add("plain" + std::to_string(i), "images/plains/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("house" + std::to_string(i), "house/" + std::to_string(i) + ".png");
+            Textures::get()->add("house" + std::to_string(i), "images/house/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= PoisonFog::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("poison_fog" + std::to_string(i), "poison_fog/" + std::to_string(i) + ".png");
+            Textures::get()->add("poison_fog" + std::to_string(i), "images/poison_fog/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
-            Textures::get()->add("fire" + std::to_string(i), "fire/" + std::to_string(i) + ".png");
+            Textures::get()->add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
         }
     }
 	catch (CouldntOpenTexture &e) {
@@ -168,10 +168,10 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog"}) {
-            Sounds::get()->add(a, a + ".ogg");
+            Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
-            Sounds::get()->add("footsteps" + std::to_string(i), "footsteps/" + std::to_string(i) + ".ogg");
+            Sounds::get()->add("footsteps" + std::to_string(i), "sounds/footsteps/" + std::to_string(i) + ".ogg");
         }
     }
     catch (CouldntOpenSound &e) {
@@ -180,10 +180,10 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     }
 
     try {
-        Music::get()->add("intro", "intro.ogg");
-        Music::get()->add("menu", "menu.ogg");
+        Music::get()->add("intro", "music/intro.ogg");
+        Music::get()->add("menu", "music/menu.ogg");
         for (uint32_t i = 0; i < 10; i = i + 1) {
-            Music::get()->add(std::to_string(i), "ingame_0" + std::to_string(i) + ".ogg");
+            Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
     }
 	catch (CouldntOpenMusic &e) {
@@ -193,7 +193,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
 
     try {
         for (const std::string& a : { "ridge" }) {
-            Maps::get()->add(a, a + ".tmx");
+            Maps::get()->add(a, "levels/" + a + ".tmx");
         }
     }
     catch (CouldntOpenMap& e) {

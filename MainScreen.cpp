@@ -383,7 +383,7 @@ void MainScreen::drawCells(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->map->getStatePtr()->getMapSizePtr()->getWidth(); i = i + 1) {
 		for (uint32_t j = 0; j < this->map->getStatePtr()->getMapSizePtr()->getHeight(); j = j + 1) {
 			sf::Sprite s;
-			s.setTexture(*Textures::get()->get(std::to_string(this->plains.getType(i, j) + 1)));
+			s.setTexture(*Textures::get()->get("plain" + std::to_string(this->plains.getType(i, j))));
 			s.setPosition(64 * i, 64 * j);
 			window.draw(s);
 		}

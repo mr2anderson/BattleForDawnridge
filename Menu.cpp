@@ -224,10 +224,10 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
 
     Events chooseLanguageEnglishEvent;
-    chooseLanguageEnglishEvent.add(std::make_shared<ChooseLanguageEvent>("en.txt"));
+    chooseLanguageEnglishEvent.add(std::make_shared<ChooseLanguageEvent>("en.cfg"));
 
     Events chooseLanguageRussianEvent;
-    chooseLanguageRussianEvent.add(std::make_shared<ChooseLanguageEvent>("ru.txt"));
+    chooseLanguageRussianEvent.add(std::make_shared<ChooseLanguageEvent>("ru.cfg"));
 
     std::vector<HorizontalSelectionWindowComponent> chooseLanguageWindowComponents;
     chooseLanguageWindowComponents.emplace_back(

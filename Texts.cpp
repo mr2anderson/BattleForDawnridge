@@ -33,8 +33,11 @@
 Texts* Texts::singletone = nullptr;
 
 
+static const std::string LOCAL_ROOT = DATA_ROOT + "/locales";
+
+
 void Texts::load() {
-    std::string path = DATA_ROOT + "/" + this->getPath();
+    std::string path = LOCAL_ROOT + "/" + this->getPath();
     std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenText(path);
@@ -94,7 +97,7 @@ void Texts::setDefaultPath(const std::string& path) {
         std::filesystem::create_directories(USERDATA_ROOT);
     }
 
-    std::ofstream file(USERDATA_ROOT + "/language.txt");
+    std::ofstream file(USERDATA_ROOT + "/language.cfg");
     file << path;
     file.close();
 }
@@ -106,12 +109,12 @@ std::wstring* Texts::get(const std::string& name) {
     return &it->second;
 }
 std::string Texts::getPath() const {
-    std::ifstream file(USERDATA_ROOT + "/language.txt");
+    std::ifstream file(USERDATA_ROOT + "/language.cfg");
     if (file.is_open()) {
         std::string path;
         std::getline(file, path);
         file.close();
         return path;
     }
-    return "en.txt";
+    return "en.cfg";
 }
