@@ -32,3 +32,6 @@ uint32_t InfirmarySpec::getHealingSpeed() const {
 uint8_t InfirmarySpec::getWarriorToHealType() const {
     return Warrior::TYPE::HUMAN;
 }
+std::string InfirmarySpec::getHealTextureName() const {
+    return "christianity";
+}

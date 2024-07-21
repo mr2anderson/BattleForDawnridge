@@ -61,7 +61,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents
 
 	if (b->works()) {
 		component = {
-			"christianity",
+			this->getHealTextureName(),
 			*Texts::get()->get("this_building_heals_warriors") + std::to_wstring(this->getHealingSpeed()),
 			false,
 			Events()
