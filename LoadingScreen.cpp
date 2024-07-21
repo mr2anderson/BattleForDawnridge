@@ -169,7 +169,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog"}) {
+                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog", 
+                                      "infantryman"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {

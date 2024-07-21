@@ -46,7 +46,7 @@ uint32_t Infantryman::getTimeToProduce() const {
 	return Balance::get()->getInt("infantryman_time_to_produce");
 }
 std::string Infantryman::getSoundName() const {
-	return "hooray";
+	return "infantryman";
 }
 std::wstring Infantryman::getDescription() const {
 	return *Texts::get()->get("infantryman_description");
