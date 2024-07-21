@@ -58,6 +58,3 @@ std::string Road::getSoundName() const {
 std::wstring Road::getDescription() const {
 	return *Texts::get()->get("road_description");
 }
-std::wstring Road::getUpperCaseReadableName() const {
-	return *Texts::get()->get("road_upper_case_readable_name");
-}

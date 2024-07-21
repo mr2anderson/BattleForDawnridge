@@ -58,6 +58,3 @@ std::string WarehouseWood::getSoundName() const {
 std::wstring WarehouseWood::getDescription() const {
 	return *Texts::get()->get("warehouse_wood_description");
 }
-std::wstring WarehouseWood::getUpperCaseReadableName() const {
-	return *Texts::get()->get("warehouse_wood_upper_case_readable_name");
-}

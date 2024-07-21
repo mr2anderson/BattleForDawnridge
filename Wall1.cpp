@@ -58,6 +58,3 @@ std::string Wall1::getSoundName() const {
 std::wstring Wall1::getDescription() const {
 	return *Texts::get()->get("wall1_description");
 }
-std::wstring Wall1::getUpperCaseReadableName() const {
-	return *Texts::get()->get("wall1_upper_case_readable_name");
-}

@@ -58,6 +58,3 @@ std::string Gates2::getSoundName() const {
 std::wstring Gates2::getDescription() const {
     return *Texts::get()->get("gates2_description");
 }
-std::wstring Gates2::getUpperCaseReadableName() const {
-    return *Texts::get()->get("gates2_upper_case_readable_name");
-}

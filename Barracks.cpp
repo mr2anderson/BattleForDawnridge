@@ -58,6 +58,3 @@ std::wstring Barracks::getDescription() const {
 uint32_t Barracks::getRegenerationSpeed() const {
 	return Balance::get()->getInt("barracks_regeneration_speed");
 }
-std::wstring Barracks::getUpperCaseReadableName() const {
-	return *Texts::get()->get("barracks_upper_case_readable_name");
-}

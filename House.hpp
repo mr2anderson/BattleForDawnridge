@@ -38,9 +38,8 @@ public:
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
 	uint32_t getRegenerationSpeed() const override;
-	std::wstring getUpperCaseReadableName() const override;
 
-	static const uint32_t TOTAL_TYPES;
+    static const uint32_t TOTAL_TYPES;
 private:
 	uint32_t type;
 };

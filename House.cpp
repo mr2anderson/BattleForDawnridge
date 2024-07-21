@@ -68,6 +68,3 @@ std::wstring House::getDescription() const {
 uint32_t House::getRegenerationSpeed() const {
 	return Balance::get()->getInt("house_regeneration_speed");
 }
-std::wstring House::getUpperCaseReadableName() const {
-	return *Texts::get()->get("house_upper_case_readable_name");
-}

@@ -58,6 +58,3 @@ std::wstring Market::getDescription() const {
 uint32_t Market::getRegenerationSpeed() const {
 	return Balance::get()->getInt("market_regeneration_speed");
 }
-std::wstring Market::getUpperCaseReadableName() const {
-	return *Texts::get()->get("market_upper_case_readable_name");
-}

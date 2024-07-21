@@ -58,6 +58,3 @@ std::string Resin::getSoundName() const {
 std::wstring Resin::getDescription() const {
 	return *Texts::get()->get("resin_description");
 }
-std::wstring Resin::getUpperCaseReadableName() const {
-	return *Texts::get()->get("resin_upper_case_readable_name");
-}

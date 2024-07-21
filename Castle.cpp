@@ -66,6 +66,3 @@ std::wstring Castle::getDescription() const {
 uint32_t Castle::getRegenerationSpeed() const {
 	return Balance::get()->getInt("castle_regeneration_speed");
 }
-std::wstring Castle::getUpperCaseReadableName() const {
-	return *Texts::get()->get("castle_upper_case_readable_name");
-}

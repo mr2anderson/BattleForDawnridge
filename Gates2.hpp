@@ -39,5 +39,4 @@ public:
     std::wstring getDescription() const override;
 private:
     uint32_t getRegenerationSpeed() const override;
-    std::wstring getUpperCaseReadableName() const override;
 };

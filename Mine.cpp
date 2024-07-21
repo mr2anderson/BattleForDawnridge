@@ -59,6 +59,3 @@ std::string Mine::getSoundName() const {
 std::wstring Mine::getDescription() const {
 	return *Texts::get()->get("mine_description");
 }
-std::wstring Mine::getUpperCaseReadableName() const {
-	return *Texts::get()->get("mine_upper_case_readable_name");
-}

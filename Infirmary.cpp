@@ -58,6 +58,3 @@ std::wstring Infirmary::getDescription() const {
 uint32_t Infirmary::getRegenerationSpeed() const {
 	return Balance::get()->getInt("infirmary_regeneration_speed");
 }
-std::wstring Infirmary::getUpperCaseReadableName() const {
-	return *Texts::get()->get("infirmary_upper_case_readable_name");
-}

@@ -49,7 +49,6 @@ public:
 protected:
 	void addSpec(IBuildingSpec* spec);
 	virtual uint32_t getRegenerationSpeed() const = 0;
-	virtual std::wstring getUpperCaseReadableName() const = 0;
 private:
 	uint32_t burningMovesLeft;
 	Fire fire;
@@ -66,7 +65,7 @@ private:
 	Events hit(uint32_t d, const std::optional<std::string>& direction) override;
 	Events newMove(MapState* state, uint32_t playerId) override;
 	Events processRegeneration();
-	Events getResponse(MapState *state, uint32_t playerId, uint32_t button);
+	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
 	sf::Color getTextureColor() const override;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;

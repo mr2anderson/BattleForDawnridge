@@ -59,6 +59,3 @@ std::string Quarry::getSoundName() const {
 std::wstring Quarry::getDescription() const {
 	return *Texts::get()->get("quarry_description");
 }
-std::wstring Quarry::getUpperCaseReadableName() const {
-	return *Texts::get()->get("quarry_upper_case_readable_name");
-}

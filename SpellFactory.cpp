@@ -57,6 +57,3 @@ std::wstring SpellFactory::getDescription() const {
 uint32_t SpellFactory::getRegenerationSpeed() const {
 	return Balance::get()->getInt("spell_factory_regeneration_speed");
 }
-std::wstring SpellFactory::getUpperCaseReadableName() const {
-	return *Texts::get()->get("spell_factory_upper_case_readable_name");
-}

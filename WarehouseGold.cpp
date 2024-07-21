@@ -60,6 +60,3 @@ std::string WarehouseGold::getSoundName() const {
 std::wstring WarehouseGold::getDescription() const {
 	return *Texts::get()->get("warehouse_gold_description");
 }
-std::wstring WarehouseGold::getUpperCaseReadableName() const {
-	return *Texts::get()->get("warehouse_gold_upper_case_readable_name");
-}

@@ -58,6 +58,3 @@ std::wstring Arable::getDescription() const {
 uint32_t Arable::getRegenerationSpeed() const {
 	return Balance::get()->getInt("arable_regeneration_speed");
 }
-std::wstring Arable::getUpperCaseReadableName() const {
-	return *Texts::get()->get("arable_upper_case_readable_name");
-}

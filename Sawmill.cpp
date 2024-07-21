@@ -59,6 +59,3 @@ std::string Sawmill::getSoundName() const {
 std::wstring Sawmill::getDescription() const {
 	return *Texts::get()->get("sawmill_description");
 }
-std::wstring Sawmill::getUpperCaseReadableName() const {
-	return *Texts::get()->get("sawmill_upper_case_readable_name");
-}
