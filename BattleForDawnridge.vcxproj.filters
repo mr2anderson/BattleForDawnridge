@@ -1384,6 +1384,15 @@
     <ClInclude Include="CouldntOpenBalance.hpp">
       <Filter>Header Files\resourceExceptions</Filter>
     </ClInclude>
+    <ClInclude Include="WarriorHealerSpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="InfirmarySpec.hpp">
+      <Filter>Header Files\buildingSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Infirmary.hpp">
+      <Filter>Header Files\buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -2012,6 +2021,15 @@
     </ClCompile>
     <ClCompile Include="CouldntOpenBalance.cpp">
       <Filter>Source Files\resourceExceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorHealerSpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="InfirmarySpec.cpp">
+      <Filter>Source Files\buildingSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="Infirmary.cpp">
+      <Filter>Source Files\buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

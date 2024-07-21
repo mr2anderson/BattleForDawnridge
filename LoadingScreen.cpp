@@ -126,7 +126,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "down_icon", "russian_icon", "english_icon", "star_icon", "destroy_icon",
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
-                "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell"}) {
+                "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
+                "infirmary", "christianity"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         Textures::get()->add("menu", "images/menu.jpg");
@@ -170,7 +171,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog", 
-                                      "infantryman"}) {
+                                      "infantryman", "heal"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {

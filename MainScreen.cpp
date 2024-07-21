@@ -59,6 +59,7 @@
 #include "SpellProducerSpec.hpp"
 #include "SpellFactory.hpp"
 #include "Effect.hpp"
+#include "Infirmary.hpp"
 
 
 
@@ -250,6 +251,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
     buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
+	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>( buildMenuSectionTroopsComponents);
     Events createBuildWindowSectionTroopsEvent = clickSoundEvent;

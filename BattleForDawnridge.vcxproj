@@ -506,6 +506,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="IConductionResourcePointCollectorSpec.hpp" />
     <ClInclude Include="ArableSpec.hpp" />
     <ClInclude Include="GatesSpec.hpp" />
+    <ClInclude Include="Infirmary.hpp" />
+    <ClInclude Include="InfirmarySpec.hpp" />
     <ClInclude Include="KillNextTurnEvent.hpp" />
     <ClInclude Include="MarkSpellAsUsedEvent.hpp" />
     <ClInclude Include="MineSpec.hpp" />
@@ -737,6 +739,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="IWarehouseSpec.hpp" />
     <ClInclude Include="WarehouseStoneSpec.hpp" />
     <ClInclude Include="WarehouseWoodSpec.hpp" />
+    <ClInclude Include="WarriorHealerSpec.hpp" />
     <ClInclude Include="WarriorPlayerPointer.hpp" />
     <ClInclude Include="Music.hpp" />
     <ClInclude Include="NextClueEvent.hpp" />
@@ -819,6 +822,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="ArableSpec.cpp" />
     <ClCompile Include="GatesSpec.cpp" />
     <ClCompile Include="IBuildingSpec.cpp" />
+    <ClCompile Include="Infirmary.cpp" />
+    <ClCompile Include="InfirmarySpec.cpp" />
     <ClCompile Include="ISelectable.cpp" />
     <ClCompile Include="KillNextTurnEvent.cpp" />
     <ClCompile Include="MarkSpellAsUsedEvent.cpp" />
@@ -949,6 +954,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="IWarehouseSpec.cpp" />
     <ClCompile Include="WarehouseStoneSpec.cpp" />
     <ClCompile Include="WarehouseWoodSpec.cpp" />
+    <ClCompile Include="WarriorHealerSpec.cpp" />
     <ClCompile Include="WarriorPlayerPointer.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="NextClueEvent.cpp" />
