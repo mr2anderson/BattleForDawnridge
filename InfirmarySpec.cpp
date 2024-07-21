@@ -19,6 +19,7 @@
 
 #include "InfirmarySpec.hpp"
 #include "Balance.hpp"
+#include "Warrior.hpp"
 
 
 InfirmarySpec::InfirmarySpec() = default;
@@ -27,4 +28,7 @@ IBuildingSpec* InfirmarySpec::clone() const {
 }
 uint32_t InfirmarySpec::getHealingSpeed() const {
 	return Balance::get()->getInt("infirmary_healing_speed");
+}
+uint8_t InfirmarySpec::getWarriorToHealType() const {
+    return Warrior::TYPE::HUMAN;
 }

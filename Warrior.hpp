@@ -60,6 +60,7 @@ public:
 	Damage getDamage() const;
 	Defence getDefence() const override;
 
+    virtual uint8_t getType() const = 0;
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
@@ -71,6 +72,10 @@ public:
 	virtual uint32_t getMovementPoints() const = 0;
 
 	static const uint32_t TOTAL_FOOTSTEPS;
+
+    enum TYPE {
+        HUMAN
+    };
 protected:
 	virtual Damage getBaseDamage() const = 0;
 	virtual Defence getBaseDefence() const = 0;

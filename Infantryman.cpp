@@ -30,6 +30,9 @@ Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId) :
 Warrior* Infantryman::cloneWarrior() const {
 	return new Infantryman(*this);
 }
+uint8_t Infantryman::getType() const {
+    return Warrior::TYPE::HUMAN;
+}
 uint32_t Infantryman::getMaxHP() const {
 	return Balance::get()->getInt("infantryman_max_hp");
 }

@@ -31,4 +31,5 @@ public:
 	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
 	uint32_t getRadius() const override;
 	virtual uint32_t getHealingSpeed() const = 0;
+    virtual uint8_t getWarriorToHealType() const = 0;
 };

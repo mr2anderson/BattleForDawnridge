@@ -86,7 +86,9 @@ Events Warrior::hit(uint32_t d, const std::optional<std::string> &direction) {
         response.add(std::make_shared<ChangeWarriorDirectionEvent>(this, direction.value()));
     }
 
-    response.add(std::make_shared<PlaySoundEvent>("ouch"));
+    if (this->getType() == Warrior::TYPE::HUMAN) {
+        response.add(std::make_shared<PlaySoundEvent>("ouch"));
+    }
 
     if (hpPointsAfterOperation == 0) {
         response.add(std::make_shared<StartWarriorAnimationEvent>(this, "tipping over"));

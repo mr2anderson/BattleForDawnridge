@@ -29,4 +29,5 @@ public:
 	IBuildingSpec* clone() const override;
 
 	uint32_t getHealingSpeed() const override;
+    uint8_t getWarriorToHealType() const override;
 };
