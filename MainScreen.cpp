@@ -143,7 +143,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
     this->initMap(mapPtr);
 	this->initPlayerIsActiveTable();
-	this->initCurrentPlayerIndex();
+    this->initCurrentPlayerId();
     this->initMoveCtr();
 	this->initSelectable();
     this->initGraphics(window);
@@ -155,8 +155,8 @@ void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
 void MainScreen::initPlayerIsActiveTable() {
 	this->playerIsActive.resize(this->map->getStatePtr()->getPlayersPtr()->total(), true);
 }
-void MainScreen::initCurrentPlayerIndex() {
-	this->currentPlayerIndex = 0;
+void MainScreen::initCurrentPlayerId() {
+	this->currentPlayerId = 1;
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;
@@ -431,12 +431,15 @@ void MainScreen::changeMove() {
 	this->currentGOIndexNewMoveEvent = 0;
 	this->totalGONewMoveEvents = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
 	do {
-		this->currentPlayerIndex = (this->currentPlayerIndex + 1) % this->map->getStatePtr()->getPlayersPtr()->total();
+		this->currentPlayerId = this->currentPlayerId + 1;
+        if (this->currentPlayerId > this->map->getStatePtr()->getPlayersPtr()->total()) {
+            this->currentPlayerId = 1;
+        }
 	}
-	while (!this->playerIsActive.at(this->currentPlayerIndex));
+	while (!this->playerIsActive.at(this->currentPlayerId - 1));
 }
 Player* MainScreen::getCurrentPlayer() {
-	return this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr((this->move + 1) % this->map->getStatePtr()->getPlayersPtr()->total() + 1);
+	return this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
 }
 void MainScreen::addButtonClickEventToQueue() {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
@@ -818,7 +821,7 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 			return;
 		}
 	}
-	this->playerIsActive.at(this->currentPlayerIndex) = false;
+	this->playerIsActive[e->getPlayerId() - 1] = false;
 	uint32_t count = 0;
 	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
 		count = count + this->playerIsActive.at(i);
@@ -831,9 +834,12 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 		w = std::make_shared<WindowButton>(*Texts::get()->get("game_finished"), *Texts::get()->get("OK"), returnToMenuEvent);
 	}
 	else {
-        Events clickEvent;
-        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		w = std::make_shared<WindowButton>(*Texts::get()->get("player_is_out"), *Texts::get()->get("OK"), clickEvent);
+        Events event;
+        event.add(std::make_shared<PlaySoundEvent>("click"));
+        if (this->currentPlayerId == e->getPlayerId()) {
+            event.add(std::make_shared<ChangeMoveEvent>());
+        }
+		w = std::make_shared<WindowButton>(*Texts::get()->get("player_is_out"), *Texts::get()->get("OK"), event);
 	}
 	std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
 	this->handleCreatePopUpElementEvent(createW);

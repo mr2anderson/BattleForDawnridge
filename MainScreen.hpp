@@ -88,7 +88,7 @@ private:
 
     std::shared_ptr<Map> map;
 	std::vector<bool> playerIsActive;
-	uint32_t currentPlayerIndex;
+	uint32_t currentPlayerId;
 	std::shared_ptr<PopUpElement> element;
     std::optional<SuspendingAnimation> animation;
     std::queue<std::shared_ptr<Event>> events;
@@ -110,7 +110,7 @@ private:
 	void init(std::shared_ptr<Map> mapPtr, sf::RenderWindow &window);
 	void initMap(std::shared_ptr<Map> mapPtr);
 	void initPlayerIsActiveTable();
-	void initCurrentPlayerIndex();
+	void initCurrentPlayerId();
 	void initMoveCtr();
 	void initSelectable();
 	void initGraphics(sf::RenderWindow &window);
