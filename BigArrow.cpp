@@ -35,5 +35,5 @@ std::string BigArrow::getSoundName() const {
     return "big_arrow" + std::to_string(rd() % TOTAL_SOUNDS + 1);
 }
 float BigArrow::getTime() const {
-    return 0.75f;
+    return 0.5f;
 }

@@ -28,6 +28,7 @@ public:
 	VictoryConditionSpec();
 	IBuildingSpec* clone() const override;
 
+    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
 	Events getEventOnDestroy(const Building *b, MapState* state) const override;
 	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
 	bool isVictoryCondition() const override;

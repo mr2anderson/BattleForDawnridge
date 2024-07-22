@@ -21,11 +21,26 @@
 #include "VictoryConditionBDestroyedEvent.hpp"
 #include "Texts.hpp"
 #include "Building.hpp"
+#include "FocusOnEvent.hpp"
+#include "PlaySoundEvent.hpp"
+#include "ImageFlyingE.hpp"
+#include "CreateEEvent.hpp"
 
 
 VictoryConditionSpec::VictoryConditionSpec() = default;
 IBuildingSpec* VictoryConditionSpec::clone() const {
 	return new VictoryConditionSpec(*this);
+}
+Events VictoryConditionSpec::getActiveNewMoveEvent(const Building* b, MapState* state) {
+    Events events;
+
+    events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
+    events.add(std::make_shared<PlaySoundEvent>("bell"));
+
+    std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("star_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
+    events.add(std::make_shared<CreateEEvent>(flyingE));
+
+    return events;
 }
 Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* state) const {
 	Events event;
