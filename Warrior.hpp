@@ -38,7 +38,7 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-	Events hit(uint32_t d, const std::optional<std::string> &direction) override;
+	Events hit(uint32_t d) override;
 	Events killNextTurn();
 	Events revertKillNextTurn();
 	void enableRageMode();

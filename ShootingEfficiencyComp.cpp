@@ -17,10 +17,24 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include "ShootingEfficiencyComp.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE = sf::Color(0, 0, 80, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 40, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(60, 0, 0, 100);
+ShootingEfficiencyComp::ShootingEfficiencyComp(Damage damage) {
+    this->damage = damage;
+}
+bool ShootingEfficiencyComp::operator()(const Unit *u1, const Unit *u2) {
+    uint32_t hpLoss1 = this->damage.getHpLoss(u1->getDefence());
+    uint32_t hpLoss2 = this->damage.getHpLoss(u2->getDefence());
+
+    uint32_t shotsToKill1 = u1->getHP() / hpLoss1 + (bool)(u1->getHP() % hpLoss1);
+    uint32_t shotsToKill2 = u2->getHP() / hpLoss2 + (bool)(u2->getHP() % hpLoss2);
+
+    if (shotsToKill1 < shotsToKill2) {
+        return true;
+    }
+    if (shotsToKill1 > shotsToKill2) {
+        return false;
+    }
+    return (hpLoss1 < hpLoss2);
+}

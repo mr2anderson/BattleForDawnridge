@@ -150,7 +150,6 @@ bool Building::allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t s
 }
 Events Building::destroy(MapState *state) {
     Events response;
-    response.add(std::make_shared<PlaySoundEvent>("destroy"));
 	response.add(std::make_shared<SubHpEvent>(this, this->getHP()));
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
@@ -243,7 +242,8 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	Events destroyEvent = clickSoundEvent;
+	Events destroyEvent;
+    destroyEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
 	destroyEvent.add(std::make_shared<DestroyEvent>(this));
 	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(*Texts::get()->get("verify_destroy"), *Texts::get()->get("yes"), *Texts::get()->get("no"), resetHighlightEvent + destroyEvent, resetHighlightEvent + clickSoundEvent);
 	Events createVerify = clickSoundEvent;
@@ -280,7 +280,7 @@ void Building::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) 
 	pointer.setMax(this->getMaxHP());
 	target.draw(pointer, states);
 }
-Events Building::hit(uint32_t d, const std::optional<std::string>& direction) {
+Events Building::hit(uint32_t d) {
 	uint32_t hpPointsAfterOperation;
 	if (d >= this->getHP()) {
 		hpPointsAfterOperation = 0;
@@ -291,18 +291,16 @@ Events Building::hit(uint32_t d, const std::optional<std::string>& direction) {
 
 	Events response;
 
+    response.add(std::make_shared<PlaySoundEvent>("building_hit"));
 	if (hpPointsAfterOperation == 0) {
 		response.add(std::make_shared<PlaySoundEvent>("destroy"));
+        response.add(std::make_shared<DestroyEvent>(this));
 	}
 	else {
-		response.add(std::make_shared<PlaySoundEvent>("fire"));
-	}
-
-	if (hpPointsAfterOperation == 0) {
-		response.add(std::make_shared<DestroyEvent>(this));
-	}
-	else {
-		response.add(std::make_shared<SetFireEvent>(this));
+        if (this->burningMovesLeft == 0) {
+            response.add(std::make_shared<PlaySoundEvent>("fire"));
+        }
+        response.add(std::make_shared<SetFireEvent>(this));
 	}
 
 	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());

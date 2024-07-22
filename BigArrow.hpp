@@ -17,10 +17,22 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include "Projectile.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE = sf::Color(0, 0, 80, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 40, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(60, 0, 0, 100);
+#pragma once
+
+
+class BigArrow : public Projectile {
+public:
+    BigArrow();
+
+    std::string getTextureName() const override;
+    std::string getSoundName() const override;
+    float getTime() const override;
+
+    static const uint32_t TOTAL_TYPES;
+    static const uint32_t TOTAL_SOUNDS;
+private:
+    sf::Clock clock;
+};

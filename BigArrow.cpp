@@ -17,10 +17,23 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include <random>
+#include "BigArrow.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE = sf::Color(0, 0, 80, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 40, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(60, 0, 0, 100);
+const uint32_t BigArrow::TOTAL_TYPES = 25;
+const uint32_t BigArrow::TOTAL_SOUNDS = 3;
+
+
+BigArrow::BigArrow() = default;
+std::string BigArrow::getTextureName() const {
+    uint32_t type = this->clock.getElapsedTime().asMilliseconds() / (1000 / TOTAL_TYPES) % TOTAL_TYPES + 1;
+    return "big_arrow" + std::to_string(type);
+}
+std::string BigArrow::getSoundName() const {
+    std::random_device rd;
+    return "big_arrow" + std::to_string(rd() % TOTAL_SOUNDS + 1);
+}
+float BigArrow::getTime() const {
+    return 0.75f;
+}

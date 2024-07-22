@@ -17,10 +17,28 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include "CameraDependentPopUpElement.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE = sf::Color(0, 0, 80, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 40, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(60, 0, 0, 100);
+#pragma once
+
+
+class Projectile : public CameraDependentPopUpElement {
+public:
+    Projectile();
+
+    void setSrc(float xInPixels, float yInPixels);
+    void setDst(float xInPixels, float yInPixels);
+    void run(uint32_t windowW, uint32_t windowH) override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    Events click() override;
+    void update() override;
+    virtual std::string getTextureName() const = 0;
+    virtual std::string getSoundName() const = 0;
+    virtual float getTime() const = 0;
+private:
+    float x1, y1;
+    float vx, vy;
+    float rotation;
+    sf::Clock clock;
+};

@@ -45,6 +45,7 @@
 #include "PoisonFog.hpp"
 #include "Balance.hpp"
 #include "CouldntOpenBalance.hpp"
+#include "BigArrow.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -157,6 +158,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= PoisonFog::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("poison_fog" + std::to_string(i), "images/poison_fog/" + std::to_string(i) + ".png");
         }
+        for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
+            Textures::get()->add("big_arrow" + std::to_string(i), "images/big_arrow/" + std::to_string(i) + ".png");
+        }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
             Textures::get()->add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
         }
@@ -171,11 +175,14 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog", 
-                                      "infantryman", "heal"}) {
+                                      "infantryman", "heal", "building_hit"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
             Sounds::get()->add("footsteps" + std::to_string(i), "sounds/footsteps/" + std::to_string(i) + ".ogg");
+        }
+        for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
+            Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
     }
     catch (CouldntOpenSound &e) {

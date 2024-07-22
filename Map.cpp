@@ -132,6 +132,9 @@ void Map::add(GO *object) {
     if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
         this->state.getCollectionsPtr()->addToRPs(rp);
     }
+    if (Unit* u = dynamic_cast<Unit*>(object)) {
+        this->state.getCollectionsPtr()->addToUnits(u);
+    }
     if (Building* b = dynamic_cast<Building*>(object)) {
         this->state.getCollectionsPtr()->addToBuildings(b);
     }

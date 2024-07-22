@@ -34,7 +34,6 @@
 #include "HPFlyingE.hpp"
 #include "SubHpEvent.hpp"
 #include "Textures.hpp"
-#include "ChangeWarriorDirectionEvent.hpp"
 #include "FirstTimeTipsTable.hpp"
 #include "StartWarriorAnimationEvent.hpp"
 #include "HPPointer.hpp"
@@ -71,7 +70,7 @@ void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         this->drawHPPointer(target, states);
     }
 }
-Events Warrior::hit(uint32_t d, const std::optional<std::string> &direction) {
+Events Warrior::hit(uint32_t d) {
     uint32_t hpPointsAfterOperation;
     if (d >= this->getHP()) {
         hpPointsAfterOperation = 0;
@@ -81,10 +80,6 @@ Events Warrior::hit(uint32_t d, const std::optional<std::string> &direction) {
     }
 
     Events response;
-
-    if (direction.has_value()) {
-        response.add(std::make_shared<ChangeWarriorDirectionEvent>(this, direction.value()));
-    }
 
     if (this->getType() == Warrior::TYPE::HUMAN) {
         response.add(std::make_shared<PlaySoundEvent>("ouch"));
@@ -100,7 +95,7 @@ Events Warrior::hit(uint32_t d, const std::optional<std::string> &direction) {
     std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
-    response.add(std::make_shared<SubHpEvent>(this, this->getHP() - (hpPointsAfterOperation + 1 * (hpPointsAfterOperation == 0))));
+    response.add(std::make_shared<SubHpEvent>(this, this->getHP() - hpPointsAfterOperation - 1 * (hpPointsAfterOperation == 0)));
 
     response.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
 
@@ -152,7 +147,7 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
         }
 
         if (this->toKill) {
-            events = events + this->hit(this->getHP(), std::nullopt);
+            events = events + this->hit(this->getHP());
         }
 
 		return events;
@@ -385,7 +380,7 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
 Events Warrior::processRunningAnimation() {
     Events events;
 
-    if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 100) {
+    if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 250) {
         events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(this->footstepsRandomSrc() % TOTAL_FOOTSTEPS + 1), true));
         this->footstepsClock.restart();
     }

@@ -29,7 +29,7 @@ Fire::Fire(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->scaleX = 64.f * (float)sx / 128.f;
 	this->scaleY = 64.f * (float)sy / 128.f;
 	this->x = 64 * x;
-	this->y = 64 * y - 64.f * this->scaleY;
+	this->y = 64 * y;
 }
 void Fire::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;

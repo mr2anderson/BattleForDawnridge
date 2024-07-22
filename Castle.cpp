@@ -23,6 +23,7 @@
 #include "VictoryConditionSpec.hpp"
 #include "CastleWoodGeneratorSpec.hpp"
 #include "CastlePopulationLimitIncreaserSpec.hpp"
+#include "CastleShootingSpec.hpp"
 #include "Texts.hpp"
 #include "Balance.hpp"
 
@@ -35,6 +36,7 @@ Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
 	this->addSpec(new CastleWarehouseSpec());
 	this->addSpec(new VictoryConditionSpec());
 	this->addSpec(new CastlePopulationLimitIncreaserSpec());
+    this->addSpec(new CastleShootingSpec());
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);

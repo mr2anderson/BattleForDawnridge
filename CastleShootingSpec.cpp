@@ -17,10 +17,24 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include "CastleShootingSpec.hpp"
+#include "Balance.hpp"
+#include "BigArrow.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE = sf::Color(0, 0, 80, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 40, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(60, 0, 0, 100);
+CastleShootingSpec::CastleShootingSpec() = default;
+IBuildingSpec* CastleShootingSpec::clone() const {
+    return new CastleShootingSpec(*this);
+}
+Damage CastleShootingSpec::getDamage() const {
+    return Balance::get()->getDamage("castle_damage");
+}
+uint32_t CastleShootingSpec::getShotsNumber() const {
+    return Balance::get()->getInt("castle_shots_number");
+}
+uint32_t CastleShootingSpec::getShootingRadius() const {
+    return Balance::get()->getInt("castle_shooting_radius");
+}
+std::shared_ptr<Projectile> CastleShootingSpec::getProjectile() const {
+    return std::make_shared<BigArrow>();
+}

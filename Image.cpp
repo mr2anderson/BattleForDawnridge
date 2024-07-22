@@ -36,12 +36,6 @@ static uint32_t GET_TEXTURE_H(const std::string& imageName, std::optional<sf::In
 }
 
 
-static uint32_t GET_TEXTURE_W(const std::string& imageName, std::optional<sf::IntRect> rect, uint32_t fixedH) {
-    float scale = (float)fixedH / (float)GET_TEXTURE_H(imageName, rect);
-    return scale * GET_TEXTURE_W(imageName, rect);
-}
-
-
 Image::Image() = default;
 Image::Image(int32_t x, int32_t y, const std::string &imageName, std::optional<sf::IntRect> rect) :
         RectangularUiElement(x, y, GET_TEXTURE_W(imageName, rect), GET_TEXTURE_H(imageName, rect)) {
@@ -51,15 +45,36 @@ Image::Image(int32_t x, int32_t y, const std::string &imageName, std::optional<s
     this->sprite.setTexture(*Textures::get()->get(imageName));
     this->sprite.setPosition(this->getX(), this->getY());
 }
-Image::Image(int32_t x, int32_t y, uint32_t h, const std::string &imageName, std::optional<sf::IntRect> rect) :
-        RectangularUiElement(x, y, GET_TEXTURE_W(imageName, rect, h), h) {
-    float scale = (float)h / (float)GET_TEXTURE_H(imageName, rect);
+Image::Image(int32_t x, int32_t y, uint32_t size, const std::string &imageName, std::optional<sf::IntRect> rect) :
+        RectangularUiElement(x, y, size, size) {
     if (rect.has_value()) {
         this->sprite.setTextureRect(rect.value());
     }
     this->sprite.setTexture(*Textures::get()->get(imageName));
-    this->sprite.setScale(scale, scale);
-    this->sprite.setPosition(this->getX(), this->getY());
+
+    float scaleX = (float)size / GET_TEXTURE_W(imageName, rect);
+    float scaleY = (float)size / GET_TEXTURE_H(imageName, rect);
+
+    if (scaleX >= 1) {
+        float dw = GET_TEXTURE_W(imageName, rect) * (scaleX - 1);
+        this->dPosX = dw / 2;
+        scaleX = 1;
+    }
+    else {
+        this->dPosX = 0;
+    }
+
+    if (scaleY >= 1) {
+        float dh = GET_TEXTURE_H(imageName, rect) * (scaleY - 1);
+        this->dPosY = dh / 2;
+        scaleY = 1;
+    }
+    else {
+        this->dPosY = 0;
+    }
+
+    this->sprite.setScale(scaleX, scaleY);
+    this->rerenderBasedOnPosition();
 }
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
@@ -75,5 +90,5 @@ void Image::setY(int32_t newY) {
     this->rerenderBasedOnPosition();
 }
 void Image::rerenderBasedOnPosition() {
-    this->sprite.setPosition(this->getX(), this->getY());
+    this->sprite.setPosition(this->getX() + this->dPosX, this->getY() + this->dPosY);
 }

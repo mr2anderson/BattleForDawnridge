@@ -36,8 +36,8 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Events hit(Damage d, const std::optional<std::string> &direction);
-	virtual Events hit(uint32_t d, const std::optional<std::string>& direction) = 0;
+	Events hit(Damage d);
+	virtual Events hit(uint32_t d) = 0;
 	bool belongTo(uint32_t playerId) const;
 	void changePlayer(uint32_t newPlayerId);
 	uint32_t getPlayerId() const;

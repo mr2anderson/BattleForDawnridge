@@ -32,6 +32,9 @@ void Collections::addToEffects(Effect* effect) {
 void Collections::addToRPs(ResourcePoint* rp) {
 	this->rps.push(rp);
 }
+void Collections::addToUnits(Unit *u) {
+    this->units.push(u);
+}
 void Collections::addToBuildings(Building* b) {
 	this->buildings.push(b);
 }
@@ -48,6 +51,9 @@ uint32_t Collections::totalEffects() const {
 }
 uint32_t Collections::totalRPs() const {
 	return this->rps.size();
+}
+uint32_t Collections::totalUnits() const {
+    return this->units.size();
 }
 uint32_t Collections::totalBuildings() const {
 	return this->buildings.size();
@@ -66,13 +72,15 @@ Effect* Collections::getEffect(uint32_t i) {
 ResourcePoint* Collections::getRP(uint32_t i) {
 	return this->rps.at(i);
 }
+Unit* Collections::getUnit(uint32_t i) {
+    return this->units.at(i);
+}
 Building* Collections::getBuilding(uint32_t i) {
 	return this->buildings.at(i);
 }
 Warrior* Collections::getWarrior(uint32_t i) {
 	return this->warriors.at(i);
 }
-
 
 
 const GO* Collections::getGO(uint32_t i) const {

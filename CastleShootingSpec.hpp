@@ -17,10 +17,19 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include "ShootingSpec.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 150);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE = sf::Color(0, 0, 80, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN = sf::Color(0, 40, 0, 100);
-const sf::Color COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED = sf::Color(60, 0, 0, 100);
+#pragma once
+
+
+class CastleShootingSpec : public ShootingSpec {
+public:
+    CastleShootingSpec();
+    IBuildingSpec* clone() const override;
+
+    Damage getDamage() const override;
+    uint32_t getShotsNumber() const override;
+    uint32_t getShootingRadius() const override;
+    std::shared_ptr<Projectile> getProjectile() const override;
+};

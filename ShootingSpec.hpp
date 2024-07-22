@@ -17,26 +17,26 @@
  */
 
 
-#include <optional>
-#include "RectangularUIElement.hpp"
+#include "AreaControllerSpec.hpp"
+#include "Projectile.hpp"
+#include "Damage.hpp"
 
 
 #pragma once
 
 
-class Image : public RectangularUiElement {
+class ShootingSpec : public AreaControllerSpec {
 public:
-    Image();
-    Image(int32_t x, int32_t y, const std::string& imageName, std::optional<sf::IntRect> rect = std::nullopt); // creating image with default size
-    Image(int32_t x, int32_t y, uint32_t size, const std::string &imageName, std::optional<sf::IntRect> rect = std::nullopt); // creating image making it fit in specified size by scaling
+    ShootingSpec();
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-    void setX(int32_t newX) override;
-    void setY(int32_t newY) override;
-private:
-    sf::Sprite sprite;
-    float dPosX, dPosY;
-
-    void rerenderBasedOnPosition();
+    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
+    std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
+    uint32_t getRadius() const override;
+    sf::Color getHighlightColor() const override;
+    bool ignoreLowObstacles() const override;
+    bool ignoreHighObstacles() const override;
+    virtual Damage getDamage() const = 0;
+    virtual uint32_t getShotsNumber() const = 0;
+    virtual uint32_t getShootingRadius() const = 0;
+    virtual std::shared_ptr<Projectile> getProjectile() const = 0;
 };

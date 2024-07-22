@@ -57,7 +57,7 @@ Events PoisonFog::getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerI
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
 		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == currentPlayerId and w->getType() == Warrior::TYPE::HUMAN and w->getX() == this->getX() and w->getY() == this->getY()) {
-			events = events + w->hit(Balance::get()->getInt("poison_fog_damage"), std::nullopt);
+			events = events + w->hit(Balance::get()->getInt("poison_fog_damage"));
 		}
 	}
 
