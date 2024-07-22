@@ -836,6 +836,12 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 	else {
         Events event;
         event.add(std::make_shared<PlaySoundEvent>("click"));
+        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalEffects(); i = i + 1) {
+            Effect *effect = this->map->getStatePtr()->getCollectionsPtr()->getEffect(i);
+            if (effect->exist() and effect->getPlayerId() == e->getPlayerId()) {
+                event.add(std::make_shared<SubHpEvent>(effect, effect->getHP()));
+            }
+        }
         if (this->currentPlayerId == e->getPlayerId()) {
             event.add(std::make_shared<ChangeMoveEvent>());
         }

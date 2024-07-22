@@ -31,6 +31,7 @@ public:
 
 	uint32_t getSX() const override;
 	uint32_t getSY() const override;
+    uint32_t getPlayerId() const;
 protected:
 	virtual Events getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const = 0;
 	virtual uint32_t getLifetime() const = 0;

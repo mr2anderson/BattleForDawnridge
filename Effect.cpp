@@ -33,6 +33,9 @@ uint32_t Effect::getSX() const { // Config file is not used cuz engine supports 
 uint32_t Effect::getSY() const {
 	return 1;
 }
+uint32_t Effect::getPlayerId() const {
+    return this->playerId;
+}
 uint8_t Effect::getClickPriority() const {
 	return GO::PRIORITY::LOW;
 }
