@@ -156,7 +156,7 @@ void MainScreen::initPlayerIsActiveTable() {
 	this->playerIsActive.resize(this->map->getStatePtr()->getPlayersPtr()->total(), true);
 }
 void MainScreen::initCurrentPlayerId() {
-	this->currentPlayerId = 1;
+	this->currentPlayerId = 0;
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;
