@@ -25,7 +25,7 @@ IBuildingSpec::~IBuildingSpec() = default;
 Events IBuildingSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
 	return Events();
 }
-Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* state) {
+Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* state, uint8_t type) {
 	return Events();
 }
 Events IBuildingSpec::getEventOnDestroy(const Building *building, MapState* state) const {

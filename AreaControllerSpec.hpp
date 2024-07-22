@@ -29,13 +29,21 @@ public:
 	AreaControllerSpec();
 
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state);
-	Events getHighlightEvent(const Building *building, MapState* state) override;
+	Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) override;
 	bool inRadius(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
 	virtual bool ignoreUltraHighObstacles() const;
 	virtual bool ignoreHighObstacles() const;
 	virtual bool ignoreLowObstacles() const;
+    virtual uint8_t getHighlightType() const = 0;
 	virtual uint32_t getRadius() const = 0;
     virtual sf::Color getHighlightColor() const = 0;
+
+    enum HIGHLIGHT_TYPE {
+        UNIVERSAL,
+        TERRITORY,
+        ATTACK,
+        OTHER
+    };
 private:
 	uint64_t prevHash;
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> prevAvailable;

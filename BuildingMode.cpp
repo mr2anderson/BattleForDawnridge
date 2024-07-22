@@ -32,6 +32,7 @@
 #include "Building.hpp"
 #include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
+#include "AreaControllerSpec.hpp"
 
 
 BuildingMode::BuildingMode() = default;
@@ -117,8 +118,8 @@ Events BuildingMode::getHighlightEvent(MapState *state) const {
 	Events result;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
 		Building* b = state->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b->getPlayerId() == this->playerId and (b->isOrigin() or b->isActiveConductor())) {
-			result = result + b->getHighlightEvent(state);
+		if (b->exist() and b->getPlayerId() == this->playerId) {
+			result = result + b->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
 		}
 	}
 	return result;

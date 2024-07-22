@@ -203,6 +203,9 @@ uint32_t WarriorProducerSpec::getRadius() const {
 sf::Color WarriorProducerSpec::getHighlightColor() const {
     return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
 }
+uint8_t WarriorProducerSpec::getHighlightType() const {
+    return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
+}
 std::tuple<uint32_t, uint32_t> WarriorProducerSpec::getNewWarriorPosition(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) {
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(x, y, sx, sy, playerId, state);
 	for (const auto& a : available) {

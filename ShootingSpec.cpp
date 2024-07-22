@@ -91,6 +91,9 @@ uint32_t ShootingSpec::getRadius() const {
 sf::Color ShootingSpec::getHighlightColor() const {
     return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED;
 }
+uint8_t ShootingSpec::getHighlightType() const {
+    return AreaControllerSpec::HIGHLIGHT_TYPE::ATTACK;
+}
 bool ShootingSpec::ignoreLowObstacles() const {
     return true;
 }

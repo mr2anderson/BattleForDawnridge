@@ -45,11 +45,11 @@ std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getCompo
 	}
 	return {};
 }
-Events TerritoryConductorSpec::getHighlightEvent(const Building* building, MapState* state) {
+Events TerritoryConductorSpec::getHighlightEvent(const Building* building, MapState* state, uint8_t type) {
 	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
 		return Events();
 	}
-	return this->AreaControllerSpec::getHighlightEvent(building, state);
+	return this->AreaControllerSpec::getHighlightEvent(building, state, type);
 }
 bool TerritoryConductorSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
 	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
@@ -62,4 +62,7 @@ bool TerritoryConductorSpec::isActiveConductor(const Building *building) const {
 }
 sf::Color TerritoryConductorSpec::getHighlightColor() const {
     return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
+}
+uint8_t TerritoryConductorSpec::getHighlightType() const {
+    return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
 }

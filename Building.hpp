@@ -33,7 +33,7 @@ public:
 	~Building();
 	virtual Building* cloneBuilding() const = 0;
 
-	Events getHighlightEvent(MapState *state) const;
+	Events getHighlightEvent(MapState *state, uint8_t type) const;
 	Resources getLimit() const;
 	uint32_t getPopulationLimit() const;
 	bool isVictoryCondition() const;

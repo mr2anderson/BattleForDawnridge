@@ -105,3 +105,6 @@ uint32_t AreaResourcePointCollectorSpec::getRadius() const {
 sf::Color AreaResourcePointCollectorSpec::getHighlightColor() const {
     return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN;
 }
+uint8_t AreaResourcePointCollectorSpec::getHighlightType() const {
+    return AreaControllerSpec::OTHER;
+}

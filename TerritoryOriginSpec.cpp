@@ -31,3 +31,6 @@ bool TerritoryOriginSpec::isOrigin() const {
 sf::Color TerritoryOriginSpec::getHighlightColor() const {
     return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
 }
+uint8_t TerritoryOriginSpec::getHighlightType() const {
+    return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
+}

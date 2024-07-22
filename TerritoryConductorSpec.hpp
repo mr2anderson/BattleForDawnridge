@@ -28,9 +28,10 @@ public:
 	TerritoryConductorSpec();
 
 	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	Events getHighlightEvent(const Building* building, MapState* state) override;
+	Events getHighlightEvent(const Building* building, MapState* state, uint8_t) override;
 	bool allowBuilding(const Building* building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) override;
 	bool isActiveConductor(const Building* building) const override;
     sf::Color getHighlightColor() const override;
+    uint8_t getHighlightType() const override;
 	virtual bool conductsIfNotWork() const = 0;
 };

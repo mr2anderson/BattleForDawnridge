@@ -35,6 +35,7 @@ public:
 	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	uint32_t getRadius() const override;
     sf::Color getHighlightColor() const override;
+    uint8_t getHighlightType() const override;
 	virtual std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) = 0;
 private:
 	std::shared_ptr<Warrior> currentProducing;

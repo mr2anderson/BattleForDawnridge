@@ -85,3 +85,6 @@ uint32_t WarriorHealerSpec::getRadius() const {
 sf::Color WarriorHealerSpec::getHighlightColor() const {
     return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
 }
+uint8_t WarriorHealerSpec::getHighlightType() const {
+    return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
+}

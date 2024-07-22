@@ -38,6 +38,7 @@
 #include "ConductionGraph.hpp"
 #include "HPPointer.hpp"
 #include "Balance.hpp"
+#include "AreaControllerSpec.hpp"
 
 
 Building::Building() = default;
@@ -56,11 +57,11 @@ Building::~Building() {
 		delete this->specs.at(i);
 	}
 }
-Events Building::getHighlightEvent(MapState *state) const {
+Events Building::getHighlightEvent(MapState *state, uint8_t type) const {
 	Events highlightEvent;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(this, state);
+		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(this, state, type);
 	}
 
 	return highlightEvent;
@@ -355,7 +356,6 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
 	components.push_back(this->getHpInfoComponent());
 	components.push_back(this->getDestroyComponent());
 
-	bool connected = this->connectedToOrigin(state);
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
 		std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
 		components.insert(components.end(), specComponents.begin(), specComponents.end());
@@ -363,7 +363,7 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
 
 	std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
 
-	Events response = this->getHighlightEvent(state);
+	Events response = this->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::UNIVERSAL);
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(w));
 

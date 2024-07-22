@@ -31,6 +31,7 @@ public:
 	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	uint32_t getRadius() const override;
     sf::Color getHighlightColor() const override;
+    uint8_t getHighlightType() const override;
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;
 	virtual uint32_t getCollectionRadius() const = 0;

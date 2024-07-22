@@ -58,7 +58,11 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvaila
 
     return result;
 }
-Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state) {
+Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) {
+    if (type != HIGHLIGHT_TYPE::UNIVERSAL and type != this->getHighlightType()) {
+        return Events();
+    }
+
     std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     Events events;

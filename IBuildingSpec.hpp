@@ -36,7 +36,7 @@ public:
 	virtual IBuildingSpec* clone() const = 0;
 
 	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);
-	virtual Events getHighlightEvent(const Building *building, MapState* state);
+	virtual Events getHighlightEvent(const Building *building, MapState* state, uint8_t type);
 	virtual Events getEventOnDestroy(const Building *building, MapState* state) const;
 	virtual std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
 	virtual std::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
