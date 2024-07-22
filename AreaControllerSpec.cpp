@@ -20,7 +20,6 @@
 #include <limits>
 #include "AreaControllerSpec.hpp"
 #include "SetHighlightEvent.hpp"
-#include "ColorTheme.hpp"
 #include "LandscapeGraph.hpp"
 #include "Building.hpp"
 
@@ -64,7 +63,7 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
 
     Events events;
     for (const auto& a : available) {
-        events.add(std::make_shared<SetHighlightEvent>(COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE, std::get<0>(a.first), std::get<1>(a.first), 1, 1));
+        events.add(std::make_shared<SetHighlightEvent>(this->getHighlightColor(), std::get<0>(a.first), std::get<1>(a.first), 1, 1));
     }
 
     return events;

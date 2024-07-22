@@ -26,6 +26,7 @@
 #include "CreateEEvent.hpp"
 #include "HPFlyingE.hpp"
 #include "Texts.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorHealerSpec::WarriorHealerSpec() = default;
@@ -80,4 +81,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents
 }
 uint32_t WarriorHealerSpec::getRadius() const {
 	return 0;
+}
+sf::Color WarriorHealerSpec::getHighlightColor() const {
+    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
 }

@@ -34,6 +34,7 @@ public:
 	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
 	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	uint32_t getRadius() const override;
+    sf::Color getHighlightColor() const override;
 	virtual std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) = 0;
 private:
 	std::shared_ptr<Warrior> currentProducing;

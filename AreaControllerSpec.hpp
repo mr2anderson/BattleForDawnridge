@@ -35,6 +35,7 @@ public:
 	virtual bool ignoreHighObstacles() const;
 	virtual bool ignoreLowObstacles() const;
 	virtual uint32_t getRadius() const = 0;
+    virtual sf::Color getHighlightColor() const = 0;
 private:
 	uint64_t prevHash;
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> prevAvailable;

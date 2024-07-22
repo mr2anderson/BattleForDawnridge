@@ -20,6 +20,7 @@
 #include "TerritoryConductorSpec.hpp"
 #include "Texts.hpp"
 #include "Building.hpp"
+#include "ColorTheme.hpp"
 
 
 TerritoryConductorSpec::TerritoryConductorSpec() = default;
@@ -58,4 +59,7 @@ bool TerritoryConductorSpec::allowBuilding(const Building *building, MapState* s
 }
 bool TerritoryConductorSpec::isActiveConductor(const Building *building) const {
 	return this->conductsIfNotWork() or building->works();
+}
+sf::Color TerritoryConductorSpec::getHighlightColor() const {
+    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
 }

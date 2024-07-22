@@ -29,4 +29,5 @@ public:
 
 	bool allowBuilding(const Building* building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) override;
 	bool isOrigin() const override;
+    sf::Color getHighlightColor() const override;
 };
