@@ -60,6 +60,8 @@
 #include "SpellFactory.hpp"
 #include "Effect.hpp"
 #include "Infirmary.hpp"
+#include "Tower1.hpp"
+#include "Tower2.hpp"
 
 
 
@@ -263,9 +265,11 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     buildMenuSectionDefenceComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates1>());
+    buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower1>());
+    buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Resin>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall2>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates2>());
-	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Resin>());
+    buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower2>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionDefenceComponents);
     Events createBuildWindowSectionDefenceEvent = clickSoundEvent;
