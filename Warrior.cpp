@@ -137,17 +137,19 @@ void Warrior::changeDirection(const std::string& newDirection) {
     this->currentDirection = newDirection;
 }
 Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
-	if (this->exist() and this->belongTo(currentPlayerId)) {
+	if (this->exist()) {
         Events events;
 
 		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
 
-        if (this->rageModeMovesLeft > 0) {
-            events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this));
-        }
+        if (this->belongTo(currentPlayerId)) {
+            if (this->rageModeMovesLeft > 0) {
+                events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this));
+            }
 
-        if (this->toKill) {
-            events = events + this->hit(this->getHP());
+            if (this->toKill) {
+                events = events + this->hit(this->getHP());
+            }
         }
 
 		return events;
@@ -521,25 +523,40 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
         Events()
     };
 }
-Events Warrior::getSelectionWindow() {
+HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
+    return {
+        this->getTextureName(),
+        *Texts::get()->get("warrior_of_enemy"),
+        false,
+        Events()
+    };
+}
+Events Warrior::getSelectionWindow(bool own) {
     std::vector<HorizontalSelectionWindowComponent> components;
     components.push_back(this->getExitComponent());
-    components.push_back(this->getDescriptionComponent());
-    components.push_back(this->getWarriorInfoComponent());
-    if (this->rageModeMovesLeft > 0) {
-        components.push_back(this->getRageModeComponent());
-    }
-    if (this->toKill) {
-        components.push_back(this->getRevertKillComponent());
+
+    Events events;
+
+    if (own) {
+        components.push_back(this->getDescriptionComponent());
+        components.push_back(this->getWarriorInfoComponent());
+        if (this->rageModeMovesLeft > 0) {
+            components.push_back(this->getRageModeComponent());
+        }
+        if (this->toKill) {
+            components.push_back(this->getRevertKillComponent());
+        }
+        else {
+            components.push_back(this->getKillComponent());
+        }
+        events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     }
     else {
-        components.push_back(this->getKillComponent());
+        components.push_back(this->getWarriorOfEnemyComponent());
+        events.add(std::make_shared<PlaySoundEvent>("click"));
     }
 
     std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
-
-    Events events;
-    events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     events.add(std::make_shared<CreateEEvent>(w));
 
     return events;
@@ -558,12 +575,13 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	if (!this->exist()) {
 		return Events();
 	}
-	if (!this->belongTo(playerId)) {
-		return Events();
-	}
 
     if (button == sf::Mouse::Button::Right) {
-        return this->getSelectionWindow();
+        return this->getMoveHighlightionEvent(state) + this->getSelectionWindow(this->belongTo(playerId));
+    }
+
+    if (!this->belongTo(playerId)) {
+        return Events();
     }
 
 	Events response;

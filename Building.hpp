@@ -59,6 +59,7 @@ private:
 	bool isLowObstacle(uint32_t playerId) const override;
 	HorizontalSelectionWindowComponent getHpInfoComponent() const;
 	HorizontalSelectionWindowComponent getDestroyComponent();
+    HorizontalSelectionWindowComponent getBuildingOfEnemyComponent();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const;
 	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;

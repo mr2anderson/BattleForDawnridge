@@ -257,6 +257,14 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	};
 	return component;
 }
+HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
+    return {
+        this->getTextureName(),
+        *Texts::get()->get("building_of_enemy"),
+        false,
+        Events()
+    };
+}
 void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Unit::draw(target, states);
 	if (this->exist()) {
@@ -346,25 +354,33 @@ Events Building::processRegeneration() {
 	return events;
 }
 Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
-	if (!this->belongTo(playerId) or !this->exist() or button == sf::Mouse::Right) {
+	if (!this->exist() or button == sf::Mouse::Right) {
 		return Events();
 	}
 
+    Events response;
+
 	std::vector<HorizontalSelectionWindowComponent> components;
 	components.push_back(this->getExitComponent());
-	components.push_back(this->getDescriptionComponent());
-	components.push_back(this->getHpInfoComponent());
-	components.push_back(this->getDestroyComponent());
 
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
-		components.insert(components.end(), specComponents.begin(), specComponents.end());
-	}
+    if (this->belongTo(playerId)) {
+        components.push_back(this->getDescriptionComponent());
+        components.push_back(this->getHpInfoComponent());
+        components.push_back(this->getDestroyComponent());
+        for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+            std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
+            components.insert(components.end(), specComponents.begin(), specComponents.end());
+        }
+        response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+    }
+    else {
+        components.push_back(this->getBuildingOfEnemyComponent());
+        response.add(std::make_shared<PlaySoundEvent>("click"));
+    }
+
+    response = response + this->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::UNIVERSAL);
 
 	std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
-
-	Events response = this->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::UNIVERSAL);
-	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(w));
 
 	return response;

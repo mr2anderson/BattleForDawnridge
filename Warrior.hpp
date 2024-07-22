@@ -110,7 +110,8 @@ private:
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
     HorizontalSelectionWindowComponent getWarriorInfoComponent() const;
-    Events getSelectionWindow();
+    HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
+    Events getSelectionWindow(bool own);
 
     AnimationState getCurrentAnimationState() const;
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
