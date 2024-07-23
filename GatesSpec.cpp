@@ -19,15 +19,22 @@
 
 #include "GatesSpec.hpp"
 #include "Balance.hpp"
+#include "Building.hpp"
 
 
 GatesSpec::GatesSpec() = default;
 IBuildingSpec* GatesSpec::clone() const {
 	return new GatesSpec(*this);
 }
+uint32_t GatesSpec::getWarriorMovementCost(const Building *building, uint32_t playerId) const {
+    return 1 + 9999 * (building->getPlayerId() != playerId);
+}
+bool GatesSpec::warriorCanStay(const Building *building, uint32_t playerId) const {
+    return (building->getPlayerId() == playerId);
+}
 bool GatesSpec::conductsIfNotWork() const {
 	return true;
 }
 uint32_t GatesSpec::getRadius() const {
-	return Balance::get()->getInt("balance_radius");
+	return Balance::get()->getInt("gates_radius");
 }

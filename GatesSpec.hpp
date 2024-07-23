@@ -28,6 +28,8 @@ public:
 	GatesSpec();
 	IBuildingSpec* clone() const override;
 
+    uint32_t getWarriorMovementCost(const Building *building, uint32_t playerId) const override;
+    bool warriorCanStay(const Building *building, uint32_t playerId) const override;
 	bool conductsIfNotWork() const override;
 	uint32_t getRadius() const override;
 };
