@@ -28,8 +28,8 @@ WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y,playerId) {
 	this->addSpec(new WarehouseIronSpec());
 }
-Building* WarehouseIron::cloneBuilding() const {
-	return new WarehouseIron(*this);
+Building* WarehouseIron::createSameTypeBuilding() const {
+	return new WarehouseIron(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseIron::getSX() const {
 	return Balance::get()->getInt("warehouse_iron_sx");

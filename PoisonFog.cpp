@@ -17,13 +17,13 @@
  */
 
 
-#include <random>
 #include "PoisonFog.hpp"
 #include "Texts.hpp"
 #include "Warrior.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "Balance.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 const uint32_t PoisonFog::TOTAL_TYPES = 1;
@@ -31,8 +31,7 @@ const uint32_t PoisonFog::TOTAL_TYPES = 1;
 
 PoisonFog::PoisonFog() = default;
 PoisonFog::PoisonFog(uint32_t x, uint32_t y, uint32_t playerId) : Effect(x, y, playerId) {
-	std::random_device rd;
-	this->type = rd() % TOTAL_TYPES + 1;
+	this->type = GlobalRandomGenerator::get()->gen() % TOTAL_TYPES + 1;
 }
 std::string PoisonFog::getTextureName() const {
 	return "poison_fog" + std::to_string(this->type);

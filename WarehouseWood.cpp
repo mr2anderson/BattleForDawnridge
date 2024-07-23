@@ -28,8 +28,8 @@ WarehouseWood::WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new WarehouseWoodSpec());
 }
-Building* WarehouseWood::cloneBuilding() const {
-	return new WarehouseWood(*this);
+Building* WarehouseWood::createSameTypeBuilding() const {
+	return new WarehouseWood(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseWood::getSX() const {
 	return Balance::get()->getInt("warehouse_wood_sx");

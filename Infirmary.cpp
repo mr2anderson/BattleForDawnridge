@@ -28,8 +28,8 @@ Infirmary::Infirmary(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new InfirmarySpec());
 }
-Building* Infirmary::cloneBuilding() const {
-	return new Infirmary(*this);
+Building* Infirmary::createSameTypeBuilding() const {
+	return new Infirmary(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Infirmary::getSX() const {
 	return Balance::get()->getInt("infirmary_sx");

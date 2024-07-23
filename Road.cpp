@@ -28,8 +28,8 @@ Road::Road(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new RoadSpec());
 }
-Building* Road::cloneBuilding() const {
-	return new Road(*this);
+Building* Road::createSameTypeBuilding() const {
+	return new Road(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Road::getSX() const {
 	return Balance::get()->getInt("road_sx");

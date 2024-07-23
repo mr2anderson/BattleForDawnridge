@@ -81,7 +81,7 @@ Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t b
 		return exitEvent;
 	}
 
-	Building* clonedB = this->b->cloneBuilding();
+	Building* clonedB = this->b->createSameTypeBuilding();
 	clonedB->setX(x);
 	clonedB->setY(y);
 	clonedB->changePlayer(this->playerId);

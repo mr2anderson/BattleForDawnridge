@@ -27,8 +27,8 @@ SpellFactory::SpellFactory() = default;
 SpellFactory::SpellFactory(uint32_t x, uint32_t y, uint32_t playerId) : Building(x, y, playerId) {
 	this->addSpec(new SpellFactorySpec());
 }
-SpellFactory::Building* SpellFactory::cloneBuilding() const {
-	return new SpellFactory(*this);
+SpellFactory::Building* SpellFactory::createSameTypeBuilding() const {
+	return new SpellFactory(this->getX(), this->getY(), this->getPlayerId());
 }
 Defence SpellFactory::getDefence() const {
 	return Balance::get()->getDefence("spell_factory_defence");

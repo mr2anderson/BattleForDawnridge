@@ -17,25 +17,16 @@
  */
 
 
-#include "Building.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
-#pragma once
+GlobalRandomGenerator* GlobalRandomGenerator::singletone = nullptr;
 
 
-class WarehouseIron : public Building {
-public:
-	WarehouseIron();
-	WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId);
-	Building* createSameTypeBuilding() const override;
-
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-	Defence getDefence() const override;
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-	uint32_t getRegenerationSpeed() const override;
-};
+GlobalRandomGenerator::GlobalRandomGenerator() {
+    std::random_device rd;
+    this->mersenne = std::mt19937(rd());
+}
+uint32_t GlobalRandomGenerator::gen() {
+    return this->mersenne();
+}

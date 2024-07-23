@@ -28,8 +28,8 @@ Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new ArableSpec());
 }
-Building* Arable::cloneBuilding() const {
-	return new Arable(*this);
+Building* Arable::createSameTypeBuilding() const {
+	return new Arable(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Arable::getSX() const {
 	return Balance::get()->getInt("arable_sx");

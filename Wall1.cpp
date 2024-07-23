@@ -28,8 +28,8 @@ Wall1::Wall1(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new WallSpec());
 }
-Building* Wall1::cloneBuilding() const {
-	return new Wall1(*this);
+Building* Wall1::createSameTypeBuilding() const {
+	return new Wall1(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Wall1::getSX() const {
     return Balance::get()->getInt("wall1_sx");

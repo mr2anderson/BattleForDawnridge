@@ -19,21 +19,25 @@
 
 #include "Playlist.hpp"
 #include "Music.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 Playlist *Playlist::singletone = nullptr;
 
 
+Playlist::Playlist() {
+    this->index = GlobalRandomGenerator::get()->gen() % SOUNDTRACKS_N;
+}
 void Playlist::update() {
     if (Music::get()->get(std::to_string(this->index))->getStatus() == sf::Music::Status::Playing) {
         return;
     }
-    this->index = (this->index + 1) % this->number;
+    this->index = (this->index + 1) % SOUNDTRACKS_N;
     Music::get()->get(std::to_string(this->index))->play();
     Music::get()->get(std::to_string(this->index))->setVolume(MUSIC_VOLUME);
 }
 void Playlist::restartMusic() {
-    for (uint32_t i = 0; i < this->number; i = i + 1) {
+    for (uint32_t i = 0; i < SOUNDTRACKS_N; i = i + 1) {
         Music::get()->get(std::to_string(this->index))->stop();
     }
 }

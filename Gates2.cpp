@@ -28,8 +28,8 @@ Gates2::Gates2(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
     this->addSpec(new GatesSpec());
 }
-Building* Gates2::cloneBuilding() const {
-    return new Gates2(*this);
+Building* Gates2::createSameTypeBuilding() const {
+    return new Gates2(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Gates2::getSX() const {
     return Balance::get()->getInt("gates2_sx");

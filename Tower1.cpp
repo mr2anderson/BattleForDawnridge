@@ -28,8 +28,8 @@ Tower1::Tower1(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
     this->addSpec(new Tower1Spec());
 }
-Building* Tower1::cloneBuilding() const {
-    return new Tower1(*this);
+Building* Tower1::createSameTypeBuilding() const {
+    return new Tower1(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Tower1::getSX() const {
     return Balance::get()->getInt("tower1_sx");

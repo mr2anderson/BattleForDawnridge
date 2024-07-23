@@ -28,8 +28,8 @@ Market::Market(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new MarketSpec());
 }
-Building* Market::cloneBuilding() const {
-	return new Market(*this);
+Building* Market::createSameTypeBuilding() const {
+	return new Market(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Market::getSX() const {
 	return Balance::get()->getInt("market_sx");

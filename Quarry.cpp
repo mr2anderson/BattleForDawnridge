@@ -29,8 +29,8 @@ Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new QuarrySpec());
 }
-Building* Quarry::cloneBuilding() const {
-	return new Quarry(*this);
+Building* Quarry::createSameTypeBuilding() const {
+	return new Quarry(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Quarry::getSX() const {
 	return Balance::get()->getInt("quarry_sx");

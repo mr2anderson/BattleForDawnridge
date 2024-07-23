@@ -27,7 +27,7 @@ class Mine : public Building {
 public:
 	Mine();
 	Mine(uint32_t x, uint32_t y, uint32_t playerId);
-	Building* cloneBuilding() const override;
+	Building* createSameTypeBuilding() const override;
 
     uint32_t getSX() const override;
     uint32_t getSY() const override;

@@ -17,17 +17,16 @@
  */
 
 
-#include <random>
 #include "PlainsGeneration.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 const uint32_t PlainsGeneration::TOTAL_PLAINS = 5;
 
 
 PlainsGeneration::PlainsGeneration() {
-	std::random_device rd1, rd2;
-	this->s1 = rd1();
-	this->s2 = rd2();
+	this->s1 = GlobalRandomGenerator::get()->gen();
+	this->s2 = GlobalRandomGenerator::get()->gen();
 }
 uint32_t PlainsGeneration::getType(uint32_t i, uint32_t j) const {
 	return (i * this->s1 + j * this->s2) % TOTAL_PLAINS + 1;

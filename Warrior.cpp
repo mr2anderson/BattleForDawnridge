@@ -45,6 +45,7 @@
 #include "WindowTwoButtons.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 #include "Balance.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -61,8 +62,6 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->startAnimation("talking");
     this->toKill = false;
     this->rageModeMovesLeft = 0;
-    std::random_device rd;
-    this->footstepsRandomSrc = std::mt19937(rd());
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
@@ -383,7 +382,7 @@ Events Warrior::processRunningAnimation() {
     Events events;
 
     if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 250) {
-        events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(this->footstepsRandomSrc() % TOTAL_FOOTSTEPS + 1), true));
+        events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
         this->footstepsClock.restart();
     }
 

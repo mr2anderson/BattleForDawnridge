@@ -17,7 +17,6 @@
  */
 
 
-#include <random>
 #include "Unit.hpp"
 #include "Collection.hpp"
 #include "ISelectable.hpp"
@@ -86,7 +85,6 @@ private:
 	sf::Clock animationClock;
     std::queue<std::string> currentMovement;
 	sf::Clock footstepsClock;
-	std::mt19937 footstepsRandomSrc;
 	bool toKill;
 	uint32_t rageModeMovesLeft;
 

@@ -17,11 +17,11 @@
  */
 
 
-#include <random>
 #include "House.hpp"
 #include "HouseSpec.hpp"
 #include "Texts.hpp"
 #include "Balance.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 const uint32_t House::TOTAL_TYPES = 16;
@@ -33,13 +33,12 @@ House::House() {
 House::House(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 
-	std::random_device rd;
-	this->type = rd() % TOTAL_TYPES + 1;
+	this->type = GlobalRandomGenerator::get()->gen() % TOTAL_TYPES + 1;
 
 	this->addSpec(new HouseSpec());
 }
-Building* House::cloneBuilding() const {
-	return new House(*this);
+Building* House::createSameTypeBuilding() const {
+	return new House(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t House::getSX() const {
 	return Balance::get()->getInt("house_sx");

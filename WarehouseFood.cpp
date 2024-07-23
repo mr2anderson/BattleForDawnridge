@@ -28,8 +28,8 @@ WarehouseFood::WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new WarehouseFoodSpec());
 }
-Building* WarehouseFood::cloneBuilding() const {
-	return new WarehouseFood(*this);
+Building* WarehouseFood::createSameTypeBuilding() const {
+	return new WarehouseFood(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseFood::getSX() const {
 	return Balance::get()->getInt("warehouse_food_sx");

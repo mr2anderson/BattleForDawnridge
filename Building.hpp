@@ -31,7 +31,7 @@ public:
 	Building(uint32_t x, uint32_t y, uint32_t playerId);
 	Building(const Building& building);
 	~Building();
-	virtual Building* cloneBuilding() const = 0;
+	virtual Building* createSameTypeBuilding() const = 0;
 
 	Events getHighlightEvent(MapState *state, uint8_t type) const;
 	Resources getLimit() const;

@@ -28,8 +28,8 @@ Resin::Resin(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new ResinSpec());
 }
-Building* Resin::cloneBuilding() const {
-	return new Resin(*this);
+Building* Resin::createSameTypeBuilding() const {
+	return new Resin(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Resin::getSX() const {
 	return Balance::get()->getInt("resin_sx");

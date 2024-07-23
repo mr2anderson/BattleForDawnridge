@@ -29,8 +29,8 @@ Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new MineSpec());
 }
-Building* Mine::cloneBuilding() const {
-	return new Mine(*this);
+Building* Mine::createSameTypeBuilding() const {
+	return new Mine(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Mine::getSX() const {
 	return Balance::get()->getInt("mine_sx");

@@ -38,8 +38,8 @@ Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
     this->addSpec(new CastleWoodGeneratorSpec());
 	this->addSpec(new CastleTerritoryExpanderSpec());
 }
-Building* Castle::cloneBuilding() const {
-	return new Castle(*this);
+Building* Castle::createSameTypeBuilding() const {
+	return new Castle(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Castle::getSX() const {
 	return Balance::get()->getInt("castle_sx");

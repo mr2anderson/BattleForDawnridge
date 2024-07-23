@@ -27,7 +27,7 @@ class Wall2 : public Building {
 public:
 	Wall2();
 	Wall2(uint32_t x, uint32_t y, uint32_t playerId);
-	Building* cloneBuilding() const override;
+	Building* createSameTypeBuilding() const override;
 
 	Defence getDefence() const override;
 	Resources getCost() const override;

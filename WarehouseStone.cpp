@@ -28,8 +28,8 @@ WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new WarehouseStoneSpec());
 }
-Building* WarehouseStone::cloneBuilding() const {
-	return new WarehouseStone(*this);
+Building* WarehouseStone::createSameTypeBuilding() const {
+	return new WarehouseStone(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseStone::getSX() const {
 	return Balance::get()->getInt("warehouse_stone_sx");

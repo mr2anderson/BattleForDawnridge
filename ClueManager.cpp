@@ -17,9 +17,9 @@
  */
 
 
-#include <ctime>
 #include "ClueManager.hpp"
 #include "Texts.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 ClueManager* ClueManager::singletone = nullptr;
@@ -33,7 +33,7 @@ const uint32_t ClueManager::H = 80;
 
 
 ClueManager::ClueManager() {
-	this->currentClue = time(nullptr) % TOTAL_CLUES;
+	this->currentClue = GlobalRandomGenerator::get()->gen() % TOTAL_CLUES;
 	this->regenerateLabel();
 }
 Label ClueManager::getClueLabel(uint32_t windowW, uint32_t windowH) {

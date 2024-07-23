@@ -17,8 +17,8 @@
  */
 
 
-#include <random>
 #include "BigArrow.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
 const uint32_t BigArrow::TOTAL_TYPES = 25;
@@ -31,8 +31,7 @@ std::string BigArrow::getTextureName() const {
     return "big_arrow" + std::to_string(type);
 }
 std::string BigArrow::getSoundName() const {
-    std::random_device rd;
-    return "big_arrow" + std::to_string(rd() % TOTAL_SOUNDS + 1);
+    return "big_arrow" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_SOUNDS + 1);
 }
 float BigArrow::getTime() const {
     return 0.5f;

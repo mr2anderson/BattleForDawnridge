@@ -28,8 +28,8 @@ Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new BarracksSpec());
 }
-Building* Barracks::cloneBuilding() const {
-	return new Barracks(*this);
+Building* Barracks::createSameTypeBuilding() const {
+	return new Barracks(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Barracks::getSX() const {
 	return Balance::get()->getInt("barracks_sx");

@@ -29,8 +29,8 @@ Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 	this->addSpec(new SawmillSpec());
 }
-Building* Sawmill::cloneBuilding() const {
-	return new Sawmill(*this);
+Building* Sawmill::createSameTypeBuilding() const {
+	return new Sawmill(this->getX(), this->getY(), this->getPlayerId());
 }
 Defence Sawmill::getDefence() const {
 	return Balance::get()->getDefence("sawmill_defence");

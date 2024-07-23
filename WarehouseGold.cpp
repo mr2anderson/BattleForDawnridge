@@ -30,8 +30,8 @@ WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
 	this->addSpec(new WarehouseGoldWarehouseSpec());
 	this->addSpec(new WarehouseGoldCollectorSpec());
 }
-Building* WarehouseGold::cloneBuilding() const {
-	return new WarehouseGold(*this);
+Building* WarehouseGold::createSameTypeBuilding() const {
+	return new WarehouseGold(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseGold::getSX() const {
 	return Balance::get()->getInt("warehouse_gold_sx");

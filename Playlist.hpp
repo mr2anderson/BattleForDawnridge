@@ -17,7 +17,6 @@
  */
 
 
-#include <ctime>
 #include <cstdint>
 
 
@@ -28,7 +27,7 @@ class Playlist {
 public:
     static Playlist *get() {
         if (Playlist::singletone == nullptr) {
-            Playlist::singletone = new Playlist(SOUNDTRACKS_N);
+            Playlist::singletone = new Playlist();
         }
         return Playlist::singletone;
     }
@@ -38,15 +37,10 @@ public:
 
     static constexpr uint32_t SOUNDTRACKS_N = 10;
 private:
-    Playlist() = default;
-    Playlist(uint32_t number) {
-        this->number = number;
-        this->index = (int32_t)(time(nullptr) % this->number);
-    }
+    Playlist();
     Playlist(const Playlist& copy);
     static Playlist *singletone;
 
-    uint32_t number;
     uint32_t index;
 
     static constexpr uint32_t MUSIC_VOLUME = 40;
