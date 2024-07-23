@@ -31,12 +31,12 @@
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new CastleTerritoryExpanderSpec());
-	this->addSpec(new CastleWoodGeneratorSpec());
-	this->addSpec(new CastleWarehouseSpec());
-	this->addSpec(new VictoryConditionSpec());
-	this->addSpec(new CastlePopulationLimitIncreaserSpec());
+    this->addSpec(new VictoryConditionSpec());
+    this->addSpec(new CastleWarehouseSpec());
+    this->addSpec(new CastlePopulationLimitIncreaserSpec());
     this->addSpec(new CastleShootingSpec());
+    this->addSpec(new CastleWoodGeneratorSpec());
+	this->addSpec(new CastleTerritoryExpanderSpec());
 }
 Building* Castle::cloneBuilding() const {
 	return new Castle(*this);

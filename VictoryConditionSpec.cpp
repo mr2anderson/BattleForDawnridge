@@ -37,7 +37,7 @@ Events VictoryConditionSpec::getActiveNewMoveEvent(const Building* b, MapState* 
     events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
     events.add(std::make_shared<PlaySoundEvent>("bell"));
 
-    std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("star_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
+    std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("bell", b->getX(), b->getY(), b->getSX(), b->getSY());
     events.add(std::make_shared<CreateEEvent>(flyingE));
 
     return events;
@@ -51,7 +51,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 }
 std::vector<HorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
 	HorizontalSelectionWindowComponent component = {
-		"star_icon",
+		"bell",
 		*Texts::get()->get("victory_condition_building_description"),
 		false,
 		Events()
