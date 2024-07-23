@@ -167,7 +167,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         Events()
     );
     educationWindowComponents.emplace_back(
-        "road",
+        "road_none",
         *Locales::get()->get("guide_road_system_description"),
         false,
         Events()
