@@ -17,6 +17,7 @@
  */
 
 
+#include <set>
 #include "BuildingMode.hpp"
 #include "BuildEvent.hpp"
 #include "SubResourcesEvent.hpp"
@@ -147,12 +148,30 @@ bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
 	uint32_t sx = clonedB->getSX();
 	uint32_t sy = clonedB->getSY();
 
+    std::set<std::tuple<uint32_t, uint32_t>> ds; // splitting on small sections in order to avoid situations when area is highlighted but building is now allowed cuz it is highlighted by two (or more) different territory buildings
+    for (uint32_t dx = 0; dx < sx; dx = dx + 1) {
+        for (uint32_t dy = 0; dy < sy; dy = dy + 1) {
+            ds.emplace(dx, dy);
+        }
+    }
+
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
 		Building* b = state->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b->getPlayerId() == this->playerId and b->allowBuilding(state, x, y, sx, sy)) {
-			return true;
+		if (b->exist() and b->getPlayerId() == this->playerId) {
+            std::vector<std::tuple<uint32_t, uint32_t>> toErase;
+            for (const auto &d : ds) {
+                if (b->allowBuilding(state, x + std::get<0>(d), y + std::get<1>(d), 1, 1)) {
+                    toErase.push_back(d);
+                }
+            }
+            for (const auto &d : toErase) {
+                ds.erase(d);
+            }
+            if (ds.empty()) {
+                return true;
+            }
 		}
 	}
 
-	return false;
+    return false;
 }
