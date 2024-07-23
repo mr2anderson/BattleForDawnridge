@@ -30,6 +30,9 @@ std::string BigArrow::getTextureName() const {
     uint32_t type = this->clock.getElapsedTime().asMilliseconds() / (1000 / TOTAL_TYPES) % TOTAL_TYPES + 1;
     return "big_arrow" + std::to_string(type);
 }
+std::string BigArrow::getIconTextureName() const {
+    return "big_arrow_icon";
+}
 std::string BigArrow::getSoundName() const {
     return "big_arrow" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_SOUNDS + 1);
 }

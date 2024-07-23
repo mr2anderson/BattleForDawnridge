@@ -34,6 +34,7 @@ public:
     Events click() override;
     void update() override;
     virtual std::string getTextureName() const = 0;
+    virtual std::string getIconTextureName() const = 0;
     virtual std::string getSoundName() const = 0;
     virtual float getTime() const = 0;
 private:
