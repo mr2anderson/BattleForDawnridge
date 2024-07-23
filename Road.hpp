@@ -43,6 +43,7 @@ public:
 	uint32_t getRegenerationSpeed() const override;
 private:
     std::string type;
+    sf::Clock verifyingTypeTimer;
 
     std::string getProperType(MapState *state) const;
 };

@@ -40,7 +40,8 @@ Building* Road::createSameTypeBuilding() const {
 Events Road::newFrame(MapState *state, uint32_t playerId) {
     Events events;
 
-    if (this->exist() and this->works()) {
+    if (this->verifyingTypeTimer.getElapsedTime().asMilliseconds() > 100 and this->exist() and this->works()) { // There is no effort to call verifying every single frame
+        this->verifyingTypeTimer.restart();
         std::string properType = this->getProperType(state);
         if (this->type != properType) {
             events.add(std::make_shared<ReconfRoadEvent>(this, properType));
