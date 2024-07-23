@@ -531,17 +531,16 @@ HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     };
 }
 Events Warrior::getSelectionWindow(bool own) {
-    std::vector<HorizontalSelectionWindowComponent> components;
-    components.push_back(this->getExitComponent());
-
     Events events;
 
+    std::vector<HorizontalSelectionWindowComponent> components;
+    components.push_back(this->getExitComponent());
+    components.push_back(this->getDescriptionComponent());
+    components.push_back(this->getWarriorInfoComponent());
+    if (this->rageModeMovesLeft > 0) {
+        components.push_back(this->getRageModeComponent());
+    }
     if (own) {
-        components.push_back(this->getDescriptionComponent());
-        components.push_back(this->getWarriorInfoComponent());
-        if (this->rageModeMovesLeft > 0) {
-            components.push_back(this->getRageModeComponent());
-        }
         if (this->toKill) {
             components.push_back(this->getRevertKillComponent());
         }

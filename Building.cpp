@@ -361,11 +361,11 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
     Events response;
 
 	std::vector<HorizontalSelectionWindowComponent> components;
-	components.push_back(this->getExitComponent());
+    components.push_back(this->getExitComponent());
+    components.push_back(this->getDescriptionComponent());
+    components.push_back(this->getHpInfoComponent());
 
     if (this->belongTo(playerId)) {
-        components.push_back(this->getDescriptionComponent());
-        components.push_back(this->getHpInfoComponent());
         components.push_back(this->getDestroyComponent());
         for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
             std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
