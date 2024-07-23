@@ -80,6 +80,9 @@ Events GO::click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint
 	}
 	return Events();
 }
+Events GO::newFrame(MapState *state, uint32_t playerId) {
+    return Events();
+}
 bool GO::intersects(GO* go) const {
 	sf::IntRect rect1;
 	rect1.left = this->getX();

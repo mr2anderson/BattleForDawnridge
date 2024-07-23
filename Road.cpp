@@ -21,21 +21,42 @@
 #include "RoadSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ReconfRoadEvent.hpp"
 
 
-Road::Road() = default;
+Road::Road() {
+    this->type = "none";
+}
 Road::Road(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
+
+    this->type = "none";
+
 	this->addSpec(new RoadSpec());
 }
 Building* Road::createSameTypeBuilding() const {
 	return new Road(this->getX(), this->getY(), this->getPlayerId());
 }
-uint32_t Road::getSX() const {
-	return Parameters::get()->getInt("road_sx");
+Events Road::newFrame(MapState *state, uint32_t playerId) {
+    Events events;
+
+    if (this->exist() and this->works()) {
+        std::string properType = this->getProperType(state);
+        if (this->type != properType) {
+            events.add(std::make_shared<ReconfRoadEvent>(this, properType));
+        }
+    }
+
+    return events;
+}
+void Road::reconf(const std::string &properType) {
+    this->type = properType;
+}
+uint32_t Road::getSX() const { // Config file is not used cuz engine does not support other sizes
+	return 1;
 }
 uint32_t Road::getSY() const {
-	return Parameters::get()->getInt("road_sy");
+	return 1;
 }
 uint32_t Road::getMaxHP() const {
 	return Parameters::get()->getInt("road_max_hp");
@@ -50,11 +71,38 @@ uint32_t Road::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("road_regeneration_speed");
 }
 std::string Road::getTextureName() const {
-	return "road";
+	return "road_" + this->type;
 }
 std::string Road::getSoundName() const {
 	return "road";
 }
 std::wstring Road::getDescription() const {
 	return *Locales::get()->get("road_description");
+}
+std::string Road::getProperType(MapState *state) const {
+    bool horizontal = false;
+    bool vertical = false;
+
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+        Building *b = state->getCollectionsPtr()->getBuilding(i);
+        if (b->exist() and b->getPlayerId() == this->getPlayerId() and (b->isActiveConductor() or b->isOrigin())) {
+            if (this->getY() >= b->getY() and this->getY() < b->getY() + b->getSY() and (b->getX() + b->getSX() == this->getX() or this->getX() + this->getSX() == b->getX())) {
+                horizontal = true;
+            }
+            if (this->getX() >= b->getX() and this->getX() < b->getX() + b->getSX() and (b->getY() + b->getSY() == this->getY() or this->getY() + this->getSY() == b->getY())) {
+                vertical = true;
+            }
+        }
+    }
+
+    if (horizontal and vertical) {
+        return "all";
+    }
+    if (horizontal) {
+        return "horizontal";
+    }
+    if (vertical) {
+        return "vertical";
+    }
+    return "none";
 }

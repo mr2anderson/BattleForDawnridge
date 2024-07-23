@@ -112,6 +112,10 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 			}
 		}
 		this->drawEverything(window);
+        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+            Events e = this->map->getStatePtr()->getCollectionsPtr()->getGO(i)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
+            this->addEvents(e);
+        }
 		Playlist::get()->update();
 		this->removeFinishedElement();
         this->addNewMoveEvent();
@@ -773,6 +777,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<CreateEffectEvent> createEffectEvent = std::dynamic_pointer_cast<CreateEffectEvent>(e)) {
 		this->handleCreateEffectEvent(createEffectEvent);
 	}
+    else if (std::shared_ptr<ReconfRoadEvent> reconfRoadEvent = std::dynamic_pointer_cast<ReconfRoadEvent>(e)) {
+        this->handleReconfRoadEvent(reconfRoadEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -958,4 +965,7 @@ void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRa
 }
 void MainScreen::handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e) {
 	this->map->add(e->getEffect());
+}
+void MainScreen::handleReconfRoadEvent(std::shared_ptr<ReconfRoadEvent> e) {
+    e->getRoad()->reconf(e->getProperType());
 }

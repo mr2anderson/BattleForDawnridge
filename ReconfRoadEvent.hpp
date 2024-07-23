@@ -17,32 +17,24 @@
  */
 
 
-#include "Building.hpp"
+#include <string>
+#include "Event.hpp"
 
 
 #pragma once
 
 
-class Road : public Building {
+class Road;
+
+
+class ReconfRoadEvent : public Event {
 public:
-	Road();
-	Road(uint32_t x, uint32_t y, uint32_t playerId);
-	Building* createSameTypeBuilding() const override;
+    ReconfRoadEvent(Road *road, const std::string &properType);
 
-    Events newFrame(MapState *state, uint32_t playerId) override;
-    void reconf(const std::string &properType);
-
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-	Defence getDefence() const override;
-	Resources getCost() const override;
-	std::string getTextureName() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-	uint32_t getRegenerationSpeed() const override;
+    Road* getRoad();
+    std::string getProperType() const;
+    bool isUrgent() const override;
 private:
-    std::string type;
-
-    std::string getProperType(MapState *state) const;
+    Road *road;
+    std::string properType;
 };

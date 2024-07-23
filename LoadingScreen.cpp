@@ -120,7 +120,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
                 "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-                "wall1", "wall2", "road", "mountains",
+                "wall1", "wall2", "mountains",
                 "arable", "blue", "green",
                 "purple", "warehouse_food", "warehouse_wood", "warehouse_stone",
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
@@ -130,6 +130,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2"}) {
             Textures::get()->add(a, "images/" + a + ".png");
+        }
+        for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
+            Textures::get()->add("road_" + a, "images/road/" + a + ".png");
         }
         Textures::get()->add("menu", "images/menu.jpg");
         for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over"}) {
