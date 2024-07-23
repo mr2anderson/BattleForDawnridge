@@ -575,7 +575,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 		return Events();
 	}
 
-    if (button == sf::Mouse::Button::Right) {
+    if (button == sf::Mouse::Button::Right or (button == sf::Mouse::Button::Left and !this->belongTo(playerId))) {
         return this->getMoveHighlightionEvent(state) + this->getSelectionWindow(this->belongTo(playerId));
     }
 
