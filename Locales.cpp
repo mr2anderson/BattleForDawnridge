@@ -23,24 +23,24 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Root.hpp"
 #include "UTFEncoder.hpp"
-#include "CouldntOpenText.hpp"
+#include "CouldntOpenLocales.hpp"
 #include "LanguageAlreadyInUse.hpp"
 
 
-Texts* Texts::singletone = nullptr;
+Locales* Locales::singletone = nullptr;
 
 
 static const std::string LOCAL_ROOT = DATA_ROOT + "/locales";
 
 
-void Texts::load() {
+void Locales::load() {
     std::string path = LOCAL_ROOT + "/" + this->getPath();
     std::ifstream file(path);
     if (!file.is_open()) {
-        throw CouldntOpenText(path);
+        throw CouldntOpenLocales(path);
     }
 
     std::string current;
@@ -88,7 +88,7 @@ void Texts::load() {
 
     file.close();
 }
-void Texts::setDefaultPath(const std::string& path) {
+void Locales::setDefaultPath(const std::string& path) {
     if (path == this->getPath()) {
         throw LanguageAlreadyInUse();
     }
@@ -101,14 +101,14 @@ void Texts::setDefaultPath(const std::string& path) {
     file << path;
     file.close();
 }
-std::wstring* Texts::get(const std::string& name) {
+std::wstring* Locales::get(const std::string& name) {
     auto it = this->texts.find(name);
     if (it == this->texts.end()) {
         std::cerr << "Invalid text id: " << name << std::endl;
     }
     return &it->second;
 }
-std::string Texts::getPath() const {
+std::string Locales::getPath() const {
     std::ifstream file(USERDATA_ROOT + "/language.cfg");
     if (file.is_open()) {
         std::string path;

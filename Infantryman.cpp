@@ -18,8 +18,8 @@
 
 
 #include "Infantryman.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Infantryman::Infantryman() = default;
@@ -34,25 +34,25 @@ uint8_t Infantryman::getType() const {
     return Warrior::TYPE::HUMAN;
 }
 uint32_t Infantryman::getMaxHP() const {
-	return Balance::get()->getInt("infantryman_max_hp");
+	return Parameters::get()->getInt("infantryman_max_hp");
 }
 Damage Infantryman::getBaseDamage() const {
-	return Balance::get()->getDamage("infantryman_damage");
+	return Parameters::get()->getDamage("infantryman_damage");
 }
 Defence Infantryman::getBaseDefence() const {
-	return Balance::get()->getDefence("infantryman_defence");
+	return Parameters::get()->getDefence("infantryman_defence");
 }
 Resources Infantryman::getCost() const {
-	return Balance::get()->getResources("infantryman_cost");
+	return Parameters::get()->getResources("infantryman_cost");
 }
 uint32_t Infantryman::getTimeToProduce() const {
-	return Balance::get()->getInt("infantryman_time_to_produce");
+	return Parameters::get()->getInt("infantryman_time_to_produce");
 }
 std::string Infantryman::getSoundName() const {
 	return "infantryman";
 }
 std::wstring Infantryman::getDescription() const {
-	return *Texts::get()->get("infantryman_description");
+	return *Locales::get()->get("infantryman_description");
 }
 uint32_t Infantryman::getTalkingAnimationsNumberInSet() const {
 	return 7;
@@ -73,8 +73,8 @@ std::string Infantryman::getBaseTextureName() const {
 	return "infantryman";
 }
 uint32_t Infantryman::getMovementPoints() const {
-	return Balance::get()->getInt("infantryman_movement_points");
+	return Parameters::get()->getInt("infantryman_movement_points");
 }
 uint32_t Infantryman::getPopulation() const {
-	return Balance::get()->getInt("infantryman_population");
+	return Parameters::get()->getInt("infantryman_population");
 }

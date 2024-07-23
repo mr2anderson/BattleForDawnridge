@@ -19,7 +19,7 @@
 
 #include "AreaResourcePointCollectorSpec.hpp"
 #include "ResourcePoint.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Building.hpp"
 #include "FocusOnEvent.hpp"
 #include "ImageFlyingE.hpp"
@@ -83,7 +83,7 @@ std::vector<HorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::
 	if (building->works()) {
 		component = {
 			this->getResourceType() + "_icon",
-			*Texts::get()->get("this_building_collects_resources_from_resource_points") + std::to_wstring(this->getCollectionSpeed()),
+            *Locales::get()->get("this_building_collects_resources_from_resource_points") + std::to_wstring(this->getCollectionSpeed()),
 			false,
 			Events()
 		};
@@ -91,7 +91,7 @@ std::vector<HorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::
 	else {
 		component = {
 			"hammer_icon",
-			*Texts::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
+			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
 			false,
 			Events()
 		};

@@ -18,7 +18,7 @@
 
 
 #include "HouseSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 HouseSpec::HouseSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* HouseSpec::clone() const {
 	return new HouseSpec(*this);
 }
 uint32_t HouseSpec::getActivePopulationLimit() const {
-	return Balance::get()->getInt("house_population_limit");
+	return Parameters::get()->getInt("house_population_limit");
 }

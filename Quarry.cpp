@@ -20,8 +20,8 @@
 
 #include "Quarry.hpp"
 #include "QuarrySpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Quarry::Quarry() = default;
@@ -33,22 +33,22 @@ Building* Quarry::createSameTypeBuilding() const {
 	return new Quarry(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Quarry::getSX() const {
-	return Balance::get()->getInt("quarry_sx");
+	return Parameters::get()->getInt("quarry_sx");
 }
 uint32_t Quarry::getSY() const {
-	return Balance::get()->getInt("quarry_sy");
+	return Parameters::get()->getInt("quarry_sy");
 }
 uint32_t Quarry::getMaxHP() const {
-	return Balance::get()->getInt("quarry_max_hp");
+	return Parameters::get()->getInt("quarry_max_hp");
 }
 Defence Quarry::getDefence() const {
-	return Balance::get()->getDefence("quarry_defence");
+	return Parameters::get()->getDefence("quarry_defence");
 }
 Resources Quarry::getCost() const {
-	return Balance::get()->getResources("quarry_cost");
+	return Parameters::get()->getResources("quarry_cost");
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return Balance::get()->getInt("quarry_regeneration_speed");
+	return Parameters::get()->getInt("quarry_regeneration_speed");
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";
@@ -57,5 +57,5 @@ std::string Quarry::getSoundName() const {
 	return "stone";
 }
 std::wstring Quarry::getDescription() const {
-	return *Texts::get()->get("quarry_description");
+	return *Locales::get()->get("quarry_description");
 }

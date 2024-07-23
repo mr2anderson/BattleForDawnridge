@@ -18,7 +18,7 @@
 
 
 #include "ClueManager.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "GlobalRandomGenerator.hpp"
 
 
@@ -47,5 +47,5 @@ void ClueManager::nextClue() {
 	this->regenerateLabel();
 }
 void ClueManager::regenerateLabel() {
-	this->label = Label(0, 0, W, H, *Texts::get()->get("clue" + std::to_string(this->currentClue)));
+	this->label = Label(0, 0, W, H, *Locales::get()->get("clue" + std::to_string(this->currentClue)));
 }

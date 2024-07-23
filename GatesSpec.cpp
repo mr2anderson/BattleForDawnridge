@@ -18,7 +18,7 @@
 
 
 #include "GatesSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 #include "Building.hpp"
 
 
@@ -36,5 +36,5 @@ bool GatesSpec::conductsIfNotWork() const {
 	return true;
 }
 uint32_t GatesSpec::getRadius() const {
-	return Balance::get()->getInt("gates_radius");
+	return Parameters::get()->getInt("gates_radius");
 }

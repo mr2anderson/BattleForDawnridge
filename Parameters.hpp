@@ -25,13 +25,13 @@
 #pragma once
 
 
-class Balance {
+class Parameters {
 public:
-    static Balance* get() {
-        if (Balance::singletone == nullptr) {
-            Balance::singletone = new Balance();
+    static Parameters* get() {
+        if (Parameters::singletone == nullptr) {
+            Parameters::singletone = new Parameters();
         }
-        return Balance::singletone;
+        return Parameters::singletone;
     }
 
     void load();
@@ -42,9 +42,9 @@ public:
     uint32_t getInt(const std::string& id) const;
     double getDouble(const std::string& id) const;
 private:
-    Balance() = default;
-    Balance(const Balance& copy);
-    static Balance* singletone;
+    Parameters() = default;
+    Parameters(const Parameters& copy);
+    static Parameters* singletone;
 
     std::unordered_map<std::string, Damage> damages;
     std::unordered_map<std::string, Defence> defences;

@@ -21,7 +21,7 @@
 #include "BuildEvent.hpp"
 #include "SubResourcesEvent.hpp"
 #include "PlaySoundEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "WindowButton.hpp"
 #include "CreateEEvent.hpp"
 #include "Textures.hpp"
@@ -55,7 +55,7 @@ Events BuildingMode::start(MapState *state) {
 
 		startEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-		std::shared_ptr<WindowButton> buildingModeGuide = std::make_shared<WindowButton>(*Texts::get()->get("building_mode_guide"), *Texts::get()->get("OK"), startEvent);
+		std::shared_ptr<WindowButton> buildingModeGuide = std::make_shared<WindowButton>(*Locales::get()->get("building_mode_guide"), *Locales::get()->get("OK"), startEvent);
 		events.add(std::make_shared<CreateEEvent>(buildingModeGuide));
 	}
 
@@ -88,21 +88,21 @@ Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t b
 
 	if (!this->inMap(state, clonedB)) {
 		delete clonedB;
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("not_in_map"), *Texts::get()->get("OK"), clickSoundEvent);
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("not_in_map"), *Locales::get()->get("OK"), clickSoundEvent);
 		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
 	if (!this->empty(state, clonedB)) {
 		delete clonedB;
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("place_occupied"), *Texts::get()->get("OK"), clickSoundEvent);
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("place_occupied"), *Locales::get()->get("OK"), clickSoundEvent);
 		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
 	if (!this->controlled(state, clonedB)) {
 		delete clonedB;
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("too_far_from_roads"), *Texts::get()->get("OK"), clickSoundEvent);
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("too_far_from_roads"), *Locales::get()->get("OK"), clickSoundEvent);
 		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;

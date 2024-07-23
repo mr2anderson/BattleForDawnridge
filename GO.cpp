@@ -19,7 +19,7 @@
 
 #include "GO.hpp"
 #include "Textures.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 
@@ -126,7 +126,7 @@ HorizontalSelectionWindowComponent GO::getExitComponent() const {
 
 	HorizontalSelectionWindowComponent component = {
 		"exit_icon",
-		*Texts::get()->get("leave"),
+		*Locales::get()->get("leave"),
 		true,
 		exitEvent
 	};

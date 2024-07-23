@@ -19,8 +19,8 @@
 
 #include "Arable.hpp"
 #include "ArableSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Arable::Arable() = default;
@@ -32,19 +32,19 @@ Building* Arable::createSameTypeBuilding() const {
 	return new Arable(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Arable::getSX() const {
-	return Balance::get()->getInt("arable_sx");
+	return Parameters::get()->getInt("arable_sx");
 }
 uint32_t Arable::getSY() const {
-	return Balance::get()->getInt("arable_sy");
+	return Parameters::get()->getInt("arable_sy");
 }
 uint32_t Arable::getMaxHP() const {
-	return Balance::get()->getInt("arable_max_hp");
+	return Parameters::get()->getInt("arable_max_hp");
 }
 Defence Arable::getDefence() const {
-	return Balance::get()->getDefence("arable_defence");
+	return Parameters::get()->getDefence("arable_defence");
 }
 Resources Arable::getCost() const {
-	return Balance::get()->getResources("arable_cost");
+	return Parameters::get()->getResources("arable_cost");
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -53,8 +53,8 @@ std::string Arable::getSoundName() const {
 	return "food";
 }
 std::wstring Arable::getDescription() const {
-	return *Texts::get()->get("arable_description");
+	return *Locales::get()->get("arable_description");
 }
 uint32_t Arable::getRegenerationSpeed() const {
-	return Balance::get()->getInt("arable_regeneration_speed");
+	return Parameters::get()->getInt("arable_regeneration_speed");
 }

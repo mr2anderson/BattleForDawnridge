@@ -17,12 +17,32 @@
  */
 
 
-#include "CouldntOpenText.hpp"
+
+#include <unordered_map>
+#include <string>
 
 
-CouldntOpenText::CouldntOpenText(const std::string &path) : CouldntOpen(path) {
+#pragma once
 
-}
-std::string CouldntOpenText::getUpperCaseResourceReadableName() const {
-    return "TEXT";
-}
+
+class Locales {
+public:
+    static Locales* get() {
+        if (Locales::singletone == nullptr) {
+            Locales::singletone = new Locales();
+        }
+        return Locales::singletone;
+    }
+
+    void load();
+    void setDefaultPath(const std::string& path);
+    std::wstring* get(const std::string& name);
+private:
+    Locales() = default;
+    Locales(const Locales& copy);
+    static Locales* singletone;
+
+    std::unordered_map<std::string, std::wstring> texts;
+
+    std::string getPath() const;
+};

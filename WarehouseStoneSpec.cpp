@@ -18,7 +18,7 @@
 
 
 #include "WarehouseStoneSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseStoneSpec::WarehouseStoneSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* WarehouseStoneSpec::clone() const {
 	return new WarehouseStoneSpec(*this);
 }
 Resources WarehouseStoneSpec::getLimit() const {
-	return Balance::get()->getResources("warehouse_stone_limit");
+	return Parameters::get()->getResources("warehouse_stone_limit");
 }

@@ -22,7 +22,7 @@
 #include "Fonts.hpp"
 #include "Sounds.hpp"
 #include "Music.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "SoundQueue.hpp"
 #include "ColorTheme.hpp"
 #include "ClueManager.hpp"
@@ -59,7 +59,7 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
 	this->s.setPosition(windowW - this->s.getLocalBounds().width, windowH - this->s.getLocalBounds().height);
 
 	this->t.setFont(*Fonts::get()->get("1"));
-	this->t.setString(*Texts::get()->get("press_any_key_to_continue"));
+	this->t.setString(*Locales::get()->get("press_any_key_to_continue"));
 	this->t.setCharacterSize(31);
 	this->t.setFillColor(sf::Color::White);
 	this->t.setOutlineColor(sf::Color::Black);

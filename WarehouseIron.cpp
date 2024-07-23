@@ -19,8 +19,8 @@
 
 #include "WarehouseIron.hpp"
 #include "WarehouseIronSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;
@@ -32,22 +32,22 @@ Building* WarehouseIron::createSameTypeBuilding() const {
 	return new WarehouseIron(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseIron::getSX() const {
-	return Balance::get()->getInt("warehouse_iron_sx");
+	return Parameters::get()->getInt("warehouse_iron_sx");
 }
 uint32_t WarehouseIron::getSY() const {
-	return Balance::get()->getInt("warehouse_iron_sy");
+	return Parameters::get()->getInt("warehouse_iron_sy");
 }
 uint32_t WarehouseIron::getMaxHP() const {
-	return Balance::get()->getInt("warehouse_iron_max_hp");
+	return Parameters::get()->getInt("warehouse_iron_max_hp");
 }
 Defence WarehouseIron::getDefence() const {
-	return Balance::get()->getDefence("warehouse_iron_defence");
+	return Parameters::get()->getDefence("warehouse_iron_defence");
 }
 Resources WarehouseIron::getCost() const {
-	return Balance::get()->getResources("warehouse_iron_cost");
+	return Parameters::get()->getResources("warehouse_iron_cost");
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
-	return Balance::get()->getInt("warehouse_iron_regeneration_speed");
+	return Parameters::get()->getInt("warehouse_iron_regeneration_speed");
 }
 std::string WarehouseIron::getTextureName() const {
 	return "warehouse_iron";
@@ -56,5 +56,5 @@ std::string WarehouseIron::getSoundName() const {
 	return "iron";
 }
 std::wstring WarehouseIron::getDescription() const {
-	return *Texts::get()->get("warehouse_iron_description");
+	return *Locales::get()->get("warehouse_iron_description");
 }

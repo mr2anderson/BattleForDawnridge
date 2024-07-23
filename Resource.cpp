@@ -18,7 +18,7 @@
 
 
 #include "Resource.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 
 
 Resource::Resource() = default;
@@ -32,7 +32,7 @@ std::wstring Resource::getReadableInfo() const {
 		return result;
 	}
 
-	result = result + *Texts::get()->get(this->type + "_number");
+	result = result + *Locales::get()->get(this->type + "_number");
 	result = result + std::to_wstring(this->n) + L")";
 
 	return result;

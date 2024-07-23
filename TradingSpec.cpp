@@ -20,7 +20,7 @@
 #include "TradingSpec.hpp"
 #include "PlaySoundEvent.hpp"
 #include "WindowButton.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "SubResourceEvent.hpp"
 #include "FocusOnEvent.hpp"
@@ -43,8 +43,8 @@ Events TradingSpec::doTrade(const Building *b, const Trade& trade) {
 	response.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
 
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(
-		*Texts::get()->get("trade_started") + L'\n' +
-		trade.getReadableInfo(), *Texts::get()->get("OK"), clickSoundEvent);
+            *Locales::get()->get("trade_started") + L'\n' +
+            trade.getReadableInfo(), *Locales::get()->get("OK"), clickSoundEvent);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	response.add(std::make_shared<SubResourceEvent>(trade.sell));
@@ -96,7 +96,7 @@ std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const
 		if (this->busy()) {
 			components.emplace_back(
 				"trade_icon",
-				*Texts::get()->get("trading_building_is_busy") + this->currentTrade.getReadableInfo(),
+                *Locales::get()->get("trading_building_is_busy") + this->currentTrade.getReadableInfo(),
 				false,
 				Events()
 			);
@@ -112,7 +112,7 @@ std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const
 	else {
 		components.emplace_back(
 			"hammer_icon",
-			*Texts::get()->get("this_building_cant_do_trades_if_hp_isnt_full"),
+			*Locales::get()->get("this_building_cant_do_trades_if_hp_isnt_full"),
 			false,
 			Events()
 		);
@@ -138,15 +138,15 @@ HorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building
 		Events clickEvent;
 		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_trade"), *Texts::get()->get("OK"), clickEvent);
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_trade"), *Locales::get()->get("OK"), clickEvent);
 		events = events + clickEvent;
 		events.add(std::make_shared<CreateEEvent>(w));
 	}
 
 	HorizontalSelectionWindowComponent component = {
 		trade.buy.type + "_icon",
-		*Texts::get()->get("buy") + trade.buy.getReadableInfo() +
-		*Texts::get()->get("for") + trade.sell.getReadableInfo(),
+        *Locales::get()->get("buy") + trade.buy.getReadableInfo() +
+        *Locales::get()->get("for") + trade.sell.getReadableInfo(),
 		true,
 		events
 	};

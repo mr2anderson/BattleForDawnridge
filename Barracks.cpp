@@ -19,8 +19,8 @@
 
 #include "Barracks.hpp"
 #include "BarracksSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Barracks::Barracks() = default;
@@ -32,19 +32,19 @@ Building* Barracks::createSameTypeBuilding() const {
 	return new Barracks(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Barracks::getSX() const {
-	return Balance::get()->getInt("barracks_sx");
+	return Parameters::get()->getInt("barracks_sx");
 }
 uint32_t Barracks::getSY() const {
-	return Balance::get()->getInt("barracks_sy");
+	return Parameters::get()->getInt("barracks_sy");
 }
 uint32_t Barracks::getMaxHP() const {
-	return Balance::get()->getInt("barracks_max_hp");
+	return Parameters::get()->getInt("barracks_max_hp");
 }
 Defence Barracks::getDefence() const {
-	return Balance::get()->getDefence("barracks_defence");
+	return Parameters::get()->getDefence("barracks_defence");
 }
 Resources Barracks::getCost() const {
-	return Balance::get()->getResources("barracks_cost");
+	return Parameters::get()->getResources("barracks_cost");
 }
 std::string Barracks::getTextureName() const {
 	return "barracks";
@@ -53,8 +53,8 @@ std::string Barracks::getSoundName() const {
 	return "hooray";
 }
 std::wstring Barracks::getDescription() const {
-	return *Texts::get()->get("barracks_description");
+	return *Locales::get()->get("barracks_description");
 }
 uint32_t Barracks::getRegenerationSpeed() const {
-	return Balance::get()->getInt("barracks_regeneration_speed");
+	return Parameters::get()->getInt("barracks_regeneration_speed");
 }

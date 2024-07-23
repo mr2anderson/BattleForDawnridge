@@ -25,7 +25,7 @@
 #include "AddHpEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "HPFlyingE.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "ColorTheme.hpp"
 
 
@@ -63,7 +63,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents
 	if (b->works()) {
 		component = {
 			this->getHealTextureName(),
-			*Texts::get()->get("this_building_heals_warriors") + std::to_wstring(this->getHealingSpeed()),
+            *Locales::get()->get("this_building_heals_warriors") + std::to_wstring(this->getHealingSpeed()),
 			false,
 			Events()
 		};
@@ -71,7 +71,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents
 	else {
 		component = {
 			"hammer_icon",
-			*Texts::get()->get("does_not_heal_if_hp_isnt_full"),
+			*Locales::get()->get("does_not_heal_if_hp_isnt_full"),
 			false,
 			Events()
 		};

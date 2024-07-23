@@ -20,8 +20,8 @@
 
 #include "Sawmill.hpp"
 #include "SawmillSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Sawmill::Sawmill() = default;
@@ -33,22 +33,22 @@ Building* Sawmill::createSameTypeBuilding() const {
 	return new Sawmill(this->getX(), this->getY(), this->getPlayerId());
 }
 Defence Sawmill::getDefence() const {
-	return Balance::get()->getDefence("sawmill_defence");
+	return Parameters::get()->getDefence("sawmill_defence");
 }
 Resources Sawmill::getCost() const {
-	return Balance::get()->getResources("sawmill_cost");
+	return Parameters::get()->getResources("sawmill_cost");
 }
 uint32_t Sawmill::getSX() const {
-	return Balance::get()->getInt("sawmill_sx");
+	return Parameters::get()->getInt("sawmill_sx");
 }
 uint32_t Sawmill::getSY() const {
-	return Balance::get()->getInt("sawmill_sy");
+	return Parameters::get()->getInt("sawmill_sy");
 }
 uint32_t Sawmill::getMaxHP() const {
-	return Balance::get()->getInt("sawmill_max_hp");
+	return Parameters::get()->getInt("sawmill_max_hp");
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return Balance::get()->getInt("sawmill_regeneration_speed");
+	return Parameters::get()->getInt("sawmill_regeneration_speed");
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";
@@ -57,5 +57,5 @@ std::string Sawmill::getSoundName() const {
 	return "wood";
 }
 std::wstring Sawmill::getDescription() const {
-	return *Texts::get()->get("sawmill_description");
+	return *Locales::get()->get("sawmill_description");
 }

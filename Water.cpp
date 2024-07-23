@@ -18,11 +18,11 @@
 
 
 #include "Water.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 Water::Water() = default;
@@ -31,10 +31,10 @@ Water::Water(uint32_t x, uint32_t y, uint32_t type) :
 	this->type = type;
 }
 uint32_t Water::getSY() const {
-	return Balance::get()->getInt("water_sx");
+	return Parameters::get()->getInt("water_sx");
 }
 uint32_t Water::getSX() const {
-	return Balance::get()->getInt("water_sy");
+	return Parameters::get()->getInt("water_sy");
 }
 std::string Water::getTextureName() const {
 	return "water";
@@ -46,7 +46,7 @@ std::string Water::getSoundName() const {
 	return "water";
 }
 std::wstring Water::getDescription() const {
-	return *Texts::get()->get("water_description");
+	return *Locales::get()->get("water_description");
 }
 bool Water::isLowObstacle(uint32_t playerId) const {
     return true;

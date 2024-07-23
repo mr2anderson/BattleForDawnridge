@@ -490,11 +490,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddHpEvent.hpp" />
     <ClInclude Include="AddResourceEvent.hpp" />
     <ClInclude Include="AddResourcesEvent.hpp" />
-    <ClInclude Include="Balance.hpp" />
+    <ClInclude Include="Parameters.hpp" />
     <ClInclude Include="BarracksSpec.hpp" />
     <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp" />
     <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
-    <ClInclude Include="CouldntOpenBalance.hpp" />
+    <ClInclude Include="CouldntOpenParameters.hpp" />
     <ClInclude Include="CreateEffectEvent.hpp" />
     <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp" />
@@ -564,7 +564,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="CouldntOpenMap.hpp" />
     <ClInclude Include="CouldntOpenMusic.hpp" />
     <ClInclude Include="CouldntOpenSound.hpp" />
-    <ClInclude Include="CouldntOpenText.hpp" />
+    <ClInclude Include="CouldntOpenLocales.hpp" />
     <ClInclude Include="CouldntOpenTexture.hpp" />
     <ClInclude Include="CreateAnimationEvent.hpp" />
     <ClInclude Include="CreateEEvent.hpp" />
@@ -774,7 +774,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="SubHpEvent.hpp" />
     <ClInclude Include="SubResourceEvent.hpp" />
     <ClInclude Include="SubResourcesEvent.hpp" />
-    <ClInclude Include="Texts.hpp" />
+    <ClInclude Include="Locales.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="TilesetHandler.hpp" />
     <ClInclude Include="Trade.hpp" />
@@ -805,11 +805,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AddResourceEvent.cpp" />
     <ClCompile Include="AddResourcesEvent.cpp" />
     <ClCompile Include="AreaControllerSpec.cpp" />
-    <ClCompile Include="Balance.cpp" />
+    <ClCompile Include="Parameters.cpp" />
     <ClCompile Include="BarracksSpec.cpp" />
     <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp" />
     <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
-    <ClCompile Include="CouldntOpenBalance.cpp" />
+    <ClCompile Include="CouldntOpenParameters.cpp" />
     <ClCompile Include="CreateEffectEvent.cpp" />
     <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp" />
@@ -878,7 +878,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="CouldntOpenMap.cpp" />
     <ClCompile Include="CouldntOpenMusic.cpp" />
     <ClCompile Include="CouldntOpenSound.cpp" />
-    <ClCompile Include="CouldntOpenText.cpp" />
+    <ClCompile Include="CouldntOpenLocales.cpp" />
     <ClCompile Include="CouldntOpenTexture.cpp" />
     <ClCompile Include="CreateAnimationEvent.cpp" />
     <ClCompile Include="CreateEEvent.cpp" />
@@ -988,7 +988,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="SubHpEvent.cpp" />
     <ClCompile Include="SubResourceEvent.cpp" />
     <ClCompile Include="SubResourcesEvent.cpp" />
-    <ClCompile Include="Texts.cpp" />
+    <ClCompile Include="Locales.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TilesetHandler.cpp" />
     <ClCompile Include="Trade.cpp" />

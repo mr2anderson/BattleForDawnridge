@@ -19,12 +19,12 @@
 
 #include <map>
 #include "PoisonSpell.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Warrior.hpp"
 #include "PoisonFog.hpp"
 #include "CreateEffectEvent.hpp"
 #include "SubHpEvent.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 PoisonSpell::PoisonSpell(uint32_t playerId) : Spell(playerId) {
@@ -34,22 +34,22 @@ Spell* PoisonSpell::clone() const {
 	return new PoisonSpell(*this);
 }
 std::wstring PoisonSpell::getDescription() const {
-	return *Texts::get()->get("poison_spell_description") + std::to_wstring(Balance::get()->getInt("poison_fog_damage"));
+	return *Locales::get()->get("poison_spell_description") + std::to_wstring(Parameters::get()->getInt("poison_fog_damage"));
 }
 std::string PoisonSpell::getTextureName() const {
 	return "poison_spell";
 }
 Resources PoisonSpell::getCost() const {
-	return Balance::get()->getResources("poison_spell_cost");
+	return Parameters::get()->getResources("poison_spell_cost");
 }
 uint32_t PoisonSpell::getCreationTime() const {
-	return Balance::get()->getInt("poison_spell_creation_time");
+	return Parameters::get()->getInt("poison_spell_creation_time");
 }
 sf::Color PoisonSpell::getPreviewColor() const {
 	return sf::Color(50, 30, 0, 50);
 }
 uint32_t PoisonSpell::getRadius() const {
-	return Balance::get()->getInt("poison_spell_radius");
+	return Parameters::get()->getInt("poison_spell_radius");
 }
 std::string PoisonSpell::getSoundName() const {
 	return "poison_fog";

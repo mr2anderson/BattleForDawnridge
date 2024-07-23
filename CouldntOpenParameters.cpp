@@ -17,15 +17,12 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include "CouldntOpenParameters.hpp"
 
 
-#pragma once
+CouldntOpenParameters::CouldntOpenParameters(const std::string& path) : CouldntOpen(path) {
 
-
-class CouldntOpenText : public CouldntOpen {
-public:
-    CouldntOpenText(const std::string &path);
-
-    std::string getUpperCaseResourceReadableName() const override;
-};
+}
+std::string CouldntOpenParameters::getUpperCaseResourceReadableName() const {
+	return "PARAMETERS";
+}

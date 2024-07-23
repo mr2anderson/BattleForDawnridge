@@ -808,7 +808,7 @@
     <ClInclude Include="CouldntOpenSound.hpp">
       <Filter>Header Files\resourceExceptions</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenText.hpp">
+    <ClInclude Include="CouldntOpenLocales.hpp">
       <Filter>Header Files\resourceExceptions</Filter>
     </ClInclude>
     <ClInclude Include="CouldntOpenTexture.hpp">
@@ -913,7 +913,7 @@
     <ClInclude Include="SubResourcesEvent.hpp">
       <Filter>Header Files\events</Filter>
     </ClInclude>
-    <ClInclude Include="Texts.hpp">
+    <ClInclude Include="Locales.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="Textures.hpp">
@@ -1378,10 +1378,10 @@
     <ClInclude Include="PoisonSpell.hpp">
       <Filter>Header Files\spells</Filter>
     </ClInclude>
-    <ClInclude Include="Balance.hpp">
+    <ClInclude Include="Parameters.hpp">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenBalance.hpp">
+    <ClInclude Include="CouldntOpenParameters.hpp">
       <Filter>Header Files\resourceExceptions</Filter>
     </ClInclude>
     <ClInclude Include="WarriorHealerSpec.hpp">
@@ -1452,7 +1452,7 @@
     <ClCompile Include="CouldntOpenSound.cpp">
       <Filter>Source Files\resourceExceptions</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenText.cpp">
+    <ClCompile Include="CouldntOpenLocales.cpp">
       <Filter>Source Files\resourceExceptions</Filter>
     </ClCompile>
     <ClCompile Include="CreateEEvent.cpp">
@@ -1536,7 +1536,7 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="Texts.cpp">
+    <ClCompile Include="Locales.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
     <ClCompile Include="ReturnToMenuEvent.cpp">
@@ -2016,10 +2016,10 @@
     <ClCompile Include="PoisonSpell.cpp">
       <Filter>Source Files\spells</Filter>
     </ClCompile>
-    <ClCompile Include="Balance.cpp">
+    <ClCompile Include="Parameters.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenBalance.cpp">
+    <ClCompile Include="CouldntOpenParameters.cpp">
       <Filter>Source Files\resourceExceptions</Filter>
     </ClCompile>
     <ClCompile Include="WarriorHealerSpec.cpp">

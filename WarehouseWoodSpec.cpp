@@ -19,7 +19,7 @@
 
 
 #include "WarehouseWoodSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseWoodSpec::WarehouseWoodSpec() = default;
@@ -27,5 +27,5 @@ IBuildingSpec* WarehouseWoodSpec::clone() const {
 	return new WarehouseWoodSpec(*this);
 }
 Resources WarehouseWoodSpec::getLimit() const {
-	return Balance::get()->getResources("warehouse_wood_limit");
+	return Parameters::get()->getResources("warehouse_wood_limit");
 }

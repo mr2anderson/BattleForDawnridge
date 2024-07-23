@@ -27,7 +27,7 @@
 #include "CreateAnimationEvent.hpp"
 #include "CloseAnimationEvent.hpp"
 #include "WindowButton.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "WarriorPlayerPointer.hpp"
 #include "PlayerPointerCircle.hpp"
@@ -44,7 +44,7 @@
 #include "RevertKillNextTurnEvent.hpp"
 #include "WindowTwoButtons.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 #include "GlobalRandomGenerator.hpp"
 
 
@@ -104,7 +104,7 @@ Events Warrior::killNextTurn() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("will_be_killed_on_next_turn"), *Texts::get()->get("OK"), clickSoundEvent);
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("will_be_killed_on_next_turn"), *Locales::get()->get("OK"), clickSoundEvent);
 
     Events event = clickSoundEvent;
     event.add(std::make_shared<CreateEEvent>(w));
@@ -117,7 +117,7 @@ Events Warrior::revertKillNextTurn() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("wont_be_killed_on_next_turn"), *Texts::get()->get("OK"), clickSoundEvent);
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("wont_be_killed_on_next_turn"), *Locales::get()->get("OK"), clickSoundEvent);
 
     Events event = clickSoundEvent;
     event.add(std::make_shared<CreateEEvent>(w));
@@ -127,7 +127,7 @@ Events Warrior::revertKillNextTurn() {
     return event;
 }
 void Warrior::enableRageMode() {
-    this->rageModeMovesLeft = Balance::get()->getInt("rage_mode_lifetime");
+    this->rageModeMovesLeft = Parameters::get()->getInt("rage_mode_lifetime");
 }
 void Warrior::decreaseRageModeMovesLeft() {
     this->rageModeMovesLeft = this->rageModeMovesLeft - 1;
@@ -297,10 +297,10 @@ void Warrior::startAnimation(const std::string& type) {
     this->currentAnimation = type;
 }
 Damage Warrior::getDamage() const {
-    return (1 + Balance::get()->getDouble("rage_mode_damage_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDamage();
+    return (1 + Parameters::get()->getDouble("rage_mode_damage_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDamage();
 }
 Defence Warrior::getDefence() const {
-    return (1 + Balance::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
+    return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
 }
 uint8_t Warrior::getDrawingPriority() const {
     return GO::PRIORITY::HIGH;
@@ -472,8 +472,8 @@ float Warrior::getScale() const {
 HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
         "rage_spell",
-        *Texts::get()->get("rage_spell_description") + L"\n" +
-        *Texts::get()->get("moves_left") + std::to_wstring(this->rageModeMovesLeft),
+        *Locales::get()->get("rage_spell_description") + L"\n" +
+        *Locales::get()->get("moves_left") + std::to_wstring(this->rageModeMovesLeft),
         false,
         Events()
     };
@@ -485,14 +485,14 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     Events killNextTurnEvent = clickSoundEvent;
     killNextTurnEvent.add(std::make_shared<KillNextTurnEvent>(this));
 
-    std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("verify_kill"), *Texts::get()->get("yes"), *Texts::get()->get("no"), killNextTurnEvent, clickSoundEvent);
+    std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("verify_kill"), *Locales::get()->get("yes"), *Locales::get()->get("no"), killNextTurnEvent, clickSoundEvent);
 
     Events killNextTurnEventVerify = clickSoundEvent;
     killNextTurnEventVerify.add(std::make_shared<CreateEEvent>(verifyWindow));
 
     return {
         "skull",
-        *Texts::get()->get("kill"),
+        *Locales::get()->get("kill"),
         true,
         killNextTurnEventVerify
     };
@@ -506,7 +506,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 
     return {
         "skull",
-        *Texts::get()->get("revert_kill"),
+        *Locales::get()->get("revert_kill"),
         true,
         revertKillNextTurnEvent
     };
@@ -514,10 +514,10 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
         "helmet",
-        *Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
-        *Texts::get()->get("damage") + this->getDamage().getReadable() + L"\n" +
-        *Texts::get()->get("movement_points") + std::to_wstring(this->movementPoints.value_or(this->getMovementPoints())) + L" / " + std::to_wstring(this->getMovementPoints()) + L"\n" +
-        *Texts::get()->get("population") + std::to_wstring(this->getPopulation()),
+        *Locales::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
+        *Locales::get()->get("damage") + this->getDamage().getReadable() + L"\n" +
+        *Locales::get()->get("movement_points") + std::to_wstring(this->movementPoints.value_or(this->getMovementPoints())) + L" / " + std::to_wstring(this->getMovementPoints()) + L"\n" +
+        *Locales::get()->get("population") + std::to_wstring(this->getPopulation()),
         false,
         Events()
     };
@@ -525,7 +525,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
         this->getTextureName(),
-        *Texts::get()->get("warrior_of_enemy"),
+        *Locales::get()->get("warrior_of_enemy"),
         false,
         Events()
     };
@@ -599,7 +599,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 
             selectThisEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Texts::get()->get("warrior_selection_guide"), *Texts::get()->get("OK"), selectThisEvent);
+            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Locales::get()->get("warrior_selection_guide"), *Locales::get()->get("OK"), selectThisEvent);
             response.add(std::make_shared<CreateEEvent>(warriorSelectionGuide));
         }
     }
@@ -607,7 +607,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
         Events clickSoundEvent;
         clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-        std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_more_movement_points"), *Texts::get()->get("OK"), clickSoundEvent);
+        std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_more_movement_points"), *Locales::get()->get("OK"), clickSoundEvent);
         response.add(std::make_shared<CreateEEvent>(w));
     }
 	return response;

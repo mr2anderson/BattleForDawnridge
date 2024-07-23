@@ -18,8 +18,8 @@
 
 
 #include "BlackKnight.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 BlackKnight::BlackKnight() = default;
@@ -34,25 +34,25 @@ uint8_t BlackKnight::getType() const {
     return BlackKnight::TYPE::HUMAN;
 }
 uint32_t BlackKnight::getMaxHP() const {
-	return Balance::get()->getInt("black_knight_max_hp");
+	return Parameters::get()->getInt("black_knight_max_hp");
 }
 Damage BlackKnight::getBaseDamage() const {
-	return Balance::get()->getDamage("black_knight_damage");
+	return Parameters::get()->getDamage("black_knight_damage");
 }
 Defence BlackKnight::getBaseDefence() const {
-	return Balance::get()->getDefence("black_knight_defence");
+	return Parameters::get()->getDefence("black_knight_defence");
 }
 Resources BlackKnight::getCost() const {
-	return Balance::get()->getResources("black_knight_cost");
+	return Parameters::get()->getResources("black_knight_cost");
 }
 uint32_t BlackKnight::getTimeToProduce() const {
-	return Balance::get()->getInt("black_knight_time_to_produce");
+	return Parameters::get()->getInt("black_knight_time_to_produce");
 }
 std::string BlackKnight::getSoundName() const {
 	return "breath";
 }
 std::wstring BlackKnight::getDescription() const {
-	return *Texts::get()->get("black_knight_description");
+	return *Locales::get()->get("black_knight_description");
 }
 uint32_t BlackKnight::getTalkingAnimationsNumberInSet() const {
 	return 9;
@@ -73,8 +73,8 @@ std::string BlackKnight::getBaseTextureName() const {
 	return "black_knight";
 }
 uint32_t BlackKnight::getMovementPoints() const {
-	return Balance::get()->getInt("black_knight_movement_points");
+	return Parameters::get()->getInt("black_knight_movement_points");
 }
 uint32_t BlackKnight::getPopulation() const {
-	return Balance::get()->getInt("black_knight_population");
+	return Parameters::get()->getInt("black_knight_population");
 }

@@ -19,7 +19,7 @@
 
 #include "IPopulationLimitIncreaserSpec.hpp"
 #include "Building.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 
 
 std::vector<HorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(const Building* building, MapState* state) {
@@ -28,7 +28,7 @@ std::vector<HorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::g
 	if (building->works()) {
 		component = {
 			"helmet",
-			*Texts::get()->get("this_building_increases_population_limit") + std::to_wstring(this->getPopulationLimit(building)),
+            *Locales::get()->get("this_building_increases_population_limit") + std::to_wstring(this->getPopulationLimit(building)),
 			false,
 			Events()
 		};
@@ -36,7 +36,7 @@ std::vector<HorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::g
 	else {
 		component = {
 			"hammer_icon",
-			*Texts::get()->get("does_not_increase_population_limit_if_hp_isnt_full"),
+			*Locales::get()->get("does_not_increase_population_limit_if_hp_isnt_full"),
 			false,
 			Events()
 		};

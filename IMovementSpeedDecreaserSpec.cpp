@@ -19,13 +19,13 @@
 
 #include "IMovementSpeedDecreaserSpec.hpp"
 #include "Building.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 
 
 std::vector<HorizontalSelectionWindowComponent> IMovementSpeedDecreaser::getComponents(const Building* building, MapState* state) {
 	HorizontalSelectionWindowComponent component = {
 		building->getTextureName(),
-		*Texts::get()->get("this_building_decreases_movement_speed") + std::to_wstring(this->getMovementSpeedDecreasingEffectStrength()),
+        *Locales::get()->get("this_building_decreases_movement_speed") + std::to_wstring(this->getMovementSpeedDecreasingEffectStrength()),
 		false,
 		Events()
 	};

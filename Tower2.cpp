@@ -19,8 +19,8 @@
 
 #include "Tower2.hpp"
 #include "Tower2Spec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Tower2::Tower2() = default;
@@ -32,19 +32,19 @@ Building* Tower2::createSameTypeBuilding() const {
     return new Tower2(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Tower2::getSX() const {
-    return Balance::get()->getInt("tower2_sx");
+    return Parameters::get()->getInt("tower2_sx");
 }
 uint32_t Tower2::getSY() const {
-    return Balance::get()->getInt("tower2_sy");
+    return Parameters::get()->getInt("tower2_sy");
 }
 uint32_t Tower2::getMaxHP() const {
-    return Balance::get()->getInt("tower2_max_hp");
+    return Parameters::get()->getInt("tower2_max_hp");
 }
 Defence Tower2::getDefence() const {
-    return Balance::get()->getDefence("tower2_defence");
+    return Parameters::get()->getDefence("tower2_defence");
 }
 Resources Tower2::getCost() const {
-    return Balance::get()->getResources("tower2_cost");
+    return Parameters::get()->getResources("tower2_cost");
 }
 std::string Tower2::getTextureName() const {
     return "tower2";
@@ -53,8 +53,8 @@ std::string Tower2::getSoundName() const {
     return "big_arrow1";
 }
 std::wstring Tower2::getDescription() const {
-    return *Texts::get()->get("tower2_description");
+    return *Locales::get()->get("tower2_description");
 }
 uint32_t Tower2::getRegenerationSpeed() const {
-    return Balance::get()->getInt("tower2_regeneration_speed");
+    return Parameters::get()->getInt("tower2_regeneration_speed");
 }

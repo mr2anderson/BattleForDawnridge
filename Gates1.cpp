@@ -19,8 +19,8 @@
 
 #include "Gates1.hpp"
 #include "GatesSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Gates1::Gates1() = default;
@@ -32,22 +32,22 @@ Building* Gates1::createSameTypeBuilding() const {
     return new Gates1(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Gates1::getSX() const {
-    return Balance::get()->getInt("gates1_sx");
+    return Parameters::get()->getInt("gates1_sx");
 }
 uint32_t Gates1::getSY() const {
-    return Balance::get()->getInt("gates1_sy");
+    return Parameters::get()->getInt("gates1_sy");
 }
 uint32_t Gates1::getMaxHP() const {
-    return Balance::get()->getInt("gates1_max_hp");
+    return Parameters::get()->getInt("gates1_max_hp");
 }
 Defence Gates1::getDefence() const {
-    return Balance::get()->getDefence("gates1_defence");
+    return Parameters::get()->getDefence("gates1_defence");
 }
 Resources Gates1::getCost() const {
-    return Balance::get()->getResources("gates1_cost");
+    return Parameters::get()->getResources("gates1_cost");
 }
 uint32_t Gates1::getRegenerationSpeed() const {
-    return Balance::get()->getInt("gates1_regeneration_speed");
+    return Parameters::get()->getInt("gates1_regeneration_speed");
 }
 std::string Gates1::getTextureName() const {
     return "gates1";
@@ -56,5 +56,5 @@ std::string Gates1::getSoundName() const {
     return "stone";
 }
 std::wstring Gates1::getDescription() const {
-    return *Texts::get()->get("gates1_description");
+    return *Locales::get()->get("gates1_description");
 }

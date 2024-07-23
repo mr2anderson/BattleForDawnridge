@@ -19,9 +19,9 @@
 
 #include "RageSpell.hpp"
 #include "EnableWarriorRageModeEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Warrior.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 RageSpell::RageSpell(uint32_t playerId) : Spell(playerId) {
@@ -31,22 +31,22 @@ Spell* RageSpell::clone() const {
 	return new RageSpell(*this);
 }
 std::wstring RageSpell::getDescription() const {
-	return *Texts::get()->get("rage_spell_description");
+	return *Locales::get()->get("rage_spell_description");
 }
 std::string RageSpell::getTextureName() const {
 	return "rage_spell";
 }
 Resources RageSpell::getCost() const {
-	return Balance::get()->getResources("rage_spell_cost");
+	return Parameters::get()->getResources("rage_spell_cost");
 }
 uint32_t RageSpell::getCreationTime() const {
-	return Balance::get()->getInt("rage_spell_creation_time");
+	return Parameters::get()->getInt("rage_spell_creation_time");
 }
 sf::Color RageSpell::getPreviewColor() const {
 	return sf::Color(75, 0, 130, 30);
 }
 uint32_t RageSpell::getRadius() const {
-	return Balance::get()->getInt("rage_spell_radius");
+	return Parameters::get()->getInt("rage_spell_radius");
 }
 std::string RageSpell::getSoundName() const {
 	return "rage_spell";

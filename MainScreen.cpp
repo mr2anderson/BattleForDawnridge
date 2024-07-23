@@ -48,7 +48,7 @@
 #include "Sounds.hpp"
 #include "WindowButton.hpp"
 #include "Textures.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "TradingSpec.hpp"
 #include "ResourcePoint.hpp"
 #include "WarriorProducerSpec.hpp"
@@ -169,7 +169,7 @@ void MainScreen::initSelectable() {
 template<typename T> std::wstring GET_BUILD_DESCRIPTION() {
 	std::unique_ptr<T> t = std::make_unique<T>();
 	std::wstring description = t->getDescription() + L'\n' +
-		*Texts::get()->get("cost") + t->getCost().getReadableInfo();
+                               *Locales::get()->get("cost") + t->getCost().getReadableInfo();
 	return description;
 }
 template<typename T> HorizontalSelectionWindowComponent GET_BUILD_COMPONENT() {
@@ -195,7 +195,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     Events endMoveEvent = clickSoundEvent;
 	endMoveEvent.add(std::make_shared<ChangeMoveEvent>());
 
-	std::shared_ptr<WindowTwoButtons> confirmEndMoveWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("confirm_end_move"), *Texts::get()->get("yes"), *Texts::get()->get("no"), endMoveEvent, clickSoundEvent);
+	std::shared_ptr<WindowTwoButtons> confirmEndMoveWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("confirm_end_move"), *Locales::get()->get("yes"), *Locales::get()->get("no"), endMoveEvent, clickSoundEvent);
 	Events createConfirmEndMoveWindowEvent = clickSoundEvent;
 	createConfirmEndMoveWindowEvent.add(std::make_shared<CreateEEvent>(confirmEndMoveWindow));
 
@@ -205,7 +205,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     Events returnToMenuEvent = clickSoundEvent;
 	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
 
-	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(*Texts::get()->get("confirm_return_to_menu"), *Texts::get()->get("yes"), *Texts::get()->get("no"), returnToMenuEvent, clickSoundEvent);
+	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("confirm_return_to_menu"), *Locales::get()->get("yes"), *Locales::get()->get("no"), returnToMenuEvent, clickSoundEvent);
 	Events createConfirmReturnToMenuWindowEvent = clickSoundEvent;
 	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
 
@@ -213,7 +213,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
-    buildMenuSectionMainComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
+    buildMenuSectionMainComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<Road>());
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<House>());
 
@@ -224,7 +224,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionResourceCollectorsComponents;
-    buildMenuSectionResourceCollectorsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
+    buildMenuSectionResourceCollectorsComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Arable>());
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Sawmill>());
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Quarry>());
@@ -237,7 +237,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionWarehousesComponents;
-    buildMenuSectionWarehousesComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
+    buildMenuSectionWarehousesComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseFood>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseWood>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseStone>());
@@ -251,7 +251,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
-    buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
+    buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
 
@@ -262,7 +262,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
     std::vector<HorizontalSelectionWindowComponent> buildMenuSectionDefenceComponents;
-    buildMenuSectionDefenceComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
+    buildMenuSectionDefenceComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates1>());
     buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower1>());
@@ -278,7 +278,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
     std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
-    buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
+    buildMenuSectionOtherComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<Market>());
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
 
@@ -289,13 +289,13 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 
 
     std::vector<HorizontalSelectionWindowComponent> buildMenuComponents;
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("leave"), true, clickSoundEvent);
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("main"), true, createBuildWindowSectionMainEvent);
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("resource_collectors"), true, createBuildWindowSectionResourceCollectorsEvent);
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("warehouses"), true, createBuildWindowSectionWarehousesEvent);
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("troops"), true, createBuildWindowSectionTroopsEvent);
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("defence"), true, createBuildWindowSectionDefenceEvent);
-    buildMenuComponents.emplace_back("hammer_icon", *Texts::get()->get("other"), true, createBuildWindowSectionOtherEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("main"), true, createBuildWindowSectionMainEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("resource_collectors"), true, createBuildWindowSectionResourceCollectorsEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("warehouses"), true, createBuildWindowSectionWarehousesEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("troops"), true, createBuildWindowSectionTroopsEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("defence"), true, createBuildWindowSectionDefenceEvent);
+    buildMenuComponents.emplace_back("hammer_icon", *Locales::get()->get("other"), true, createBuildWindowSectionOtherEvent);
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindow = std::make_shared<HorizontalSelectionWindow>(buildMenuComponents);
     Events buildEvent = clickSoundEvent;
@@ -311,9 +311,9 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->animation = std::nullopt;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
-	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Texts::get()->get("new_move")), createConfirmEndMoveWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Locales::get()->get("new_move")), createConfirmEndMoveWindowEvent);
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 200, 40 + 10 + 30, "hammer_icon"), buildEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Texts::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Locales::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
 
 
@@ -835,7 +835,7 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
 		Events returnToMenuEvent;
         returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
 		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
-		w = std::make_shared<WindowButton>(*Texts::get()->get("game_finished"), *Texts::get()->get("OK"), returnToMenuEvent);
+		w = std::make_shared<WindowButton>(*Locales::get()->get("game_finished"), *Locales::get()->get("OK"), returnToMenuEvent);
 	}
 	else {
         Events event;
@@ -849,7 +849,7 @@ void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryCo
         if (this->currentPlayerId == e->getPlayerId()) {
             event.add(std::make_shared<ChangeMoveEvent>());
         }
-		w = std::make_shared<WindowButton>(*Texts::get()->get("player_is_out"), *Texts::get()->get("OK"), event);
+		w = std::make_shared<WindowButton>(*Locales::get()->get("player_is_out"), *Locales::get()->get("OK"), event);
 	}
 	std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
 	this->handleCreatePopUpElementEvent(createW);
@@ -920,7 +920,7 @@ void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
 		Events clickEvent;
 		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_building"), *Texts::get()->get("OK"), clickEvent);
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_building"), *Locales::get()->get("OK"), clickEvent);
 		Events unableToBuildEvent;
 		unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
 		this->addEvents(unableToBuildEvent);

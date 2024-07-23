@@ -19,8 +19,8 @@
 
 #include "Wall1.hpp"
 #include "WallSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Wall1::Wall1() = default;
@@ -32,22 +32,22 @@ Building* Wall1::createSameTypeBuilding() const {
 	return new Wall1(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Wall1::getSX() const {
-    return Balance::get()->getInt("wall1_sx");
+    return Parameters::get()->getInt("wall1_sx");
 }
 uint32_t Wall1::getSY() const {
-	return Balance::get()->getInt("wall1_sy");
+	return Parameters::get()->getInt("wall1_sy");
 }
 uint32_t Wall1::getMaxHP() const {
-	return Balance::get()->getInt("wall1_max_hp");
+	return Parameters::get()->getInt("wall1_max_hp");
 }
 Defence Wall1::getDefence() const {
-	return Balance::get()->getDefence("wall1_defence");
+	return Parameters::get()->getDefence("wall1_defence");
 }
 Resources Wall1::getCost() const {
-	return Balance::get()->getResources("wall1_cost");
+	return Parameters::get()->getResources("wall1_cost");
 }
 uint32_t Wall1::getRegenerationSpeed() const {
-	return Balance::get()->getInt("wall1_regeneration_speed");
+	return Parameters::get()->getInt("wall1_regeneration_speed");
 }
 std::string Wall1::getTextureName() const {
 	return "wall1";
@@ -56,5 +56,5 @@ std::string Wall1::getSoundName() const {
 	return "stone";
 }
 std::wstring Wall1::getDescription() const {
-	return *Texts::get()->get("wall1_description");
+	return *Locales::get()->get("wall1_description");
 }

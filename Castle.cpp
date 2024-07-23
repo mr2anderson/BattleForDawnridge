@@ -24,8 +24,8 @@
 #include "CastleWoodGeneratorSpec.hpp"
 #include "CastlePopulationLimitIncreaserSpec.hpp"
 #include "CastleShootingSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Castle::Castle() = default;
@@ -42,16 +42,16 @@ Building* Castle::createSameTypeBuilding() const {
 	return new Castle(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Castle::getSX() const {
-	return Balance::get()->getInt("castle_sx");
+	return Parameters::get()->getInt("castle_sx");
 }
 uint32_t Castle::getSY() const {
-	return Balance::get()->getInt("castle_sy");
+	return Parameters::get()->getInt("castle_sy");
 }
 uint32_t Castle::getMaxHP() const {
-	return Balance::get()->getInt("castle_max_hp");
+	return Parameters::get()->getInt("castle_max_hp");
 }
 Defence Castle::getDefence() const {
-	return Balance::get()->getDefence("castle_defence");
+	return Parameters::get()->getDefence("castle_defence");
 }
 Resources Castle::getCost() const {
 	return Resources();
@@ -63,8 +63,8 @@ std::string Castle::getSoundName() const {
 	return "hooray";
 }
 std::wstring Castle::getDescription() const {
-	return *Texts::get()->get("castle_description");
+	return *Locales::get()->get("castle_description");
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return Balance::get()->getInt("castle_regeneration_speed");
+	return Parameters::get()->getInt("castle_regeneration_speed");
 }

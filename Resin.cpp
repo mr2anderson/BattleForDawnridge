@@ -19,8 +19,8 @@
 
 #include "Resin.hpp"
 #include "ResinSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Resin::Resin() = default;
@@ -32,22 +32,22 @@ Building* Resin::createSameTypeBuilding() const {
 	return new Resin(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Resin::getSX() const {
-	return Balance::get()->getInt("resin_sx");
+	return Parameters::get()->getInt("resin_sx");
 }
 uint32_t Resin::getSY() const {
-	return Balance::get()->getInt("resin_sy");
+	return Parameters::get()->getInt("resin_sy");
 }
 uint32_t Resin::getMaxHP() const {
-	return Balance::get()->getInt("resin_max_hp");
+	return Parameters::get()->getInt("resin_max_hp");
 }
 Defence Resin::getDefence() const {
-	return Balance::get()->getDefence("resin_defence");
+	return Parameters::get()->getDefence("resin_defence");
 }
 Resources Resin::getCost() const {
-	return Balance::get()->getResources("resin_cost");
+	return Parameters::get()->getResources("resin_cost");
 }
 uint32_t Resin::getRegenerationSpeed() const {
-	return Balance::get()->getInt("resin_regeneration_speed");
+	return Parameters::get()->getInt("resin_regeneration_speed");
 }
 std::string Resin::getTextureName() const {
 	return "resin";
@@ -56,5 +56,5 @@ std::string Resin::getSoundName() const {
 	return "gurgle";
 }
 std::wstring Resin::getDescription() const {
-	return *Texts::get()->get("resin_description");
+	return *Locales::get()->get("resin_description");
 }

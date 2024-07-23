@@ -18,7 +18,7 @@
 
 
 #include "WarehouseIronSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseIronSpec::WarehouseIronSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* WarehouseIronSpec::clone() const {
 	return new WarehouseIronSpec(*this);
 }
 Resources WarehouseIronSpec::getLimit() const {
-	return Balance::get()->getResources("warehouse_iron_limit");
+	return Parameters::get()->getResources("warehouse_iron_limit");
 }

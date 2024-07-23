@@ -17,32 +17,15 @@
  */
 
 
-
-#include <unordered_map>
-#include <string>
+#include "CouldntOpen.hpp"
 
 
 #pragma once
 
 
-class Texts {
+class CouldntOpenParameters : public CouldntOpen {
 public:
-    static Texts* get() {
-        if (Texts::singletone == nullptr) {
-            Texts::singletone = new Texts();
-        }
-        return Texts::singletone;
-    }
+	CouldntOpenParameters(const std::string &path);
 
-    void load();
-    void setDefaultPath(const std::string& path);
-    std::wstring* get(const std::string& name);
-private:
-    Texts() = default;
-    Texts(const Texts& copy);
-    static Texts* singletone;
-
-    std::unordered_map<std::string, std::wstring> texts;
-
-    std::string getPath() const;
+	std::string getUpperCaseResourceReadableName() const override;
 };

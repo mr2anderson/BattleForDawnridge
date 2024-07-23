@@ -19,8 +19,8 @@
 
 #include "House.hpp"
 #include "HouseSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 #include "GlobalRandomGenerator.hpp"
 
 
@@ -41,19 +41,19 @@ Building* House::createSameTypeBuilding() const {
 	return new House(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t House::getSX() const {
-	return Balance::get()->getInt("house_sx");
+	return Parameters::get()->getInt("house_sx");
 }
 uint32_t House::getSY() const {
-	return Balance::get()->getInt("house_sy");
+	return Parameters::get()->getInt("house_sy");
 }
 uint32_t House::getMaxHP() const {
-	return Balance::get()->getInt("house_max_hp");
+	return Parameters::get()->getInt("house_max_hp");
 }
 Defence House::getDefence() const {
-	return Balance::get()->getDefence("house_defence");
+	return Parameters::get()->getDefence("house_defence");
 }
 Resources House::getCost() const {
-	return Balance::get()->getResources("house_cost");
+	return Parameters::get()->getResources("house_cost");
 }
 std::string House::getTextureName() const {
 	return "house" + std::to_string(this->type);
@@ -62,8 +62,8 @@ std::string House::getSoundName() const {
 	return "bottles";
 }
 std::wstring House::getDescription() const {
-	return *Texts::get()->get("house_description");
+	return *Locales::get()->get("house_description");
 }
 uint32_t House::getRegenerationSpeed() const {
-	return Balance::get()->getInt("house_regeneration_speed");
+	return Parameters::get()->getInt("house_regeneration_speed");
 }

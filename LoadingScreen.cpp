@@ -23,7 +23,7 @@
 #include "Fonts.hpp"
 #include "Sounds.hpp"
 #include "Music.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Maps.hpp"
 #include "ColorTheme.hpp"
 #include "Infantryman.hpp"
@@ -36,15 +36,15 @@
 #include "CouldntOpenFont.hpp"
 #include "CouldntOpenSound.hpp"
 #include "CouldntOpenMusic.hpp"
-#include "CouldntOpenText.hpp"
+#include "CouldntOpenLocales.hpp"
 #include "CouldntOpenMap.hpp"
 #include "UTFEncoder.hpp"
 #include "ClueManager.hpp"
 #include "Fire.hpp"
 #include "House.hpp"
 #include "PoisonFog.hpp"
-#include "Balance.hpp"
-#include "CouldntOpenBalance.hpp"
+#include "Parameters.hpp"
+#include "CouldntOpenParameters.hpp"
 #include "BigArrow.hpp"
 
 
@@ -85,9 +85,9 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     }
 
     try {
-        Texts::get()->load();
+        Locales::get()->load();
     }
-	catch (CouldntOpenText &e) {
+	catch (CouldntOpenLocales &e) {
         this->loadingError(&e, window);
         return false;
     }
@@ -101,7 +101,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
-	t.setString(*Texts::get()->get("please_wait"));
+	t.setString(*Locales::get()->get("please_wait"));
 	t.setCharacterSize(31);
 	t.setFillColor(sf::Color::White);
 	t.setOutlineColor(sf::Color::Black);
@@ -204,9 +204,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
 
 
     try {
-        Balance::get()->load();
+        Parameters::get()->load();
     }
-    catch (CouldntOpenBalance& e) {
+    catch (CouldntOpenParameters& e) {
         loadingError(&e, window);
         return false;
     }

@@ -19,8 +19,8 @@
 
 #include "WarehouseWood.hpp"
 #include "WarehouseWoodSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;
@@ -32,22 +32,22 @@ Building* WarehouseWood::createSameTypeBuilding() const {
 	return new WarehouseWood(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseWood::getSX() const {
-	return Balance::get()->getInt("warehouse_wood_sx");
+	return Parameters::get()->getInt("warehouse_wood_sx");
 }
 uint32_t WarehouseWood::getSY() const {
-	return Balance::get()->getInt("warehouse_wood_sy");
+	return Parameters::get()->getInt("warehouse_wood_sy");
 }
 uint32_t WarehouseWood::getMaxHP() const {
-	return Balance::get()->getInt("warehouse_wood_max_hp");
+	return Parameters::get()->getInt("warehouse_wood_max_hp");
 }
 Defence WarehouseWood::getDefence() const {
-	return Balance::get()->getDefence("warehouse_wood_defence");
+	return Parameters::get()->getDefence("warehouse_wood_defence");
 }
 Resources WarehouseWood::getCost() const {
-	return Balance::get()->getResources("warehouse_wood_cost");
+	return Parameters::get()->getResources("warehouse_wood_cost");
 }
 uint32_t WarehouseWood::getRegenerationSpeed() const {
-	return Balance::get()->getInt("warehouse_wood_regeneration_speed");
+	return Parameters::get()->getInt("warehouse_wood_regeneration_speed");
 }
 std::string WarehouseWood::getTextureName() const {
 	return "warehouse_wood";
@@ -56,5 +56,5 @@ std::string WarehouseWood::getSoundName() const {
 	return "wood";
 }
 std::wstring WarehouseWood::getDescription() const {
-	return *Texts::get()->get("warehouse_wood_description");
+	return *Locales::get()->get("warehouse_wood_description");
 }

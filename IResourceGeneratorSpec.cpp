@@ -23,7 +23,7 @@
 #include "AddResourceEvent.hpp"
 #include "FocusOnEvent.hpp"
 #include "CreateEEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Building.hpp"
 
 
@@ -60,7 +60,7 @@ std::vector<HorizontalSelectionWindowComponent> IResourceGeneratorSpec::getCompo
 	if (building->works()) {
 		component = {
 			this->getProduct().type + "_icon",
-			*Texts::get()->get("this_building_produces_resources_every_move") + this->getProduct().getReadableInfo(),
+            *Locales::get()->get("this_building_produces_resources_every_move") + this->getProduct().getReadableInfo(),
 			false,
 			Events()
 		};
@@ -68,7 +68,7 @@ std::vector<HorizontalSelectionWindowComponent> IResourceGeneratorSpec::getCompo
 	else {
 		component = {
 			"hammer_icon",
-			*Texts::get()->get("this_building_cant_produce_resources_if_hp_isnt_full"),
+			*Locales::get()->get("this_building_cant_produce_resources_if_hp_isnt_full"),
 			false,
 			Events()
 		};

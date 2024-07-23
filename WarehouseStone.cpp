@@ -19,8 +19,8 @@
 
 #include "WarehouseStone.hpp"
 #include "WarehouseStoneSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;
@@ -32,22 +32,22 @@ Building* WarehouseStone::createSameTypeBuilding() const {
 	return new WarehouseStone(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseStone::getSX() const {
-	return Balance::get()->getInt("warehouse_stone_sx");
+	return Parameters::get()->getInt("warehouse_stone_sx");
 }
 uint32_t WarehouseStone::getSY() const {
-	return Balance::get()->getInt("warehouse_stone_sy");
+	return Parameters::get()->getInt("warehouse_stone_sy");
 }
 uint32_t WarehouseStone::getMaxHP() const {
-	return Balance::get()->getInt("warehouse_stone_max_hp");
+	return Parameters::get()->getInt("warehouse_stone_max_hp");
 }
 Defence WarehouseStone::getDefence() const {
-	return Balance::get()->getDefence("warehouse_stone_defence");
+	return Parameters::get()->getDefence("warehouse_stone_defence");
 }
 Resources WarehouseStone::getCost() const {
-	return Balance::get()->getResources("warehouse_stone_cost");
+	return Parameters::get()->getResources("warehouse_stone_cost");
 }
 uint32_t WarehouseStone::getRegenerationSpeed() const {
-	return Balance::get()->getInt("warehouse_stone_regeneration_speed");
+	return Parameters::get()->getInt("warehouse_stone_regeneration_speed");
 }
 std::string WarehouseStone::getTextureName() const {
 	return "warehouse_stone";
@@ -56,5 +56,5 @@ std::string WarehouseStone::getSoundName() const {
 	return "stone";
 }
 std::wstring WarehouseStone::getDescription() const {
-	return *Texts::get()->get("warehouse_stone_description");
+	return *Locales::get()->get("warehouse_stone_description");
 }

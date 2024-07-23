@@ -20,8 +20,8 @@
 
 #include "Mine.hpp"
 #include "MineSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Mine::Mine() = default;
@@ -33,22 +33,22 @@ Building* Mine::createSameTypeBuilding() const {
 	return new Mine(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Mine::getSX() const {
-	return Balance::get()->getInt("mine_sx");
+	return Parameters::get()->getInt("mine_sx");
 }
 uint32_t Mine::getSY() const {
-	return Balance::get()->getInt("mine_sy");
+	return Parameters::get()->getInt("mine_sy");
 }
 uint32_t Mine::getMaxHP() const {
-	return Balance::get()->getInt("mine_max_hp");
+	return Parameters::get()->getInt("mine_max_hp");
 }
 Defence Mine::getDefence() const {
-	return Balance::get()->getDefence("mine_defence");
+	return Parameters::get()->getDefence("mine_defence");
 }
 Resources Mine::getCost() const {
-	return Balance::get()->getResources("mine_cost");
+	return Parameters::get()->getResources("mine_cost");
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return Balance::get()->getInt("mine_regeneration_speed");
+	return Parameters::get()->getInt("mine_regeneration_speed");
 }
 std::string Mine::getTextureName() const {
 	return "mine";
@@ -57,5 +57,5 @@ std::string Mine::getSoundName() const {
 	return "iron";
 }
 std::wstring Mine::getDescription() const {
-	return *Texts::get()->get("mine_description");
+	return *Locales::get()->get("mine_description");
 }

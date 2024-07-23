@@ -20,7 +20,7 @@
 #include <algorithm>
 #include "ShootingSpec.hpp"
 #include "ColorTheme.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Building.hpp"
 #include "ShootingEfficiencyComp.hpp"
 #include "Damage.hpp"
@@ -79,7 +79,7 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
 std::vector<HorizontalSelectionWindowComponent> ShootingSpec::getComponents(const Building *b, MapState *state) {
     HorizontalSelectionWindowComponent component = {
             this->getProjectile()->getTextureName(),
-            *Texts::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
+            *Locales::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
             false,
             Events()
     };

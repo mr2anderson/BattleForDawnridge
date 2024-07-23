@@ -18,14 +18,14 @@
 
 
 #include "Player.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 
 Player::Player() = default;
 Player::Player(uint32_t id) {
 	this->id = id;
-	this->resources = Balance::get()->getResources("start_resources");
+	this->resources = Parameters::get()->getResources("start_resources");
 }
 uint32_t Player::getId() const {
 	return this->id;

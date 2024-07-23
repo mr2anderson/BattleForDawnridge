@@ -18,7 +18,7 @@
 
 
 #include "Damage.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 
 
 Damage::Damage() = default;
@@ -51,15 +51,15 @@ std::wstring Damage::getReadable() const {
 	std::wstring result;
 	switch (this->type) {
 	case TYPE::CUT: {
-		result += *Texts::get()->get("cut");
+		result += *Locales::get()->get("cut");
 		break;
 	}
 	case TYPE::CRUSH: {
-		result += *Texts::get()->get("crush");
+		result += *Locales::get()->get("crush");
 		break;
 	}
 	case TYPE::STAB: {
-		result += *Texts::get()->get("stab");
+		result += *Locales::get()->get("stab");
 		break;
 	}
 	}

@@ -21,21 +21,21 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "Balance.hpp"
-#include "CouldntOpenBalance.hpp"
+#include "Parameters.hpp"
+#include "CouldntOpenParameters.hpp"
 #include "Root.hpp"
 
 
-Balance* Balance::singletone = nullptr;
+Parameters* Parameters::singletone = nullptr;
 
 
 static std::string GET_PATH() {
-	return DATA_ROOT + "/configs/balance.cfg";
+	return DATA_ROOT + "/configs/parameters.cfg";
 }
-void Balance::load() {
+void Parameters::load() {
 	std::ifstream file(GET_PATH());
 	if (!file.is_open()) {
-		throw CouldntOpenBalance(GET_PATH());
+		throw CouldntOpenParameters(GET_PATH());
 	}
 
 	std::string line;
@@ -123,7 +123,7 @@ void Balance::load() {
 
 	file.close();
 }
-Damage Balance::getDamage(const std::string& id) const {
+Damage Parameters::getDamage(const std::string& id) const {
 	auto it = this->damages.find(id);
 	if (it == this->damages.end()) {
 		std::cerr << "Invalid damage id: " << id << std::endl;
@@ -131,7 +131,7 @@ Damage Balance::getDamage(const std::string& id) const {
 	}
 	return it->second;
 }
-Defence Balance::getDefence(const std::string& id) const {
+Defence Parameters::getDefence(const std::string& id) const {
 	auto it = this->defences.find(id);
 	if (it == this->defences.end()) {
 		std::cerr << "Invalid defence id: " << id << std::endl;
@@ -139,7 +139,7 @@ Defence Balance::getDefence(const std::string& id) const {
 	}
 	return it->second;
 }
-Resources Balance::getResources(const std::string& id) const {
+Resources Parameters::getResources(const std::string& id) const {
 	auto it = this->resources.find(id);
 	if (it == this->resources.end()) {
 		std::cerr << "Invalid resources id: " << id << std::endl;
@@ -147,7 +147,7 @@ Resources Balance::getResources(const std::string& id) const {
 	}
 	return it->second;
 }
-Resource Balance::getResource(const std::string& id) const {
+Resource Parameters::getResource(const std::string& id) const {
 	auto it = this->resource.find(id);
 	if (it == this->resource.end()) {
 		std::cerr << "Invalid resource id: " << id << std::endl;
@@ -155,7 +155,7 @@ Resource Balance::getResource(const std::string& id) const {
 	}
 	return it->second;
 }
-uint32_t Balance::getInt(const std::string& id) const {
+uint32_t Parameters::getInt(const std::string& id) const {
 	auto it = this->ints.find(id);
 	if (it == this->ints.end()) {
 		std::cerr << "Invalid int id: " << id << std::endl;
@@ -163,7 +163,7 @@ uint32_t Balance::getInt(const std::string& id) const {
 	}
 	return it->second;
 }
-double Balance::getDouble(const std::string& id) const {
+double Parameters::getDouble(const std::string& id) const {
 	auto it = this->doubles.find(id);
 	if (it == this->doubles.end()) {
 		std::cerr << "Invalid double id: " << id << std::endl;

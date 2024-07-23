@@ -18,8 +18,8 @@
 
 
 #include "Knight.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Knight::Knight() = default;
@@ -34,25 +34,25 @@ uint8_t Knight::getType() const {
     return Warrior::TYPE::HUMAN;
 }
 uint32_t Knight::getMaxHP() const {
-	return Balance::get()->getInt("knight_max_hp");
+	return Parameters::get()->getInt("knight_max_hp");
 }
 Damage Knight::getBaseDamage() const {
-	return Balance::get()->getDamage("knight_damage");
+	return Parameters::get()->getDamage("knight_damage");
 }
 Defence Knight::getBaseDefence() const {
-	return Balance::get()->getDefence("knight_defence");
+	return Parameters::get()->getDefence("knight_defence");
 }
 Resources Knight::getCost() const {
-	return Balance::get()->getResources("knight_cost");
+	return Parameters::get()->getResources("knight_cost");
 }
 uint32_t Knight::getTimeToProduce() const {
-	return Balance::get()->getInt("knight_time_to_produce");
+	return Parameters::get()->getInt("knight_time_to_produce");
 }
 std::string Knight::getSoundName() const {
 	return "knight";
 }
 std::wstring Knight::getDescription() const {
-	return *Texts::get()->get("knight_description");
+	return *Locales::get()->get("knight_description");
 }
 uint32_t Knight::getTalkingAnimationsNumberInSet() const {
 	return 12;
@@ -73,8 +73,8 @@ std::string Knight::getBaseTextureName() const {
 	return "knight";
 }
 uint32_t Knight::getMovementPoints() const {
-	return Balance::get()->getInt("knight_movement_points");
+	return Parameters::get()->getInt("knight_movement_points");
 }
 uint32_t Knight::getPopulation() const {
-	return Balance::get()->getInt("knight_population");
+	return Parameters::get()->getInt("knight_population");
 }

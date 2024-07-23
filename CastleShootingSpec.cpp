@@ -18,7 +18,7 @@
 
 
 #include "CastleShootingSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 #include "BigArrow.hpp"
 
 
@@ -27,13 +27,13 @@ IBuildingSpec* CastleShootingSpec::clone() const {
     return new CastleShootingSpec(*this);
 }
 Damage CastleShootingSpec::getDamage() const {
-    return Balance::get()->getDamage("castle_damage");
+    return Parameters::get()->getDamage("castle_damage");
 }
 uint32_t CastleShootingSpec::getShotsNumber() const {
-    return Balance::get()->getInt("castle_shots_number");
+    return Parameters::get()->getInt("castle_shots_number");
 }
 uint32_t CastleShootingSpec::getShootingRadius() const {
-    return Balance::get()->getInt("castle_shooting_radius");
+    return Parameters::get()->getInt("castle_shooting_radius");
 }
 std::shared_ptr<Projectile> CastleShootingSpec::getProjectile() const {
     return std::make_shared<BigArrow>();

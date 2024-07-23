@@ -18,7 +18,7 @@
 
 
 #include "Effect.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "SubHpEvent.hpp"
 #include "CreateEEvent.hpp"
 
@@ -84,7 +84,7 @@ Events Effect::getResponse(MapState* state, uint32_t playerId, uint32_t button) 
 HorizontalSelectionWindowComponent Effect::getEffectComponent() const {
 	return {
 		this->getTextureName(),
-		*Texts::get()->get("effect_description") + std::to_wstring(this->getHP()),
+        *Locales::get()->get("effect_description") + std::to_wstring(this->getHP()),
 		false,
 		Events(),
 		this->getTextureRect()

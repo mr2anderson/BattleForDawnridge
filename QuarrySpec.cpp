@@ -18,7 +18,7 @@
 
 
 #include "QuarrySpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 QuarrySpec::QuarrySpec() = default;
@@ -29,8 +29,8 @@ std::string QuarrySpec::getResourceType() const {
 	return "stone";
 }
 uint32_t QuarrySpec::getCollectionSpeed() const {
-	return Balance::get()->getInt("quarry_collection_speed");
+	return Parameters::get()->getInt("quarry_collection_speed");
 }
 uint32_t QuarrySpec::getCollectionRadius() const {
-	return Balance::get()->getInt("quarry_collection_radius");
+	return Parameters::get()->getInt("quarry_collection_radius");
 }

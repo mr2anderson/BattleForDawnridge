@@ -18,7 +18,7 @@
 
 
 #include "SawmillSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 SawmillSpec::SawmillSpec() = default;
@@ -29,8 +29,8 @@ std::string SawmillSpec::getResourceType() const {
 	return "wood";
 }
 uint32_t SawmillSpec::getCollectionSpeed() const {
-	return Balance::get()->getInt("sawmill_collection_speed");
+	return Parameters::get()->getInt("sawmill_collection_speed");
 }
 uint32_t SawmillSpec::getCollectionRadius() const {
-	return Balance::get()->getInt("sawmill_collection_radius");
+	return Parameters::get()->getInt("sawmill_collection_radius");
 }

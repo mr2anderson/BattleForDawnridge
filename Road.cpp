@@ -19,8 +19,8 @@
 
 #include "Road.hpp"
 #include "RoadSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Road::Road() = default;
@@ -32,22 +32,22 @@ Building* Road::createSameTypeBuilding() const {
 	return new Road(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Road::getSX() const {
-	return Balance::get()->getInt("road_sx");
+	return Parameters::get()->getInt("road_sx");
 }
 uint32_t Road::getSY() const {
-	return Balance::get()->getInt("road_sy");
+	return Parameters::get()->getInt("road_sy");
 }
 uint32_t Road::getMaxHP() const {
-	return Balance::get()->getInt("road_max_hp");
+	return Parameters::get()->getInt("road_max_hp");
 }
 Defence Road::getDefence() const {
-	return Balance::get()->getDefence("road_defence");
+	return Parameters::get()->getDefence("road_defence");
 }
 Resources Road::getCost() const {
-	return Balance::get()->getResources("road_cost");
+	return Parameters::get()->getResources("road_cost");
 }
 uint32_t Road::getRegenerationSpeed() const {
-	return Balance::get()->getInt("road_regeneration_speed");
+	return Parameters::get()->getInt("road_regeneration_speed");
 }
 std::string Road::getTextureName() const {
 	return "road";
@@ -56,5 +56,5 @@ std::string Road::getSoundName() const {
 	return "road";
 }
 std::wstring Road::getDescription() const {
-	return *Texts::get()->get("road_description");
+	return *Locales::get()->get("road_description");
 }

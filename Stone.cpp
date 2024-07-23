@@ -18,8 +18,8 @@
 
 
 #include "Stone.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Stone::Stone() = default;
@@ -27,13 +27,13 @@ Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
 }
 uint32_t Stone::getSX() const {
-	return Balance::get()->getInt("stone_sx");
+	return Parameters::get()->getInt("stone_sx");
 }
 uint32_t Stone::getSY() const {
-	return Balance::get()->getInt("stone_sy");
+	return Parameters::get()->getInt("stone_sy");
 }
 uint32_t Stone::getMaxHP() const {
-	return Balance::get()->getInt("stone_max_hp");
+	return Parameters::get()->getInt("stone_max_hp");
 }
 std::string Stone::getResourceType() const {
 	return "stone";
@@ -45,5 +45,5 @@ std::string Stone::getTextureName() const {
 	return "stone";
 }
 std::wstring Stone::getDescription() const {
-	return *Texts::get()->get("stone_description");
+	return *Locales::get()->get("stone_description");
 }

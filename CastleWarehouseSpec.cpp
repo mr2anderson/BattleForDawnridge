@@ -18,7 +18,7 @@
 
 
 #include "CastleWarehouseSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 CastleWarehouseSpec::CastleWarehouseSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* CastleWarehouseSpec::clone() const {
 	return new CastleWarehouseSpec(*this);
 }
 Resources CastleWarehouseSpec::getLimit() const {
-	return Balance::get()->getResources("castle_resources");
+	return Parameters::get()->getResources("castle_resources");
 }

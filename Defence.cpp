@@ -20,7 +20,7 @@
 #include <iomanip>
 #include <sstream>
 #include "Defence.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 
 
 Defence::Defence() = default;
@@ -49,9 +49,9 @@ static std::wstring FORMAT_K(double a) {
 std::wstring Defence::getReadable() const {
 	std::wstring result;
 
-	result += *Texts::get()->get("cut") + FORMAT_K(this->cut) + L", ";
-	result += *Texts::get()->get("stab") + FORMAT_K(this->stab) + L", ";
-	result += *Texts::get()->get("crush") + FORMAT_K(this->crush) + L"";
+	result += *Locales::get()->get("cut") + FORMAT_K(this->cut) + L", ";
+	result += *Locales::get()->get("stab") + FORMAT_K(this->stab) + L", ";
+	result += *Locales::get()->get("crush") + FORMAT_K(this->crush) + L"";
 
 	return result;
 }

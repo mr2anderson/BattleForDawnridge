@@ -20,7 +20,7 @@
 #include "SpellProducerSpec.hpp"
 #include "Building.hpp"
 #include "WindowButton.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "SubResourcesEvent.hpp"
@@ -58,22 +58,22 @@ std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents
 				Events event;
 				event.add(std::make_shared<ResetHighlightEvent>());
 				if (resources >= spell->getCost()) {
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("spell_producing_started"), *Texts::get()->get("OK"), clickSoundEvent);
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("spell_producing_started"), *Locales::get()->get("OK"), clickSoundEvent);
 					event.add(std::make_shared<PlaySoundEvent>(building->getSoundName()));
 					event.add(std::make_shared<SubResourcesEvent>(spell->getCost()));
 					event.add(std::make_shared<CreateEEvent>(w));
 					event.add(std::make_shared<SetSpellEvent>(this, spell));
 				}
 				else {
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_spell_producing"), *Texts::get()->get("OK"), clickSoundEvent);
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_spell_producing"), *Locales::get()->get("OK"), clickSoundEvent);
 					event = event + clickSoundEvent;
 					event.add(std::make_shared<CreateEEvent>(w));
 				}
 
 				components.emplace_back(
 					spell->getTextureName(),
-					spell->getDescription() + L"\n" +
-					*Texts::get()->get("cost") + spell->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_make_spell") + std::to_wstring(spell->getCreationTime()),
+                    spell->getDescription() + L"\n" +
+                    *Locales::get()->get("cost") + spell->getCost().getReadableInfo() + L". " + *Locales::get()->get("time_to_make_spell") + std::to_wstring(spell->getCreationTime()),
 					true,
 					event
 				);
@@ -95,8 +95,8 @@ std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents
 				else {
 					components.emplace_back(
 						spell->getTextureName(),
-						*Texts::get()->get("spell_producing_in_progress") + std::to_wstring(spell->getCreationMovesLeft()) + L"\n" +
-						spell->getDescription(),
+                        *Locales::get()->get("spell_producing_in_progress") + std::to_wstring(spell->getCreationMovesLeft()) + L"\n" +
+                        spell->getDescription(),
 						false,
 						Events()
 					);
@@ -107,7 +107,7 @@ std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents
 	else {
 		components.emplace_back(
 			"hammer_icon",
-			*Texts::get()->get("does_not_produce_spells_if_hp_isnt_full"),
+			*Locales::get()->get("does_not_produce_spells_if_hp_isnt_full"),
 			false,
 			Events()
 		);

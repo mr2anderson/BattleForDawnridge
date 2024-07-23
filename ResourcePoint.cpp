@@ -19,9 +19,9 @@
 
 #include "ResourcePoint.hpp"
 #include "CreateEEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "HPPointer.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;
@@ -36,7 +36,7 @@ bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
 	return true;
 }
 uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
-	return Balance::get()->getInt("resource_point_warrior_movement_cost");
+	return Parameters::get()->getInt("resource_point_warrior_movement_cost");
 }
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist() or button == sf::Mouse::Button::Right) {
@@ -61,7 +61,7 @@ Events ResourcePoint::getSelectionWindow() {
 HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		this->getResourceType() + "_icon",
-		*Texts::get()->get("left") + std::to_wstring(this->getHP()),
+        *Locales::get()->get("left") + std::to_wstring(this->getHP()),
 		false,
 		Events()
 	};

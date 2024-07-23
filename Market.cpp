@@ -19,8 +19,8 @@
 
 #include "Market.hpp"
 #include "MarketSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Market::Market() = default;
@@ -32,19 +32,19 @@ Building* Market::createSameTypeBuilding() const {
 	return new Market(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Market::getSX() const {
-	return Balance::get()->getInt("market_sx");
+	return Parameters::get()->getInt("market_sx");
 }
 uint32_t Market::getSY() const {
-	return Balance::get()->getInt("market_sy");
+	return Parameters::get()->getInt("market_sy");
 }
 uint32_t Market::getMaxHP() const {
-	return Balance::get()->getInt("market_max_hp");
+	return Parameters::get()->getInt("market_max_hp");
 }
 Defence Market::getDefence() const {
-	return Balance::get()->getDefence("market_defence");
+	return Parameters::get()->getDefence("market_defence");
 }
 Resources Market::getCost() const {
-	return Balance::get()->getResources("market_cost");
+	return Parameters::get()->getResources("market_cost");
 }
 std::string Market::getTextureName() const {
 	return "market";
@@ -53,8 +53,8 @@ std::string Market::getSoundName() const {
 	return "gold";
 }
 std::wstring Market::getDescription() const {
-	return *Texts::get()->get("market_description");
+	return *Locales::get()->get("market_description");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return Balance::get()->getInt("market_regeneration_speed");
+	return Parameters::get()->getInt("market_regeneration_speed");
 }

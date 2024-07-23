@@ -17,12 +17,12 @@
  */
 
 
-#include "CouldntOpenBalance.hpp"
+#include "CouldntOpenLocales.hpp"
 
 
-CouldntOpenBalance::CouldntOpenBalance(const std::string& path) : CouldntOpen(path) {
+CouldntOpenLocales::CouldntOpenLocales(const std::string &path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenBalance::getUpperCaseResourceReadableName() const {
-	return "BALANCE";
+std::string CouldntOpenLocales::getUpperCaseResourceReadableName() const {
+    return "LOCALES";
 }

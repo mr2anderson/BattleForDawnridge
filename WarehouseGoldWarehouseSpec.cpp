@@ -18,7 +18,7 @@
 
 
 #include "WarehouseGoldWarehouseSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseGoldWarehouseSpec::WarehouseGoldWarehouseSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* WarehouseGoldWarehouseSpec::clone() const {
 	return new WarehouseGoldWarehouseSpec(*this);
 }
 Resources WarehouseGoldWarehouseSpec::getLimit() const {
-	return Balance::get()->getResources("warehouse_gold_limit");
+	return Parameters::get()->getResources("warehouse_gold_limit");
 }

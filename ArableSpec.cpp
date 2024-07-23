@@ -18,7 +18,7 @@
 
 
 #include "ArableSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 ArableSpec::ArableSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* ArableSpec::clone() const {
 	return new ArableSpec(*this);
 }
 Resource ArableSpec::getProduct() const {
-	return Balance::get()->getResource("arable_product");
+	return Parameters::get()->getResource("arable_product");
 }

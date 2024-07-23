@@ -18,7 +18,7 @@
 
 
 #include "RoadSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 RoadSpec::RoadSpec() = default;
@@ -29,5 +29,5 @@ bool RoadSpec::conductsIfNotWork() const {
 	return false;
 }
 uint32_t RoadSpec::getRadius() const {
-	return Balance::get()->getInt("road_radius");
+	return Parameters::get()->getInt("road_radius");
 }

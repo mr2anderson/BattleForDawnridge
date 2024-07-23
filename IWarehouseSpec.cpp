@@ -18,7 +18,7 @@
 
 
 #include "IWarehouseSpec.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Building.hpp"
 #include "AddResourcesEvent.hpp"
 
@@ -41,7 +41,7 @@ Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *sta
 std::vector<HorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(const Building *building, MapState* state) {
 	HorizontalSelectionWindowComponent component = {
 		"resources_icon",
-		*Texts::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
+        *Locales::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
 		false,
 		Events()
 	};

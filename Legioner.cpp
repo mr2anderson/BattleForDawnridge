@@ -18,8 +18,8 @@
 
 
 #include "Legioner.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Legioner::Legioner() = default;
@@ -34,25 +34,25 @@ uint8_t Legioner::getType() const {
     return Warrior::TYPE::HUMAN;
 }
 uint32_t Legioner::getMaxHP() const {
-	return Balance::get()->getInt("legioner_max_hp");
+	return Parameters::get()->getInt("legioner_max_hp");
 }
 Damage Legioner::getBaseDamage() const {
-	return Balance::get()->getDamage("legioner_damage");
+	return Parameters::get()->getDamage("legioner_damage");
 }
 Defence Legioner::getBaseDefence() const {
-	return Balance::get()->getDefence("legioner_defence");
+	return Parameters::get()->getDefence("legioner_defence");
 }
 Resources Legioner::getCost() const {
-	return Balance::get()->getResources("legioner_cost");
+	return Parameters::get()->getResources("legioner_cost");
 }
 uint32_t Legioner::getTimeToProduce() const {
-	return Balance::get()->getInt("legioner_time_to_produce");
+	return Parameters::get()->getInt("legioner_time_to_produce");
 }
 std::string Legioner::getSoundName() const {
 	return "sword";
 }
 std::wstring Legioner::getDescription() const {
-	return *Texts::get()->get("legioner_description");
+	return *Locales::get()->get("legioner_description");
 }
 uint32_t Legioner::getTalkingAnimationsNumberInSet() const {
 	return 8;
@@ -73,8 +73,8 @@ std::string Legioner::getBaseTextureName() const {
 	return "legioner";
 }
 uint32_t Legioner::getMovementPoints() const {
-	return Balance::get()->getInt("legioner_movement_points");
+	return Parameters::get()->getInt("legioner_movement_points");
 }
 uint32_t Legioner::getPopulation() const {
-	return Balance::get()->getInt("legioner_population");
+	return Parameters::get()->getInt("legioner_population");
 }

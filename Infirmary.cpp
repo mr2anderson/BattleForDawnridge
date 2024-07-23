@@ -19,8 +19,8 @@
 
 #include "Infirmary.hpp"
 #include "InfirmarySpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 Infirmary::Infirmary() = default;
@@ -32,19 +32,19 @@ Building* Infirmary::createSameTypeBuilding() const {
 	return new Infirmary(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t Infirmary::getSX() const {
-	return Balance::get()->getInt("infirmary_sx");
+	return Parameters::get()->getInt("infirmary_sx");
 }
 uint32_t Infirmary::getSY() const {
-	return Balance::get()->getInt("infirmary_sy");
+	return Parameters::get()->getInt("infirmary_sy");
 }
 uint32_t Infirmary::getMaxHP() const {
-	return Balance::get()->getInt("infirmary_max_hp");
+	return Parameters::get()->getInt("infirmary_max_hp");
 }
 Defence Infirmary::getDefence() const {
-	return Balance::get()->getDefence("infirmary_defence");
+	return Parameters::get()->getDefence("infirmary_defence");
 }
 Resources Infirmary::getCost() const {
-	return Balance::get()->getResources("infirmary_cost");
+	return Parameters::get()->getResources("infirmary_cost");
 }
 std::string Infirmary::getTextureName() const {
 	return "infirmary";
@@ -53,8 +53,8 @@ std::string Infirmary::getSoundName() const {
 	return "hooray";
 }
 std::wstring Infirmary::getDescription() const {
-	return *Texts::get()->get("infirmary_description");
+	return *Locales::get()->get("infirmary_description");
 }
 uint32_t Infirmary::getRegenerationSpeed() const {
-	return Balance::get()->getInt("infirmary_regeneration_speed");
+	return Parameters::get()->getInt("infirmary_regeneration_speed");
 }

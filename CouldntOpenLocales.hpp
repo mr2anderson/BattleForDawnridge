@@ -23,9 +23,9 @@
 #pragma once
 
 
-class CouldntOpenBalance : public CouldntOpen {
+class CouldntOpenLocales : public CouldntOpen {
 public:
-	CouldntOpenBalance(const std::string &path);
+    CouldntOpenLocales(const std::string &path);
 
-	std::string getUpperCaseResourceReadableName() const override;
+    std::string getUpperCaseResourceReadableName() const override;
 };

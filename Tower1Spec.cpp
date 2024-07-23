@@ -18,7 +18,7 @@
 
 
 #include "Tower1Spec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 #include "BigArrow.hpp"
 
 
@@ -27,13 +27,13 @@ IBuildingSpec* Tower1Spec::clone() const {
     return new Tower1Spec(*this);
 }
 Damage Tower1Spec::getDamage() const {
-    return Balance::get()->getDamage("tower1_damage");
+    return Parameters::get()->getDamage("tower1_damage");
 }
 uint32_t Tower1Spec::getShotsNumber() const {
-    return Balance::get()->getInt("tower1_shots_number");
+    return Parameters::get()->getInt("tower1_shots_number");
 }
 uint32_t Tower1Spec::getShootingRadius() const {
-    return Balance::get()->getInt("tower1_shooting_radius");
+    return Parameters::get()->getInt("tower1_shooting_radius");
 }
 std::shared_ptr<Projectile> Tower1Spec::getProjectile() const {
     return std::make_shared<BigArrow>();

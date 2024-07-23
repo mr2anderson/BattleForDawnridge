@@ -20,8 +20,8 @@
 #include "WarehouseGold.hpp"
 #include "WarehouseGoldWarehouseSpec.hpp"
 #include "WarehouseGoldCollectorSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
@@ -34,22 +34,22 @@ Building* WarehouseGold::createSameTypeBuilding() const {
 	return new WarehouseGold(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseGold::getSX() const {
-	return Balance::get()->getInt("warehouse_gold_sx");
+	return Parameters::get()->getInt("warehouse_gold_sx");
 }
 uint32_t WarehouseGold::getSY() const {
-	return Balance::get()->getInt("warehouse_gold_sy");
+	return Parameters::get()->getInt("warehouse_gold_sy");
 }
 uint32_t WarehouseGold::getMaxHP() const {
-	return Balance::get()->getInt("warehouse_gold_max_hp");
+	return Parameters::get()->getInt("warehouse_gold_max_hp");
 }
 Defence WarehouseGold::getDefence() const {
-	return Balance::get()->getDefence("warehouse_gold_defence");
+	return Parameters::get()->getDefence("warehouse_gold_defence");
 }
 Resources WarehouseGold::getCost() const {
-	return Balance::get()->getResources("warehouse_gold_cost");
+	return Parameters::get()->getResources("warehouse_gold_cost");
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return Balance::get()->getInt("warehouse_gold_regeneration_speed");
+	return Parameters::get()->getInt("warehouse_gold_regeneration_speed");
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";
@@ -58,5 +58,5 @@ std::string WarehouseGold::getSoundName() const {
 	return "gold";
 }
 std::wstring WarehouseGold::getDescription() const {
-	return *Texts::get()->get("warehouse_gold_description");
+	return *Locales::get()->get("warehouse_gold_description");
 }

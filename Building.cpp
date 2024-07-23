@@ -19,7 +19,7 @@
 
 #include "Building.hpp"
 #include "PlaySoundEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "ImageFlyingE.hpp"
 #include "HPFlyingE.hpp"
 #include "PlayerPointerCircle.hpp"
@@ -37,7 +37,7 @@
 #include "ResetHighlightEvent.hpp"
 #include "ConductionGraph.hpp"
 #include "HPPointer.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 #include "AreaControllerSpec.hpp"
 
 
@@ -164,7 +164,7 @@ void Building::decreaseBurningMovesLeft() {
 }
 void Building::setFire() {
 	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
-	this->burningMovesLeft = Balance::get()->getInt("fire_lifetime");
+	this->burningMovesLeft = Parameters::get()->getInt("fire_lifetime");
 }
 void Building::addSpec(IBuildingSpec* spec) {
 	this->specs.push_back(spec);
@@ -220,17 +220,17 @@ HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 	std::wstring secondLine;
 	if (this->burningMovesLeft == 0) {
 		textureName = "shield_icon";
-		secondLine = *Texts::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Texts::get()->get("p_per_move") + L". " + *Texts::get()->get("everything_is_alright");
+		secondLine = *Locales::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Locales::get()->get("p_per_move") + L". " + *Locales::get()->get("everything_is_alright");
 	}
 	else {
 		textureName = "fire1";
-		secondLine = *Texts::get()->get("building_on_fire") + std::to_wstring(this->burningMovesLeft);
+		secondLine = *Locales::get()->get("building_on_fire") + std::to_wstring(this->burningMovesLeft);
 	}
 
 	HorizontalSelectionWindowComponent component = {
 		textureName,
-		*Texts::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
-		secondLine,
+        *Locales::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
+        secondLine,
 		false,
 		Events()
 	};
@@ -246,12 +246,12 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	Events destroyEvent;
     destroyEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
 	destroyEvent.add(std::make_shared<DestroyEvent>(this));
-	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(*Texts::get()->get("verify_destroy"), *Texts::get()->get("yes"), *Texts::get()->get("no"), resetHighlightEvent + destroyEvent, resetHighlightEvent + clickSoundEvent);
+	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(*Locales::get()->get("verify_destroy"), *Locales::get()->get("yes"), *Locales::get()->get("no"), resetHighlightEvent + destroyEvent, resetHighlightEvent + clickSoundEvent);
 	Events createVerify = clickSoundEvent;
 	createVerify.add(std::make_shared<CreateEEvent>(verify));
 	HorizontalSelectionWindowComponent component = {
 		"destroy_icon",
-		*Texts::get()->get("destroy_this_building"),
+		*Locales::get()->get("destroy_this_building"),
 		true,
 		createVerify
 	};
@@ -260,7 +260,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
     return {
         this->getTextureName(),
-        *Texts::get()->get("building_of_enemy"),
+        *Locales::get()->get("building_of_enemy"),
         false,
         Events()
     };

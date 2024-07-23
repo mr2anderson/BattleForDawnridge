@@ -18,12 +18,12 @@
 
 
 #include "Mountains.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
 #include "Mountains.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 Mountains::Mountains() = default;
@@ -32,10 +32,10 @@ Mountains::Mountains(uint32_t x, uint32_t y, uint32_t type) :
 	this->type = type;
 }
 uint32_t Mountains::getSX() const {
-	return Balance::get()->getInt("mountains_sx");
+	return Parameters::get()->getInt("mountains_sx");
 }
 uint32_t Mountains::getSY() const {
-	return Balance::get()->getInt("mountains_sy");
+	return Parameters::get()->getInt("mountains_sy");
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";
@@ -47,7 +47,7 @@ std::string Mountains::getSoundName() const {
 	return "wind";
 }
 std::wstring Mountains::getDescription() const {
-	return *Texts::get()->get("mountains_description");
+	return *Locales::get()->get("mountains_description");
 }
 bool Mountains::isUltraHighObstacle(uint32_t playerId) const {
     return true;

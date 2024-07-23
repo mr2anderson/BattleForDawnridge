@@ -19,7 +19,7 @@
 
 #include "VictoryConditionSpec.hpp"
 #include "VictoryConditionBDestroyedEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Building.hpp"
 #include "FocusOnEvent.hpp"
 #include "PlaySoundEvent.hpp"
@@ -52,7 +52,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 std::vector<HorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
 	HorizontalSelectionWindowComponent component = {
 		"bell",
-		*Texts::get()->get("victory_condition_building_description"),
+		*Locales::get()->get("victory_condition_building_description"),
 		false,
 		Events()
 	};

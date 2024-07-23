@@ -20,7 +20,7 @@
 #include "WarriorProducerSpec.hpp"
 #include "WindowButton.hpp"
 #include "Warrior.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "ImageFlyingE.hpp"
@@ -46,7 +46,7 @@ Events WarriorProducerSpec::startProducing(std::shared_ptr<Warrior> w) {
 	Events clickSoundEvent;
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	std::shared_ptr<WindowButton> producingStartedWindow = std::make_shared<WindowButton>(*Texts::get()->get("producing_started") + std::to_wstring(this->currentProducingMovesLeft), *Texts::get()->get("OK"), clickSoundEvent);
+	std::shared_ptr<WindowButton> producingStartedWindow = std::make_shared<WindowButton>(*Locales::get()->get("producing_started") + std::to_wstring(this->currentProducingMovesLeft), *Locales::get()->get("OK"), clickSoundEvent);
 	Events response;
 	response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 	response.add(std::make_shared<CreateEEvent>(producingStartedWindow));
@@ -101,10 +101,10 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 		if (this->producing) {
 			std::wstring text;
 			if (this->currentProducingMovesLeft > 0) {
-				text = *Texts::get()->get("producing_in_progress") + std::to_wstring(this->currentProducingMovesLeft);
+				text = *Locales::get()->get("producing_in_progress") + std::to_wstring(this->currentProducingMovesLeft);
 			}
 			else {
-				text = *Texts::get()->get("couldnt_find_new_warrior_position");
+				text = *Locales::get()->get("couldnt_find_new_warrior_position");
 			}
 			components.emplace_back(
 				currentProducing->getTextureName(),
@@ -142,7 +142,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 					Events clickEvent;
 					clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("no_resources_for_producing"), *Texts::get()->get("OK"), clickEvent);
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_producing"), *Locales::get()->get("OK"), clickEvent);
 					produceEvent = produceEvent + clickEvent;
 					produceEvent.add(std::make_shared<CreateEEvent>(w));
 				}
@@ -150,7 +150,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 					Events clickEvent;
 					clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Texts::get()->get("population_limit"), *Texts::get()->get("OK"), clickEvent);
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("population_limit"), *Locales::get()->get("OK"), clickEvent);
 					produceEvent = produceEvent + clickEvent;
 					produceEvent.add(std::make_shared<CreateEEvent>(w));
 				}
@@ -161,10 +161,10 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 
 				components.emplace_back(
 					w->getTextureName(),
-					w->getDescription() + L"\n" +
-					*Texts::get()->get("hp") + std::to_wstring(w->getMaxHP()) + L" (" + w->getDefence().getReadable() + L")\n" +
-					*Texts::get()->get("damage") + w->getDamage().getReadable() + L". " + *Texts::get()->get("movement_points") + std::to_wstring(w->getMovementPoints()) + L"\n" +
-					*Texts::get()->get("population") + std::to_wstring(w->getPopulation()) + L". " +  *Texts::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Texts::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
+                    w->getDescription() + L"\n" +
+                    *Locales::get()->get("hp") + std::to_wstring(w->getMaxHP()) + L" (" + w->getDefence().getReadable() + L")\n" +
+                    *Locales::get()->get("damage") + w->getDamage().getReadable() + L". " + *Locales::get()->get("movement_points") + std::to_wstring(w->getMovementPoints()) + L"\n" +
+                    *Locales::get()->get("population") + std::to_wstring(w->getPopulation()) + L". " + *Locales::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Locales::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
 					true,
 					produceEvent
 				);
@@ -174,7 +174,7 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 	else {
 		components.emplace_back(
 			"hammer_icon",
-			*Texts::get()->get("does_not_train_if_hp_isnt_full"),
+			*Locales::get()->get("does_not_train_if_hp_isnt_full"),
 			false,
 			Events()
 		);

@@ -19,8 +19,8 @@
 
 #include "WarehouseFood.hpp"
 #include "WarehouseFoodSpec.hpp"
-#include "Texts.hpp"
-#include "Balance.hpp"
+#include "Locales.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseFood::WarehouseFood() = default;
@@ -32,22 +32,22 @@ Building* WarehouseFood::createSameTypeBuilding() const {
 	return new WarehouseFood(this->getX(), this->getY(), this->getPlayerId());
 }
 uint32_t WarehouseFood::getSX() const {
-	return Balance::get()->getInt("warehouse_food_sx");
+	return Parameters::get()->getInt("warehouse_food_sx");
 }
 uint32_t WarehouseFood::getSY() const {
-	return Balance::get()->getInt("warehouse_food_sy");
+	return Parameters::get()->getInt("warehouse_food_sy");
 }
 uint32_t WarehouseFood::getMaxHP() const {
-	return Balance::get()->getInt("warehouse_food_max_hp");
+	return Parameters::get()->getInt("warehouse_food_max_hp");
 }
 Defence WarehouseFood::getDefence() const {
-	return Balance::get()->getDefence("warehouse_food_defence");
+	return Parameters::get()->getDefence("warehouse_food_defence");
 }
 Resources WarehouseFood::getCost() const {
-	return Balance::get()->getResources("warehouse_food_cost");
+	return Parameters::get()->getResources("warehouse_food_cost");
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {
-	return Balance::get()->getInt("warehouse_food_regeneration_speed");
+	return Parameters::get()->getInt("warehouse_food_regeneration_speed");
 }
 std::string WarehouseFood::getTextureName() const {
 	return "warehouse_food";
@@ -56,5 +56,5 @@ std::string WarehouseFood::getSoundName() const {
 	return "food";
 }
 std::wstring WarehouseFood::getDescription() const {
-	return *Texts::get()->get("warehouse_food_description");
+	return *Locales::get()->get("warehouse_food_description");
 }

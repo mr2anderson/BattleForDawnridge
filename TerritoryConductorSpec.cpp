@@ -18,7 +18,7 @@
 
 
 #include "TerritoryConductorSpec.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Building.hpp"
 #include "ColorTheme.hpp"
 
@@ -28,7 +28,7 @@ std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getCompo
 	if (!building->works() and !this->conductsIfNotWork()) {
 		HorizontalSelectionWindowComponent component = {
 			"hammer_icon",
-			*Texts::get()->get("does_not_expand_territory_if_hp_isnt_full"),
+			*Locales::get()->get("does_not_expand_territory_if_hp_isnt_full"),
 			false,
 			Events()
 		};
@@ -37,7 +37,7 @@ std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getCompo
 	if (!building->connectedToOrigin(state)) {
 		HorizontalSelectionWindowComponent component = {
 			"road",
-			*Texts::get()->get("does_not_lead_to_city_center"),
+			*Locales::get()->get("does_not_lead_to_city_center"),
 			false,
 			Events()
 		};

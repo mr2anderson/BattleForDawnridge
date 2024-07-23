@@ -18,7 +18,7 @@
 
 
 #include "WarehouseGoldCollectorSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 WarehouseGoldCollectorSpec::WarehouseGoldCollectorSpec() = default;
@@ -26,7 +26,7 @@ IBuildingSpec* WarehouseGoldCollectorSpec::clone() const {
 	return new WarehouseGoldCollectorSpec(*this);
 }
 uint32_t WarehouseGoldCollectorSpec::getCollectionSpeed() const {
-	return Balance::get()->getInt("warehouse_gold_collection_speed");
+	return Parameters::get()->getInt("warehouse_gold_collection_speed");
 }
 std::string WarehouseGoldCollectorSpec::getResourceType() const {
 	return "gold";

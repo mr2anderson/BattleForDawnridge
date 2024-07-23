@@ -18,9 +18,9 @@
 
 
 #include "SpellFactory.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "SpellFactorySpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 SpellFactory::SpellFactory() = default;
@@ -31,19 +31,19 @@ SpellFactory::Building* SpellFactory::createSameTypeBuilding() const {
 	return new SpellFactory(this->getX(), this->getY(), this->getPlayerId());
 }
 Defence SpellFactory::getDefence() const {
-	return Balance::get()->getDefence("spell_factory_defence");
+	return Parameters::get()->getDefence("spell_factory_defence");
 }
 Resources SpellFactory::getCost() const {
-	return Balance::get()->getResources("spell_factory_cost");
+	return Parameters::get()->getResources("spell_factory_cost");
 }
 uint32_t SpellFactory::getSX() const {
-	return Balance::get()->getInt("spell_factory_sx");
+	return Parameters::get()->getInt("spell_factory_sx");
 }
 uint32_t SpellFactory::getSY() const {
-	return Balance::get()->getInt("spell_factory_sy");
+	return Parameters::get()->getInt("spell_factory_sy");
 }
 uint32_t SpellFactory::getMaxHP() const {
-	return Balance::get()->getInt("spell_factory_max_hp");
+	return Parameters::get()->getInt("spell_factory_max_hp");
 }
 std::string SpellFactory::getTextureName() const {
 	return "spell_factory";
@@ -52,8 +52,8 @@ std::string SpellFactory::getSoundName() const {
 	return "spell_factory";
 }
 std::wstring SpellFactory::getDescription() const {
-	return *Texts::get()->get("spell_factory_description");
+	return *Locales::get()->get("spell_factory_description");
 }
 uint32_t SpellFactory::getRegenerationSpeed() const {
-	return Balance::get()->getInt("spell_factory_regeneration_speed");
+	return Parameters::get()->getInt("spell_factory_regeneration_speed");
 }

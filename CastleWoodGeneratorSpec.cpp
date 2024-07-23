@@ -18,7 +18,7 @@
 
 
 #include "CastleWoodGeneratorSpec.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 CastleWoodGeneratorSpec::CastleWoodGeneratorSpec() = default;
@@ -26,5 +26,5 @@ IBuildingSpec* CastleWoodGeneratorSpec::clone() const {
 	return new CastleWoodGeneratorSpec(*this);
 }
 Resource CastleWoodGeneratorSpec::getProduct() const {
-	return Balance::get()->getResource("castle_product");
+	return Parameters::get()->getResource("castle_product");
 }

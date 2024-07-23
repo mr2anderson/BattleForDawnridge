@@ -18,10 +18,10 @@
 
 
 #include "Forest.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
-#include "Balance.hpp"
+#include "Parameters.hpp"
 
 
 Forest::Forest() = default;
@@ -29,13 +29,13 @@ Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : ResourcePoint(x, y) {
 	this->type = type;
 }
 uint32_t Forest::getSX() const {
-	return Balance::get()->getInt("forest_sx");
+	return Parameters::get()->getInt("forest_sx");
 }
 uint32_t Forest::getSY() const {
-	return Balance::get()->getInt("forest_sy");
+	return Parameters::get()->getInt("forest_sy");
 }
 uint32_t Forest::getMaxHP() const {
-	return Balance::get()->getInt("forest_max_hp");
+	return Parameters::get()->getInt("forest_max_hp");
 }
 std::string Forest::getResourceType() const {
 	return "wood";
@@ -50,5 +50,5 @@ sf::IntRect Forest::getTextureRect() const {
 	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
 }
 std::wstring Forest::getDescription() const {
-	return *Texts::get()->get("forest_description");
+	return *Locales::get()->get("forest_description");
 }

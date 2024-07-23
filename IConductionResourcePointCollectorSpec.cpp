@@ -24,7 +24,7 @@
 #include "FocusOnEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "AddResourceEvent.hpp"
-#include "Texts.hpp"
+#include "Locales.hpp"
 #include "SubHpEvent.hpp"
 
 
@@ -85,15 +85,15 @@ std::vector<HorizontalSelectionWindowComponent> IConductionResourcePointCollecto
 
 		std::wstring s;
 		if (n == 0) {
-			s = *Texts::get()->get("no_conducted_resource_points");
+			s = *Locales::get()->get("no_conducted_resource_points");
 		}
 		else {
-			s = *Texts::get()->get("conducted_resource_points_number") + std::to_wstring(n);
+			s = *Locales::get()->get("conducted_resource_points_number") + std::to_wstring(n);
 		}
 
 		component = {
-			this->getResourceType() + "_icon", 
-			*Texts::get()->get("this_building_collects_resources_from_conducted_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " + s,
+			this->getResourceType() + "_icon",
+            *Locales::get()->get("this_building_collects_resources_from_conducted_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " + s,
 			false,
 			Events()
 		};
@@ -101,7 +101,7 @@ std::vector<HorizontalSelectionWindowComponent> IConductionResourcePointCollecto
 	else {
 		component = {
 			"hammer_icon",
-			*Texts::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
+			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
 			false,
 			Events()
 		};
