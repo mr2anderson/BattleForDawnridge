@@ -35,7 +35,7 @@ public:
     void update();
     void restartMusic();
 
-    static constexpr uint32_t SOUNDTRACKS_N = 10;
+    static const uint32_t SOUNDTRACKS_N;
 private:
     Playlist();
     Playlist(const Playlist& copy);
@@ -43,5 +43,5 @@ private:
 
     uint32_t index;
 
-    static constexpr uint32_t MUSIC_VOLUME = 40;
+    static const uint32_t MUSIC_VOLUME;
 };

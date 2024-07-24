@@ -85,6 +85,7 @@ std::shared_ptr<Map> Menu::run(sf::RenderWindow& window) {
 }
 void Menu::init(uint32_t windowW, uint32_t windowH) {
     Music::get()->get("menu")->play();
+    Music::get()->get("menu")->setVolume(30);
 
     this->closeMenu = false;
     this->startGameMap = "";

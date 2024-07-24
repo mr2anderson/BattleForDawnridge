@@ -46,6 +46,7 @@
 #include "Parameters.hpp"
 #include "CouldntOpenParameters.hpp"
 #include "BigArrow.hpp"
+#include "Playlist.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -196,7 +197,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         Music::get()->add("intro", "music/intro.ogg");
         Music::get()->add("menu", "music/menu.ogg");
-        for (uint32_t i = 0; i < 10; i = i + 1) {
+        for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
             Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
     }
