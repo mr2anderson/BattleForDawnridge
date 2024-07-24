@@ -24,6 +24,7 @@
 #include "TilesetHandler.hpp"
 #include "Parameters.hpp"
 #include "GlobalRandomGenerator.hpp"
+#include "GlobalClock.hpp"
 
 
 const uint32_t PoisonFog::TOTAL_TYPES = 1;
@@ -38,7 +39,7 @@ std::string PoisonFog::getTextureName() const {
 }
 sf::IntRect PoisonFog::getTextureRect() const {
 	uint32_t totalFrames = Textures::get()->get(this->getTextureName())->getSize().x * Textures::get()->get(this->getTextureName())->getSize().y / 64 / this->getSX() / 64 / this->getSY();
-	uint32_t currentFrame = this->animationClock.getElapsedTime().asMilliseconds() / (1000 / totalFrames) % totalFrames;
+	uint32_t currentFrame = GlobalClock::get()->getMs() / (1000 / totalFrames) % totalFrames;
 	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, currentFrame);
 }
 std::string PoisonFog::getSoundName() const {

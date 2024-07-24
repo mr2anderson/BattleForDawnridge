@@ -36,7 +36,6 @@ PAKScreen* PAKScreen::singletone = nullptr;
 bool PAKScreen::run(sf::RenderWindow &window) {
 	window.setMouseCursorVisible(false);
     this->init(window.getSize().x, window.getSize().y);
-	sf::Clock clock;
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {

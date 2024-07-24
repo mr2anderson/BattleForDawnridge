@@ -37,10 +37,11 @@ private:
     float xInPixels, yInPixels;
     uint32_t sx;
     uint8_t orientation;
-    sf::Sprite sprite;
+    std::string type;
 
     void setTypeBlue() override;
     void setTypeGreen() override;
     void setTypePurple() override;
-    void recalcPosition();
+    float getCurrentScale() const;
+    sf::Vector2f getCurrentPosition() const;
 };

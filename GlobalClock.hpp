@@ -17,26 +17,27 @@
  */
 
 
-#include "Effect.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class PoisonFog : public Effect {
+class GlobalClock {
 public:
-	PoisonFog();
-	PoisonFog(uint32_t x, uint32_t y, uint32_t playerId);
+    static GlobalClock* get() {
+        if (GlobalClock::singletone == nullptr) {
+            GlobalClock::singletone = new GlobalClock();
+        }
+        return GlobalClock::singletone;
+    }
 
-	std::string getTextureName() const override;
-	sf::IntRect getTextureRect() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-	uint32_t getLifetime() const override;
-
-	static const uint32_t TOTAL_TYPES;
+    uint32_t getMs() const;
 private:
-	uint32_t type;
+    GlobalClock();
+    GlobalClock(const GlobalClock& copy);
+    static GlobalClock* singletone;
 
-	Events getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const override;
+    sf::Clock clock;
 };

@@ -34,7 +34,6 @@ public:
 private:
 	float x, y;
 	float scaleX, scaleY;
-	sf::Clock animationClock;
 
 	uint32_t getCurrentFrame() const;
 };

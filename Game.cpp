@@ -47,7 +47,7 @@ void Game::run() {
 }
 void Game::initWindow() {
 	sf::ContextSettings settings;
-	settings.antialiasingLevel = 4;
+	settings.antialiasingLevel = 16;
 
 	this->window.create(sf::VideoMode::getDesktopMode(), "Battle for Dawnridge", sf::Style::Fullscreen, settings);
 	this->window.setVerticalSyncEnabled(true);

@@ -17,26 +17,13 @@
  */
 
 
-#include "Effect.hpp"
+#include "GlobalClock.hpp"
 
 
-#pragma once
+GlobalClock* GlobalClock::singletone = nullptr;
 
 
-class PoisonFog : public Effect {
-public:
-	PoisonFog();
-	PoisonFog(uint32_t x, uint32_t y, uint32_t playerId);
-
-	std::string getTextureName() const override;
-	sf::IntRect getTextureRect() const override;
-	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
-	uint32_t getLifetime() const override;
-
-	static const uint32_t TOTAL_TYPES;
-private:
-	uint32_t type;
-
-	Events getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const override;
-};
+GlobalClock::GlobalClock() = default;
+uint32_t GlobalClock::getMs() const {
+    return this->clock.getElapsedTime().asMilliseconds();
+}

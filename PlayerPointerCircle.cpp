@@ -17,8 +17,10 @@
  */
 
 
+#include <cmath>
 #include "PlayerPointerCircle.hpp"
 #include "Textures.hpp"
+#include "GlobalClock.hpp"
 
 
 PlayerPointerCircle::PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation) {
@@ -28,22 +30,28 @@ PlayerPointerCircle::PlayerPointerCircle(float xInPixels, float yInPixels, uint3
     this->orientation = orientation;
 }
 void PlayerPointerCircle::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(this->sprite, states);
+    sf::Sprite sprite;
+    sprite.setTexture(*Textures::get()->get(this->type));
+    sprite.setPosition(this->getCurrentPosition());
+    sprite.setOrigin(sprite.getTexture()->getSize().x / 2, sprite.getTexture()->getSize().y / 2);
+    sprite.setScale(this->getCurrentScale(), this->getCurrentScale());
+
+    target.draw(sprite, states);
 }
 void PlayerPointerCircle::setTypeBlue() {
-    this->sprite.setTexture(*Textures::get()->get("blue"));
-    this->recalcPosition();
+    this->type = "blue";
 }
 void PlayerPointerCircle::setTypeGreen() {
-    this->sprite.setTexture(*Textures::get()->get("green"));
-    this->recalcPosition();
+    this->type = "green";
 }
 void PlayerPointerCircle::setTypePurple() {
-    this->sprite.setTexture(*Textures::get()->get("purple"));
-    this->recalcPosition();
+    this->type = "purple";
 }
-void PlayerPointerCircle::recalcPosition() {
-    this->sprite.setPosition(
-        this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 5 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx - this->sprite.getLocalBounds().width),
-        this->yInPixels - this->sprite.getGlobalBounds().height);
+float PlayerPointerCircle::getCurrentScale() const {
+    return 0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4;
+}
+sf::Vector2f PlayerPointerCircle::getCurrentPosition() const {
+    return sf::Vector2f(
+        this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 5 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx),
+        this->yInPixels);
 }

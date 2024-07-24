@@ -19,6 +19,7 @@
 
 #include "Fire.hpp"
 #include "Textures.hpp"
+#include "GlobalClock.hpp"
 
 
 const uint32_t Fire::TOTAL_FRAMES = 25;
@@ -39,5 +40,5 @@ void Fire::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite, states);
 }
 uint32_t Fire::getCurrentFrame() const {
-	return this->animationClock.getElapsedTime().asMilliseconds() / (1000 / TOTAL_FRAMES) % TOTAL_FRAMES + 1;
+	return GlobalClock::get()->getMs() / (1000 / TOTAL_FRAMES) % TOTAL_FRAMES + 1;
 }
