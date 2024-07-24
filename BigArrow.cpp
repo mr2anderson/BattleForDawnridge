@@ -22,13 +22,13 @@
 #include "GlobalClock.hpp"
 
 
-const uint32_t BigArrow::TOTAL_TYPES = 25;
+const uint32_t BigArrow::TOTAL_TYPES = 36;
 const uint32_t BigArrow::TOTAL_SOUNDS = 3;
 
 
 BigArrow::BigArrow() = default;
 std::string BigArrow::getTextureName() const {
-    uint32_t type = GlobalClock::get()->getMs() / (1000 / TOTAL_TYPES) % TOTAL_TYPES + 1;
+    uint32_t type = GlobalClock::get()->getMs() / ((uint32_t)(1000 * this->getTime()) / TOTAL_TYPES) % TOTAL_TYPES + 1;
     return "big_arrow" + std::to_string(type);
 }
 std::string BigArrow::getIconTextureName() const {
@@ -38,5 +38,5 @@ std::string BigArrow::getSoundName() const {
     return "big_arrow" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_SOUNDS + 1);
 }
 float BigArrow::getTime() const {
-    return 0.5f;
+    return 0.2f;
 }
