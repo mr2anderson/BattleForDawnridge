@@ -33,22 +33,27 @@ std::vector<Trade> MarketSpec::getTrades() const {
 
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("food", Parameters::get()->getInt("market_food_k") * goldVolume),
+		Resource("food", Parameters::get()->getDouble("market_food_k") * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("wood", Parameters::get()->getInt("market_wood_k") * goldVolume),
+		Resource("wood", Parameters::get()->getDouble("market_wood_k") * goldVolume),
 		time
 	);
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("stone", Parameters::get()->getInt("market_stone_k") * goldVolume),
+		Resource("stone", Parameters::get()->getDouble("market_stone_k") * goldVolume),
 		time
 	);
+    trades.emplace_back(
+            Resource("gold", goldVolume),
+            Resource("crystal", Parameters::get()->getDouble("market_crystal_k") * goldVolume),
+            time
+    );
 	trades.emplace_back(
 		Resource("gold", goldVolume),
-		Resource("iron", Parameters::get()->getInt("market_iron_k") * goldVolume),
+		Resource("iron", Parameters::get()->getDouble("market_iron_k") * goldVolume),
 		time
 	);
 

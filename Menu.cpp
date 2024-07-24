@@ -162,6 +162,12 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         Events()
     );
     educationWindowComponents.emplace_back(
+            "crystal_icon",
+            *Locales::get()->get("guide_crystal_description"),
+            false,
+            Events()
+    );
+    educationWindowComponents.emplace_back(
         "gold_icon",
         *Locales::get()->get("guide_gold_description"),
         false,

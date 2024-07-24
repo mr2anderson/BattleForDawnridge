@@ -23,7 +23,7 @@
 
 
 bool Resources::mapCmp::operator()(const std::string& a, const std::string& b) const {
-	std::array<std::string, 4> priorities = { "food", "wood", "stone", "iron" };
+	std::array<std::string, 6> priorities = { "food", "wood", "stone", "iron", "crystal", "gold" };
 	std::optional<uint32_t> aPriority = std::nullopt;
 	std::optional<uint32_t> bPriority = std::nullopt;
 	for (uint32_t i = 0; i < priorities.size(); i = i + 1) {

@@ -25,7 +25,6 @@
 #include "Music.hpp"
 #include "Locales.hpp"
 #include "Maps.hpp"
-#include "ColorTheme.hpp"
 #include "Infantryman.hpp"
 #include "Legioner.hpp"
 #include "Knight.hpp"
@@ -47,6 +46,7 @@
 #include "CouldntOpenParameters.hpp"
 #include "BigArrow.hpp"
 #include "Playlist.hpp"
+#include "Well.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -129,7 +129,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
-                "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon"}) {
+                "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -158,6 +158,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         }
         for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("house" + std::to_string(i), "images/house/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 1; i <= Well::TOTAL_TYPES; i = i + 1) {
+            Textures::get()->add("well" + std::to_string(i), "images/well/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= PoisonFog::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("poison_fog" + std::to_string(i), "images/poison_fog/" + std::to_string(i) + ".png");

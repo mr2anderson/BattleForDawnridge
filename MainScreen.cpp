@@ -62,6 +62,7 @@
 #include "Infirmary.hpp"
 #include "Tower1.hpp"
 #include "Tower2.hpp"
+#include "Well.hpp"
 
 
 
@@ -233,6 +234,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Sawmill>());
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Quarry>());
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Mine>());
+    buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Well>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionResourceCollectors = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionResourceCollectorsComponents);
 	Events createBuildWindowSectionResourceCollectorsEvent = clickSoundEvent;
