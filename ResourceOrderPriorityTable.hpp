@@ -17,31 +17,28 @@
  */
 
 
-#include <map>
-#include <vector>
-#include "Resource.hpp"
-#include "ResourceOrderComp.hpp"
+#include <string>
+#include <unordered_map>
+#include <cstdint>
 
 
 #pragma once
 
 
-class Resources {
+class ResourceOrderPriorityTable {
 public:
-	Resources();
-	Resources(const std::vector<Resource>& v);
+    static ResourceOrderPriorityTable* get() {
+        if (ResourceOrderPriorityTable::singletone == nullptr) {
+            ResourceOrderPriorityTable::singletone = new ResourceOrderPriorityTable();
+        }
+        return ResourceOrderPriorityTable::singletone;
+    }
 
-	void plus(const Resource& resource);
-	void plus(const Resource& resource, uint32_t limit);
-	void minus(const Resource& resource);
-	void plus(const Resources& resources);
-	void plus(const Resources& resources, const Resources& limit);
-	void minus(const Resources& resources);
-	void limit(const Resources& resources);
-	int32_t get(const std::string& id) const;
-    std::vector<Resource> getAll() const;
-	std::wstring getReadableInfo() const;
-	friend bool operator>=(const Resources& a, const Resources& b);
+    uint32_t getPriority(const std::string &id) const;
 private:
-	std::map<std::string, int32_t, ResourceOrderComp> map;
+    ResourceOrderPriorityTable();
+    ResourceOrderPriorityTable(const ResourceOrderPriorityTable& copy);
+    static ResourceOrderPriorityTable* singletone;
+
+    std::unordered_map<std::string, uint32_t> data;
 };

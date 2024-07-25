@@ -17,31 +17,11 @@
  */
 
 
-#include <map>
-#include <vector>
-#include "Resource.hpp"
 #include "ResourceOrderComp.hpp"
+#include "ResourceOrderPriorityTable.hpp"
 
 
-#pragma once
-
-
-class Resources {
-public:
-	Resources();
-	Resources(const std::vector<Resource>& v);
-
-	void plus(const Resource& resource);
-	void plus(const Resource& resource, uint32_t limit);
-	void minus(const Resource& resource);
-	void plus(const Resources& resources);
-	void plus(const Resources& resources, const Resources& limit);
-	void minus(const Resources& resources);
-	void limit(const Resources& resources);
-	int32_t get(const std::string& id) const;
-    std::vector<Resource> getAll() const;
-	std::wstring getReadableInfo() const;
-	friend bool operator>=(const Resources& a, const Resources& b);
-private:
-	std::map<std::string, int32_t, ResourceOrderComp> map;
-};
+ResourceOrderComp::ResourceOrderComp() = default;
+bool ResourceOrderComp::operator()(const std::string &a, const std::string &b) const {
+    return ResourceOrderPriorityTable::get()->getPriority(a) < ResourceOrderPriorityTable::get()->getPriority(b);
+}

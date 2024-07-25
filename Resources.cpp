@@ -22,25 +22,6 @@
 #include "Resources.hpp"
 
 
-bool Resources::mapCmp::operator()(const std::string& a, const std::string& b) const {
-	std::array<std::string, 6> priorities = { "food", "wood", "stone", "iron", "crystal", "gold" };
-	std::optional<uint32_t> aPriority = std::nullopt;
-	std::optional<uint32_t> bPriority = std::nullopt;
-	for (uint32_t i = 0; i < priorities.size(); i = i + 1) {
-		if (priorities[i] == a) {
-			aPriority = i;
-		}
-		if (priorities[i] == b) {
-			bPriority = i;
-		}
-	}
-	if (aPriority.has_value() and bPriority.has_value()) {
-		return aPriority < bPriority;
-	}
-	return a < b;
-}
-
-
 Resources::Resources() = default;
 Resources::Resources(const std::vector<Resource>& v) {
 	for (const auto& r : v) {
@@ -86,6 +67,15 @@ int32_t Resources::get(const std::string& type) const {
 		return 0;
 	}
 	return this->map.at(type);
+}
+std::vector<Resource> Resources::getAll() const {
+    std::vector<Resource> result;
+
+    for (const auto& a : this->map) {
+        result.emplace_back(a.first, a.second);
+    }
+
+    return result;
 }
 std::wstring Resources::getReadableInfo() const {
 	std::wstring result;

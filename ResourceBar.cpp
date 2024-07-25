@@ -17,7 +17,6 @@
  */
 
 
-#include <array>
 #include "ResourceBar.hpp"
 #include "Textures.hpp"
 #include "Fonts.hpp"
@@ -49,26 +48,26 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	rect.setOutlineThickness(2);
 	target.draw(rect, states);
 
-	std::array<std::string, 6> res = { "food", "wood", "stone", "iron", "crystal", "gold" };
-	for (uint32_t i = 0; i <= 6; i = i + 1) {
+    std::vector<Resource> res = this->resources.getAll();
+	for (uint32_t i = 0; i <= res.size(); i = i + 1) {
 		sf::Sprite sprite;
-		if (i == 6) {
+		if (i == res.size()) {
 			sprite.setTexture(*Textures::get()->get("helmet"));
 		}
 		else {
-			sprite.setTexture(*Textures::get()->get(res.at(i) + "_icon"));
+			sprite.setTexture(*Textures::get()->get(res.at(i).type + "_icon"));
 		}
-		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / 7, rect.getPosition().y));
+		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / (res.size() + 1), rect.getPosition().y));
 		sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
 		target.draw(sprite, states);
 
 		sf::Text text;
 		text.setFont(*Fonts::get()->get("1"));
-		if (i == 6) {
+		if (i == res.size()) {
 			text.setString(std::to_wstring(this->population) + L" / " + std::to_wstring(this->populationLimit));
 		}
 		else {
-			text.setString(std::to_string(this->resources.get(res.at(i))) + " / " + std::to_string(this->limit.get(res.at(i))));
+			text.setString(std::to_string(res.at(i).n) + " / " + std::to_string(this->limit.get(res.at(i).type)));
 		}
 		text.setCharacterSize(16);
 		text.setFillColor(sf::Color::White);
