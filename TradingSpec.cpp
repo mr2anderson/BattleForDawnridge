@@ -89,16 +89,17 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 
 	return responce;
 }
-std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const Building *b, MapState* state) {
-	std::vector<HorizontalSelectionWindowComponent> components;
+std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponents(const Building *b, MapState* state) {
+	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (b->works()) {
 		if (this->busy()) {
 			components.emplace_back(
-				"trade_icon",
+				HorizontalSelectionWindowComponent("trade_icon",
                 *Locales::get()->get("trading_building_is_busy") + this->currentTrade.getReadableInfo(),
 				false,
-				Events()
+				Events()),
+                true
 			);
 		}
 		else {
@@ -111,10 +112,11 @@ std::vector<HorizontalSelectionWindowComponent> TradingSpec::getComponents(const
 	}
 	else {
 		components.emplace_back(
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("this_building_cant_do_trades_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		);
 	}
 
@@ -129,7 +131,7 @@ std::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) co
 bool TradingSpec::busy() const {
 	return this->currentTrade.movesLeft > 0;
 }
-HorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade) {
+BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade) {
 	Events events;
 	if (playerResources.get(trade.sell.type) >= trade.sell.n) {
 		events.add(std::make_shared<DoTradeEvent>(b, this, trade));
@@ -143,12 +145,13 @@ HorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building
 		events.add(std::make_shared<CreateEEvent>(w));
 	}
 
-	HorizontalSelectionWindowComponent component = {
-		trade.buy.type + "_icon",
+	BuildingHorizontalSelectionWindowComponent component = {
+		HorizontalSelectionWindowComponent(trade.buy.type + "_icon",
         *Locales::get()->get("buy") + trade.buy.getReadableInfo() +
         *Locales::get()->get("for") + trade.sell.getReadableInfo(),
 		true,
-		events
+		events),
+        false
 	};
 
 	return component;

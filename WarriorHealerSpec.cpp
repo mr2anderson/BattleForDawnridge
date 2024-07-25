@@ -57,23 +57,25 @@ Events WarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *sta
 
 	return events;
 }
-std::vector<HorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents(const Building* b, MapState* state) {
-	HorizontalSelectionWindowComponent component;
+std::vector<BuildingHorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents(const Building* b, MapState* state) {
+	BuildingHorizontalSelectionWindowComponent component;
 
 	if (b->works()) {
 		component = {
-			this->getHealTextureName(),
+			HorizontalSelectionWindowComponent(this->getHealTextureName(),
             *Locales::get()->get("this_building_heals_warriors") + std::to_wstring(this->getHealingSpeed()),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 	else {
 		component = {
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("does_not_heal_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 

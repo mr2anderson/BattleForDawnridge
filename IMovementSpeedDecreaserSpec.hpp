@@ -25,7 +25,7 @@
 
 class IMovementSpeedDecreaser : public IBuildingSpec {
 public:
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
 	uint32_t getWarriorMovementCost(const Building* building, uint32_t playerId) const override;
 	virtual uint32_t getMovementSpeedDecreasingEffectStrength() const = 0;
 };

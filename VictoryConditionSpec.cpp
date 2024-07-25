@@ -49,12 +49,13 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 
 	return event;
 }
-std::vector<HorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
-	HorizontalSelectionWindowComponent component = {
-		"bell",
+std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
+	BuildingHorizontalSelectionWindowComponent component = {
+		HorizontalSelectionWindowComponent("bell",
 		*Locales::get()->get("victory_condition_building_description"),
 		false,
-		Events()
+		Events()),
+        true
 	};
 	return { component };
 }

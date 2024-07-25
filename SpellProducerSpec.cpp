@@ -42,8 +42,8 @@ Events SpellProducerSpec::getActiveNewMoveEvent(const Building* building, MapSta
 	}
 	return this->spell->newMove(building);
 }
-std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents(const Building *building, MapState *state) {
-	std::vector<HorizontalSelectionWindowComponent> components;
+std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getComponents(const Building *building, MapState *state) {
+	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (building->works()) {
 		if (this->spell == nullptr or this->spell->wasUsed()) {
@@ -71,11 +71,12 @@ std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents
 				}
 
 				components.emplace_back(
-					spell->getTextureName(),
+					HorizontalSelectionWindowComponent(spell->getTextureName(),
                     spell->getDescription() + L"\n" +
                     *Locales::get()->get("cost") + spell->getCost().getReadableInfo() + L". " + *Locales::get()->get("time_to_make_spell") + std::to_wstring(spell->getCreationTime()),
 					true,
-					event
+					event),
+                    false
 				);
 			}
 		}
@@ -86,19 +87,21 @@ std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents
 					useSpellEvent.add(std::make_shared<UseSpellEvent>(this->spell));
 
 					components.emplace_back(
-						spell->getTextureName(),
+						HorizontalSelectionWindowComponent(spell->getTextureName(),
 						spell->getDescription(),
 						true,
-						useSpellEvent
+						useSpellEvent),
+                        true
 					);
 				}
 				else {
 					components.emplace_back(
-						spell->getTextureName(),
+						HorizontalSelectionWindowComponent(spell->getTextureName(),
                         *Locales::get()->get("spell_producing_in_progress") + std::to_wstring(spell->getCreationMovesLeft()) + L"\n" +
                         spell->getDescription(),
 						false,
-						Events()
+						Events()),
+                        true
 					);
 				}
 			}
@@ -106,10 +109,11 @@ std::vector<HorizontalSelectionWindowComponent> SpellProducerSpec::getComponents
 	}
 	else {
 		components.emplace_back(
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("does_not_produce_spells_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		);
 	}
 	

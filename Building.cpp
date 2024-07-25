@@ -259,7 +259,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 }
 HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
     return {
-        this->getTextureName(),
+        "lord_icon",
         *Locales::get()->get("building_of_enemy"),
         false,
         Events()
@@ -362,19 +362,31 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
 
 	std::vector<HorizontalSelectionWindowComponent> components;
     components.push_back(this->getExitComponent());
+    if (!this->belongTo(playerId)) {
+        components.push_back(this->getBuildingOfEnemyComponent());
+    }
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getHpInfoComponent());
 
     if (this->belongTo(playerId)) {
         components.push_back(this->getDestroyComponent());
         for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-            std::vector<HorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
-            components.insert(components.end(), specComponents.begin(), specComponents.end());
+            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
+            for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
+                components.push_back(specComponents[j].component);
+            }
         }
         response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     }
     else {
-        components.push_back(this->getBuildingOfEnemyComponent());
+        for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
+            for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
+                if (specComponents[j].showToEnemies) {
+                    components.push_back(specComponents[j].component);
+                }
+            }
+        }
         response.add(std::make_shared<PlaySoundEvent>("click"));
     }
 

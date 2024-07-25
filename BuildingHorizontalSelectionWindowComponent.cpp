@@ -17,19 +17,11 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include "BuildingHorizontalSelectionWindowComponent.hpp"
 
 
-#pragma once
-
-
-class VictoryConditionSpec : public IBuildingSpec {
-public:
-	VictoryConditionSpec();
-	IBuildingSpec* clone() const override;
-
-    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-	Events getEventOnDestroy(const Building *b, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
-	bool isVictoryCondition() const override;
-};
+BuildingHorizontalSelectionWindowComponent::BuildingHorizontalSelectionWindowComponent() = default;
+BuildingHorizontalSelectionWindowComponent::BuildingHorizontalSelectionWindowComponent(const HorizontalSelectionWindowComponent &component, bool showToEnemies) {
+    this->component = component;
+    this->showToEnemies = showToEnemies;
+}

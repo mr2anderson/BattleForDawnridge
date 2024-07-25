@@ -76,12 +76,13 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
 
     return events;
 }
-std::vector<HorizontalSelectionWindowComponent> ShootingSpec::getComponents(const Building *b, MapState *state) {
-    HorizontalSelectionWindowComponent component = {
-            this->getProjectile()->getIconTextureName(),
+std::vector<BuildingHorizontalSelectionWindowComponent> ShootingSpec::getComponents(const Building *b, MapState *state) {
+    BuildingHorizontalSelectionWindowComponent component = {
+            HorizontalSelectionWindowComponent(this->getProjectile()->getIconTextureName(),
             *Locales::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
             false,
-            Events()
+            Events()),
+            true
     };
     return {component};
 }

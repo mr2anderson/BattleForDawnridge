@@ -24,22 +24,25 @@
 
 
 TerritoryConductorSpec::TerritoryConductorSpec() = default;
-std::vector<HorizontalSelectionWindowComponent> TerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> TerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
 	if (!building->works() and !this->conductsIfNotWork()) {
-		HorizontalSelectionWindowComponent component = {
-			"hammer_icon",
+		BuildingHorizontalSelectionWindowComponent component = {
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("does_not_expand_territory_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		};
 		return { component };
 	}
 	if (!building->connectedToOrigin(state)) {
-		HorizontalSelectionWindowComponent component = {
+		BuildingHorizontalSelectionWindowComponent component = {
+             HorizontalSelectionWindowComponent(
 			"road",
 			*Locales::get()->get("does_not_lead_to_city_center"),
 			false,
-			Events()
+			Events()),
+            true
 		};
 		return { component };
 	}

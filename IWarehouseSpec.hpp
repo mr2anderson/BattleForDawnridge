@@ -26,5 +26,5 @@
 class IWarehouseSpec : public IBuildingSpec {
 public:
 	Events getEventOnDestroy(const Building* building, MapState* state) const override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 };

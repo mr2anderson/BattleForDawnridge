@@ -22,23 +22,25 @@
 #include "Locales.hpp"
 
 
-std::vector<HorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(const Building* building, MapState* state) {
-	HorizontalSelectionWindowComponent component;
+std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(const Building* building, MapState* state) {
+	BuildingHorizontalSelectionWindowComponent component;
 
 	if (building->works()) {
 		component = {
-			"helmet",
+			HorizontalSelectionWindowComponent("helmet",
             *Locales::get()->get("this_building_increases_population_limit") + std::to_wstring(this->getPopulationLimit(building)),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 	else {
 		component = {
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("does_not_increase_population_limit_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 

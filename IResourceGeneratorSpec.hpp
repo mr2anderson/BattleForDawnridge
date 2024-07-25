@@ -26,6 +26,6 @@
 class IResourceGeneratorSpec : public IBuildingSpec {
 public:
 	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	virtual Resource getProduct() const = 0;
 };

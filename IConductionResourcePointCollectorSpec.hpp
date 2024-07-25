@@ -26,7 +26,7 @@
 class IConductionResourcePointCollectorSpec : public IBuildingSpec {
 public:
 	Events getActiveNewMoveEvent(const Building* building, MapState* state) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;
 };

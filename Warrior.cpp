@@ -524,7 +524,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
 }
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
-        this->getTextureName(),
+        "lord_icon",
         *Locales::get()->get("warrior_of_enemy"),
         false,
         Events()
@@ -535,6 +535,9 @@ Events Warrior::getSelectionWindow(bool own) {
 
     std::vector<HorizontalSelectionWindowComponent> components;
     components.push_back(this->getExitComponent());
+    if (!own) {
+        components.push_back(this->getWarriorOfEnemyComponent());
+    }
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getWarriorInfoComponent());
     if (this->rageModeMovesLeft > 0) {
@@ -550,7 +553,6 @@ Events Warrior::getSelectionWindow(bool own) {
         events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     }
     else {
-        components.push_back(this->getWarriorOfEnemyComponent());
         events.add(std::make_shared<PlaySoundEvent>("click"));
     }
 

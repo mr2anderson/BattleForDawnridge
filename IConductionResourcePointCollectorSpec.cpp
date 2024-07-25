@@ -73,8 +73,8 @@ Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Buildi
 
 	return response;
 }
-std::vector<HorizontalSelectionWindowComponent> IConductionResourcePointCollectorSpec::getComponents(const Building* building, MapState* state) {
-	HorizontalSelectionWindowComponent component;
+std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePointCollectorSpec::getComponents(const Building* building, MapState* state) {
+	BuildingHorizontalSelectionWindowComponent component;
 
 	if (building->works()) {
 		uint32_t n = 0;
@@ -92,18 +92,20 @@ std::vector<HorizontalSelectionWindowComponent> IConductionResourcePointCollecto
 		}
 
 		component = {
-			this->getResourceType() + "_icon",
+			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
             *Locales::get()->get("this_building_collects_resources_from_conducted_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " + s,
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 	else {
 		component = {
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 

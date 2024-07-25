@@ -54,23 +54,26 @@ Events IResourceGeneratorSpec::getActiveNewMoveEvent(const Building *building, M
 
 	return event;
 }
-std::vector<HorizontalSelectionWindowComponent> IResourceGeneratorSpec::getComponents(const Building *building, MapState* state) {
-	HorizontalSelectionWindowComponent component;
+std::vector<BuildingHorizontalSelectionWindowComponent> IResourceGeneratorSpec::getComponents(const Building *building, MapState* state) {
+	BuildingHorizontalSelectionWindowComponent component;
 
 	if (building->works()) {
 		component = {
+            HorizontalSelectionWindowComponent(
 			this->getProduct().type + "_icon",
             *Locales::get()->get("this_building_produces_resources_every_move") + this->getProduct().getReadableInfo(),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 	else {
 		component = {
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("this_building_cant_produce_resources_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		};
 	}
 

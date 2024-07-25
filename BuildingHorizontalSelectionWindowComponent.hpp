@@ -17,19 +17,16 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include "HorizontalSelectionWindowComponent.hpp"
 
 
 #pragma once
 
 
-class VictoryConditionSpec : public IBuildingSpec {
-public:
-	VictoryConditionSpec();
-	IBuildingSpec* clone() const override;
+struct BuildingHorizontalSelectionWindowComponent {
+    BuildingHorizontalSelectionWindowComponent();
+    BuildingHorizontalSelectionWindowComponent(const HorizontalSelectionWindowComponent &component, bool showToEnemies);
 
-    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-	Events getEventOnDestroy(const Building *b, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
-	bool isVictoryCondition() const override;
+    HorizontalSelectionWindowComponent component;
+    bool showToEnemies;
 };

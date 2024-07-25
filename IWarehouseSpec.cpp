@@ -38,12 +38,13 @@ Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *sta
 
 	return event;
 }
-std::vector<HorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(const Building *building, MapState* state) {
-	HorizontalSelectionWindowComponent component = {
-		"resources_icon",
+std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(const Building *building, MapState* state) {
+	BuildingHorizontalSelectionWindowComponent component = {
+		HorizontalSelectionWindowComponent("resources_icon",
         *Locales::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
 		false,
-		Events()
+		Events()),
+        true
 	};
 	return { component };
 }

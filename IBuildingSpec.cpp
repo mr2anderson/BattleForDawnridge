@@ -31,8 +31,8 @@ Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* stat
 Events IBuildingSpec::getEventOnDestroy(const Building *building, MapState* state) const {
 	return Events();
 }
-std::vector<HorizontalSelectionWindowComponent> IBuildingSpec::getComponents(const Building *building, MapState* state) {
-	return std::vector<HorizontalSelectionWindowComponent>();
+std::vector<BuildingHorizontalSelectionWindowComponent> IBuildingSpec::getComponents(const Building *building, MapState* state) {
+	return std::vector<BuildingHorizontalSelectionWindowComponent>();
 }
 std::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *building) const {
 	return std::nullopt;

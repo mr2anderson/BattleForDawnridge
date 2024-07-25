@@ -31,7 +31,7 @@ public:
 	void decreaseCurrentProducingMovesLeft();
 	void stopProducing();
 	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
 	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	uint32_t getRadius() const override;
     sf::Color getHighlightColor() const override;

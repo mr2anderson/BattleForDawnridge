@@ -94,8 +94,8 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 		return response;
 	}
 }
-std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponents(const Building *b, MapState* state) {
-	std::vector<HorizontalSelectionWindowComponent> components;
+std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::getComponents(const Building *b, MapState* state) {
+	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (b->works()) {
 		if (this->producing) {
@@ -107,10 +107,11 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 				text = *Locales::get()->get("couldnt_find_new_warrior_position");
 			}
 			components.emplace_back(
-				currentProducing->getTextureName(),
+				HorizontalSelectionWindowComponent(currentProducing->getTextureName(),
 				text,
 				false,
-				Events()
+				Events()),
+                true
 			);
 		}
 		else {
@@ -160,23 +161,25 @@ std::vector<HorizontalSelectionWindowComponent> WarriorProducerSpec::getComponen
 				}
 
 				components.emplace_back(
-					w->getTextureName(),
+					HorizontalSelectionWindowComponent(w->getTextureName(),
                     w->getDescription() + L"\n" +
                     *Locales::get()->get("hp") + std::to_wstring(w->getMaxHP()) + L" (" + w->getDefence().getReadable() + L")\n" +
                     *Locales::get()->get("damage") + w->getDamage().getReadable() + L". " + *Locales::get()->get("movement_points") + std::to_wstring(w->getMovementPoints()) + L"\n" +
                     *Locales::get()->get("population") + std::to_wstring(w->getPopulation()) + L". " + *Locales::get()->get("cost") + w->getCost().getReadableInfo() + L". " + *Locales::get()->get("time_to_produce") + std::to_wstring(w->getTimeToProduce()),
 					true,
-					produceEvent
+					produceEvent),
+                    false
 				);
 			}
 		}
 	}
 	else {
 		components.emplace_back(
-			"hammer_icon",
+			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("does_not_train_if_hp_isnt_full"),
 			false,
-			Events()
+			Events()),
+            true
 		);
 	}
 

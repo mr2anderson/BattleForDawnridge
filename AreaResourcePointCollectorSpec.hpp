@@ -28,7 +28,7 @@ public:
 	AreaResourcePointCollectorSpec();
 
 	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	uint32_t getRadius() const override;
     sf::Color getHighlightColor() const override;
     uint8_t getHighlightType() const override;

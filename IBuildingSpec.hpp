@@ -19,7 +19,7 @@
 
 #include "Events.hpp"
 #include "MapState.hpp"
-#include "HorizontalSelectionWindowComponent.hpp"
+#include "BuildingHorizontalSelectionWindowComponent.hpp"
 #include "BuildingShortInfo.hpp"
 
 
@@ -38,7 +38,7 @@ public:
 	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);
 	virtual Events getHighlightEvent(const Building *building, MapState* state, uint8_t type);
 	virtual Events getEventOnDestroy(const Building *building, MapState* state) const;
-	virtual std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
+	virtual std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
 	virtual std::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
 	virtual Resources getLimit() const;
 	virtual uint32_t getPopulationLimit(const Building *building) const;

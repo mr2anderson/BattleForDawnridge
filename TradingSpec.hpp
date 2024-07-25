@@ -31,12 +31,12 @@ public:
 	Events doTrade(const Building *b, const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
 	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
-	std::vector<HorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
 	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	virtual std::vector<Trade> getTrades() const = 0;
 private:
 	Trade currentTrade;
 
 	bool busy() const;
-	HorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade);
+	BuildingHorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade);
 };
