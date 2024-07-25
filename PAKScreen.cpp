@@ -53,7 +53,7 @@ bool PAKScreen::run(sf::RenderWindow &window) {
 }
 void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
     Music::get()->get("intro")->play();
-    Music::get()->get("intro")->setVolume(30);
+    Music::get()->get("intro")->setVolume(50);
 
 	this->s.setTexture(*Textures::get()->get("loading_screen"));
 	this->s.setPosition(windowW - this->s.getLocalBounds().width, windowH - this->s.getLocalBounds().height);

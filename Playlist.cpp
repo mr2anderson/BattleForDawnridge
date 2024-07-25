@@ -26,7 +26,7 @@ Playlist *Playlist::singletone = nullptr;
 
 
 const uint32_t Playlist::SOUNDTRACKS_N = 7;
-const uint32_t Playlist::MUSIC_VOLUME = 30;
+const uint32_t Playlist::MUSIC_VOLUME = 50;
 
 
 Playlist::Playlist() {
