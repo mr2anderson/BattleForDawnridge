@@ -63,6 +63,7 @@
 #include "Tower1.hpp"
 #include "Tower2.hpp"
 #include "Well.hpp"
+#include "WarehouseCrystal.hpp"
 
 
 
@@ -248,6 +249,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseWood>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseStone>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseIron>());
+    buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseCrystal>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseGold>());
 	
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionWarehouses = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionWarehousesComponents);
