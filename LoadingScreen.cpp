@@ -78,17 +78,14 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
         Fonts::get()->add("1", "fonts/1.ttf");
         Textures::get()->add("loading_screen", "images/loading_screen.jpg");
     }
-	catch (CouldntOpenFont &e) {
-        return false;
-    }
-    catch (CouldntOpenTexture& e) {
+	catch (CouldntOpen&) {
         return false;
     }
 
     try {
         Locales::get()->load();
     }
-	catch (CouldntOpenLocales &e) {
+	catch (CouldntOpen &e) {
         this->loadingError(&e, window);
         return false;
     }
@@ -129,7 +126,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
-                "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon"}) {
+                "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -171,18 +168,13 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
             Textures::get()->add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
         }
-    }
-	catch (CouldntOpenTexture &e) {
-        loadingError(&e, window);
-        return false;
-    }
 
-    try {
+
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog", 
-                                      "infantryman", "heal", "building_hit", "bell"}) {
+                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
+                                      "infantryman", "heal", "building_hit", "bell", "crystal"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
@@ -191,42 +183,27 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
             Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
-    }
-    catch (CouldntOpenSound &e) {
-        loadingError(&e, window);
-        return false;
-    }
 
-    try {
+
         Music::get()->add("intro", "music/intro.ogg");
         Music::get()->add("menu", "music/menu.ogg");
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
             Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
-    }
-	catch (CouldntOpenMusic &e) {
-        loadingError(&e, window);
-        return false;
-    }
 
 
-    try {
         Parameters::get()->load();
-    }
-    catch (CouldntOpenParameters& e) {
-        loadingError(&e, window);
-        return false;
-    }
 
-    try {
+
         for (const std::string& a : { "ridge" }) {
             Maps::get()->add(a, "levels/" + a + ".tmx");
         }
     }
-    catch (CouldntOpenMap& e) {
+	catch (CouldntOpen &e) {
         loadingError(&e, window);
         return false;
     }
+
 
     return true;
 }
