@@ -36,6 +36,7 @@
 #include "Legioner.hpp"
 #include "Treasure.hpp"
 #include "Effect.hpp"
+#include "Plant.hpp"
 
 
 Map::Map(const std::string &path) {
@@ -95,6 +96,9 @@ Map::Map(const std::string &path) {
             }
             else if (id == 8) {
                 this->add(new Treasure(x, y));
+            }
+            else if (id == 3) {
+                this->add(new Plant(x, y));
             }
             x = x + 1;
         }

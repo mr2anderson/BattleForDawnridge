@@ -47,6 +47,7 @@
 #include "BigArrow.hpp"
 #include "Playlist.hpp"
 #include "Well.hpp"
+#include "Plant.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -152,6 +153,11 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         }
         for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
             Textures::get()->add("plain" + std::to_string(i), "images/plains/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 1; i <= Plant::TOTAL_TYPES; i = i + 1) {
+            for (uint32_t j = 1; j <= Plant::ANIMATION_NUMBER[i - 1]; j = j + 1) {
+                Textures::get()->add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/plant/" + std::to_string(i) + "/" + std::to_string(j) + ".png");
+            }
         }
         for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("house" + std::to_string(i), "images/house/" + std::to_string(i) + ".png");
