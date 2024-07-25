@@ -28,9 +28,14 @@ class AreaControllerSpec: public IBuildingSpec{
 public:
 	AreaControllerSpec();
 
+    enum IN_RADIUS_TYPE {
+        FULLY,
+        PARTIALLY
+    };
+
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state);
 	Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) override;
-	bool inRadius(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
+	bool inRadius(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type = IN_RADIUS_TYPE::FULLY);
 	virtual bool ignoreUltraHighObstacles() const;
 	virtual bool ignoreHighObstacles() const;
 	virtual bool ignoreLowObstacles() const;

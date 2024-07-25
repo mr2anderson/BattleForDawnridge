@@ -72,18 +72,25 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
 
     return events;
 }
-bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
+bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type) {
     std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     for (uint32_t x = x2; x < x2 + sx2; x = x + 1) {
         for (uint32_t y = y2; y < y2 + sy2; y = y + 1) {
             if (available.find(std::make_tuple(x, y)) == available.end()) {
-                return false;
+                if (type == IN_RADIUS_TYPE::FULLY) {
+                    return false;
+                }
+            }
+            else {
+                if (type == IN_RADIUS_TYPE::PARTIALLY) {
+                    return true;
+                }
             }
         }
     }
 
-    return true;
+    return (type == IN_RADIUS_TYPE::FULLY);
 }
 bool AreaControllerSpec::ignoreUltraHighObstacles() const {
     return false;
