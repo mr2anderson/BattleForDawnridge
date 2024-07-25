@@ -123,10 +123,23 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 	return components;
 }
 std::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) const {
-	if (this->busy()) {
-		return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), this->currentTrade.buy.type + "_icon", std::to_string(this->currentTrade.movesLeft));
-	}
-	return std::nullopt;
+    if (!b->works()) {
+        return std::nullopt;
+    }
+
+    std::string pictureName;
+    std::string text;
+
+    if (this->busy()) {
+        pictureName = this->currentTrade.buy.type + "_icon";
+        text = std::to_string(this->currentTrade.movesLeft);
+    }
+    else {
+        pictureName = "trade_icon";
+        text = "...";
+    }
+
+    return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), pictureName, text);
 }
 bool TradingSpec::busy() const {
 	return this->currentTrade.movesLeft > 0;

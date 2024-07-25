@@ -121,20 +121,28 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 	return components;
 }
 std::optional<BuildingShortInfo> SpellProducerSpec::getShortInfo(const Building* building) const {
-	if (this->spell == nullptr or this->spell->wasUsed()) {
+	if (!building->works()) {
 		return std::nullopt;
 	}
 
+    std::string pictureName;
 	std::string text;
-	
-	if (this->spell->isReady()) {
-		text = "!";
-	}
-	else {
-		text = std::to_string(this->spell->getCreationMovesLeft());
-	}
 
-	return BuildingShortInfo(building->getXInPixels(), building->getYInPixels(), building->getSX(), building->getSY(), this->spell->getTextureName(), text);
+    if (this->spell == nullptr or this->spell->wasUsed()) {
+        pictureName = "priest_icon";
+        text = "...";
+    }
+    else {
+        pictureName = this->spell->getTextureName();
+        if (this->spell->isReady()) {
+            text = "!";
+        }
+        else {
+            text = std::to_string(this->spell->getCreationMovesLeft());
+        }
+    }
+
+	return BuildingShortInfo(building->getXInPixels(), building->getYInPixels(), building->getSX(), building->getSY(), pictureName, text);
 }
 void SpellProducerSpec::setSpell(std::shared_ptr<Spell> newSpell) {
 	if (this->spell != nullptr) {

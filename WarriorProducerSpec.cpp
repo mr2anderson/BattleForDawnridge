@@ -186,19 +186,28 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 	return components;
 }
 std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Building *b) const {
-	if (!this->producing) {
+	if (!b->works()) {
 		return std::nullopt;
 	}
 
+    std::string pictureName;
 	std::string text;
-	if (this->currentProducingMovesLeft > 0) {
-		text = std::to_string(this->currentProducingMovesLeft);
-	}
-	else {
-		text = "!";
-	}
 
-	return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), this->currentProducing->getTextureName(), text);
+    if (this->producing) {
+        pictureName = this->currentProducing->getTextureName();
+        if (this->currentProducingMovesLeft > 0) {
+            text = std::to_string(this->currentProducingMovesLeft);
+        }
+        else {
+            text = "!";
+        }
+    }
+	else {
+        pictureName = "infantryman_icon";
+        text = "...";
+    }
+
+	return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), pictureName, text);
 }
 uint32_t WarriorProducerSpec::getRadius() const {
 	return 1;
