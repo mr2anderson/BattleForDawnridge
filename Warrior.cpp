@@ -456,6 +456,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("verify_kill"), *Locales::get()->get("yes"), *Locales::get()->get("no"), killNextTurnEvent, clickSoundEvent);
 
     Events killNextTurnEventVerify = clickSoundEvent;
+    killNextTurnEventVerify.add(std::make_shared<ResetHighlightEvent>());
     killNextTurnEventVerify.add(std::make_shared<CreateEEvent>(verifyWindow));
 
     return {
