@@ -30,7 +30,7 @@ uint32_t InfirmarySpec::getHealingSpeed() const {
 	return Parameters::get()->getInt("infirmary_healing_speed");
 }
 uint8_t InfirmarySpec::getWarriorToHealType() const {
-    return Warrior::TYPE::HUMAN;
+    return Warrior::BEEN_HIT_SOUND_TYPE::HUMAN;
 }
 std::string InfirmarySpec::getHealTextureName() const {
     return "christianity";

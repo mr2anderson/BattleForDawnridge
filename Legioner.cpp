@@ -30,8 +30,8 @@ Legioner::Legioner(uint32_t x, uint32_t y, uint32_t playerId) :
 Warrior* Legioner::cloneWarrior() const {
 	return new Legioner(*this);
 }
-uint8_t Legioner::getType() const {
-    return Warrior::TYPE::HUMAN;
+uint8_t Legioner::getBeenHitSoundType() const {
+    return Warrior::BEEN_HIT_SOUND_TYPE::HUMAN;
 }
 uint32_t Legioner::getMaxHP() const {
 	return Parameters::get()->getInt("legioner_max_hp");

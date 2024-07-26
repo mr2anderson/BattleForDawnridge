@@ -80,7 +80,7 @@ Events Warrior::hit(uint32_t d) {
 
     Events response;
 
-    if (this->getType() == Warrior::TYPE::HUMAN) {
+    if (this->getBeenHitSoundType() == Warrior::BEEN_HIT_SOUND_TYPE::HUMAN) {
         response.add(std::make_shared<PlaySoundEvent>("ouch"));
     }
 

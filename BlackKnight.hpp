@@ -29,7 +29,7 @@ public:
 	BlackKnight(uint32_t x, uint32_t y, uint32_t playerId);
 	Warrior* cloneWarrior() const override;
 
-    uint8_t getType() const override;
+    uint8_t getBeenHitSoundType() const override;
     uint32_t getMaxHP() const override;
 	Defence getBaseDefence() const override;
 	Resources getCost() const override;
