@@ -21,17 +21,15 @@
 
 
 
-/*#include "Infantryman.hpp"
-#include "Legioner.hpp"
-#include "Knight.hpp"
-#include "BlackKnight.hpp"
+#include <iostream>
+#include "Valkyr.hpp"
 #include "Root.hpp"
 void process(std::string path) {
 	sf::Image image;
 	image.loadFromFile(path);
 	for (uint32_t i = 0; i < image.getSize().x; i = i + 1) {
 		for (uint32_t j = 0; j < image.getSize().y; j = j + 1) {
-			if (image.getPixel(i, j) == sf::Color(111, 79, 51) or image.getPixel(i, j) == sf::Color(41, 29, 18)) {
+			if (image.getPixel(i, j) == sf::Color(97, 68, 43) or image.getPixel(i, j) == sf::Color(31, 22, 13)) {
 				image.setPixel(i, j, sf::Color::Transparent);
 			}
 		}
@@ -40,26 +38,27 @@ void process(std::string path) {
 	path.pop_back();
 	path.pop_back();
 	image.saveToFile(path + "png");
-}*/
+    std::cout << "saving to " << path + "png" << std::endl;
+}
 
 
 
 
 int main() {
-	/*for (const std::string& a : {"talking", "running", "attack", "been hit", "tipping over"}) {
+	for (const std::string& a : {"talking", "running", "attack", "been hit", "tipping over"}) {
 		for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
 			for (const std::tuple<std::string, uint32_t>& w : {
-				std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)) }) {
+				std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)) }) {
 				for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
 					std::string s = std::to_string(i);
 					while (s.size() < 4) {
 						s = ('0' + s);
 					}
-					process(DATA_ROOT + "/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".bmp");
+					process(DATA_ROOT + "/images/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".bmp");
 				}
 			}
 		}
-	}*/
+	}
 	Game::get()->run();
 	return 0;
 }

@@ -32,10 +32,10 @@ WarriorNearSingleAttacker::WarriorNearSingleAttacker(uint32_t x, uint32_t y, uin
 Events WarriorNearSingleAttacker::newMove(MapState *state, uint32_t currentPlayerId) {
     Events events = Warrior::newMove(state, currentPlayerId);
 
-    if (this->exist() and this->getPlayerId() == currentPlayerId) {
+    if (this->exist()) {
         Events refreshAttackAbilityEvent;
         refreshAttackAbilityEvent.add(std::make_shared<RefreshAttackAbilityEvent>(this));
-        return refreshAttackAbilityEvent;
+        events = refreshAttackAbilityEvent + events;
     }
 
     return events;

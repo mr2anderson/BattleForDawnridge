@@ -65,6 +65,7 @@
 #include "Well.hpp"
 #include "WarehouseCrystal.hpp"
 #include "ISingleAttacker.hpp"
+#include "WarriorNearMultyAttacker.hpp"
 
 
 
@@ -787,6 +788,12 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<WipeAttackAbilityEvent> wipeAttackAbilityEvent = std::dynamic_pointer_cast<WipeAttackAbilityEvent>(e)) {
         this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent);
     }
+    else if (std::shared_ptr<RefreshAttackedTableEvent> refreshAttackedTableEvent = std::dynamic_pointer_cast<RefreshAttackedTableEvent>(e)) {
+        this->handleRefreshAttackedTableEvent(refreshAttackedTableEvent);
+    }
+    else if (std::shared_ptr<MarkAsAttackedEvent> markAsAttackedEvent = std::dynamic_pointer_cast<MarkAsAttackedEvent>(e)) {
+        this->handleMarkAsAttackedEvent(markAsAttackedEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -978,4 +985,10 @@ void MainScreen::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAb
 }
 void MainScreen::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e) {
     e->getI()->wipeAbility();
+}
+void MainScreen::handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e) {
+    e->getWarrior()->refreshAttackedTable();
+}
+void MainScreen::handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e) {
+    e->getAttacker()->markAsAttacked(e->getTarget());
 }

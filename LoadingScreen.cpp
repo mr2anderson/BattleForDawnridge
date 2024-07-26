@@ -31,12 +31,6 @@
 #include "BlackKnight.hpp"
 #include "PlainsGeneration.hpp"
 #include "WindowButton.hpp"
-#include "CouldntOpenTexture.hpp"
-#include "CouldntOpenFont.hpp"
-#include "CouldntOpenSound.hpp"
-#include "CouldntOpenMusic.hpp"
-#include "CouldntOpenLocales.hpp"
-#include "CouldntOpenMap.hpp"
 #include "UTFEncoder.hpp"
 #include "ClueManager.hpp"
 #include "Fire.hpp"
@@ -48,6 +42,7 @@
 #include "Playlist.hpp"
 #include "Well.hpp"
 #include "Plant.hpp"
+#include "Valkyr.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -141,6 +136,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)), 
                     std::make_tuple("legioner", Legioner().getAnimationNumber(a, d)),
                     std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
+                    std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)),
                     std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)) }) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
@@ -181,7 +177,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
-                                      "infantryman", "heal", "building_hit", "bell", "crystal", "swing"}) {
+                                      "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
+                                      "ouch_woman", "valkyr"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {

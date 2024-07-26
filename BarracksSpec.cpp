@@ -21,6 +21,7 @@
 #include "Infantryman.hpp"
 #include "Legioner.hpp"
 #include "Knight.hpp"
+#include "Valkyr.hpp"
 #include "BlackKnight.hpp"
 
 
@@ -34,6 +35,7 @@ std::vector<std::shared_ptr<Warrior>> BarracksSpec::getWarriorsToProduce(uint32_
 	warriors.push_back(std::make_shared<Infantryman>(0, 0, playerId));
 	warriors.push_back(std::make_shared<Legioner>(0, 0, playerId));
 	warriors.push_back(std::make_shared<Knight>(0, 0, playerId));
+    warriors.push_back(std::make_shared<Valkyr>(0, 0, playerId));
 	warriors.push_back(std::make_shared<BlackKnight>(0, 0, playerId));
 
 	return warriors;

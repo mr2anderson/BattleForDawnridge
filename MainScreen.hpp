@@ -68,6 +68,8 @@
 #include "CreateEffectEvent.hpp"
 #include "RefreshAttackAbilityEvent.hpp"
 #include "WipeAttackAbilityEvent.hpp"
+#include "RefreshAttackedTableEvent.hpp"
+#include "MarkAsAttackedEvent.hpp"
 
 
 #pragma once
@@ -202,4 +204,6 @@ private:
 	void handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e);
     void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e);
     void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e);
+    void handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e);
+    void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e);
 };
