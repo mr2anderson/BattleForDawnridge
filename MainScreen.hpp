@@ -66,7 +66,8 @@
 #include "EnableWarriorRageModeEvent.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 #include "CreateEffectEvent.hpp"
-#include "ReconfRoadEvent.hpp"
+#include "RefreshAttackAbilityEvent.hpp"
+#include "WipeAttackAbilityEvent.hpp"
 
 
 #pragma once
@@ -199,5 +200,6 @@ private:
 	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e);
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e);
 	void handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e);
-    void handleReconfRoadEvent(std::shared_ptr<ReconfRoadEvent> e);
+    void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e);
+    void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e);
 };

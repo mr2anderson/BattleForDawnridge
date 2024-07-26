@@ -24,7 +24,7 @@
 
 Knight::Knight() = default;
 Knight::Knight(uint32_t x, uint32_t y, uint32_t playerId) :
-	Warrior(x, y, playerId) {
+	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
 Warrior* Knight::cloneWarrior() const {
@@ -33,11 +33,17 @@ Warrior* Knight::cloneWarrior() const {
 std::string Knight::getBeenHitSoundName() const {
     return "ouch";
 }
+std::string Knight::getStartAttackSoundName() const {
+    return "swing";
+}
 uint32_t Knight::getMaxHP() const {
 	return Parameters::get()->getInt("knight_max_hp");
 }
 Defence Knight::getBaseDefence() const {
 	return Parameters::get()->getDefence("knight_defence");
+}
+Damage Knight::getBaseDamage() const {
+    return Parameters::get()->getDamage("knight_damage");
 }
 Resources Knight::getCost() const {
 	return Parameters::get()->getResources("knight_cost");
@@ -62,6 +68,9 @@ uint32_t Knight::getBeenHitAnimationsNumberInSet() const {
 }
 uint32_t Knight::getTippingOverAnimationsNumberInSet() const {
 	return 12;
+}
+uint32_t Knight::getAttackAnimationsNumberInSet() const {
+    return 12;
 }
 std::string Knight::getBaseTextureName() const {
 	return "knight";

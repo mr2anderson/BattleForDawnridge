@@ -18,6 +18,7 @@
 
 
 #include <algorithm>
+#include <limits>
 #include "ShootingSpec.hpp"
 #include "ColorTheme.hpp"
 #include "Locales.hpp"
@@ -46,7 +47,13 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
     for (uint32_t i = 0; i < toShoot.size(); i = i + 1) {
         Unit *u = toShoot[i];
         uint32_t hpLoss = this->getDamage().getHpLoss(u->getDefence());
-        uint32_t shotsToKill = u->getHP() / hpLoss + (bool)(u->getHP() % hpLoss);
+        uint32_t shotsToKill;
+        if (hpLoss == 0) {
+            shotsToKill = std::numeric_limits<uint32_t>::max();
+        }
+        else {
+            shotsToKill = u->getHP() / hpLoss + (bool)(u->getHP() % hpLoss);
+        }
         shots.push_back(std::min(shotsLeft, shotsToKill));
         shotsLeft = shotsLeft - shots.back();
         if (shotsLeft == 0) {

@@ -24,6 +24,6 @@ SuspendingAnimation::SuspendingAnimation() = default;
 SuspendingAnimation::SuspendingAnimation(IWithSuspendingAnimation *animated) {
     this->animated = animated;
 }
-Events SuspendingAnimation::process() {
-    return this->animated->processCurrentAnimation();
+Events SuspendingAnimation::process(MapState *state) {
+    return this->animated->processCurrentAnimation(state);
 }

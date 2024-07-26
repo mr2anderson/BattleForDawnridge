@@ -181,7 +181,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
-                                      "infantryman", "heal", "building_hit", "bell", "crystal"}) {
+                                      "infantryman", "heal", "building_hit", "bell", "crystal", "swing"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {

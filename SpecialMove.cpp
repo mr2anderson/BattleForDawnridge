@@ -17,21 +17,12 @@
  */
 
 
-#include "PlayerPointer.hpp"
+#include "SpecialMove.hpp"
 
 
-#pragma once
-
-
-class WarriorPlayerPointer : public PlayerPointer {
-public:
-    WarriorPlayerPointer(float xInPixels, float yInPixels, bool color);
-
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-private:
-    sf::Sprite sprite;
-
-    void setTypeBlue() override;
-    void setTypeGreen() override;
-    void setTypePurple() override;
-};
+SpecialMove::SpecialMove() = default;
+SpecialMove::SpecialMove(uint32_t targetX, uint32_t targetY, sf::Color color) {
+    this->targetX = targetX;
+    this->targetY = targetY;
+    this->color = color;
+}

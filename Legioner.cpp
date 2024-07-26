@@ -24,7 +24,7 @@
 
 Legioner::Legioner() = default;
 Legioner::Legioner(uint32_t x, uint32_t y, uint32_t playerId) :
-	Warrior(x, y, playerId) {
+	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
 Warrior* Legioner::cloneWarrior() const {
@@ -33,11 +33,17 @@ Warrior* Legioner::cloneWarrior() const {
 std::string Legioner::getBeenHitSoundName() const {
     return "ouch";
 }
+std::string Legioner::getStartAttackSoundName() const {
+    return "swing";
+}
 uint32_t Legioner::getMaxHP() const {
 	return Parameters::get()->getInt("legioner_max_hp");
 }
 Defence Legioner::getBaseDefence() const {
 	return Parameters::get()->getDefence("legioner_defence");
+}
+Damage Legioner::getBaseDamage() const {
+    return Parameters::get()->getDamage("legioner_damage");
 }
 Resources Legioner::getCost() const {
 	return Parameters::get()->getResources("legioner_cost");
@@ -62,6 +68,9 @@ uint32_t Legioner::getBeenHitAnimationsNumberInSet() const {
 }
 uint32_t Legioner::getTippingOverAnimationsNumberInSet() const {
 	return 12;
+}
+uint32_t Legioner::getAttackAnimationsNumberInSet() const {
+    return 12;
 }
 std::string Legioner::getBaseTextureName() const {
 	return "legioner";

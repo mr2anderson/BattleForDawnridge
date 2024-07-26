@@ -17,21 +17,23 @@
  */
 
 
-#include "Warrior.hpp"
+#include "WarriorNearSingleAttacker.hpp"
 
 
 #pragma once
 
 
-class BlackKnight : public Warrior {
+class BlackKnight : public WarriorNearSingleAttacker {
 public:
 	BlackKnight();
 	BlackKnight(uint32_t x, uint32_t y, uint32_t playerId);
 	Warrior* cloneWarrior() const override;
 
     std::string getBeenHitSoundName() const override;
+    std::string getStartAttackSoundName() const override;
     uint32_t getMaxHP() const override;
 	Defence getBaseDefence() const override;
+    Damage getBaseDamage() const override;
 	Resources getCost() const override;
 	uint32_t getTimeToProduce() const override;
 	std::string getSoundName() const override;
@@ -41,6 +43,7 @@ private:
 	uint32_t getRunningAnimationsNumberInSet() const override;
 	uint32_t getBeenHitAnimationsNumberInSet() const override;
 	uint32_t getTippingOverAnimationsNumberInSet() const override;
+    uint32_t getAttackAnimationsNumberInSet() const override;
 	std::string getBaseTextureName() const override;
 	uint32_t getMovementPoints() const override;
 	uint32_t getPopulation() const override;

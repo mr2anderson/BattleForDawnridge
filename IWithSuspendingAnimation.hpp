@@ -23,7 +23,10 @@
 #pragma once
 
 
+class MapState;
+
+
 class IWithSuspendingAnimation {
 public:
-    virtual Events processCurrentAnimation() = 0;
+    virtual Events processCurrentAnimation(MapState *state) = 0;
 };

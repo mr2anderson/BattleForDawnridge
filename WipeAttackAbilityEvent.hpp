@@ -17,21 +17,17 @@
  */
 
 
-#include "PlayerPointer.hpp"
+#include "Event.hpp"
 
 
-#pragma once
+class ISingleAttacker;
 
 
-class WarriorPlayerPointer : public PlayerPointer {
+class WipeAttackAbilityEvent : public Event {
 public:
-    WarriorPlayerPointer(float xInPixels, float yInPixels, bool color);
+    WipeAttackAbilityEvent(ISingleAttacker *i);
 
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    ISingleAttacker *getI();
 private:
-    sf::Sprite sprite;
-
-    void setTypeBlue() override;
-    void setTypeGreen() override;
-    void setTypePurple() override;
+    ISingleAttacker *i;
 };

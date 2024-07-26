@@ -17,21 +17,18 @@
  */
 
 
-#include "PlayerPointer.hpp"
+#include "WarriorAttacker.hpp"
 
 
 #pragma once
 
 
-class WarriorPlayerPointer : public PlayerPointer {
+class WarriorNearAttacker : public WarriorAttacker {
 public:
-    WarriorPlayerPointer(float xInPixels, float yInPixels, bool color);
-
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    WarriorNearAttacker();
+    WarriorNearAttacker(uint32_t x, uint32_t y, uint32_t playerId);
+protected:
+    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const override;
 private:
-    sf::Sprite sprite;
-
-    void setTypeBlue() override;
-    void setTypeGreen() override;
-    void setTypePurple() override;
+    std::vector<std::string> getAttackPossibleDirections() const override;
 };

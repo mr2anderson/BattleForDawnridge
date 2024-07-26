@@ -17,21 +17,11 @@
  */
 
 
-#include "PlayerPointer.hpp"
-
-
 #pragma once
 
 
-class WarriorPlayerPointer : public PlayerPointer {
+class ISingleAttacker {
 public:
-    WarriorPlayerPointer(float xInPixels, float yInPixels, bool color);
-
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-private:
-    sf::Sprite sprite;
-
-    void setTypeBlue() override;
-    void setTypeGreen() override;
-    void setTypePurple() override;
+    virtual void refreshAbility() = 0;
+    virtual void wipeAbility() = 0;
 };

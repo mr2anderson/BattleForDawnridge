@@ -17,6 +17,7 @@
  */
 
 
+#include <limits>
 #include "ShootingEfficiencyComp.hpp"
 
 
@@ -27,8 +28,21 @@ bool ShootingEfficiencyComp::operator()(const Unit *u1, const Unit *u2) {
     uint32_t hpLoss1 = this->damage.getHpLoss(u1->getDefence());
     uint32_t hpLoss2 = this->damage.getHpLoss(u2->getDefence());
 
-    uint32_t shotsToKill1 = u1->getHP() / hpLoss1 + (bool)(u1->getHP() % hpLoss1);
-    uint32_t shotsToKill2 = u2->getHP() / hpLoss2 + (bool)(u2->getHP() % hpLoss2);
+    uint32_t shotsToKill1;
+    if (hpLoss1 == 0) {
+        shotsToKill1 = std::numeric_limits<uint32_t>::max();
+    }
+    else {
+        shotsToKill1 = u1->getHP() / hpLoss1 + (bool)(u1->getHP() % hpLoss1);
+    }
+
+    uint32_t shotsToKill2;
+    if (hpLoss2 == 0) {
+        shotsToKill2 = std::numeric_limits<uint32_t>::max();
+    }
+    else {
+        shotsToKill2 = u2->getHP() / hpLoss2 + (bool)(u2->getHP() % hpLoss2);
+    }
 
     if (shotsToKill1 < shotsToKill2) {
         return true;

@@ -24,7 +24,7 @@
 
 BlackKnight::BlackKnight() = default;
 BlackKnight::BlackKnight(uint32_t x, uint32_t y, uint32_t playerId) :
-	Warrior(x, y, playerId) {
+	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
 Warrior* BlackKnight::cloneWarrior() const {
@@ -33,11 +33,17 @@ Warrior* BlackKnight::cloneWarrior() const {
 std::string BlackKnight::getBeenHitSoundName() const {
     return "ouch";
 }
+std::string BlackKnight::getStartAttackSoundName() const {
+    return "swing";
+}
 uint32_t BlackKnight::getMaxHP() const {
 	return Parameters::get()->getInt("black_knight_max_hp");
 }
 Defence BlackKnight::getBaseDefence() const {
 	return Parameters::get()->getDefence("black_knight_defence");
+}
+Damage BlackKnight::getBaseDamage() const {
+    return Parameters::get()->getDamage("black_knight_damage");
 }
 Resources BlackKnight::getCost() const {
 	return Parameters::get()->getResources("black_knight_cost");
@@ -62,6 +68,9 @@ uint32_t BlackKnight::getBeenHitAnimationsNumberInSet() const {
 }
 uint32_t BlackKnight::getTippingOverAnimationsNumberInSet() const {
 	return 9;
+}
+uint32_t BlackKnight::getAttackAnimationsNumberInSet() const {
+    return 13;
 }
 std::string BlackKnight::getBaseTextureName() const {
 	return "black_knight";

@@ -24,7 +24,7 @@
 
 Infantryman::Infantryman() = default;
 Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId) :
-	Warrior(x, y, playerId) {
+	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
 Warrior* Infantryman::cloneWarrior() const {
@@ -33,11 +33,17 @@ Warrior* Infantryman::cloneWarrior() const {
 std::string Infantryman::getBeenHitSoundName() const {
     return "ouch";
 }
+std::string Infantryman::getStartAttackSoundName() const {
+    return "swing";
+}
 uint32_t Infantryman::getMaxHP() const {
 	return Parameters::get()->getInt("infantryman_max_hp");
 }
 Defence Infantryman::getBaseDefence() const {
 	return Parameters::get()->getDefence("infantryman_defence");
+}
+Damage Infantryman::getBaseDamage() const {
+    return Parameters::get()->getDamage("infantryman_damage");
 }
 Resources Infantryman::getCost() const {
 	return Parameters::get()->getResources("infantryman_cost");
@@ -62,6 +68,9 @@ uint32_t Infantryman::getBeenHitAnimationsNumberInSet() const {
 }
 uint32_t Infantryman::getTippingOverAnimationsNumberInSet() const {
 	return 9;
+}
+uint32_t Infantryman::getAttackAnimationsNumberInSet() const {
+    return 13;
 }
 std::string Infantryman::getBaseTextureName() const {
 	return "infantryman";

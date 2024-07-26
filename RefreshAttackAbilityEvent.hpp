@@ -17,19 +17,17 @@
  */
 
 
-#include "ReconfRoadEvent.hpp"
+#include "Event.hpp"
 
 
-ReconfRoadEvent::ReconfRoadEvent(Road *road, const std::string &properType) {
-    this->road = road;
-    this->properType = properType;
-}
-Road *ReconfRoadEvent::getRoad() {
-    return this->road;
-}
-std::string ReconfRoadEvent::getProperType() const {
-    return this->properType;
-}
-bool ReconfRoadEvent::isUrgent() const {
-    return true;
-}
+class ISingleAttacker;
+
+
+class RefreshAttackAbilityEvent : public Event {
+public:
+    RefreshAttackAbilityEvent(ISingleAttacker *i);
+
+    ISingleAttacker* getI();
+private:
+    ISingleAttacker *i;
+};

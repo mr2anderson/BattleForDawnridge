@@ -64,6 +64,7 @@
 #include "Tower2.hpp"
 #include "Well.hpp"
 #include "WarehouseCrystal.hpp"
+#include "ISingleAttacker.hpp"
 
 
 
@@ -115,8 +116,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 		}
 		this->drawEverything(window);
         for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-            Events e = this->map->getStatePtr()->getCollectionsPtr()->getGO(i)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
-            this->addEvents(e);
+            this->map->getStatePtr()->getCollectionsPtr()->getGO(i)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
         }
 		Playlist::get()->update();
 		this->removeFinishedElement();
@@ -127,7 +127,7 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 		}
         if (this->animation.has_value()) {
             Events animationEvent;
-            animationEvent = this->animation.value().process();
+            animationEvent = this->animation.value().process(this->map->getStatePtr());
             this->addEvents(animationEvent);
         }
 		this->moveView();
@@ -781,8 +781,11 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<CreateEffectEvent> createEffectEvent = std::dynamic_pointer_cast<CreateEffectEvent>(e)) {
 		this->handleCreateEffectEvent(createEffectEvent);
 	}
-    else if (std::shared_ptr<ReconfRoadEvent> reconfRoadEvent = std::dynamic_pointer_cast<ReconfRoadEvent>(e)) {
-        this->handleReconfRoadEvent(reconfRoadEvent);
+    else if (std::shared_ptr<RefreshAttackAbilityEvent> refreshAttackAbilityEvent = std::dynamic_pointer_cast<RefreshAttackAbilityEvent>(e)) {
+        this->handleRefreshAttackAbilityEvent(refreshAttackAbilityEvent);
+    }
+    else if (std::shared_ptr<WipeAttackAbilityEvent> wipeAttackAbilityEvent = std::dynamic_pointer_cast<WipeAttackAbilityEvent>(e)) {
+        this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent);
     }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
@@ -970,6 +973,9 @@ void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRa
 void MainScreen::handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e) {
 	this->map->add(e->getEffect());
 }
-void MainScreen::handleReconfRoadEvent(std::shared_ptr<ReconfRoadEvent> e) {
-    e->getRoad()->reconf(e->getProperType());
+void MainScreen::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e) {
+    e->getI()->refreshAbility();
+}
+void MainScreen::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e) {
+    e->getI()->wipeAbility();
 }

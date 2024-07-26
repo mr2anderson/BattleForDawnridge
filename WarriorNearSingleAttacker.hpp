@@ -17,24 +17,24 @@
  */
 
 
-#include <string>
-#include "Event.hpp"
+#include "WarriorNearAttacker.hpp"
+#include "ISingleAttacker.hpp"
 
 
 #pragma once
 
 
-class Road;
-
-
-class ReconfRoadEvent : public Event {
+class WarriorNearSingleAttacker : public WarriorNearAttacker, public ISingleAttacker {
 public:
-    ReconfRoadEvent(Road *road, const std::string &properType);
-
-    Road* getRoad();
-    std::string getProperType() const;
-    bool isUrgent() const override;
+    WarriorNearSingleAttacker();
+    WarriorNearSingleAttacker(uint32_t x, uint32_t y, uint32_t playerId);
 private:
-    Road *road;
-    std::string properType;
+    bool attackAbility;
+
+    Events newMove(MapState *state, uint32_t currentPlayerId) override;
+    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const override;
+    Events startAttack(Unit *u, uint32_t targetX, uint32_t targetY) override;
+    std::wstring getSpecialInfoString() const override;
+    void refreshAbility() override;
+    void wipeAbility() override;
 };

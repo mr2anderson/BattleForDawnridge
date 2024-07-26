@@ -21,7 +21,6 @@
 #include "RoadSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ReconfRoadEvent.hpp"
 
 
 Road::Road() {
@@ -36,22 +35,6 @@ Road::Road(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Road::createSameTypeBuilding() const {
 	return new Road(this->getX(), this->getY(), this->getPlayerId());
-}
-Events Road::newFrame(MapState *state, uint32_t playerId) {
-    Events events;
-
-    if (this->verifyingTypeTimer.getElapsedTime().asMilliseconds() > 100 and this->exist() and this->works()) { // There is no effort to call verifying every single frame
-        this->verifyingTypeTimer.restart();
-        std::string properType = this->getProperType(state);
-        if (this->type != properType) {
-            events.add(std::make_shared<ReconfRoadEvent>(this, properType));
-        }
-    }
-
-    return events;
-}
-void Road::reconf(const std::string &properType) {
-    this->type = properType;
 }
 uint32_t Road::getSX() const { // Config file is not used cuz engine does not support other sizes
 	return 1;
@@ -79,6 +62,13 @@ std::string Road::getSoundName() const {
 }
 std::wstring Road::getDescription() const {
 	return *Locales::get()->get("road_description");
+}
+void Road::newFrame(MapState *state, uint32_t playerId) {
+    if (this->verifyingTypeTimer.getElapsedTime().asMilliseconds() > 100 and this->exist() and this->works()) { // There is no effort to call verifying every single frame
+        this->verifyingTypeTimer.restart();
+        std::string properType = this->getProperType(state);
+        this->type = properType;
+    }
 }
 std::string Road::getProperType(MapState *state) const {
     bool horizontal = false;

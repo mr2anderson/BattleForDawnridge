@@ -29,9 +29,6 @@ public:
 	Road(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* createSameTypeBuilding() const override;
 
-    Events newFrame(MapState *state, uint32_t playerId) override;
-    void reconf(const std::string &properType);
-
     uint32_t getSX() const override;
     uint32_t getSY() const override;
     uint32_t getMaxHP() const override;
@@ -45,5 +42,6 @@ private:
     std::string type;
     sf::Clock verifyingTypeTimer;
 
+    void newFrame(MapState *state, uint32_t playerId) override;
     std::string getProperType(MapState *state) const;
 };

@@ -28,7 +28,7 @@ public:
     SuspendingAnimation();
     SuspendingAnimation(IWithSuspendingAnimation *animated);
 
-    Events process();
+    Events process(MapState *state);
 private:
     IWithSuspendingAnimation *animated;
 };

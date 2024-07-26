@@ -21,9 +21,9 @@
 #include "Textures.hpp"
 
 
-WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels, uint32_t value) {
+WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels, bool color) {
     this->sprite.setPosition(xInPixels, yInPixels);
-    if (value == 0) {
+    if (!color) {
         this->sprite.setColor(sf::Color(255, 255, 255, 75));
     }
 }
