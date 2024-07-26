@@ -28,7 +28,7 @@ public:
 	WallSpec();
 	IBuildingSpec* clone() const override;
 
-	uint32_t getWarriorMovementCost(const Building *b, uint32_t playerId) const override;
-	bool warriorCanStay(const Building *b, uint32_t playerId) const override;
+	uint32_t getWarriorMovementCost(const Building *b, const Warrior *w) const override;
+	bool warriorCanStay(const Building *b, const Warrior *w) const override;
 	bool isHighObstacle(const Building *b, uint32_t playerId) const override;
 };

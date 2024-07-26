@@ -22,6 +22,7 @@
 #include "Locales.hpp"
 #include "HPPointer.hpp"
 #include "Parameters.hpp"
+#include "Warrior.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;
@@ -32,10 +33,13 @@ Events ResourcePoint::newMove(MapState *state, uint32_t playerId) {
 uint32_t ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 	return std::min(this->getHP(), value);
 }
-bool ResourcePoint::warriorCanStay(uint32_t warriorPlayerId) const {
+bool ResourcePoint::warriorCanStay(const Warrior *w) const {
 	return true;
 }
-uint32_t ResourcePoint::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+uint32_t ResourcePoint::getWarriorMovementCost(const Warrior *w) const {
+    if (w->isFlying()) {
+        return 1;
+    }
 	return Parameters::get()->getInt("resource_point_warrior_movement_cost");
 }
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId, uint32_t button) {

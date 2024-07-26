@@ -27,6 +27,7 @@
 
 
 class Building;
+class Warrior;
 
 
 class IBuildingSpec {
@@ -46,8 +47,8 @@ public:
 	virtual bool allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2);
 	virtual bool isOrigin() const;
 	virtual bool isActiveConductor(const Building *building) const;
-	virtual uint32_t getWarriorMovementCost(const Building *building, uint32_t playerId) const;
-	virtual bool warriorCanStay(const Building *building, uint32_t playerId) const;
+	virtual uint32_t getWarriorMovementCost(const Building *building, const Warrior *w) const;
+	virtual bool warriorCanStay(const Building *building, const Warrior *w) const;
 	virtual bool isUltraHighObstacle(const Building *building, uint32_t playerId) const;
 	virtual bool isHighObstacle(const Building *building, uint32_t playerId) const;
 	virtual bool isLowObstacle(const Building *building, uint32_t playerId) const;

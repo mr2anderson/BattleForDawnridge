@@ -221,7 +221,7 @@ bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
         GO* go = state->getCollectionsPtr()->getGO(i);
-		if (go->exist() and !go->warriorCanStay(this->getPlayerId())) {
+		if (go->exist() and !go->warriorCanStay(this)) {
 			sf::IntRect goRect;
 			goRect.left = go->getX();
 			goRect.top = go->getY();
@@ -235,11 +235,11 @@ bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
-bool Warrior::warriorCanStay(uint32_t warriorPlayerId) const {
+bool Warrior::warriorCanStay(const Warrior *w) const {
 	return false;
 }
-uint32_t Warrior::getWarriorMovementCost(uint32_t warriorPlayerId) const {
-	if (this->getPlayerId() == warriorPlayerId) {
+uint32_t Warrior::getWarriorMovementCost(const Warrior *w) const {
+	if (this->getPlayerId() == w->getPlayerId()) {
 		return 1;
 	}
     return 10000;
@@ -264,6 +264,9 @@ Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
 }
 bool Warrior::isVehicle() const {
+    return false;
+}
+bool Warrior::isFlying() const {
     return false;
 }
 bool Warrior::delayBetweenTalkingAnimations() const {
@@ -332,11 +335,11 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
         if (go->exist()) {
             for (uint32_t x = go->getX(); x < go->getX() + go->getSX(); x = x + 1) {
                 for (uint32_t y = go->getY(); y < go->getY() + go->getSY(); y = y + 1) {
-                    if (!go->warriorCanStay(this->getPlayerId())) {
+                    if (!go->warriorCanStay(this)) {
                         g.setCantStay(x, y);
                     }
-                    if (go->getWarriorMovementCost(this->getPlayerId()) != 1) {
-                        g.updateMovementCost(x, y, go->getWarriorMovementCost(this->getPlayerId()));
+                    if (go->getWarriorMovementCost(this) != 1) {
+                        g.updateMovementCost(x, y, go->getWarriorMovementCost(this));
                     }
                 }
             }

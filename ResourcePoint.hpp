@@ -31,8 +31,8 @@ public:
 	Events newMove(MapState *state, uint32_t playerId) override;
 	virtual uint32_t tryToCollect(uint32_t playerId, uint32_t value);
 	virtual std::string getResourceType() const = 0;
-	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+	bool warriorCanStay(const Warrior *w) const override;
+	uint32_t getWarriorMovementCost(const Warrior *w) const override;
 private:
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
 	Events getSelectionWindow();

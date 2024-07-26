@@ -18,17 +18,21 @@
 
 
 #include "WallSpec.hpp"
+#include "Warrior.hpp"
 
 
 WallSpec::WallSpec() = default;
 IBuildingSpec* WallSpec::clone() const {
 	return new WallSpec(*this);
 }
-uint32_t WallSpec::getWarriorMovementCost(const Building *b, uint32_t playerId) const {
+uint32_t WallSpec::getWarriorMovementCost(const Building *b, const Warrior *w) const {
+    if (w->isFlying()) {
+        return 1;
+    }
 	return 10000;
 }
-bool WallSpec::warriorCanStay(const Building *b, uint32_t playerId) const {
-	return false;
+bool WallSpec::warriorCanStay(const Building *b, const Warrior *w) const {
+	return w->isFlying();
 }
 bool WallSpec::isHighObstacle(const Building *b, uint32_t playerId) const {
 	return true;

@@ -35,8 +35,8 @@ public:
 	std::string getSoundName() const override;
 	std::wstring getDescription() const override;
     bool isUltraHighObstacle(uint32_t playerId) const override;
-	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+	bool warriorCanStay(const Warrior *w) const override;
+	uint32_t getWarriorMovementCost(const Warrior *w) const override;
 private:
 	uint32_t type;
 

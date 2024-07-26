@@ -169,19 +169,19 @@ void Building::setFire() {
 void Building::addSpec(IBuildingSpec* spec) {
 	this->specs.push_back(spec);
 }
-uint32_t Building::getWarriorMovementCost(uint32_t playerId) const {
+uint32_t Building::getWarriorMovementCost(const Warrior *w) const {
 	uint32_t cost = 1;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		uint32_t specMovementCost = this->specs.at(i)->getWarriorMovementCost(this, playerId);
+		uint32_t specMovementCost = this->specs.at(i)->getWarriorMovementCost(this, w);
 		cost = std::max(cost, specMovementCost);
 	}
 
 	return cost;
 }
-bool Building::warriorCanStay(uint32_t playerId) const {
+bool Building::warriorCanStay(const Warrior *w) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (!this->specs.at(i)->warriorCanStay(this, playerId)) {
+		if (!this->specs.at(i)->warriorCanStay(this, w)) {
 			return false;
 		}
 	}

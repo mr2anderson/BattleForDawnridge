@@ -51,13 +51,14 @@ public:
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
     uint32_t getCurrentAnimationMs() const;
 	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
-	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+	bool warriorCanStay(const Warrior *w) const override;
+	uint32_t getWarriorMovementCost(const Warrior *w) const override;
     Events processCurrentAnimation() override;
 	void startAnimation(const std::string& type);
 	Defence getDefence() const override;
 
     virtual bool isVehicle() const;
+    virtual bool isFlying() const;
     virtual std::string getBeenHitSoundName() const = 0;
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;

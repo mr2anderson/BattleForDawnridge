@@ -53,10 +53,10 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
-bool GO::warriorCanStay(uint32_t warriorPlayerId) const {
+bool GO::warriorCanStay(const Warrior *w) const {
 	return true;
 }
-uint32_t GO::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+uint32_t GO::getWarriorMovementCost(const Warrior *w) const {
 	return 1;
 }
 bool GO::isUltraHighObstacle(uint32_t playerId) const {

@@ -55,10 +55,10 @@ bool IBuildingSpec::isOrigin() const {
 bool IBuildingSpec::isActiveConductor(const Building *building) const {
 	return false;
 }
-uint32_t IBuildingSpec::getWarriorMovementCost(const Building *building, uint32_t playerId) const {
+uint32_t IBuildingSpec::getWarriorMovementCost(const Building *building, const Warrior *w) const {
 	return 1;
 }
-bool IBuildingSpec::warriorCanStay(const Building *building, uint32_t playerId) const {
+bool IBuildingSpec::warriorCanStay(const Building *building, const Warrior *w) const {
 	return true;
 }
 bool IBuildingSpec::isUltraHighObstacle(const Building *building, uint32_t playerId) const {

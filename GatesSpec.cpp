@@ -20,17 +20,24 @@
 #include "GatesSpec.hpp"
 #include "Parameters.hpp"
 #include "Building.hpp"
+#include "Warrior.hpp"
 
 
 GatesSpec::GatesSpec() = default;
 IBuildingSpec* GatesSpec::clone() const {
 	return new GatesSpec(*this);
 }
-uint32_t GatesSpec::getWarriorMovementCost(const Building *building, uint32_t playerId) const {
-    return 1 + 9999 * (building->getPlayerId() != playerId);
+uint32_t GatesSpec::getWarriorMovementCost(const Building *building, const Warrior *w) const {
+    if (w->isFlying()) {
+        return 1;
+    }
+    return 1 + 9999 * (building->getPlayerId() != w->getPlayerId());
 }
-bool GatesSpec::warriorCanStay(const Building *building, uint32_t playerId) const {
-    return (building->getPlayerId() == playerId);
+bool GatesSpec::warriorCanStay(const Building *building, const Warrior *w) const {
+    if (w->isFlying()) {
+        return true;
+    }
+    return (building->getPlayerId() == w->getPlayerId());
 }
 bool GatesSpec::conductsIfNotWork() const {
 	return true;

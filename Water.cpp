@@ -23,6 +23,7 @@
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
 #include "Parameters.hpp"
+#include "Warrior.hpp"
 
 
 Water::Water() = default;
@@ -51,10 +52,13 @@ std::wstring Water::getDescription() const {
 bool Water::isLowObstacle(uint32_t playerId) const {
     return true;
 }
-bool Water::warriorCanStay(uint32_t warriorPlayerId) const {
-	return false;
+bool Water::warriorCanStay(const Warrior *w) const {
+	return w->isFlying();
 }
-uint32_t Water::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+uint32_t Water::getWarriorMovementCost(const Warrior *w) const {
+    if (w->isFlying()) {
+        return 1;
+    }
 	return 10000;
 }
 Events Water::getResponse(MapState *state, uint32_t playerId, uint32_t button) {

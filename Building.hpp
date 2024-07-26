@@ -68,7 +68,7 @@ private:
     Events newMove(MapState* state, uint32_t playerId) override;
     Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
 	sf::Color getTextureColor() const override;
-	bool warriorCanStay(uint32_t warriorPlayerId) const override;
-	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
+	bool warriorCanStay(const Warrior *w) const override;
+	uint32_t getWarriorMovementCost(const Warrior *w) const override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 };

@@ -24,6 +24,9 @@
 #pragma once
 
 
+class Warrior;
+
+
 class GO : public sf::Drawable {
 public:
 	GO();
@@ -39,8 +42,8 @@ public:
 	virtual uint32_t getSY() const = 0;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
-	virtual bool warriorCanStay(uint32_t warriorPlayerId) const;
-	virtual uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const;
+	virtual bool warriorCanStay(const Warrior *w) const;
+	virtual uint32_t getWarriorMovementCost(const Warrior *w) const;
     virtual bool isUltraHighObstacle(uint32_t playerId) const;
     virtual bool isHighObstacle(uint32_t playerId) const;
     virtual bool isLowObstacle(uint32_t playerId) const;

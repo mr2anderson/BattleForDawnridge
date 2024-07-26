@@ -52,10 +52,10 @@ std::wstring Mountains::getDescription() const {
 bool Mountains::isUltraHighObstacle(uint32_t playerId) const {
     return true;
 }
-bool Mountains::warriorCanStay(uint32_t warriorPlayerId) const {
+bool Mountains::warriorCanStay(const Warrior *w) const {
 	return false;
 }
-uint32_t Mountains::getWarriorMovementCost(uint32_t warriorPlayerId) const {
+uint32_t Mountains::getWarriorMovementCost(const Warrior *w) const {
 	return 10000;
 }
 Events Mountains::getResponse(MapState *state, uint32_t playerId, uint32_t button) {

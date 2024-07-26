@@ -20,6 +20,7 @@
 #include "IMovementSpeedDecreaserSpec.hpp"
 #include "Building.hpp"
 #include "Locales.hpp"
+#include "Warrior.hpp"
 
 
 std::vector<BuildingHorizontalSelectionWindowComponent> IMovementSpeedDecreaser::getComponents(const Building* building, MapState* state) {
@@ -33,6 +34,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IMovementSpeedDecreaser:
 
 	return { component };
 }
-uint32_t IMovementSpeedDecreaser::getWarriorMovementCost(const Building* building, uint32_t playerId) const {
+uint32_t IMovementSpeedDecreaser::getWarriorMovementCost(const Building* building, const Warrior *w) const {
+    if (w->isFlying()) {
+        return 1;
+    }
 	return this->getMovementSpeedDecreasingEffectStrength();
 }
