@@ -265,6 +265,9 @@ void Warrior::startAnimation(const std::string& type) {
 Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
 }
+bool Warrior::delayBetweenTalkingAnimations() const {
+    return true;
+}
 uint8_t Warrior::getDrawingPriority() const {
     return GO::PRIORITY::HIGH;
 }
@@ -381,6 +384,7 @@ Events Warrior::processBeenHitAnimation() {
     Events events;
 
     if (this->getCurrentAnimationState().finished) {
+        this->startAnimation("talking");
         events.add(std::make_shared<CloseAnimationEvent>());
     }
 
@@ -390,6 +394,7 @@ Events Warrior::processTippingOverAnimation() {
     Events events;
 
     if (this->getCurrentAnimationState().finished) {
+        this->startAnimation("talking");
         events.add(std::make_shared<CloseAnimationEvent>());
         events.add(std::make_shared<SubHpEvent>(this, 1));
     }
@@ -528,10 +533,19 @@ AnimationState Warrior::getCurrentAnimationState() const {
     uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->currentDirection);
     uint32_t msForFrame = this->getCurrentAnimationMs() / animationNumber;
     uint32_t currentFrame = ms / msForFrame;
-    if (currentFrame > animationNumber - 1) {
-        return {animationNumber - 1, true};
+
+    if (currentFrame < animationNumber) {
+        return {currentFrame, false};
     }
-    return {currentFrame, false};
+
+    if (this->currentAnimation == "talking") { // Talking animation never finishes, but is not suspending
+        if (this->delayBetweenTalkingAnimations() and currentFrame / animationNumber % 2 == 1) {
+            return {0, false};
+        }
+        return {currentFrame % animationNumber, false};
+    }
+
+    return {animationNumber - 1, true};
 }
 Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist()) {
@@ -548,7 +562,6 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 
 	Events response;
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-    response.add(std::make_shared<StartWarriorAnimationEvent>(this, "talking"));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0) {
         Events selectThisEvent = this->getMoveHighlightionEvent(state);
         selectThisEvent.add(std::make_shared<SelectEvent>(this));

@@ -61,6 +61,7 @@ public:
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
+    virtual bool delayBetweenTalkingAnimations() const;
 	virtual uint32_t getRunningAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
