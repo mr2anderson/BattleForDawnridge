@@ -51,7 +51,6 @@ public:
 	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
     uint32_t getCurrentAnimationMs() const;
 	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
-	uint32_t getMovementCost(MapState *state, uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(uint32_t warriorPlayerId) const override;
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
     Events processCurrentAnimation() override;

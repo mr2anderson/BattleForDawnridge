@@ -237,31 +237,6 @@ bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
-uint32_t Warrior::getMovementCost(MapState *state, uint32_t newX, uint32_t newY) const {
-	sf::IntRect thisRect;
-	thisRect.left = newX;
-	thisRect.top = newY;
-	thisRect.width = this->getSX();
-	thisRect.height = this->getSY();
-
-	uint32_t cost = 1;
-
-	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i);
-		if (go->exist()) {
-			sf::IntRect goRect;
-			goRect.left = go->getX();
-			goRect.top = go->getY();
-			goRect.width = go->getSX();
-			goRect.height = go->getSY();
-			if (thisRect.intersects(goRect)) {
-				cost = std::max(cost, go->getWarriorMovementCost(this->getPlayerId()));
-			}
-		}
-	}
-
-	return cost;
-}
 bool Warrior::warriorCanStay(uint32_t warriorPlayerId) const {
 	return false;
 }
