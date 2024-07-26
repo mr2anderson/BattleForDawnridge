@@ -30,8 +30,8 @@ Knight::Knight(uint32_t x, uint32_t y, uint32_t playerId) :
 Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
 }
-uint8_t Knight::getBeenHitSoundType() const {
-    return Warrior::BEEN_HIT_SOUND_TYPE::HUMAN;
+std::string Knight::getBeenHitSoundName() const {
+    return "ouch";
 }
 uint32_t Knight::getMaxHP() const {
 	return Parameters::get()->getInt("knight_max_hp");

@@ -30,8 +30,8 @@ BlackKnight::BlackKnight(uint32_t x, uint32_t y, uint32_t playerId) :
 Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
 }
-uint8_t BlackKnight::getBeenHitSoundType() const {
-    return BlackKnight::BEEN_HIT_SOUND_TYPE::HUMAN;
+std::string BlackKnight::getBeenHitSoundName() const {
+    return "ouch";
 }
 uint32_t BlackKnight::getMaxHP() const {
 	return Parameters::get()->getInt("black_knight_max_hp");

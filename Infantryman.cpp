@@ -30,8 +30,8 @@ Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId) :
 Warrior* Infantryman::cloneWarrior() const {
 	return new Infantryman(*this);
 }
-uint8_t Infantryman::getBeenHitSoundType() const {
-    return Warrior::BEEN_HIT_SOUND_TYPE::HUMAN;
+std::string Infantryman::getBeenHitSoundName() const {
+    return "ouch";
 }
 uint32_t Infantryman::getMaxHP() const {
 	return Parameters::get()->getInt("infantryman_max_hp");

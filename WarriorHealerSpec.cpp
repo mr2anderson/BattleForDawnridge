@@ -41,7 +41,7 @@ Events WarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *sta
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
 		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == b->getPlayerId() and
-                w->getBeenHitSoundType() == this->getWarriorToHealType() and w->getHP() != w->getMaxHP() and this->inRadius(b, state, w->getX(), w->getY(), w->getSX(), w->getSY())) {
+                w->isVehicle() == this->healVehicles() and w->getHP() != w->getMaxHP() and this->inRadius(b, state, w->getX(), w->getY(), w->getSX(), w->getSY())) {
 			if (first) {
 				events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 				first = false;
@@ -90,4 +90,7 @@ sf::Color WarriorHealerSpec::getHighlightColor() const {
 }
 uint8_t WarriorHealerSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
+}
+bool WarriorHealerSpec::healVehicles() const {
+    return false;
 }

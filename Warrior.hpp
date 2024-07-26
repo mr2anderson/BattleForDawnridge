@@ -57,7 +57,8 @@ public:
 	void startAnimation(const std::string& type);
 	Defence getDefence() const override;
 
-    virtual uint8_t getBeenHitSoundType() const = 0;
+    virtual bool isVehicle() const;
+    virtual std::string getBeenHitSoundName() const = 0;
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
@@ -69,10 +70,6 @@ public:
 	virtual uint32_t getMovementPoints() const = 0;
 
 	static const uint32_t TOTAL_FOOTSTEPS;
-
-    enum BEEN_HIT_SOUND_TYPE {
-        HUMAN
-    };
 protected:
 	virtual Defence getBaseDefence() const = 0;
 private:

@@ -80,9 +80,7 @@ Events Warrior::hit(uint32_t d) {
 
     Events response;
 
-    if (this->getBeenHitSoundType() == Warrior::BEEN_HIT_SOUND_TYPE::HUMAN) {
-        response.add(std::make_shared<PlaySoundEvent>("ouch"));
-    }
+    response.add(std::make_shared<PlaySoundEvent>(this->getBeenHitSoundName()));
 
     if (hpPointsAfterOperation == 0) {
         response.add(std::make_shared<StartWarriorAnimationEvent>(this, "tipping over"));
@@ -264,6 +262,9 @@ void Warrior::startAnimation(const std::string& type) {
 }
 Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
+}
+bool Warrior::isVehicle() const {
+    return false;
 }
 bool Warrior::delayBetweenTalkingAnimations() const {
     return true;

@@ -33,6 +33,6 @@ public:
     sf::Color getHighlightColor() const override;
     uint8_t getHighlightType() const override;
 	virtual uint32_t getHealingSpeed() const = 0;
-    virtual uint8_t getWarriorToHealType() const = 0;
+    virtual bool healVehicles() const;
     virtual std::string getHealTextureName() const = 0;
 };
