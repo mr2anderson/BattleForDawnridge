@@ -21,7 +21,7 @@
 
 
 
-#include <iostream>
+/*#include <iostream>
 #include "Valkyr.hpp"
 #include "Root.hpp"
 void process(std::string path) {
@@ -39,13 +39,13 @@ void process(std::string path) {
 	path.pop_back();
 	image.saveToFile(path + "png");
     std::cout << "saving to " << path + "png" << std::endl;
-}
+}*/
 
 
 
 
 int main() {
-	for (const std::string& a : {"talking", "running", "attack", "been hit", "tipping over"}) {
+	/*for (const std::string& a : {"talking", "running", "attack", "been hit", "tipping over"}) {
 		for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
 			for (const std::tuple<std::string, uint32_t>& w : {
 				std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)) }) {
@@ -58,7 +58,7 @@ int main() {
 				}
 			}
 		}
-	}
+	}*/
 	Game::get()->run();
 	return 0;
 }
