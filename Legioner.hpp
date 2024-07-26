@@ -31,7 +31,6 @@ public:
 
     uint8_t getType() const override;
     uint32_t getMaxHP() const override;
-	Damage getBaseDamage() const override;
 	Defence getBaseDefence() const override;
 	Resources getCost() const override;
 	uint32_t getTimeToProduce() const override;
@@ -40,7 +39,6 @@ public:
 private:
 	uint32_t getTalkingAnimationsNumberInSet() const override;
 	uint32_t getRunningAnimationsNumberInSet() const override;
-	uint32_t getAttackAnimationsNumberInSet() const override;
 	uint32_t getBeenHitAnimationsNumberInSet() const override;
 	uint32_t getTippingOverAnimationsNumberInSet() const override;
 	std::string getBaseTextureName() const override;

@@ -36,9 +36,6 @@ uint8_t BlackKnight::getType() const {
 uint32_t BlackKnight::getMaxHP() const {
 	return Parameters::get()->getInt("black_knight_max_hp");
 }
-Damage BlackKnight::getBaseDamage() const {
-	return Parameters::get()->getDamage("black_knight_damage");
-}
 Defence BlackKnight::getBaseDefence() const {
 	return Parameters::get()->getDefence("black_knight_defence");
 }
@@ -58,10 +55,7 @@ uint32_t BlackKnight::getTalkingAnimationsNumberInSet() const {
 	return 9;
 }
 uint32_t BlackKnight::getRunningAnimationsNumberInSet() const {
-	return 8;
-}
-uint32_t BlackKnight::getAttackAnimationsNumberInSet() const {
-	return 13;
+    return 8;
 }
 uint32_t BlackKnight::getBeenHitAnimationsNumberInSet() const {
 	return 9;

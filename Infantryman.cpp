@@ -36,9 +36,6 @@ uint8_t Infantryman::getType() const {
 uint32_t Infantryman::getMaxHP() const {
 	return Parameters::get()->getInt("infantryman_max_hp");
 }
-Damage Infantryman::getBaseDamage() const {
-	return Parameters::get()->getDamage("infantryman_damage");
-}
 Defence Infantryman::getBaseDefence() const {
 	return Parameters::get()->getDefence("infantryman_defence");
 }
@@ -59,9 +56,6 @@ uint32_t Infantryman::getTalkingAnimationsNumberInSet() const {
 }
 uint32_t Infantryman::getRunningAnimationsNumberInSet() const {
 	return 8;
-}
-uint32_t Infantryman::getAttackAnimationsNumberInSet() const {
-	return 13;
 }
 uint32_t Infantryman::getBeenHitAnimationsNumberInSet() const {
 	return 7;

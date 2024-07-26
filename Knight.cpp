@@ -36,9 +36,6 @@ uint8_t Knight::getType() const {
 uint32_t Knight::getMaxHP() const {
 	return Parameters::get()->getInt("knight_max_hp");
 }
-Damage Knight::getBaseDamage() const {
-	return Parameters::get()->getDamage("knight_damage");
-}
 Defence Knight::getBaseDefence() const {
 	return Parameters::get()->getDefence("knight_defence");
 }
@@ -58,9 +55,6 @@ uint32_t Knight::getTalkingAnimationsNumberInSet() const {
 	return 12;
 }
 uint32_t Knight::getRunningAnimationsNumberInSet() const {
-	return 12;
-}
-uint32_t Knight::getAttackAnimationsNumberInSet() const {
 	return 12;
 }
 uint32_t Knight::getBeenHitAnimationsNumberInSet() const {

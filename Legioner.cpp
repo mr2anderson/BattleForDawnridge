@@ -36,9 +36,6 @@ uint8_t Legioner::getType() const {
 uint32_t Legioner::getMaxHP() const {
 	return Parameters::get()->getInt("legioner_max_hp");
 }
-Damage Legioner::getBaseDamage() const {
-	return Parameters::get()->getDamage("legioner_damage");
-}
 Defence Legioner::getBaseDefence() const {
 	return Parameters::get()->getDefence("legioner_defence");
 }
@@ -59,9 +56,6 @@ uint32_t Legioner::getTalkingAnimationsNumberInSet() const {
 }
 uint32_t Legioner::getRunningAnimationsNumberInSet() const {
 	return 8;
-}
-uint32_t Legioner::getAttackAnimationsNumberInSet() const {
-	return 12;
 }
 uint32_t Legioner::getBeenHitAnimationsNumberInSet() const {
 	return 8;

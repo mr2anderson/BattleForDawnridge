@@ -56,7 +56,6 @@ public:
 	uint32_t getWarriorMovementCost(uint32_t warriorPlayerId) const override;
     Events processCurrentAnimation() override;
 	void startAnimation(const std::string& type);
-	Damage getDamage() const;
 	Defence getDefence() const override;
 
     virtual uint8_t getType() const = 0;
@@ -64,7 +63,6 @@ public:
 	virtual std::string getBaseTextureName() const = 0;
 	virtual uint32_t getTalkingAnimationsNumberInSet() const = 0;
 	virtual uint32_t getRunningAnimationsNumberInSet() const = 0;
-	virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
 	virtual uint32_t getBeenHitAnimationsNumberInSet() const = 0;
 	virtual uint32_t getTippingOverAnimationsNumberInSet() const = 0;
 	virtual uint32_t getPopulation() const = 0;
@@ -76,7 +74,6 @@ public:
         HUMAN
     };
 protected:
-	virtual Damage getBaseDamage() const = 0;
 	virtual Defence getBaseDefence() const = 0;
 private:
 	std::optional<uint32_t> movementPoints;

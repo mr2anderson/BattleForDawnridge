@@ -185,12 +185,6 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 		}
 		return 0;
 	}
-	if (type == "attack") {
-		if (direction == "n" or direction == "s" or direction == "w" or direction == "e") {
-			return this->getAttackAnimationsNumberInSet();
-		}
-		return 0;
-	}
 	if (type == "been hit") {
 		if (direction == "n" or direction == "s" or direction == "w" or direction == "e" or direction == "nw" or direction == "ne" or direction == "sw" or direction == "se") {
 			return this->getBeenHitAnimationsNumberInSet();
@@ -211,9 +205,6 @@ uint32_t Warrior::getCurrentAnimationMs() const {
     }
     if (this->currentAnimation == "running") {
         return 500;
-    }
-    if (this->currentAnimation == "attack") {
-        return 600;
     }
     if (this->currentAnimation == "been hit") {
         return 500;
@@ -295,9 +286,6 @@ Events Warrior::processCurrentAnimation() {
 void Warrior::startAnimation(const std::string& type) {
     this->animationClock.restart();
     this->currentAnimation = type;
-}
-Damage Warrior::getDamage() const {
-    return (1 + Parameters::get()->getDouble("rage_mode_damage_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDamage();
 }
 Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->rageModeMovesLeft > 0)) * this->getBaseDefence();
@@ -515,7 +503,6 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
         "helmet",
         *Locales::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
-        *Locales::get()->get("damage") + this->getDamage().getReadable() + L"\n" +
         *Locales::get()->get("movement_points") + std::to_wstring(this->movementPoints.value_or(this->getMovementPoints())) + L" / " + std::to_wstring(this->getMovementPoints()) + L"\n" +
         *Locales::get()->get("population") + std::to_wstring(this->getPopulation()),
         false,
