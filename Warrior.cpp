@@ -394,7 +394,6 @@ Events Warrior::processTippingOverAnimation() {
     Events events;
 
     if (this->getCurrentAnimationState().finished) {
-        this->startAnimation("talking");
         events.add(std::make_shared<CloseAnimationEvent>());
         events.add(std::make_shared<SubHpEvent>(this, 1));
     }
