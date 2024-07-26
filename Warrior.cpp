@@ -329,7 +329,13 @@ Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button
     events.add(std::make_shared<ResetHighlightEvent>());
     events.add(std::make_shared<EnableCursorEvent>());
 
+    Events specialMoveEvents;
     if (button == sf::Mouse::Button::Left) {
+        specialMoveEvents = this->handleSpecialMove(state, x, y);
+        events = events + specialMoveEvents;
+    }
+
+    if ((button == sf::Mouse::Button::Left and specialMoveEvents.empty()) or button == sf::Mouse::Button::Right) {
         try {
             Move move = this->getMove(state, x, y);
             events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
@@ -342,9 +348,6 @@ Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button
         catch (MoveDoesNotExist&) {
 
         }
-    }
-    else {
-        events = events + this->handleSpecialMove(state, x, y);
     }
 
     return events;
@@ -611,7 +614,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 
             selectThisEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Locales::get()->get("warrior_selection_guide"), *Locales::get()->get("OK"), selectThisEvent);
+            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Locales::get()->get("warrior_selection_guide"), *Locales::get()->get("OK"), selectThisEvent, 600, 400);
             response.add(std::make_shared<CreateEEvent>(warriorSelectionGuide));
         }
     }
