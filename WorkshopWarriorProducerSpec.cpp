@@ -36,5 +36,5 @@ std::string WorkshopWarriorProducerSpec::getProducingIconName() const {
     return "gear";
 }
 std::string WorkshopWarriorProducerSpec::getWaitingIconName() const {
-    return "gear";
+    return "gear_icon";
 }

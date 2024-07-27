@@ -29,7 +29,7 @@ uint32_t WorkshopWarriorHealerSpec::getHealingSpeed() const {
     return Parameters::get()->getInt("workshop_healing_speed");
 }
 std::string WorkshopWarriorHealerSpec::getHealTextureName() const {
-    return "gear";
+    return "gear_icon";
 }
 bool WorkshopWarriorHealerSpec::healVehicles() const {
     return true;
