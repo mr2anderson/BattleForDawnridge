@@ -45,6 +45,7 @@
 #include "Valkyr.hpp"
 #include "Healer.hpp"
 #include "HealerProjectile.hpp"
+#include "Ram.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -125,7 +126,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
-                "lord_icon", "infantryman_icon", "priest_icon", "church", "healer_icon"}) {
+                "lord_icon", "infantryman_icon", "priest_icon", "church", "healer_icon", "workshop", "gear"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -140,7 +141,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
                     std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)),
                     std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)),
-                    std::make_tuple("healer", Healer().getAnimationNumber(a, d))}) {
+                    std::make_tuple("healer", Healer().getAnimationNumber(a, d)),
+                    std::make_tuple("ram", Ram().getAnimationNumber(a, d))}) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
                         while (s.size() < 4) {
@@ -184,7 +186,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
-                                      "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "church"}) {
+                                      "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "church", "vehicle_hit",
+                                      "vehicle"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {

@@ -404,16 +404,21 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
 Events Warrior::processRunningAnimation(MapState *state) {
     Events events;
 
-    if (this->isFlying()) {
-        if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 500) {
-            events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_WINGS + 1), true));
-            this->footstepsClock.restart();
-        }
+    if (this->isVehicle()) {
+
     }
     else {
-        if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 250) {
-            events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
-            this->footstepsClock.restart();
+        if (this->isFlying()) {
+            if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 500) {
+                events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_WINGS + 1), true));
+                this->footstepsClock.restart();
+            }
+        }
+        else {
+            if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 250) {
+                events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
+                this->footstepsClock.restart();
+            }
         }
     }
 

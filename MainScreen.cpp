@@ -68,6 +68,7 @@
 #include "WarriorNearMultyAttacker.hpp"
 #include "WarriorHealer.hpp"
 #include "Church.hpp"
+#include "Workshop.hpp"
 
 
 
@@ -266,6 +267,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
     buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Church>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
+    buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>( buildMenuSectionTroopsComponents);
     Events createBuildWindowSectionTroopsEvent = clickSoundEvent;
@@ -832,6 +834,9 @@ void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
 	this->map->add(b);
 }
 void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
+    if (e->getSoundName().empty()) {
+        return;
+    }
 	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }
 void MainScreen::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e) {
