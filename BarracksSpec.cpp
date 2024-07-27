@@ -40,3 +40,9 @@ std::vector<std::shared_ptr<Warrior>> BarracksSpec::getWarriorsToProduce(uint32_
 
 	return warriors;
 }
+std::string BarracksSpec::getProducingIconName() const {
+    return "axe_icon";
+}
+std::string BarracksSpec::getWaitingIconName() const {
+    return "infantryman_icon";
+}

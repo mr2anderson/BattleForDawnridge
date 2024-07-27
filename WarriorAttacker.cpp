@@ -33,7 +33,7 @@ WarriorAttacker::WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId) : Wa
 Damage WarriorAttacker::getDamage() const {
     Damage baseDamage = this->getBaseDamage();
     if (this->inRage()) {
-        baseDamage = (1 + Parameters::get()->getDouble("rage_spell_damage_bonus")) * baseDamage;
+        baseDamage = (1 + Parameters::get()->getDouble("rage_mode_damage_bonus")) * baseDamage;
     }
     return baseDamage;
 }

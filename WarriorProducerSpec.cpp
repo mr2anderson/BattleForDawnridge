@@ -65,7 +65,7 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 
 	Events response;
 	if (this->currentProducingMovesLeft != 0) {
-		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("producing_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
+		std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>(this->getProducingIconName(), b->getX(), b->getY(), b->getSX(), b->getSY());
 
 		response.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
@@ -203,7 +203,7 @@ std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Buildin
         }
     }
 	else {
-        pictureName = "infantryman_icon";
+        pictureName = this->getWaitingIconName();
         text = "...";
     }
 

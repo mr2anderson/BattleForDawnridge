@@ -22,14 +22,14 @@
 
 
 /*#include <iostream>
-#include "Valkyr.hpp"
+#include "Healer.hpp"
 #include "Root.hpp"
 void process(std::string path) {
 	sf::Image image;
 	image.loadFromFile(path);
 	for (uint32_t i = 0; i < image.getSize().x; i = i + 1) {
 		for (uint32_t j = 0; j < image.getSize().y; j = j + 1) {
-			if (image.getPixel(i, j) == sf::Color(97, 68, 43) or image.getPixel(i, j) == sf::Color(31, 22, 13)) {
+			if (image.getPixel(i, j) == sf::Color(128, 128, 128)) {
 				image.setPixel(i, j, sf::Color::Transparent);
 			}
 		}
@@ -48,7 +48,7 @@ int main() {
 	/*for (const std::string& a : {"talking", "running", "attack", "been hit", "tipping over"}) {
 		for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
 			for (const std::tuple<std::string, uint32_t>& w : {
-				std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)) }) {
+				std::make_tuple("healer", Healer().getAnimationNumber(a, d)) }) {
 				for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
 					std::string s = std::to_string(i);
 					while (s.size() < 4) {

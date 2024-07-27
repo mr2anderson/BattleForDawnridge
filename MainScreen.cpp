@@ -66,6 +66,8 @@
 #include "WarehouseCrystal.hpp"
 #include "ISingleAttacker.hpp"
 #include "WarriorNearMultyAttacker.hpp"
+#include "WarriorHealer.hpp"
+#include "Church.hpp"
 
 
 
@@ -262,6 +264,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
     buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
+    buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Church>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
 
     std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>( buildMenuSectionTroopsComponents);
@@ -794,6 +797,12 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<MarkAsAttackedEvent> markAsAttackedEvent = std::dynamic_pointer_cast<MarkAsAttackedEvent>(e)) {
         this->handleMarkAsAttackedEvent(markAsAttackedEvent);
     }
+    else if (std::shared_ptr<RefreshHealingAbilityEvent> refreshHealingAbilityEvent = std::dynamic_pointer_cast<RefreshHealingAbilityEvent>(e)) {
+        this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent);
+    }
+    else if (std::shared_ptr<WipeHealingAbilityEvent> wipeHealingAbilityEvent = std::dynamic_pointer_cast<WipeHealingAbilityEvent>(e)) {
+        this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -991,4 +1000,10 @@ void MainScreen::handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttacked
 }
 void MainScreen::handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e) {
     e->getAttacker()->markAsAttacked(e->getTarget());
+}
+void MainScreen::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e) {
+    e->getWarrior()->refreshHealingAbility();
+}
+void MainScreen::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e) {
+    e->getWarrior()->wipeHealingAbility();
 }

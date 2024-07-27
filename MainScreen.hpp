@@ -70,6 +70,8 @@
 #include "WipeAttackAbilityEvent.hpp"
 #include "RefreshAttackedTableEvent.hpp"
 #include "MarkAsAttackedEvent.hpp"
+#include "RefreshHealingAbilityEvent.hpp"
+#include "WipeHealingAbilityEvent.hpp"
 
 
 #pragma once
@@ -206,4 +208,6 @@ private:
     void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e);
     void handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e);
     void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e);
+    void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e);
+    void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e);
 };

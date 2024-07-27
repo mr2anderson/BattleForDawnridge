@@ -65,8 +65,9 @@ void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     float dt = this->clock.getElapsedTime().asSeconds();
 
     sf::Sprite sprite;
-    sprite.setPosition(this->x1 + dt * this->vx, this->y1 + dt * this->vy);
     sprite.setTexture(*Textures::get()->get(this->getTextureName()));
+    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+    sprite.setPosition(this->x1 + dt * this->vx, this->y1 + dt * this->vy);
     sprite.setRotation(this->rotation);
     target.draw(sprite, states);
 }

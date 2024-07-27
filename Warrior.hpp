@@ -77,6 +77,7 @@ public:
 	virtual uint32_t getMovementPoints() const = 0;
 
 	static const uint32_t TOTAL_FOOTSTEPS;
+    static const uint32_t TOTAL_WINGS;
 protected:
     virtual std::vector<SpecialMove> getSpecialMoves(MapState *state) const = 0;
     virtual Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) = 0;

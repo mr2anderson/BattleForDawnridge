@@ -43,6 +43,8 @@
 #include "Well.hpp"
 #include "Plant.hpp"
 #include "Valkyr.hpp"
+#include "Healer.hpp"
+#include "HealerProjectile.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -119,11 +121,11 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "purple", "warehouse_food", "warehouse_wood", "warehouse_stone",
                 "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
                 "down_icon", "russian_icon", "english_icon", "bell", "destroy_icon",
-                "btc", "producing_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
+                "btc", "axe_icon", "cross_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
-                "lord_icon", "infantryman_icon", "priest_icon"}) {
+                "lord_icon", "infantryman_icon", "priest_icon", "church", "healer_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -137,7 +139,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     std::make_tuple("legioner", Legioner().getAnimationNumber(a, d)),
                     std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
                     std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)),
-                    std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)) }) {
+                    std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)),
+                    std::make_tuple("healer", Healer().getAnimationNumber(a, d))}) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
                         while (s.size() < 4) {
@@ -168,6 +171,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("big_arrow" + std::to_string(i), "images/big_arrow/" + std::to_string(i) + ".png");
         }
+        for (uint32_t i = 1; i <= HealerProjectile::TOTAL_TYPES; i = i + 1) {
+            Textures::get()->add("healer_projectile" + std::to_string(i), "images/healer_projectile/" + std::to_string(i) + ".png");
+        }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
             Textures::get()->add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
         }
@@ -178,11 +184,14 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
-                                      "ouch_woman", "valkyr"}) {
+                                      "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "church"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
             Sounds::get()->add("footsteps" + std::to_string(i), "sounds/footsteps/" + std::to_string(i) + ".ogg");
+        }
+        for (uint32_t i = 1; i <= Warrior::TOTAL_WINGS; i = i + 1) {
+            Sounds::get()->add("wings" + std::to_string(i), "sounds/wings/" + std::to_string(i) + ".ogg");
         }
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
             Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");

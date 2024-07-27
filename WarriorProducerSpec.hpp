@@ -37,6 +37,8 @@ public:
     sf::Color getHighlightColor() const override;
     uint8_t getHighlightType() const override;
 	virtual std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) = 0;
+    virtual std::string getProducingIconName() const = 0;
+    virtual std::string getWaitingIconName() const = 0;
 private:
 	std::shared_ptr<Warrior> currentProducing;
 	uint32_t currentProducingMovesLeft;

@@ -29,4 +29,6 @@ public:
 	IBuildingSpec* clone() const override;
 
 	std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) override;
+    std::string getProducingIconName() const override;
+    std::string getWaitingIconName() const override;
 };
