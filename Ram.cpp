@@ -70,10 +70,10 @@ uint32_t Ram::getBeenHitAnimationsNumberInSet() const {
     return 1;
 }
 uint32_t Ram::getTippingOverAnimationsNumberInSet() const {
-    return 16;
+    return 1;
 }
 uint32_t Ram::getAttackAnimationsNumberInSet() const {
-    return 14;
+    return 18;
 }
 std::string Ram::getBaseTextureName() const {
     return "ram";
