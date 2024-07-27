@@ -72,9 +72,34 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 		response.add(std::make_shared<CreateEEvent>(flyingE));
 		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
 	}
-	if (this->currentProducingMovesLeft != 1) {
+	if (this->currentProducingMovesLeft > 1) {
 		return response;
 	}
+
+    uint32_t freeSpace = 0;
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+        Building *building = state->getCollectionsPtr()->getBuilding(i);
+        if (building->exist() and building->getPlayerId() == b->getPlayerId()) {
+            freeSpace = freeSpace + building->getPopulationLimit();
+        }
+    }
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+        Warrior *warrior = state->getCollectionsPtr()->getWarrior(i);
+        if (warrior->exist() and warrior->getPlayerId() == b->getPlayerId()) {
+            if (freeSpace >= warrior->getPopulation()) {
+                freeSpace = freeSpace - warrior->getPopulation();
+            }
+            else {
+                freeSpace = 0;
+                break;
+            }
+        }
+    }
+
+    if (this->currentProducing->getPopulation() > freeSpace) {
+        return response;
+    }
+
 	try {
 		uint32_t newX, newY;
 		std::tie(newX, newY) = this->getNewWarriorPosition(b->getX(), b->getY(), b->getSX(), b->getSY(), b->getPlayerId(), state);
@@ -104,7 +129,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 				text = *Locales::get()->get("producing_in_progress") + std::to_wstring(this->currentProducingMovesLeft);
 			}
 			else {
-				text = *Locales::get()->get("couldnt_find_new_warrior_position");
+				text = *Locales::get()->get("couldnt_place_warrior");
 			}
 			components.emplace_back(
 				HorizontalSelectionWindowComponent(currentProducing->getTextureName(),
