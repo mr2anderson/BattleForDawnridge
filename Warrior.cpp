@@ -121,6 +121,7 @@ Events Warrior::revertKillNextTurn() {
     std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("wont_be_killed_on_next_turn"), *Locales::get()->get("OK"), clickSoundEvent);
 
     Events event = clickSoundEvent;
+    event.add(std::make_shared<ResetHighlightEvent>());
     event.add(std::make_shared<CreateEEvent>(w));
 
     this->toKill = false;
