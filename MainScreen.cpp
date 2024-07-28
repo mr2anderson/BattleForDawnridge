@@ -349,16 +349,17 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	this->drawCells(window);
 	window.draw(*this->map);
 	this->drawHighlightion(window);
-	if (this->selected != nullptr) {
-		window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView()), std::get<1>(this->getMousePositionBasedOnView())));
-	}
-	if (this->element != nullptr) {
-		if (!this->element->isCameraDependent()) {
-			window.setView(window.getDefaultView());
-		}
-		window.draw(*this->element);
-	}
+    this->drawDarkness(window);
+    if (this->selected != nullptr) {
+        window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView()), std::get<1>(this->getMousePositionBasedOnView())));
+    }
+    if (this->element != nullptr and this->element->isCameraDependent()) {
+        window.draw(*this->element);
+    }
 	window.setView(window.getDefaultView());
+    if (this->element != nullptr and !this->element->isCameraDependent()) {
+        window.draw(*this->element);
+    }
 	this->drawResourceBar(window);
 	for (const auto& b : this->buttons) {
 		window.draw(b);
@@ -414,6 +415,13 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 	for (const auto& rect : rects) {
 		window.draw(rect);
 	}
+}
+void MainScreen::drawDarkness(sf::RenderWindow &window) {
+    sf::RectangleShape darkness;
+    darkness.setPosition(0, 0);
+    darkness.setFillColor(sf::Color(0, 0, 0, 100));
+    darkness.setSize(sf::Vector2f(64 * this->map->getStatePtr()->getMapSizePtr()->getWidth(), 64 * this->map->getStatePtr()->getMapSizePtr()->getHeight()));
+    window.draw(darkness);
 }
 
 

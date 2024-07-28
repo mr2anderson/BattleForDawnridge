@@ -126,6 +126,7 @@ private:
 	void drawResourceBar(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow& window);
 	void drawHighlightion(sf::RenderWindow& window);
+    void drawDarkness(sf::RenderWindow& window);
 
 
 	void removeFinishedElement();

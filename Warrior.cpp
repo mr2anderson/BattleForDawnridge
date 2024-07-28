@@ -638,7 +638,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 
             selectThisEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Locales::get()->get("warrior_selection_guide"), *Locales::get()->get("OK"), selectThisEvent, 600, 400);
+            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Locales::get()->get("warrior_selection_guide"), *Locales::get()->get("OK"), selectThisEvent, 450, 250);
             response.add(std::make_shared<CreateEEvent>(warriorSelectionGuide));
         }
     }
