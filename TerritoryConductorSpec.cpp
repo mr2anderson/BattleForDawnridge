@@ -38,7 +38,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TerritoryConductorSpec::
 	if (!building->connectedToOrigin(state)) {
 		BuildingHorizontalSelectionWindowComponent component = {
              HorizontalSelectionWindowComponent(
-			"road",
+			building->getTextureName(),
 			*Locales::get()->get("does_not_lead_to_city_center"),
 			false,
 			Events()),
