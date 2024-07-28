@@ -61,6 +61,7 @@ public:
     std::string getCurrentAnimation() const;
     AnimationState getCurrentAnimationState() const;
 	Defence getDefence() const override;
+    std::vector<std::tuple<uint32_t, uint32_t>> getMoves(MapState *state);
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
@@ -102,7 +103,6 @@ private:
     void newFrame(MapState *state, uint32_t playerId) override;
 	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
 	Events getMoveHighlightionEvent(MapState *state);
-	std::vector<std::tuple<uint32_t, uint32_t>> getMoves(MapState *state);
     Move getMove(MapState *state, uint32_t x2, uint32_t y2);
     MovementGraph buildMovementGraph(MapState *state);
     Events processRunningAnimation(MapState *state);
@@ -117,6 +117,7 @@ private:
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
     HorizontalSelectionWindowComponent getWarriorInfoComponent() const;
+    HorizontalSelectionWindowComponent getBlockingBuildingComponent() const;
     HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
     Events getSelectionWindow(bool own);
 

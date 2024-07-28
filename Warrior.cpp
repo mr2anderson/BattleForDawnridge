@@ -295,6 +295,9 @@ AnimationState Warrior::getCurrentAnimationState() const {
 Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->inRage())) * this->getBaseDefence();
 }
+std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves(MapState *state) {
+    return this->buildMovementGraph(state).getMoves(this->getX(), this->getY(), this->movementPoints.value());
+}
 bool Warrior::isVehicle() const {
     return false;
 }
@@ -370,9 +373,6 @@ Events Warrior::getMoveHighlightionEvent(MapState *state) {
     }
 
 	return event;
-}
-std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves(MapState *state) {
-	return this->buildMovementGraph(state).getMoves(this->getX(), this->getY(), this->movementPoints.value());
 }
 Move Warrior::getMove(MapState *state, uint32_t x2, uint32_t y2) {
     return this->buildMovementGraph(state).getMove(this->getX(), this->getY(), x2, y2, this->movementPoints.value());
@@ -561,6 +561,14 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
         Events()
     };
 }
+HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const {
+    return {
+        "destroyed_icon",
+        *Locales::get()->get("blocking_building"),
+        false,
+        Events()
+    };
+}
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
         "lord_icon",
@@ -579,6 +587,7 @@ Events Warrior::getSelectionWindow(bool own) {
     }
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getWarriorInfoComponent());
+    components.push_back(this->getBlockingBuildingComponent());
     if (this->inRage() > 0) {
         components.push_back(this->getRageModeComponent());
     }

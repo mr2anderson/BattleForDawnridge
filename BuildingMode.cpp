@@ -34,6 +34,7 @@
 #include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "AreaControllerSpec.hpp"
+#include "Warrior.hpp"
 
 
 BuildingMode::BuildingMode() = default;
@@ -108,6 +109,13 @@ Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t b
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
+    if (!this->noEnemyWarriors(state, clonedB)) {
+        delete clonedB;
+        std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("enemy_warriors"), *Locales::get()->get("OK"), clickSoundEvent);
+        exitEvent = exitEvent + clickSoundEvent;
+        exitEvent.add(std::make_shared<CreateEEvent>(w));
+        return exitEvent;
+    }
 
 	exitEvent.add(std::make_shared<PlaySoundEvent>(clonedB->getSoundName()));
 	exitEvent.add(std::make_shared<BuildEvent>(clonedB));
@@ -174,4 +182,21 @@ bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
 	}
 
     return false;
+}
+bool BuildingMode::noEnemyWarriors(MapState *state, const Building *clonedB) const {
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+        Warrior *w = state->getCollectionsPtr()->getWarrior(i);
+        if (w->exist() and w->getPlayerId() != this->playerId) {
+            std::vector<std::tuple<uint32_t, uint32_t>> moves = w->getMoves(state);
+            for (const auto move : moves) {
+                uint32_t moveX, moveY;
+                std::tie(moveX, moveY) = move;
+                if (moveX >= clonedB->getX() and moveY >= clonedB->getY() and moveX < clonedB->getX() + clonedB->getSX() and moveY < clonedB->getY() + clonedB->getSY()) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
 }

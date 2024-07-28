@@ -126,7 +126,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
-                "lord_icon", "infantryman_icon", "priest_icon", "church", "healer_icon", "workshop", "gear", "gear_icon"}) {
+                "lord_icon", "infantryman_icon", "priest_icon", "church", "healer_icon", "workshop", "gear", "gear_icon",
+                "destroyed_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {

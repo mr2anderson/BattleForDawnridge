@@ -42,4 +42,5 @@ private:
 	bool inMap(MapState* state, const Building *clonedB) const;
 	bool empty(MapState* state, const Building *clonedB) const;
 	bool controlled(MapState* state, const Building *clonedB) const;
+    bool noEnemyWarriors(MapState* state, const Building *clonedB) const;
 };
