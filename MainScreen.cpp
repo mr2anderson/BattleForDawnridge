@@ -419,7 +419,7 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
     sf::RectangleShape darkness;
     darkness.setPosition(0, 0);
-    darkness.setFillColor(sf::Color(0, 0, 0, 100));
+    darkness.setFillColor(sf::Color(0, 0, 0, 75));
     darkness.setSize(sf::Vector2f(64 * this->map->getStatePtr()->getMapSizePtr()->getWidth(), 64 * this->map->getStatePtr()->getMapSizePtr()->getHeight()));
     window.draw(darkness);
 }
