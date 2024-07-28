@@ -18,7 +18,8 @@
 
 
 #include "Infirmary.hpp"
-#include "InfirmarySpec.hpp"
+#include "InfirmaryWarriorHealerSpec.hpp"
+#include "InfirmaryWarriorProducerSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
 
@@ -26,7 +27,8 @@
 Infirmary::Infirmary() = default;
 Infirmary::Infirmary(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new InfirmarySpec());
+	this->addSpec(new InfirmaryWarriorHealerSpec());
+    this->addSpec(new InfirmaryWarriorProducerSpec());
 }
 Building* Infirmary::createSameTypeBuilding() const {
 	return new Infirmary(this->getX(), this->getY(), this->getPlayerId());

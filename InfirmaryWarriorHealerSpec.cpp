@@ -17,25 +17,18 @@
  */
 
 
-#include "Building.hpp"
+#include "InfirmaryWarriorHealerSpec.hpp"
+#include "Parameters.hpp"
+#include "Warrior.hpp"
 
 
-#pragma once
-
-
-class Church : public Building {
-public:
-    Church();
-    Church(uint32_t x, uint32_t y, uint32_t playerId);
-    Building* createSameTypeBuilding() const override;
-
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-    Defence getDefence() const override;
-    Resources getCost() const override;
-    std::string getTextureName() const override;
-    std::string getSoundName() const override;
-    std::wstring getDescription() const override;
-    uint32_t getRegenerationSpeed() const override;
-};
+InfirmaryWarriorHealerSpec::InfirmaryWarriorHealerSpec() = default;
+IBuildingSpec* InfirmaryWarriorHealerSpec::clone() const {
+	return new InfirmaryWarriorHealerSpec(*this);
+}
+uint32_t InfirmaryWarriorHealerSpec::getHealingSpeed() const {
+	return Parameters::get()->getInt("infirmary_healing_speed");
+}
+std::string InfirmaryWarriorHealerSpec::getHealTextureName() const {
+    return "christianity";
+}

@@ -17,24 +17,17 @@
  */
 
 
-#include "ChurchSpec.hpp"
-#include "Healer.hpp"
+#include "WarriorHealerSpec.hpp"
 
 
-ChurchSpec::ChurchSpec() = default;
-IBuildingSpec *ChurchSpec::clone() const {
-    return new ChurchSpec(*this);
-}
-std::vector<std::shared_ptr<Warrior>> ChurchSpec::getWarriorsToProduce(uint32_t playerId) {
-    std::vector<std::shared_ptr<Warrior>> warriors;
+#pragma once
 
-    warriors.push_back(std::make_shared<Healer>(0, 0, playerId));
 
-    return warriors;
-}
-std::string ChurchSpec::getProducingIconName() const {
-    return "cross_icon";
-}
-std::string ChurchSpec::getWaitingIconName() const {
-    return "healer_icon";
-}
+class InfirmaryWarriorHealerSpec : public WarriorHealerSpec {
+public:
+	InfirmaryWarriorHealerSpec();
+	IBuildingSpec* clone() const override;
+
+	uint32_t getHealingSpeed() const override;
+    std::string getHealTextureName() const override;
+};

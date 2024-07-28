@@ -126,7 +126,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
-                "lord_icon", "infantryman_icon", "priest_icon", "church", "healer_icon", "workshop", "gear", "gear_icon",
+                "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
@@ -187,7 +187,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
-                                      "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "church", "vehicle_hit",
+                                      "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "vehicle_hit",
                                       "vehicle"}) {
             Sounds::get()->add(a, "sounds/" + a + ".ogg");
         }

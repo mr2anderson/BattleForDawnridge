@@ -507,7 +507,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="ArableSpec.hpp" />
     <ClInclude Include="GatesSpec.hpp" />
     <ClInclude Include="Infirmary.hpp" />
-    <ClInclude Include="InfirmarySpec.hpp" />
+    <ClInclude Include="InfirmaryWarriorHealerSpec.hpp" />
     <ClInclude Include="KillNextTurnEvent.hpp" />
     <ClInclude Include="MarkSpellAsUsedEvent.hpp" />
     <ClInclude Include="MineSpec.hpp" />
@@ -823,7 +823,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="GatesSpec.cpp" />
     <ClCompile Include="IBuildingSpec.cpp" />
     <ClCompile Include="Infirmary.cpp" />
-    <ClCompile Include="InfirmarySpec.cpp" />
+    <ClCompile Include="InfirmaryWarriorHealerSpec.cpp" />
     <ClCompile Include="ISelectable.cpp" />
     <ClCompile Include="KillNextTurnEvent.cpp" />
     <ClCompile Include="MarkSpellAsUsedEvent.cpp" />

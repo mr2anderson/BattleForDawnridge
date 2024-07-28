@@ -1387,7 +1387,7 @@
     <ClInclude Include="WarriorHealerSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="InfirmarySpec.hpp">
+    <ClInclude Include="InfirmaryWarriorHealerSpec.hpp">
       <Filter>Header Files\buildingSpecs</Filter>
     </ClInclude>
     <ClInclude Include="Infirmary.hpp">
@@ -2025,7 +2025,7 @@
     <ClCompile Include="WarriorHealerSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="InfirmarySpec.cpp">
+    <ClCompile Include="InfirmaryWarriorHealerSpec.cpp">
       <Filter>Source Files\buildingSpecs</Filter>
     </ClCompile>
     <ClCompile Include="Infirmary.cpp">

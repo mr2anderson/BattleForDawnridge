@@ -67,7 +67,6 @@
 #include "ISingleAttacker.hpp"
 #include "WarriorNearMultyAttacker.hpp"
 #include "WarriorHealer.hpp"
-#include "Church.hpp"
 #include "Workshop.hpp"
 
 
@@ -265,7 +264,6 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
     buildMenuSectionTroopsComponents.emplace_back("hammer_icon", *Locales::get()->get("leave"), true, clickSoundEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
-    buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Church>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
     buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
 

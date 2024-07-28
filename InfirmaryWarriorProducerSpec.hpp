@@ -17,18 +17,18 @@
  */
 
 
-#include "InfirmarySpec.hpp"
-#include "Parameters.hpp"
-#include "Warrior.hpp"
+#include "WarriorProducerSpec.hpp"
 
 
-InfirmarySpec::InfirmarySpec() = default;
-IBuildingSpec* InfirmarySpec::clone() const {
-	return new InfirmarySpec(*this);
-}
-uint32_t InfirmarySpec::getHealingSpeed() const {
-	return Parameters::get()->getInt("infirmary_healing_speed");
-}
-std::string InfirmarySpec::getHealTextureName() const {
-    return "christianity";
-}
+#pragma once
+
+
+class InfirmaryWarriorProducerSpec : public WarriorProducerSpec {
+public:
+    InfirmaryWarriorProducerSpec();
+    IBuildingSpec* clone() const override;
+
+    std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) override;
+    std::string getProducingIconName() const override;
+    std::string getWaitingIconName() const override;
+};
