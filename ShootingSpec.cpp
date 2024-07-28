@@ -23,7 +23,7 @@
 #include "ColorTheme.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
-#include "ShootingEfficiencyComp.hpp"
+#include "ShootingPriorityComp.hpp"
 #include "Damage.hpp"
 #include "CreateEEvent.hpp"
 #include "FocusOnEvent.hpp"
@@ -39,7 +39,7 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
         }
     }
 
-    ShootingEfficiencyComp comp(this->getDamage());
+    ShootingPriorityComp comp(b);
     std::sort(toShoot.begin(), toShoot.end(), comp);
 
     std::vector<uint32_t> shots;

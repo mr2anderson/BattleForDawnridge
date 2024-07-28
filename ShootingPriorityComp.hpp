@@ -24,11 +24,11 @@
 #pragma once
 
 
-class ShootingEfficiencyComp {
+class ShootingPriorityComp {
 public:
-    ShootingEfficiencyComp(Damage damage);
+    ShootingPriorityComp(const GO* shootingBuilding);
 
-    bool operator()(const Unit *u1, const Unit *u2);
+    bool operator()(const GO *go1, const GO *go2);
 private:
-    Damage damage;
+    const GO* shootingBuilding;
 };
