@@ -36,6 +36,7 @@ void Playlist::update() {
     if (Music::get()->get(std::to_string(this->index))->getStatus() == sf::Music::Status::Playing) {
         return;
     }
+    Music::get()->get(std::to_string(this->index))->stop();
     this->index = (this->index + 1) % SOUNDTRACKS_N;
     Music::get()->get(std::to_string(this->index))->play();
     Music::get()->get(std::to_string(this->index))->setVolume(MUSIC_VOLUME);
