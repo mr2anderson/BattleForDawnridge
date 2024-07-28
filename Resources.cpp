@@ -62,7 +62,7 @@ void Resources::limit(const Resources& resources) {
 		}
 	}
 }
-int32_t Resources::get(const std::string& type) const {
+uint32_t Resources::get(const std::string& type) const {
 	if (this->map.find(type) == this->map.end()) {
 		return 0;
 	}

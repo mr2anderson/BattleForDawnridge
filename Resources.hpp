@@ -38,10 +38,10 @@ public:
 	void plus(const Resources& resources, const Resources& limit);
 	void minus(const Resources& resources);
 	void limit(const Resources& resources);
-	int32_t get(const std::string& id) const;
+	uint32_t get(const std::string& id) const;
     std::vector<Resource> getAll() const;
 	std::wstring getReadableInfo() const;
 	friend bool operator>=(const Resources& a, const Resources& b);
 private:
-	std::map<std::string, int32_t, ResourceOrderComp> map;
+	std::map<std::string, uint32_t, ResourceOrderComp> map;
 };
