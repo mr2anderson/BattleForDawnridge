@@ -30,13 +30,13 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "WarriorPlayerPointer.hpp"
-#include "PlayerPointerCircle.hpp"
+#include "BuildingStatePointer.hpp"
 #include "HPFlyingE.hpp"
 #include "SubHpEvent.hpp"
 #include "Textures.hpp"
 #include "FirstTimeTipsTable.hpp"
 #include "StartWarriorAnimationEvent.hpp"
-#include "HPPointer.hpp"
+#include "WarriorHPPointer.hpp"
 #include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "EnableCursorEvent.hpp"
@@ -657,8 +657,6 @@ std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
     return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels(), (this->movementPoints.value_or(this->getMovementPoints()) > 0 or this->hasSpecialMoves));
 }
 void Warrior::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const {
-    HPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), HPPointer::ORIENTATION::DOWN);
-    pointer.setCurrent(this->getHP());
-    pointer.setMax(this->getMaxHP());
+    WarriorHPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
     target.draw(pointer, states);
 }

@@ -17,25 +17,22 @@
  */
 
 
-#include "PlayerPointer.hpp"
+
+#include <SFML/Graphics.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class PlayerPointerCircle : public PlayerPointer {
+class WarriorHPPointer : public sf::Drawable {
 public:
-    PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy);
+	WarriorHPPointer();
+	WarriorHPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint32_t currentHP, uint32_t maxHP);
 
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-    float xInPixels, yInPixels;
-    uint32_t sx, sy;
-    std::string type;
-
-    void setTypeBlue() override;
-    void setTypeGreen() override;
-    void setTypePurple() override;
-    float getCurrentScale() const;
-    sf::Vector2f getCurrentPosition() const;
+	uint32_t current, max;
+	float xInPixels, yInPixels;
+	uint32_t sx, sy;
 };

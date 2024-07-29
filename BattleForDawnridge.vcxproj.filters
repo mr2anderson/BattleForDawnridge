@@ -844,7 +844,7 @@
     <ClInclude Include="HighlightTable.hpp">
       <Filter>Header Files\screensService</Filter>
     </ClInclude>
-    <ClInclude Include="HPPointer.hpp">
+    <ClInclude Include="WarriorHPPointer.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="HPGO.hpp">
@@ -1033,7 +1033,7 @@
     <ClInclude Include="ImageFlyingE.hpp">
       <Filter>Header Files\popUpElements</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerPointerCircle.hpp">
+    <ClInclude Include="BuildingStatePointer.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="WarriorPlayerPointer.hpp">
@@ -1473,7 +1473,7 @@
     <ClCompile Include="HorizontalSelectionWindowComponent.cpp">
       <Filter>Source Files\popUpElementsService</Filter>
     </ClCompile>
-    <ClCompile Include="HPPointer.cpp">
+    <ClCompile Include="WarriorHPPointer.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
@@ -1659,7 +1659,7 @@
     <ClCompile Include="ImageFlyingE.cpp">
       <Filter>Source Files\popUpElements</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerPointerCircle.cpp">
+    <ClCompile Include="BuildingStatePointer.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="WarriorPlayerPointer.cpp">

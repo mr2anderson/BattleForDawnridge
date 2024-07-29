@@ -22,21 +22,17 @@
 #include "Locales.hpp"
 #include "ImageFlyingE.hpp"
 #include "HPFlyingE.hpp"
-#include "PlayerPointerCircle.hpp"
-#include "WindowButton.hpp"
+#include "BuildingStatePointer.hpp"
 #include "CreateEEvent.hpp"
 #include "AddHpEvent.hpp"
 #include "WindowTwoButtons.hpp"
 #include "DestroyEvent.hpp"
-#include "ImageFlyingE.hpp"
 #include "DecreaseBurningMovesLeftEvent.hpp"
 #include "SubHpEvent.hpp"
 #include "SetFireEvent.hpp"
 #include "FocusOnEvent.hpp"
-#include "HPPointer.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "ConductionGraph.hpp"
-#include "HPPointer.hpp"
 #include "Parameters.hpp"
 #include "AreaControllerSpec.hpp"
 
@@ -272,7 +268,6 @@ void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(this->fire, states);
 		}
 		this->drawShortInfos(target, states);
-		this->drawHPPointer(target, states);
 	}
 }
 void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -282,12 +277,6 @@ void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states)
 			target.draw(bsi.value(), states);
 		}
 	}
-}
-void Building::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const {
-	HPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), HPPointer::ORIENTATION::UP);
-	pointer.setCurrent(this->getHP());
-	pointer.setMax(this->getMaxHP());
-	target.draw(pointer, states);
 }
 Events Building::hit(uint32_t d) {
 	uint32_t hpPointsAfterOperation;
@@ -401,8 +390,8 @@ sf::Color Building::getTextureColor() const {
 	if (this->burningMovesLeft == 0) {
 		return this->Unit::getTextureColor();
 	}
-	return sf::Color(100, 100, 100);
+	return {150, 150, 150};
 }
 std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
-    return std::make_shared<PlayerPointerCircle>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY());
+    return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
 }

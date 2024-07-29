@@ -46,6 +46,7 @@
 #include "Healer.hpp"
 #include "HealerProjectile.hpp"
 #include "Ram.hpp"
+#include "BuildingStatePointer.hpp"
 
 
 LoadingScreen* LoadingScreen::singletone = nullptr;
@@ -127,7 +128,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "cursor", "helmet", "skull", "resin", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
-                "destroyed_icon"}) {
+                "destroyed_icon", "heart_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -179,6 +180,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
             Textures::get()->add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 0; i < BuildingStatePointer::TOTAL_HP_POINTERS; i = i + 1) {
+            Textures::get()->add("building_hp_pointer" + std::to_string(i), "images/building_hp_pointer/" + std::to_string(i) + ".png");
         }
 
 

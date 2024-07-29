@@ -693,7 +693,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Collection.hpp" />
     <ClInclude Include="HighlightTable.hpp" />
     <ClInclude Include="HPFlyingE.hpp" />
-    <ClInclude Include="HPPointer.hpp" />
+    <ClInclude Include="WarriorHPPointer.hpp" />
     <ClInclude Include="HPGO.hpp" />
     <ClInclude Include="Image.hpp" />
     <ClInclude Include="ImageFlyingE.hpp" />
@@ -747,7 +747,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="PlainsGeneration.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayerPointer.hpp" />
-    <ClInclude Include="PlayerPointerCircle.hpp" />
+    <ClInclude Include="BuildingStatePointer.hpp" />
     <ClInclude Include="PlayerColors.hpp" />
     <ClInclude Include="Playlist.hpp" />
     <ClInclude Include="PlaySoundEvent.hpp" />
@@ -907,7 +907,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="GO.cpp" />
     <ClCompile Include="HighlightTable.cpp" />
     <ClCompile Include="HPFlyingE.cpp" />
-    <ClCompile Include="HPPointer.cpp" />
+    <ClCompile Include="WarriorHPPointer.cpp" />
     <ClCompile Include="HPGO.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageFlyingE.cpp" />
@@ -962,7 +962,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="PlainsGeneration.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerPointer.cpp" />
-    <ClCompile Include="PlayerPointerCircle.cpp" />
+    <ClCompile Include="BuildingStatePointer.cpp" />
     <ClCompile Include="PlayerColors.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="PlaySoundEvent.cpp" />

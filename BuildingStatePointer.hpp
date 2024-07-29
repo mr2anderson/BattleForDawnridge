@@ -17,33 +17,28 @@
  */
 
 
-
-#include <SFML/Graphics.hpp>
-#include <cstdint>
+#include "PlayerPointer.hpp"
 
 
 #pragma once
 
 
-class HPPointer : public sf::Drawable {
+class BuildingStatePointer : public PlayerPointer {
 public:
-	HPPointer();
-	HPPointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation);
+    BuildingStatePointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint32_t currentHP, uint32_t maxHP);
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-	void setCurrent(uint32_t current);
-	void setMax(uint32_t current);
-
-	enum ORIENTATION {
-		UP,
-		DOWN
-	};
+    static const uint32_t TOTAL_HP_POINTERS;
 private:
-	uint32_t current, max;
-	float xInPixels, yInPixels;
-	uint32_t sx, sy;
-	uint8_t orientation;
+    float xInPixels, yInPixels;
+    uint32_t sx, sy;
+    uint32_t current, max;
+    std::string type;
 
-	std::string getCurrentHpFormatted() const;
+    void setTypeBlue() override;
+    void setTypeGreen() override;
+    void setTypePurple() override;
+    float getCurrentScale() const;
+    sf::Vector2f getCurrentPosition() const;
 };

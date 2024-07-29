@@ -62,7 +62,6 @@ private:
     HorizontalSelectionWindowComponent getBuildingOfEnemyComponent();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const;
-	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;
 	Events hit(uint32_t d) override;
 	Events processRegeneration();
     Events newMove(MapState* state, uint32_t playerId) override;
