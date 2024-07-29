@@ -189,7 +189,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch", "bottles", "gurgle", "spell_factory", "rage_spell", "poison_fog",
+                                      "ouch", "gurgle", "spell_factory", "rage_spell", "poison_fog",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
                                       "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "vehicle_hit",
                                       "vehicle"}) {

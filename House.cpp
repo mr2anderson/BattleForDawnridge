@@ -59,7 +59,7 @@ std::string House::getTextureName() const {
 	return "house" + std::to_string(this->type);
 }
 std::string House::getSoundName() const {
-	return "bottles";
+	return "hooray";
 }
 std::wstring House::getDescription() const {
 	return *Locales::get()->get("house_description");

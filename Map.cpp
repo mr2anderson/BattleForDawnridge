@@ -33,7 +33,7 @@
 #include "Root.hpp"
 #include "Castle.hpp"
 #include "Infantryman.hpp"
-#include "Legioner.hpp"
+#include "Healer.hpp"
 #include "Treasure.hpp"
 #include "Effect.hpp"
 #include "Plant.hpp"
@@ -83,8 +83,10 @@ Map::Map(const std::string &path) {
                 c->setMaxHp();
                 this->add(c);
 
-                this->add(new Infantryman(x, y + c->getSY(), currentPlayerId));
-                this->add(new Legioner(x + this->state.getCollectionsPtr()->getGO(this->state.getCollectionsPtr()->totalGOs() - 1)->getSX(), y + c->getSY(), currentPlayerId));
+                this->add(new Healer(x + c->getSX(), y, currentPlayerId));
+                this->add(new Infantryman(x + c->getSX() + 1, y, currentPlayerId));
+                this->add(new Infantryman(x + c->getSX(), y + 1, currentPlayerId));
+                this->add(new Infantryman(x + c->getSX() + 1, y + 1, currentPlayerId));
 
                 currentPlayerId = currentPlayerId + 1;
             }
