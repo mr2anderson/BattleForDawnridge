@@ -41,7 +41,7 @@ void BuildingStatePointer::draw(sf::RenderTarget &target, sf::RenderStates state
     sprite.setTexture(*Textures::get()->get(this->type));
     sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
     sprite.setScale(this->getCurrentScale(), this->getCurrentScale());
-    sprite.setPosition(this->getCurrentPosition() - sf::Vector2f(8, 0));
+    sprite.setPosition(this->xInPixels + sprite.getLocalBounds().width / 2, this->yInPixels + 8 * this->sx);
     target.draw(sprite, states);
 
     uint32_t id = (TOTAL_HP_POINTERS - 1) * this->current / this->max;
@@ -49,7 +49,7 @@ void BuildingStatePointer::draw(sf::RenderTarget &target, sf::RenderStates state
     sprite.setTexture(*Textures::get()->get("building_hp_pointer" + std::to_string(id)));
     sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
     sprite.setScale(this->getCurrentScale(), this->getCurrentScale());
-    sprite.setPosition(this->getCurrentPosition() + sf::Vector2f(8, 0));
+    sprite.setPosition(this->xInPixels + sprite.getLocalBounds().width / 2, this->yInPixels + 16 * this->sx);
     target.draw(sprite, states);
 }
 void BuildingStatePointer::setTypeBlue() {
@@ -62,10 +62,5 @@ void BuildingStatePointer::setTypePurple() {
     this->type = "purple";
 }
 float BuildingStatePointer::getCurrentScale() const {
-    return 0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4;
-}
-sf::Vector2f BuildingStatePointer::getCurrentPosition() const {
-    return sf::Vector2f(
-        this->xInPixels + (64 * this->sx) / 2,
-        this->yInPixels + (64 * this->sy) / 2);
+    return (0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4) * std::pow((float)this->sx / 2, 2);
 }

@@ -40,5 +40,4 @@ private:
     void setTypeGreen() override;
     void setTypePurple() override;
     float getCurrentScale() const;
-    sf::Vector2f getCurrentPosition() const;
 };
