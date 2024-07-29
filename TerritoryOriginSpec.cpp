@@ -18,7 +18,7 @@
 
 
 #include "TerritoryOriginSpec.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 
 
 TerritoryOriginSpec::TerritoryOriginSpec() = default;
@@ -28,8 +28,8 @@ bool TerritoryOriginSpec::allowBuilding(const Building* building, MapState* stat
 bool TerritoryOriginSpec::isOrigin() const {
 	return true;
 }
-sf::Color TerritoryOriginSpec::getHighlightColor() const {
-    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
+sf::Color TerritoryOriginSpec::getHighlightColor(uint32_t playerId) const {
+    return HighlightColors::get()->getTerritoryExpandingColor(playerId);
 }
 uint8_t TerritoryOriginSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;

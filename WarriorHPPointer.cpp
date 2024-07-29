@@ -34,8 +34,8 @@ WarriorHPPointer::WarriorHPPointer(float xInPixels, float yInPixels, uint32_t sx
     this->max = maxHP;
 }
 void WarriorHPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t red = 127 - 127 * this->current / this->max;
-	uint32_t green = 127 * this->current / this->max;
+	uint32_t red = 255 - 255 * this->current / this->max;
+	uint32_t green = 255 * this->current / this->max;
 	uint32_t blue = 0;
 
     sf::Sprite sprite;

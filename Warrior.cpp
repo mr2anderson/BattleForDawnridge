@@ -21,7 +21,7 @@
 #include "SelectEvent.hpp"
 #include "SetHighlightEvent.hpp"
 #include "RefreshMovementPointsEvent.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 #include "DisableCursorEvent.hpp"
 #include "MoveDoesNotExist.hpp"
 #include "CreateAnimationEvent.hpp"
@@ -47,6 +47,8 @@
 #include "Parameters.hpp"
 #include "GlobalRandomGenerator.hpp"
 #include "FocusOnEvent.hpp"
+#include "Building.hpp"
+#include "AreaControllerSpec.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -300,6 +302,23 @@ Defence Warrior::getDefence() const {
 std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves(MapState *state) {
     return this->buildMovementGraph(state).getMoves(this->getX(), this->getY(), this->movementPoints.value());
 }
+Events Warrior::getMoveHighlightionEvent(MapState *state) {
+    Events event;
+
+    std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves(state);
+    for (uint32_t i = 0; i < moves.size(); i = i + 1) {
+        std::tuple<uint32_t, uint32_t> move = moves.at(i);
+        event.add(std::make_shared<SetHighlightEvent>(HighlightColors::get()->getWarriorMovementColor(this->getPlayerId()), std::get<0>(move), std::get<1>(move), this->getSX(), this->getSY()));
+    }
+
+    std::vector<SpecialMove> specialMoves = this->getSpecialMoves(state);
+    for (uint32_t i = 0; i < specialMoves.size(); i = i + 1) {
+        SpecialMove specMove = specialMoves.at(i);
+        event.add(std::make_shared<SetHighlightEvent>(specMove.color, specMove.targetX, specMove.targetY, this->getSX(), this->getSY()));
+    }
+
+    return event;
+}
 bool Warrior::isVehicle() const {
     return false;
 }
@@ -358,23 +377,6 @@ Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button
     }
 
     return events;
-}
-Events Warrior::getMoveHighlightionEvent(MapState *state) {
-	Events event;
-
-	std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves(state);
-	for (uint32_t i = 0; i < moves.size(); i = i + 1) {
-		std::tuple<uint32_t, uint32_t> move = moves.at(i);
-		event.add(std::make_shared<SetHighlightEvent>(COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN, std::get<0>(move), std::get<1>(move), this->getSX(), this->getSY()));
-	}
-
-    std::vector<SpecialMove> specialMoves = this->getSpecialMoves(state);
-    for (uint32_t i = 0; i < specialMoves.size(); i = i + 1) {
-        SpecialMove specMove = specialMoves.at(i);
-        event.add(std::make_shared<SetHighlightEvent>(specMove.color, specMove.targetX, specMove.targetY, this->getSX(), this->getSY()));
-    }
-
-	return event;
 }
 Move Warrior::getMove(MapState *state, uint32_t x2, uint32_t y2) {
     return this->buildMovementGraph(state).getMove(this->getX(), this->getY(), x2, y2, this->movementPoints.value());
@@ -629,6 +631,12 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0 or this->hasSpecialMoves) {
         Events selectThisEvent = this->getMoveHighlightionEvent(state);
+        for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+            Building *b = state->getCollectionsPtr()->getBuilding(i);
+            if (b->exist() and b->getPlayerId() != this->getPlayerId()) {
+                selectThisEvent = selectThisEvent + b->getHighlightEvent(state, AreaControllerSpec::ATTACK);
+            }
+        }
         selectThisEvent.add(std::make_shared<SelectEvent>(this));
         selectThisEvent.add(std::make_shared<DisableCursorEvent>());
 

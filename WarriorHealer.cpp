@@ -20,7 +20,7 @@
 #include "WarriorHealer.hpp"
 #include "Parameters.hpp"
 #include "Locales.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 #include "RefreshHealingAbilityEvent.hpp"
 #include "WipeHealingAbilityEvent.hpp"
 
@@ -95,7 +95,7 @@ std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
         Warrior *w = state->getCollectionsPtr()->getWarrior(i);
         if (this->canHeal(w)) {
-            moves.emplace_back(w->getX(), w->getY(), COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE);
+            moves.emplace_back(w->getX(), w->getY(), HighlightColors::get()->getWarriorHealColor(this->getPlayerId()));
         }
     }
 

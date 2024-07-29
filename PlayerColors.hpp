@@ -32,9 +32,9 @@ public:
         return PlayerColors ::singletone;
     }
 
-    uint32_t getBlueIndex() const;
-    uint32_t getGreenIndex() const;
-    uint32_t getPurpleIndex() const;
+    uint32_t getBlueID() const;
+    uint32_t getGreenID() const;
+    uint32_t getPurpleID() const;
 private:
     PlayerColors();
     PlayerColors(const PlayerColors& copy);

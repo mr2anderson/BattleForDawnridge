@@ -26,7 +26,7 @@
 #include "CreateEEvent.hpp"
 #include "SubHpEvent.hpp"
 #include "AddResourceEvent.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 
 
 AreaResourcePointCollectorSpec::AreaResourcePointCollectorSpec() = default;
@@ -104,8 +104,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> AreaResourcePointCollect
 uint32_t AreaResourcePointCollectorSpec::getRadius() const {
 	return this->getCollectionRadius();
 }
-sf::Color AreaResourcePointCollectorSpec::getHighlightColor() const {
-    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_GREEN;
+sf::Color AreaResourcePointCollectorSpec::getHighlightColor(uint32_t playerId) const {
+    return HighlightColors::get()->getResourceCollectingColor(playerId);
 }
 uint8_t AreaResourcePointCollectorSpec::getHighlightType() const {
     return AreaControllerSpec::OTHER;

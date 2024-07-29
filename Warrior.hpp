@@ -62,6 +62,7 @@ public:
     AnimationState getCurrentAnimationState() const;
 	Defence getDefence() const override;
     std::vector<std::tuple<uint32_t, uint32_t>> getMoves(MapState *state);
+    Events getMoveHighlightionEvent(MapState *state);
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
@@ -102,7 +103,6 @@ private:
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
     void newFrame(MapState *state, uint32_t playerId) override;
 	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
-	Events getMoveHighlightionEvent(MapState *state);
     Move getMove(MapState *state, uint32_t x2, uint32_t y2);
     MovementGraph buildMovementGraph(MapState *state);
     Events processRunningAnimation(MapState *state);

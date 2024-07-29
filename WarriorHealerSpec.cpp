@@ -26,7 +26,7 @@
 #include "CreateEEvent.hpp"
 #include "HPFlyingE.hpp"
 #include "Locales.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 
 
 WarriorHealerSpec::WarriorHealerSpec() = default;
@@ -85,8 +85,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorHealerSpec::getCo
 uint32_t WarriorHealerSpec::getRadius() const {
 	return 0;
 }
-sf::Color WarriorHealerSpec::getHighlightColor() const {
-    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
+sf::Color WarriorHealerSpec::getHighlightColor(uint32_t playerId) const {
+    return HighlightColors::get()->getBuildingHealColor(playerId);
 }
 uint8_t WarriorHealerSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;

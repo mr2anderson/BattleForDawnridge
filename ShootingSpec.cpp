@@ -20,7 +20,7 @@
 #include <algorithm>
 #include <limits>
 #include "ShootingSpec.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "ShootingPriorityComp.hpp"
@@ -96,8 +96,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ShootingSpec::getCompone
 uint32_t ShootingSpec::getRadius() const {
     return this->getShootingRadius();
 }
-sf::Color ShootingSpec::getHighlightColor() const {
-    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED;
+sf::Color ShootingSpec::getHighlightColor(uint32_t playerId) const {
+    return HighlightColors::get()->getBuildingAttackColor(playerId);
 }
 uint8_t ShootingSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::ATTACK;

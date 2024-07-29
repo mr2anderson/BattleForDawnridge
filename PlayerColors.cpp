@@ -40,12 +40,12 @@ PlayerColors::PlayerColors() {
 		all.pop_back();
 	}
 }
-uint32_t PlayerColors::getBlueIndex() const {
+uint32_t PlayerColors::getBlueID() const {
     return this->indexes[0];
 }
-uint32_t PlayerColors::getGreenIndex() const {
+uint32_t PlayerColors::getGreenID() const {
     return this->indexes[1];
 }
-uint32_t PlayerColors::getPurpleIndex() const {
+uint32_t PlayerColors::getPurpleID() const {
     return this->indexes[2];
 }

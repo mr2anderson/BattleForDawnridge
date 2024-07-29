@@ -32,5 +32,5 @@ public:
 	void mark(SetHighlightEvent e);
 	std::vector<sf::RectangleShape> getRects() const;
 private:
-	std::map<std::tuple<uint32_t, uint32_t, uint8_t, uint8_t, uint8_t, uint8_t>, bool> data;
+	std::map<std::tuple<uint32_t, uint32_t>, sf::Color> data;
 };

@@ -21,7 +21,7 @@
 #include "Parameters.hpp"
 #include "CreateAnimationEvent.hpp"
 #include "CloseAnimationEvent.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 
 
 WarriorAttacker::WarriorAttacker() {
@@ -69,7 +69,7 @@ std::vector<SpecialMove> WarriorAttacker::getSpecialMoves(MapState *state) const
         Unit *u = state->getCollectionsPtr()->getUnit(i);
         std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
         for (uint32_t j = 0; j < targets.size(); j = j + 1) {
-            specialMoves.emplace_back(std::get<0>(targets.at(j)), std::get<1>(targets.at(j)), COLOR_THEME::CELL_COLOR_HIGHLIGHTED_RED);
+            specialMoves.emplace_back(std::get<0>(targets.at(j)), std::get<1>(targets.at(j)), HighlightColors::get()->getWarriorAttackColor(this->getPlayerId()));
         }
     }
 

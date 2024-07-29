@@ -67,7 +67,7 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
 
     Events events;
     for (const auto& a : available) {
-        events.add(std::make_shared<SetHighlightEvent>(this->getHighlightColor(), std::get<0>(a.first), std::get<1>(a.first), 1, 1));
+        events.add(std::make_shared<SetHighlightEvent>(this->getHighlightColor(building->getPlayerId()), std::get<0>(a.first), std::get<1>(a.first), 1, 1));
     }
 
     return events;

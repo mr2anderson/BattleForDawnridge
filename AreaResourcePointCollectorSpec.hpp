@@ -30,7 +30,7 @@ public:
 	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	uint32_t getRadius() const override;
-    sf::Color getHighlightColor() const override;
+    sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;

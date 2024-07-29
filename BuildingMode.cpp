@@ -126,11 +126,19 @@ Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t b
 Events BuildingMode::getHighlightEvent(MapState *state) const {
 	Events result;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b->getPlayerId() == this->playerId) {
-			result = result + b->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
+		Building* building = state->getCollectionsPtr()->getBuilding(i);
+		if (building->exist()) {
+            if (building->getPlayerId() == this->playerId) {
+                result = result + building->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
+            }
 		}
 	}
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+        Warrior* w = state->getCollectionsPtr()->getWarrior(i);
+        if (w->exist() and w->getPlayerId() != this->playerId) {
+            result = result + w->getMoveHighlightionEvent(state);
+        }
+    }
 	return result;
 }
 bool BuildingMode::inMap(MapState *state, const Building *clonedB) const {

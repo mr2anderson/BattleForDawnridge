@@ -29,8 +29,6 @@ class SetHighlightEvent : public Event {
 public:
 	SetHighlightEvent(sf::Color color, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
-	friend bool operator<(SetHighlightEvent a, SetHighlightEvent b);
-
 	sf::Color getColor() const;
 	uint32_t getX() const;
 	uint32_t getY() const;

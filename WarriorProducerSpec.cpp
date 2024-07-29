@@ -32,7 +32,7 @@
 #include "Building.hpp"
 #include "SubResourcesEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
-#include "ColorTheme.hpp"
+#include "HighlightColors.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -237,8 +237,8 @@ std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Buildin
 uint32_t WarriorProducerSpec::getRadius() const {
 	return 1;
 }
-sf::Color WarriorProducerSpec::getHighlightColor() const {
-    return COLOR_THEME::CELL_COLOR_HIGHLIGHTED_BLUE;
+sf::Color WarriorProducerSpec::getHighlightColor(uint32_t playerId) const {
+    return HighlightColors::get()->getWarriorProducingColor(playerId);
 }
 uint8_t WarriorProducerSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;

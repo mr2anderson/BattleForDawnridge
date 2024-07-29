@@ -17,19 +17,23 @@
  */
 
 
+#include <iostream>
 #include "PlayerPointer.hpp"
 #include "PlayerColors.hpp"
 
 
 PlayerPointer::PlayerPointer() = default;
 void PlayerPointer::setSide(uint32_t side) {
-    if (side == PlayerColors::get()->getBlueIndex()) {
+    if (side == PlayerColors::get()->getBlueID()) {
         this->setTypeBlue();
     }
-    else if (side == PlayerColors::get()->getGreenIndex()) {
+    else if (side == PlayerColors::get()->getGreenID()) {
         this->setTypeGreen();
     }
-    else if (side == PlayerColors::get()->getPurpleIndex()) {
+    else if (side == PlayerColors::get()->getPurpleID()) {
         this->setTypePurple();
+    }
+    else {
+        std::cerr << "PlayerPointer: warning: unknown color id" << std::endl;
     }
 }

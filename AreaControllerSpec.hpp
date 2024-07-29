@@ -41,7 +41,7 @@ public:
 	virtual bool ignoreLowObstacles() const;
     virtual uint8_t getHighlightType() const = 0;
 	virtual uint32_t getRadius() const = 0;
-    virtual sf::Color getHighlightColor() const = 0;
+    virtual sf::Color getHighlightColor(uint32_t playerId) const = 0;
 
     enum HIGHLIGHT_TYPE {
         UNIVERSAL,

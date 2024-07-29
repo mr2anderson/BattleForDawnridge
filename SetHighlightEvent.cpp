@@ -27,54 +27,6 @@ SetHighlightEvent::SetHighlightEvent(sf::Color color, uint32_t x, uint32_t y, ui
 	this->sx = sx;
 	this->sy = sy;
 }
-bool operator<(SetHighlightEvent a, SetHighlightEvent b) {
-	if (a.color.r < b.color.r) {
-		return true;
-	}
-	if (a.color.r > b.color.r) {
-		return false;
-	}
-
-	if (a.color.g < b.color.g) {
-		return true;
-	}
-	if (a.color.g > b.color.g) {
-		return false;
-	}
-
-	if (a.color.b < b.color.b) {
-		return true;
-	}
-	if (a.color.b > b.color.b) {
-		return false;
-	}
-
-	if (a.x < b.x) {
-		return true;
-	}
-	if (a.x > b.x) {
-		return false;
-	}
-
-	if (a.y < b.y) {
-		return true;
-	}
-	if (a.y > b.y) {
-		return false;
-	}
-
-	if (a.sx < b.sx) {
-		return true;
-	}
-	if (a.sx > b.sx) {
-		return false;
-	}
-
-	if (a.sy < b.sy) {
-		return true;
-	}
-	return false;
-}
 sf::Color SetHighlightEvent::getColor() const {
 	return this->color;
 }
