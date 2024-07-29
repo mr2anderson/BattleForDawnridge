@@ -24,11 +24,11 @@
 #pragma once
 
 
-class VictoryConditionBDestroyedEvent : public Event {
+class MarkPlayerAsInactiveEvent : public Event {
 public:
-	VictoryConditionBDestroyedEvent(uint32_t playerId);
+    MarkPlayerAsInactiveEvent(uint32_t playerId);
 
-	uint32_t getPlayerId() const;
+    uint32_t getPlayerId() const;
 private:
-	uint32_t playerId;
+    uint32_t playerId;
 };

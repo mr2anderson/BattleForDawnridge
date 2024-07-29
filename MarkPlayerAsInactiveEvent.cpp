@@ -17,12 +17,12 @@
  */
 
 
-#include "VictoryConditionBDestroyedEvent.hpp"
+#include "MarkPlayerAsInactiveEvent.hpp"
 
 
-VictoryConditionBDestroyedEvent::VictoryConditionBDestroyedEvent(uint32_t playerId) {
-	this->playerId = playerId;
+MarkPlayerAsInactiveEvent::MarkPlayerAsInactiveEvent(uint32_t playerId) {
+    this->playerId = playerId;
 }
-uint32_t VictoryConditionBDestroyedEvent::getPlayerId() const {
-	return this->playerId;
+uint32_t MarkPlayerAsInactiveEvent::getPlayerId() const {
+    return this->playerId;
 }

@@ -706,9 +706,6 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
         this->handleDestroyEvent(destroyEvent);
     }
-    else if (std::shared_ptr<VictoryConditionBDestroyedEvent> victoryConditionBDestroyedEvent = std::dynamic_pointer_cast<VictoryConditionBDestroyedEvent>(e)) {
-        this->handleVictoryConditionBDestroyedEvent(victoryConditionBDestroyedEvent);
-    }
     else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e)) {
         this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent);
     }
@@ -811,6 +808,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<WipeHealingAbilityEvent> wipeHealingAbilityEvent = std::dynamic_pointer_cast<WipeHealingAbilityEvent>(e)) {
         this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent);
     }
+    else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
+        this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -858,42 +858,6 @@ void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
 void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map->getStatePtr());
 	this->addEvents(destroyBuildingEvent);
-}
-void MainScreen::handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e) {
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
-		if (b->getPlayerId() == e->getPlayerId() and b->exist() and b->isVictoryCondition()) {
-			return;
-		}
-	}
-	this->playerIsActive[e->getPlayerId() - 1] = false;
-	uint32_t count = 0;
-	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
-		count = count + this->playerIsActive.at(i);
-	}
-	std::shared_ptr<WindowButton> w;
-	if (count == 1) {
-		Events returnToMenuEvent;
-        returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
-		w = std::make_shared<WindowButton>(*Locales::get()->get("game_finished"), *Locales::get()->get("OK"), returnToMenuEvent);
-	}
-	else {
-        Events event;
-        event.add(std::make_shared<PlaySoundEvent>("click"));
-        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalEffects(); i = i + 1) {
-            Effect *effect = this->map->getStatePtr()->getCollectionsPtr()->getEffect(i);
-            if (effect->exist() and effect->getPlayerId() == e->getPlayerId()) {
-                event.add(std::make_shared<SubHpEvent>(effect, effect->getHP()));
-            }
-        }
-        if (this->currentPlayerId == e->getPlayerId()) {
-            event.add(std::make_shared<ChangeMoveEvent>());
-        }
-		w = std::make_shared<WindowButton>(*Locales::get()->get("player_is_out"), *Locales::get()->get("OK"), event);
-	}
-	std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
-	this->handleCreatePopUpElementEvent(createW);
 }
 void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
 	e->getSpec()->decreaseCurrentProducingMovesLeft();
@@ -1017,4 +981,34 @@ void MainScreen::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealing
 }
 void MainScreen::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e) {
     e->getWarrior()->wipeHealingAbility();
+}
+void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e) {
+    this->playerIsActive[e->getPlayerId() - 1] = false;
+    uint32_t count = 0;
+    for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
+        count = count + this->playerIsActive.at(i);
+    }
+    std::shared_ptr<WindowButton> w;
+    if (count == 1) {
+        Events returnToMenuEvent;
+        returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
+        returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
+        w = std::make_shared<WindowButton>(*Locales::get()->get("game_finished"), *Locales::get()->get("OK"), returnToMenuEvent);
+    }
+    else {
+        Events event;
+        event.add(std::make_shared<PlaySoundEvent>("click"));
+        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalEffects(); i = i + 1) {
+            Effect *effect = this->map->getStatePtr()->getCollectionsPtr()->getEffect(i);
+            if (effect->exist() and effect->getPlayerId() == e->getPlayerId()) {
+                event.add(std::make_shared<SubHpEvent>(effect, effect->getHP()));
+            }
+        }
+        if (this->currentPlayerId == e->getPlayerId()) {
+            event.add(std::make_shared<ChangeMoveEvent>());
+        }
+        w = std::make_shared<WindowButton>(*Locales::get()->get("player_is_out"), *Locales::get()->get("OK"), event);
+    }
+    std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
+    this->handleCreatePopUpElementEvent(createW);
 }

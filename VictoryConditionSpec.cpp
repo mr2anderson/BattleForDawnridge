@@ -18,7 +18,7 @@
 
 
 #include "VictoryConditionSpec.hpp"
-#include "VictoryConditionBDestroyedEvent.hpp"
+#include "MarkPlayerAsInactiveEvent.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "FocusOnEvent.hpp"
@@ -45,7 +45,14 @@ Events VictoryConditionSpec::getActiveNewMoveEvent(const Building* b, MapState* 
 Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* state) const {
 	Events event;
 
-	event.add(std::make_shared<VictoryConditionBDestroyedEvent>(b->getPlayerId()));
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+        Building* building = state->getCollectionsPtr()->getBuilding(i);
+        if (building != b and building->getPlayerId() == b->getPlayerId() and building->exist() and building->isVictoryCondition()) {
+            return event;
+        }
+    }
+
+	event.add(std::make_shared<MarkPlayerAsInactiveEvent>(b->getPlayerId()));
 
 	return event;
 }

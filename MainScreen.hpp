@@ -37,7 +37,6 @@
 #include "UnselectEvent.hpp"
 #include "StartWarriorAnimationEvent.hpp"
 #include "PlaySoundEvent.hpp"
-#include "VictoryConditionBDestroyedEvent.hpp"
 #include "RefreshMovementPointsEvent.hpp"
 #include "EnableCursorEvent.hpp"
 #include "DisableCursorEvent.hpp"
@@ -72,6 +71,7 @@
 #include "MarkAsAttackedEvent.hpp"
 #include "RefreshHealingAbilityEvent.hpp"
 #include "WipeHealingAbilityEvent.hpp"
+#include "MarkPlayerAsInactiveEvent.hpp"
 
 
 #pragma once
@@ -176,7 +176,6 @@ private:
 	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
 	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
 	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
-	void handleVictoryConditionBDestroyedEvent(std::shared_ptr<VictoryConditionBDestroyedEvent> e);
 	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e);
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
 	void handleSelectEvent(std::shared_ptr<SelectEvent> w);
@@ -211,4 +210,5 @@ private:
     void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e);
     void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e);
     void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e);
+    void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e);
 };
