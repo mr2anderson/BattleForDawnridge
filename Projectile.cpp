@@ -24,13 +24,10 @@
 
 Projectile::Projectile() = default;
 void Projectile::setSrc(float xInPixels, float yInPixels) {
-    this->x1 = xInPixels - Textures::get()->get(this->getTextureName())->getSize().x / 2;
-    this->y1 = yInPixels - Textures::get()->get(this->getTextureName())->getSize().y / 2;
+    this->x1 = xInPixels;
+    this->y1 = yInPixels;
 }
 void Projectile::setDst(float xInPixels, float yInPixels) {
-    xInPixels = xInPixels - Textures::get()->get(this->getTextureName())->getSize().x / 2;
-    yInPixels = yInPixels - Textures::get()->get(this->getTextureName())->getSize().y / 2;
-
     float dx = xInPixels - this->x1;
     float dy = yInPixels - this->y1;
 
