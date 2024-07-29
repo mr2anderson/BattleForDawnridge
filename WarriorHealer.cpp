@@ -44,9 +44,6 @@ uint32_t WarriorHealer::getHealingSpeed() const {
     }
     return healingSpeed;
 }
-bool WarriorHealer::healVehicles() const {
-    return false;
-}
 Events WarriorHealer::heal(Warrior *w) {
     this->wipeMovementPoints();
     this->setDirection(this->getDirection(w));
@@ -80,7 +77,7 @@ Events WarriorHealer::newMove(MapState *state, uint32_t playerId) {
     return events;
 }
 bool WarriorHealer::canHeal(Warrior *w) const {
-    if (!this->healingAvailable or !w->exist() or w->getPlayerId() != this->getPlayerId() or w->isVehicle() != this->healVehicles() or w->getHP() == w->getMaxHP()) {
+    if (!this->healingAvailable or !w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP()) {
         return false;
     }
 
