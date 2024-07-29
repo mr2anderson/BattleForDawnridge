@@ -24,7 +24,7 @@
 WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels, bool color) {
     this->sprite.setPosition(xInPixels, yInPixels);
     if (!color) {
-        this->sprite.setColor(sf::Color(255, 255, 255, 25));
+        this->sprite.setColor(sf::Color(255, 255, 255, 0));
     }
 }
 void WarriorPlayerPointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {

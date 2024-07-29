@@ -31,10 +31,10 @@ Events Unit::hit(Damage d) {
 	return this->hit(dPoints);
 }
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	if (this->exist() and this->getPlayerId() != 0) {
-		this->drawPlayerPointer(target, states);
-	}
 	this->HPGO::draw(target, states);
+    if (this->exist() and this->getPlayerId() != 0) {
+        this->drawPlayerPointer(target, states);
+    }
 }
 bool Unit::belongTo(uint32_t playerId) const {
 	return (this->playerId == playerId);

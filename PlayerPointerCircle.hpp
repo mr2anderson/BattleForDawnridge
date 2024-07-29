@@ -25,18 +25,12 @@
 
 class PlayerPointerCircle : public PlayerPointer {
 public:
-    enum ORIENTATION {
-        LEFT_UP,
-        RIGHT_UP
-    };
-
-    PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation = ORIENTATION::RIGHT_UP);
+    PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy);
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 private:
     float xInPixels, yInPixels;
-    uint32_t sx;
-    uint8_t orientation;
+    uint32_t sx, sy;
     std::string type;
 
     void setTypeBlue() override;

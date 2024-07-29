@@ -23,11 +23,11 @@
 #include "GlobalClock.hpp"
 
 
-PlayerPointerCircle::PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint8_t orientation) {
+PlayerPointerCircle::PlayerPointerCircle(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy) {
     this->xInPixels = xInPixels;
     this->yInPixels = yInPixels;
     this->sx = sx;
-    this->orientation = orientation;
+    this->sy = sy;
 }
 void PlayerPointerCircle::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::Sprite sprite;
@@ -48,10 +48,10 @@ void PlayerPointerCircle::setTypePurple() {
     this->type = "purple";
 }
 float PlayerPointerCircle::getCurrentScale() const {
-    return 0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4;
+    return (0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4) * ((float)this->sx / 2);
 }
 sf::Vector2f PlayerPointerCircle::getCurrentPosition() const {
     return sf::Vector2f(
-        this->xInPixels + (this->orientation == ORIENTATION::LEFT_UP) * 5 + (this->orientation == ORIENTATION::RIGHT_UP) * (64 * this->sx),
-        this->yInPixels);
+        this->xInPixels + (64 * this->sx) / 2,
+        this->yInPixels + (64 * this->sy) / 2);
 }
