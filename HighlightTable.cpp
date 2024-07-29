@@ -18,6 +18,7 @@
 
 
 #include "HighlightTable.hpp"
+#include "ColorBlender.hpp"
 
 
 HighlightTable::HighlightTable() = default;
@@ -28,15 +29,21 @@ void HighlightTable::mark(SetHighlightEvent e) {
 	for (uint32_t dx = 0; dx < e.getSX(); dx = dx + 1) {
 		for (uint32_t dy = 0; dy < e.getSY(); dy = dy + 1) {
 			std::tuple<uint32_t, uint32_t> key = std::make_tuple(e.getX() + dx, e.getY() + dy);
-            if (this->data.find(key) == this->data.end()) {
-                this->data[key] = e.getColor();
-            }
-			else {
-                this->data[key] = sf::Color(this->data[key].r / 2 + e.getColor().r / 2, this->data[key].g / 2 + e.getColor().g / 2, this->data[key].b / 2 + e.getColor().b / 2, this->data[key].a);
-            }
+            this->data[key].insert(e.getColor());
 		}
 	}
 }
+
+
+static std::vector<sf::Color> SET_TO_VECTOR(const std::set<sf::Color, SFColorComp> &set) {
+    std::vector<sf::Color> v;
+    for (const auto &c : set) {
+        v.push_back(c);
+    }
+    return v;
+}
+
+
 std::vector<sf::RectangleShape> HighlightTable::getRects() const {
 	std::vector<sf::RectangleShape> rects;
 	rects.reserve(this->data.size());
@@ -44,7 +51,7 @@ std::vector<sf::RectangleShape> HighlightTable::getRects() const {
         sf::RectangleShape rect;
         rect.setSize(sf::Vector2f(64, 64));
         rect.setPosition(64 * std::get<0>(p.first), 64 * std::get<1>(p.first));
-        rect.setFillColor(p.second);
+        rect.setFillColor(ColorBlender::get()->blend(SET_TO_VECTOR(p.second)));
         rect.setOutlineThickness(1);
         rect.setOutlineColor(sf::Color::Black);
         rects.push_back(rect);

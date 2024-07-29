@@ -17,22 +17,12 @@
  */
 
 
-#include <map>
-#include <set>
-#include "SetHighlightEvent.hpp"
-#include "SFColorComp.hpp"
+#include <SFML/Graphics.hpp>
 
 
 #pragma once
 
 
-class HighlightTable {
-public:
-	HighlightTable();
-
-	void clear();
-	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
-private:
-	std::map<std::tuple<uint32_t, uint32_t>, std::set<sf::Color, SFColorComp>> data;
+struct SFColorComp {
+    bool operator()(const sf::Color &c1, const sf::Color &c2) const;
 };

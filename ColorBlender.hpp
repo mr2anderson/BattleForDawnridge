@@ -17,22 +17,25 @@
  */
 
 
-#include <map>
-#include <set>
-#include "SetHighlightEvent.hpp"
-#include "SFColorComp.hpp"
+#include <SFML/Graphics.hpp>
 
 
 #pragma once
 
 
-class HighlightTable {
+class ColorBlender {
 public:
-	HighlightTable();
+    static ColorBlender* get() {
+        if (ColorBlender::singletone == nullptr) {
+            ColorBlender::singletone = new ColorBlender();
+        }
+        return ColorBlender::singletone;
+    }
 
-	void clear();
-	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
+    sf::Color blend(sf::Color c1, sf::Color c2) const;
+    sf::Color blend(std::vector<sf::Color> colors) const;
 private:
-	std::map<std::tuple<uint32_t, uint32_t>, std::set<sf::Color, SFColorComp>> data;
+    ColorBlender();
+    ColorBlender(const ColorBlender& copy);
+    static ColorBlender* singletone;
 };

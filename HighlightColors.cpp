@@ -20,6 +20,7 @@
 #include <iostream>
 #include "HighlightColors.hpp"
 #include "PlayerColors.hpp"
+#include "ColorBlender.hpp"
 
 
 HighlightColors* HighlightColors::singletone = nullptr;
@@ -45,14 +46,9 @@ static sf::Color GET_PLAYER_COLOR(uint32_t playerId) {
 }
 
 
-static sf::Color BLEND(sf::Color c1, sf::Color c2) {
-    return sf::Color(c1.r / 2 + c2.r / 2, c1.g / 2 + c2.g / 2, c1.b / 2 + c2.b / 2);
-}
-
-
 static sf::Color EVAL(sf::Color c, uint32_t playerId) {
-    c = BLEND(c, GET_PLAYER_COLOR(playerId));
-    c.a = 25;
+    c = ColorBlender::get()->blend(c, GET_PLAYER_COLOR(playerId));
+    c.a = 35;
     return c;
 }
 

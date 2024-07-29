@@ -17,22 +17,33 @@
  */
 
 
-#include <map>
-#include <set>
-#include "SetHighlightEvent.hpp"
 #include "SFColorComp.hpp"
 
 
-#pragma once
+bool SFColorComp::operator()(const sf::Color &c1, const sf::Color &c2) const {
+    if (c1.r < c2.r) {
+        return true;
+    }
+    if (c1.r > c2.r) {
+        return false;
+    }
 
+    if (c1.g < c2.g) {
+        return true;
+    }
+    if (c1.g > c2.g) {
+        return false;
+    }
 
-class HighlightTable {
-public:
-	HighlightTable();
+    if (c1.b < c2.b) {
+        return true;
+    }
+    if (c1.b > c2.b) {
+        return false;
+    }
 
-	void clear();
-	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
-private:
-	std::map<std::tuple<uint32_t, uint32_t>, std::set<sf::Color, SFColorComp>> data;
-};
+    if (c1.a < c2.a) {
+        return true;
+    }
+    return false;
+}

@@ -17,22 +17,29 @@
  */
 
 
-#include <map>
-#include <set>
-#include "SetHighlightEvent.hpp"
-#include "SFColorComp.hpp"
+#include <cstdint>
+#include "ColorBlender.hpp"
 
 
-#pragma once
+ColorBlender* ColorBlender::singletone = nullptr;
 
 
-class HighlightTable {
-public:
-	HighlightTable();
+ColorBlender::ColorBlender() = default;
+sf::Color ColorBlender::blend(sf::Color c1, sf::Color c2) const {
+    return this->blend({c1, c2});
+}
+sf::Color ColorBlender::blend(std::vector<sf::Color> colors) const {
+    uint32_t r = 0;
+    uint32_t g = 0;
+    uint32_t b = 0;
+    uint32_t a = 0;
 
-	void clear();
-	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
-private:
-	std::map<std::tuple<uint32_t, uint32_t>, std::set<sf::Color, SFColorComp>> data;
-};
+    for (auto color : colors) {
+        r = r + color.r;
+        g = g + color.g;
+        b = b + color.b;
+        a = a + color.a;
+    }
+
+    return sf::Color(r / colors.size(), g / colors.size(), b / colors.size(), a / colors.size());
+}
