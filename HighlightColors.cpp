@@ -30,7 +30,7 @@ static sf::Color GET_PLAYER_COLOR(uint32_t playerId) {
         return {0, 25, 255};
     }
     if (playerId == PlayerColors::get()->getGreenID()) {
-        return {0, 150, 0};
+        return {0, 100, 0};
     }
     if (playerId == PlayerColors::get()->getPurpleID()) {
         return {147, 0, 255};
