@@ -325,12 +325,13 @@ Events Building::processRegeneration() {
 	Events events;
 	if (this->burningMovesLeft == 0) {
 		if (this->getHP() < this->getMaxHP()) {
+            uint32_t toHeal = this->getRegenerationSpeed() - 1 * (this->getHP() == 1);
 			events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
-			std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(this->getRegenerationSpeed(), this->getMaxHP() - this->getHP()), true, this->getX(), this->getY(), this->getSX(), this->getSY());
+			std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(toHeal, this->getMaxHP() - this->getHP()), true, this->getX(), this->getY(), this->getSX(), this->getSY());
 			events.add(std::make_shared<PlaySoundEvent>("regeneration"));
 			events.add(std::make_shared<CreateEEvent>(element));
-			events.add(std::make_shared<AddHpEvent>(this, this->getRegenerationSpeed()));
-			if (this->getHP() + this->getRegenerationSpeed() >= this->getMaxHP()) {
+			events.add(std::make_shared<AddHpEvent>(this, toHeal));
+			if (this->getHP() + toHeal >= this->getMaxHP()) {
 				std::shared_ptr<ImageFlyingE> element2 = std::make_shared<ImageFlyingE>("hammer_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
 				events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
 				events.add(std::make_shared<CreateEEvent>(element2));
