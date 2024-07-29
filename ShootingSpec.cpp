@@ -31,6 +31,10 @@
 
 ShootingSpec::ShootingSpec() = default;
 Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
+    if (!b->wasWithFullHP()) {
+        return Events();
+    }
+
     std::vector<Unit*> toShoot;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
         Unit* u = state->getCollectionsPtr()->getUnit(i);
@@ -84,14 +88,30 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
     return events;
 }
 std::vector<BuildingHorizontalSelectionWindowComponent> ShootingSpec::getComponents(const Building *b, MapState *state) {
-    BuildingHorizontalSelectionWindowComponent component = {
-            HorizontalSelectionWindowComponent(this->getProjectile()->getIconTextureName(),
-            *Locales::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
-            false,
-            Events()),
-            true
-    };
+    BuildingHorizontalSelectionWindowComponent component;
+
+    if (b->wasWithFullHP()) {
+        component = {HorizontalSelectionWindowComponent(this->getProjectile()->getIconTextureName(),
+                                                       *Locales::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
+                                                       false,
+                                                       Events()),
+                true};
+    }
+    else {
+        component = {HorizontalSelectionWindowComponent("hammer_icon",
+                                                        *Locales::get()->get("does_not_shoot_if_isnt_built_yet"),
+                                                        false,
+                                                        Events()),
+                     true};
+    }
+
     return {component};
+}
+Events ShootingSpec::getHighlightEvent(const Building *b, MapState *state, uint8_t type) {
+    if (b->wasWithFullHP()) {
+        return AreaControllerSpec::getHighlightEvent(b, state, type);
+    }
+    return Events();
 }
 uint32_t ShootingSpec::getRadius() const {
     return this->getShootingRadius();
