@@ -264,13 +264,21 @@ HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
 void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Unit::draw(target, states);
 	if (this->exist()) {
-		if (this->burningMovesLeft > 0) {
-			target.draw(this->fire, states);
-		}
+        target.draw(fire, states);
 		this->drawShortInfos(target, states);
 	}
 }
 void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states) const {
+    if (!this->works()) {
+        if (this->burningMovesLeft == 0) {
+            uint32_t delta = this->getMaxHP() - (this->getHP() - 1 * (this->getHP() == 1));
+            uint32_t movesToRegenerate = delta / this->getRegenerationSpeed() + (delta % this->getRegenerationSpeed() != 0);
+            BuildingShortInfo bsi(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), "hammer_icon", std::to_string(movesToRegenerate));
+            target.draw(bsi, states);
+        }
+        return;
+    }
+
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
 		std::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this);
 		if (bsi.has_value()) {
@@ -388,10 +396,10 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
 	return response;
 }
 sf::Color Building::getTextureColor() const {
-	if (this->burningMovesLeft == 0) {
+	if (this->getHP() == this->getMaxHP()) {
 		return this->Unit::getTextureColor();
 	}
-	return {150, 150, 150};
+	return {100, 100, 100};
 }
 std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());

@@ -30,6 +30,8 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+    std::string getTextureName() const;
+
 	static const uint32_t TOTAL_FRAMES;
 private:
 	float x, y;
