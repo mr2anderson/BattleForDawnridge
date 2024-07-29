@@ -54,7 +54,6 @@
 #include "WarriorProducerSpec.hpp"
 #include "Warrior.hpp"
 #include "House.hpp"
-#include "Resin.hpp"
 #include "Spell.hpp"
 #include "SpellProducerSpec.hpp"
 #include "SpellFactory.hpp"
@@ -278,7 +277,6 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates1>());
     buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower1>());
-    buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Resin>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall2>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates2>());
     buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower2>());
