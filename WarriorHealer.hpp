@@ -31,6 +31,7 @@ public:
     void refreshHealingAbility();
     void wipeHealingAbility();
     uint32_t getHealingSpeed() const;
+    bool blockBuildingAbility() const override;
     virtual std::string getStartHealingSoundName() const = 0;
 protected:
     virtual uint32_t getBaseHealingSpeed() const = 0;

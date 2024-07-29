@@ -30,6 +30,7 @@ public:
 
     Damage getDamage() const;
     uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const override;
+    bool blockBuildingAbility() const override;
     virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
     virtual std::string getStartAttackSoundName() const = 0;
 protected:

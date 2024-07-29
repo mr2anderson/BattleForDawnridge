@@ -591,7 +591,9 @@ Events Warrior::getSelectionWindow(bool own) {
     }
     components.push_back(this->getDescriptionComponent());
     components.push_back(this->getWarriorInfoComponent());
-    components.push_back(this->getBlockingBuildingComponent());
+    if (this->blockBuildingAbility()) {
+        components.push_back(this->getBlockingBuildingComponent());
+    }
     if (this->inRage() > 0) {
         components.push_back(this->getRageModeComponent());
     }

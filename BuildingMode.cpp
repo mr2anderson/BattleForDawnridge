@@ -135,7 +135,7 @@ Events BuildingMode::getHighlightEvent(MapState *state) const {
 	}
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
         Warrior* w = state->getCollectionsPtr()->getWarrior(i);
-        if (w->exist() and w->getPlayerId() != this->playerId) {
+        if (w->exist() and w->getPlayerId() != this->playerId and w->blockBuildingAbility()) {
             result = result + w->getMoveHighlightionEvent(state);
         }
     }
@@ -194,7 +194,7 @@ bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
 bool BuildingMode::noEnemyWarriors(MapState *state, const Building *clonedB) const {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
         Warrior *w = state->getCollectionsPtr()->getWarrior(i);
-        if (w->exist() and w->getPlayerId() != this->playerId) {
+        if (w->exist() and w->getPlayerId() != this->playerId and w->blockBuildingAbility()) {
             std::vector<std::tuple<uint32_t, uint32_t>> moves = w->getMoves(state);
             for (const auto move : moves) {
                 uint32_t moveX, moveY;

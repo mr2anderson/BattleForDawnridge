@@ -51,6 +51,9 @@ uint32_t WarriorAttacker::getAnimationNumber(const std::string& type, const std:
     }
     return 0;
 }
+bool WarriorAttacker::blockBuildingAbility() const {
+    return true;
+}
 uint32_t WarriorAttacker::getCurrentAnimationMs() const {
     uint32_t baseResult = this->Warrior::getCurrentAnimationMs();
     if (baseResult != 0) {

@@ -44,6 +44,9 @@ uint32_t WarriorHealer::getHealingSpeed() const {
     }
     return healingSpeed;
 }
+bool WarriorHealer::blockBuildingAbility() const {
+    return false;
+}
 Events WarriorHealer::heal(Warrior *w) {
     this->wipeMovementPoints();
     this->setDirection(this->getDirection(w));
