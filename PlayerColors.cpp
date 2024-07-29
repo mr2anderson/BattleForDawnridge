@@ -18,15 +18,15 @@
 
 
 #include <vector>
-#include "PlayerPointerColors.hpp"
+#include "PlayerColors.hpp"
 #include "GlobalRandomGenerator.hpp"
 
 
 
-PlayerPointerColors* PlayerPointerColors::singletone = nullptr;
+PlayerColors* PlayerColors::singletone = nullptr;
 
 
-PlayerPointerColors::PlayerPointerColors() {
+PlayerColors::PlayerColors() {
 	std::vector<uint32_t> all;
     for (uint32_t i = 1; i <= 3; i = i + 1) {
         all.push_back(i);
@@ -40,12 +40,12 @@ PlayerPointerColors::PlayerPointerColors() {
 		all.pop_back();
 	}
 }
-uint32_t PlayerPointerColors::getBlueIndex() const {
+uint32_t PlayerColors::getBlueIndex() const {
     return this->indexes[0];
 }
-uint32_t PlayerPointerColors::getGreenIndex() const {
+uint32_t PlayerColors::getGreenIndex() const {
     return this->indexes[1];
 }
-uint32_t PlayerPointerColors::getPurpleIndex() const {
+uint32_t PlayerColors::getPurpleIndex() const {
     return this->indexes[2];
 }

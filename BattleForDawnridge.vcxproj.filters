@@ -1003,7 +1003,7 @@
     <ClInclude Include="Move.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerPointerColors.hpp">
+    <ClInclude Include="PlayerColors.hpp">
       <Filter>Header Files\goService</Filter>
     </ClInclude>
     <ClInclude Include="NextClueEvent.hpp">
@@ -1632,7 +1632,7 @@
     <ClCompile Include="Move.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerPointerColors.cpp">
+    <ClCompile Include="PlayerColors.cpp">
       <Filter>Source Files\goService</Filter>
     </ClCompile>
     <ClCompile Include="NextClueEvent.cpp">

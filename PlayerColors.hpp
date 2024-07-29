@@ -23,22 +23,22 @@
 #pragma once
 
 
-class PlayerPointerColors {
+class PlayerColors {
 public:
-    static PlayerPointerColors* get() {
-        if (PlayerPointerColors::singletone == nullptr) {
-            PlayerPointerColors::singletone = new PlayerPointerColors();
+    static PlayerColors* get() {
+        if (PlayerColors::singletone == nullptr) {
+            PlayerColors::singletone = new PlayerColors();
         }
-        return PlayerPointerColors ::singletone;
+        return PlayerColors ::singletone;
     }
 
     uint32_t getBlueIndex() const;
     uint32_t getGreenIndex() const;
     uint32_t getPurpleIndex() const;
 private:
-    PlayerPointerColors();
-    PlayerPointerColors(const PlayerPointerColors& copy);
-    static PlayerPointerColors* singletone;
+    PlayerColors();
+    PlayerColors(const PlayerColors& copy);
+    static PlayerColors* singletone;
 
     std::vector<uint32_t> indexes;
 };
