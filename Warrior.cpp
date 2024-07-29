@@ -46,6 +46,7 @@
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 #include "Parameters.hpp"
 #include "GlobalRandomGenerator.hpp"
+#include "FocusOnEvent.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -152,6 +153,7 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
             }
 
             if (this->toKill) {
+                events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
                 events = events + this->hit(this->getHP());
             }
         }

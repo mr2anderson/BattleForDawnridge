@@ -25,6 +25,7 @@
 #include "Parameters.hpp"
 #include "GlobalRandomGenerator.hpp"
 #include "GlobalClock.hpp"
+#include "FocusOnEvent.hpp"
 
 
 const uint32_t PoisonFog::TOTAL_TYPES = 1;
@@ -58,6 +59,7 @@ Events PoisonFog::getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerI
 		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == currentPlayerId and
                 !w->isVehicle() and w->getX() == this->getX() and w->getY() == this->getY()) {
+            events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
 			events = events + w->hit(Parameters::get()->getInt("poison_fog_damage"));
 		}
 	}
