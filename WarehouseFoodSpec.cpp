@@ -26,6 +26,6 @@ WarehouseFoodSpec::WarehouseFoodSpec() = default;
 IBuildingSpec* WarehouseFoodSpec::clone() const {
 	return new WarehouseFoodSpec(*this);
 }
-Resources WarehouseFoodSpec::getLimit() const {
+Resources WarehouseFoodSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_food_limit");
 }

@@ -28,5 +28,5 @@ public:
     WarehouseCrystalSpec();
     IBuildingSpec* clone() const override;
 
-    Resources getLimit() const override;
+    Resources getActiveLimit() const override;
 };

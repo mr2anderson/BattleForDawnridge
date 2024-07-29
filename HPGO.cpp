@@ -43,7 +43,7 @@ uint32_t HPGO::getHP() const {
 	return this->currentHp.value_or(this->getMaxHP());
 }
 void HPGO::setMaxHp() {
-	this->currentHp = this->getMaxHP();
+	this->addHp(this->getMaxHP());
 }
 bool HPGO::exist() const {
 	return (this->getHP() != 0);

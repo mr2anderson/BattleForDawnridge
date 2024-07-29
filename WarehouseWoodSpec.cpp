@@ -26,6 +26,6 @@ WarehouseWoodSpec::WarehouseWoodSpec() = default;
 IBuildingSpec* WarehouseWoodSpec::clone() const {
 	return new WarehouseWoodSpec(*this);
 }
-Resources WarehouseWoodSpec::getLimit() const {
+Resources WarehouseWoodSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_wood_limit");
 }

@@ -25,6 +25,6 @@ CastleWarehouseSpec::CastleWarehouseSpec() = default;
 IBuildingSpec* CastleWarehouseSpec::clone() const {
 	return new CastleWarehouseSpec(*this);
 }
-Resources CastleWarehouseSpec::getLimit() const {
+Resources CastleWarehouseSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("castle_resources");
 }

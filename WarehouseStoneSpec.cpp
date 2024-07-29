@@ -25,6 +25,6 @@ WarehouseStoneSpec::WarehouseStoneSpec() = default;
 IBuildingSpec* WarehouseStoneSpec::clone() const {
 	return new WarehouseStoneSpec(*this);
 }
-Resources WarehouseStoneSpec::getLimit() const {
+Resources WarehouseStoneSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_stone_limit");
 }

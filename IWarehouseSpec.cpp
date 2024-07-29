@@ -26,6 +26,10 @@
 Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *state) const {
 	Events event;
 
+    if (!building->wasWithFullHP()) {
+        return event;
+    }
+
 	Resources newLimit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
 		Building* b = state->getCollectionsPtr()->getBuilding(i);
@@ -39,12 +43,34 @@ Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *sta
 	return event;
 }
 std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(const Building *building, MapState* state) {
-	BuildingHorizontalSelectionWindowComponent component = {
-		HorizontalSelectionWindowComponent("resources_icon",
-        *Locales::get()->get("resource_storage_building_description") + this->getLimit().getReadableInfo(),
-		false,
-		Events()),
-        true
-	};
+	BuildingHorizontalSelectionWindowComponent component;
+
+    if (building->wasWithFullHP()) {
+        component = {HorizontalSelectionWindowComponent(
+                        "resources_icon",
+                        *Locales::get()->get("resource_storage_building_description") + this->getActiveLimit().getReadableInfo(),
+                        false,
+                        Events()),
+                true
+        };
+    }
+    else {
+        component = {
+                HorizontalSelectionWindowComponent(
+                        "hammer_icon",
+                        *Locales::get()->get("does_not_increase_resource_limit_if_isnt_built_yet"),
+                        false,
+                        Events()
+                        ),
+                        true
+        };
+    }
+
 	return { component };
+}
+Resources IWarehouseSpec::getLimit(const Building *building) const {
+    if (building->wasWithFullHP()) {
+        return this->getActiveLimit();
+    }
+    return {};
 }

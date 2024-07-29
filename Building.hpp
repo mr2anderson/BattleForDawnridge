@@ -40,6 +40,8 @@ public:
 	bool isOrigin() const;
 	bool isActiveConductor() const;
 	bool works() const;
+    bool wasWithFullHP() const;
+    void addHp(uint32_t delta) override;
 	bool connectedTo(MapState* state, GO* go) const;
 	bool connectedToOrigin(MapState* state) const;
 	bool allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
@@ -50,6 +52,7 @@ protected:
 	void addSpec(IBuildingSpec* spec);
 	virtual uint32_t getRegenerationSpeed() const = 0;
 private:
+    bool _wasWithFullHP;
 	uint32_t burningMovesLeft;
 	Fire fire;
 	std::vector<IBuildingSpec*> specs;

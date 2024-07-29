@@ -25,6 +25,6 @@ WarehouseCrystalSpec::WarehouseCrystalSpec() = default;
 IBuildingSpec* WarehouseCrystalSpec::clone() const {
     return new WarehouseCrystalSpec(*this);
 }
-Resources WarehouseCrystalSpec::getLimit() const {
+Resources WarehouseCrystalSpec::getActiveLimit() const {
     return Parameters::get()->getResources("warehouse_crystal_limit");
 }

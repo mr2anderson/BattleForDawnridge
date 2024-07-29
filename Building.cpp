@@ -40,6 +40,7 @@
 Building::Building() = default;
 Building::Building(uint32_t x, uint32_t y, uint32_t playerId) :
 	Unit(x, y, 1, playerId) {
+    this->_wasWithFullHP = false;
 	this->burningMovesLeft = 0;
 }
 Building::Building(const Building& building) {
@@ -66,7 +67,7 @@ Resources Building::getLimit() const {
 	Resources limit;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		limit.plus(this->specs.at(i)->getLimit());
+		limit.plus(this->specs.at(i)->getLimit(this));
 	}
 
 	return limit;
@@ -109,6 +110,15 @@ bool Building::isActiveConductor() const {
 }
 bool Building::works() const {
 	return (this->getHP() == this->getMaxHP());
+}
+bool Building::wasWithFullHP() const {
+    return this->_wasWithFullHP;
+}
+void Building::addHp(uint32_t delta) {
+    this->Unit::addHp(delta);
+    if (this->getHP() == this->getMaxHP()) {
+        this->_wasWithFullHP = true;
+    }
 }
 bool Building::connectedTo(MapState* state, GO* go) const {
 	ConductionGraph g;

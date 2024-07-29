@@ -28,5 +28,5 @@ public:
 	WarehouseWoodSpec();
 	IBuildingSpec* clone() const override;
 
-	Resources getLimit() const override;
+	Resources getActiveLimit() const override;
 };

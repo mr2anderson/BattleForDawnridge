@@ -25,6 +25,6 @@ WarehouseIronSpec::WarehouseIronSpec() = default;
 IBuildingSpec* WarehouseIronSpec::clone() const {
 	return new WarehouseIronSpec(*this);
 }
-Resources WarehouseIronSpec::getLimit() const {
+Resources WarehouseIronSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_iron_limit");
 }

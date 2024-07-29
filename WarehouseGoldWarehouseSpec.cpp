@@ -25,6 +25,6 @@ WarehouseGoldWarehouseSpec::WarehouseGoldWarehouseSpec() = default;
 IBuildingSpec* WarehouseGoldWarehouseSpec::clone() const {
 	return new WarehouseGoldWarehouseSpec(*this);
 }
-Resources WarehouseGoldWarehouseSpec::getLimit() const {
+Resources WarehouseGoldWarehouseSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_gold_limit");
 }

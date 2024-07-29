@@ -37,7 +37,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IBuildingSpec::getCompon
 std::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *building) const {
 	return std::nullopt;
 }
-Resources IBuildingSpec::getLimit() const {
+Resources IBuildingSpec::getLimit(const Building *building) const {
 	return Resources();
 }
 uint32_t IBuildingSpec::getPopulationLimit(const Building *building) const {
