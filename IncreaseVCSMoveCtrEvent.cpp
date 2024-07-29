@@ -17,22 +17,12 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include "IncreaseVCSMoveCtrEvent.hpp"
 
 
-#pragma once
-
-
-class VictoryConditionSpec : public IBuildingSpec {
-public:
-	VictoryConditionSpec();
-	IBuildingSpec* clone() const override;
-
-    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-	Events getEventOnDestroy(const Building *b, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
-	bool isVictoryCondition() const override;
-    void increaseMoveCtr();
-private:
-    uint32_t moveCtr;
-};
+IncreaseVCSMoveCtrEvent::IncreaseVCSMoveCtrEvent(VictoryConditionSpec *spec) {
+    this->spec = spec;
+}
+VictoryConditionSpec* IncreaseVCSMoveCtrEvent::getSpec() {
+    return this->spec;
+}

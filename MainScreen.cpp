@@ -67,6 +67,7 @@
 #include "WarriorNearMultyAttacker.hpp"
 #include "WarriorHealer.hpp"
 #include "Workshop.hpp"
+#include "VictoryConditionSpec.hpp"
 
 
 
@@ -809,6 +810,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
         this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent);
     }
+    else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
+        this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -1009,4 +1013,7 @@ void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsIna
     }
     std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
     this->handleCreatePopUpElementEvent(createW);
+}
+void MainScreen::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e) {
+    e->getSpec()->increaseMoveCtr();
 }

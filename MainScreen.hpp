@@ -72,6 +72,7 @@
 #include "RefreshHealingAbilityEvent.hpp"
 #include "WipeHealingAbilityEvent.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
+#include "IncreaseVCSMoveCtrEvent.hpp"
 
 
 #pragma once
@@ -211,4 +212,5 @@ private:
     void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e);
     void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e);
     void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e);
+    void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e);
 };

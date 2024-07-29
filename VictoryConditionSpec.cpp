@@ -25,9 +25,12 @@
 #include "PlaySoundEvent.hpp"
 #include "ImageFlyingE.hpp"
 #include "CreateEEvent.hpp"
+#include "IncreaseVCSMoveCtrEvent.hpp"
 
 
-VictoryConditionSpec::VictoryConditionSpec() = default;
+VictoryConditionSpec::VictoryConditionSpec() {
+    this->moveCtr = 0;
+}
 IBuildingSpec* VictoryConditionSpec::clone() const {
 	return new VictoryConditionSpec(*this);
 }
@@ -36,6 +39,7 @@ Events VictoryConditionSpec::getActiveNewMoveEvent(const Building* b, MapState* 
 
     events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
     events.add(std::make_shared<PlaySoundEvent>("bell"));
+    events.add(std::make_shared<IncreaseVCSMoveCtrEvent>(this));
 
     std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("bell", b->getX(), b->getY(), b->getSX(), b->getSY());
     events.add(std::make_shared<CreateEEvent>(flyingE));
@@ -59,7 +63,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component = {
 		HorizontalSelectionWindowComponent("bell",
-		*Locales::get()->get("victory_condition_building_description"),
+		*Locales::get()->get("victory_condition_building_description") + std::to_wstring(this->moveCtr),
 		false,
 		Events()),
         true
@@ -68,4 +72,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::ge
 }
 bool VictoryConditionSpec::isVictoryCondition() const {
 	return true;
+}
+void VictoryConditionSpec::increaseMoveCtr() {
+    this->moveCtr = this->moveCtr + 1;
 }
