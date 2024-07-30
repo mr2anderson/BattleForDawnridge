@@ -33,6 +33,7 @@
 #include "Root.hpp"
 #include "Castle.hpp"
 #include "Infantryman.hpp"
+#include "Knight.hpp"
 #include "Healer.hpp"
 #include "Treasure.hpp"
 #include "Effect.hpp"
@@ -86,7 +87,7 @@ Map::Map(const std::string &path) {
                 this->add(new Healer(x + c->getSX(), y, currentPlayerId));
                 this->add(new Infantryman(x + c->getSX() + 1, y, currentPlayerId));
                 this->add(new Infantryman(x + c->getSX(), y + 1, currentPlayerId));
-                this->add(new Infantryman(x + c->getSX() + 1, y + 1, currentPlayerId));
+                this->add(new Knight(x + c->getSX() + 1, y + 1, currentPlayerId));
 
                 currentPlayerId = currentPlayerId + 1;
             }
