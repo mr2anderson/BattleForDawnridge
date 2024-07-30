@@ -508,9 +508,6 @@ sf::Color Warrior::getTextureColor() const {
     }
     return this->Unit::getTextureColor();
 }
-float Warrior::getScale() const {
-    return 1 + 0.1 * (this->inRage() > 0);
-}
 HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
         "rage_spell",

@@ -113,7 +113,6 @@ private:
     float getOffsetY() const override;
     float getOffset() const;
 	sf::Color getTextureColor() const override;
-	float getScale() const override;
 	HorizontalSelectionWindowComponent getRageModeComponent() const;
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
