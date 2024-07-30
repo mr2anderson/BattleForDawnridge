@@ -274,7 +274,9 @@ HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
 void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Unit::draw(target, states);
 	if (this->exist()) {
-        target.draw(fire, states);
+        if (this->burningMovesLeft > 0) {
+            target.draw(fire, states);
+        }
 		this->drawShortInfos(target, states);
 	}
 }
