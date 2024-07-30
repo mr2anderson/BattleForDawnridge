@@ -17,38 +17,14 @@
  */
 
 
-#include <set>
-#include <vector>
-#include <cstdint>
-#include "TypeComp.hpp"
+#include <typeinfo>
 
 
 #pragma once
 
 
-template <typename T> class Collection {
-public:
-	Collection() = default;
-
-	void push(T* t) {
-		this->data.insert(t);
-
-        this->dataIndexed.clear();
-        this->dataIndexed.reserve(this->data.size());
-        for (auto &a : this->data) {
-            this->dataIndexed.push_back(a);
-        }
-	}
-	uint32_t size() const {
-		return this->data.size();
-	}
-	T* at(uint32_t i) {
-        return this->dataIndexed[i];
-	}
-	const T* at(uint32_t i) const {
-        return this->dataIndexed[i];
-	}
-private:
-	std::multiset<T*, TypeComp<T>> data;
-    std::vector<T*> dataIndexed;
+template<typename T> struct TypeComp {
+    bool operator()(const T *a, const T *b) const {
+        return typeid(a).hash_code() < typeid(b).hash_code();
+    }
 };
