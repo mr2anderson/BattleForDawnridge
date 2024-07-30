@@ -23,19 +23,32 @@
 
 WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels, bool color) {
     this->sprite.setPosition(xInPixels, yInPixels);
-    if (!color) {
-        this->sprite.setColor(sf::Color(255, 255, 255, 0));
-    }
+    this->color = color;
 }
 void WarriorPlayerPointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(this->sprite, states);
 }
 void WarriorPlayerPointer::setTypeBlue() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_blue"));
+    if (this->color) {
+        this->sprite.setTexture(*Textures::get()->get("warrior_blue"));
+    }
+    else {
+        this->sprite.setTexture(*Textures::get()->get("warrior_blue_no_moves"));
+    }
 }
 void WarriorPlayerPointer::setTypeGreen() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_green"));
+    if (this->color) {
+        this->sprite.setTexture(*Textures::get()->get("warrior_green"));
+    }
+    else {
+        this->sprite.setTexture(*Textures::get()->get("warrior_green_no_moves"));
+    }
 }
 void WarriorPlayerPointer::setTypePurple() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_purple"));
+    if (this->color) {
+        this->sprite.setTexture(*Textures::get()->get("warrior_purple"));
+    }
+    else {
+        this->sprite.setTexture(*Textures::get()->get("warrior_purple_no_moves"));
+    }
 }
