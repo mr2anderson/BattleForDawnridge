@@ -78,28 +78,29 @@ Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bui
 	return response;
 }
 std::vector<BuildingHorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::getComponents(const Building *building, MapState* state) {
-	BuildingHorizontalSelectionWindowComponent component;
+	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (building->works()) {
-		component = {
+		components.emplace_back(
 			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
-            *Locales::get()->get("this_building_collects_resources_from_resource_points") + std::to_wstring(this->getCollectionSpeed()),
+            *Locales::get()->get("this_building_collects_resources_from_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " +
+            *Locales::get()->get("resource_in_radius") + std::to_wstring(this->countResourceInRadius(building, state)),
 			false,
 			Events()),
             true
-		};
+        );
 	}
 	else {
-		component = {
+		components.emplace_back(
 			HorizontalSelectionWindowComponent("hammer_icon",
 			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
 			false,
 			Events()),
             true
-		};
+        );
 	}
 
-	return { component };
+	return components;
 }
 uint32_t AreaResourcePointCollectorSpec::getRadius() const {
 	return this->getCollectionRadius();
@@ -109,4 +110,16 @@ sf::Color AreaResourcePointCollectorSpec::getHighlightColor(uint32_t playerId) c
 }
 uint8_t AreaResourcePointCollectorSpec::getHighlightType() const {
     return AreaControllerSpec::OTHER;
+}
+uint32_t AreaResourcePointCollectorSpec::countResourceInRadius(const Building *building, MapState *state) {
+    uint32_t ctr = 0;
+
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
+        ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
+        if (rp->exist() and this->inRadius(building, state, rp->getX(), rp->getY(), rp->getSX(), rp->getSY()) and rp->getResourceType() == this->getResourceType()) {
+            ctr = ctr + rp->getHP();
+        }
+    }
+
+    return ctr;
 }

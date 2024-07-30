@@ -35,4 +35,6 @@ public:
 	virtual std::string getResourceType() const = 0;
 	virtual uint32_t getCollectionSpeed() const = 0;
 	virtual uint32_t getCollectionRadius() const = 0;
+private:
+    uint32_t countResourceInRadius(const Building *building, MapState *state);
 };
