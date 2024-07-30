@@ -107,12 +107,6 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ShootingSpec::getCompone
 
     return {component};
 }
-Events ShootingSpec::getHighlightEvent(const Building *b, MapState *state, uint8_t type) {
-    if (b->wasWithFullHP()) {
-        return AreaControllerSpec::getHighlightEvent(b, state, type);
-    }
-    return Events();
-}
 uint32_t ShootingSpec::getRadius() const {
     return this->getShootingRadius();
 }
