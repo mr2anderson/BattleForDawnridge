@@ -633,12 +633,6 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0 or this->hasSpecialMoves) {
         Events selectThisEvent = this->getMoveHighlightionEvent(state);
-        for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-            Building *b = state->getCollectionsPtr()->getBuilding(i);
-            if (b->exist() and b->getPlayerId() != this->getPlayerId()) {
-                selectThisEvent = selectThisEvent + b->getHighlightEvent(state, AreaControllerSpec::ATTACK);
-            }
-        }
         selectThisEvent.add(std::make_shared<SelectEvent>(this));
         selectThisEvent.add(std::make_shared<DisableCursorEvent>());
 
