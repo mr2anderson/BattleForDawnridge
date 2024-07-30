@@ -411,7 +411,7 @@ sf::Color Building::getTextureColor() const {
 	if (this->getHP() == this->getMaxHP()) {
 		return this->Unit::getTextureColor();
 	}
-	return {100, 100, 100};
+	return {175, 175, 175};
 }
 std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
