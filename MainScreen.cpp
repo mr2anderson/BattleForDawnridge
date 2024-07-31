@@ -27,6 +27,8 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <boost/iostreams/filter/bzip2.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
 #include "MainScreen.hpp"
 #include "WindowTwoButtons.hpp"
 #include "ResourceBar.hpp"
@@ -181,8 +183,11 @@ void MainScreen::initFromMap(const std::string &mapName, sf::RenderWindow& windo
 	this->changeMove();
 }
 void MainScreen::initFromSave(const std::string &saveName, sf::RenderWindow &window) {
-    std::ifstream ifs(USERDATA_ROOT + "/saves/" + saveName);
-    iarchive ia(ifs);
+    std::ifstream ifs(USERDATA_ROOT + "/saves/" + saveName, std::ios::binary);
+    boost::iostreams::filtering_istreambuf fis;
+    fis.push(boost::iostreams::bzip2_decompressor());
+    fis.push(ifs);
+    iarchive ia(fis);
     ia >> map;
     ia >> playerIsActive;
     ia >> currentPlayerId;
@@ -206,8 +211,11 @@ void MainScreen::save() {
     std::stringstream ss;
     ss << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
 
-    std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save");
-    oarchive oa(ofs);
+    std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
+    boost::iostreams::filtering_ostreambuf fos;
+    fos.push(boost::iostreams::bzip2_compressor());
+    fos.push(ofs);
+    oarchive oa(fos);
     oa << map;
     oa << playerIsActive;
     oa << currentPlayerId;
