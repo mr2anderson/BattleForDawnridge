@@ -39,4 +39,13 @@ private:
 	uint32_t type;
 
 	Events getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<Effect>(*this);
+        ar & this->type;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(PoisonFog)

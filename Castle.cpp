@@ -26,6 +26,7 @@
 #include "CastleShootingSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Castle::Castle() = default;
@@ -68,3 +69,6 @@ std::wstring Castle::getDescription() const {
 uint32_t Castle::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("castle_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Castle)

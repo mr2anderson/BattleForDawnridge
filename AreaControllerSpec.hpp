@@ -54,4 +54,12 @@ private:
 	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> prevAvailable;
 
 	uint64_t getHash(MapState* state) const;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(AreaControllerSpec)

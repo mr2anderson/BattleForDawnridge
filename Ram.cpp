@@ -84,3 +84,6 @@ uint32_t Ram::getMovementPoints() const {
 uint32_t Ram::getPopulation() const {
     return Parameters::get()->getInt("ram_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Ram)

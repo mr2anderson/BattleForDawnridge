@@ -20,6 +20,7 @@
 #include "BlackKnight.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 BlackKnight::BlackKnight() = default;
@@ -81,3 +82,6 @@ uint32_t BlackKnight::getMovementPoints() const {
 uint32_t BlackKnight::getPopulation() const {
 	return Parameters::get()->getInt("black_knight_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(BlackKnight)

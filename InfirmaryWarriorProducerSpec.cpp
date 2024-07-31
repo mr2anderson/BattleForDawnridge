@@ -38,3 +38,6 @@ std::string InfirmaryWarriorProducerSpec::getProducingIconName() const {
 std::string InfirmaryWarriorProducerSpec::getWaitingIconName() const {
     return "healer_icon";
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(InfirmaryWarriorProducerSpec)

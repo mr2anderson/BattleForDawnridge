@@ -38,3 +38,6 @@ uint32_t Tower2Spec::getShootingRadius() const {
 std::shared_ptr<Projectile> Tower2Spec::getProjectile() const {
     return std::make_shared<BigArrow>();
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Tower2Spec)

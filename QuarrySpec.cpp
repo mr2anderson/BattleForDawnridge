@@ -34,3 +34,6 @@ uint32_t QuarrySpec::getCollectionSpeed() const {
 uint32_t QuarrySpec::getCollectionRadius() const {
 	return Parameters::get()->getInt("quarry_collection_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(QuarrySpec)

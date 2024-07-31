@@ -38,4 +38,14 @@ private:
 	Collections collections;
 	MapSize mapSize;
 	Players players;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->collections;
+        ar & this->mapSize;
+        ar & this->players;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(MapState)

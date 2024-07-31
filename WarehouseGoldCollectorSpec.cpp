@@ -31,3 +31,6 @@ uint32_t WarehouseGoldCollectorSpec::getCollectionSpeed() const {
 std::string WarehouseGoldCollectorSpec::getResourceType() const {
 	return "gold";
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseGoldCollectorSpec)

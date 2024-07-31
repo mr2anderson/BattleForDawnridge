@@ -27,6 +27,7 @@
 #include "SubHpEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "HighlightColors.hpp"
+#include "ArchiveType.hpp"
 
 
 AreaResourcePointCollectorSpec::AreaResourcePointCollectorSpec() = default;
@@ -123,3 +124,6 @@ uint32_t AreaResourcePointCollectorSpec::countResourceInRadius(const Building *b
 
     return ctr;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(AreaResourcePointCollectorSpec)

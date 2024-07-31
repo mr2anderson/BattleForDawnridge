@@ -31,4 +31,12 @@ public:
 	uint32_t getWarriorMovementCost(const Building *b, const Warrior *w) const override;
 	bool warriorCanStay(const Building *b, const Warrior *w) const override;
 	bool isHighObstacle(const Building *b, uint32_t playerId) const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WallSpec)

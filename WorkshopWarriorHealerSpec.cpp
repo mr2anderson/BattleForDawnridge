@@ -34,3 +34,6 @@ std::string WorkshopWarriorHealerSpec::getHealTextureName() const {
 bool WorkshopWarriorHealerSpec::healVehicles() const {
     return true;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WorkshopWarriorHealerSpec)

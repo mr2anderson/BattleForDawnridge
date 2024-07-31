@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "Wall1.hpp"
 #include "WallSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Wall1::Wall1() = default;
@@ -58,3 +60,6 @@ std::string Wall1::getSoundName() const {
 std::wstring Wall1::getDescription() const {
 	return *Locales::get()->get("wall1_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Wall1)

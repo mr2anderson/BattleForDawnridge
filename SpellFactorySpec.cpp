@@ -34,3 +34,6 @@ std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_
 
 	return toProduce;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(SpellFactorySpec)

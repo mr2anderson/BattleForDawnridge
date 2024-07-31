@@ -22,6 +22,7 @@
 #include "SetHighlightEvent.hpp"
 #include "LandscapeGraph.hpp"
 #include "Building.hpp"
+#include "ArchiveType.hpp"
 
 
 AreaControllerSpec::AreaControllerSpec() {
@@ -111,3 +112,6 @@ uint64_t AreaControllerSpec::getHash(MapState *state) const {
 
     return (total << 20ull) + exist;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(AreaControllerSpec)

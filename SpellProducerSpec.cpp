@@ -165,3 +165,6 @@ void SpellProducerSpec::setSpell(std::shared_ptr<Spell> newSpell) {
 	}
 	this->spell = newSpell->clone();
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(SpellProducerSpec)

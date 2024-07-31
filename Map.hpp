@@ -26,12 +26,20 @@
 
 class Map : public sf::Drawable {
 public:
+    Map();
     Map(const std::string &path);
-    ~Map();
+    ~Map() override;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     MapState* getStatePtr();
-    void add(GO* object);
 private:
     MapState state;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->state;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Map)

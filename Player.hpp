@@ -41,4 +41,13 @@ public:
 private:
 	uint32_t id;
 	Resources resources;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->id;
+        ar & this->resources;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Player)

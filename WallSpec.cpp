@@ -37,3 +37,6 @@ bool WallSpec::warriorCanStay(const Building *b, const Warrior *w) const {
 bool WallSpec::isHighObstacle(const Building *b, uint32_t playerId) const {
 	return true;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WallSpec)

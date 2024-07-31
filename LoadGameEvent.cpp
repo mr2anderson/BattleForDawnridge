@@ -17,15 +17,12 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include "LoadGameEvent.hpp"
 
 
-#pragma once
-
-
-class IMovementSpeedDecreaser : public IBuildingSpec {
-public:
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	uint32_t getWarriorMovementCost(const Building* building, const Warrior *w) const override;
-	virtual uint32_t getMovementSpeedDecreasingEffectStrength() const = 0;
-};
+LoadGameEvent::LoadGameEvent(const std::string &saveName) {
+    this->saveName = saveName;
+}
+std::string LoadGameEvent::getSaveName() const {
+    return this->saveName;
+}

@@ -19,7 +19,9 @@
 
 
 #include <vector>
+#include <boost/serialization/vector.hpp>
 #include "Player.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -34,4 +36,12 @@ public:
 	uint32_t total();
 private:
 	std::vector<Player> v;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->v;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Players)

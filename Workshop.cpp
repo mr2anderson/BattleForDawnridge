@@ -60,3 +60,6 @@ std::wstring Workshop::getDescription() const {
 uint32_t Workshop::getRegenerationSpeed() const {
     return Parameters::get()->getInt("workshop_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Workshop)

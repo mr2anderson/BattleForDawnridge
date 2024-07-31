@@ -20,16 +20,13 @@
 #include <fstream>
 #include <sstream>
 #include "Map.hpp"
-#include "CouldntOpenMap.hpp"
 #include "GO.hpp"
-#include "ResourcePoint.hpp"
-#include "Building.hpp"
-#include "Warrior.hpp"
 #include "Forest.hpp"
 #include "Stone.hpp"
 #include "Iron.hpp"
 #include "Mountains.hpp"
 #include "Water.hpp"
+#include "CouldntOpenMap.hpp"
 #include "Root.hpp"
 #include "Castle.hpp"
 #include "Infantryman.hpp"
@@ -37,8 +34,10 @@
 #include "Treasure.hpp"
 #include "Effect.hpp"
 #include "Plant.hpp"
+#include "ArchiveType.hpp"
 
 
+Map::Map() = default;
 Map::Map(const std::string &path) {
     std::ifstream file(DATA_ROOT + "/" + path);
     if (!file.is_open()) {
@@ -68,39 +67,39 @@ Map::Map(const std::string &path) {
         while (std::getline(ss, word, ',')) {
             uint32_t id = std::stoi(word);
             if (id >= 257 and id < 281) {
-                this->add(new Forest(x, y, id - 257));
+                this->getStatePtr()->getCollectionsPtr()->add(new Forest(x, y, id - 257));
             }
             else if (id >= 281 and id < 296) {
-                this->add(new Mountains(x, y, id - 281));
+                this->getStatePtr()->getCollectionsPtr()->add(new Mountains(x, y, id - 281));
             }
             else if (id >= 296) {
-                this->add(new Water(x, y, id - 296));
+                this->getStatePtr()->getCollectionsPtr()->add(new Water(x, y, id - 296));
             }
             else if (id == 1) {
                 this->state.getPlayersPtr()->addPlayer(Player(currentPlayerId));
 
                 Castle* c = new Castle(x, y, currentPlayerId);
                 c->setMaxHp();
-                this->add(c);
+                this->getStatePtr()->getCollectionsPtr()->add(c);
 
-                this->add(new Healer(x + c->getSX(), y, currentPlayerId));
-                this->add(new Infantryman(x + c->getSX() + 1, y, currentPlayerId));
-                this->add(new Infantryman(x + c->getSX(), y + 1, currentPlayerId));
-                this->add(new Infantryman(x + c->getSX() + 1, y + 1, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(new Healer(x + c->getSX(), y, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(new Infantryman(x + c->getSX() + 1, y, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(new Infantryman(x + c->getSX(), y + 1, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(new Infantryman(x + c->getSX() + 1, y + 1, currentPlayerId));
 
                 currentPlayerId = currentPlayerId + 1;
             }
             else if (id == 4) {
-                this->add(new Iron(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(new Iron(x, y));
             }
             else if (id == 6) {
-                this->add(new Stone(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(new Stone(x, y));
             }
             else if (id == 8) {
-                this->add(new Treasure(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(new Treasure(x, y));
             }
             else if (id == 3) {
-                this->add(new Plant(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(new Plant(x, y));
             }
             x = x + 1;
         }
@@ -129,22 +128,6 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 MapState* Map::getStatePtr() {
     return &this->state;
 }
-void Map::add(GO *object) {
-    this->state.getCollectionsPtr()->addToGOs(object);
 
-    if (Effect* effect = dynamic_cast<Effect*>(object)) {
-        this->state.getCollectionsPtr()->addToEffects(effect);
-    }
-    if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
-        this->state.getCollectionsPtr()->addToRPs(rp);
-    }
-    if (Unit* u = dynamic_cast<Unit*>(object)) {
-        this->state.getCollectionsPtr()->addToUnits(u);
-    }
-    if (Building* b = dynamic_cast<Building*>(object)) {
-        this->state.getCollectionsPtr()->addToBuildings(b);
-    }
-    if (Warrior* w = dynamic_cast<Warrior*>(object)) {
-        this->state.getCollectionsPtr()->addToWarriors(w);
-    }
-}
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Map)

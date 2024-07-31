@@ -18,10 +18,12 @@
 
 
 
+#include <boost/serialization/base_object.hpp>
 #include "Sawmill.hpp"
 #include "SawmillSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Sawmill::Sawmill() = default;
@@ -59,3 +61,6 @@ std::string Sawmill::getSoundName() const {
 std::wstring Sawmill::getDescription() const {
 	return *Locales::get()->get("sawmill_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Sawmill)

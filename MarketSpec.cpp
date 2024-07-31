@@ -59,3 +59,6 @@ std::vector<Trade> MarketSpec::getTrades() const {
 
 	return trades;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(MarketSpec)

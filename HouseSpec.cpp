@@ -28,3 +28,6 @@ IBuildingSpec* HouseSpec::clone() const {
 uint32_t HouseSpec::getActivePopulationLimit() const {
 	return Parameters::get()->getInt("house_population_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(HouseSpec)

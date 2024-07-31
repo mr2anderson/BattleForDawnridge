@@ -21,6 +21,7 @@
 #include "RoadSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Road::Road() {
@@ -97,3 +98,6 @@ std::string Road::getProperType(MapState *state) const {
     }
     return "none";
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Road)

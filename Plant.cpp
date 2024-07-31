@@ -55,3 +55,6 @@ std::string Plant::getTextureName() const {
 std::wstring Plant::getDescription() const {
     return *Locales::get()->get("plant_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Plant)

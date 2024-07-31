@@ -28,3 +28,6 @@ IBuildingSpec* WarehouseStoneSpec::clone() const {
 Resources WarehouseStoneSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_stone_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseStoneSpec)

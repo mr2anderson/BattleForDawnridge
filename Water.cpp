@@ -17,6 +17,7 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "Water.hpp"
 #include "Locales.hpp"
 #include "Textures.hpp"
@@ -24,6 +25,7 @@
 #include "CreateEEvent.hpp"
 #include "Parameters.hpp"
 #include "Warrior.hpp"
+#include "ArchiveType.hpp"
 
 
 Water::Water() = default;
@@ -79,3 +81,6 @@ Events Water::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 
 	return event;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Water)

@@ -47,3 +47,6 @@ std::string Stone::getTextureName() const {
 std::wstring Stone::getDescription() const {
 	return *Locales::get()->get("stone_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Stone)

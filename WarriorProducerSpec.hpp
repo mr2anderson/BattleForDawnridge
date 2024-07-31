@@ -17,6 +17,7 @@
  */
 
 
+#include <boost/serialization/shared_ptr.hpp>
 #include "AreaControllerSpec.hpp"
 
 
@@ -45,4 +46,15 @@ private:
 	bool producing;
 
 	std::tuple<uint32_t, uint32_t> getNewWarriorPosition(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state);
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+        ar & this->currentProducing;
+        ar & this->currentProducingMovesLeft;
+        ar & this->producing;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WarriorProducerSpec)

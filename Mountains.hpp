@@ -41,4 +41,13 @@ private:
 	uint32_t type;
 
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<GO>(*this);
+        ar & this->type;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Mountains)

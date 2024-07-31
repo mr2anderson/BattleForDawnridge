@@ -18,6 +18,10 @@
 
 
 
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/set.hpp>
+#include "ArchiveType.hpp"
 #include "Collection.hpp"
 
 
@@ -36,12 +40,7 @@ class Collections {
 public:
 	Collections();
 
-	void addToGOs(GO* go);
-	void addToEffects(Effect* effect);
-	void addToRPs(ResourcePoint* rp);
-    void addToUnits(Unit* u);
-	void addToBuildings(Building* b);
-	void addToWarriors(Warrior* w);
+	void add(GO *object);
 
 	uint32_t totalGOs() const;
 	uint32_t totalEffects() const;
@@ -65,4 +64,11 @@ private:
     Collection<Unit> units;
 	Collection<Building> buildings;
 	Collection<Warrior> warriors;
+
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version);
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Collections)

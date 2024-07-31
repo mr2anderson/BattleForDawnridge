@@ -87,3 +87,6 @@ uint32_t Healer::getMovementPoints() const {
 uint32_t Healer::getPopulation() const {
     return Parameters::get()->getInt("healer_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Healer)

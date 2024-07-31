@@ -35,4 +35,13 @@ public:
     void increaseMoveCtr();
 private:
     uint32_t moveCtr;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+        ar & this->moveCtr;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(VictoryConditionSpec)

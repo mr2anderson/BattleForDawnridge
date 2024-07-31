@@ -19,6 +19,7 @@
 
 #include "MineSpec.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 MineSpec::MineSpec() = default;
@@ -34,3 +35,6 @@ uint32_t MineSpec::getCollectionSpeed() const {
 uint32_t MineSpec::getCollectionRadius() const {
 	return Parameters::get()->getInt("mine_collection_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(MineSpec)

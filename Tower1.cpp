@@ -58,3 +58,6 @@ std::wstring Tower1::getDescription() const {
 uint32_t Tower1::getRegenerationSpeed() const {
     return Parameters::get()->getInt("tower1_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Tower1)

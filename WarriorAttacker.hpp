@@ -46,4 +46,13 @@ private:
     std::string getDirection(uint32_t targetX, uint32_t targetY) const;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
     Events processCurrentAnimation(MapState *state) override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<Warrior>(*this);
+        ar & this->target;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WarriorAttacker)

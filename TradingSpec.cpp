@@ -169,3 +169,6 @@ BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const 
 
 	return component;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(TradingSpec)

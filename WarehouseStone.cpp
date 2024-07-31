@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "WarehouseStone.hpp"
 #include "WarehouseStoneSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;
@@ -58,3 +60,6 @@ std::string WarehouseStone::getSoundName() const {
 std::wstring WarehouseStone::getDescription() const {
 	return *Locales::get()->get("warehouse_stone_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseStone)

@@ -31,4 +31,12 @@ public:
 	std::string getResourceType() const override;
 	uint32_t getCollectionSpeed() const override;
 	uint32_t getCollectionRadius() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<AreaResourcePointCollectorSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(QuarrySpec)

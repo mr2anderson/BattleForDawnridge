@@ -29,4 +29,12 @@ public:
 	IBuildingSpec* clone() const override;
 
 	std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<SpellProducerSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(SpellFactorySpec)

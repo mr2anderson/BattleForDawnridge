@@ -40,4 +40,12 @@ public:
     virtual uint32_t getShotsNumber() const = 0;
     virtual uint32_t getShootingRadius() const = 0;
     virtual std::shared_ptr<Projectile> getProjectile() const = 0;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(ShootingSpec)

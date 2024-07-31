@@ -39,4 +39,13 @@ private:
 
 	bool busy() const;
 	BuildingHorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade);
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+        ar & this->currentTrade;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(TradingSpec)

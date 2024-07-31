@@ -28,3 +28,6 @@ IBuildingSpec* ArableSpec::clone() const {
 Resource ArableSpec::getProduct() const {
 	return Parameters::get()->getResource("arable_product");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(ArableSpec)

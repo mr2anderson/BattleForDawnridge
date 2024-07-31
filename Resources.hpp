@@ -19,6 +19,9 @@
 
 #include <map>
 #include <vector>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/map.hpp>
 #include "Resource.hpp"
 #include "ResourceOrderComp.hpp"
 
@@ -44,4 +47,12 @@ public:
 	friend bool operator>=(const Resources& a, const Resources& b);
 private:
 	std::map<std::string, uint32_t, ResourceOrderComp> map;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->map;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Resources)

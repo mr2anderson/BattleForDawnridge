@@ -20,6 +20,7 @@
 #include "Legioner.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Legioner::Legioner() = default;
@@ -81,3 +82,6 @@ uint32_t Legioner::getMovementPoints() const {
 uint32_t Legioner::getPopulation() const {
 	return Parameters::get()->getInt("legioner_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Legioner)

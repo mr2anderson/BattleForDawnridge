@@ -17,6 +17,9 @@
  */
 
 
+#include <boost/serialization/deque.hpp>
+#include <boost/serialization/stack.hpp>
+#include <boost/serialization/queue.hpp>
 #include "Unit.hpp"
 #include "Collection.hpp"
 #include "ISelectable.hpp"
@@ -88,7 +91,7 @@ protected:
 
     void setDirection(const std::string &newDirection);
 private:
-	std::optional<uint32_t> movementPoints;
+	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;
     sf::Clock hasSpecialMovesCheckTimer;
 	std::string currentDirection;
@@ -124,4 +127,18 @@ private:
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<Unit>(*this);
+        ar & this->movementPoints;
+        ar & this->currentDirection;
+        ar & this->currentAnimation;
+        ar & this->currentMovement;
+        ar & this->toKill;
+        ar & this->rageModeMovesLeft;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Warrior)

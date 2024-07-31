@@ -19,6 +19,7 @@
 
 #include "CastleWarehouseSpec.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 CastleWarehouseSpec::CastleWarehouseSpec() = default;
@@ -28,3 +29,6 @@ IBuildingSpec* CastleWarehouseSpec::clone() const {
 Resources CastleWarehouseSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("castle_resources");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(CastleWarehouseSpec)

@@ -35,4 +35,12 @@ public:
 	virtual uint32_t getHealingSpeed() const = 0;
     virtual bool healVehicles() const;
     virtual std::string getHealTextureName() const = 0;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WarriorHealerSpec)

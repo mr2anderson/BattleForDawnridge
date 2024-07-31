@@ -18,6 +18,7 @@
 
 
 #include <unordered_map>
+#include <boost/serialization/unordered_map.hpp>
 #include "WarriorNearAttacker.hpp"
 
 
@@ -38,4 +39,13 @@ private:
     std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const override;
     Events startAttack(Unit *u, uint32_t targetX, uint32_t targetY) override;
     std::wstring getSpecialInfoString() const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<WarriorNearAttacker>(*this);
+        ar & this->attackedTable;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WarriorNearMultyAttacker)

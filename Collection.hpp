@@ -32,12 +32,7 @@ public:
 
 	void push(T* t) {
 		this->data.insert(t);
-
-        this->dataIndexed.clear();
-        this->dataIndexed.reserve(this->data.size());
-        for (auto &a : this->data) {
-            this->dataIndexed.push_back(a);
-        }
+        this->reindex();
 	}
 	uint32_t size() const {
 		return this->data.size();
@@ -49,6 +44,16 @@ public:
         return this->dataIndexed[i];
 	}
 private:
+    friend class Collections;
+
 	std::multiset<T*, TypeComp<T>> data;
     std::vector<T*> dataIndexed;
+
+    void reindex() {
+        this->dataIndexed.clear();
+        this->dataIndexed.reserve(this->data.size());
+        for (auto &a : this->data) {
+            this->dataIndexed.push_back(a);
+        }
+    }
 };

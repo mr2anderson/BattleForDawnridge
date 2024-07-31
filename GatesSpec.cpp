@@ -45,3 +45,6 @@ bool GatesSpec::conductsIfNotWork() const {
 uint32_t GatesSpec::getRadius() const {
 	return Parameters::get()->getInt("gates_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(GatesSpec)

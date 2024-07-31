@@ -19,6 +19,7 @@
 
 #include "CastleTerritoryExpanderSpec.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 CastleTerritoryExpanderSpec::CastleTerritoryExpanderSpec() = default;
@@ -28,3 +29,6 @@ IBuildingSpec* CastleTerritoryExpanderSpec::clone() const {
 uint32_t CastleTerritoryExpanderSpec::getRadius() const {
 	return Parameters::get()->getInt("castle_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(CastleTerritoryExpanderSpec)

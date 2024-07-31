@@ -52,3 +52,6 @@ uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(const Building* build
 	}
 	return this->getActivePopulationLimit();
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(IPopulationLimitIncreaserSpec)

@@ -21,6 +21,7 @@
 #include "GatesSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Gates1::Gates1() = default;
@@ -58,3 +59,6 @@ std::string Gates1::getSoundName() const {
 std::wstring Gates1::getDescription() const {
     return *Locales::get()->get("gates1_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Gates1)

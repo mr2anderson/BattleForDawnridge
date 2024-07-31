@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "Events.hpp"
 #include "MapState.hpp"
 #include "BuildingHorizontalSelectionWindowComponent.hpp"
 #include "BuildingShortInfo.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -33,7 +35,6 @@ class Warrior;
 class IBuildingSpec {
 public:
     virtual ~IBuildingSpec();
-
 	virtual IBuildingSpec* clone() const = 0;
 
 	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);
@@ -52,4 +53,12 @@ public:
 	virtual bool isUltraHighObstacle(const Building *building, uint32_t playerId) const;
 	virtual bool isHighObstacle(const Building *building, uint32_t playerId) const;
 	virtual bool isLowObstacle(const Building *building, uint32_t playerId) const;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(IBuildingSpec)

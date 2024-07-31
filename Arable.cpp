@@ -58,3 +58,6 @@ std::wstring Arable::getDescription() const {
 uint32_t Arable::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("arable_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Arable)

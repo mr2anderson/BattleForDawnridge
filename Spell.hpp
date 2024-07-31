@@ -17,7 +17,8 @@
  */
 
 
-#include <optional>
+#include <boost/optional.hpp>
+#include <boost/serialization/base_object.hpp>
 #include "ISelectable.hpp"
 #include "Resources.hpp"
 
@@ -30,6 +31,7 @@ class Building;
 
 class Spell : public ISelectable {
 public:
+    Spell();
 	Spell(uint32_t playerId);
 	virtual Spell* clone() const = 0;
 
@@ -52,10 +54,20 @@ protected:
 	virtual std::string getSoundName() const = 0;
 	virtual Events changeMap(MapState* state, uint32_t centerX, uint32_t centerY) = 0;
 private:
-	std::optional<uint32_t> creationMovesLeft;
+	boost::optional<uint32_t> creationMovesLeft;
 	bool used;
 	uint32_t playerId;
 
 	Events unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) override;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->creationMovesLeft;
+        ar & this->used;
+        ar & this->playerId;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Spell)

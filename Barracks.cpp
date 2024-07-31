@@ -58,3 +58,6 @@ std::wstring Barracks::getDescription() const {
 uint32_t Barracks::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("barracks_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Barracks)

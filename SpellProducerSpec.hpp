@@ -36,4 +36,13 @@ public:
 	virtual std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const = 0;
 private:
 	Spell* spell;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+        ar & this->spell;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(SpellProducerSpec)

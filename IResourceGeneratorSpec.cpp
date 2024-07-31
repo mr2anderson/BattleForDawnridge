@@ -79,3 +79,6 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IResourceGeneratorSpec::
 
 	return { component };
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(IResourceGeneratorSpec)

@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "WarehouseIron.hpp"
 #include "WarehouseIronSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;
@@ -58,3 +60,6 @@ std::string WarehouseIron::getSoundName() const {
 std::wstring WarehouseIron::getDescription() const {
 	return *Locales::get()->get("warehouse_iron_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseIron)

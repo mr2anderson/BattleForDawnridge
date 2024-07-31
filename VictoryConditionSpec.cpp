@@ -17,6 +17,7 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "VictoryConditionSpec.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "Locales.hpp"
@@ -26,6 +27,7 @@
 #include "ImageFlyingE.hpp"
 #include "CreateEEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
+#include "ArchiveType.hpp"
 
 
 VictoryConditionSpec::VictoryConditionSpec() {
@@ -76,3 +78,6 @@ bool VictoryConditionSpec::isVictoryCondition() const {
 void VictoryConditionSpec::increaseMoveCtr() {
     this->moveCtr = this->moveCtr + 1;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(VictoryConditionSpec)

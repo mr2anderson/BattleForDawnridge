@@ -57,3 +57,6 @@ std::wstring SpellFactory::getDescription() const {
 uint32_t SpellFactory::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("spell_factory_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(SpellFactory)

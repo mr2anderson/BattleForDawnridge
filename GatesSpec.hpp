@@ -32,4 +32,12 @@ public:
     bool warriorCanStay(const Building *building, const Warrior *w) const override;
 	bool conductsIfNotWork() const override;
 	uint32_t getRadius() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<TerritoryConductorSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(GatesSpec)

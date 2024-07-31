@@ -34,3 +34,6 @@ sf::Color TerritoryOriginSpec::getHighlightColor(uint32_t playerId) const {
 uint8_t TerritoryOriginSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(TerritoryOriginSpec)

@@ -29,4 +29,12 @@ public:
 	IBuildingSpec* clone() const override;
 
 	Resources getActiveLimit() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IWarehouseSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WarehouseGoldWarehouseSpec)

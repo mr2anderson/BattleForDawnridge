@@ -32,4 +32,13 @@ struct Trade {
 
 	Resource sell, buy;
 	uint32_t movesLeft;
+
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->sell;
+        ar & this->buy;
+        ar & this->movesLeft;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Trade)

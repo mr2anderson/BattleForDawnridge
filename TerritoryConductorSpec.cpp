@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "TerritoryConductorSpec.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "HighlightColors.hpp"
+#include "ArchiveType.hpp"
 
 
 TerritoryConductorSpec::TerritoryConductorSpec() = default;
@@ -69,3 +71,6 @@ sf::Color TerritoryConductorSpec::getHighlightColor(uint32_t playerId) const {
 uint8_t TerritoryConductorSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(TerritoryConductorSpec)

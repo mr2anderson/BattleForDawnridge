@@ -28,4 +28,12 @@ public:
 	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	virtual Resource getProduct() const = 0;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(IResourceGeneratorSpec)

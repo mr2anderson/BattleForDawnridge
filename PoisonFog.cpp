@@ -66,3 +66,6 @@ Events PoisonFog::getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerI
 
 	return events;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(PoisonFog)

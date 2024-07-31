@@ -19,6 +19,7 @@
 
 #include "Resource.hpp"
 #include "Locales.hpp"
+#include "ArchiveType.hpp"
 
 
 Resource::Resource() = default;
@@ -37,3 +38,6 @@ std::wstring Resource::getReadableInfo() const {
 
 	return result;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Resource)

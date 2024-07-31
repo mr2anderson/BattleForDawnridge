@@ -18,9 +18,9 @@
 
 
 #include <queue>
-#include "Map.hpp"
 #include "CloseMenuEvent.hpp"
 #include "StartGameEvent.hpp"
+#include "LoadGameEvent.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
 #include "PlaySoundEvent.hpp"
@@ -39,14 +39,19 @@ public:
 		return Menu::singletone;
 	}
 
-	std::shared_ptr<Map> run(sf::RenderWindow& window);
+    std::tuple<uint8_t, std::string> run(sf::RenderWindow& window);
+
+    enum TYPE {
+        START_LOCAL_GAME,
+        LOAD_LOCAL_GAME
+    };
 private:
 	Menu() = default;
 	Menu(const Menu& copy) = delete;
 	static Menu* singletone;
 
     bool closeMenu;
-	std::string startGameMap;
+	std::tuple<uint8_t, std::string> response;
     uint32_t windowW, windowH;
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
@@ -66,5 +71,6 @@ private:
     void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
     void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
+    void handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

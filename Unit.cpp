@@ -17,12 +17,14 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "Unit.hpp"
+#include "ArchiveType.hpp"
 
 
 
 Unit::Unit() = default;
-Unit::Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId) :
+Unit::Unit(uint32_t x, uint32_t y, boost::optional<uint32_t> currentHp, uint32_t playerId) :
 	HPGO(x, y, currentHp) {
 	this->playerId = playerId;
 }
@@ -50,3 +52,6 @@ void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) 
     ptr->setSide(this->getPlayerId());
 	target.draw(*ptr, states);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Unit)

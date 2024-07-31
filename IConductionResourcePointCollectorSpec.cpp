@@ -26,6 +26,7 @@
 #include "AddResourceEvent.hpp"
 #include "Locales.hpp"
 #include "SubHpEvent.hpp"
+#include "ArchiveType.hpp"
 
 
 Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Building* building, MapState* state) {
@@ -111,3 +112,6 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 
 	return { component };
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(IConductionResourcePointCollectorSpec)

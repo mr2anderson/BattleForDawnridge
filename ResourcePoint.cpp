@@ -17,16 +17,18 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "ResourcePoint.hpp"
 #include "CreateEEvent.hpp"
 #include "Locales.hpp"
 #include "WarriorHPPointer.hpp"
 #include "Parameters.hpp"
 #include "Warrior.hpp"
+#include "ArchiveType.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;
-ResourcePoint::ResourcePoint(uint32_t x, uint32_t y) : HPGO(x, y, std::nullopt) {}
+ResourcePoint::ResourcePoint(uint32_t x, uint32_t y) : HPGO(x, y, boost::none) {}
 Events ResourcePoint::newMove(MapState *state, uint32_t playerId) {
 	return Events();
 }
@@ -71,3 +73,6 @@ HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() con
 	};
 	return component;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(ResourcePoint)

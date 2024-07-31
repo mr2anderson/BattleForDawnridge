@@ -22,6 +22,7 @@
 #include "QuarrySpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Quarry::Quarry() = default;
@@ -59,3 +60,6 @@ std::string Quarry::getSoundName() const {
 std::wstring Quarry::getDescription() const {
 	return *Locales::get()->get("quarry_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Quarry)

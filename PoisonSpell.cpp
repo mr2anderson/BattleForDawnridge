@@ -27,6 +27,7 @@
 #include "Parameters.hpp"
 
 
+PoisonSpell::PoisonSpell() = default;
 PoisonSpell::PoisonSpell(uint32_t playerId) : Spell(playerId) {
 
 }
@@ -97,3 +98,6 @@ Events PoisonSpell::changeMap(MapState* state, uint32_t centerX, uint32_t center
 
 	return events;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(PoisonSpell)

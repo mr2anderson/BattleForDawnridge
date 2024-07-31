@@ -17,9 +17,8 @@
  */
 
 
-#include <array>
-#include <optional>
 #include "Resources.hpp"
+#include "ArchiveType.hpp"
 
 
 Resources::Resources() = default;
@@ -96,3 +95,6 @@ bool operator >=(const Resources& a, const Resources& b) {
 	}
 	return true;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Resources)

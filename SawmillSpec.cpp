@@ -34,3 +34,6 @@ uint32_t SawmillSpec::getCollectionSpeed() const {
 uint32_t SawmillSpec::getCollectionRadius() const {
 	return Parameters::get()->getInt("sawmill_collection_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(SawmillSpec)

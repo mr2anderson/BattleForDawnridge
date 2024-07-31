@@ -32,7 +32,7 @@
 class Unit : public HPGO {
 public:
 	Unit();
-	Unit(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp, uint32_t playerId);
+	Unit(uint32_t x, uint32_t y, boost::optional<uint32_t> currentHp, uint32_t playerId);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -50,4 +50,13 @@ private:
 	uint32_t playerId;
 
 	void drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<HPGO>(*this);
+        ar & this->playerId;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Unit)

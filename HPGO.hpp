@@ -17,7 +17,8 @@
  */
 
 
-#include <optional>
+#include <boost/optional.hpp>
+#include <boost/serialization/optional.hpp>
 #include "GO.hpp"
 
 
@@ -27,7 +28,7 @@
 class HPGO : public GO {
 public:
 	HPGO();
-	HPGO(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp);
+	HPGO(uint32_t x, uint32_t y, boost::optional<uint32_t> currentHp);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -38,5 +39,14 @@ public:
 	bool exist() const override;
     virtual uint32_t getMaxHP() const = 0;
 private:
-	std::optional<uint32_t> currentHp;
+	boost::optional<uint32_t> currentHp;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<GO>(*this);
+        ar & this->currentHp;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(HPGO)

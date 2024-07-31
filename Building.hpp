@@ -17,6 +17,7 @@
  */
 
 
+#include <boost/serialization/vector.hpp>
 #include "Unit.hpp"
 #include "Fire.hpp"
 #include "IBuildingSpec.hpp"
@@ -30,7 +31,7 @@ public:
 	Building();
 	Building(uint32_t x, uint32_t y, uint32_t playerId);
 	Building(const Building& building);
-	~Building();
+	~Building() override;
 	virtual Building* createSameTypeBuilding() const = 0;
 
 	Events getHighlightEvent(MapState *state, uint8_t type) const;
@@ -54,7 +55,6 @@ protected:
 private:
     bool _wasWithFullHP;
 	uint32_t burningMovesLeft;
-	Fire fire;
 	std::vector<IBuildingSpec*> specs;
 
 	bool isUltraHighObstacle(uint32_t playerId) const override;
@@ -73,4 +73,15 @@ private:
 	bool warriorCanStay(const Warrior *w) const override;
 	uint32_t getWarriorMovementCost(const Warrior *w) const override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive & ar, const unsigned int version) {
+        ar & boost::serialization::base_object<Unit>(*this);
+        ar & this->_wasWithFullHP;
+        ar & this->burningMovesLeft;
+        ar & this->specs;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Building)

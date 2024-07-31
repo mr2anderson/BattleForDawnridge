@@ -22,6 +22,7 @@
 #include "MineSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Mine::Mine() = default;
@@ -59,3 +60,6 @@ std::string Mine::getSoundName() const {
 std::wstring Mine::getDescription() const {
 	return *Locales::get()->get("mine_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Mine)

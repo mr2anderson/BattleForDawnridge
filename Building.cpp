@@ -35,6 +35,7 @@
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
 #include "AreaControllerSpec.hpp"
+#include "ArchiveType.hpp"
 
 
 Building::Building() = default;
@@ -169,7 +170,6 @@ void Building::decreaseBurningMovesLeft() {
 	this->burningMovesLeft = this->burningMovesLeft - 1;
 }
 void Building::setFire() {
-	this->fire = Fire(this->getX(), this->getY(), this->getSX(), this->getSY());
 	this->burningMovesLeft = Parameters::get()->getInt("fire_lifetime");
 }
 void Building::addSpec(IBuildingSpec* spec) {
@@ -275,7 +275,7 @@ void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Unit::draw(target, states);
 	if (this->exist()) {
         if (this->burningMovesLeft > 0) {
-            target.draw(fire, states);
+            target.draw(Fire(this->getX(), this->getY(), this->getSX(), this->getSY()), states);
         }
 		this->drawShortInfos(target, states);
 	}
@@ -416,3 +416,6 @@ sf::Color Building::getTextureColor() const {
 std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Building)

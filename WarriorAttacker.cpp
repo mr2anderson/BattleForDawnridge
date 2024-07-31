@@ -157,3 +157,6 @@ Events WarriorAttacker::processCurrentAnimation(MapState *state) {
 
     return events;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorAttacker)

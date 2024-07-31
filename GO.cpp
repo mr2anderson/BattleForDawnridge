@@ -22,6 +22,7 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
+#include "ArchiveType.hpp"
 
 
 GO::GO() = default;
@@ -150,3 +151,6 @@ void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sprite.setColor(this->getTextureColor());
 	target.draw(sprite, states);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(GO)

@@ -81,3 +81,6 @@ uint32_t Valkyr::getMovementPoints() const {
 uint32_t Valkyr::getPopulation() const {
     return Parameters::get()->getInt("valkyr_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Valkyr)

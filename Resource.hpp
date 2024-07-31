@@ -19,6 +19,7 @@
 
 #include <string>
 #include <cstdint>
+#include <boost/serialization/export.hpp>
 
 
 #pragma once
@@ -32,4 +33,12 @@ struct Resource {
 
 	std::string type;
 	uint32_t n;
+
+    template<class Archive> void serialize(Archive & ar, const unsigned int version) {
+        ar & this->type;
+        ar & this->n;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Resource)

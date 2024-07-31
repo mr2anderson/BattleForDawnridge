@@ -17,8 +17,11 @@
  */
 
 
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/base_object.hpp>
 #include "HorizontalSelectionWindow.hpp"
 #include "MapState.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -78,4 +81,13 @@ private:
 	uint32_t x, y;
 
 	void drawTexture(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->x;
+        ar & this->y;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(GO)

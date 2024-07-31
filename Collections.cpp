@@ -18,28 +18,35 @@
 
 
 #include "Collections.hpp"
+#include "GO.hpp"
+#include "Effect.hpp"
+#include "ResourcePoint.hpp"
+#include "Unit.hpp"
+#include "Building.hpp"
+#include "Warrior.hpp"
 
 
 Collections::Collections() = default;
 
 
-void Collections::addToGOs(GO* go) {
-	this->gos.push(go);
-}
-void Collections::addToEffects(Effect* effect) {
-	this->effects.push(effect);
-}
-void Collections::addToRPs(ResourcePoint* rp) {
-	this->rps.push(rp);
-}
-void Collections::addToUnits(Unit *u) {
-    this->units.push(u);
-}
-void Collections::addToBuildings(Building* b) {
-	this->buildings.push(b);
-}
-void Collections::addToWarriors(Warrior* w) {
-	this->warriors.push(w);
+void Collections::add(GO *object) {
+    this->gos.push(object);
+
+    if (Effect* effect = dynamic_cast<Effect*>(object)) {
+        this->effects.push(effect);
+    }
+    if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
+        this->rps.push(rp);
+    }
+    if (Unit* u = dynamic_cast<Unit*>(object)) {
+        this->units.push(u);
+    }
+    if (Building* b = dynamic_cast<Building*>(object)) {
+        this->buildings.push(b);
+    }
+    if (Warrior* w = dynamic_cast<Warrior*>(object)) {
+        this->warriors.push(w);
+    }
 }
 
 
@@ -86,3 +93,31 @@ Warrior* Collections::getWarrior(uint32_t i) {
 const GO* Collections::getGO(uint32_t i) const {
 	return this->gos.at(i);
 }
+
+
+template<class Archive> void Collections::serialize(Archive &ar, const unsigned int version) {
+    ar & this->gos.data;
+    ar & this->gos.dataIndexed;
+
+    ar & this->effects.data;
+    ar & this->effects.dataIndexed;
+
+    ar & this->rps.data;
+    ar & this->rps.dataIndexed;
+
+    ar & this->units.data;
+    ar & this->units.dataIndexed;
+
+    ar & this->buildings.data;
+    ar & this->buildings.dataIndexed;
+
+    ar & this->warriors.data;
+    ar & this->warriors.dataIndexed;
+}
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Collections)
+
+
+template void Collections::serialize(iarchive &ar, const unsigned int version);
+template void Collections::serialize(oarchive &ar, const unsigned int version);

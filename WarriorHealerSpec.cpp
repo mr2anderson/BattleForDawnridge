@@ -94,3 +94,6 @@ uint8_t WarriorHealerSpec::getHighlightType() const {
 bool WarriorHealerSpec::healVehicles() const {
     return false;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorHealerSpec)

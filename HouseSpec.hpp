@@ -26,7 +26,15 @@
 class HouseSpec : public IPopulationLimitIncreaserSpec {
 public:
 	HouseSpec();
-	IBuildingSpec* clone() const;
+	IBuildingSpec* clone() const override;
 
 	uint32_t getActivePopulationLimit() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IPopulationLimitIncreaserSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(HouseSpec)

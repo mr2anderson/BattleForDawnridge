@@ -60,3 +60,6 @@ std::wstring Infirmary::getDescription() const {
 uint32_t Infirmary::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("infirmary_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Infirmary)

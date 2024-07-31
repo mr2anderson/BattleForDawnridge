@@ -38,3 +38,6 @@ std::string WorkshopWarriorProducerSpec::getProducingIconName() const {
 std::string WorkshopWarriorProducerSpec::getWaitingIconName() const {
     return "gear_icon";
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WorkshopWarriorProducerSpec)

@@ -31,4 +31,12 @@ public:
     std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) override;
     std::string getProducingIconName() const override;
     std::string getWaitingIconName() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<WarriorProducerSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(InfirmaryWarriorProducerSpec)

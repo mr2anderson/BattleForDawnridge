@@ -19,6 +19,7 @@
 
 #include "Trade.hpp"
 #include "Locales.hpp"
+#include "ArchiveType.hpp"
 
 
 Trade::Trade() {
@@ -38,3 +39,6 @@ std::wstring Trade::getReadableInfo() const {
 	}
 	return result;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Trade)

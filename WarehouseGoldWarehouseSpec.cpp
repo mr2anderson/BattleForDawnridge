@@ -28,3 +28,6 @@ IBuildingSpec* WarehouseGoldWarehouseSpec::clone() const {
 Resources WarehouseGoldWarehouseSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_gold_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseGoldWarehouseSpec)

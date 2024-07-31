@@ -22,8 +22,8 @@
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
-#include "Mountains.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Mountains::Mountains() = default;
@@ -76,3 +76,6 @@ Events Mountains::getResponse(MapState *state, uint32_t playerId, uint32_t butto
 
 	return event;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Mountains)

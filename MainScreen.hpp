@@ -73,6 +73,7 @@
 #include "WipeHealingAbilityEvent.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
+#include "SaveGameEvent.hpp"
 
 
 #pragma once
@@ -87,7 +88,8 @@ public:
 		return MainScreen::singletone;
 	}
 
-	bool run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window);
+	bool startLocalGame(const std::string &mapName, sf::RenderWindow& window);
+    bool loadLocalGame(const std::string &saveName, sf::RenderWindow& window);
 private:
 	MainScreen() = default;
 	MainScreen(const MainScreen& copy) = delete;
@@ -107,19 +109,24 @@ private:
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
 	ISelectable* selected;
-
     bool returnToMenu;
 	bool curcorVisibility;
 	uint32_t windowW, windowH;
 	std::shared_ptr<sf::View> view;
     std::vector<Button> buttons;
 
-	void init(std::shared_ptr<Map> mapPtr, sf::RenderWindow &window);
+
+    bool gameCycle(sf::RenderWindow &window);
+
+	void initFromMap(const std::string &mapName, sf::RenderWindow &window);
+    void initFromSave(const std::string &saveName, sf::RenderWindow &window);
+
+    void save();
+
 	void initMap(std::shared_ptr<Map> mapPtr);
 	void initPlayerIsActiveTable();
 	void initCurrentPlayerId();
 	void initMoveCtr();
-	void initSelectable();
 	void initGraphics(sf::RenderWindow &window);
 
 
@@ -213,4 +220,5 @@ private:
     void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e);
     void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e);
     void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e);
+    void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e);
 };

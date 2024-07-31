@@ -28,3 +28,6 @@ IBuildingSpec* WarehouseCrystalSpec::clone() const {
 Resources WarehouseCrystalSpec::getActiveLimit() const {
     return Parameters::get()->getResources("warehouse_crystal_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseCrystalSpec)

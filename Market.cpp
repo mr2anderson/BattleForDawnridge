@@ -21,6 +21,7 @@
 #include "MarketSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Market::Market() = default;
@@ -58,3 +59,6 @@ std::wstring Market::getDescription() const {
 uint32_t Market::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("market_regeneration_speed");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Market)

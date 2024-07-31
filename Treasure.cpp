@@ -58,3 +58,6 @@ std::string Treasure::getTextureName() const {
 std::wstring Treasure::getDescription() const {
 	return *Locales::get()->get("treasure_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Treasure)

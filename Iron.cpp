@@ -20,6 +20,7 @@
 #include "Iron.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Iron::Iron() = default;
@@ -47,3 +48,6 @@ std::string Iron::getSoundName() const {
 std::wstring Iron::getDescription() const {
 	return *Locales::get()->get("iron_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Iron)

@@ -68,3 +68,6 @@ std::string Well::getSoundName() const {
 std::wstring Well::getDescription() const {
     return *Locales::get()->get("well_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Well)

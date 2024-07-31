@@ -19,6 +19,7 @@
 
 #include "CastleWoodGeneratorSpec.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 CastleWoodGeneratorSpec::CastleWoodGeneratorSpec() = default;
@@ -28,3 +29,6 @@ IBuildingSpec* CastleWoodGeneratorSpec::clone() const {
 Resource CastleWoodGeneratorSpec::getProduct() const {
 	return Parameters::get()->getResource("castle_product");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(CastleWoodGeneratorSpec)

@@ -34,3 +34,6 @@ uint32_t WellSpec::getCollectionSpeed() const {
 uint32_t WellSpec::getCollectionRadius() const {
     return Parameters::get()->getInt("well_collection_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WellSpec)

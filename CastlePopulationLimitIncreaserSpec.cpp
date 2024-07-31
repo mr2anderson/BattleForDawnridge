@@ -19,6 +19,7 @@
 
 #include "CastlePopulationLimitIncreaserSpec.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 CastlePopulationLimitIncreaserSpec::CastlePopulationLimitIncreaserSpec() = default;
@@ -28,3 +29,6 @@ IBuildingSpec* CastlePopulationLimitIncreaserSpec::clone() const {
 uint32_t CastlePopulationLimitIncreaserSpec::getActivePopulationLimit() const {
 	return Parameters::get()->getInt("castle_population_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(CastlePopulationLimitIncreaserSpec)

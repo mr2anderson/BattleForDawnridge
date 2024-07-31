@@ -44,3 +44,6 @@ std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearAttacker::canAttack(Unit 
 std::vector<std::string> WarriorNearAttacker::getAttackPossibleDirections() const {
     return {"n", "s", "w", "e"};
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorNearAttacker)

@@ -23,6 +23,7 @@
 #include "Knight.hpp"
 #include "Valkyr.hpp"
 #include "BlackKnight.hpp"
+#include "ArchiveType.hpp"
 
 
 BarracksSpec::BarracksSpec() = default;
@@ -46,3 +47,6 @@ std::string BarracksSpec::getProducingIconName() const {
 std::string BarracksSpec::getWaitingIconName() const {
     return "infantryman_icon";
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(BarracksSpec)

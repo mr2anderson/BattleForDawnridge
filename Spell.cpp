@@ -35,8 +35,9 @@
 #include "MarkSpellAsUsedEvent.hpp"
 
 
+Spell::Spell() = default;
 Spell::Spell(uint32_t playerId) {
-	this->creationMovesLeft = std::nullopt;
+	this->creationMovesLeft = boost::none;
 	this->used = false;
 	this->playerId = playerId;
 }
@@ -113,3 +114,6 @@ std::shared_ptr<sf::Drawable> Spell::getSelectablePointer(uint32_t mouseX, uint3
 
 	return preview;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Spell)

@@ -24,6 +24,7 @@
 #include "Parameters.hpp"
 
 
+RageSpell::RageSpell() = default;
 RageSpell::RageSpell(uint32_t playerId) : Spell(playerId) {
 
 }
@@ -69,3 +70,6 @@ Events RageSpell::changeMap(MapState* state, uint32_t centerX, uint32_t centerY)
 
 	return events;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(RageSpell)

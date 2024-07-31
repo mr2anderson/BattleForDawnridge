@@ -20,6 +20,7 @@
 #include "Infantryman.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Infantryman::Infantryman() = default;
@@ -81,3 +82,6 @@ uint32_t Infantryman::getMovementPoints() const {
 uint32_t Infantryman::getPopulation() const {
 	return Parameters::get()->getInt("infantryman_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Infantryman)

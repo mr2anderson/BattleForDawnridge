@@ -17,11 +17,13 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "WarehouseGold.hpp"
 #include "WarehouseGoldWarehouseSpec.hpp"
 #include "WarehouseGoldCollectorSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
@@ -60,3 +62,6 @@ std::string WarehouseGold::getSoundName() const {
 std::wstring WarehouseGold::getDescription() const {
 	return *Locales::get()->get("warehouse_gold_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseGold)

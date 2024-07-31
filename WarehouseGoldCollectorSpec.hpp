@@ -30,4 +30,12 @@ public:
 
 	uint32_t getCollectionSpeed() const override;
 	std::string getResourceType() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IConductionResourcePointCollectorSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WarehouseGoldCollectorSpec)

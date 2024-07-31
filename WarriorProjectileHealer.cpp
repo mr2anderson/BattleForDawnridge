@@ -43,3 +43,6 @@ Events WarriorProjectileHealer::heal(Warrior *w) {
 
     return events;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorProjectileHealer)

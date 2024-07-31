@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "WarehouseWood.hpp"
 #include "WarehouseWoodSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;
@@ -58,3 +60,6 @@ std::string WarehouseWood::getSoundName() const {
 std::wstring WarehouseWood::getDescription() const {
 	return *Locales::get()->get("warehouse_wood_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseWood)

@@ -122,3 +122,6 @@ std::wstring WarriorHealer::getSpecialInfoString() const {
 
     return str;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorHealer)

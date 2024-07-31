@@ -28,3 +28,6 @@ IBuildingSpec* WarehouseIronSpec::clone() const {
 Resources WarehouseIronSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_iron_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseIronSpec)

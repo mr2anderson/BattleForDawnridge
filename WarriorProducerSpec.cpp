@@ -33,6 +33,7 @@
 #include "SubResourcesEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
 #include "HighlightColors.hpp"
+#include "ArchiveType.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -252,3 +253,6 @@ std::tuple<uint32_t, uint32_t> WarriorProducerSpec::getNewWarriorPosition(uint32
 	}
 	throw CouldntFindNewWarriorPosition();
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorProducerSpec)

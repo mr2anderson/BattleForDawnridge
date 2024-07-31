@@ -74,3 +74,6 @@ Resources IWarehouseSpec::getLimit(const Building *building) const {
     }
     return {};
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(IWarehouseSpec)

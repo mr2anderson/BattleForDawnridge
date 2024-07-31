@@ -38,3 +38,6 @@ uint32_t CastleShootingSpec::getShootingRadius() const {
 std::shared_ptr<Projectile> CastleShootingSpec::getProjectile() const {
     return std::make_shared<BigArrow>();
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(CastleShootingSpec)

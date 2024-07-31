@@ -31,3 +31,6 @@ bool RoadSpec::conductsIfNotWork() const {
 uint32_t RoadSpec::getRadius() const {
 	return Parameters::get()->getInt("road_radius");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(RoadSpec)

@@ -22,6 +22,7 @@
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Forest::Forest() = default;
@@ -52,3 +53,6 @@ sf::IntRect Forest::getTextureRect() const {
 std::wstring Forest::getDescription() const {
 	return *Locales::get()->get("forest_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Forest)

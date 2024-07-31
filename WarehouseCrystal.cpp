@@ -58,3 +58,6 @@ std::string WarehouseCrystal::getSoundName() const {
 std::wstring WarehouseCrystal::getDescription() const {
     return *Locales::get()->get("warehouse_crystal_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseCrystal)

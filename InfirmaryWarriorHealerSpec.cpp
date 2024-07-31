@@ -32,3 +32,6 @@ uint32_t InfirmaryWarriorHealerSpec::getHealingSpeed() const {
 std::string InfirmaryWarriorHealerSpec::getHealTextureName() const {
     return "christianity";
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(InfirmaryWarriorHealerSpec)

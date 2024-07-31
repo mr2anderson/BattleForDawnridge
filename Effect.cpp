@@ -21,10 +21,11 @@
 #include "Locales.hpp"
 #include "SubHpEvent.hpp"
 #include "CreateEEvent.hpp"
+#include "ArchiveType.hpp"
 
 
 Effect::Effect() = default;
-Effect::Effect(uint32_t x, uint32_t y, uint32_t playerId) : HPGO(x, y, std::nullopt) {
+Effect::Effect(uint32_t x, uint32_t y, uint32_t playerId) : HPGO(x, y, boost::none) {
 	this->playerId = playerId;
 }
 uint32_t Effect::getSX() const { // Config file is not used cuz engine supports only (1, 1) effects
@@ -90,3 +91,6 @@ HorizontalSelectionWindowComponent Effect::getEffectComponent() const {
 		this->getTextureRect()
 	};
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Effect)

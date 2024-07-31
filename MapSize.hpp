@@ -18,6 +18,9 @@
 
 
 #include <cstdint>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/access.hpp>
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -34,4 +37,13 @@ public:
 	uint32_t getHeight() const;
 private:
 	uint32_t width, height;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->width;
+        ar & this->height;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(MapSize)

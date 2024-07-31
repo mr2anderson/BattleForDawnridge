@@ -20,6 +20,7 @@
 #include "Knight.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 Knight::Knight() = default;
@@ -81,3 +82,6 @@ uint32_t Knight::getMovementPoints() const {
 uint32_t Knight::getPopulation() const {
 	return Parameters::get()->getInt("knight_population");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Knight)

@@ -20,7 +20,6 @@
 #include "IBuildingSpec.hpp"
 
 
-
 IBuildingSpec::~IBuildingSpec() = default;
 Events IBuildingSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
 	return Events();
@@ -70,3 +69,6 @@ bool IBuildingSpec::isHighObstacle(const Building *building, uint32_t playerId) 
 bool IBuildingSpec::isLowObstacle(const Building *building, uint32_t playerId) const {
 	return false;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(IBuildingSpec)

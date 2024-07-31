@@ -36,13 +36,20 @@ void Game::run() {
 		return;
 	}
 	for (; ;) {
-        std::shared_ptr<Map> map = Menu::get()->run(this->window);
-		if (map == nullptr) {
+        std::tuple<uint8_t, std::string> response = Menu::get()->run(this->window);
+		if (std::get<1>(response).empty()) {
             return;
         }
-		if (!MainScreen::get()->run(map, this->window)) {
-			return;
-		}
+        if (std::get<0>(response) == Menu::TYPE::START_LOCAL_GAME) {
+            if (!MainScreen::get()->startLocalGame(std::get<1>(response), this->window)) {
+                return;
+            }
+        }
+        else if (std::get<0>(response) == Menu::TYPE::LOAD_LOCAL_GAME) {
+            if (!MainScreen::get()->loadLocalGame(std::get<1>(response), this->window)) {
+                return;
+            }
+        }
 	}
 }
 void Game::initWindow() {

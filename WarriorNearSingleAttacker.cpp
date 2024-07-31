@@ -74,3 +74,6 @@ std::wstring WarriorNearSingleAttacker::getSpecialInfoString() const {
 
     return str;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarriorNearSingleAttacker)

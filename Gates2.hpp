@@ -37,6 +37,13 @@ public:
     std::string getTextureName() const override;
     std::string getSoundName() const override;
     std::wstring getDescription() const override;
-private:
     uint32_t getRegenerationSpeed() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<Building>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Gates2)

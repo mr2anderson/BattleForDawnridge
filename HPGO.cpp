@@ -18,10 +18,11 @@
 
 
 #include "HPGO.hpp"
+#include "ArchiveType.hpp"
 
 
 HPGO::HPGO() = default;
-HPGO::HPGO(uint32_t x, uint32_t y, std::optional<uint32_t> currentHp) :
+HPGO::HPGO(uint32_t x, uint32_t y, boost::optional<uint32_t> currentHp) :
 	GO(x, y) {
 	this->currentHp = currentHp;
 }
@@ -48,3 +49,6 @@ void HPGO::setMaxHp() {
 bool HPGO::exist() const {
 	return (this->getHP() != 0);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(HPGO)

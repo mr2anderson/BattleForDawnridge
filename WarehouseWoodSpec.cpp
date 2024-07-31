@@ -29,3 +29,6 @@ IBuildingSpec* WarehouseWoodSpec::clone() const {
 Resources WarehouseWoodSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_wood_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseWoodSpec)

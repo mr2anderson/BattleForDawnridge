@@ -17,10 +17,12 @@
  */
 
 
+#include <boost/serialization/base_object.hpp>
 #include "WarehouseFood.hpp"
 #include "WarehouseFoodSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 WarehouseFood::WarehouseFood() = default;
@@ -58,3 +60,6 @@ std::string WarehouseFood::getSoundName() const {
 std::wstring WarehouseFood::getDescription() const {
 	return *Locales::get()->get("warehouse_food_description");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseFood)

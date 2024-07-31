@@ -46,4 +46,12 @@ private:
     std::string getBaseTextureName() const override;
     uint32_t getMovementPoints() const override;
     uint32_t getPopulation() const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<WarriorProjectileHealer>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Healer)

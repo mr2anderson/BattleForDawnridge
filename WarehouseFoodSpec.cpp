@@ -19,6 +19,7 @@
 
 #include "WarehouseFoodSpec.hpp"
 #include "Parameters.hpp"
+#include "ArchiveType.hpp"
 
 
 
@@ -29,3 +30,6 @@ IBuildingSpec* WarehouseFoodSpec::clone() const {
 Resources WarehouseFoodSpec::getActiveLimit() const {
 	return Parameters::get()->getResources("warehouse_food_limit");
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WarehouseFoodSpec)

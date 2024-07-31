@@ -37,3 +37,6 @@ Players* MapState::getPlayersPtr() {
 const Collections* MapState::getCollectionsPtr() const {
 	return &this->collections;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(MapState)

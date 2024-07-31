@@ -21,8 +21,6 @@
 
 
 MapSize::MapSize() = default;
-
-
 void MapSize::setWidth(uint32_t newWidth) {
 	this->width = newWidth;
 }
@@ -35,3 +33,6 @@ uint32_t MapSize::getWidth() const {
 uint32_t MapSize::getHeight() const {
 	return this->height;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(MapSize)

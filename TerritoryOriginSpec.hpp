@@ -31,4 +31,12 @@ public:
 	bool isOrigin() const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(TerritoryOriginSpec)

@@ -122,3 +122,6 @@ bool ShootingSpec::ignoreLowObstacles() const {
 bool ShootingSpec::ignoreHighObstacles() const {
     return true;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(ShootingSpec)

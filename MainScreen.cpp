@@ -22,6 +22,11 @@
 
 
 
+#include <fstream>
+#include <filesystem>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 #include "MainScreen.hpp"
 #include "WindowTwoButtons.hpp"
 #include "ResourceBar.hpp"
@@ -68,6 +73,9 @@
 #include "WarriorHealer.hpp"
 #include "Workshop.hpp"
 #include "VictoryConditionSpec.hpp"
+#include "ArchiveType.hpp"
+#include "Root.hpp"
+#include "Maps.hpp"
 
 
 
@@ -82,12 +90,26 @@ MainScreen* MainScreen::singletone = nullptr;
 
 
 
-bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
-    this->init(mapPtr, window);
-	sf::Event event{};
-	for (; ;) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::MouseButtonPressed) {
+bool MainScreen::startLocalGame(const std::string &mapName, sf::RenderWindow& window) {
+    this->initFromMap(mapName, window);
+	return this->gameCycle(window);
+}
+bool MainScreen::loadLocalGame(const std::string &saveName, sf::RenderWindow &window) {
+    this->initFromSave(saveName, window);
+    return this->gameCycle(window);
+}
+
+
+
+
+
+
+
+bool MainScreen::gameCycle(sf::RenderWindow &window) {
+    sf::Event event{};
+    for (; ;) {
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::MouseButtonPressed) {
                 if (!this->animation.has_value() and this->viewMovingQueue.empty()) {
                     if (this->element == nullptr) {
                         if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
@@ -115,31 +137,31 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
                         }
                     }
                 }
-			}
-		}
-		this->drawEverything(window);
+            }
+        }
+        this->drawEverything(window);
         for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
             this->map->getStatePtr()->getCollectionsPtr()->getGO(i)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
         }
-		Playlist::get()->update();
-		this->removeFinishedElement();
+        Playlist::get()->update();
+        this->removeFinishedElement();
         this->addNewMoveEvent();
         this->processBaseEvents();
-		if (this->element != nullptr) {
-			this->element->update();
-		}
+        if (this->element != nullptr) {
+            this->element->update();
+        }
         if (this->animation.has_value()) {
             Events animationEvent;
             animationEvent = this->animation.value().process(this->map->getStatePtr());
             this->addEvents(animationEvent);
         }
-		this->moveView();
+        this->moveView();
         if (this->returnToMenu) {
-			this->prepareToReturnToMenu(window);
+            this->prepareToReturnToMenu(window);
             return true;
         }
-		window.setMouseCursorVisible(this->curcorVisibility);
-	}
+        window.setMouseCursorVisible(this->curcorVisibility);
+    }
 }
 
 
@@ -150,16 +172,52 @@ bool MainScreen::run(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
 
 
 
-
-void MainScreen::init(std::shared_ptr<Map> mapPtr, sf::RenderWindow& window) {
-    this->initMap(mapPtr);
+void MainScreen::initFromMap(const std::string &mapName, sf::RenderWindow& window) {
+    this->initMap(Maps::get()->load(mapName));
 	this->initPlayerIsActiveTable();
     this->initCurrentPlayerId();
     this->initMoveCtr();
-	this->initSelectable();
     this->initGraphics(window);
 	this->changeMove();
 }
+void MainScreen::initFromSave(const std::string &saveName, sf::RenderWindow &window) {
+    std::ifstream ifs(USERDATA_ROOT + "/saves/" + saveName);
+    iarchive ia(ifs);
+    ia >> map;
+    ia >> playerIsActive;
+    ia >> currentPlayerId;
+    ia >> move;
+    this->initGraphics(window);
+}
+
+
+
+
+
+
+
+void MainScreen::save() {
+    if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
+        std::filesystem::create_directories(USERDATA_ROOT + "/saves");
+    }
+
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::stringstream ss;
+    ss << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+
+    std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save");
+    oarchive oa(ofs);
+    oa << map;
+    oa << playerIsActive;
+    oa << currentPlayerId;
+    oa << move;
+}
+
+
+
+
+
 void MainScreen::initMap(std::shared_ptr<Map> mapPtr) {
     this->map = mapPtr;
 }
@@ -171,9 +229,6 @@ void MainScreen::initCurrentPlayerId() {
 }
 void MainScreen::initMoveCtr() {
 	this->move = 0;
-}
-void MainScreen::initSelectable() {
-	this->selected = nullptr;
 }
 template<typename T> std::wstring GET_BUILD_DESCRIPTION() {
 	std::unique_ptr<T> t = std::make_unique<T>();
@@ -217,6 +272,13 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
 	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("confirm_return_to_menu"), *Locales::get()->get("yes"), *Locales::get()->get("no"), returnToMenuEvent, clickSoundEvent);
 	Events createConfirmReturnToMenuWindowEvent = clickSoundEvent;
 	createConfirmReturnToMenuWindowEvent.add(std::make_shared<CreateEEvent>(confirmReturnToMenuWindow));
+
+
+
+
+    Events saveGameEvent = clickSoundEvent;
+    saveGameEvent.add(std::make_shared<SaveGameEvent>());
+    saveGameEvent.add(std::make_shared<CreateEEvent>(std::make_shared<WindowButton>(*Locales::get()->get("game_saved"), *Locales::get()->get("OK"), clickSoundEvent)));
 
 
 
@@ -319,12 +381,14 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->curcorVisibility = true;
     this->element = nullptr;
+    this->selected = nullptr;
     this->animation = std::nullopt;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Locales::get()->get("new_move")), createConfirmEndMoveWindowEvent);
 	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 200, 40 + 10 + 30, "hammer_icon"), buildEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Locales::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Locales::get()->get("save_game")), saveGameEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 80, 200, 30, *Locales::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 }
 
 
@@ -813,6 +877,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
         this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent);
     }
+    else if (std::shared_ptr<SaveGameEvent> saveGameEvent = std::dynamic_pointer_cast<SaveGameEvent>(e)) {
+        this->handleSaveGameEvent(saveGameEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -839,7 +906,7 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCur
 }
 void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
 	Building* b = e->getBuilding();
-	this->map->add(b);
+	this->map->getStatePtr()->getCollectionsPtr()->add(b);
 }
 void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
     if (e->getSoundName().empty()) {
@@ -866,7 +933,7 @@ void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<De
 }
 void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e) {
 	e->getSpec()->stopProducing();
-	this->map->add(e->getWarrior()->cloneWarrior());
+	this->map->getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
 }
 void MainScreen::handleSelectEvent(std::shared_ptr<SelectEvent> e) {
 	this->selected = e->getSelectable();
@@ -964,7 +1031,7 @@ void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRa
 	e->getWarrior()->decreaseRageModeMovesLeft();
 }
 void MainScreen::handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e) {
-	this->map->add(e->getEffect());
+	this->map->getStatePtr()->getCollectionsPtr()->add(e->getEffect());
 }
 void MainScreen::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e) {
     e->getI()->refreshAbility();
@@ -1016,4 +1083,7 @@ void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsIna
 }
 void MainScreen::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e) {
     e->getSpec()->increaseMoveCtr();
+}
+void MainScreen::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e) {
+    this->save();
 }

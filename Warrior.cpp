@@ -30,7 +30,6 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "WarriorPlayerPointer.hpp"
-#include "BuildingStatePointer.hpp"
 #include "HPFlyingE.hpp"
 #include "SubHpEvent.hpp"
 #include "Textures.hpp"
@@ -61,8 +60,8 @@ Warrior::Warrior() {
     this->hasSpecialMoves = false;
 }
 Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
-	Unit(x, y, std::nullopt, playerId) {
-	this->movementPoints = std::nullopt;
+	Unit(x, y, boost::none, playerId) {
+	this->movementPoints = boost::none;
     this->currentDirection = "e";
     this->startAnimation("talking");
     this->toKill = false;
@@ -661,3 +660,6 @@ void Warrior::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) c
     WarriorHPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
     target.draw(pointer, states);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Warrior)
