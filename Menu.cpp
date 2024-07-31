@@ -118,42 +118,8 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
 
 
-    std::vector<std::string> saves;
-    if (std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
-        for (const auto & entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
-            saves.push_back(entry.path().filename());
-        }
-        std::reverse(saves.begin(), saves.end());
-    }
-    std::shared_ptr<PopUpElement> chooseSaveWindow;
-    if (saves.empty()) {
-        chooseSaveWindow = std::make_shared<WindowButton>(*Locales::get()->get("you_do_not_have_any_saves_yet"), *Locales::get()->get("OK"), clickEvent);
-    }
-    else {
-        std::vector<HorizontalSelectionWindowComponent> components;
-        components.emplace_back(
-                "exit_icon",
-                *Locales::get()->get("cancel"),
-                true,
-                clickEvent
-        );
-        for (const auto &save : saves) {
-            Events loadSaveEvent = clickEvent;
-            loadSaveEvent.add(std::make_shared<LoadGameEvent>(save));
-            std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("load") + UTFEncoder::get()->utf8ToUtf16(save) + L"?", *Locales::get()->get("yes"), *Locales::get()->get("no"), loadSaveEvent, clickEvent);
-            Events createLoadSaveVerifyWindowEvent = clickEvent;
-            createLoadSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(loadSaveVerifyWindow));
-            components.emplace_back(
-                    "load_icon",
-                    *Locales::get()->get("load") + UTFEncoder::get()->utf8ToUtf16(save),
-                    true,
-                    createLoadSaveVerifyWindowEvent
-            );
-        }
-        chooseSaveWindow = std::make_shared<HorizontalSelectionWindow>(components);
-    }
     Events createChooseSaveWindowEvent = clickEvent;
-    createChooseSaveWindowEvent.add(std::make_shared<CreateEEvent>(chooseSaveWindow));
+    createChooseSaveWindowEvent.add(std::make_shared<GenerateChooseSaveWindowEvent>());
     this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60, *Locales::get()->get("load_game_local")), createChooseSaveWindowEvent);
 
 
@@ -398,6 +364,12 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<LoadGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadGameEvent>(e)) {
         this->handleLoadGameEvent(loadGameEvent);
     }
+    else if (std::shared_ptr<GenerateChooseSaveWindowEvent> generateChooseSaveWindowEvent = std::dynamic_pointer_cast<GenerateChooseSaveWindowEvent>(e)) {
+        this->handleGenerateChooseSaveWindowEvent(generateChooseSaveWindowEvent);
+    }
+    else if (std::shared_ptr<DeleteSaveEvent> deleteSaveEvent = std::dynamic_pointer_cast<DeleteSaveEvent>(e)) {
+        this->handleDeleteSaveEvent(deleteSaveEvent);
+    }
     else if (std::shared_ptr<ChooseLanguageEvent> chooseLanguageEvent = std::dynamic_pointer_cast<ChooseLanguageEvent>(e)) {
         this->handleChooseLanguageEvent(chooseLanguageEvent);
     }
@@ -417,6 +389,65 @@ void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
 }
 void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
     this->response = std::make_tuple(TYPE::LOAD_LOCAL_GAME, e->getSaveName());
+}
+void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSaveWindowEvent> e) { // It is impossible to create choose save window like other windows in menu, cuz it is content might be changed during run time
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    std::vector<std::string> saves;
+    if (std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
+        for (const auto & entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
+            saves.push_back(entry.path().filename());
+        }
+        std::reverse(saves.begin(), saves.end());
+    }
+
+    std::shared_ptr<PopUpElement> window;
+    if (saves.empty()) {
+        window = std::make_shared<WindowButton>(*Locales::get()->get("you_do_not_have_any_saves_yet"), *Locales::get()->get("OK"), clickEvent);
+    }
+    else {
+        std::vector<HorizontalSelectionWindowComponent> components;
+        components.emplace_back(
+                "exit_icon",
+                *Locales::get()->get("cancel"),
+                true,
+                clickEvent
+        );
+        for (const auto &save : saves) {
+
+            Events loadSaveEvent = clickEvent;
+            loadSaveEvent.add(std::make_shared<LoadGameEvent>(save));
+            std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("load") + UTFEncoder::get()->utf8ToUtf16(save) + L"?", *Locales::get()->get("yes"), *Locales::get()->get("no"), loadSaveEvent, clickEvent);
+            Events createLoadSaveVerifyWindowEvent = clickEvent;
+            createLoadSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(loadSaveVerifyWindow));
+
+            Events deleteSaveEvent = clickEvent;
+            deleteSaveEvent.add(std::make_shared<DeleteSaveEvent>(save));
+            std::shared_ptr<WindowTwoButtons> deleteSaveVerifyWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("delete") + UTFEncoder::get()->utf8ToUtf16(save) + L"?", *Locales::get()->get("yes"), *Locales::get()->get("no"), deleteSaveEvent, clickEvent);
+            Events createDeleteSaveVerifyWindowEvent = clickEvent;
+            createDeleteSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(deleteSaveVerifyWindow));
+
+            std::shared_ptr<WindowTwoButtons> chooseActionWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("save") + UTFEncoder::get()->utf8ToUtf16(save), *Locales::get()->get("load"), *Locales::get()->get("delete"), createLoadSaveVerifyWindowEvent, createDeleteSaveVerifyWindowEvent);
+            Events createChooseActionWindowEvent = clickEvent;
+            createChooseActionWindowEvent.add(std::make_shared<CreateEEvent>(chooseActionWindow));
+
+            components.emplace_back(
+                    "save_icon",
+                    *Locales::get()->get("save") + UTFEncoder::get()->utf8ToUtf16(save),
+                    true,
+                    createChooseActionWindowEvent
+            );
+        }
+        window = std::make_shared<HorizontalSelectionWindow>(components);
+    }
+
+    Events result = clickEvent;
+    result.add(std::make_shared<CreateEEvent>(window));
+    this->addEvents(result);
+}
+void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
+    std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());
 }
 void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
     Events clickEvent;
