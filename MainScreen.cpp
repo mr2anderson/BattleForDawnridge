@@ -387,10 +387,10 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->animation = std::nullopt;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
 
-	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 30, *Locales::get()->get("new_move")), createConfirmEndMoveWindowEvent);
-	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 200, 40 + 10 + 30, "hammer_icon"), buildEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 30, *Locales::get()->get("save_game")), saveGameEvent);
-    this->buttons.emplace_back(std::make_shared<Label>(5, 80, 200, 30, *Locales::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Label>(this->windowW - 10 - 200, 40, 200, 60, *Locales::get()->get("new_move")), createConfirmEndMoveWindowEvent);
+	this->buttons.emplace_back(std::make_shared<Image>(this->windowW - 10 - 200, 40 + 60 + 10, "hammer_icon"), buildEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 60, *Locales::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(5, 110, 200, 60, *Locales::get()->get("save_game")), saveGameEvent);
 }
 
 
