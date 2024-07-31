@@ -121,6 +121,13 @@ private:
 	void initFromMap(const std::string &mapName, sf::RenderWindow &window);
     void initFromSave(const std::string &saveName, sf::RenderWindow &window);
 
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive & ar, const unsigned int version) {
+        ar & this->map;
+        ar & this->playerIsActive;
+        ar & this->currentPlayerId;
+        ar & this->move;
+    }
     void save();
 
 	void initMap(std::shared_ptr<Map> mapPtr);

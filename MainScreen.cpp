@@ -188,10 +188,7 @@ void MainScreen::initFromSave(const std::string &saveName, sf::RenderWindow &win
     fis.push(boost::iostreams::bzip2_decompressor());
     fis.push(ifs);
     iarchive ia(fis);
-    ia >> map;
-    ia >> playerIsActive;
-    ia >> currentPlayerId;
-    ia >> move;
+    ia >> *this;
     this->initGraphics(window);
 }
 
@@ -216,10 +213,7 @@ void MainScreen::save() {
     fos.push(boost::iostreams::bzip2_compressor());
     fos.push(ofs);
     oarchive oa(fos);
-    oa << map;
-    oa << playerIsActive;
-    oa << currentPlayerId;
-    oa << move;
+    oa << *this;
 }
 
 
