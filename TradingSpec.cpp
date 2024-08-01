@@ -29,6 +29,7 @@
 #include "AddResourceEvent.hpp"
 #include "Building.hpp"
 #include "DoTradeEvent.hpp"
+#include "WindowTwoButtons.hpp"
 
 
 TradingSpec::TradingSpec() = default;
@@ -103,10 +104,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 			);
 		}
 		else {
-			Resources playerResources = state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources();
 			std::vector<Trade> trades = this->getTrades();
 			for (const auto& trade : trades) {
-				components.push_back(this->getTradeComponent(b, playerResources, trade));
+				components.push_back(this->getTradeComponent(b, trade, state));
 			}
 		}
 	}
@@ -144,15 +144,33 @@ std::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) co
 bool TradingSpec::busy() const {
 	return this->currentTrade.movesLeft > 0;
 }
-BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade) {
+BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building* b, const Trade& trade, MapState *state) {
+    Resources freeSpace;
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+        Building *warehouse = state->getCollectionsPtr()->getBuilding(i);
+        if (warehouse->exist() and warehouse->getPlayerId() == b->getPlayerId()) {
+            freeSpace.plus(warehouse->getLimit());
+        }
+    }
+    freeSpace.minus(state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources());
+
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
 	Events events;
-	if (playerResources.get(trade.sell.type) >= trade.sell.n) {
-		events.add(std::make_shared<DoTradeEvent>(b, this, trade));
+	if (state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources().get(trade.sell.type) >= trade.sell.n) {
+        Events doTradeEvent;
+        doTradeEvent.add(std::make_shared<DoTradeEvent>(b, this, trade));
+        if (freeSpace >= Resources({trade.buy})) {
+            events = events + doTradeEvent;
+        }
+		else {
+            std::shared_ptr<WindowTwoButtons> w = std::make_shared<WindowTwoButtons>(*Locales::get()->get("no_space_for_trade"), *Locales::get()->get("yes"), *Locales::get()->get("no"), doTradeEvent, clickEvent);
+            events = events + clickEvent;
+            events.add(std::make_shared<CreateEEvent>(w));
+        }
 	}
 	else {
-		Events clickEvent;
-		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_trade"), *Locales::get()->get("OK"), clickEvent);
 		events = events + clickEvent;
 		events.add(std::make_shared<CreateEEvent>(w));

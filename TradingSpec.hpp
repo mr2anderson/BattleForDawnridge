@@ -38,7 +38,7 @@ private:
 	Trade currentTrade;
 
 	bool busy() const;
-	BuildingHorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Resources& playerResources, const Trade& trade);
+	BuildingHorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Trade& trade, MapState *state);
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
