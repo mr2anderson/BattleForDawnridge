@@ -46,6 +46,3 @@ private:
         ar & this->players;
     }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(MapState)

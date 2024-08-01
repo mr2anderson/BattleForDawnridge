@@ -31,22 +31,7 @@ Collections::Collections() = default;
 
 void Collections::add(GO *object) {
     this->gos.push(object);
-
-    if (Effect* effect = dynamic_cast<Effect*>(object)) {
-        this->effects.push(effect);
-    }
-    if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
-        this->rps.push(rp);
-    }
-    if (Unit* u = dynamic_cast<Unit*>(object)) {
-        this->units.push(u);
-    }
-    if (Building* b = dynamic_cast<Building*>(object)) {
-        this->buildings.push(b);
-    }
-    if (Warrior* w = dynamic_cast<Warrior*>(object)) {
-        this->warriors.push(w);
-    }
+    this->addToSubClassCollections(object);
 }
 
 
@@ -70,8 +55,11 @@ uint32_t Collections::totalWarriors() const {
 }
 
 
-GO* Collections::getGO(uint32_t i) {
-	return this->gos.at(i);
+GO* Collections::getGO(uint32_t i, uint8_t filter) {
+	return this->gos.at(i, filter);
+}
+const GO* Collections::getGO(uint32_t i, uint8_t filter) const {
+    return this->gos.at(i, filter);
 }
 Effect* Collections::getEffect(uint32_t i) {
 	return this->effects.at(i);
@@ -85,39 +73,23 @@ Unit* Collections::getUnit(uint32_t i) {
 Building* Collections::getBuilding(uint32_t i) {
 	return this->buildings.at(i);
 }
-Warrior* Collections::getWarrior(uint32_t i) {
+Warrior* Collections::getWarrior(uint32_t i)  {
 	return this->warriors.at(i);
 }
-
-
-const GO* Collections::getGO(uint32_t i) const {
-	return this->gos.at(i);
+void Collections::addToSubClassCollections(GO *object) {
+    if (Effect* effect = dynamic_cast<Effect*>(object)) {
+        this->effects.push(effect);
+    }
+    if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
+        this->rps.push(rp);
+    }
+    if (Unit* u = dynamic_cast<Unit*>(object)) {
+        this->units.push(u);
+    }
+    if (Building* b = dynamic_cast<Building*>(object)) {
+        this->buildings.push(b);
+    }
+    if (Warrior* w = dynamic_cast<Warrior*>(object)) {
+        this->warriors.push(w);
+    }
 }
-
-
-template<class Archive> void Collections::serialize(Archive &ar, const unsigned int version) {
-    ar & this->gos.data;
-    ar & this->gos.dataIndexed;
-
-    ar & this->effects.data;
-    ar & this->effects.dataIndexed;
-
-    ar & this->rps.data;
-    ar & this->rps.dataIndexed;
-
-    ar & this->units.data;
-    ar & this->units.dataIndexed;
-
-    ar & this->buildings.data;
-    ar & this->buildings.dataIndexed;
-
-    ar & this->warriors.data;
-    ar & this->warriors.dataIndexed;
-}
-
-
-BOOST_CLASS_EXPORT_IMPLEMENT(Collections)
-
-
-template void Collections::serialize(iarchive &ar, const unsigned int version);
-template void Collections::serialize(oarchive &ar, const unsigned int version);

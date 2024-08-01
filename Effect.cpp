@@ -38,10 +38,10 @@ uint32_t Effect::getPlayerId() const {
     return this->playerId;
 }
 uint8_t Effect::getClickPriority() const {
-	return GO::PRIORITY::LOW;
+	return 0;
 }
 uint8_t Effect::getDrawingPriority() const {
-	return GO::PRIORITY::HIGHEST;
+	return 255;
 }
 uint32_t Effect::getMaxHP() const {
 	return this->getLifetime();

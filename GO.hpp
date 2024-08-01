@@ -58,18 +58,12 @@ public:
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
 	virtual uint8_t getDrawingPriority() const;
 	virtual uint8_t getClickPriority() const;
+    virtual uint64_t getNewMovePriority() const;
 	virtual std::string getTextureName() const = 0;
 	virtual sf::IntRect getTextureRect() const;
 	virtual sf::Color getTextureColor() const;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
-
-	enum PRIORITY {
-		LOW,
-		DEFAULT,
-		HIGH,
-		HIGHEST
-	};
 protected:
 	virtual Events getResponse(MapState *state, uint32_t currentPlayerId, uint32_t button) = 0;
     virtual float getOffsetX() const;

@@ -19,7 +19,6 @@
 
 #include <string>
 #include <cstdint>
-#include <boost/serialization/export.hpp>
 
 
 #pragma once
@@ -39,6 +38,3 @@ struct Resource {
         ar & this->n;
     }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(Resource)

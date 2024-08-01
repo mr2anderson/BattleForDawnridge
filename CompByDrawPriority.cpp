@@ -17,25 +17,10 @@
  */
 
 
-
-#include "Resource.hpp"
-
-
-#pragma once
+#include "CompByDrawPriority.hpp"
+#include "GO.hpp"
 
 
-struct Trade {
-	Trade();
-	Trade(const Resource& sell, const Resource& buy, uint32_t movesLeft);
-
-	std::wstring getReadableInfo() const;
-
-	Resource sell, buy;
-	uint32_t movesLeft;
-
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & this->sell;
-        ar & this->buy;
-        ar & this->movesLeft;
-    }
-};
+bool CompByDrawPriority::operator()(GO *a, GO *b) const {
+    return a->getDrawingPriority() < b->getDrawingPriority();
+}

@@ -17,14 +17,10 @@
  */
 
 
-#include <typeinfo>
+#include "CompByNewMovePriority.hpp"
+#include "GO.hpp"
 
 
-#pragma once
-
-
-template<typename T> struct TypeComp {
-    bool operator()(const T *a, const T *b) const {
-        return typeid(a).hash_code() < typeid(b).hash_code();
-    }
-};
+bool CompByNewMovePriority::operator()(GO *a, GO *b) const {
+    return a->getNewMovePriority() > b->getNewMovePriority();
+}

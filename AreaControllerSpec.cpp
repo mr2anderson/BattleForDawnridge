@@ -36,7 +36,7 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvaila
     std::map<std::tuple<uint32_t, uint32_t>, bool> blocked;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i);
+        GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         if (!go->exist()) {
             continue;
         }
@@ -105,7 +105,7 @@ bool AreaControllerSpec::ignoreLowObstacles() const {
 uint64_t AreaControllerSpec::getHash(MapState *state) const {
     uint64_t exist = 0;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        exist = exist + state->getCollectionsPtr()->getGO(i)->exist();
+        exist = exist + state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->exist();
     }
 
     uint64_t total = state->getCollectionsPtr()->totalGOs();

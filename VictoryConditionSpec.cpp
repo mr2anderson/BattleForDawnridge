@@ -17,7 +17,7 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
+#include <limits>
 #include "VictoryConditionSpec.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "Locales.hpp"
@@ -27,7 +27,6 @@
 #include "ImageFlyingE.hpp"
 #include "CreateEEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
-#include "ArchiveType.hpp"
 
 
 VictoryConditionSpec::VictoryConditionSpec() {
@@ -74,6 +73,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::ge
 }
 bool VictoryConditionSpec::isVictoryCondition() const {
 	return true;
+}
+uint64_t VictoryConditionSpec::getNewMovePriority() const {
+    return std::numeric_limits<uint64_t>::max();
 }
 void VictoryConditionSpec::increaseMoveCtr() {
     this->moveCtr = this->moveCtr + 1;

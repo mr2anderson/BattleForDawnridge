@@ -17,6 +17,7 @@
  */
 
 
+#include <limits>
 #include "IWarehouseSpec.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
@@ -67,6 +68,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
     }
 
 	return { component };
+}
+uint64_t IWarehouseSpec::getNewMovePriority() const {
+    return std::numeric_limits<uint64_t>::max() - 3;
 }
 Resources IWarehouseSpec::getLimit(const Building *building) const {
     if (building->wasWithFullHP()) {

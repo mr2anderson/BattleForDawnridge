@@ -34,6 +34,3 @@ Player* Players::getPlayerPtr(uint32_t id) {
 uint32_t Players::total() {
 	return this->v.size();
 }
-
-
-BOOST_CLASS_EXPORT_IMPLEMENT(Players)

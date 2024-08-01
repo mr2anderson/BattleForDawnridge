@@ -32,14 +32,14 @@ public:
 	uint32_t getSX() const override;
 	uint32_t getSY() const override;
     uint32_t getPlayerId() const;
+    uint8_t getClickPriority() const override;
+    uint8_t getDrawingPriority() const override;
 protected:
 	virtual Events getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const = 0;
 	virtual uint32_t getLifetime() const = 0;
 private:
 	uint32_t playerId;
 
-	uint8_t getClickPriority() const override;
-	uint8_t getDrawingPriority() const override;
 	uint32_t getMaxHP() const override;
 	Events newMove(MapState* state, uint32_t playerId) override;
 	Events getResponse(MapState* state, uint32_t playerId, uint32_t button) override;

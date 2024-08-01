@@ -55,6 +55,3 @@ private:
         ar & this->resources;
     }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(Player)

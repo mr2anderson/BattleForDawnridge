@@ -35,7 +35,6 @@
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
 #include "AreaControllerSpec.hpp"
-#include "ArchiveType.hpp"
 
 
 Building::Building() = default;
@@ -114,6 +113,15 @@ bool Building::works() const {
 }
 bool Building::wasWithFullHP() const {
     return this->_wasWithFullHP;
+}
+uint64_t Building::getNewMovePriority() const {
+    uint64_t priority = this->Unit::getNewMovePriority();
+
+    for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+        priority = std::max(priority, this->specs.at(i)->getNewMovePriority());
+    }
+
+    return priority;
 }
 void Building::addHp(uint32_t delta) {
     this->Unit::addHp(delta);

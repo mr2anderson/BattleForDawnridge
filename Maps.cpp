@@ -64,7 +64,7 @@ void Maps::generateThumbnail(const std::string& name) {
     }
 
     for (uint32_t i = 0; i < map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = map->getStatePtr()->getCollectionsPtr()->getGO(i);
+        GO* go = map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         float x = go->getX() * sx;
         float y = (go->getY() + 1) * sy;
         sf::Sprite sprite;

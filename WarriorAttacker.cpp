@@ -119,16 +119,12 @@ std::string WarriorAttacker::getDirection(uint32_t targetX, uint32_t targetY) co
     return "e";
 }
 Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
-    for (uint32_t p : {GO::PRIORITY::HIGHEST, GO::PRIORITY::HIGH, GO::PRIORITY::DEFAULT, GO::PRIORITY::LOW}) {
-        for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
-            Unit *u = state->getCollectionsPtr()->getUnit(i);
-            if (u->getClickPriority() == p) {
-                std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
-                for (uint32_t j = 0; j < targets.size(); j = j + 1) {
-                    if (std::make_tuple(targetX, targetY) == targets.at(j)) {
-                        return this->startAttack(u, targetX, targetY);
-                    }
-                }
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
+        Unit *u = state->getCollectionsPtr()->getUnit(i);
+        std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
+        for (uint32_t j = 0; j < targets.size(); j = j + 1) {
+            if (std::make_tuple(targetX, targetY) == targets.at(j)) {
+                return this->startAttack(u, targetX, targetY);
             }
         }
     }

@@ -26,7 +26,6 @@
 #include "CastleShootingSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Castle::Castle() = default;

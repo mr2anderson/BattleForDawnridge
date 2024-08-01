@@ -5,7 +5,10 @@ add_definitions(-Werror)
 add_definitions(-O3)
 #add_definitions(-flto)
 file(GLOB BattleForDawnridge_src CONFIGURE_DEPENDS "*.hpp" "*.cpp")
-add_executable(BattleForDawnridge ${BattleForDawnridge_src})
+add_executable(BattleForDawnridge ${BattleForDawnridge_src}
+        CompByNewMovePriority.cpp
+        CompByClickPriority.cpp
+        CompByDrawPriority.cpp)
 
 find_package(Boost REQUIRED COMPONENTS serialization)
 find_package(Boost REQUIRED COMPONENTS iostreams)

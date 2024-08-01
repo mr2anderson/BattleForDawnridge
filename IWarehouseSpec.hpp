@@ -27,6 +27,7 @@ class IWarehouseSpec : public IBuildingSpec {
 public:
 	Events getEventOnDestroy(const Building* building, MapState* state) const override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
+    uint64_t getNewMovePriority() const override;
     virtual Resources getActiveLimit() const = 0;
 private:
     Resources getLimit(const Building *building) const override;

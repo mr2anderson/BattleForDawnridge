@@ -19,7 +19,6 @@
 
 #include <map>
 #include <vector>
-#include <boost/serialization/export.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/map.hpp>
 #include "Resource.hpp"
@@ -53,6 +52,3 @@ private:
         ar & this->map;
     }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(Resources)

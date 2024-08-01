@@ -17,25 +17,12 @@
  */
 
 
-
-#include "Resource.hpp"
-
-
 #pragma once
 
 
-struct Trade {
-	Trade();
-	Trade(const Resource& sell, const Resource& buy, uint32_t movesLeft);
+class GO;
 
-	std::wstring getReadableInfo() const;
 
-	Resource sell, buy;
-	uint32_t movesLeft;
-
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & this->sell;
-        ar & this->buy;
-        ar & this->movesLeft;
-    }
+struct CompByNewMovePriority {
+    bool operator()(GO* a, GO* b) const;
 };

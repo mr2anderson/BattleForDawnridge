@@ -143,7 +143,7 @@ bool MainScreen::gameCycle(sf::RenderWindow &window) {
         }
         this->drawEverything(window);
         for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-            this->map->getStatePtr()->getCollectionsPtr()->getGO(i)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
+            this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
         }
         Playlist::get()->update();
         this->removeFinishedElement();
@@ -507,7 +507,7 @@ void MainScreen::addNewMoveEvent() {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
 		}
-		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
+		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
 	}
@@ -543,18 +543,14 @@ void MainScreen::addGameObjectClickEventToQueue(uint8_t button) {
 	uint32_t mouseX, mouseY;
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView();
 
-	for (uint8_t priority : {GO::PRIORITY::HIGHEST, GO::PRIORITY::HIGH, GO::PRIORITY::DEFAULT, GO::PRIORITY::LOW}) {
-		for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-			GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i);
-			if (go->getClickPriority() == priority) {
-				Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
-				if (!gor.empty()) {
-					this->addEvents(gor);
-					return;
-				}
-			}
-		}
-	}
+    for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
+        Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
+        if (!gor.empty()) {
+            this->addEvents(gor);
+            return;
+        }
+    }
 }
 void MainScreen::processBaseEvents() {
     while (!this->events.empty()) {

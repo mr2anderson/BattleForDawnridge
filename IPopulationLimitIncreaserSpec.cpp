@@ -17,6 +17,7 @@
  */
 
 
+#include <limits>
 #include "IPopulationLimitIncreaserSpec.hpp"
 #include "Building.hpp"
 #include "Locales.hpp"
@@ -51,6 +52,9 @@ uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(const Building* build
 		return 0;
 	}
 	return this->getActivePopulationLimit();
+}
+uint64_t IPopulationLimitIncreaserSpec::getNewMovePriority() const {
+    return std::numeric_limits<uint64_t>::max() - 2;
 }
 
 

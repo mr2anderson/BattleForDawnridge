@@ -17,10 +17,9 @@
  */
 
 
-#include <set>
 #include <vector>
 #include <cstdint>
-#include "TypeComp.hpp"
+#include <boost/serialization/access.hpp>
 
 
 #pragma once
@@ -31,29 +30,91 @@ public:
 	Collection() = default;
 
 	void push(T* t) {
-		this->data.insert(t);
-        this->reindex();
+        this->content.push_back(t);
 	}
 	uint32_t size() const {
-		return this->data.size();
+		return this->content.size();
 	}
-	T* at(uint32_t i) {
-        return this->dataIndexed[i];
-	}
-	const T* at(uint32_t i) const {
-        return this->dataIndexed[i];
-	}
+    T* at(uint32_t i) {
+        return this->content.at(i);
+    }
+    T* at(uint32_t i) const {
+        return this->content.at(i);
+    }
 private:
-    friend class Collections;
+    std::vector<T*> content;
 
-	std::multiset<T*, TypeComp<T>> data;
-    std::vector<T*> dataIndexed;
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->content;
+    }
+};
 
-    void reindex() {
-        this->dataIndexed.clear();
-        this->dataIndexed.reserve(this->data.size());
-        for (auto &a : this->data) {
-            this->dataIndexed.push_back(a);
+
+
+
+#include "IndexedMultiset.hpp"
+#include "CompByClickPriority.hpp"
+#include "CompByDrawPriority.hpp"
+#include "CompByNewMovePriority.hpp"
+
+
+enum FILTER {
+    NEW_MOVE_PRIORITY,
+    DRAW_PRIORITY,
+    CLICK_PRIORITY,
+    DEFAULT_PRIORITY = CLICK_PRIORITY
+};
+class GO;
+template<> class Collection<GO> {
+public:
+    Collection() = default;
+
+    void push(GO* t) {
+        this->newMovePriority.insert(t);
+        this->drawPriority.insert(t);
+        this->clickPriority.insert(t);
+    }
+    uint32_t size() const {
+        return this->newMovePriority.size();
+    }
+    GO* at(uint32_t i, uint8_t filter) {
+        switch (filter) {
+            case FILTER::NEW_MOVE_PRIORITY:
+                return this->newMovePriority.at(i);
+            case FILTER::DRAW_PRIORITY:
+                return this->drawPriority.at(i);
+            case FILTER::CLICK_PRIORITY:
+                return this->clickPriority.at(i);
+        }
+        return nullptr;
+    }
+    GO* at(uint32_t i, uint8_t filter) const {
+        switch (filter) {
+            case FILTER::NEW_MOVE_PRIORITY:
+                return this->newMovePriority.at(i);
+            case FILTER::DRAW_PRIORITY:
+                return this->drawPriority.at(i);
+            case FILTER::CLICK_PRIORITY:
+                return this->clickPriority.at(i);
+        }
+        return nullptr;
+    }
+private:
+    IndexedMultiset<GO*, CompByNewMovePriority> newMovePriority;
+    IndexedMultiset<GO*, CompByDrawPriority> drawPriority;
+    IndexedMultiset<GO*, CompByClickPriority> clickPriority;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->newMovePriority;
+        if (Archive::is_loading::value) {
+            this->drawPriority.clear();
+            this->clickPriority.clear();
+            for (uint32_t i = 0; i < this->newMovePriority.size(); i = i + 1) {
+                this->drawPriority.insert(this->newMovePriority.at(i));
+                this->clickPriority.insert(this->newMovePriority.at(i));
+            }
         }
     }
 };

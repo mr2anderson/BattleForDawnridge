@@ -69,6 +69,9 @@ bool IBuildingSpec::isHighObstacle(const Building *building, uint32_t playerId) 
 bool IBuildingSpec::isLowObstacle(const Building *building, uint32_t playerId) const {
 	return false;
 }
+uint64_t IBuildingSpec::getNewMovePriority() const {
+    return 0;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(IBuildingSpec)

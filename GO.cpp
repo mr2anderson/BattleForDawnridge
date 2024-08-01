@@ -17,12 +17,12 @@
  */
 
 
+#include <typeinfo>
 #include "GO.hpp"
 #include "Textures.hpp"
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
-#include "ArchiveType.hpp"
 
 
 GO::GO() = default;
@@ -103,10 +103,13 @@ Events GO::newMove(MapState* state, uint32_t currentPlayerId) {
 	return Events();
 }
 uint8_t GO::getDrawingPriority() const {
-	return PRIORITY::DEFAULT;
+	return 0;
 }
 uint8_t GO::getClickPriority() const {
-	return PRIORITY::DEFAULT;
+	return 0;
+}
+uint64_t GO::getNewMovePriority() const {
+    return typeid(*this).hash_code();
 }
 sf::IntRect GO::getTextureRect() const {
 	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());

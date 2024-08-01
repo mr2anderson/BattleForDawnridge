@@ -42,6 +42,3 @@ private:
         ar & this->v;
     }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(Players)

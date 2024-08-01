@@ -18,9 +18,6 @@
 
 
 
-#include <boost/serialization/export.hpp>
-#include <boost/serialization/access.hpp>
-#include <boost/serialization/set.hpp>
 #include "ArchiveType.hpp"
 #include "Collection.hpp"
 
@@ -49,14 +46,13 @@ public:
 	uint32_t totalBuildings() const;
 	uint32_t totalWarriors() const;
 
-	GO* getGO(uint32_t i);
+	GO* getGO(uint32_t i, uint8_t filter);
+    const GO* getGO(uint32_t i, uint8_t filter) const;
 	Effect* getEffect(uint32_t i);
 	ResourcePoint* getRP(uint32_t i);
     Unit* getUnit(uint32_t i);
 	Building* getBuilding(uint32_t i);
 	Warrior* getWarrior(uint32_t i);
-
-	const GO* getGO(uint32_t i) const;
 private:
 	Collection<GO> gos;
 	Collection<Effect> effects;
@@ -65,10 +61,16 @@ private:
 	Collection<Building> buildings;
 	Collection<Warrior> warriors;
 
+    void addToSubClassCollections(GO *object);
+
 
     friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version);
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & this->gos;
+        if (Archive::is_loading::value) {
+            for (uint32_t i = 0; i < this->gos.size(); i = i + 1) {
+                this->addToSubClassCollections(this->gos.at(i, FILTER::DEFAULT_PRIORITY));
+            }
+        }
+    }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(Collections)

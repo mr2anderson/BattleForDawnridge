@@ -148,7 +148,7 @@ bool BuildingMode::inMap(MapState *state, const Building *clonedB) const {
 }
 bool BuildingMode::empty(MapState* state, const Building *clonedB) const {
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = state->getCollectionsPtr()->getGO(i);
+		GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (!go->exist()) {
 			continue;
 		}

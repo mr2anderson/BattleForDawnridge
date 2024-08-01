@@ -17,6 +17,7 @@
  */
 
 
+#include <limits>
 #include "Warrior.hpp"
 #include "SelectEvent.hpp"
 #include "SetHighlightEvent.hpp"
@@ -233,7 +234,7 @@ bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 	thisRect.height = this->getSY();
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i);
+        GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (go->exist() and !go->warriorCanStay(this)) {
 			sf::IntRect goRect;
 			goRect.left = go->getX();
@@ -256,6 +257,15 @@ uint32_t Warrior::getWarriorMovementCost(const Warrior *w) const {
 		return 1;
 	}
     return 10000;
+}
+uint8_t Warrior::getDrawingPriority() const {
+    return 253 + this->isFlying() - this->isVehicle();
+}
+uint8_t Warrior::getClickPriority() const {
+    return 255;
+}
+uint64_t Warrior::getNewMovePriority() const {
+    return std::numeric_limits<uint64_t>::max() - 1;
 }
 Events Warrior::processCurrentAnimation(MapState *state) {
     if (currentAnimation == "running") {
@@ -330,12 +340,6 @@ bool Warrior::delayBetweenTalkingAnimations() const {
 void Warrior::setDirection(const std::string &newDirection) {
     this->currentDirection = newDirection;
 }
-uint8_t Warrior::getDrawingPriority() const {
-    return GO::PRIORITY::HIGH;
-}
-uint8_t Warrior::getClickPriority() const {
-    return GO::PRIORITY::HIGH;
-}
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get()->get("hand"));
@@ -387,7 +391,7 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
     }
     
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i);
+        GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         if (go->exist()) {
             for (uint32_t x = go->getX(); x < go->getX() + go->getSX(); x = x + 1) {
                 for (uint32_t y = go->getY(); y < go->getY() + go->getSY(); y = y + 1) {

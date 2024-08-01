@@ -59,6 +59,9 @@ public:
 	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(const Warrior *w) const override;
 	uint32_t getWarriorMovementCost(const Warrior *w) const override;
+    uint8_t getDrawingPriority() const override;
+    uint8_t getClickPriority() const override;
+    uint64_t getNewMovePriority() const override;
     Events processCurrentAnimation(MapState *state) override;
 	void startAnimation(const std::string& type);
     std::string getCurrentAnimation() const;
@@ -102,8 +105,6 @@ private:
 	bool toKill;
 	uint32_t rageModeMovesLeft;
 
-	uint8_t getDrawingPriority() const override;
-	uint8_t getClickPriority() const override;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
     void newFrame(MapState *state, uint32_t playerId) override;
 	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;

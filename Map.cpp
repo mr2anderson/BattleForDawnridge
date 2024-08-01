@@ -112,17 +112,13 @@ Map::Map(const std::string &path) {
 }
 Map::~Map() {
     for (uint32_t i = 0; i < this->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        delete this->getStatePtr()->getCollectionsPtr()->getGO(i);
+        delete this->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
     }
 }
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (uint8_t priority : {GO::PRIORITY::LOW, GO::PRIORITY::DEFAULT, GO::PRIORITY::HIGH, GO::PRIORITY::HIGHEST}) {
-        for (uint32_t i = 0; i < this->state.getCollectionsPtr()->totalGOs(); i = i + 1) {
-            const GO* go = this->state.getCollectionsPtr()->getGO(i);
-            if (go->getDrawingPriority() == priority) {
-                target.draw(*go, states);
-            }
-        }
+    for (uint32_t i = 0; i < this->state.getCollectionsPtr()->totalGOs(); i = i + 1) {
+        const GO* go = this->state.getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
+        target.draw(*go, states);
     }
 }
 MapState* Map::getStatePtr() {

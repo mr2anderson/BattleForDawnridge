@@ -38,6 +38,3 @@ std::wstring Resource::getReadableInfo() const {
 
 	return result;
 }
-
-
-BOOST_CLASS_EXPORT_IMPLEMENT(Resource)

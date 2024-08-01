@@ -64,6 +64,3 @@ int32_t Player::getResource(const std::string& id) const {
 Resources Player::getResources() const {
 	return this->resources;
 }
-
-
-BOOST_CLASS_EXPORT_IMPLEMENT(Player)
