@@ -35,7 +35,7 @@ std::wstring Trade::getReadableInfo() const {
 	result = result + *Locales::get()->get("buy_noun") + this->sell.getReadableInfo() + L". ";
 	result = result + *Locales::get()->get("sell_noun") + this->buy.getReadableInfo() + L". ";
 	if (this->movesLeft != 0) {
-		result = result + L' ' + *Locales::get()->get("moves_number") + std::to_wstring(this->movesLeft) + L'.';
+		result = result + *Locales::get()->get("moves_number") + std::to_wstring(this->movesLeft) + L'.';
 	}
 	return result;
 }
