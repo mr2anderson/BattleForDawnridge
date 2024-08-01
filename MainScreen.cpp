@@ -206,7 +206,7 @@ void MainScreen::save() {
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
     std::stringstream ss;
-    ss << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+    ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
 
     std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
     boost::iostreams::filtering_ostreambuf fos;

@@ -18,6 +18,7 @@
 
 
 #include <filesystem>
+#include <set>
 #include "Menu.hpp"
 #include "Maps.hpp"
 #include "WindowTwoButtons.hpp"
@@ -394,12 +395,11 @@ void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSav
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::vector<std::string> saves;
+    std::set<std::string> saves;
     if (std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
         for (const auto & entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
-            saves.push_back(entry.path().filename());
+            saves.insert(entry.path().filename());
         }
-        std::reverse(saves.begin(), saves.end());
     }
 
     std::shared_ptr<PopUpElement> window;
