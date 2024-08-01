@@ -63,7 +63,7 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 
 	responce.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 
-	responce.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
+	responce.add(std::make_shared<PlaySoundEvent>(this->currentTrade.buy.type));
 
 	std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 	responce.add(std::make_shared<CreateEEvent>(element));
@@ -71,7 +71,7 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
 
 	if (this->currentTrade.movesLeft == 1) {
-		responce.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
+		responce.add(std::make_shared<PlaySoundEvent>(this->currentTrade.buy.type));
 
 		element = std::make_shared<ImageFlyingE>(this->currentTrade.buy.type + "_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 		responce.add(std::make_shared<CreateEEvent>(element));
