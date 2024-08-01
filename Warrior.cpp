@@ -215,7 +215,7 @@ uint32_t Warrior::getCurrentAnimationMs() const {
         return 750;
     }
     if (this->currentAnimation == "running") {
-        return 500 * (1 + this->isVehicle());
+        return 500 * (1 + 0.75f * this->isVehicle());
     }
     if (this->currentAnimation == "been hit") {
         return 500;
