@@ -363,7 +363,6 @@ Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button
     if ((button == sf::Mouse::Button::Left and specialMoveEvents.empty()) or button == sf::Mouse::Button::Right) {
         try {
             Move move = this->getMove(state, x, y);
-            events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
             this->currentMovement = move.route;
             this->startAnimation("running");
             this->currentDirection = move.route.front();
