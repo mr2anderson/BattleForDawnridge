@@ -31,6 +31,7 @@ public:
 	uint32_t getId() const;
 	friend bool operator==(const Player &a, const Player &b);
 	friend bool operator!=(const Player &a, const Player &b);
+    friend bool operator<(const Player &a, const Player &b);
 	void addResource(const Resource& resource, uint32_t limit);
 	void subResource(const Resource &resource);
 	void addResources(const Resources& resources, const Resources& limit);
@@ -38,6 +39,12 @@ public:
 	void limitResources(const Resources& limit);
 	int32_t getResource(const std::string& id) const;
 	Resources getResources() const;
+
+    enum COLOR {
+        BLUE = 1,
+        GREEN = 2,
+        PURPLE = 3
+    };
 private:
 	uint32_t id;
 	Resources resources;

@@ -30,3 +30,6 @@ GlobalRandomGenerator::GlobalRandomGenerator() {
 uint32_t GlobalRandomGenerator::gen() {
     return this->mersenne();
 }
+std::mt19937 &GlobalRandomGenerator::getMt() {
+    return this->mersenne;
+}

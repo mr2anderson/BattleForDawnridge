@@ -34,6 +34,7 @@ public:
     }
 
     uint32_t gen();
+    std::mt19937 &getMt();
 private:
     GlobalRandomGenerator();
     GlobalRandomGenerator(const GlobalRandomGenerator& copy);

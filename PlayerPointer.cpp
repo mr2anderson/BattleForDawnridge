@@ -19,18 +19,18 @@
 
 #include <iostream>
 #include "PlayerPointer.hpp"
-#include "PlayerColors.hpp"
+#include "Player.hpp"
 
 
 PlayerPointer::PlayerPointer() = default;
 void PlayerPointer::setSide(uint32_t side) {
-    if (side == PlayerColors::get()->getBlueID()) {
+    if (side == Player::COLOR::BLUE) {
         this->setTypeBlue();
     }
-    else if (side == PlayerColors::get()->getGreenID()) {
+    else if (side == Player::COLOR::GREEN) {
         this->setTypeGreen();
     }
-    else if (side == PlayerColors::get()->getPurpleID()) {
+    else if (side == Player::COLOR::PURPLE) {
         this->setTypePurple();
     }
     else {

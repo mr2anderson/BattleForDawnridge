@@ -40,6 +40,9 @@ bool operator==(const Player &a, const Player &b) {
 bool operator!=(const Player &a, const Player &b) {
 	return !(a == b);
 }
+bool operator<(const Player &a, const Player &b) {
+    return a.getId() < b.getId();
+}
 void Player::addResource(const Resource& resource, uint32_t limit) {
 	this->resources.plus(resource, limit);
 }

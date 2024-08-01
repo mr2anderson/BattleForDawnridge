@@ -19,8 +19,8 @@
 
 #include <iostream>
 #include "HighlightColors.hpp"
-#include "PlayerColors.hpp"
 #include "ColorBlender.hpp"
+#include "Player.hpp"
 
 
 HighlightColors* HighlightColors::singletone = nullptr;
@@ -32,13 +32,13 @@ static const sf::Color PURPLE = sf::Color(238, 130, 238);
 
 
 static sf::Color GET_PLAYER_COLOR(uint32_t playerId) {
-    if (playerId == PlayerColors::get()->getBlueID()) {
+    if (playerId == Player::BLUE) {
         return BLUE;
     }
-    if (playerId == PlayerColors::get()->getGreenID()) {
+    if (playerId == Player::GREEN) {
         return GREEN;
     }
-    if (playerId == PlayerColors::get()->getPurpleID()) {
+    if (playerId == Player::PURPLE) {
         return PURPLE;
     }
     std::cerr << "HighlightColors: warning: unknown color" << std::endl;
