@@ -86,6 +86,9 @@ std::vector<std::tuple<uint32_t, uint32_t>> WarriorAttacker::canAttack(Unit *u) 
 
     for (uint32_t x = u->getX(); x < u->getX() + u->getSX(); x = x + 1) {
         for (uint32_t y = u->getY(); y < u->getY() + u->getSY(); y = y + 1) {
+            if (x == this->getX() and y == this->getY()) {
+                continue;
+            }
             result.emplace_back(x, y);
         }
     }
