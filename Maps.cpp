@@ -19,15 +19,19 @@
 
 #include <iostream>
 #include "Maps.hpp"
+#include "Textures.hpp"
 #include "GO.hpp"
 
 
 Maps* Maps::singletone = nullptr;
 
 
+const uint32_t Maps::THUMBNAIL_SIZE = 128;
+
+
 void Maps::add(const std::string &name, const std::string &path) {
     this->paths[name] = path;
-    this->verify(name);
+    this->generateThumbnail(name);
 }
 std::shared_ptr<Map> Maps::load(const std::string& name) {
     auto it = this->paths.find(name);
@@ -37,6 +41,28 @@ std::shared_ptr<Map> Maps::load(const std::string& name) {
     std::shared_ptr<Map> map = std::make_shared<Map>(it->second);
     return map;
 }
-void Maps::verify(const std::string &name) {
-    this->load(name);
+void Maps::generateThumbnail(const std::string& name) {
+    std::shared_ptr<Map> map = this->load(name);
+
+    float sx = std::min((float)THUMBNAIL_SIZE / (float)map->getStatePtr()->getMapSizePtr()->getWidth(), (float)THUMBNAIL_SIZE / (float)map->getStatePtr()->getMapSizePtr()->getHeight());
+    float sy = sx;
+    float scaleX = sx / 64.f;
+    float scaleY = scaleX;
+
+    sf::RenderTexture renderTexture;
+    renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+
+    for (uint32_t i = 0; i < map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+        float x = go->getX() * sx;
+        float y = (go->getY() + 1) * sy;
+        sf::Sprite sprite;
+        sprite.setTextureRect(go->getTextureRect());
+        sprite.setTexture(*Textures::get()->get(go->getTextureName()));
+        sprite.setPosition(x, THUMBNAIL_SIZE - y);
+        sprite.setScale(scaleX, scaleY);
+        renderTexture.draw(sprite);
+    }
+
+    Textures::get()->add(name, renderTexture.getTexture());
 }

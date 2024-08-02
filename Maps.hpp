@@ -36,6 +36,8 @@ public:
 
     void add(const std::string &name, const std::string& path);
     std::shared_ptr<Map> load(const std::string& name);
+
+    static const uint32_t THUMBNAIL_SIZE;
 private:
     Maps() = default;
     Maps(const Maps& copy);
@@ -43,5 +45,5 @@ private:
 
     std::unordered_map<std::string, std::string> paths;
 
-    void verify(const std::string &name);
+    void generateThumbnail(const std::string& name);
 };
