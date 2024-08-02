@@ -17,26 +17,21 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include <cstdint>
 
 
 #pragma once
 
 
-class IWarehouseSpec : public IBuildingSpec {
+class GO;
+
+
+class NewMovePriority {
 public:
-	Events getEventOnDestroy(const Building* building, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
-    uint8_t getNewMoveMainPriority() const override;
-    virtual Resources getActiveLimit() const = 0;
+    NewMovePriority(uint8_t mainPriority, const GO* type);
+
+    bool operator>(const NewMovePriority &b);
 private:
-    Resources getLimit(const Building *building) const override;
-
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<IBuildingSpec>(*this);
-    }
+    uint8_t mainPriority;
+    uint64_t typeHashCode;
 };
-
-
-BOOST_CLASS_EXPORT_KEY(IWarehouseSpec)

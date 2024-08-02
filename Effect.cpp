@@ -43,6 +43,9 @@ uint8_t Effect::getClickPriority() const {
 uint8_t Effect::getDrawingPriority() const {
 	return 255;
 }
+uint8_t Effect::getNewMoveMainPriority() const {
+    return 3;
+}
 uint32_t Effect::getMaxHP() const {
 	return this->getLifetime();
 }

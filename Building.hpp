@@ -42,7 +42,7 @@ public:
 	bool isActiveConductor() const;
 	bool works() const;
     bool wasWithFullHP() const;
-    uint64_t getNewMovePriority() const override;
+    uint8_t getNewMoveMainPriority() const override;
     void addHp(uint32_t delta) override;
 	bool connectedTo(MapState* state, GO* go) const;
 	bool connectedToOrigin(MapState* state) const;

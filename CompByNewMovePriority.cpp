@@ -18,6 +18,7 @@
 
 
 #include "CompByNewMovePriority.hpp"
+#include "NewMovePriority.hpp"
 #include "GO.hpp"
 
 

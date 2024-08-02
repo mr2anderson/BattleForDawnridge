@@ -108,8 +108,11 @@ uint8_t GO::getDrawingPriority() const {
 uint8_t GO::getClickPriority() const {
 	return 0;
 }
-uint64_t GO::getNewMovePriority() const {
-    return typeid(*this).hash_code();
+uint8_t GO::getNewMoveMainPriority() const {
+    return 0;
+}
+NewMovePriority GO::getNewMovePriority() const {
+    return {this->getNewMoveMainPriority(), this};
 }
 sf::IntRect GO::getTextureRect() const {
 	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());

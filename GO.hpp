@@ -20,6 +20,7 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/base_object.hpp>
 #include "HorizontalSelectionWindow.hpp"
+#include "NewMovePriority.hpp"
 #include "MapState.hpp"
 #include "ArchiveType.hpp"
 
@@ -58,7 +59,8 @@ public:
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
 	virtual uint8_t getDrawingPriority() const;
 	virtual uint8_t getClickPriority() const;
-    virtual uint64_t getNewMovePriority() const;
+    virtual uint8_t getNewMoveMainPriority() const;
+    NewMovePriority getNewMovePriority() const;
 	virtual std::string getTextureName() const = 0;
 	virtual sf::IntRect getTextureRect() const;
 	virtual sf::Color getTextureColor() const;

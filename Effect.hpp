@@ -34,6 +34,7 @@ public:
     uint32_t getPlayerId() const;
     uint8_t getClickPriority() const override;
     uint8_t getDrawingPriority() const override;
+    uint8_t getNewMoveMainPriority() const override;
 protected:
 	virtual Events getActiveNewMoveEvent(MapState* state, uint32_t currentPlayerId) const = 0;
 	virtual uint32_t getLifetime() const = 0;

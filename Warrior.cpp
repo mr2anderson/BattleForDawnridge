@@ -264,8 +264,8 @@ uint8_t Warrior::getDrawingPriority() const {
 uint8_t Warrior::getClickPriority() const {
     return 255;
 }
-uint64_t Warrior::getNewMovePriority() const {
-    return std::numeric_limits<uint64_t>::max() - 1;
+uint8_t Warrior::getNewMoveMainPriority() const {
+    return 4;
 }
 Events Warrior::processCurrentAnimation(MapState *state) {
     if (currentAnimation == "running") {

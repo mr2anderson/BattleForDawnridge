@@ -17,26 +17,20 @@
  */
 
 
-#include "IBuildingSpec.hpp"
+#include "NewMovePriority.hpp"
+#include "GO.hpp"
 
 
-#pragma once
-
-
-class IWarehouseSpec : public IBuildingSpec {
-public:
-	Events getEventOnDestroy(const Building* building, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
-    uint8_t getNewMoveMainPriority() const override;
-    virtual Resources getActiveLimit() const = 0;
-private:
-    Resources getLimit(const Building *building) const override;
-
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<IBuildingSpec>(*this);
+NewMovePriority::NewMovePriority(uint8_t mainPriority, const GO *type) {
+    this->mainPriority = mainPriority;
+    this->typeHashCode = typeid(*type).hash_code();
+}
+bool NewMovePriority::operator>(const NewMovePriority &b) {
+    if (this->mainPriority > b.mainPriority) {
+        return true;
     }
-};
-
-
-BOOST_CLASS_EXPORT_KEY(IWarehouseSpec)
+    if (this->mainPriority < b.mainPriority) {
+        return false;
+    }
+    return this->typeHashCode > b.typeHashCode;
+}

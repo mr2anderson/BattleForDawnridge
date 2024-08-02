@@ -61,7 +61,7 @@ public:
 	uint32_t getWarriorMovementCost(const Warrior *w) const override;
     uint8_t getDrawingPriority() const override;
     uint8_t getClickPriority() const override;
-    uint64_t getNewMovePriority() const override;
+    uint8_t getNewMoveMainPriority() const override;
     Events processCurrentAnimation(MapState *state) override;
 	void startAnimation(const std::string& type);
     std::string getCurrentAnimation() const;

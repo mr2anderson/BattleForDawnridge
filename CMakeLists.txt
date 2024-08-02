@@ -8,7 +8,9 @@ file(GLOB BattleForDawnridge_src CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 add_executable(BattleForDawnridge ${BattleForDawnridge_src}
         CompByNewMovePriority.cpp
         CompByClickPriority.cpp
-        CompByDrawPriority.cpp)
+        CompByDrawPriority.cpp
+        NewMovePriority.hpp
+        NewMovePriority.cpp)
 
 find_package(Boost REQUIRED COMPONENTS serialization)
 find_package(Boost REQUIRED COMPONENTS iostreams)

@@ -17,7 +17,6 @@
  */
 
 
-#include <limits>
 #include "VictoryConditionSpec.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "Locales.hpp"
@@ -74,8 +73,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::ge
 bool VictoryConditionSpec::isVictoryCondition() const {
 	return true;
 }
-uint64_t VictoryConditionSpec::getNewMovePriority() const {
-    return std::numeric_limits<uint64_t>::max();
+uint8_t VictoryConditionSpec::getNewMoveMainPriority() const {
+    return 5;
 }
 void VictoryConditionSpec::increaseMoveCtr() {
     this->moveCtr = this->moveCtr + 1;

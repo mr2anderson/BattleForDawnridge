@@ -53,8 +53,8 @@ uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(const Building* build
 	}
 	return this->getActivePopulationLimit();
 }
-uint64_t IPopulationLimitIncreaserSpec::getNewMovePriority() const {
-    return std::numeric_limits<uint64_t>::max() - 2;
+uint8_t IPopulationLimitIncreaserSpec::getNewMoveMainPriority() const {
+    return 1;
 }
 
 
