@@ -110,7 +110,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
         createStartGameOnRidgeVerifyWindow
     );
 
-    std::shared_ptr<HorizontalSelectionWindow> chooseLevelWindow = std::make_shared<HorizontalSelectionWindow>(chooseLevelWindowComponents, Maps::THUMBNAIL_SIZE);
+    std::shared_ptr<HorizontalSelectionWindow> chooseLevelWindow = std::make_shared<HorizontalSelectionWindow>(chooseLevelWindowComponents);
     Events createChooseLevelWindowEvent = clickEvent;
     createChooseLevelWindowEvent.add(std::make_shared<CreateEEvent>(chooseLevelWindow));
 	this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, *Locales::get()->get("start_game_local")), createChooseLevelWindowEvent);
