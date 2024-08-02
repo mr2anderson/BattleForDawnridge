@@ -18,30 +18,28 @@
 
 
 #include <boost/serialization/access.hpp>
-#include <set>
 #include <vector>
 #include <cstdint>
+#include <algorithm>
 #include "ArchiveType.hpp"
 
 
 #pragma once
 
 
-template<typename T, typename Comp> class IndexedMultiset {
+// Data structure
+// Sorted order
+// Access O(1)
+// Insert O(n)
+// Memory O(n)
+template<typename T, typename Comp> class SortedIndexedContainer {
 public:
-    IndexedMultiset() = default;
+    SortedIndexedContainer() = default;
 
     void insert(T t) {
-        this->set.insert(t);
-        this->vector.resize(this->set.size());
-        uint32_t ctr = 0;
-        for (auto &a : this->set) {
-            this->vector.at(ctr) = a;
-            ctr = ctr + 1;
-        }
+        this->vector.insert(std::upper_bound(this->vector.begin(), this->vector.end(), t, Comp()), t);
     }
     void clear() {
-        this->set.clear();
         this->vector.clear();
     }
     uint32_t size() const {
@@ -54,17 +52,10 @@ public:
         return this->vector.at(i);
     }
 private:
-    std::multiset<T, Comp> set;
     std::vector<T> vector;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & this->vector;
-        if (Archive::is_loading::value) {
-            this->set.clear();
-            for (uint32_t i = 0; i < this->vector.size(); i = i + 1) {
-                this->set.insert(this->vector.at(i));
-            }
-        }
     }
 };

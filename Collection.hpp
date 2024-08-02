@@ -53,7 +53,7 @@ private:
 
 
 
-#include "IndexedMultiset.hpp"
+#include "SortedIndexedContainer.hpp"
 #include "CompByClickPriority.hpp"
 #include "CompByDrawPriority.hpp"
 #include "CompByNewMovePriority.hpp"
@@ -101,9 +101,9 @@ public:
         return nullptr;
     }
 private:
-    IndexedMultiset<GO*, CompByNewMovePriority> newMovePriority;
-    IndexedMultiset<GO*, CompByDrawPriority> drawPriority;
-    IndexedMultiset<GO*, CompByClickPriority> clickPriority;
+    SortedIndexedContainer<GO*, CompByNewMovePriority> newMovePriority;
+    SortedIndexedContainer<GO*, CompByDrawPriority> drawPriority;
+    SortedIndexedContainer<GO*, CompByClickPriority> clickPriority;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
