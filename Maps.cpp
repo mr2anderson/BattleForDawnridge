@@ -19,7 +19,6 @@
 
 #include <iostream>
 #include "Maps.hpp"
-#include "PlainsGeneration.hpp"
 #include "Textures.hpp"
 #include "GO.hpp"
 
@@ -52,16 +51,6 @@ void Maps::generateThumbnail(const std::string& name) {
 
     sf::RenderTexture renderTexture;
     renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
-
-    PlainsGeneration generation;
-    for (uint32_t i = 0; i < THUMBNAIL_SIZE; i = i + 64) {
-        for (uint32_t j = 0; j < THUMBNAIL_SIZE; j = j + 64) {
-            sf::Sprite sprite;
-            sprite.setTexture(*Textures::get()->get("plain" + std::to_string(generation.getType(i / 64, j / 64))));
-            sprite.setPosition(i, THUMBNAIL_SIZE - j - 64);
-            renderTexture.draw(sprite);
-        }
-    }
 
     for (uint32_t i = 0; i < map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
         GO* go = map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);

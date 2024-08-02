@@ -29,7 +29,6 @@
 #include "Legioner.hpp"
 #include "Knight.hpp"
 #include "BlackKnight.hpp"
-#include "PlainsGeneration.hpp"
 #include "WindowButton.hpp"
 #include "UTFEncoder.hpp"
 #include "ClueManager.hpp"
@@ -128,7 +127,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "cursor", "helmet", "skull", "spell_factory", "rage_spell", "poison_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
-                "destroyed_icon", "heart_icon", "warrior_green_no_moves", "warrior_blue_no_moves", "warrior_purple_no_moves", "save_icon"}) {
+                "destroyed_icon", "heart_icon", "warrior_green_no_moves", "warrior_blue_no_moves", "warrior_purple_no_moves", "save_icon",
+                "plain"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -154,9 +154,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     }
                 }
             }
-        }
-        for (uint32_t i = 1; i <= PlainsGeneration::TOTAL_PLAINS; i = i + 1) {
-            Textures::get()->add("plain" + std::to_string(i), "images/plains/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= Plant::TOTAL_TYPES; i = i + 1) {
             for (uint32_t j = 1; j <= Plant::ANIMATION_NUMBER[i - 1]; j = j + 1) {

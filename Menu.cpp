@@ -268,7 +268,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
 
 
-    std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>(*Locales::get()->get("credits"), *Locales::get()->get("close"), clickEvent, 600, 400);
+    std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>(*Locales::get()->get("credits"), *Locales::get()->get("close"), clickEvent, 600, 600);
     Events creditsEvent = clickEvent;
     creditsEvent.add(std::make_shared<CreateEEvent>(creditsWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 360, 400, 60, *Locales::get()->get("show_credits")), creditsEvent);
@@ -276,7 +276,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 
 
 
-    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>(*Locales::get()->get("license"), *Locales::get()->get("close"), clickEvent, 600, 400);
+    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>(*Locales::get()->get("license"), *Locales::get()->get("close"), clickEvent, 600, 600);
     Events licenseEvent = clickEvent;
     licenseEvent.add(std::make_shared<CreateEEvent>(licenseWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 430, 400, 60, *Locales::get()->get("show_license")), licenseEvent);

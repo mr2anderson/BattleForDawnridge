@@ -464,10 +464,12 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	window.draw(bar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getMapSizePtr()->getWidth(); i = i + 1) {
-		for (uint32_t j = 0; j < this->map->getStatePtr()->getMapSizePtr()->getHeight(); j = j + 1) {
+    uint32_t sx = Textures::get()->get("plain")->getSize().x / 64;
+    uint32_t sy = Textures::get()->get("plain")->getSize().y / 64;
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getMapSizePtr()->getWidth(); i = i + sx) {
+		for (uint32_t j = 0; j < this->map->getStatePtr()->getMapSizePtr()->getHeight(); j = j + sy) {
 			sf::Sprite s;
-			s.setTexture(*Textures::get()->get("plain" + std::to_string(this->plains.getType(i, j))));
+			s.setTexture(*Textures::get()->get("plain"));
 			s.setPosition(64 * i, 64 * j);
 			window.draw(s);
 		}

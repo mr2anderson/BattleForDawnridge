@@ -21,7 +21,6 @@
 #include <optional>
 #include "Map.hpp"
 #include "HighlightTable.hpp"
-#include "PlainsGeneration.hpp"
 #include "AddResourcesEvent.hpp"
 #include "BuildEvent.hpp"
 #include "ChangeMoveEvent.hpp"
@@ -104,7 +103,6 @@ private:
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	uint32_t move;
 	HighlightTable highlightTable;
-	PlainsGeneration plains;
     BuildingMode bm;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
