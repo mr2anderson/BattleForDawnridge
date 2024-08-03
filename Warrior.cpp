@@ -506,7 +506,7 @@ float Warrior::getOffset() const {
 }
 sf::Color Warrior::getTextureColor() const {
     if (this->inRage()) {
-        return sf::Color(75, 0, 130);
+        return sf::Color(150, 0, 255);
     }
     return this->Unit::getTextureColor();
 }
