@@ -142,7 +142,7 @@ private:
 
 
 	void removeFinishedElement();
-	void addNewMoveEvent();
+	void processNewMoveEvents();
 	bool allNewMoveEventsAdded() const;
 	void changeMove();
 	Player* getCurrentPlayer();

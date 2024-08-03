@@ -146,7 +146,7 @@ bool MainScreen::gameCycle(sf::RenderWindow &window) {
         }
         Playlist::get()->update();
         this->removeFinishedElement();
-        this->addNewMoveEvent();
+        this->processNewMoveEvents();
         this->processBaseEvents();
         if (this->element != nullptr) {
             this->element->update();
@@ -503,7 +503,7 @@ void MainScreen::removeFinishedElement() {
         this->element = nullptr;
     }
 }
-void MainScreen::addNewMoveEvent() {
+void MainScreen::processNewMoveEvents() {
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
@@ -511,6 +511,7 @@ void MainScreen::addNewMoveEvent() {
 		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
+        this->processBaseEvents();
 	}
 }
 bool MainScreen::allNewMoveEventsAdded() const {
