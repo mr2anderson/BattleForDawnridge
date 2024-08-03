@@ -100,9 +100,6 @@ Events HorizontalSelectionWindow::click() {
 }
 void HorizontalSelectionWindow::finish() {
 	this->PopUpElement::finish();
-	while (this->possibleToMoveDown()) {
-		this->moveDown();
-	}
 }
 bool HorizontalSelectionWindow::show(const Button& button) const {
 	return (button.getY() + button.getH() > this->rect->getY() and 
