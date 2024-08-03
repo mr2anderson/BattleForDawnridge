@@ -19,7 +19,6 @@
 
 #include "Collections.hpp"
 #include "GO.hpp"
-#include "Effect.hpp"
 #include "ResourcePoint.hpp"
 #include "Unit.hpp"
 #include "Building.hpp"
@@ -37,9 +36,6 @@ void Collections::add(GO *object) {
 
 uint32_t Collections::totalGOs() const {
 	return this->gos.size();
-}
-uint32_t Collections::totalEffects() const {
-	return this->effects.size();
 }
 uint32_t Collections::totalRPs() const {
 	return this->rps.size();
@@ -61,9 +57,6 @@ GO* Collections::getGO(uint32_t i, uint8_t filter) {
 const GO* Collections::getGO(uint32_t i, uint8_t filter) const {
     return this->gos.at(i, filter);
 }
-Effect* Collections::getEffect(uint32_t i) {
-	return this->effects.at(i);
-}
 ResourcePoint* Collections::getRP(uint32_t i) {
 	return this->rps.at(i);
 }
@@ -77,9 +70,6 @@ Warrior* Collections::getWarrior(uint32_t i)  {
 	return this->warriors.at(i);
 }
 void Collections::addToSubClassCollections(GO *object) {
-    if (Effect* effect = dynamic_cast<Effect*>(object)) {
-        this->effects.push(effect);
-    }
     if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
         this->rps.push(rp);
     }

@@ -32,7 +32,6 @@
 #include "Infantryman.hpp"
 #include "Healer.hpp"
 #include "Treasure.hpp"
-#include "Effect.hpp"
 #include "Plant.hpp"
 #include "ArchiveType.hpp"
 

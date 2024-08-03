@@ -34,7 +34,6 @@
 #include "ClueManager.hpp"
 #include "Fire.hpp"
 #include "House.hpp"
-#include "PoisonFog.hpp"
 #include "Parameters.hpp"
 #include "CouldntOpenParameters.hpp"
 #include "BigArrow.hpp"
@@ -124,7 +123,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "down_icon", "russian_icon", "english_icon", "bell", "destroy_icon",
                 "btc", "axe_icon", "cross_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
-                "cursor", "helmet", "skull", "spell_factory", "rage_spell", "poison_spell",
+                "cursor", "helmet", "skull", "spell_factory", "rage_spell",
                 "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon", "heart_icon", "warrior_green_no_moves", "warrior_blue_no_moves", "warrior_purple_no_moves", "save_icon",
@@ -166,9 +165,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= Well::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("well" + std::to_string(i), "images/well/" + std::to_string(i) + ".png");
         }
-        for (uint32_t i = 1; i <= PoisonFog::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("poison_fog" + std::to_string(i), "images/poison_fog/" + std::to_string(i) + ".png");
-        }
         for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
             Textures::get()->add("big_arrow" + std::to_string(i), "images/big_arrow/" + std::to_string(i) + ".png");
         }
@@ -186,7 +182,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
-                                      "ouch", "spell_factory", "rage_spell", "poison_fog",
+                                      "ouch", "spell_factory", "rage_spell",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
                                       "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "vehicle_hit",
                                       "vehicle"}) {

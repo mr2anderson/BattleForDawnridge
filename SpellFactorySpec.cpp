@@ -19,7 +19,6 @@
 
 #include "SpellFactorySpec.hpp"
 #include "RageSpell.hpp"
-#include "PoisonSpell.hpp"
 
 
 SpellFactorySpec::SpellFactorySpec() = default;
@@ -30,7 +29,6 @@ std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_
 	std::vector<std::shared_ptr<Spell>> toProduce;
 
 	toProduce.push_back(std::make_shared<RageSpell>(playerId));
-	toProduce.push_back(std::make_shared<PoisonSpell>(playerId));
 
 	return toProduce;
 }

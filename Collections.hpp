@@ -40,7 +40,6 @@ public:
 	void add(GO *object);
 
 	uint32_t totalGOs() const;
-	uint32_t totalEffects() const;
 	uint32_t totalRPs() const;
     uint32_t totalUnits() const;
 	uint32_t totalBuildings() const;
@@ -48,14 +47,12 @@ public:
 
 	GO* getGO(uint32_t i, uint8_t filter);
     const GO* getGO(uint32_t i, uint8_t filter) const;
-	Effect* getEffect(uint32_t i);
-	ResourcePoint* getRP(uint32_t i);
+    ResourcePoint* getRP(uint32_t i);
     Unit* getUnit(uint32_t i);
 	Building* getBuilding(uint32_t i);
 	Warrior* getWarrior(uint32_t i);
 private:
 	Collection<GO> gos;
-	Collection<Effect> effects;
 	Collection<ResourcePoint> rps;
     Collection<Unit> units;
 	Collection<Building> buildings;

@@ -64,7 +64,6 @@
 #include "Spell.hpp"
 #include "SpellProducerSpec.hpp"
 #include "SpellFactory.hpp"
-#include "Effect.hpp"
 #include "Infirmary.hpp"
 #include "Tower1.hpp"
 #include "Tower2.hpp"
@@ -850,9 +849,6 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 	else if (std::shared_ptr<DecreaseRageModeMovesLeftEvent> decreaseRageModeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseRageModeMovesLeftEvent>(e)) {
 		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent);
 	}
-	else if (std::shared_ptr<CreateEffectEvent> createEffectEvent = std::dynamic_pointer_cast<CreateEffectEvent>(e)) {
-		this->handleCreateEffectEvent(createEffectEvent);
-	}
     else if (std::shared_ptr<RefreshAttackAbilityEvent> refreshAttackAbilityEvent = std::dynamic_pointer_cast<RefreshAttackAbilityEvent>(e)) {
         this->handleRefreshAttackAbilityEvent(refreshAttackAbilityEvent);
     }
@@ -1030,9 +1026,6 @@ void MainScreen::handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorR
 void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e) {
 	e->getWarrior()->decreaseRageModeMovesLeft();
 }
-void MainScreen::handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e) {
-	this->map->getStatePtr()->getCollectionsPtr()->add(e->getEffect());
-}
 void MainScreen::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e) {
     e->getI()->refreshAbility();
 }
@@ -1067,12 +1060,6 @@ void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsIna
     else {
         Events event;
         event.add(std::make_shared<PlaySoundEvent>("click"));
-        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalEffects(); i = i + 1) {
-            Effect *effect = this->map->getStatePtr()->getCollectionsPtr()->getEffect(i);
-            if (effect->exist() and effect->getPlayerId() == e->getPlayerId()) {
-                event.add(std::make_shared<SubHpEvent>(effect, effect->getHP()));
-            }
-        }
         if (this->currentPlayerId == e->getPlayerId()) {
             event.add(std::make_shared<ChangeMoveEvent>());
         }

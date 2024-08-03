@@ -25,7 +25,7 @@
 ClueManager* ClueManager::singletone = nullptr;
 
 
-const uint32_t ClueManager::TOTAL_CLUES = 38;
+const uint32_t ClueManager::TOTAL_CLUES = 36;
 
 
 const uint32_t ClueManager::W = 475;

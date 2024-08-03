@@ -63,7 +63,6 @@
 #include "MarkSpellAsUsedEvent.hpp"
 #include "EnableWarriorRageModeEvent.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
-#include "CreateEffectEvent.hpp"
 #include "RefreshAttackAbilityEvent.hpp"
 #include "WipeAttackAbilityEvent.hpp"
 #include "RefreshAttackedTableEvent.hpp"
@@ -216,7 +215,6 @@ private:
 	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e);
 	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e);
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e);
-	void handleCreateEffectEvent(std::shared_ptr<CreateEffectEvent> e);
     void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e);
     void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e);
     void handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e);

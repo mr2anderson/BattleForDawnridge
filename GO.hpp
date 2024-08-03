@@ -69,7 +69,6 @@ public:
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
 
-    static const DrawingPriority DRAWING_PRIORITY_EFFECT;
     static const DrawingPriority DRAWING_PRIORITY_WARRIOR_FLYING;
     static const DrawingPriority DRAWING_PRIORITY_WARRIOR_DEFAULT;
     static const DrawingPriority DRAWING_PRIORITY_WARRIOR_VEHICLE;
