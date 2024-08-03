@@ -53,8 +53,8 @@ uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(const Building* build
 	}
 	return this->getActivePopulationLimit();
 }
-uint8_t IPopulationLimitIncreaserSpec::getNewMoveMainPriority() const {
-    return 1;
+NewMoveMainPriority IPopulationLimitIncreaserSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_HOUSE;
 }
 
 

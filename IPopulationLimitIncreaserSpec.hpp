@@ -27,7 +27,7 @@ class IPopulationLimitIncreaserSpec : public IBuildingSpec {
 public:
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
 	uint32_t getPopulationLimit(const Building* building) const override;
-    uint8_t getNewMoveMainPriority() const override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
 	virtual uint32_t getActivePopulationLimit() const = 0;
 private:
     friend class boost::serialization::access;

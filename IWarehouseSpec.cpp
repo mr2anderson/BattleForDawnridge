@@ -68,8 +68,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
 
 	return { component };
 }
-uint8_t IWarehouseSpec::getNewMoveMainPriority() const {
-    return 1;
+NewMoveMainPriority IWarehouseSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_WAREHOUSE;
 }
 Resources IWarehouseSpec::getLimit(const Building *building) const {
     if (building->wasWithFullHP()) {

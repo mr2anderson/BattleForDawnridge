@@ -73,8 +73,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::ge
 bool VictoryConditionSpec::isVictoryCondition() const {
 	return true;
 }
-uint8_t VictoryConditionSpec::getNewMoveMainPriority() const {
-    return 5;
+NewMoveMainPriority VictoryConditionSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION;
 }
 void VictoryConditionSpec::increaseMoveCtr() {
     this->moveCtr = this->moveCtr + 1;

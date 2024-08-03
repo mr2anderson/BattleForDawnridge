@@ -18,6 +18,7 @@
 
 
 #include "IBuildingSpec.hpp"
+#include "GO.hpp"
 
 
 IBuildingSpec::~IBuildingSpec() = default;
@@ -69,8 +70,8 @@ bool IBuildingSpec::isHighObstacle(const Building *building, uint32_t playerId) 
 bool IBuildingSpec::isLowObstacle(const Building *building, uint32_t playerId) const {
 	return false;
 }
-uint8_t IBuildingSpec::getNewMoveMainPriority() const {
-    return 0;
+NewMoveMainPriority IBuildingSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_LOWEST;
 }
 
 

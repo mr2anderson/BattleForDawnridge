@@ -71,6 +71,9 @@ sf::Color TerritoryConductorSpec::getHighlightColor(uint32_t playerId) const {
 uint8_t TerritoryConductorSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
 }
+NewMoveMainPriority TerritoryConductorSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(TerritoryConductorSpec)

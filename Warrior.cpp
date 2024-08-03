@@ -258,14 +258,20 @@ uint32_t Warrior::getWarriorMovementCost(const Warrior *w) const {
 	}
     return 10000;
 }
-uint8_t Warrior::getDrawingPriority() const {
-    return 253 + this->isFlying() - this->isVehicle();
+DrawingPriority Warrior::getDrawingPriority() const {
+    if (this->isFlying()) {
+        return GO::DRAWING_PRIORITY_WARRIOR_FLYING;
+    }
+    if (this->isVehicle()) {
+        return GO::DRAWING_PRIORITY_WARRIOR_VEHICLE;
+    }
+    return GO::DRAWING_PRIORITY_WARRIOR_DEFAULT;
 }
-uint8_t Warrior::getClickPriority() const {
-    return 255;
+ClickPriority Warrior::getClickPriority() const {
+    return GO::CLICK_PRIORITY_WARRIOR;
 }
-uint8_t Warrior::getNewMoveMainPriority() const {
-    return 4;
+NewMoveMainPriority Warrior::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_WARRIOR;
 }
 Events Warrior::processCurrentAnimation(MapState *state) {
     if (currentAnimation == "running") {

@@ -18,22 +18,12 @@
 
 
 #include <cstdint>
-#include "NewMoveMainPriority.hpp"
+#include "Priority.hpp"
 
 
 #pragma once
 
 
-class GO;
+class DrawingPriority : public Priority<uint8_t> {
 
-
-class NewMovePriority {
-public:
-    NewMovePriority(NewMoveMainPriority main, Priority<uint64_t> second);
-
-    bool operator<(const NewMovePriority &b) const;
-    bool operator>(const NewMovePriority &b) const;
-private:
-    NewMoveMainPriority main;
-    Priority<uint64_t> second;
 };

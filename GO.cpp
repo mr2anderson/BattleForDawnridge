@@ -25,6 +25,25 @@
 #include "ResetHighlightEvent.hpp"
 
 
+const DrawingPriority GO::DRAWING_PRIORITY_EFFECT = {4};
+const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_FLYING = {3};
+const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_DEFAULT = {2};
+const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_VEHICLE = {1};
+const DrawingPriority GO::DRAWING_PRIORITY_LOWEST = {0};
+
+const ClickPriority GO::CLICK_PRIORITY_WARRIOR {1};
+const ClickPriority GO::CLICK_PRIORITY_LOWEST = {0};
+
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_WARRIOR = {7};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION = {6};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_EFFECT = {5};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_SHOOTING = {4};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR = {3};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_HOUSE = {2};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_WAREHOUSE = {1};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_LOWEST = {0};
+
+
 GO::GO() = default;
 GO::GO(uint32_t x, uint32_t y) {
 	this->x = x;
@@ -102,17 +121,17 @@ bool GO::intersects(GO* go) const {
 Events GO::newMove(MapState* state, uint32_t currentPlayerId) {
 	return Events();
 }
-uint8_t GO::getDrawingPriority() const {
-	return 0;
+DrawingPriority GO::getDrawingPriority() const {
+	return GO::DRAWING_PRIORITY_LOWEST;
 }
-uint8_t GO::getClickPriority() const {
-	return 0;
+ClickPriority GO::getClickPriority() const {
+	return GO::CLICK_PRIORITY_LOWEST;
 }
-uint8_t GO::getNewMoveMainPriority() const {
-    return 0;
+NewMoveMainPriority GO::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_LOWEST;
 }
 NewMovePriority GO::getNewMovePriority() const {
-    return {this->getNewMoveMainPriority(), this};
+    return {this->getNewMoveMainPriority(), typeid(this).hash_code()};
 }
 sf::IntRect GO::getTextureRect() const {
 	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());

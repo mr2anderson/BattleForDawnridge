@@ -32,7 +32,7 @@ public:
 	Events getEventOnDestroy(const Building *b, MapState* state) const override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
 	bool isVictoryCondition() const override;
-    uint8_t getNewMoveMainPriority() const override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
     void increaseMoveCtr();
 private:
     uint32_t moveCtr;

@@ -59,9 +59,9 @@ public:
 	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(const Warrior *w) const override;
 	uint32_t getWarriorMovementCost(const Warrior *w) const override;
-    uint8_t getDrawingPriority() const override;
-    uint8_t getClickPriority() const override;
-    uint8_t getNewMoveMainPriority() const override;
+    DrawingPriority getDrawingPriority() const override;
+    ClickPriority getClickPriority() const override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
     Events processCurrentAnimation(MapState *state) override;
 	void startAnimation(const std::string& type);
     std::string getCurrentAnimation() const;

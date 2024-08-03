@@ -37,14 +37,11 @@ uint32_t Effect::getSY() const {
 uint32_t Effect::getPlayerId() const {
     return this->playerId;
 }
-uint8_t Effect::getClickPriority() const {
-	return 0;
+DrawingPriority Effect::getDrawingPriority() const {
+	return GO::DRAWING_PRIORITY_EFFECT;
 }
-uint8_t Effect::getDrawingPriority() const {
-	return 255;
-}
-uint8_t Effect::getNewMoveMainPriority() const {
-    return 3;
+NewMoveMainPriority Effect::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_EFFECT;
 }
 uint32_t Effect::getMaxHP() const {
 	return this->getLifetime();

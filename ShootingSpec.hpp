@@ -36,7 +36,7 @@ public:
     uint8_t getHighlightType() const override;
     bool ignoreLowObstacles() const override;
     bool ignoreHighObstacles() const override;
-    uint8_t getNewMoveMainPriority() const override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
     virtual Damage getDamage() const = 0;
     virtual uint32_t getShotsNumber() const = 0;
     virtual uint32_t getShootingRadius() const = 0;

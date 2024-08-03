@@ -20,6 +20,8 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/base_object.hpp>
 #include "HorizontalSelectionWindow.hpp"
+#include "DrawingPriority.hpp"
+#include "ClickPriority.hpp"
 #include "NewMovePriority.hpp"
 #include "MapState.hpp"
 #include "ArchiveType.hpp"
@@ -57,15 +59,33 @@ public:
 	bool intersects(GO* go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
-	virtual uint8_t getDrawingPriority() const;
-	virtual uint8_t getClickPriority() const;
-    virtual uint8_t getNewMoveMainPriority() const;
+	virtual DrawingPriority getDrawingPriority() const;
+	virtual ClickPriority getClickPriority() const;
+    virtual NewMoveMainPriority getNewMoveMainPriority() const;
     NewMovePriority getNewMovePriority() const;
 	virtual std::string getTextureName() const = 0;
 	virtual sf::IntRect getTextureRect() const;
 	virtual sf::Color getTextureColor() const;
 	virtual std::string getSoundName() const = 0;
 	virtual std::wstring getDescription() const = 0;
+
+    static const DrawingPriority DRAWING_PRIORITY_EFFECT;
+    static const DrawingPriority DRAWING_PRIORITY_WARRIOR_FLYING;
+    static const DrawingPriority DRAWING_PRIORITY_WARRIOR_DEFAULT;
+    static const DrawingPriority DRAWING_PRIORITY_WARRIOR_VEHICLE;
+    static const DrawingPriority DRAWING_PRIORITY_LOWEST;
+
+    static const ClickPriority CLICK_PRIORITY_WARRIOR;
+    static const ClickPriority CLICK_PRIORITY_LOWEST;
+
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_WARRIOR;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_EFFECT;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_SHOOTING;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_HOUSE;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_WAREHOUSE;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_LOWEST;
 protected:
 	virtual Events getResponse(MapState *state, uint32_t currentPlayerId, uint32_t button) = 0;
     virtual float getOffsetX() const;

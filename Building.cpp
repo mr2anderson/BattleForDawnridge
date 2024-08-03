@@ -114,8 +114,8 @@ bool Building::works() const {
 bool Building::wasWithFullHP() const {
     return this->_wasWithFullHP;
 }
-uint8_t Building::getNewMoveMainPriority() const {
-    uint8_t priority = 0;
+NewMoveMainPriority Building::getNewMoveMainPriority() const {
+    NewMoveMainPriority priority = this->Unit::getNewMoveMainPriority();
 
     for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
         priority = std::max(priority, this->specs.at(i)->getNewMoveMainPriority());

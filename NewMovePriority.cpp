@@ -21,16 +21,25 @@
 #include "GO.hpp"
 
 
-NewMovePriority::NewMovePriority(uint8_t mainPriority, const GO *type) {
-    this->mainPriority = mainPriority;
-    this->typeHashCode = typeid(*type).hash_code();
+NewMovePriority::NewMovePriority(NewMoveMainPriority main, Priority<uint64_t> second) {
+    this->main = main;
+    this->second = second;
 }
-bool NewMovePriority::operator>(const NewMovePriority &b) {
-    if (this->mainPriority > b.mainPriority) {
+bool NewMovePriority::operator>(const NewMovePriority &b) const {
+    if (this->main > b.main) {
         return true;
     }
-    if (this->mainPriority < b.mainPriority) {
+    if (this->main < b.main) {
         return false;
     }
-    return this->typeHashCode > b.typeHashCode;
+    return this->second > b.second;
+}
+bool NewMovePriority::operator<(const NewMovePriority &b) const {
+    if (this->main < b.main) {
+        return true;
+    }
+    if (this->main > b.main) {
+        return false;
+    }
+    return this->second < b.second;
 }

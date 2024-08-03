@@ -17,23 +17,24 @@
  */
 
 
-#include <cstdint>
-#include "NewMoveMainPriority.hpp"
-
-
 #pragma once
 
 
-class GO;
-
-
-class NewMovePriority {
+template<typename T> class Priority {
 public:
-    NewMovePriority(NewMoveMainPriority main, Priority<uint64_t> second);
-
-    bool operator<(const NewMovePriority &b) const;
-    bool operator>(const NewMovePriority &b) const;
+    bool operator<(const Priority &b) const {
+        return this->val < b.val;
+    }
+    bool operator>(const Priority &b) const {
+        return this->val > b.val;
+    }
+protected:
+    friend class NewMovePriority;
+    friend class GO;
+    Priority() = default;
+    Priority(T val) {
+        this->val = val;
+    }
 private:
-    NewMoveMainPriority main;
-    Priority<uint64_t> second;
+    T val;
 };

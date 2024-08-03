@@ -33,6 +33,7 @@ public:
 	bool isActiveConductor(const Building* building) const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
 	virtual bool conductsIfNotWork() const = 0;
 private:
     friend class boost::serialization::access;

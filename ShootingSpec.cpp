@@ -122,8 +122,8 @@ bool ShootingSpec::ignoreLowObstacles() const {
 bool ShootingSpec::ignoreHighObstacles() const {
     return true;
 }
-uint8_t ShootingSpec::getNewMoveMainPriority() const {
-    return 2;
+NewMoveMainPriority ShootingSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_SHOOTING;
 }
 
 
