@@ -18,6 +18,7 @@
 
 
 #include "CameraDependentPopUpElement.hpp"
+#include "Clock.hpp"
 
 
 #pragma once
@@ -38,7 +39,7 @@ public:
         return Events();
     }
 	void update() override {
-        float dt = this->clock.getElapsedTime().asSeconds();
+        float dt = this->clock.getSecondsAsFloat();
 
         this->setTransparentColor(dt);
         this->setPosition(dt);
@@ -66,7 +67,7 @@ protected:
 private:
     T t;
     float startX, startY;
-	sf::Clock clock;
+	Clock clock;
 	float dst;
 
     static constexpr float TIME = 0.625;

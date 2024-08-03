@@ -17,20 +17,24 @@
  */
 
 
-#include "CameraDependentPopUpElement.hpp"
+#include <cmath>
 #include "Clock.hpp"
 
 
-class SpellEffect : public CameraDependentPopUpElement {
-public:
-    SpellEffect(const std::string &textureName, uint32_t x, uint32_t y);
+static const double NS_IN_SECOND = std::pow(10, 9);
 
-    void run(uint32_t windowW, uint32_t windowH) override;
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    Events click() override;
-    void update() override;
-private:
-    sf::Sprite sprite;
-    float startX, startY;
-    Clock clock;
-};
+
+Clock::Clock() {
+    this->restart();
+}
+uint32_t Clock::getMS() const {
+    auto current = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(current - this->start).count();
+}
+float Clock::getSecondsAsFloat() const {
+    auto current = std::chrono::high_resolution_clock::now();
+    return (double)std::chrono::duration_cast<std::chrono::nanoseconds>(current - this->start).count() / NS_IN_SECOND;
+}
+void Clock::restart() {
+    this->start = std::chrono::high_resolution_clock::now();
+}

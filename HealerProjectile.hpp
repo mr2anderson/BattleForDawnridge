@@ -34,5 +34,5 @@ public:
 
     static const uint32_t TOTAL_TYPES;
 private:
-    sf::Clock animationClock;
+    Clock animationClock;
 };

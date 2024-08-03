@@ -17,20 +17,27 @@
  */
 
 
-#include "CameraDependentPopUpElement.hpp"
-#include "Clock.hpp"
+#include <chrono>
+#include <cstdint>
+#include <boost/serialization/binary_object.hpp>
+#include "ArchiveType.hpp"
 
 
-class SpellEffect : public CameraDependentPopUpElement {
+#pragma once
+
+
+class Clock {
 public:
-    SpellEffect(const std::string &textureName, uint32_t x, uint32_t y);
+    Clock();
 
-    void run(uint32_t windowW, uint32_t windowH) override;
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    Events click() override;
-    void update() override;
+    uint32_t getMS() const;
+    float getSecondsAsFloat() const;
+    void restart();
 private:
-    sf::Sprite sprite;
-    float startX, startY;
-    Clock clock;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::make_binary_object(&start, sizeof(start));
+    }
 };

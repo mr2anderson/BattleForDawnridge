@@ -28,6 +28,7 @@
 #include "AnimationState.hpp"
 #include "Damage.hpp"
 #include "SpecialMove.hpp"
+#include "Clock.hpp"
 
 
 #pragma once
@@ -96,12 +97,12 @@ protected:
 private:
 	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;
-    sf::Clock hasSpecialMovesCheckTimer;
+    Clock hasSpecialMovesCheckTimer;
 	std::string currentDirection;
 	std::string currentAnimation;
-	sf::Clock animationClock;
+	Clock animationClock;
     std::queue<std::string> currentMovement;
-	sf::Clock footstepsClock;
+	Clock footstepsClock;
 	bool toKill;
 	uint32_t rageModeMovesLeft;
 
@@ -133,8 +134,11 @@ private:
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<Unit>(*this);
         ar & this->movementPoints;
+        ar & this->hasSpecialMoves;
+        ar & this->hasSpecialMovesCheckTimer;
         ar & this->currentDirection;
         ar & this->currentAnimation;
+        ar & this->animationClock;
         ar & this->currentMovement;
         ar & this->toKill;
         ar & this->rageModeMovesLeft;

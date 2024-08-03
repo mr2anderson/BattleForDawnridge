@@ -25,5 +25,5 @@ GlobalClock* GlobalClock::singletone = nullptr;
 
 GlobalClock::GlobalClock() = default;
 uint32_t GlobalClock::getMs() const {
-    return this->clock.getElapsedTime().asMilliseconds();
+    return this->clock.getMS();
 }

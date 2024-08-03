@@ -65,7 +65,7 @@ std::wstring Road::getDescription() const {
 	return *Locales::get()->get("road_description");
 }
 void Road::newFrame(MapState *state, uint32_t playerId) {
-    if (this->verifyingTypeTimer.getElapsedTime().asMilliseconds() > 100 and this->exist() and this->works()) { // There is no effort to call verifying every single frame
+    if (this->verifyingTypeTimer.getMS() > 100 and this->exist() and this->works()) { // There is no effort to call verifying every single frame
         this->verifyingTypeTimer.restart();
         std::string properType = this->getProperType(state);
         this->type = properType;

@@ -17,8 +17,7 @@
  */
 
 
-#include <SFML/Graphics.hpp>
-#include <cstdint>
+#include "Clock.hpp"
 
 
 #pragma once
@@ -39,5 +38,5 @@ private:
     GlobalClock(const GlobalClock& copy);
     static GlobalClock* singletone;
 
-    sf::Clock clock;
+    Clock clock;
 };

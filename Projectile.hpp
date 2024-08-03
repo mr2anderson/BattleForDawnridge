@@ -18,6 +18,7 @@
 
 
 #include "CameraDependentPopUpElement.hpp"
+#include "Clock.hpp"
 
 
 #pragma once
@@ -41,5 +42,5 @@ private:
     float x1, y1;
     float vx, vy;
     float rotation;
-    sf::Clock clock;
+    Clock clock;
 };

@@ -293,7 +293,7 @@ std::string Warrior::getCurrentAnimation() const {
     return this->currentAnimation;
 }
 AnimationState Warrior::getCurrentAnimationState() const {
-    uint32_t ms = this->animationClock.getElapsedTime().asMilliseconds();
+    uint32_t ms = this->animationClock.getMS();
     uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->currentDirection);
     uint32_t msForFrame = this->getCurrentAnimationMs() / animationNumber;
     uint32_t currentFrame = ms / msForFrame;
@@ -353,7 +353,7 @@ std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uin
     return std::make_shared<sf::Sprite>(sprite);
 }
 void Warrior::newFrame(MapState *state, uint32_t currentPlayerId) {
-    if (this->exist() and this->getPlayerId() == currentPlayerId and this->hasSpecialMovesCheckTimer.getElapsedTime().asMilliseconds() > 100) {
+    if (this->exist() and this->getPlayerId() == currentPlayerId and this->hasSpecialMovesCheckTimer.getMS() > 100) {
         this->hasSpecialMovesCheckTimer.restart();
         this->hasSpecialMoves = !this->getSpecialMoves(state).empty();
     }
@@ -422,13 +422,13 @@ Events Warrior::processRunningAnimation(MapState *state) {
     }
     else {
         if (this->isFlying()) {
-            if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 500) {
+            if (this->footstepsClock.getMS() >= 500) {
                 events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_WINGS + 1), true));
                 this->footstepsClock.restart();
             }
         }
         else {
-            if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 250) {
+            if (this->footstepsClock.getMS() >= 250) {
                 events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
                 this->footstepsClock.restart();
             }
@@ -508,7 +508,7 @@ float Warrior::getOffsetY() const {
     return 0;
 }
 float Warrior::getOffset() const {
-    return 64 * (float)this->animationClock.getElapsedTime().asMilliseconds() / (float)this->getCurrentAnimationMs();
+    return 64 * (float)this->animationClock.getMS() / (float)this->getCurrentAnimationMs();
 }
 sf::Color Warrior::getTextureColor() const {
     if (this->inRage()) {

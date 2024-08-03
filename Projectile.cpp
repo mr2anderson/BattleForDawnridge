@@ -59,7 +59,7 @@ void Projectile::run(uint32_t windowW, uint32_t windowH) {
     this->clock.restart();
 }
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    float dt = this->clock.getElapsedTime().asSeconds();
+    float dt = this->clock.getSecondsAsFloat();
 
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get()->get(this->getTextureName()));
@@ -72,7 +72,7 @@ Events Projectile::click() {
     return Events();
 }
 void Projectile::update() {
-    float dt = this->clock.getElapsedTime().asSeconds();
+    float dt = this->clock.getSecondsAsFloat();
     if (dt >= this->getTime()) {
         this->finish();
     }

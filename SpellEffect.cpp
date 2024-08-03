@@ -41,7 +41,7 @@ Events SpellEffect::click() {
 	return Events();
 }
 void SpellEffect::update() {
-	float dt = this->clock.getElapsedTime().asSeconds();
+	float dt = this->clock.getSecondsAsFloat();
 
 	if (dt >= TIME) {
 		this->finish();
