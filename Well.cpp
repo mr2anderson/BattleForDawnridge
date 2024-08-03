@@ -22,7 +22,7 @@
 #include "WellSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 
 
 const uint32_t Well::TOTAL_TYPES = 8;
@@ -34,7 +34,7 @@ Well::Well() {
 Well::Well(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
 
-    this->type = GlobalRandomGenerator::get()->gen() % TOTAL_TYPES + 1;
+    this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
 
     this->addSpec(new WellSpec());
 }

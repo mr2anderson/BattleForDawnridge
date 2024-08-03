@@ -18,7 +18,6 @@
 
 
 #include "Resources.hpp"
-#include "ArchiveType.hpp"
 
 
 Resources::Resources() = default;

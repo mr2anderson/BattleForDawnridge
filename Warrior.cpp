@@ -45,7 +45,7 @@
 #include "WindowTwoButtons.hpp"
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 #include "Parameters.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 #include "FocusOnEvent.hpp"
 #include "Building.hpp"
 #include "AreaControllerSpec.hpp"
@@ -423,13 +423,13 @@ Events Warrior::processRunningAnimation(MapState *state) {
     else {
         if (this->isFlying()) {
             if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 500) {
-                events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_WINGS + 1), true));
+                events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_WINGS + 1), true));
                 this->footstepsClock.restart();
             }
         }
         else {
             if (this->footstepsClock.getElapsedTime().asMilliseconds() >= 250) {
-                events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
+                events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
                 this->footstepsClock.restart();
             }
         }

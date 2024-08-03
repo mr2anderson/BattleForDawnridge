@@ -18,7 +18,7 @@
 
 
 #include "BigArrow.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 #include "GlobalClock.hpp"
 
 
@@ -35,7 +35,7 @@ std::string BigArrow::getIconTextureName() const {
     return "big_arrow_icon";
 }
 std::string BigArrow::getSoundName() const {
-    return "big_arrow" + std::to_string(GlobalRandomGenerator::get()->gen() % TOTAL_SOUNDS + 1);
+    return "big_arrow" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_SOUNDS + 1);
 }
 float BigArrow::getTime() const {
     return 0.2f;

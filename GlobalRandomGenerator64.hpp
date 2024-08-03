@@ -17,24 +17,10 @@
  */
 
 
-#include <iostream>
-#include "Sounds.hpp"
-#include "Root.hpp"
-#include "CouldntOpenSound.hpp"
+#include "GlobalRandomGenerator.hpp"
 
 
-Sounds *Sounds::singletone = nullptr;
+#pragma once
 
 
-void Sounds::add(const std::string& name, const std::string& path) {
-    if (!this->sounds[name].loadFromFile(std::string(DATA_ROOT) + "/" + path)) {
-        throw CouldntOpenSound(path);
-    }
-}
-sf::SoundBuffer *Sounds::get(const std::string& name) {
-    auto it = this->sounds.find(name);
-    if (it == this->sounds.end()) {
-        std::cerr << "Invalid sound uid: " << name << std::endl;
-    }
-    return &it->second;
-}
+typedef GlobalRandomGenerator<std::mt19937_64, uint64_t> GlobalRandomGenerator64;

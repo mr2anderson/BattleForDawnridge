@@ -126,7 +126,7 @@ void Parameters::load() {
 Damage Parameters::getDamage(const std::string& id) const {
 	auto it = this->damages.find(id);
 	if (it == this->damages.end()) {
-		std::cerr << "Invalid damage id: " << id << std::endl;
+		std::cerr << "Invalid damage uid: " << id << std::endl;
 		return Damage(0, Damage::CUT);
 	}
 	return it->second;
@@ -134,7 +134,7 @@ Damage Parameters::getDamage(const std::string& id) const {
 Defence Parameters::getDefence(const std::string& id) const {
 	auto it = this->defences.find(id);
 	if (it == this->defences.end()) {
-		std::cerr << "Invalid defence id: " << id << std::endl;
+		std::cerr << "Invalid defence uid: " << id << std::endl;
 		return Defence(1, 1, 1);
 	}
 	return it->second;
@@ -142,7 +142,7 @@ Defence Parameters::getDefence(const std::string& id) const {
 Resources Parameters::getResources(const std::string& id) const {
 	auto it = this->resources.find(id);
 	if (it == this->resources.end()) {
-		std::cerr << "Invalid resources id: " << id << std::endl;
+		std::cerr << "Invalid resources uid: " << id << std::endl;
 		return Resources();
 	}
 	return it->second;
@@ -150,7 +150,7 @@ Resources Parameters::getResources(const std::string& id) const {
 Resource Parameters::getResource(const std::string& id) const {
 	auto it = this->resource.find(id);
 	if (it == this->resource.end()) {
-		std::cerr << "Invalid resource id: " << id << std::endl;
+		std::cerr << "Invalid resource uid: " << id << std::endl;
 		return Resource();
 	}
 	return it->second;
@@ -158,7 +158,7 @@ Resource Parameters::getResource(const std::string& id) const {
 uint32_t Parameters::getInt(const std::string& id) const {
 	auto it = this->ints.find(id);
 	if (it == this->ints.end()) {
-		std::cerr << "Invalid int id: " << id << std::endl;
+		std::cerr << "Invalid int uid: " << id << std::endl;
 		return 1;
 	}
 	return it->second;
@@ -166,7 +166,7 @@ uint32_t Parameters::getInt(const std::string& id) const {
 double Parameters::getDouble(const std::string& id) const {
 	auto it = this->doubles.find(id);
 	if (it == this->doubles.end()) {
-		std::cerr << "Invalid double id: " << id << std::endl;
+		std::cerr << "Invalid double uid: " << id << std::endl;
 		return 1;
 	}
 	return it->second;

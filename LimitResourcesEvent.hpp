@@ -17,24 +17,21 @@
  */
 
 
-#include <iostream>
-#include "Sounds.hpp"
-#include "Root.hpp"
-#include "CouldntOpenSound.hpp"
+#include <cstdint>
+#include "Event.hpp"
+#include "Resources.hpp"
 
 
-Sounds *Sounds::singletone = nullptr;
+#pragma once
 
 
-void Sounds::add(const std::string& name, const std::string& path) {
-    if (!this->sounds[name].loadFromFile(std::string(DATA_ROOT) + "/" + path)) {
-        throw CouldntOpenSound(path);
-    }
-}
-sf::SoundBuffer *Sounds::get(const std::string& name) {
-    auto it = this->sounds.find(name);
-    if (it == this->sounds.end()) {
-        std::cerr << "Invalid sound uid: " << name << std::endl;
-    }
-    return &it->second;
-}
+class LimitResourcesEvent : public Event {
+public:
+    LimitResourcesEvent(uint32_t playerId, const Resources &limit);
+
+    uint32_t getPlayerId() const;
+    Resources getLimit() const;
+private:
+    uint32_t playerId;
+    Resources limit;
+};

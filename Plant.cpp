@@ -20,7 +20,7 @@
 #include "Plant.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 #include "GlobalClock.hpp"
 
 
@@ -32,7 +32,7 @@ Plant::Plant() {
     this->type = 1;
 }
 Plant::Plant(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
-    this->type = GlobalRandomGenerator::get()->gen() % TOTAL_TYPES + 1;
+    this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
 }
 uint32_t Plant::getSX() const {
     return Parameters::get()->getInt("plant_sx");

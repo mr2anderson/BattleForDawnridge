@@ -104,7 +104,7 @@ void Locales::setDefaultPath(const std::string& path) {
 std::wstring* Locales::get(const std::string& name) {
     auto it = this->texts.find(name);
     if (it == this->texts.end()) {
-        std::cerr << "Invalid text id: " << name << std::endl;
+        std::cerr << "Invalid text uid: " << name << std::endl;
     }
     return &it->second;
 }

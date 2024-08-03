@@ -23,6 +23,7 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
+#include "GlobalRandomGenerator64.hpp"
 
 
 const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_FLYING = {3};
@@ -46,6 +47,7 @@ GO::GO() = default;
 GO::GO(uint32_t x, uint32_t y) {
 	this->x = x;
 	this->y = y;
+    this->generateUID();
 }
 void GO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!this->exist()) {
@@ -64,6 +66,9 @@ uint32_t GO::getX() const {
 }
 uint32_t GO::getY() const {
 	return this->y;
+}
+uint64_t GO::getUID() const {
+    return this->uid;
 }
 void GO::setX(uint32_t newX) {
 	this->x = newX;
@@ -165,6 +170,9 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 		this->getTextureRect()
 	};
 	return component;
+}
+void GO::generateUID() {
+    this->uid = GlobalRandomGenerator64::get()->gen();
 }
 void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;

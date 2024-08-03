@@ -19,7 +19,7 @@
 
 #include "Playlist.hpp"
 #include "Music.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 
 
 Playlist *Playlist::singletone = nullptr;
@@ -30,7 +30,7 @@ const uint32_t Playlist::MUSIC_VOLUME = 50;
 
 
 Playlist::Playlist() {
-    this->index = GlobalRandomGenerator::get()->gen() % SOUNDTRACKS_N;
+    this->index = GlobalRandomGenerator32::get()->gen() % SOUNDTRACKS_N;
 }
 void Playlist::update() {
     if (Music::get()->get(std::to_string(this->index))->getStatus() == sf::Music::Status::Playing) {

@@ -72,6 +72,7 @@
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
 #include "SaveGameEvent.hpp"
+#include "LimitResourcesEvent.hpp"
 
 
 #pragma once
@@ -224,4 +225,5 @@ private:
     void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e);
     void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e);
     void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e);
+    void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e);
 };

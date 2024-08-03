@@ -21,7 +21,7 @@
 #include "HouseSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 
 
 const uint32_t House::TOTAL_TYPES = 16;
@@ -33,7 +33,7 @@ House::House() {
 House::House(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 
-	this->type = GlobalRandomGenerator::get()->gen() % TOTAL_TYPES + 1;
+	this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
 
 	this->addSpec(new HouseSpec());
 }

@@ -46,6 +46,7 @@ public:
 	uint32_t getY() const;
 	virtual uint32_t getSX() const = 0;
 	virtual uint32_t getSY() const = 0;
+    uint64_t getUID() const;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
 	virtual bool warriorCanStay(const Warrior *w) const;
@@ -94,13 +95,18 @@ protected:
 	HorizontalSelectionWindowComponent getDescriptionComponent() const;
 private:
 	uint32_t x, y;
+    uint64_t uid;
 
+    void generateUID();
 	void drawTexture(sf::RenderTarget& target, sf::RenderStates states) const;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & this->x;
         ar & this->y;
+        if (Archive::is_loading::value) {
+            this->generateUID();
+        }
     }
 };
 

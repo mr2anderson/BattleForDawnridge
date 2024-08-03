@@ -877,6 +877,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<SaveGameEvent> saveGameEvent = std::dynamic_pointer_cast<SaveGameEvent>(e)) {
         this->handleSaveGameEvent(saveGameEvent);
     }
+    else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
+        this->handleLimitResourcesEvent(limitResourcesEvent);
+    }
 }
 void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -1074,4 +1077,7 @@ void MainScreen::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCt
 }
 void MainScreen::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e) {
     this->save();
+}
+void MainScreen::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e) {
+    this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
 }

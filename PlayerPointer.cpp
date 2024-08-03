@@ -34,6 +34,6 @@ void PlayerPointer::setSide(uint32_t side) {
         this->setTypePurple();
     }
     else {
-        std::cerr << "PlayerPointer: warning: unknown color id" << std::endl;
+        std::cerr << "PlayerPointer: warning: unknown color uid" << std::endl;
     }
 }

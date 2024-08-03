@@ -20,25 +20,21 @@
 #include "IWarehouseSpec.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
-#include "AddResourcesEvent.hpp"
+#include "LimitResourcesEvent.hpp"
 
 
 Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *state) const {
 	Events event;
 
-    if (!building->wasWithFullHP()) {
-        return event;
-    }
-
 	Resources newLimit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b != building) {
-			newLimit.plus(b->getLimit());
-		}
-	}
+        Building *b = state->getCollectionsPtr()->getBuilding(i);
+        if (b->exist() and b->getPlayerId() == building->getPlayerId() and b->getUID() != building->getUID()) {
+            newLimit.plus(b->getLimit());
+        }
+    }
 
-	event.add(std::make_shared<AddResourcesEvent>(Resources(), newLimit));
+    event.add(std::make_shared<LimitResourcesEvent>(building->getPlayerId(), newLimit));
 
 	return event;
 }

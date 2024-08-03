@@ -24,7 +24,7 @@
 #pragma once
 
 
-class GlobalRandomGenerator {
+template<typename Generator, typename Value> class GlobalRandomGenerator {
 public:
     static GlobalRandomGenerator* get() {
         if (GlobalRandomGenerator::singletone == nullptr) {
@@ -33,12 +33,22 @@ public:
         return GlobalRandomGenerator::singletone;
     }
 
-    uint32_t gen();
-    std::mt19937 &getMt();
+    Value gen() {
+        return this->generator();
+    }
+    Generator &getGenerator() {
+        return &this->generator;
+    }
 private:
-    GlobalRandomGenerator();
+    GlobalRandomGenerator() {
+        std::random_device rd;
+        this->generator = Generator(rd());
+    }
     GlobalRandomGenerator(const GlobalRandomGenerator& copy);
     static GlobalRandomGenerator* singletone;
 
-    std::mt19937 mersenne;
+    Generator generator;
 };
+
+
+template<typename Generator, typename Value> GlobalRandomGenerator<Generator, Value>* GlobalRandomGenerator<Generator, Value>::singletone = nullptr;

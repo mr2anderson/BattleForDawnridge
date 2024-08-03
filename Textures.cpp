@@ -37,7 +37,7 @@ void Textures::add(const std::string& name, const sf::Texture& texture) {
 sf::Texture *Textures::get(const std::string& name) {
     auto it = this->textures.find(name);
     if (it == this->textures.end()) {
-        std::cerr << "Invalid texture id: " << name << std::endl;
+        std::cerr << "Invalid texture uid: " << name << std::endl;
     }
     return &it->second;
 }

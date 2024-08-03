@@ -20,16 +20,7 @@
 #include "GlobalRandomGenerator.hpp"
 
 
-GlobalRandomGenerator* GlobalRandomGenerator::singletone = nullptr;
+#pragma once
 
 
-GlobalRandomGenerator::GlobalRandomGenerator() {
-    std::random_device rd;
-    this->mersenne = std::mt19937(rd());
-}
-uint32_t GlobalRandomGenerator::gen() {
-    return this->mersenne();
-}
-std::mt19937 &GlobalRandomGenerator::getMt() {
-    return this->mersenne;
-}
+typedef GlobalRandomGenerator<std::mt19937, uint32_t> GlobalRandomGenerator32;

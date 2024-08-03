@@ -51,7 +51,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
         Building* building = state->getCollectionsPtr()->getBuilding(i);
-        if (building != b and building->getPlayerId() == b->getPlayerId() and building->exist() and building->isVictoryCondition()) {
+        if (building->getUID() != b->getUID() and building->getPlayerId() == b->getPlayerId() and building->exist() and building->isVictoryCondition()) {
             return event;
         }
     }

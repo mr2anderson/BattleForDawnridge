@@ -34,7 +34,7 @@ void Fonts::add(const std::string& name, const std::string& path) {
 sf::Font* Fonts::get(const std::string& name) {
     auto it = this->fonts.find(name);
     if (it == this->fonts.end()) {
-        std::cerr << "Invalid font id: " << name << std::endl;
+        std::cerr << "Invalid font uid: " << name << std::endl;
     }
     return &it->second;
 }

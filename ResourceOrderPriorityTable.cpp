@@ -34,7 +34,7 @@ ResourceOrderPriorityTable::ResourceOrderPriorityTable() {
 }
 uint32_t ResourceOrderPriorityTable::getPriority(const std::string &id) const {
     if (this->data.find(id) == this->data.end()) {
-        std::cerr << "ResourceOrderPriorityTable: Warning: Unknown id: " << id << std::endl;
+        std::cerr << "ResourceOrderPriorityTable: Warning: Unknown uid: " << id << std::endl;
         return 0;
     }
     return this->data.at(id);

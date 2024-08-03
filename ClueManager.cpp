@@ -19,7 +19,7 @@
 
 #include "ClueManager.hpp"
 #include "Locales.hpp"
-#include "GlobalRandomGenerator.hpp"
+#include "GlobalRandomGenerator32.hpp"
 
 
 ClueManager* ClueManager::singletone = nullptr;
@@ -33,7 +33,7 @@ const uint32_t ClueManager::H = 80;
 
 
 ClueManager::ClueManager() {
-	this->currentClue = GlobalRandomGenerator::get()->gen() % TOTAL_CLUES;
+	this->currentClue = GlobalRandomGenerator32::get()->gen() % TOTAL_CLUES;
 	this->regenerateLabel();
 }
 Label ClueManager::getClueLabel(uint32_t windowW, uint32_t windowH) {

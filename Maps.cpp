@@ -36,7 +36,7 @@ void Maps::add(const std::string &name, const std::string &path) {
 std::shared_ptr<Map> Maps::load(const std::string& name) {
     auto it = this->paths.find(name);
     if (it == this->paths.end()) {
-        std::cerr << "Invalid map id: " << name << std::endl;
+        std::cerr << "Invalid map uid: " << name << std::endl;
     }
     std::shared_ptr<Map> map = std::make_shared<Map>(it->second);
     return map;

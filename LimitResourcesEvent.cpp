@@ -17,24 +17,16 @@
  */
 
 
-#include <iostream>
-#include "Sounds.hpp"
-#include "Root.hpp"
-#include "CouldntOpenSound.hpp"
+#include "LimitResourcesEvent.hpp"
 
 
-Sounds *Sounds::singletone = nullptr;
-
-
-void Sounds::add(const std::string& name, const std::string& path) {
-    if (!this->sounds[name].loadFromFile(std::string(DATA_ROOT) + "/" + path)) {
-        throw CouldntOpenSound(path);
-    }
+LimitResourcesEvent::LimitResourcesEvent(uint32_t playerId, const Resources &limit) {
+    this->playerId = playerId;
+    this->limit = limit;
 }
-sf::SoundBuffer *Sounds::get(const std::string& name) {
-    auto it = this->sounds.find(name);
-    if (it == this->sounds.end()) {
-        std::cerr << "Invalid sound uid: " << name << std::endl;
-    }
-    return &it->second;
+uint32_t LimitResourcesEvent::getPlayerId() const {
+    return this->playerId;
+}
+Resources LimitResourcesEvent::getLimit() const {
+    return this->limit;
 }
