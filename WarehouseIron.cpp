@@ -17,12 +17,10 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "WarehouseIron.hpp"
 #include "WarehouseIronSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;

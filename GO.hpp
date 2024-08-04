@@ -81,7 +81,6 @@ public:
 
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_WARRIOR;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION;
-    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_EFFECT;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_SHOOTING;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_HOUSE;

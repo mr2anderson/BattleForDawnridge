@@ -33,7 +33,6 @@
 #include "SubResourcesEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
 #include "HighlightColors.hpp"
-#include "ArchiveType.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {

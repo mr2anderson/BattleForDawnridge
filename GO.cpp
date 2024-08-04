@@ -23,7 +23,6 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
-#include "GlobalRandomGenerator64.hpp"
 
 
 const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_FLYING = {3};

@@ -27,7 +27,6 @@
 #include "SubHpEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "HighlightColors.hpp"
-#include "ArchiveType.hpp"
 
 
 AreaResourcePointCollectorSpec::AreaResourcePointCollectorSpec() = default;

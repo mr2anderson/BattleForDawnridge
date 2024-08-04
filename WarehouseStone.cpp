@@ -17,12 +17,10 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "WarehouseStone.hpp"
 #include "WarehouseStoneSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;

@@ -24,14 +24,8 @@
 #include "Building.hpp"
 
 
-AreaControllerSpec::AreaControllerSpec() {
-	this->prevHash = std::numeric_limits<uint32_t>::max();
-}
-std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) {
-    if (this->prevHash == this->getHash(state)) {
-        return this->prevAvailable;
-    }
-
+AreaControllerSpec::AreaControllerSpec() = default;
+std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const {
     std::map<std::tuple<uint32_t, uint32_t>, bool> blocked;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
@@ -51,14 +45,9 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvaila
     }
 
     LandscapeGraph g(state->getMapSizePtr()->getWidth(), state->getMapSizePtr()->getHeight(), blocked);
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> result = g.getAvailable(x, y, sx, sy, this->getRadius());
-
-    this->prevAvailable = result;
-    this->prevHash = this->getHash(state);
-
-    return result;
+    return g.getAvailable(x, y, sx, sy, this->getRadius());
 }
-Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) {
+Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) const {
     if (type != HIGHLIGHT_TYPE::UNIVERSAL and type != this->getHighlightType()) {
         return Events();
     }
@@ -72,7 +61,7 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
 
     return events;
 }
-bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type) {
+bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type) const {
     std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     for (uint32_t x = x2; x < x2 + sx2; x = x + 1) {
@@ -100,16 +89,6 @@ bool AreaControllerSpec::ignoreHighObstacles() const {
 }
 bool AreaControllerSpec::ignoreLowObstacles() const {
     return false;
-}
-uint64_t AreaControllerSpec::getHash(MapState *state) const {
-    uint64_t exist = 0;
-    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        exist = exist + state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->exist();
-    }
-
-    uint64_t total = state->getCollectionsPtr()->totalGOs();
-
-    return (total << 20ull) + exist;
 }
 
 

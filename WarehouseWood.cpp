@@ -17,12 +17,10 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "WarehouseWood.hpp"
 #include "WarehouseWoodSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;

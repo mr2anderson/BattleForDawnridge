@@ -25,7 +25,7 @@ IBuildingSpec::~IBuildingSpec() = default;
 Events IBuildingSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
 	return Events();
 }
-Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* state, uint8_t type) {
+Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* state, uint8_t type) const {
 	return Events();
 }
 Events IBuildingSpec::getEventOnDestroy(const Building *building, MapState* state) const {
@@ -46,7 +46,7 @@ uint32_t IBuildingSpec::getPopulationLimit(const Building *building) const {
 bool IBuildingSpec::isVictoryCondition() const {
 	return false;
 }
-bool IBuildingSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) {
+bool IBuildingSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) const {
 	return false;
 }
 bool IBuildingSpec::isOrigin() const {
