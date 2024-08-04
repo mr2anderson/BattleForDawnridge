@@ -200,12 +200,10 @@ void MainScreen::save() {
     if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
         std::filesystem::create_directories(USERDATA_ROOT + "/saves");
     }
-
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-    std::stringstream ss;
-    ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
-
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	std::stringstream ss;
+	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
     std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
     boost::iostreams::filtering_ostreambuf fos;
     fos.push(boost::iostreams::bzip2_compressor());

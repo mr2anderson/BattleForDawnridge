@@ -17,6 +17,9 @@
  */
 
 
+#define _USE_MATH_DEFINES
+
+
 #include <cmath>
 #include "Projectile.hpp"
 #include "Textures.hpp"

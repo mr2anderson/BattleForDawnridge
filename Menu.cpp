@@ -398,7 +398,7 @@ void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSav
     std::set<std::string> saves;
     if (std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
         for (const auto & entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
-            saves.insert(entry.path().filename());
+            saves.insert(entry.path().filename().string());
         }
     }
 
@@ -442,7 +442,7 @@ void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSav
         window = std::make_shared<HorizontalSelectionWindow>(components);
     }
 
-    Events result = clickEvent;
+    Events result;
     result.add(std::make_shared<CreateEEvent>(window));
     this->addEvents(result);
 }

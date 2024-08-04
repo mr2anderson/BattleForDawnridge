@@ -33,11 +33,8 @@
 Locales* Locales::singletone = nullptr;
 
 
-static const std::string LOCAL_ROOT = DATA_ROOT + "/locales";
-
-
 void Locales::load() {
-    std::string path = LOCAL_ROOT + "/" + this->getPath();
+    std::string path = DATA_ROOT + "/locales/" + this->getPath();
     std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenLocales(path);

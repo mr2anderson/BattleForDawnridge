@@ -16,108 +16,6 @@
     <Filter Include="Libraries">
       <UniqueIdentifier>{43f9ec9b-a1f5-4635-8e35-cb951207c1e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\popUpElements">
-      <UniqueIdentifier>{33b1267c-12fa-4f78-b20d-70e0a600ab18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\simpleUiElements">
-      <UniqueIdentifier>{d7cd9301-b319-41f9-8665-880b9e54272d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\resources">
-      <UniqueIdentifier>{027c196e-02d4-4143-97e6-01e53ac51b7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\screens">
-      <UniqueIdentifier>{05e376bd-f15b-4ff5-87c6-9ad0d09b875e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\screens">
-      <UniqueIdentifier>{9794f034-2e67-45c1-baf7-3369a6436716}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\resources">
-      <UniqueIdentifier>{6fd6c7fc-430c-4496-a70e-5322006ac0da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\simpleUiElements">
-      <UniqueIdentifier>{f934483f-da06-49d0-acfc-4b9bda690efd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\popUpElements">
-      <UniqueIdentifier>{a48a3430-6329-46f3-b087-eaa8a0330dda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\popUpElementsService">
-      <UniqueIdentifier>{f34a6c02-8ead-432d-9a5b-9885717ee1c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\goService">
-      <UniqueIdentifier>{2c4407a5-0af1-4272-a9c8-8e5cfb7fc1db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\events">
-      <UniqueIdentifier>{8f6fdfd1-df86-4aa6-9eb4-bcb6c16715d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\popUpElementsService">
-      <UniqueIdentifier>{07adb366-3e9d-402c-a0c4-23582b632dd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\resourceExceptions">
-      <UniqueIdentifier>{adbe56f9-340f-462b-8be6-4de8e79da5cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\resourceExceptions">
-      <UniqueIdentifier>{d3fe904f-be76-44a6-80f6-b59b547e69df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\screensService">
-      <UniqueIdentifier>{4122d082-f484-401c-ac26-a5e02a0a398d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\goService">
-      <UniqueIdentifier>{1df6272c-8fba-4d6d-b6e0-204afa49a90d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\events">
-      <UniqueIdentifier>{139a5972-b60e-4aca-b7b5-010a2e6ef5f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\screensService">
-      <UniqueIdentifier>{f5abc0af-dfb2-4a18-a981-ee14ef02ec55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\buildingSpecs">
-      <UniqueIdentifier>{efa08ba6-6744-4a51-a65e-15d92ab9d0db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\buildingSpecs">
-      <UniqueIdentifier>{a21f9451-3cbf-4bf2-85a1-3479647c85ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\map">
-      <UniqueIdentifier>{c934bc1f-6f2d-4182-9a59-88725c9e44c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\map">
-      <UniqueIdentifier>{66c97742-c517-413f-ad57-979e7d1343f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\buildings">
-      <UniqueIdentifier>{2ac8f5cf-7c15-40c0-a315-da58113b65bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\warriors">
-      <UniqueIdentifier>{ee4571c9-94fe-44a3-9b2c-b73fc3ac6653}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\resourcePoints">
-      <UniqueIdentifier>{66563fd7-5b8b-4c53-9ebe-40ce0cf44b59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\buildings">
-      <UniqueIdentifier>{2b134260-65d4-4d71-9267-230d53fc527b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\warriors">
-      <UniqueIdentifier>{ceaf18f4-8cbd-47d8-b8e8-35ceade079cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\resourcePoints">
-      <UniqueIdentifier>{303b147c-f62b-4933-82e1-060e17c16086}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\otherGOs">
-      <UniqueIdentifier>{c01e514e-192a-4d65-9a76-7913fae9ccc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\otherGOs">
-      <UniqueIdentifier>{b1efd4f1-83f3-4a0f-ac89-4bedfa013475}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\baseGOs">
-      <UniqueIdentifier>{2edf0bd6-6f12-405c-803e-621c82b9481f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\baseGOs">
-      <UniqueIdentifier>{f0df99e1-4746-48f3-8792-47cc03ec8175}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\spells">
-      <UniqueIdentifier>{aec4d8ed-3e37-4686-8378-357ceb456dea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\spells">
-      <UniqueIdentifier>{e46ea897-6fe5-443b-a887-e2c856bb863a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="extlibs\bin\x64\sfml-audio-2.dll">
@@ -754,644 +652,809 @@
     <ClInclude Include="Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AddHpEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="ArchiveType.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AddResourceEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="BigArrow.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AddResourcesEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="BuildingHorizontalSelectionWindowComponent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BuildEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="CastleShootingSpec.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button.hpp">
-      <Filter>Header Files\simpleUiElements</Filter>
+    <ClInclude Include="ClickPriority.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraDependentPopUpElement.hpp">
-      <Filter>Header Files\popUpElements</Filter>
+    <ClInclude Include="Clock.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraIndependentPopUpElement.hpp">
-      <Filter>Header Files\popUpElements</Filter>
+    <ClInclude Include="ColorBlender.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SetHighlightEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="CompByClickPriority.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ChangeMoveEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="CompByDrawPriority.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CloseWindowEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="CompByNewMovePriority.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CloseMenuEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="DeleteSaveEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ColorTheme.hpp">
-      <Filter>Header Files\resources</Filter>
+    <ClInclude Include="DrawingPriority.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConductionGraph.hpp">
-      <Filter>Header Files\goService</Filter>
+    <ClInclude Include="GenerateChooseSaveWindowEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpen.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="GlobalClock.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenFont.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="GlobalRandomGenerator.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenMap.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="GlobalRandomGenerator32.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenMusic.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="GlobalRandomGenerator64.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenSound.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="Healer.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenLocales.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="HealerProjectile.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CouldntOpenTexture.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
+    <ClInclude Include="HighlightColors.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CreateEEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="IncreaseVCSMoveCtrEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="InfirmaryWarriorProducerSpec.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Event.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="ISingleAttacker.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events.hpp">
-      <Filter>Header Files\events</Filter>
+    <ClInclude Include="LimitResourcesEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FlyingE.hpp">
-      <Filter>Header Files\popUpElements</Filter>
+    <ClInclude Include="LoadGameEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Fonts.hpp">
-      <Filter>Header Files\resources</Filter>
+    <ClInclude Include="MarkAsAttackedEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalSelectionWindow.hpp">
-      <Filter>Header Files\popUpElements</Filter>
+    <ClInclude Include="MarkPlayerAsInactiveEvent.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalSelectionWindowComponent.hpp">
-      <Filter>Header Files\popUpElementsService</Filter>
+    <ClInclude Include="NewMoveMainPriority.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewMovePriority.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plant.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Priority.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ram.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RefreshAttackAbilityEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RefreshAttackedTableEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RefreshHealingAbilityEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceOrderComp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceOrderPriorityTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveGameEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SFColorComp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingPriorityComp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedIndexedContainer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialMove.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower1Spec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower2Spec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UUID.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Valkyr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseCrystal.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseCrystalSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorAttacker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorHealer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorNearAttacker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorNearMultyAttacker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorNearSingleAttacker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorProjectileHealer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Well.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WellSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WipeAttackAbilityEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WipeHealingAbilityEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Workshop.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkshopWarriorHealerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkshopWarriorProducerSpec.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GO.hpp">
-      <Filter>Header Files\baseGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="HighlightTable.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="WarriorHPPointer.hpp">
-      <Filter>Header Files\goService</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HPGO.hpp">
-      <Filter>Header Files\baseGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.hpp">
-      <Filter>Header Files\simpleUiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="LabelWithImage.hpp">
-      <Filter>Header Files\simpleUiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Label.hpp">
-      <Filter>Header Files\simpleUiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingError.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingScreen.hpp">
-      <Filter>Header Files\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="MainScreen.hpp">
-      <Filter>Header Files\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.hpp">
-      <Filter>Header Files\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Music.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="PlainsGeneration.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="PAKScreen.hpp">
-      <Filter>Header Files\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Playlist.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="PlaySoundEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="PopUpElement.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="RectangularUIElement.hpp">
-      <Filter>Header Files\simpleUiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Root.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundQueue.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="Sounds.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="StartGameEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="SubResourceEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="SubResourcesEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="Locales.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Trade.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowButton.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="UTFEncoder.hpp">
-      <Filter>Header Files\resources</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Unit.hpp">
-      <Filter>Header Files\baseGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="TryToBuildEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="ReturnToMenuEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowTwoButtons.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceBar.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerPointer.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="ChooseLanguageEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="DestroyEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="VictoryConditionBDestroyedEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowButtonImage.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="WarriorProducingFinishedEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="CouldntFindNewWarriorPosition.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildingShortInfo.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="UnselectEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementGraph.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="RefreshMovementPointsEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="DisableCursorEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="EnableCursorEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementGraphElement.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="ClueManager.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="Move.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerColors.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="NextClueEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="DijkstraQueueElement.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="IWithSuspendingAnimation.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="SuspendingAnimation.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationState.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateAnimationEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="CloseAnimationEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="HPFlyingE.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageFlyingE.hpp">
-      <Filter>Header Files\popUpElements</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildingStatePointer.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="WarriorPlayerPointer.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveDoesNotExist.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="LandscapeGraph.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="Defence.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="Damage.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="TilesetHandler.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="DecreaseBurningMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="Fire.hpp">
-      <Filter>Header Files\goService</Filter>
-    </ClInclude>
-    <ClInclude Include="FirstTimeTipsTable.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="LanguageAlreadyInUse.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="SubHpEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="SetFireEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeWarriorDirectionEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildingMode.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="ISelectable.hpp">
-      <Filter>Header Files\screensService</Filter>
-    </ClInclude>
-    <ClInclude Include="StartWarriorAnimationEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="FocusOnEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="IBuildingSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="AreaResourcePointCollectorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="IWarehouseSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="AreaControllerSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarriorProducerSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="VictoryConditionSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="IResourceGeneratorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="Collection.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="Collections.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="MapState.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="Players.hpp">
-      <Filter>Header Files\map</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Arable.hpp">
-      <Filter>Header Files\buildings</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Barracks.hpp">
-      <Filter>Header Files\buildings</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Building.hpp">
-      <Filter>Header Files\buildings</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castle.hpp">
-      <Filter>Header Files\buildings</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gates1.hpp">
-      <Filter>Header Files\buildings</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gates2.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Market.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Quarry.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Road.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Sawmill.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall1.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall2.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseFood.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseGold.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseIron.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseStone.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseWood.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackKnight.hpp">
-      <Filter>Header Files\warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="Infantryman.hpp">
-      <Filter>Header Files\warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="Knight.hpp">
-      <Filter>Header Files\warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="Legioner.hpp">
-      <Filter>Header Files\warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="Warrior.hpp">
-      <Filter>Header Files\warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="Mine.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Forest.hpp">
-      <Filter>Header Files\resourcePoints</Filter>
-    </ClInclude>
-    <ClInclude Include="Iron.hpp">
-      <Filter>Header Files\resourcePoints</Filter>
-    </ClInclude>
-    <ClInclude Include="Stone.hpp">
-      <Filter>Header Files\resourcePoints</Filter>
-    </ClInclude>
-    <ClInclude Include="Treasure.hpp">
-      <Filter>Header Files\resourcePoints</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourcePoint.hpp">
-      <Filter>Header Files\resourcePoints</Filter>
-    </ClInclude>
-    <ClInclude Include="Mountains.hpp">
-      <Filter>Header Files\otherGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="Water.hpp">
-      <Filter>Header Files\otherGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="MapSize.hpp">
-      <Filter>Header Files\map</Filter>
-    </ClInclude>
-    <ClInclude Include="ResetHighlightEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="TradingSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseFoodSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="CastleWarehouseSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseIronSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseStoneSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseWoodSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WallSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="GatesSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="CastleWoodGeneratorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="SawmillSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="MarketSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="TerritoryOriginSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="TerritoryConductorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="RoadSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="CastleTerritoryExpanderSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="BarracksSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseGoldCollectorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="StartWarriorProducingEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="QuarrySpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="MineSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="ArableSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="DoTradeEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="IPopulationLimitIncreaserSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="HouseSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="House.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="KillNextTurnEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="RevertKillNextTurnEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="IMovementSpeedDecreaserSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="ResinSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="Resin.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="SpellProducerSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="SpellFactorySpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="Spell.hpp">
-      <Filter>Header Files\spells</Filter>
-    </ClInclude>
-    <ClInclude Include="SpellEffect.hpp">
-      <Filter>Header Files\spells</Filter>
-    </ClInclude>
-    <ClInclude Include="SpellPreview.hpp">
-      <Filter>Header Files\spells</Filter>
-    </ClInclude>
-    <ClInclude Include="RageSpell.hpp">
-      <Filter>Header Files\spells</Filter>
-    </ClInclude>
-    <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="MarkSpellAsUsedEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="SetSpellEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="UseSpellEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="EnableWarriorRageModeEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="SpellFactory.hpp">
-      <Filter>Header Files\buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.hpp">
-      <Filter>Header Files\otherGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="PoisonFog.hpp">
-      <Filter>Header Files\otherGOs</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateEffectEvent.hpp">
-      <Filter>Header Files\events</Filter>
-    </ClInclude>
-    <ClInclude Include="PoisonSpell.hpp">
-      <Filter>Header Files\spells</Filter>
-    </ClInclude>
-    <ClInclude Include="Parameters.hpp">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="CouldntOpenParameters.hpp">
-      <Filter>Header Files\resourceExceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="WarriorHealerSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
-    </ClInclude>
-    <ClInclude Include="InfirmaryWarriorHealerSpec.hpp">
-      <Filter>Header Files\buildingSpecs</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Infirmary.hpp">
-      <Filter>Header Files\buildings</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Market.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Quarry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Road.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sawmill.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellFactory.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseFood.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGold.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseIron.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseStone.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseWood.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArableSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaControllerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaResourcePointCollectorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarracksSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleTerritoryExpanderSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleWarehouseSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleWoodGeneratorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GatesSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IBuildingSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InfirmaryWarriorHealerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IPopulationLimitIncreaserSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IResourceGeneratorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IWarehouseSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MineSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuarrySpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SawmillSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellFactorySpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellProducerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryConductorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritoryOriginSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TradingSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryConditionSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseFoodSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGoldCollectorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseIronSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseStoneSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseWoodSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorHealerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorProducerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddHpEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddResourceEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddResourcesEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeMoveEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeWarriorDirectionEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseLanguageEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseAnimationEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseMenuEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseWindowEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateAnimationEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateEEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseBurningMovesLeftEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableCursorEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DoTradeEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnableCursorEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnableWarriorRageModeEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FocusOnEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KillNextTurnEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarkSpellAsUsedEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NextClueEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySoundEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RefreshMovementPointsEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetHighlightEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReturnToMenuEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RevertKillNextTurnEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetFireEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetHighlightEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetSpellEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartGameEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartWarriorAnimationEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartWarriorProducingEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubHpEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubResourceEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubResourcesEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TryToBuildEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnselectEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UseSpellEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorProducingFinishedEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingShortInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingStatePointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConductionGraph.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntFindNewWarriorPosition.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Damage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Defence.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DijkstraQueueElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IWithSuspendingAnimation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LandscapeGraph.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveDoesNotExist.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementGraph.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementGraphElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SuspendingAnimation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TilesetHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trade.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorHPPointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorPlayerPointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSize.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Players.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mountains.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraDependentPopUpElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraIndependentPopUpElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyingE.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalSelectionWindow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HPFlyingE.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageFlyingE.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowButton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowButtonImage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowTwoButtons.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalSelectionWindowComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenFont.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenLocales.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenMusic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenParameters.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenSound.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CouldntOpenTexture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguageAlreadyInUse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingError.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Forest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Iron.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcePoint.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stone.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Treasure.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorTheme.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fonts.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Locales.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Music.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Root.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sounds.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UTFEncoder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PAKScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingMode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClueManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstTimeTipsTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HighlightTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISelectable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Playlist.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceBar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundQueue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelWithImage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangularUIElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RageSpell.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellEffect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellPreview.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackKnight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantryman.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Legioner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Warrior.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1401,635 +1464,770 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddResourcesEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="BigArrow.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddHpEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="BuildingHorizontalSelectionWindowComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddResourceEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="CastleShootingSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BuildEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\simpleUiElements</Filter>
+    <ClCompile Include="ColorBlender.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SetHighlightEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="CompByClickPriority.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeMoveEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="CompByDrawPriority.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CloseWindowEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="CompByNewMovePriority.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CloseMenuEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="DeleteSaveEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColorTheme.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="GenerateChooseSaveWindowEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConductionGraph.cpp">
-      <Filter>Source Files\goService</Filter>
+    <ClCompile Include="GlobalClock.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenTexture.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="Healer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpen.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="HealerProjectile.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenFont.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="HighlightColors.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenMap.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="IncreaseVCSMoveCtrEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenMusic.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="InfirmaryWarriorProducerSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenSound.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="LimitResourcesEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CouldntOpenLocales.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="LoadGameEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CreateEEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="MarkAsAttackedEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="MarkPlayerAsInactiveEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Events.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="NewMovePriority.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Event.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Fonts.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HorizontalSelectionWindowComponent.cpp">
-      <Filter>Source Files\popUpElementsService</Filter>
+    <ClCompile Include="Ram.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarriorHPPointer.cpp">
-      <Filter>Source Files\goService</Filter>
+    <ClCompile Include="RefreshAttackAbilityEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Source Files\simpleUiElements</Filter>
+    <ClCompile Include="RefreshAttackedTableEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Label.cpp">
-      <Filter>Source Files\simpleUiElements</Filter>
+    <ClCompile Include="RefreshHealingAbilityEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LabelWithImage.cpp">
-      <Filter>Source Files\simpleUiElements</Filter>
+    <ClCompile Include="ResourceOrderComp.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LoadingError.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
+    <ClCompile Include="ResourceOrderPriorityTable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LoadingScreen.cpp">
-      <Filter>Source Files\screens</Filter>
+    <ClCompile Include="SaveGameEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainScreen.cpp">
-      <Filter>Source Files\screens</Filter>
+    <ClCompile Include="SFColorComp.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Maps.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="ShootingPriorityComp.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files\screens</Filter>
+    <ClCompile Include="ShootingSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Music.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="SpecialMove.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlaySoundEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="Tower1.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RectangularUiElement.cpp">
-      <Filter>Source Files\simpleUiElements</Filter>
+    <ClCompile Include="Tower1Spec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Root.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="Tower2.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sounds.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="Tower2Spec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StartGameEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="UUID.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SubResourceEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="Valkyr.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SubResourcesEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WarehouseCrystal.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UTFEncoder.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="WarehouseCrystalSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TryToBuildEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WarriorAttacker.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Trade.cpp">
-      <Filter>Source Files\goService</Filter>
+    <ClCompile Include="WarriorHealer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="WarriorNearAttacker.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Locales.cpp">
-      <Filter>Source Files\resources</Filter>
+    <ClCompile Include="WarriorNearMultyAttacker.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ReturnToMenuEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WarriorNearSingleAttacker.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WindowTwoButtons.cpp">
-      <Filter>Source Files\popUpElements</Filter>
+    <ClCompile Include="WarriorProjectileHealer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerPointer.cpp">
-      <Filter>Source Files\goService</Filter>
+    <ClCompile Include="Well.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MoveGameActionWindowUpEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WellSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MoveGameActionWindowDownEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WipeAttackAbilityEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ChooseLanguageEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WipeHealingAbilityEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DestroyEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="Workshop.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VictoryConditionBDestroyedEvent.cpp">
-      <Filter>Source Files\events</Filter>
+    <ClCompile Include="WorkshopWarriorHealerSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="CouldntFindNewWarriorPosition.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="BuildingShortInfo.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraDependentPopUpElement.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraIndependentPopUpElemenent.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="HorizontalSelectionWindow.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="PopUpElement.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowButton.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowButtonImage.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundQueue.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="HighlightTable.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="PlainsGeneration.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="Playlist.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceBar.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="UnselectEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementGraph.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="RefreshMovementPointsEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="DisableCursorEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="EnableCursorEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementGraphElement.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="ClueManager.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="Move.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerColors.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="NextClueEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="DijkstraQueueElement.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="SuspendingAnimation.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationState.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="CloseAnimationEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateAnimationEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="HPFlyingE.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageFlyingE.cpp">
-      <Filter>Source Files\popUpElements</Filter>
-    </ClCompile>
-    <ClCompile Include="BuildingStatePointer.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="WarriorPlayerPointer.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveDoesNotExist.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="LandscapeGraph.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="Defence.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="Damage.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="TilesetHandler.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="DecreaseBurningMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="Fire.cpp">
-      <Filter>Source Files\goService</Filter>
-    </ClCompile>
-    <ClCompile Include="FirstTimeTipsTable.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="LanguageAlreadyInUse.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="SubHpEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="SetFireEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeWarriorDirectionEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="BuildingMode.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="StartWarriorAnimationEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="FocusOnEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="AreaResourcePointCollectorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="IResourceGeneratorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="VictoryConditionSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="IWarehouseSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="WarriorProducerSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="MapState.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="Players.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="Collections.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="MapSize.cpp">
-      <Filter>Source Files\map</Filter>
-    </ClCompile>
-    <ClCompile Include="ResetHighlightEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="Arable.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Barracks.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Building.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Castle.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Gates1.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Gates2.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Infantryman.cpp">
-      <Filter>Source Files\warriors</Filter>
-    </ClCompile>
-    <ClCompile Include="Knight.cpp">
-      <Filter>Source Files\warriors</Filter>
-    </ClCompile>
-    <ClCompile Include="Legioner.cpp">
-      <Filter>Source Files\warriors</Filter>
-    </ClCompile>
-    <ClCompile Include="Warrior.cpp">
-      <Filter>Source Files\warriors</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackKnight.cpp">
-      <Filter>Source Files\warriors</Filter>
-    </ClCompile>
-    <ClCompile Include="Forest.cpp">
-      <Filter>Source Files\resourcePoints</Filter>
-    </ClCompile>
-    <ClCompile Include="Iron.cpp">
-      <Filter>Source Files\resourcePoints</Filter>
-    </ClCompile>
-    <ClCompile Include="Treasure.cpp">
-      <Filter>Source Files\resourcePoints</Filter>
-    </ClCompile>
-    <ClCompile Include="Stone.cpp">
-      <Filter>Source Files\resourcePoints</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseWood.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseFood.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseGold.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseIron.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseStone.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall2.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall1.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Sawmill.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Road.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Quarry.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourcePoint.cpp">
-      <Filter>Source Files\resourcePoints</Filter>
-    </ClCompile>
-    <ClCompile Include="Market.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Water.cpp">
-      <Filter>Source Files\otherGOs</Filter>
-    </ClCompile>
-    <ClCompile Include="Mountains.cpp">
-      <Filter>Source Files\otherGOs</Filter>
-    </ClCompile>
-    <ClCompile Include="Mine.cpp">
-      <Filter>Source Files\buildings</Filter>
+    <ClCompile Include="WorkshopWarriorProducerSpec.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GO.cpp">
-      <Filter>Source Files\baseGOs</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HPGO.cpp">
-      <Filter>Source Files\baseGOs</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
-      <Filter>Source Files\baseGOs</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TradingSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+    <ClCompile Include="Arable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IBuildingSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseFoodSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseWoodSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+    <ClCompile Include="Castle.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseStoneSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+    <ClCompile Include="Gates1.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseIronSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="CastleWarehouseSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="WallSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="GatesSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="CastleWoodGeneratorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="AreaControllerSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="SawmillSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="MarketSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="TerritoryOriginSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="TerritoryConductorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="RoadSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="CastleTerritoryExpanderSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="BarracksSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="ArableSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="MineSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="QuarrySpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseGoldCollectorSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="WarehouseGoldWarehouseSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="StartWarriorProducingEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="IPopulationLimitIncreaserSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="HouseSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+    <ClCompile Include="Gates2.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="House.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="KillNextTurnEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="RevertKillNextTurnEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="IMovementSpeedDecreaserSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="ResinSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="Resin.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="DoTradeEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="PAKScreen.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="SpellProducerSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="SpellFactorySpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="Spell.cpp">
-      <Filter>Source Files\spells</Filter>
-    </ClCompile>
-    <ClCompile Include="SpellEffect.cpp">
-      <Filter>Source Files\spells</Filter>
-    </ClCompile>
-    <ClCompile Include="SpellPreview.cpp">
-      <Filter>Source Files\spells</Filter>
-    </ClCompile>
-    <ClCompile Include="RageSpell.cpp">
-      <Filter>Source Files\spells</Filter>
-    </ClCompile>
-    <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="MarkSpellAsUsedEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="SetSpellEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="UseSpellEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="ISelectable.cpp">
-      <Filter>Source Files\screensService</Filter>
-    </ClCompile>
-    <ClCompile Include="EnableWarriorRageModeEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="SpellFactory.cpp">
-      <Filter>Source Files\buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Source Files\otherGOs</Filter>
-    </ClCompile>
-    <ClCompile Include="PoisonFog.cpp">
-      <Filter>Source Files\otherGOs</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateEffectEvent.cpp">
-      <Filter>Source Files\events</Filter>
-    </ClCompile>
-    <ClCompile Include="PoisonSpell.cpp">
-      <Filter>Source Files\spells</Filter>
-    </ClCompile>
-    <ClCompile Include="Parameters.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="CouldntOpenParameters.cpp">
-      <Filter>Source Files\resourceExceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="WarriorHealerSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
-    </ClCompile>
-    <ClCompile Include="InfirmaryWarriorHealerSpec.cpp">
-      <Filter>Source Files\buildingSpecs</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Infirmary.cpp">
-      <Filter>Source Files\buildings</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Market.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Quarry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Road.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sawmill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseFood.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGold.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseIron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseStone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseWood.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArableSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaControllerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaResourcePointCollectorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BarracksSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleTerritoryExpanderSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleWarehouseSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleWoodGeneratorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GatesSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IBuildingSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InfirmaryWarriorHealerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IPopulationLimitIncreaserSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IResourceGeneratorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IWarehouseSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MineSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuarrySpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SawmillSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellFactorySpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellProducerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryConductorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritoryOriginSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TradingSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryConditionSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseFoodSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGoldCollectorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseGoldWarehouseSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseIronSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseStoneSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseWoodSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorHealerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AddHpEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AddResourceEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AddResourcesEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeMoveEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeWarriorDirectionEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseLanguageEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseAnimationEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseMenuEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseWindowEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateAnimationEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateEEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseBurningMovesLeftEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DisableCursorEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DoTradeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnableCursorEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnableWarriorRageModeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FocusOnEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KillNextTurnEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarkSpellAsUsedEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveGameActionWindowDownEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveGameActionWindowUpEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NextClueEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySoundEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RefreshMovementPointsEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetHighlightEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReturnToMenuEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RevertKillNextTurnEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SetFireEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SetHighlightEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SetSpellEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StartGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWarriorAnimationEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWarriorProducingEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubHpEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubResourceEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubResourcesEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TryToBuildEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnselectEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UseSpellEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorProducingFinishedEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingShortInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingStatePointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConductionGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntFindNewWarriorPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Damage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Defence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DijkstraQueueElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LandscapeGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveDoesNotExist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementGraphElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SuspendingAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TilesetHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Trade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorHPPointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorPlayerPointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Players.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mountains.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraDependentPopUpElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraIndependentPopUpElemenent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalSelectionWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HPFlyingE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageFlyingE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowButtonImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowTwoButtons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalSelectionWindowComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenLocales.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenMusic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenParameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenSound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CouldntOpenTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LanguageAlreadyInUse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingError.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Forest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Iron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcePoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Stone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Treasure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorTheme.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Locales.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Music.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Root.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UTFEncoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClueManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstTimeTipsTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HighlightTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISelectable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PAKScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Playlist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LabelWithImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangularUiElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RageSpell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpellPreview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackKnight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantryman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Legioner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Warrior.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

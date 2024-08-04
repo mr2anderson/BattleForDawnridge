@@ -39,58 +39,58 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{6de0cc2b-2ab7-41e6-9e95-b5935b93ed6b}</ProjectGuid>
     <RootNamespace>BattleForDawnridge</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Dynamic|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Dynamic|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -315,23 +315,23 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0;extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>
-      </DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>extlibs\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0\stage\lib;extlibs\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-network-s.lib;ws2_32.lib;sfml-audio-s.lib;ogg.lib;vorbis.lib;vorbisfile.lib;vorbisenc.lib;flac.lib;openal32.lib;sfml-graphics-s.lib;freetype.lib;sfml-window-s.lib;gdi32.lib;opengl32.lib;sfml-system-s.lib;winmm.lib;kernel32.lib;user32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -349,15 +349,17 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0;extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>extlibs\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0\stage\lib;extlibs\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-network.lib;sfml-audio.lib;openal32.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -490,81 +492,56 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="AddHpEvent.hpp" />
     <ClInclude Include="AddResourceEvent.hpp" />
     <ClInclude Include="AddResourcesEvent.hpp" />
-    <ClInclude Include="Parameters.hpp" />
-    <ClInclude Include="BarracksSpec.hpp" />
-    <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp" />
-    <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
-    <ClInclude Include="CouldntOpenParameters.hpp" />
-    <ClInclude Include="CreateEffectEvent.hpp" />
-    <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp" />
-    <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp" />
-    <ClInclude Include="DoTradeEvent.hpp" />
-    <ClInclude Include="Effect.hpp" />
-    <ClInclude Include="EnableWarriorRageModeEvent.hpp" />
-    <ClInclude Include="House.hpp" />
-    <ClInclude Include="HouseSpec.hpp" />
-    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp" />
-    <ClInclude Include="ArableSpec.hpp" />
-    <ClInclude Include="GatesSpec.hpp" />
-    <ClInclude Include="Infirmary.hpp" />
-    <ClInclude Include="InfirmaryWarriorHealerSpec.hpp" />
-    <ClInclude Include="KillNextTurnEvent.hpp" />
-    <ClInclude Include="MarkSpellAsUsedEvent.hpp" />
-    <ClInclude Include="MineSpec.hpp" />
-    <ClInclude Include="IWithSuspendingAnimation.hpp" />
-    <ClInclude Include="MarketSpec.hpp" />
-    <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
-    <ClInclude Include="IMovementSpeedDecreaserSpec.hpp" />
-    <ClInclude Include="PoisonFog.hpp" />
-    <ClInclude Include="PoisonSpell.hpp" />
-    <ClInclude Include="RageSpell.hpp" />
-    <ClInclude Include="Resin.hpp" />
-    <ClInclude Include="ResinSpec.hpp" />
-    <ClInclude Include="RevertKillNextTurnEvent.hpp" />
-    <ClInclude Include="RoadSpec.hpp" />
-    <ClInclude Include="QuarrySpec.hpp" />
-    <ClInclude Include="SetSpellEvent.hpp" />
-    <ClInclude Include="Spell.hpp" />
-    <ClInclude Include="SpellEffect.hpp" />
-    <ClInclude Include="SpellFactory.hpp" />
-    <ClInclude Include="SpellFactorySpec.hpp" />
-    <ClInclude Include="SpellPreview.hpp" />
-    <ClInclude Include="SpellProducerSpec.hpp" />
-    <ClInclude Include="StartWarriorProducingEvent.hpp" />
-    <ClInclude Include="SuspendingAnimation.hpp" />
     <ClInclude Include="AnimationState.hpp" />
     <ClInclude Include="Arable.hpp" />
+    <ClInclude Include="ArableSpec.hpp" />
+    <ClInclude Include="ArchiveType.hpp" />
     <ClInclude Include="AreaControllerSpec.hpp" />
+    <ClInclude Include="AreaResourcePointCollectorSpec.hpp" />
     <ClInclude Include="Barracks.hpp" />
+    <ClInclude Include="BarracksSpec.hpp" />
+    <ClInclude Include="BigArrow.hpp" />
     <ClInclude Include="BlackKnight.hpp" />
     <ClInclude Include="BuildEvent.hpp" />
     <ClInclude Include="Building.hpp" />
+    <ClInclude Include="BuildingHorizontalSelectionWindowComponent.hpp" />
     <ClInclude Include="BuildingMode.hpp" />
     <ClInclude Include="BuildingShortInfo.hpp" />
-    <ClInclude Include="IBuildingSpec.hpp" />
+    <ClInclude Include="BuildingStatePointer.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="CameraDependentPopUpElement.hpp" />
     <ClInclude Include="CameraIndependentPopUpElement.hpp" />
     <ClInclude Include="Castle.hpp" />
-    <ClInclude Include="ResetHighlightEvent.hpp" />
-    <ClInclude Include="SetHighlightEvent.hpp" />
+    <ClInclude Include="CastlePopulationLimitIncreaserSpec.hpp" />
+    <ClInclude Include="CastleShootingSpec.hpp" />
+    <ClInclude Include="CastleTerritoryExpanderSpec.hpp" />
+    <ClInclude Include="CastleWarehouseSpec.hpp" />
+    <ClInclude Include="CastleWoodGeneratorSpec.hpp" />
     <ClInclude Include="ChangeMoveEvent.hpp" />
     <ClInclude Include="ChangeWarriorDirectionEvent.hpp" />
     <ClInclude Include="ChooseLanguageEvent.hpp" />
+    <ClInclude Include="ClickPriority.hpp" />
+    <ClInclude Include="Clock.hpp" />
     <ClInclude Include="CloseAnimationEvent.hpp" />
-    <ClInclude Include="CloseWindowEvent.hpp" />
     <ClInclude Include="CloseMenuEvent.hpp" />
+    <ClInclude Include="CloseWindowEvent.hpp" />
     <ClInclude Include="ClueManager.hpp" />
+    <ClInclude Include="Collection.hpp" />
     <ClInclude Include="Collections.hpp" />
+    <ClInclude Include="ColorBlender.hpp" />
     <ClInclude Include="ColorTheme.hpp" />
+    <ClInclude Include="CompByClickPriority.hpp" />
+    <ClInclude Include="CompByDrawPriority.hpp" />
+    <ClInclude Include="CompByNewMovePriority.hpp" />
     <ClInclude Include="ConductionGraph.hpp" />
     <ClInclude Include="CouldntFindNewWarriorPosition.hpp" />
     <ClInclude Include="CouldntOpen.hpp" />
     <ClInclude Include="CouldntOpenFont.hpp" />
+    <ClInclude Include="CouldntOpenLocales.hpp" />
     <ClInclude Include="CouldntOpenMap.hpp" />
     <ClInclude Include="CouldntOpenMusic.hpp" />
+    <ClInclude Include="CouldntOpenParameters.hpp" />
     <ClInclude Include="CouldntOpenSound.hpp" />
-    <ClInclude Include="CouldntOpenLocales.hpp" />
     <ClInclude Include="CouldntOpenTexture.hpp" />
     <ClInclude Include="CreateAnimationEvent.hpp" />
     <ClInclude Include="CreateEEvent.hpp" />
@@ -572,11 +549,17 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="DecreaseBurningMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseCurrentProducingMovesLeftEvent.hpp" />
     <ClInclude Include="DecreaseCurrentTradeMovesLeftEvent.hpp" />
+    <ClInclude Include="DecreaseRageModeMovesLeftEvent.hpp" />
+    <ClInclude Include="DecreaseSpellCreationMovesLeftEvent.hpp" />
     <ClInclude Include="Defence.hpp" />
+    <ClInclude Include="DeleteSaveEvent.hpp" />
     <ClInclude Include="DestroyEvent.hpp" />
     <ClInclude Include="DijkstraQueueElement.hpp" />
     <ClInclude Include="DisableCursorEvent.hpp" />
+    <ClInclude Include="DoTradeEvent.hpp" />
+    <ClInclude Include="DrawingPriority.hpp" />
     <ClInclude Include="EnableCursorEvent.hpp" />
+    <ClInclude Include="EnableWarriorRageModeEvent.hpp" />
     <ClInclude Include="Event.hpp" />
     <ClInclude Include="Events.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
@@ -679,7 +662,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Fire.hpp" />
     <ClInclude Include="FirstTimeTipsTable.hpp" />
-    <ClInclude Include="MovementGraphElement.hpp" />
     <ClInclude Include="FlyingE.hpp" />
     <ClInclude Include="FocusOnEvent.hpp" />
     <ClInclude Include="Fonts.hpp" />
@@ -687,198 +669,245 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Gates1.hpp" />
     <ClInclude Include="Gates2.hpp" />
+    <ClInclude Include="GatesSpec.hpp" />
+    <ClInclude Include="GenerateChooseSaveWindowEvent.hpp" />
+    <ClInclude Include="GlobalClock.hpp" />
+    <ClInclude Include="GlobalRandomGenerator.hpp" />
+    <ClInclude Include="GlobalRandomGenerator32.hpp" />
+    <ClInclude Include="GlobalRandomGenerator64.hpp" />
+    <ClInclude Include="GO.hpp" />
+    <ClInclude Include="Healer.hpp" />
+    <ClInclude Include="HealerProjectile.hpp" />
+    <ClInclude Include="HighlightColors.hpp" />
+    <ClInclude Include="HighlightTable.hpp" />
     <ClInclude Include="HorizontalSelectionWindow.hpp" />
     <ClInclude Include="HorizontalSelectionWindowComponent.hpp" />
-    <ClInclude Include="GO.hpp" />
-    <ClInclude Include="Collection.hpp" />
-    <ClInclude Include="HighlightTable.hpp" />
+    <ClInclude Include="House.hpp" />
+    <ClInclude Include="HouseSpec.hpp" />
     <ClInclude Include="HPFlyingE.hpp" />
-    <ClInclude Include="WarriorHPPointer.hpp" />
     <ClInclude Include="HPGO.hpp" />
+    <ClInclude Include="IBuildingSpec.hpp" />
+    <ClInclude Include="IConductionResourcePointCollectorSpec.hpp" />
     <ClInclude Include="Image.hpp" />
     <ClInclude Include="ImageFlyingE.hpp" />
+    <ClInclude Include="IncreaseVCSMoveCtrEvent.hpp" />
     <ClInclude Include="Infantryman.hpp" />
+    <ClInclude Include="Infirmary.hpp" />
+    <ClInclude Include="InfirmaryWarriorHealerSpec.hpp" />
+    <ClInclude Include="InfirmaryWarriorProducerSpec.hpp" />
+    <ClInclude Include="IPopulationLimitIncreaserSpec.hpp" />
+    <ClInclude Include="IResourceGeneratorSpec.hpp" />
     <ClInclude Include="Iron.hpp" />
+    <ClInclude Include="ISelectable.hpp" />
+    <ClInclude Include="ISingleAttacker.hpp" />
+    <ClInclude Include="IWarehouseSpec.hpp" />
+    <ClInclude Include="IWithSuspendingAnimation.hpp" />
+    <ClInclude Include="KillNextTurnEvent.hpp" />
     <ClInclude Include="Knight.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="LabelWithImage.hpp" />
     <ClInclude Include="LandscapeGraph.hpp" />
     <ClInclude Include="LanguageAlreadyInUse.hpp" />
     <ClInclude Include="Legioner.hpp" />
+    <ClInclude Include="LimitResourcesEvent.hpp" />
+    <ClInclude Include="LoadGameEvent.hpp" />
     <ClInclude Include="LoadingError.hpp" />
     <ClInclude Include="LoadingScreen.hpp" />
+    <ClInclude Include="Locales.hpp" />
     <ClInclude Include="MainScreen.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Maps.hpp" />
     <ClInclude Include="MapSize.hpp" />
     <ClInclude Include="MapState.hpp" />
+    <ClInclude Include="MarkAsAttackedEvent.hpp" />
     <ClInclude Include="Market.hpp" />
+    <ClInclude Include="MarketSpec.hpp" />
+    <ClInclude Include="MarkPlayerAsInactiveEvent.hpp" />
+    <ClInclude Include="MarkSpellAsUsedEvent.hpp" />
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="Mine.hpp" />
+    <ClInclude Include="MineSpec.hpp" />
     <ClInclude Include="Mountains.hpp" />
     <ClInclude Include="Move.hpp" />
     <ClInclude Include="MoveDoesNotExist.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowDownEvent.hpp" />
     <ClInclude Include="MoveHorizontalSelectionWindowUpEvent.hpp" />
     <ClInclude Include="MovementGraph.hpp" />
-    <ClInclude Include="Players.hpp" />
-    <ClInclude Include="IResourceGeneratorSpec.hpp" />
-    <ClInclude Include="AreaResourcePointCollectorSpec.hpp" />
-    <ClInclude Include="TerritoryConductorSpec.hpp" />
-    <ClInclude Include="TerritoryOriginSpec.hpp" />
-    <ClInclude Include="TradingSpec.hpp" />
-    <ClInclude Include="TryToBuildEvent.hpp" />
-    <ClInclude Include="UseSpellEvent.hpp" />
-    <ClInclude Include="VictoryConditionSpec.hpp" />
-    <ClInclude Include="WallSpec.hpp" />
-    <ClInclude Include="CastleWarehouseSpec.hpp" />
-    <ClInclude Include="WarehouseFoodSpec.hpp" />
-    <ClInclude Include="WarehouseGoldCollectorSpec.hpp" />
-    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp" />
-    <ClInclude Include="WarehouseIronSpec.hpp" />
-    <ClInclude Include="IWarehouseSpec.hpp" />
-    <ClInclude Include="WarehouseStoneSpec.hpp" />
-    <ClInclude Include="WarehouseWoodSpec.hpp" />
-    <ClInclude Include="WarriorHealerSpec.hpp" />
-    <ClInclude Include="WarriorPlayerPointer.hpp" />
+    <ClInclude Include="MovementGraphElement.hpp" />
     <ClInclude Include="Music.hpp" />
+    <ClInclude Include="NewMoveMainPriority.hpp" />
+    <ClInclude Include="NewMovePriority.hpp" />
     <ClInclude Include="NextClueEvent.hpp" />
     <ClInclude Include="PAKScreen.hpp" />
-    <ClInclude Include="PlainsGeneration.hpp" />
+    <ClInclude Include="Parameters.hpp" />
+    <ClInclude Include="Plant.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayerPointer.hpp" />
-    <ClInclude Include="BuildingStatePointer.hpp" />
-    <ClInclude Include="PlayerColors.hpp" />
+    <ClInclude Include="Players.hpp" />
     <ClInclude Include="Playlist.hpp" />
     <ClInclude Include="PlaySoundEvent.hpp" />
     <ClInclude Include="PopUpElement.hpp" />
+    <ClInclude Include="Priority.hpp" />
+    <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Quarry.hpp" />
+    <ClInclude Include="QuarrySpec.hpp" />
+    <ClInclude Include="RageSpell.hpp" />
+    <ClInclude Include="Ram.hpp" />
     <ClInclude Include="RectangularUIElement.hpp" />
+    <ClInclude Include="RefreshAttackAbilityEvent.hpp" />
+    <ClInclude Include="RefreshAttackedTableEvent.hpp" />
+    <ClInclude Include="RefreshHealingAbilityEvent.hpp" />
     <ClInclude Include="RefreshMovementPointsEvent.hpp" />
+    <ClInclude Include="ResetHighlightEvent.hpp" />
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="ResourceBar.hpp" />
+    <ClInclude Include="ResourceOrderComp.hpp" />
+    <ClInclude Include="ResourceOrderPriorityTable.hpp" />
     <ClInclude Include="ResourcePoint.hpp" />
     <ClInclude Include="Resources.hpp" />
     <ClInclude Include="ReturnToMenuEvent.hpp" />
+    <ClInclude Include="RevertKillNextTurnEvent.hpp" />
     <ClInclude Include="Road.hpp" />
+    <ClInclude Include="RoadSpec.hpp" />
     <ClInclude Include="Root.hpp" />
+    <ClInclude Include="SaveGameEvent.hpp" />
     <ClInclude Include="Sawmill.hpp" />
-    <ClInclude Include="ISelectable.hpp" />
+    <ClInclude Include="SawmillSpec.hpp" />
     <ClInclude Include="SelectEvent.hpp" />
     <ClInclude Include="SetFireEvent.hpp" />
+    <ClInclude Include="SetHighlightEvent.hpp" />
+    <ClInclude Include="SetSpellEvent.hpp" />
+    <ClInclude Include="SFColorComp.hpp" />
+    <ClInclude Include="ShootingPriorityComp.hpp" />
+    <ClInclude Include="ShootingSpec.hpp" />
+    <ClInclude Include="SortedIndexedContainer.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
+    <ClInclude Include="SpecialMove.hpp" />
+    <ClInclude Include="Spell.hpp" />
+    <ClInclude Include="SpellEffect.hpp" />
+    <ClInclude Include="SpellFactory.hpp" />
+    <ClInclude Include="SpellFactorySpec.hpp" />
+    <ClInclude Include="SpellPreview.hpp" />
+    <ClInclude Include="SpellProducerSpec.hpp" />
     <ClInclude Include="StartGameEvent.hpp" />
     <ClInclude Include="StartWarriorAnimationEvent.hpp" />
+    <ClInclude Include="StartWarriorProducingEvent.hpp" />
     <ClInclude Include="Stone.hpp" />
     <ClInclude Include="SubHpEvent.hpp" />
     <ClInclude Include="SubResourceEvent.hpp" />
     <ClInclude Include="SubResourcesEvent.hpp" />
-    <ClInclude Include="Locales.hpp" />
+    <ClInclude Include="SuspendingAnimation.hpp" />
+    <ClInclude Include="TerritoryConductorSpec.hpp" />
+    <ClInclude Include="TerritoryOriginSpec.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="TilesetHandler.hpp" />
+    <ClInclude Include="Tower1.hpp" />
+    <ClInclude Include="Tower1Spec.hpp" />
+    <ClInclude Include="Tower2.hpp" />
+    <ClInclude Include="Tower2Spec.hpp" />
     <ClInclude Include="Trade.hpp" />
+    <ClInclude Include="TradingSpec.hpp" />
     <ClInclude Include="Treasure.hpp" />
+    <ClInclude Include="TryToBuildEvent.hpp" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="UnselectEvent.hpp" />
+    <ClInclude Include="UseSpellEvent.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
-    <ClInclude Include="VictoryConditionBDestroyedEvent.hpp" />
+    <ClInclude Include="UUID.hpp" />
+    <ClInclude Include="Valkyr.hpp" />
+    <ClInclude Include="VictoryConditionSpec.hpp" />
     <ClInclude Include="Wall1.hpp" />
     <ClInclude Include="Wall2.hpp" />
+    <ClInclude Include="WallSpec.hpp" />
+    <ClInclude Include="WarehouseCrystal.hpp" />
+    <ClInclude Include="WarehouseCrystalSpec.hpp" />
     <ClInclude Include="WarehouseFood.hpp" />
+    <ClInclude Include="WarehouseFoodSpec.hpp" />
     <ClInclude Include="WarehouseGold.hpp" />
+    <ClInclude Include="WarehouseGoldCollectorSpec.hpp" />
+    <ClInclude Include="WarehouseGoldWarehouseSpec.hpp" />
     <ClInclude Include="WarehouseIron.hpp" />
+    <ClInclude Include="WarehouseIronSpec.hpp" />
     <ClInclude Include="WarehouseStone.hpp" />
+    <ClInclude Include="WarehouseStoneSpec.hpp" />
     <ClInclude Include="WarehouseWood.hpp" />
+    <ClInclude Include="WarehouseWoodSpec.hpp" />
     <ClInclude Include="Warrior.hpp" />
+    <ClInclude Include="WarriorAttacker.hpp" />
+    <ClInclude Include="WarriorHealer.hpp" />
+    <ClInclude Include="WarriorHealerSpec.hpp" />
+    <ClInclude Include="WarriorHPPointer.hpp" />
+    <ClInclude Include="WarriorNearAttacker.hpp" />
+    <ClInclude Include="WarriorNearMultyAttacker.hpp" />
+    <ClInclude Include="WarriorNearSingleAttacker.hpp" />
+    <ClInclude Include="WarriorPlayerPointer.hpp" />
     <ClInclude Include="WarriorProducerSpec.hpp" />
     <ClInclude Include="WarriorProducingFinishedEvent.hpp" />
+    <ClInclude Include="WarriorProjectileHealer.hpp" />
     <ClInclude Include="Water.hpp" />
+    <ClInclude Include="Well.hpp" />
+    <ClInclude Include="WellSpec.hpp" />
     <ClInclude Include="WindowButton.hpp" />
     <ClInclude Include="WindowButtonImage.hpp" />
     <ClInclude Include="WindowTwoButtons.hpp" />
-    <ClInclude Include="SawmillSpec.hpp" />
-    <ClInclude Include="CastleWoodGeneratorSpec.hpp" />
+    <ClInclude Include="WipeAttackAbilityEvent.hpp" />
+    <ClInclude Include="WipeHealingAbilityEvent.hpp" />
+    <ClInclude Include="Workshop.hpp" />
+    <ClInclude Include="WorkshopWarriorHealerSpec.hpp" />
+    <ClInclude Include="WorkshopWarriorProducerSpec.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddHpEvent.cpp" />
     <ClCompile Include="AddResourceEvent.cpp" />
     <ClCompile Include="AddResourcesEvent.cpp" />
-    <ClCompile Include="AreaControllerSpec.cpp" />
-    <ClCompile Include="Parameters.cpp" />
-    <ClCompile Include="BarracksSpec.cpp" />
-    <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp" />
-    <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
-    <ClCompile Include="CouldntOpenParameters.cpp" />
-    <ClCompile Include="CreateEffectEvent.cpp" />
-    <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp" />
-    <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp" />
-    <ClCompile Include="DoTradeEvent.cpp" />
-    <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="EnableWarriorRageModeEvent.cpp" />
-    <ClCompile Include="House.cpp" />
-    <ClCompile Include="HouseSpec.cpp" />
-    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp" />
-    <ClCompile Include="ArableSpec.cpp" />
-    <ClCompile Include="GatesSpec.cpp" />
-    <ClCompile Include="IBuildingSpec.cpp" />
-    <ClCompile Include="Infirmary.cpp" />
-    <ClCompile Include="InfirmaryWarriorHealerSpec.cpp" />
-    <ClCompile Include="ISelectable.cpp" />
-    <ClCompile Include="KillNextTurnEvent.cpp" />
-    <ClCompile Include="MarkSpellAsUsedEvent.cpp" />
-    <ClCompile Include="MineSpec.cpp" />
-    <ClCompile Include="MarketSpec.cpp" />
-    <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
-    <ClCompile Include="IMovementSpeedDecreaserSpec.cpp" />
-    <ClCompile Include="PoisonFog.cpp" />
-    <ClCompile Include="PoisonSpell.cpp" />
-    <ClCompile Include="RageSpell.cpp" />
-    <ClCompile Include="Resin.cpp" />
-    <ClCompile Include="ResinSpec.cpp" />
-    <ClCompile Include="RevertKillNextTurnEvent.cpp" />
-    <ClCompile Include="RoadSpec.cpp" />
-    <ClCompile Include="QuarrySpec.cpp" />
-    <ClCompile Include="SetSpellEvent.cpp" />
-    <ClCompile Include="Spell.cpp" />
-    <ClCompile Include="SpellEffect.cpp" />
-    <ClCompile Include="SpellFactory.cpp" />
-    <ClCompile Include="SpellFactorySpec.cpp" />
-    <ClCompile Include="SpellPreview.cpp" />
-    <ClCompile Include="SpellProducerSpec.cpp" />
-    <ClCompile Include="StartWarriorProducingEvent.cpp" />
-    <ClCompile Include="SuspendingAnimation.cpp" />
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="Arable.cpp" />
+    <ClCompile Include="ArableSpec.cpp" />
+    <ClCompile Include="AreaControllerSpec.cpp" />
+    <ClCompile Include="AreaResourcePointCollectorSpec.cpp" />
     <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="BarracksSpec.cpp" />
+    <ClCompile Include="BigArrow.cpp" />
     <ClCompile Include="BlackKnight.cpp" />
     <ClCompile Include="BuildEvent.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="BuildingHorizontalSelectionWindowComponent.cpp" />
     <ClCompile Include="BuildingMode.cpp" />
     <ClCompile Include="BuildingShortInfo.cpp" />
+    <ClCompile Include="BuildingStatePointer.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraDependentPopUpElement.cpp" />
     <ClCompile Include="CameraIndependentPopUpElemenent.cpp" />
     <ClCompile Include="Castle.cpp" />
-    <ClCompile Include="ResetHighlightEvent.cpp" />
-    <ClCompile Include="SetHighlightEvent.cpp" />
+    <ClCompile Include="CastlePopulationLimitIncreaserSpec.cpp" />
+    <ClCompile Include="CastleShootingSpec.cpp" />
+    <ClCompile Include="CastleTerritoryExpanderSpec.cpp" />
+    <ClCompile Include="CastleWarehouseSpec.cpp" />
+    <ClCompile Include="CastleWoodGeneratorSpec.cpp" />
     <ClCompile Include="ChangeMoveEvent.cpp" />
     <ClCompile Include="ChangeWarriorDirectionEvent.cpp" />
     <ClCompile Include="ChooseLanguageEvent.cpp" />
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="CloseAnimationEvent.cpp" />
-    <ClCompile Include="CloseWindowEvent.cpp" />
     <ClCompile Include="CloseMenuEvent.cpp" />
+    <ClCompile Include="CloseWindowEvent.cpp" />
     <ClCompile Include="ClueManager.cpp" />
     <ClCompile Include="Collections.cpp" />
+    <ClCompile Include="ColorBlender.cpp" />
     <ClCompile Include="ColorTheme.cpp" />
+    <ClCompile Include="CompByClickPriority.cpp" />
+    <ClCompile Include="CompByDrawPriority.cpp" />
+    <ClCompile Include="CompByNewMovePriority.cpp" />
     <ClCompile Include="ConductionGraph.cpp" />
     <ClCompile Include="CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="CouldntOpen.cpp" />
     <ClCompile Include="CouldntOpenFont.cpp" />
+    <ClCompile Include="CouldntOpenLocales.cpp" />
     <ClCompile Include="CouldntOpenMap.cpp" />
     <ClCompile Include="CouldntOpenMusic.cpp" />
+    <ClCompile Include="CouldntOpenParameters.cpp" />
     <ClCompile Include="CouldntOpenSound.cpp" />
-    <ClCompile Include="CouldntOpenLocales.cpp" />
     <ClCompile Include="CouldntOpenTexture.cpp" />
     <ClCompile Include="CreateAnimationEvent.cpp" />
     <ClCompile Include="CreateEEvent.cpp" />
@@ -886,133 +915,206 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="DecreaseBurningMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseCurrentProducingMovesLeftEvent.cpp" />
     <ClCompile Include="DecreaseCurrentTradeMovesLeftEvent.cpp" />
+    <ClCompile Include="DecreaseRageModeMovesLeftEvent.cpp" />
+    <ClCompile Include="DecreaseSpellCreationMovesLeftEvent.cpp" />
     <ClCompile Include="Defence.cpp" />
+    <ClCompile Include="DeleteSaveEvent.cpp" />
     <ClCompile Include="DestroyEvent.cpp" />
     <ClCompile Include="DijkstraQueueElement.cpp" />
     <ClCompile Include="DisableCursorEvent.cpp" />
+    <ClCompile Include="DoTradeEvent.cpp" />
     <ClCompile Include="EnableCursorEvent.cpp" />
+    <ClCompile Include="EnableWarriorRageModeEvent.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="FirstTimeTipsTable.cpp" />
-    <ClCompile Include="MovementGraphElement.cpp" />
     <ClCompile Include="FocusOnEvent.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gates1.cpp" />
     <ClCompile Include="Gates2.cpp" />
+    <ClCompile Include="GatesSpec.cpp" />
+    <ClCompile Include="GenerateChooseSaveWindowEvent.cpp" />
+    <ClCompile Include="GlobalClock.cpp" />
+    <ClCompile Include="GO.cpp" />
+    <ClCompile Include="Healer.cpp" />
+    <ClCompile Include="HealerProjectile.cpp" />
+    <ClCompile Include="HighlightColors.cpp" />
+    <ClCompile Include="HighlightTable.cpp" />
     <ClCompile Include="HorizontalSelectionWindow.cpp" />
     <ClCompile Include="HorizontalSelectionWindowComponent.cpp" />
-    <ClCompile Include="GO.cpp" />
-    <ClCompile Include="HighlightTable.cpp" />
+    <ClCompile Include="House.cpp" />
+    <ClCompile Include="HouseSpec.cpp" />
     <ClCompile Include="HPFlyingE.cpp" />
-    <ClCompile Include="WarriorHPPointer.cpp" />
     <ClCompile Include="HPGO.cpp" />
+    <ClCompile Include="IBuildingSpec.cpp" />
+    <ClCompile Include="IConductionResourcePointCollectorSpec.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageFlyingE.cpp" />
+    <ClCompile Include="IncreaseVCSMoveCtrEvent.cpp" />
     <ClCompile Include="Infantryman.cpp" />
+    <ClCompile Include="Infirmary.cpp" />
+    <ClCompile Include="InfirmaryWarriorHealerSpec.cpp" />
+    <ClCompile Include="InfirmaryWarriorProducerSpec.cpp" />
+    <ClCompile Include="IPopulationLimitIncreaserSpec.cpp" />
+    <ClCompile Include="IResourceGeneratorSpec.cpp" />
     <ClCompile Include="Iron.cpp" />
+    <ClCompile Include="ISelectable.cpp" />
+    <ClCompile Include="IWarehouseSpec.cpp" />
+    <ClCompile Include="KillNextTurnEvent.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelWithImage.cpp" />
     <ClCompile Include="LandscapeGraph.cpp" />
     <ClCompile Include="LanguageAlreadyInUse.cpp" />
     <ClCompile Include="Legioner.cpp" />
+    <ClCompile Include="LimitResourcesEvent.cpp" />
+    <ClCompile Include="LoadGameEvent.cpp" />
     <ClCompile Include="LoadingError.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
+    <ClCompile Include="Locales.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScreen.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="MapSize.cpp" />
     <ClCompile Include="MapState.cpp" />
+    <ClCompile Include="MarkAsAttackedEvent.cpp" />
     <ClCompile Include="Market.cpp" />
+    <ClCompile Include="MarketSpec.cpp" />
+    <ClCompile Include="MarkPlayerAsInactiveEvent.cpp" />
+    <ClCompile Include="MarkSpellAsUsedEvent.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mine.cpp" />
+    <ClCompile Include="MineSpec.cpp" />
     <ClCompile Include="Mountains.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="MoveDoesNotExist.cpp" />
     <ClCompile Include="MoveGameActionWindowDownEvent.cpp" />
     <ClCompile Include="MoveGameActionWindowUpEvent.cpp" />
     <ClCompile Include="MovementGraph.cpp" />
-    <ClCompile Include="Players.cpp" />
-    <ClCompile Include="IResourceGeneratorSpec.cpp" />
-    <ClCompile Include="AreaResourcePointCollectorSpec.cpp" />
-    <ClCompile Include="TerritoryConductorSpec.cpp" />
-    <ClCompile Include="TerritoryOriginSpec.cpp" />
-    <ClCompile Include="TradingSpec.cpp" />
-    <ClCompile Include="TryToBuildEvent.cpp" />
-    <ClCompile Include="UseSpellEvent.cpp" />
-    <ClCompile Include="VictoryConditionSpec.cpp" />
-    <ClCompile Include="WallSpec.cpp" />
-    <ClCompile Include="CastleWarehouseSpec.cpp" />
-    <ClCompile Include="WarehouseFoodSpec.cpp" />
-    <ClCompile Include="WarehouseGoldCollectorSpec.cpp" />
-    <ClCompile Include="WarehouseGoldWarehouseSpec.cpp" />
-    <ClCompile Include="WarehouseIronSpec.cpp" />
-    <ClCompile Include="IWarehouseSpec.cpp" />
-    <ClCompile Include="WarehouseStoneSpec.cpp" />
-    <ClCompile Include="WarehouseWoodSpec.cpp" />
-    <ClCompile Include="WarriorHealerSpec.cpp" />
-    <ClCompile Include="WarriorPlayerPointer.cpp" />
+    <ClCompile Include="MovementGraphElement.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="NewMovePriority.cpp" />
     <ClCompile Include="NextClueEvent.cpp" />
     <ClCompile Include="PAKScreen.cpp" />
-    <ClCompile Include="PlainsGeneration.cpp" />
+    <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerPointer.cpp" />
-    <ClCompile Include="BuildingStatePointer.cpp" />
-    <ClCompile Include="PlayerColors.cpp" />
+    <ClCompile Include="Players.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="PlaySoundEvent.cpp" />
     <ClCompile Include="PopUpElement.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Quarry.cpp" />
+    <ClCompile Include="QuarrySpec.cpp" />
+    <ClCompile Include="RageSpell.cpp" />
+    <ClCompile Include="Ram.cpp" />
     <ClCompile Include="RectangularUiElement.cpp" />
+    <ClCompile Include="RefreshAttackAbilityEvent.cpp" />
+    <ClCompile Include="RefreshAttackedTableEvent.cpp" />
+    <ClCompile Include="RefreshHealingAbilityEvent.cpp" />
     <ClCompile Include="RefreshMovementPointsEvent.cpp" />
+    <ClCompile Include="ResetHighlightEvent.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceBar.cpp" />
+    <ClCompile Include="ResourceOrderComp.cpp" />
+    <ClCompile Include="ResourceOrderPriorityTable.cpp" />
     <ClCompile Include="ResourcePoint.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="ReturnToMenuEvent.cpp" />
+    <ClCompile Include="RevertKillNextTurnEvent.cpp" />
     <ClCompile Include="Road.cpp" />
+    <ClCompile Include="RoadSpec.cpp" />
     <ClCompile Include="Root.cpp" />
+    <ClCompile Include="SaveGameEvent.cpp" />
     <ClCompile Include="Sawmill.cpp" />
+    <ClCompile Include="SawmillSpec.cpp" />
     <ClCompile Include="SelectEvent.cpp" />
     <ClCompile Include="SetFireEvent.cpp" />
+    <ClCompile Include="SetHighlightEvent.cpp" />
+    <ClCompile Include="SetSpellEvent.cpp" />
+    <ClCompile Include="SFColorComp.cpp" />
+    <ClCompile Include="ShootingPriorityComp.cpp" />
+    <ClCompile Include="ShootingSpec.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
+    <ClCompile Include="SpecialMove.cpp" />
+    <ClCompile Include="Spell.cpp" />
+    <ClCompile Include="SpellEffect.cpp" />
+    <ClCompile Include="SpellFactory.cpp" />
+    <ClCompile Include="SpellFactorySpec.cpp" />
+    <ClCompile Include="SpellPreview.cpp" />
+    <ClCompile Include="SpellProducerSpec.cpp" />
     <ClCompile Include="StartGameEvent.cpp" />
     <ClCompile Include="StartWarriorAnimationEvent.cpp" />
+    <ClCompile Include="StartWarriorProducingEvent.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="SubHpEvent.cpp" />
     <ClCompile Include="SubResourceEvent.cpp" />
     <ClCompile Include="SubResourcesEvent.cpp" />
-    <ClCompile Include="Locales.cpp" />
+    <ClCompile Include="SuspendingAnimation.cpp" />
+    <ClCompile Include="TerritoryConductorSpec.cpp" />
+    <ClCompile Include="TerritoryOriginSpec.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TilesetHandler.cpp" />
+    <ClCompile Include="Tower1.cpp" />
+    <ClCompile Include="Tower1Spec.cpp" />
+    <ClCompile Include="Tower2.cpp" />
+    <ClCompile Include="Tower2Spec.cpp" />
     <ClCompile Include="Trade.cpp" />
+    <ClCompile Include="TradingSpec.cpp" />
     <ClCompile Include="Treasure.cpp" />
+    <ClCompile Include="TryToBuildEvent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnselectEvent.cpp" />
+    <ClCompile Include="UseSpellEvent.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
-    <ClCompile Include="VictoryConditionBDestroyedEvent.cpp" />
+    <ClCompile Include="UUID.cpp" />
+    <ClCompile Include="Valkyr.cpp" />
+    <ClCompile Include="VictoryConditionSpec.cpp" />
     <ClCompile Include="Wall1.cpp" />
     <ClCompile Include="Wall2.cpp" />
+    <ClCompile Include="WallSpec.cpp" />
+    <ClCompile Include="WarehouseCrystal.cpp" />
+    <ClCompile Include="WarehouseCrystalSpec.cpp" />
     <ClCompile Include="WarehouseFood.cpp" />
+    <ClCompile Include="WarehouseFoodSpec.cpp" />
     <ClCompile Include="WarehouseGold.cpp" />
+    <ClCompile Include="WarehouseGoldCollectorSpec.cpp" />
+    <ClCompile Include="WarehouseGoldWarehouseSpec.cpp" />
     <ClCompile Include="WarehouseIron.cpp" />
+    <ClCompile Include="WarehouseIronSpec.cpp" />
     <ClCompile Include="WarehouseStone.cpp" />
+    <ClCompile Include="WarehouseStoneSpec.cpp" />
     <ClCompile Include="WarehouseWood.cpp" />
+    <ClCompile Include="WarehouseWoodSpec.cpp" />
     <ClCompile Include="Warrior.cpp" />
+    <ClCompile Include="WarriorAttacker.cpp" />
+    <ClCompile Include="WarriorHealer.cpp" />
+    <ClCompile Include="WarriorHealerSpec.cpp" />
+    <ClCompile Include="WarriorHPPointer.cpp" />
+    <ClCompile Include="WarriorNearAttacker.cpp" />
+    <ClCompile Include="WarriorNearMultyAttacker.cpp" />
+    <ClCompile Include="WarriorNearSingleAttacker.cpp" />
+    <ClCompile Include="WarriorPlayerPointer.cpp" />
     <ClCompile Include="WarriorProducerSpec.cpp" />
     <ClCompile Include="WarriorProducingFinishedEvent.cpp" />
+    <ClCompile Include="WarriorProjectileHealer.cpp" />
     <ClCompile Include="Water.cpp" />
+    <ClCompile Include="Well.cpp" />
+    <ClCompile Include="WellSpec.cpp" />
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowButtonImage.cpp" />
     <ClCompile Include="WindowTwoButtons.cpp" />
-    <ClCompile Include="SawmillSpec.cpp" />
-    <ClCompile Include="CastleWoodGeneratorSpec.cpp" />
+    <ClCompile Include="WipeAttackAbilityEvent.cpp" />
+    <ClCompile Include="WipeHealingAbilityEvent.cpp" />
+    <ClCompile Include="Workshop.cpp" />
+    <ClCompile Include="WorkshopWarriorHealerSpec.cpp" />
+    <ClCompile Include="WorkshopWarriorProducerSpec.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
