@@ -23,7 +23,6 @@
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Mountains::Mountains() = default;

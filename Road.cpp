@@ -21,7 +21,6 @@
 #include "RoadSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Road::Road() {

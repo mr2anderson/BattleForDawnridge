@@ -19,7 +19,6 @@
 
 #include "CastleWoodGeneratorSpec.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 CastleWoodGeneratorSpec::CastleWoodGeneratorSpec() = default;

@@ -17,17 +17,21 @@
  */
 
 
-#include "CastleTerritoryExpanderSpec.hpp"
-#include "Parameters.hpp"
+#include <cstdint>
+#include <tuple>
 
 
-CastleTerritoryExpanderSpec::CastleTerritoryExpanderSpec() = default;
-IBuildingSpec* CastleTerritoryExpanderSpec::clone() const {
-	return new CastleTerritoryExpanderSpec(*this);
-}
-uint32_t CastleTerritoryExpanderSpec::getRadius() const {
-	return Parameters::get()->getInt("castle_radius");
-}
+#pragma once
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(CastleTerritoryExpanderSpec)
+class UUID {
+public:
+    UUID();
+
+    bool operator==(const UUID &b) const;
+    bool operator!=(const UUID &b) const;
+    bool operator<(const UUID &b) const;
+    bool operator>(const UUID &b) const;
+private:
+    std::tuple<uint64_t, uint64_t> a;
+};

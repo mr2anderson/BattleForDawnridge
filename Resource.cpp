@@ -19,7 +19,6 @@
 
 #include "Resource.hpp"
 #include "Locales.hpp"
-#include "ArchiveType.hpp"
 
 
 Resource::Resource() = default;

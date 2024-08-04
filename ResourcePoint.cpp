@@ -17,14 +17,12 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "ResourcePoint.hpp"
 #include "CreateEEvent.hpp"
 #include "Locales.hpp"
 #include "WarriorHPPointer.hpp"
 #include "Parameters.hpp"
 #include "Warrior.hpp"
-#include "ArchiveType.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;

@@ -23,7 +23,6 @@
 #include "Knight.hpp"
 #include "Valkyr.hpp"
 #include "BlackKnight.hpp"
-#include "ArchiveType.hpp"
 
 
 BarracksSpec::BarracksSpec() = default;

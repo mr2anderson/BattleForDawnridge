@@ -17,13 +17,11 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "WarehouseGold.hpp"
 #include "WarehouseGoldWarehouseSpec.hpp"
 #include "WarehouseGoldCollectorSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;

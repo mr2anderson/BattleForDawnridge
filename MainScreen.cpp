@@ -74,7 +74,6 @@
 #include "WarriorHealer.hpp"
 #include "Workshop.hpp"
 #include "VictoryConditionSpec.hpp"
-#include "ArchiveType.hpp"
 #include "Root.hpp"
 #include "Maps.hpp"
 

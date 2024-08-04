@@ -20,7 +20,6 @@
 #include "BlackKnight.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 BlackKnight::BlackKnight() = default;

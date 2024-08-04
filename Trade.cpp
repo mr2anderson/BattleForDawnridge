@@ -19,7 +19,6 @@
 
 #include "Trade.hpp"
 #include "Locales.hpp"
-#include "ArchiveType.hpp"
 
 
 Trade::Trade() {

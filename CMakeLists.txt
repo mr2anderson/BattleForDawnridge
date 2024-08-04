@@ -9,7 +9,9 @@ add_executable(BattleForDawnridge ${BattleForDawnridge_src}
         GlobalRandomGenerator32.hpp
         GlobalRandomGenerator64.hpp
         Clock.hpp
-        Clock.cpp)
+        Clock.cpp
+        UUID.hpp
+        UUID.cpp)
 
 find_package(Boost REQUIRED COMPONENTS serialization)
 find_package(Boost REQUIRED COMPONENTS iostreams)

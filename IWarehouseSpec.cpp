@@ -29,7 +29,7 @@ Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *sta
 	Resources newLimit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
         Building *b = state->getCollectionsPtr()->getBuilding(i);
-        if (b->exist() and b->getPlayerId() == building->getPlayerId() and b->getUID() != building->getUID()) {
+        if (b->exist() and b->getPlayerId() == building->getPlayerId() and b->getUUID() != building->getUUID()) {
             newLimit.plus(b->getLimit());
         }
     }

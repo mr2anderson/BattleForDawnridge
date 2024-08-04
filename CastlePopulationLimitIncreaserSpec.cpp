@@ -19,7 +19,6 @@
 
 #include "CastlePopulationLimitIncreaserSpec.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 CastlePopulationLimitIncreaserSpec::CastlePopulationLimitIncreaserSpec() = default;

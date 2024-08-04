@@ -22,7 +22,6 @@
 #include "QuarrySpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Quarry::Quarry() = default;

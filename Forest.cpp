@@ -22,7 +22,6 @@
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Forest::Forest() = default;

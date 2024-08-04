@@ -22,7 +22,6 @@
 #include "SetHighlightEvent.hpp"
 #include "LandscapeGraph.hpp"
 #include "Building.hpp"
-#include "ArchiveType.hpp"
 
 
 AreaControllerSpec::AreaControllerSpec() {

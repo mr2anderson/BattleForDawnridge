@@ -17,17 +17,22 @@
  */
 
 
-#include "CastleTerritoryExpanderSpec.hpp"
-#include "Parameters.hpp"
+#include "UUID.hpp"
+#include "GlobalRandomGenerator64.hpp"
 
 
-CastleTerritoryExpanderSpec::CastleTerritoryExpanderSpec() = default;
-IBuildingSpec* CastleTerritoryExpanderSpec::clone() const {
-	return new CastleTerritoryExpanderSpec(*this);
+UUID::UUID() {
+    this->a = std::make_tuple(GlobalRandomGenerator64::get()->gen(), GlobalRandomGenerator64::get()->gen());
 }
-uint32_t CastleTerritoryExpanderSpec::getRadius() const {
-	return Parameters::get()->getInt("castle_radius");
+bool UUID::operator==(const UUID &b) const {
+    return this->a == b.a;
 }
-
-
-BOOST_CLASS_EXPORT_IMPLEMENT(CastleTerritoryExpanderSpec)
+bool UUID::operator!=(const UUID &b) const {
+    return this->a != b.a;
+}
+bool UUID::operator<(const UUID &b) const {
+    return this->a < b.a;
+}
+bool UUID::operator>(const UUID &b) const {
+    return this->a > b.a;
+}

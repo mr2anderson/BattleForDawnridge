@@ -22,7 +22,6 @@
 #include "MineSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Mine::Mine() = default;

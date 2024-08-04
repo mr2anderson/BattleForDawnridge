@@ -20,7 +20,6 @@
 #include "Iron.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Iron::Iron() = default;

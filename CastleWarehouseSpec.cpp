@@ -19,7 +19,6 @@
 
 #include "CastleWarehouseSpec.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 CastleWarehouseSpec::CastleWarehouseSpec() = default;

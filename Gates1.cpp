@@ -21,7 +21,6 @@
 #include "GatesSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Gates1::Gates1() = default;

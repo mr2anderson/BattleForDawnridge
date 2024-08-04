@@ -18,12 +18,10 @@
 
 
 
-#include <boost/serialization/base_object.hpp>
 #include "Sawmill.hpp"
 #include "SawmillSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
 
 
 Sawmill::Sawmill() = default;

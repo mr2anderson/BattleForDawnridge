@@ -18,7 +18,6 @@
 
 
 #include "HPGO.hpp"
-#include "ArchiveType.hpp"
 
 
 HPGO::HPGO() = default;
