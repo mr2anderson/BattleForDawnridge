@@ -5,5 +5,3 @@ Here you can watch gameplay recorded on one of the early versions of the game
 * **SFML** **System**, **Window**, **Graphics**, **Audio**
 * **Boost** **serialization**, **iostreams**
 * **bzip2**
-## Class diagram
-![](docs/diagram.png)
