@@ -18,7 +18,7 @@
 
 
 #include <boost/serialization/shared_ptr.hpp>
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
 #pragma once

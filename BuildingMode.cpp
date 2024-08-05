@@ -33,7 +33,7 @@
 #include "Building.hpp"
 #include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 #include "Warrior.hpp"
 #include "SetHighlightEvent.hpp"
 

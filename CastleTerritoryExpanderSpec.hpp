@@ -17,7 +17,7 @@
  */
 
 
-#include "TerritoryOriginSpec.hpp"
+#include "ITerritoryOriginSpec.hpp"
 
 
 #pragma once

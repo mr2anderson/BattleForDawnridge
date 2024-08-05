@@ -17,7 +17,7 @@
  */
 
 
-#include "AreaResourcePointCollectorSpec.hpp"
+#include "IAreaResourcePointCollectorSpec.hpp"
 
 
 #pragma once

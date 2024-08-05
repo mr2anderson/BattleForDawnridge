@@ -17,7 +17,7 @@
  */
 
 
-#include "TerritoryConductorSpec.hpp"
+#include "ITerritoryConductorSpec.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "HighlightColors.hpp"

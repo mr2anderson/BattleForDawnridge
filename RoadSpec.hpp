@@ -17,7 +17,7 @@
  */
 
 
-#include "TerritoryConductorSpec.hpp"
+#include "ITerritoryConductorSpec.hpp"
 
 
 #pragma once

@@ -17,7 +17,7 @@
  */
 
 
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 #include "SetHighlightEvent.hpp"
 #include "LandscapeGraph.hpp"
 #include "Building.hpp"

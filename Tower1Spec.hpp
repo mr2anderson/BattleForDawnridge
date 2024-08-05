@@ -17,7 +17,7 @@
  */
 
 
-#include "ShootingSpec.hpp"
+#include "IShootingSpec.hpp"
 
 
 #pragma once

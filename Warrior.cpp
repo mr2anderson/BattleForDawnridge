@@ -48,7 +48,7 @@
 #include "GlobalRandomGenerator32.hpp"
 #include "FocusOnEvent.hpp"
 #include "Building.hpp"
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;

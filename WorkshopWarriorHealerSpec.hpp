@@ -17,7 +17,7 @@
  */
 
 
-#include "WarriorHealerSpec.hpp"
+#include "IWarriorHealerSpec.hpp"
 
 
 #pragma once

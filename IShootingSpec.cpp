@@ -18,7 +18,7 @@
 
 
 #include <algorithm>
-#include "ShootingSpec.hpp"
+#include "IShootingSpec.hpp"
 #include "HighlightColors.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"

@@ -17,7 +17,7 @@
  */
 
 
-#include "WarriorHealerSpec.hpp"
+#include "IWarriorHealerSpec.hpp"
 #include "Building.hpp"
 #include "Warrior.hpp"
 #include "FocusOnEvent.hpp"
@@ -29,7 +29,6 @@
 #include "HighlightColors.hpp"
 
 
-IWarriorHealerSpec::IWarriorHealerSpec() = default;
 Events IWarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
 	if (!b->works()) {
 		return Events();

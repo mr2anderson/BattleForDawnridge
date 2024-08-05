@@ -17,7 +17,7 @@
  */
 
 
-#include "TerritoryOriginSpec.hpp"
+#include "ITerritoryOriginSpec.hpp"
 #include "HighlightColors.hpp"
 
 

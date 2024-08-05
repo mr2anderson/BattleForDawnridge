@@ -34,7 +34,7 @@
 #include "ResetHighlightEvent.hpp"
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
 Building::Building() = default;

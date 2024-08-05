@@ -17,7 +17,7 @@
  */
 
 
-#include "AreaResourcePointCollectorSpec.hpp"
+#include "IAreaResourcePointCollectorSpec.hpp"
 #include "ResourcePoint.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
