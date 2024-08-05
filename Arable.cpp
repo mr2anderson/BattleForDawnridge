@@ -21,6 +21,7 @@
 #include "ArableSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Arable::Arable() = default;
@@ -30,6 +31,9 @@ Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Arable::createSameTypeBuilding() const {
 	return new Arable(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Arable::getTypeUUID() const {
+	return UUIDs::get()->get("arable");
 }
 uint32_t Arable::getSX() const {
 	return Parameters::get()->getInt("arable_sx");

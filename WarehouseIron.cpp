@@ -21,6 +21,7 @@
 #include "WarehouseIronSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 WarehouseIron::WarehouseIron() = default;
@@ -30,6 +31,9 @@ WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* WarehouseIron::createSameTypeBuilding() const {
 	return new WarehouseIron(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID WarehouseIron::getTypeUUID() const {
+	return UUIDs::get()->get("warehouse_iron");
 }
 uint32_t WarehouseIron::getSX() const {
 	return Parameters::get()->getInt("warehouse_iron_sx");

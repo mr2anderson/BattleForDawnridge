@@ -20,11 +20,15 @@
 #include "Treasure.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Treasure::Treasure() = default;
 Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
+}
+UUID Treasure::getTypeUUID() const {
+	return UUIDs::get()->get("treasure");
 }
 Events Treasure::newMove(MapState *state, uint32_t playerId) {
 	this->alreadyCollected = false;

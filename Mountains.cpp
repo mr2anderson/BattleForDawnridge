@@ -23,12 +23,16 @@
 #include "TilesetHandler.hpp"
 #include "CreateEEvent.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Mountains::Mountains() = default;
 Mountains::Mountains(uint32_t x, uint32_t y, uint32_t type) :
 	GO(x, y) {
 	this->type = type;
+}
+UUID Mountains::getTypeUUID() const {
+	return UUIDs::get()->get("mountains");
 }
 uint32_t Mountains::getSX() const {
 	return Parameters::get()->getInt("mountains_sx");

@@ -21,7 +21,7 @@
 #include "GO.hpp"
 
 
-NewMovePriority::NewMovePriority(NewMoveMainPriority main, Priority<uint64_t> second) {
+NewMovePriority::NewMovePriority(NewMoveMainPriority main, Priority<UUID> second) {
     this->main = main;
     this->second = second;
 }

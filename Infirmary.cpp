@@ -22,6 +22,7 @@
 #include "InfirmaryWarriorProducerSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Infirmary::Infirmary() = default;
@@ -32,6 +33,9 @@ Infirmary::Infirmary(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Infirmary::createSameTypeBuilding() const {
 	return new Infirmary(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Infirmary::getTypeUUID() const {
+	return UUIDs::get()->get("infirmary");
 }
 uint32_t Infirmary::getSX() const {
 	return Parameters::get()->getInt("infirmary_sx");

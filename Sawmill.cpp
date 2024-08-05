@@ -22,6 +22,7 @@
 #include "SawmillSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDS.hpp"
 
 
 Sawmill::Sawmill() = default;
@@ -31,6 +32,9 @@ Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Sawmill::createSameTypeBuilding() const {
 	return new Sawmill(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Sawmill::getTypeUUID() const {
+	return UUIDs::get()->get("sawmill");
 }
 Defence Sawmill::getDefence() const {
 	return Parameters::get()->getDefence("sawmill_defence");

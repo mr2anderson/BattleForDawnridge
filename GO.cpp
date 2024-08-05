@@ -17,7 +17,6 @@
  */
 
 
-#include <typeinfo>
 #include "GO.hpp"
 #include "Textures.hpp"
 #include "Locales.hpp"
@@ -132,7 +131,7 @@ NewMoveMainPriority GO::getNewMoveMainPriority() const {
     return GO::NEW_MOVE_MAIN_PRIORITY_LOWEST;
 }
 NewMovePriority GO::getNewMovePriority() const {
-    return {this->getNewMoveMainPriority(), typeid(this).hash_code()};
+	return { this->getNewMoveMainPriority(), {this->getTypeUUID()}};
 }
 sf::IntRect GO::getTextureRect() const {
 	return sf::IntRect(0, 0, 64 * this->getSX(), 64 * this->getSY());

@@ -20,11 +20,15 @@
 #include "Iron.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Iron::Iron() = default;
 Iron::Iron(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
+}
+UUID Iron::getTypeUUID() const {
+	return UUIDs::get()->get("iron");
 }
 uint32_t Iron::getSX() const {
 	return Parameters::get()->getInt("iron_sx");

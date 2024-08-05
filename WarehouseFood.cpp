@@ -17,12 +17,11 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "WarehouseFood.hpp"
 #include "WarehouseFoodSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
+#include "UUIDs.hpp"
 
 
 WarehouseFood::WarehouseFood() = default;
@@ -32,6 +31,9 @@ WarehouseFood::WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* WarehouseFood::createSameTypeBuilding() const {
 	return new WarehouseFood(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID WarehouseFood::getTypeUUID() const {
+	return UUIDs::get()->get("warehouse_food");
 }
 uint32_t WarehouseFood::getSX() const {
 	return Parameters::get()->getInt("warehouse_food_sx");

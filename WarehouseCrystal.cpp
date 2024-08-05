@@ -21,6 +21,7 @@
 #include "WarehouseCrystalSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 WarehouseCrystal::WarehouseCrystal() = default;
@@ -30,6 +31,9 @@ WarehouseCrystal::WarehouseCrystal(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* WarehouseCrystal::createSameTypeBuilding() const {
     return new WarehouseCrystal(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID WarehouseCrystal::getTypeUUID() const {
+    return UUIDs::get()->get("warehouse_crystal");
 }
 uint32_t WarehouseCrystal::getSX() const {
     return Parameters::get()->getInt("warehouse_crystal_sx");

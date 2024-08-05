@@ -23,6 +23,7 @@
 #include "Locales.hpp"
 #include "Parameters.hpp"
 #include "GlobalRandomGenerator32.hpp"
+#include "UUIDs.hpp"
 
 
 const uint32_t Well::TOTAL_TYPES = 8;
@@ -40,6 +41,9 @@ Well::Well(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Well::createSameTypeBuilding() const {
     return new Well(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Well::getTypeUUID() const {
+    return UUIDs::get()->get("well");
 }
 Defence Well::getDefence() const {
     return Parameters::get()->getDefence("well_defence");

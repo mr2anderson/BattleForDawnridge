@@ -20,11 +20,15 @@
 #include "Stone.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDS.hpp"
 
 
 Stone::Stone() = default;
 Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
 
+}
+UUID Stone::getTypeUUID() const {
+	return UUIDs::get()->get("stone");
 }
 uint32_t Stone::getSX() const {
 	return Parameters::get()->getInt("stone_sx");

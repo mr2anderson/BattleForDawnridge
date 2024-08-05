@@ -20,12 +20,16 @@
 #include "Ram.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Ram::Ram() = default;
 Ram::Ram(uint32_t x, uint32_t y, uint32_t playerId) :
         WarriorNearSingleAttacker(x, y, playerId) {
 
+}
+UUID Ram::getTypeUUID() const {
+    return UUIDs::get()->get("ram");
 }
 Warrior* Ram::cloneWarrior() const {
     return new Ram(*this);

@@ -20,6 +20,7 @@
 #include "BlackKnight.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 BlackKnight::BlackKnight() = default;
@@ -29,6 +30,9 @@ BlackKnight::BlackKnight(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Warrior* BlackKnight::cloneWarrior() const {
 	return new BlackKnight(*this);
+}
+UUID BlackKnight::getTypeUUID() const {
+	return UUIDs::get()->get("black_knight");
 }
 std::string BlackKnight::getBeenHitSoundName() const {
     return "ouch";

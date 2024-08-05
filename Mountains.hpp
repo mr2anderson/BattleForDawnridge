@@ -27,6 +27,7 @@ class Mountains : public GO {
 public:
 	Mountains();
 	Mountains(uint32_t x, uint32_t y, uint32_t type);
+	UUID getTypeUUID() const override;
 
     uint32_t getSX() const override;
     uint32_t getSY() const override;

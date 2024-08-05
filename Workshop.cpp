@@ -22,6 +22,7 @@
 #include "WorkshopWarriorHealerSpec.hpp"
 #include "Parameters.hpp"
 #include "Locales.hpp"
+#include "UUIDs.hpp"
 
 
 Workshop::Workshop() = default;
@@ -32,6 +33,9 @@ Workshop::Workshop(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Workshop::createSameTypeBuilding() const {
     return new Workshop(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Workshop::getTypeUUID() const {
+    return UUIDs::get()->get("workshop");
 }
 uint32_t Workshop::getSX() const {
     return Parameters::get()->getInt("workshop_sx");

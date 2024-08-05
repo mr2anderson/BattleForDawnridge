@@ -21,6 +21,7 @@
 #include "RoadSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDS.hpp"
 
 
 Road::Road() {
@@ -35,6 +36,9 @@ Road::Road(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Road::createSameTypeBuilding() const {
 	return new Road(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Road::getTypeUUID() const {
+    return UUIDs::get()->get("road");
 }
 uint32_t Road::getSX() const { // Config file is not used cuz engine does not support other sizes
 	return 1;

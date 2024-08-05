@@ -27,6 +27,7 @@ class Treasure : public ResourcePoint {
 public:
 	Treasure();
 	Treasure(uint32_t x, uint32_t y);
+	UUID getTypeUUID() const override;
 
 	Events newMove(MapState *state, uint32_t playerId) override;
 	uint32_t tryToCollect(uint32_t playerId, uint32_t value) override;

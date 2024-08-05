@@ -22,6 +22,7 @@
 #include "Locales.hpp"
 #include "Parameters.hpp"
 #include "GlobalRandomGenerator32.hpp"
+#include "UUIDs.hpp"
 
 
 const uint32_t House::TOTAL_TYPES = 16;
@@ -39,6 +40,9 @@ House::House(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* House::createSameTypeBuilding() const {
 	return new House(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID House::getTypeUUID() const {
+	return UUIDs::get()->get("house");
 }
 uint32_t House::getSX() const {
 	return Parameters::get()->getInt("house_sx");

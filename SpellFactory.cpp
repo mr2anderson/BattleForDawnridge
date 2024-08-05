@@ -21,6 +21,7 @@
 #include "Locales.hpp"
 #include "SpellFactorySpec.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 SpellFactory::SpellFactory() = default;
@@ -29,6 +30,9 @@ SpellFactory::SpellFactory(uint32_t x, uint32_t y, uint32_t playerId) : Building
 }
 SpellFactory::Building* SpellFactory::createSameTypeBuilding() const {
 	return new SpellFactory(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID SpellFactory::getTypeUUID() const {
+	return UUIDs::get()->get("spell_factory");
 }
 Defence SpellFactory::getDefence() const {
 	return Parameters::get()->getDefence("spell_factory_defence");

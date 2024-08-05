@@ -21,6 +21,7 @@
 #include "WarehouseStoneSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 WarehouseStone::WarehouseStone() = default;
@@ -30,6 +31,9 @@ WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* WarehouseStone::createSameTypeBuilding() const {
 	return new WarehouseStone(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID WarehouseStone::getTypeUUID() const {
+	return UUIDs::get()->get("warehouse_stone");
 }
 uint32_t WarehouseStone::getSX() const {
 	return Parameters::get()->getInt("warehouse_stone_sx");

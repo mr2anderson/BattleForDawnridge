@@ -20,6 +20,7 @@
 #include "Valkyr.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Valkyr::Valkyr() = default;
@@ -29,6 +30,9 @@ Valkyr::Valkyr(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Warrior* Valkyr::cloneWarrior() const {
     return new Valkyr(*this);
+}
+UUID Valkyr::getTypeUUID() const {
+    return UUIDs::get()->get("valkyr");
 }
 std::string Valkyr::getBeenHitSoundName() const {
     return "ouch_woman";

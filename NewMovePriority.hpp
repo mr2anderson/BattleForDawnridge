@@ -19,6 +19,7 @@
 
 #include <cstdint>
 #include "NewMoveMainPriority.hpp"
+#include "UUID.hpp"
 
 
 #pragma once
@@ -29,11 +30,11 @@ class GO;
 
 class NewMovePriority {
 public:
-    NewMovePriority(NewMoveMainPriority main, Priority<uint64_t> second);
+    NewMovePriority(NewMoveMainPriority main, Priority<UUID> second);
 
     bool operator<(const NewMovePriority &b) const;
     bool operator>(const NewMovePriority &b) const;
 private:
     NewMoveMainPriority main;
-    Priority<uint64_t> second;
+    Priority<UUID> second;
 };

@@ -20,7 +20,7 @@
 #include "Knight.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
+#include "UUIDs.hpp"
 
 
 Knight::Knight() = default;
@@ -30,6 +30,9 @@ Knight::Knight(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Warrior* Knight::cloneWarrior() const {
 	return new Knight(*this);
+}
+UUID Knight::getTypeUUID() const {
+	return UUIDs::get()->get("knight");
 }
 std::string Knight::getBeenHitSoundName() const {
     return "ouch";

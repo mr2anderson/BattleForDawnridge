@@ -21,6 +21,7 @@
 #include "HealerProjectile.hpp"
 #include "Parameters.hpp"
 #include "Locales.hpp"
+#include "UUIDs.hpp"
 
 
 Healer::Healer() = default;
@@ -29,6 +30,9 @@ Healer::Healer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorProjectileHea
 }
 Healer *Healer::cloneWarrior() const {
     return new Healer(*this);
+}
+UUID Healer::getTypeUUID() const {
+    return UUIDs::get()->get("healer");
 }
 std::string Healer::getBeenHitSoundName() const {
     return "ouch_woman_cute";

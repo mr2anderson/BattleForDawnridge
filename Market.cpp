@@ -21,6 +21,7 @@
 #include "MarketSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Market::Market() = default;
@@ -30,6 +31,9 @@ Market::Market(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Market::createSameTypeBuilding() const {
 	return new Market(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Market::getTypeUUID() const {
+	return UUIDs::get()->get("market");
 }
 uint32_t Market::getSX() const {
 	return Parameters::get()->getInt("market_sx");

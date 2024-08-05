@@ -21,7 +21,7 @@
 #include "GatesSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
+#include "UUIDs.hpp"
 
 
 Gates2::Gates2() = default;
@@ -30,7 +30,10 @@ Gates2::Gates2(uint32_t x, uint32_t y, uint32_t playerId) :
     this->addSpec(new GatesSpec());
 }
 Building* Gates2::createSameTypeBuilding() const {
-    return new Gates2(this->getX(), this->getY(), this->getPlayerId());
+   return new Gates2(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Gates2::getTypeUUID() const {
+    return UUIDs::get()->get("gates2");
 }
 uint32_t Gates2::getSX() const {
     return Parameters::get()->getInt("gates2_sx");

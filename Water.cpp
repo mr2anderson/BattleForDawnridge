@@ -24,12 +24,16 @@
 #include "CreateEEvent.hpp"
 #include "Parameters.hpp"
 #include "Warrior.hpp"
+#include "UUIDs.hpp"
 
 
 Water::Water() = default;
 Water::Water(uint32_t x, uint32_t y, uint32_t type) :
 	GO(x, y) {
 	this->type = type;
+}
+UUID Water::getTypeUUID() const {
+	return UUIDs::get()->get("water");
 }
 uint32_t Water::getSY() const {
 	return Parameters::get()->getInt("water_sx");

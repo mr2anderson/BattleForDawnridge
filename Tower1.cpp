@@ -21,6 +21,7 @@
 #include "Tower1Spec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDS.hpp"
 
 
 Tower1::Tower1() = default;
@@ -30,6 +31,9 @@ Tower1::Tower1(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Tower1::createSameTypeBuilding() const {
     return new Tower1(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Tower1::getTypeUUID() const {
+    return UUIDs::get()->get("tower1");
 }
 uint32_t Tower1::getSX() const {
     return Parameters::get()->getInt("tower1_sx");

@@ -26,6 +26,7 @@
 #include "CastleShootingSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Castle::Castle() = default;
@@ -40,6 +41,9 @@ Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Castle::createSameTypeBuilding() const {
 	return new Castle(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Castle::getTypeUUID() const {
+	return UUIDs::get()->get("castle");
 }
 uint32_t Castle::getSX() const {
 	return Parameters::get()->getInt("castle_sx");

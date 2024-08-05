@@ -27,6 +27,7 @@ class Stone : public ResourcePoint {
 public:
 	Stone();
 	Stone(uint32_t x, uint32_t y);
+    UUID getTypeUUID() const override;
 
     uint32_t getSX() const override;
     uint32_t getSY() const override;

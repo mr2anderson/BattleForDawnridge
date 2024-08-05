@@ -22,11 +22,15 @@
 #include "Textures.hpp"
 #include "TilesetHandler.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Forest::Forest() = default;
 Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : ResourcePoint(x, y) {
 	this->type = type;
+}
+UUID Forest::getTypeUUID() const {
+	return UUIDs::get()->get("forest");
 }
 uint32_t Forest::getSX() const {
 	return Parameters::get()->getInt("forest_sx");

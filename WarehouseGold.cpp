@@ -22,6 +22,7 @@
 #include "WarehouseGoldCollectorSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 WarehouseGold::WarehouseGold() = default;
@@ -32,6 +33,9 @@ WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* WarehouseGold::createSameTypeBuilding() const {
 	return new WarehouseGold(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID WarehouseGold::getTypeUUID() const {
+	return UUIDs::get()->get("warehouse_gold");
 }
 uint32_t WarehouseGold::getSX() const {
 	return Parameters::get()->getInt("warehouse_gold_sx");

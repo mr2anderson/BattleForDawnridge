@@ -29,6 +29,8 @@ public:
 	Arable();
 	Arable(uint32_t x, uint32_t y, uint32_t playerId);
 	Building* createSameTypeBuilding() const override;
+	UUID getTypeUUID() const override;
+
     uint32_t getSX() const override;
     uint32_t getSY() const override;
     uint32_t getMaxHP() const override;

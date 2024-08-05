@@ -21,6 +21,7 @@
 #include "BarracksSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Barracks::Barracks() = default;
@@ -30,6 +31,9 @@ Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Barracks::createSameTypeBuilding() const {
 	return new Barracks(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Barracks::getTypeUUID() const {
+	return UUIDs::get()->get("barracks");
 }
 uint32_t Barracks::getSX() const {
 	return Parameters::get()->getInt("barracks_sx");

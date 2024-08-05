@@ -22,6 +22,7 @@
 #include "QuarrySpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Quarry::Quarry() = default;
@@ -31,6 +32,9 @@ Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Quarry::createSameTypeBuilding() const {
 	return new Quarry(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Quarry::getTypeUUID() const {
+	return UUIDs::get()->get("quarry");
 }
 uint32_t Quarry::getSX() const {
 	return Parameters::get()->getInt("quarry_sx");

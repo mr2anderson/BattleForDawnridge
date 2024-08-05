@@ -17,12 +17,11 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "Wall2.hpp"
 #include "WallSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
+#include "UUIDs.hpp"
 
 
 Wall2::Wall2() = default;
@@ -32,6 +31,9 @@ Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Wall2::createSameTypeBuilding() const {
 	return new Wall2(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Wall2::getTypeUUID() const {
+	return UUIDs::get()->get("wall2");
 }
 uint32_t Wall2::getSX() const {
 	return Parameters::get()->getInt("wall2_sx");

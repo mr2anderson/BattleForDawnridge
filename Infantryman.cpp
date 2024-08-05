@@ -20,7 +20,7 @@
 #include "Infantryman.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
+#include "UUIDs.hpp"
 
 
 Infantryman::Infantryman() = default;
@@ -30,6 +30,9 @@ Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Warrior* Infantryman::cloneWarrior() const {
 	return new Infantryman(*this);
+}
+UUID Infantryman::getTypeUUID() const {
+	return UUIDs::get()->get("infantryman");
 }
 std::string Infantryman::getBeenHitSoundName() const {
     return "ouch";

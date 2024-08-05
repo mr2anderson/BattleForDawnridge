@@ -20,7 +20,7 @@
 #include "Legioner.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "ArchiveType.hpp"
+#include "UUIDs.hpp"
 
 
 Legioner::Legioner() = default;
@@ -30,6 +30,9 @@ Legioner::Legioner(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Warrior* Legioner::cloneWarrior() const {
 	return new Legioner(*this);
+}
+UUID Legioner::getTypeUUID() const {
+	return UUIDs::get()->get("legioner");
 }
 std::string Legioner::getBeenHitSoundName() const {
     return "ouch";

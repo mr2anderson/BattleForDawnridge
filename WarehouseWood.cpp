@@ -21,6 +21,7 @@
 #include "WarehouseWoodSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 WarehouseWood::WarehouseWood() = default;
@@ -30,6 +31,9 @@ WarehouseWood::WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* WarehouseWood::createSameTypeBuilding() const {
 	return new WarehouseWood(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID WarehouseWood::getTypeUUID() const {
+	return UUIDs::get()->get("warehouse_wood");
 }
 uint32_t WarehouseWood::getSX() const {
 	return Parameters::get()->getInt("warehouse_wood_sx");

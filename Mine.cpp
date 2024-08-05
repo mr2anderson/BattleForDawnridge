@@ -22,6 +22,7 @@
 #include "MineSpec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
+#include "UUIDs.hpp"
 
 
 Mine::Mine() = default;
@@ -31,6 +32,9 @@ Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId) :
 }
 Building* Mine::createSameTypeBuilding() const {
 	return new Mine(this->getX(), this->getY(), this->getPlayerId());
+}
+UUID Mine::getTypeUUID() const {
+	return UUIDs::get()->get("mine");
 }
 uint32_t Mine::getSX() const {
 	return Parameters::get()->getInt("mine_sx");
