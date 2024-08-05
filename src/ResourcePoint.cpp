@@ -40,7 +40,7 @@ uint32_t ResourcePoint::getWarriorMovementCost(const Warrior *w) const {
     if (w->isFlying()) {
         return 1;
     }
-	return Parameters::get()->getInt("resource_point_warrior_movement_cost");
+	return this->getWalkingWarriorMovementCost();
 }
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist() or button == sf::Mouse::Button::Right) {
@@ -55,6 +55,7 @@ Events ResourcePoint::getSelectionWindow() {
 	components.push_back(this->getExitComponent());
 	components.push_back(this->getDescriptionComponent());
 	components.push_back(this->getResourceLeftComponent());
+	components.push_back(this->getSlowMovementComponent());
 
 	std::shared_ptr<HorizontalSelectionWindow> window = std::make_shared<HorizontalSelectionWindow>(components);
     response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
@@ -70,6 +71,18 @@ HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() con
 		Events()
 	};
 	return component;
+}
+HorizontalSelectionWindowComponent ResourcePoint::getSlowMovementComponent() const {
+	HorizontalSelectionWindowComponent component = {
+		"slow_movement_icon",
+		*Locales::get()->get("slow_movement") + std::to_wstring(this->getWalkingWarriorMovementCost()),
+		false,
+		Events()
+	};
+	return component;
+}
+uint32_t ResourcePoint::getWalkingWarriorMovementCost() const {
+	return Parameters::get()->getInt("resource_point_warrior_movement_cost");
 }
 
 

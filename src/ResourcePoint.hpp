@@ -37,6 +37,8 @@ private:
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
 	Events getSelectionWindow();
 	HorizontalSelectionWindowComponent getResourceLeftComponent() const;
+	HorizontalSelectionWindowComponent getSlowMovementComponent() const;
+	uint32_t getWalkingWarriorMovementCost() const;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive & ar, const unsigned int version) {
