@@ -815,6 +815,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="UseSpellEvent.hpp" />
     <ClInclude Include="UTFEncoder.hpp" />
     <ClInclude Include="UUID.hpp" />
+    <ClInclude Include="UUIDs.hpp" />
     <ClInclude Include="Valkyr.hpp" />
     <ClInclude Include="VictoryConditionSpec.hpp" />
     <ClInclude Include="Wall1.hpp" />
@@ -1074,6 +1075,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="UseSpellEvent.cpp" />
     <ClCompile Include="UTFEncoder.cpp" />
     <ClCompile Include="UUID.cpp" />
+    <ClCompile Include="UUIDs.cpp" />
     <ClCompile Include="Valkyr.cpp" />
     <ClCompile Include="VictoryConditionSpec.cpp" />
     <ClCompile Include="Wall1.cpp" />

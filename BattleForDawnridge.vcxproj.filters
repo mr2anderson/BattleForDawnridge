@@ -1456,6 +1456,9 @@
     <ClInclude Include="Warrior.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UUIDs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -2227,6 +2230,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Warrior.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UUIDs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
