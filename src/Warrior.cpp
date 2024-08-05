@@ -49,6 +49,7 @@
 #include "FocusOnEvent.hpp"
 #include "Building.hpp"
 #include "IAreaControllerSpec.hpp"
+#include "StaticString.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -518,7 +519,7 @@ sf::Color Warrior::getTextureColor() const {
 }
 HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
-        "rage_spell",
+        std::make_shared<StaticString>("rage_spell"),
         *Locales::get()->get("rage_spell_description") + L"\n" +
         *Locales::get()->get("moves_left") + std::to_wstring(this->rageModeMovesLeft),
         false,
@@ -539,7 +540,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     killNextTurnEventVerify.add(std::make_shared<CreateEEvent>(verifyWindow));
 
     return {
-        "skull",
+        std::make_shared<StaticString>("skull"),
         *Locales::get()->get("kill"),
         true,
         killNextTurnEventVerify
@@ -553,7 +554,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
     revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this));
 
     return {
-        "skull",
+        std::make_shared<StaticString>("skull"),
         *Locales::get()->get("revert_kill"),
         true,
         revertKillNextTurnEvent
@@ -561,7 +562,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 }
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
-        "helmet",
+        std::make_shared<StaticString>("helmet"),
         *Locales::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
         this->getSpecialInfoString() + L"\n" +
         *Locales::get()->get("movement_points") + std::to_wstring(this->movementPoints.value_or(this->getMovementPoints())) + L" / " + std::to_wstring(this->getMovementPoints()) + L"\n" +
@@ -572,7 +573,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
 }
 HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const {
     return {
-        "destroyed_icon",
+        std::make_shared<StaticString>("destroyed_icon"),
         *Locales::get()->get("blocking_building"),
         false,
         Events()
@@ -580,7 +581,7 @@ HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const
 }
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
-        "lord_icon",
+        std::make_shared<StaticString>("lord_icon"),
         *Locales::get()->get("warrior_of_enemy"),
         false,
         Events()

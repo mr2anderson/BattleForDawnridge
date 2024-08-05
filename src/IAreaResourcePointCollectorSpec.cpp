@@ -27,6 +27,7 @@
 #include "SubHpEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "HighlightColors.hpp"
+#include "StaticString.hpp"
 
 
 Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
@@ -82,7 +83,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollec
 
 	if (building->works()) {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getResourceType() + "_icon"),
             *Locales::get()->get("this_building_collects_resources_from_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " +
             *Locales::get()->get("resource_in_radius") + std::to_wstring(this->countResourceInRadius(building, state)),
 			false,
@@ -92,7 +93,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollec
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
 			false,
 			Events()),

@@ -21,6 +21,7 @@
 #include "SoundQueue.hpp"
 #include "Sounds.hpp"
 #include "CloseWindowEvent.hpp"
+#include "StaticString.hpp"
 
 
 
@@ -36,7 +37,7 @@ void HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 		this->buttons.resize(this->components.size());
 		int32_t y;
 		for (uint32_t i = 0; i < this->components.size(); i = i + 1) {
-			std::string pictureName = this->components.at(i).pictureName;
+			std::shared_ptr<const IDynamicString> pictureName = this->components.at(i).pictureName;
 			std::wstring message = this->components.at(i).message;
 			bool clickable = this->components.at(i).clickable;
 			Events onClick = this->components.at(i).gEvent;
@@ -54,11 +55,11 @@ void HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 		Events upEvent;
 		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
 		upEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		this->up = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, "up_icon"), upEvent);
+		this->up = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
 		Events downEvent;
 		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
 		downEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, "down_icon"), downEvent);
+		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
 		this->rect = std::make_unique<RectangularUiElement>(10, y, windowW - 20, windowH - y - 10);
 	}
 }

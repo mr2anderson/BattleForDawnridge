@@ -27,6 +27,7 @@
 #include "HPFlyingE.hpp"
 #include "Locales.hpp"
 #include "HighlightColors.hpp"
+#include "StaticString.hpp"
 
 
 Events IWarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
@@ -63,7 +64,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getC
 
 	if (b->works()) {
 		component = {
-			HorizontalSelectionWindowComponent(this->getHealTextureName(),
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getHealTextureName()),
             *Locales::get()->get("this_building_heals_warriors") + std::to_wstring(this->getHealingSpeed()),
 			false,
 			Events()),
@@ -72,7 +73,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getC
 	}
 	else {
 		component = {
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("does_not_heal_if_hp_isnt_full"),
 			false,
 			Events()),

@@ -28,7 +28,6 @@ public:
     BigArrow();
 
     std::string getTextureName() const override;
-    std::string getIconTextureName() const override;
     std::string getSoundName() const override;
     float getTime() const override;
 

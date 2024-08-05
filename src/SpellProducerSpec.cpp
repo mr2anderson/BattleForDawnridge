@@ -27,6 +27,9 @@
 #include "SetSpellEvent.hpp"
 #include "UseSpellEvent.hpp"
 #include "FirstTimeTipsTable.hpp"
+#include "StaticString.hpp"
+#include "TextureNameString.hpp"
+#include "TextureNameStringSmart.hpp"
 
 
 SpellProducerSpec::SpellProducerSpec() {
@@ -72,7 +75,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				}
 
 				components.emplace_back(
-					HorizontalSelectionWindowComponent(spell->getTextureName(),
+					HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(spell),
                     spell->getDescription() + L"\n" +
                     *Locales::get()->get("cost") + spell->getCost().getReadableInfo() + L". " + *Locales::get()->get("time_to_make_spell") + std::to_wstring(spell->getCreationTime()),
 					true,
@@ -102,7 +105,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
                     }
 
 					components.emplace_back(
-						HorizontalSelectionWindowComponent(spell->getTextureName(),
+						HorizontalSelectionWindowComponent(std::make_shared<TextureNameString>(spell),
 						spell->getDescription(),
 						true,
 						event),
@@ -111,7 +114,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				}
 				else {
 					components.emplace_back(
-						HorizontalSelectionWindowComponent(spell->getTextureName(),
+						HorizontalSelectionWindowComponent(std::make_shared<TextureNameString>(spell),
                         *Locales::get()->get("spell_producing_in_progress") + std::to_wstring(spell->getCreationMovesLeft()) + L"\n" +
                         spell->getDescription(),
 						false,
@@ -124,7 +127,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("does_not_produce_spells_if_hp_isnt_full"),
 			false,
 			Events()),

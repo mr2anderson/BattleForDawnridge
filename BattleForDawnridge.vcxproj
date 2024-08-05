@@ -678,6 +678,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GlobalRandomGenerator32.hpp" />
     <ClInclude Include="src\GlobalRandomGenerator64.hpp" />
     <ClInclude Include="src\GO.hpp" />
+    <ClInclude Include="src\IWithTextureName.hpp" />
+    <ClInclude Include="src\TextureNameString.hpp" />
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
     <ClInclude Include="src\HealerProjectile.hpp" />
@@ -706,6 +708,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ISelectable.hpp" />
     <ClInclude Include="src\IShootingSpec.hpp" />
     <ClInclude Include="src\ISingleAttacker.hpp" />
+    <ClInclude Include="src\IDynamicString.hpp" />
     <ClInclude Include="src\ITerritoryConductorSpec.hpp" />
     <ClInclude Include="src\ITerritoryOriginSpec.hpp" />
     <ClInclude Include="src\IWarehouseSpec.hpp" />
@@ -802,11 +805,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\StartGameEvent.hpp" />
     <ClInclude Include="src\StartWarriorAnimationEvent.hpp" />
     <ClInclude Include="src\StartWarriorProducingEvent.hpp" />
+    <ClInclude Include="src\StaticString.hpp" />
     <ClInclude Include="src\Stone.hpp" />
     <ClInclude Include="src\SubHpEvent.hpp" />
     <ClInclude Include="src\SubResourceEvent.hpp" />
     <ClInclude Include="src\SubResourcesEvent.hpp" />
     <ClInclude Include="src\SuspendingAnimation.hpp" />
+    <ClInclude Include="src\TextureNameStringSmart.hpp" />
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
     <ClInclude Include="src\Tower1.hpp" />
@@ -1063,11 +1068,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\StartGameEvent.cpp" />
     <ClCompile Include="src\StartWarriorAnimationEvent.cpp" />
     <ClCompile Include="src\StartWarriorProducingEvent.cpp" />
+    <ClCompile Include="src\StaticString.cpp" />
     <ClCompile Include="src\Stone.cpp" />
     <ClCompile Include="src\SubHpEvent.cpp" />
     <ClCompile Include="src\SubResourceEvent.cpp" />
     <ClCompile Include="src\SubResourcesEvent.cpp" />
     <ClCompile Include="src\SuspendingAnimation.cpp" />
+    <ClCompile Include="src\TextureNameString.cpp" />
+    <ClCompile Include="src\TextureNameStringSmart.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\TilesetHandler.cpp" />
     <ClCompile Include="src\Tower1.cpp" />

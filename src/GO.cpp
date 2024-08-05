@@ -17,12 +17,13 @@
  */
 
 
-#include <iostream>
 #include "GO.hpp"
 #include "Textures.hpp"
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
+#include "StaticString.hpp"
+#include "TextureNameString.hpp"
 
 
 const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_FLYING = {3};
@@ -167,7 +168,7 @@ HorizontalSelectionWindowComponent GO::getExitComponent() const {
 	exitEvent.add(std::make_shared<ResetHighlightEvent>());
 
 	HorizontalSelectionWindowComponent component = {
-		"exit_icon",
+		std::make_shared<StaticString>("exit_icon"),
 		*Locales::get()->get("leave"),
 		true,
 		exitEvent
@@ -176,7 +177,7 @@ HorizontalSelectionWindowComponent GO::getExitComponent() const {
 }
 HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 	HorizontalSelectionWindowComponent component = {
-		this->getTextureName(),
+		std::make_shared<TextureNameString>(this),
 		this->getDescription(),
 		false,
 		Events(),

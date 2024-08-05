@@ -1466,6 +1466,21 @@
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\TextureNameString.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StaticString.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IDynamicString.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IWithTextureName.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureNameStringSmart.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2243,6 +2258,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StaticString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureNameString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureNameStringSmart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

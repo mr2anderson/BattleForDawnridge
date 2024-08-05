@@ -18,19 +18,20 @@
 
 
 #include <SFML/Graphics.hpp>
+#include "IWithTextureName.hpp"
 
 
 #pragma once
 
 
-class Fire : public sf::Drawable {
+class Fire : public sf::Drawable, public IWithTextureName {
 public:
 	Fire();
 	Fire(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    std::string getTextureName() const;
+    std::string getTextureName() const override;
 
 	static const uint32_t TOTAL_FRAMES;
 private:

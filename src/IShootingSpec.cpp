@@ -26,6 +26,8 @@
 #include "Damage.hpp"
 #include "CreateEEvent.hpp"
 #include "FocusOnEvent.hpp"
+#include "StaticString.hpp"
+#include "TextureNameStringSmart.hpp"
 
 
 Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
@@ -90,14 +92,14 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getCompon
     BuildingHorizontalSelectionWindowComponent component;
 
     if (b->wasWithFullHP()) {
-        component = {HorizontalSelectionWindowComponent(this->getProjectile()->getIconTextureName(),
+        component = {HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(this->getProjectile()),
                                                        *Locales::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
                                                        false,
                                                        Events()),
                 true};
     }
     else {
-        component = {HorizontalSelectionWindowComponent("hammer_icon",
+        component = {HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
                                                         *Locales::get()->get("does_not_shoot_if_isnt_built_yet"),
                                                         false,
                                                         Events()),

@@ -20,6 +20,7 @@
 #include <boost/optional.hpp>
 #include <boost/serialization/base_object.hpp>
 #include "ISelectable.hpp"
+#include "IWithTextureName.hpp"
 #include "Resources.hpp"
 
 
@@ -29,7 +30,7 @@
 class Building;
 
 
-class Spell : public ISelectable {
+class Spell : public ISelectable, public IWithTextureName {
 public:
     Spell();
 	Spell(uint32_t playerId);
@@ -44,7 +45,6 @@ public:
 	bool wasUsed() const;
 	void markAsUsed();
 	virtual std::wstring getDescription() const = 0;
-	virtual std::string getTextureName() const = 0;
 	virtual Resources getCost() const = 0;
 	virtual uint32_t getCreationTime() const = 0;
 protected:

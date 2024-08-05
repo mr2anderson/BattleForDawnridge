@@ -26,6 +26,7 @@
 #include "ImageFlyingE.hpp"
 #include "CreateEEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
+#include "StaticString.hpp"
 
 
 VictoryConditionSpec::VictoryConditionSpec() {
@@ -62,7 +63,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 }
 std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component = {
-		HorizontalSelectionWindowComponent("bell",
+		HorizontalSelectionWindowComponent(std::make_shared<StaticString>("bell"),
 		*Locales::get()->get("victory_condition_building_description") + std::to_wstring(this->moveCtr),
 		false,
 		Events()),

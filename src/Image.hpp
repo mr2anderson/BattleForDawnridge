@@ -18,7 +18,9 @@
 
 
 #include <optional>
+#include <memory>
 #include "RectangularUIElement.hpp"
+#include "IDynamicString.hpp"
 
 
 #pragma once
@@ -27,16 +29,14 @@
 class Image : public RectangularUiElement {
 public:
     Image();
-    Image(int32_t x, int32_t y, const std::string& imageName, std::optional<sf::IntRect> rect = std::nullopt); // creating image with default size
-    Image(int32_t x, int32_t y, uint32_t size, const std::string &imageName, std::optional<sf::IntRect> rect = std::nullopt); // creating image making it fit in specified size by scaling
+    Image(int32_t x, int32_t y, std::shared_ptr<const IDynamicString> textureName, std::optional<sf::IntRect> rect = std::nullopt); // creating image with size of texture
+    Image(int32_t x, int32_t y, uint32_t size, std::shared_ptr<const IDynamicString> textureName, std::optional<sf::IntRect> rect = std::nullopt); // creating image making it fit in specified size by scaling
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-    void setX(int32_t newX) override;
-    void setY(int32_t newY) override;
 private:
-    sf::Sprite sprite;
-    float dPosX, dPosY;
+    std::shared_ptr<const IDynamicString> textureName;
 
-    void rerenderBasedOnPosition();
+    std::optional<float> dPosX, dPosY;
+    std::optional<sf::IntRect> textureRect;
+    std::optional<float> scaleX, scaleY;
 };

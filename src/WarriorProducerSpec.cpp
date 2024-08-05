@@ -33,6 +33,8 @@
 #include "SubResourcesEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
 #include "HighlightColors.hpp"
+#include "StaticString.hpp"
+#include "TextureNameStringSmart.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -132,7 +134,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 				text = *Locales::get()->get("couldnt_place_warrior");
 			}
 			components.emplace_back(
-				HorizontalSelectionWindowComponent(currentProducing->getTextureName(),
+				HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(currentProducing),
 				text,
 				false,
 				Events()),
@@ -186,7 +188,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 				}
 
 				components.emplace_back(
-					HorizontalSelectionWindowComponent(w->getTextureName(),
+					HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(w),
                     w->getDescription() + L"\n" +
                     *Locales::get()->get("hp") + std::to_wstring(w->getMaxHP()) + L" (" + w->getDefence().getReadable() + L")\n" +
                     w->getSpecialInfoString() + L"\n" +
@@ -200,7 +202,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("does_not_train_if_hp_isnt_full"),
 			false,
 			Events()),

@@ -17,10 +17,10 @@
  */
 
 
-#include <limits>
 #include "IPopulationLimitIncreaserSpec.hpp"
 #include "Building.hpp"
 #include "Locales.hpp"
+#include "StaticString.hpp"
 
 
 std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(const Building* building, MapState* state) {
@@ -28,7 +28,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 
 	if (building->works()) {
 		component = {
-			HorizontalSelectionWindowComponent("helmet",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("helmet"),
             *Locales::get()->get("this_building_increases_population_limit") + std::to_wstring(this->getPopulationLimit(building)),
 			false,
 			Events()),
@@ -37,7 +37,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 	}
 	else {
 		component = {
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("does_not_increase_population_limit_if_hp_isnt_full"),
 			false,
 			Events()),

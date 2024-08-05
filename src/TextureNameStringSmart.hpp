@@ -17,14 +17,21 @@
  */
 
 
-#include "HorizontalSelectionWindowComponent.hpp"
+#include <memory>
+#include "IDynamicString.hpp"
 
 
-HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent() = default;
-HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const std::wstring& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect) {
-	this->pictureName = pictureName;
-	this->message = message;
-	this->clickable = clickable;
-	this->gEvent = gEvent;
-	this->rect = rect;
-}
+#pragma once
+
+
+class IWithTextureName;
+
+
+class TextureNameStringSmart : public IDynamicString {
+public:
+	TextureNameStringSmart(std::shared_ptr<const IWithTextureName> a);
+
+	std::string get() const override;
+private:
+	std::shared_ptr<const IWithTextureName> ptr;
+};

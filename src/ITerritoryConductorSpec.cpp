@@ -21,12 +21,14 @@
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "HighlightColors.hpp"
+#include "StaticString.hpp"
+#include "TextureNameString.hpp"
 
 
 std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
 	if (!building->works() and !this->conductsIfNotWork()) {
 		BuildingHorizontalSelectionWindowComponent component = {
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("does_not_expand_territory_if_hp_isnt_full"),
 			false,
 			Events()),
@@ -37,7 +39,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec:
 	if (!building->connectedToOrigin(state)) {
 		BuildingHorizontalSelectionWindowComponent component = {
              HorizontalSelectionWindowComponent(
-			building->getTextureName(),
+			std::make_shared<TextureNameString>(building),
 			*Locales::get()->get("does_not_lead_to_city_center"),
 			false,
 			Events()),

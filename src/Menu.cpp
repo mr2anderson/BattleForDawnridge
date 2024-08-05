@@ -35,6 +35,7 @@
 #include "FirstTimeTipsTable.hpp"
 #include "LanguageAlreadyInUse.hpp"
 #include "Root.hpp"
+#include "StaticString.hpp"
 
 
 Menu* Menu::singletone = nullptr;
@@ -96,13 +97,13 @@ void Menu::init(sf::RenderWindow& window) {
 
     std::vector<HorizontalSelectionWindowComponent> chooseLevelWindowComponents;
     chooseLevelWindowComponents.emplace_back(
-        "exit_icon",
+        std::make_shared<StaticString>("exit_icon"),
         *Locales::get()->get("cancel"),
         true,
         clickEvent
     );
     chooseLevelWindowComponents.emplace_back(
-        "ridge",
+        std::make_shared<StaticString>("ridge"),
         *Locales::get()->get("ridge_description"),
         true,
         createStartGameOnRidgeVerifyWindow
@@ -126,91 +127,91 @@ void Menu::init(sf::RenderWindow& window) {
 
     std::vector<HorizontalSelectionWindowComponent> educationWindowComponents;
     educationWindowComponents.emplace_back(
-        "exit_icon",
+        std::make_shared<StaticString>("exit_icon"),
         *Locales::get()->get("leave"),
         true,
         clickEvent
     );
     educationWindowComponents.emplace_back(
-        "food_icon",
+        std::make_shared<StaticString>("food_icon"),
         *Locales::get()->get("guide_food_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "wood_icon",
+        std::make_shared<StaticString>("wood_icon"),
         *Locales::get()->get("guide_wood_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "stone_icon",
+        std::make_shared<StaticString>("stone_icon"),
         *Locales::get()->get("guide_stone_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "iron_icon",
+        std::make_shared<StaticString>("iron_icon"),
         *Locales::get()->get("guide_iron_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-            "crystal_icon",
+        std::make_shared<StaticString>("crystal_icon"),
             *Locales::get()->get("guide_crystal_description"),
             false,
             Events()
     );
     educationWindowComponents.emplace_back(
-        "gold_icon",
+        std::make_shared<StaticString>("gold_icon"),
         *Locales::get()->get("guide_gold_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "road_none",
+        std::make_shared<StaticString>("road_none"),
         *Locales::get()->get("guide_road_system_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "shield_icon",
+        std::make_shared<StaticString>("shield_icon"),
         *Locales::get()->get("guide_damage_mods_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "fire1",
+        std::make_shared<StaticString>("fire1"),
         *Locales::get()->get("guide_fire_system_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "warehouse_food",
+        std::make_shared<StaticString>("warehouse_food"),
         *Locales::get()->get("guide_storage_system_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "wall2",
+        std::make_shared<StaticString>("wall2"),
         *Locales::get()->get("guide_wall_system_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "forest_icon",
+        std::make_shared<StaticString>("forest_icon"),
         *Locales::get()->get("guide_movement_cost_system_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "water_icon",
+        std::make_shared<StaticString>("water_icon"),
         *Locales::get()->get("guide_obstacle_system_description"),
         false,
         Events()
     );
     educationWindowComponents.emplace_back(
-        "helmet",
+        std::make_shared<StaticString>("helmet"),
         *Locales::get()->get("guide_population_limit_system_description"),
         false,
         Events()
@@ -232,19 +233,19 @@ void Menu::init(sf::RenderWindow& window) {
 
     std::vector<HorizontalSelectionWindowComponent> chooseLanguageWindowComponents;
     chooseLanguageWindowComponents.emplace_back(
-        "exit_icon",
+        std::make_shared<StaticString>("exit_icon"),
         *Locales::get()->get("cancel"),
         true,
         clickEvent
     );
     chooseLanguageWindowComponents.emplace_back(
-        "english_icon",
+        std::make_shared<StaticString>("english_icon"),
         UTFEncoder::get()->utf8ToUtf16("English"),
         true,
         chooseLanguageEnglishEvent
     );
     chooseLanguageWindowComponents.emplace_back(
-        "russian_icon",
+        std::make_shared<StaticString>("russian_icon"),
         UTFEncoder::get()->utf8ToUtf16("Russian"),
         true,
         chooseLanguageRussianEvent
@@ -407,7 +408,7 @@ void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSav
     else {
         std::vector<HorizontalSelectionWindowComponent> components;
         components.emplace_back(
-                "exit_icon",
+                std::make_shared<StaticString>("exit_icon"),
                 *Locales::get()->get("cancel"),
                 true,
                 clickEvent
@@ -431,7 +432,7 @@ void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSav
             createChooseActionWindowEvent.add(std::make_shared<CreateEEvent>(chooseActionWindow));
 
             components.emplace_back(
-                    "save_icon",
+                    std::make_shared<StaticString>("save_icon"),
                     *Locales::get()->get("save") + UTFEncoder::get()->utf8ToUtf16(save),
                     true,
                     createChooseActionWindowEvent

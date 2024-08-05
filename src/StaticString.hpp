@@ -17,14 +17,17 @@
  */
 
 
-#include "HorizontalSelectionWindowComponent.hpp"
+#include "IDynamicString.hpp"
 
 
-HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent() = default;
-HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const std::wstring& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect) {
-	this->pictureName = pictureName;
-	this->message = message;
-	this->clickable = clickable;
-	this->gEvent = gEvent;
-	this->rect = rect;
-}
+#pragma once
+
+
+class StaticString : public IDynamicString {
+public:
+	StaticString(const std::string& value);
+
+	std::string get() const override;
+private:
+	std::string value;
+};

@@ -27,9 +27,6 @@ HealerProjectile::HealerProjectile() = default;
 std::string HealerProjectile::getTextureName() const {
     return "healer_projectile" + std::to_string(std::min(HealerProjectile::TOTAL_TYPES, (uint32_t)(this->animationClock.getMS() / ((uint32_t)(1000 * this->getTime()) / TOTAL_TYPES) + 1)));
 }
-std::string HealerProjectile::getIconTextureName() const {
-    return "healer_projectile1";
-}
 std::string HealerProjectile::getSoundName() const {
     return "healer";
 }

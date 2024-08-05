@@ -26,7 +26,7 @@
 #include "AddResourceEvent.hpp"
 #include "Locales.hpp"
 #include "SubHpEvent.hpp"
-#include "ArchiveType.hpp"
+#include "StaticString.hpp"
 
 
 Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Building* building, MapState* state) {
@@ -93,7 +93,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 		}
 
 		component = {
-			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getResourceType() + "_icon"),
             *Locales::get()->get("this_building_collects_resources_from_conducted_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " + s,
 			false,
 			Events()),
@@ -102,7 +102,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 	}
 	else {
 		component = {
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
 			false,
 			Events()),

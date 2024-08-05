@@ -30,6 +30,7 @@
 #include "Building.hpp"
 #include "DoTradeEvent.hpp"
 #include "WindowTwoButtons.hpp"
+#include "StaticString.hpp"
 
 
 TradingSpec::TradingSpec() = default;
@@ -96,7 +97,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 	if (b->works()) {
 		if (this->busy()) {
 			components.emplace_back(
-				HorizontalSelectionWindowComponent("trade_icon",
+				HorizontalSelectionWindowComponent(std::make_shared<StaticString>("trade_icon"),
                 *Locales::get()->get("trading_building_is_busy") + this->currentTrade.getReadableInfo(),
 				false,
 				Events()),
@@ -112,7 +113,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent("hammer_icon",
+			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
 			*Locales::get()->get("this_building_cant_do_trades_if_hp_isnt_full"),
 			false,
 			Events()),
@@ -177,7 +178,7 @@ BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const 
 	}
 
 	BuildingHorizontalSelectionWindowComponent component = {
-		HorizontalSelectionWindowComponent(trade.buy.type + "_icon",
+		HorizontalSelectionWindowComponent(std::make_shared<StaticString>(trade.buy.type + "_icon"),
         *Locales::get()->get("buy") + trade.buy.getReadableInfo() +
         *Locales::get()->get("for") + trade.sell.getReadableInfo(),
 		true,

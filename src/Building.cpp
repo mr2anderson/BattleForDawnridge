@@ -35,6 +35,8 @@
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
 #include "IAreaControllerSpec.hpp"
+#include "StaticString.hpp"
+#include "TextureNameStringSmart.hpp"
 
 
 Building::Building() = default;
@@ -221,14 +223,14 @@ bool Building::isLowObstacle(uint32_t playerId) const {
 	return false;
 }
 HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
-	std::string textureName;
+	std::shared_ptr<IDynamicString> textureName;
 	std::wstring secondLine;
 	if (this->burningMovesLeft == 0) {
-		textureName = "shield_icon";
+		textureName = std::make_shared<StaticString>("shield_icon");
 		secondLine = *Locales::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Locales::get()->get("p_per_move") + L". " + *Locales::get()->get("everything_is_alright");
 	}
 	else {
-		textureName = "fire1";
+		textureName = std::make_shared<TextureNameStringSmart>(std::make_shared<Fire>());
 		secondLine = *Locales::get()->get("building_on_fire") + std::to_wstring(this->burningMovesLeft);
 	}
 
@@ -255,7 +257,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	Events createVerify = clickSoundEvent;
 	createVerify.add(std::make_shared<CreateEEvent>(verify));
 	HorizontalSelectionWindowComponent component = {
-		"destroy_icon",
+		std::make_shared<StaticString>("destroy_icon"),
 		*Locales::get()->get("destroy_this_building"),
 		true,
 		createVerify
@@ -264,7 +266,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 }
 HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
     return {
-        "lord_icon",
+        std::make_shared<StaticString>("lord_icon"),
         *Locales::get()->get("building_of_enemy"),
         false,
         Events()
