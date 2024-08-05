@@ -272,12 +272,15 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0;extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>extlibs\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0\stage\lib;extlibs\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-network-s-d.lib;ws2_32.lib;sfml-audio-s-d.lib;ogg.lib;vorbis.lib;vorbisfile.lib;vorbisenc.lib;flac.lib;openal32.lib;sfml-graphics-s-d.lib;freetype.lib;sfml-window-s-d.lib;gdi32.lib;opengl32.lib;sfml-system-s-d.lib;winmm.lib;kernel32.lib;user32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -676,6 +679,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="GlobalRandomGenerator32.hpp" />
     <ClInclude Include="GlobalRandomGenerator64.hpp" />
     <ClInclude Include="GO.hpp" />
+    <ClInclude Include="HashTableMapPosition.hpp" />
     <ClInclude Include="Healer.hpp" />
     <ClInclude Include="HealerProjectile.hpp" />
     <ClInclude Include="HighlightColors.hpp" />
@@ -716,6 +720,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Locales.hpp" />
     <ClInclude Include="MainScreen.hpp" />
     <ClInclude Include="Map.hpp" />
+    <ClInclude Include="MapPositionHash.hpp" />
     <ClInclude Include="Maps.hpp" />
     <ClInclude Include="MapSize.hpp" />
     <ClInclude Include="MapState.hpp" />
@@ -979,6 +984,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScreen.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapPositionHash.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="MapSize.cpp" />
     <ClCompile Include="MapState.cpp" />

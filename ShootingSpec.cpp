@@ -114,7 +114,7 @@ sf::Color ShootingSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get()->getBuildingAttackColor(playerId);
 }
 uint8_t ShootingSpec::getHighlightType() const {
-    return AreaControllerSpec::HIGHLIGHT_TYPE::ATTACK;
+    return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
 }
 bool ShootingSpec::ignoreLowObstacles() const {
     return true;

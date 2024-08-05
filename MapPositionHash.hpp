@@ -17,23 +17,13 @@
  */
 
 
-
-#include <set>
-#include "SetHighlightEvent.hpp"
-#include "SFColorComp.hpp"
-#include "HashTableMapPosition.hpp"
+#include <tuple>
+#include <cstdint>
 
 
 #pragma once
 
 
-class HighlightTable {
-public:
-	HighlightTable();
-
-	void clear();
-	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
-private:
-	HashTableMapPosition<std::set<sf::Color, SFColorComp>> data;
+struct MapPositionHash {
+	std::size_t operator()(std::tuple<uint32_t, uint32_t> v) const;
 };

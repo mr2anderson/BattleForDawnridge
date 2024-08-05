@@ -41,8 +41,8 @@ Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, 
     std::tuple<uint32_t, uint32_t> from = std::make_tuple(x1, y1);
     std::tuple<uint32_t, uint32_t> to = std::make_tuple(x2, y2);
 
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
-    std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
+    HashTableMapPosition<uint32_t> dist;
+    HashTableMapPosition<std::tuple<uint32_t, uint32_t>> fromToStory;
     this->djkstra(from, movePoints, dist, fromToStory);
 
     if (dist.find(to) == dist.end() or !this->table[to].canStay) {
@@ -77,8 +77,8 @@ Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, 
     return move;
 }
 std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, uint32_t y, uint32_t movePoints) {
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
-    std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> fromToStory;
+    HashTableMapPosition<uint32_t> dist;
+    HashTableMapPosition<std::tuple<uint32_t, uint32_t>> fromToStory;
 	this->djkstra(std::make_tuple(x, y), movePoints, dist, fromToStory);
 	
 	std::vector<std::tuple<uint32_t, uint32_t>> moves;
@@ -101,8 +101,8 @@ void MovementGraph::REVERSE_QUEUE(std::queue<std::string> &q) {
     }
 }
 void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, 
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> &dist, 
-	std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>>& fromToStory) {
+	HashTableMapPosition<uint32_t> &dist,
+	HashTableMapPosition<std::tuple<uint32_t, uint32_t>>& fromToStory) {
 
 	dist[s] = 0;
 

@@ -30,7 +30,7 @@ void ConductionGraph::addDestination(uint32_t x, uint32_t y, uint32_t sx, uint32
 bool ConductionGraph::connectedToDestination(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	this->addConductor(x, y, sx, sy);
 	this->addAllPossiblePaths();
-	std::map<std::tuple<uint32_t, uint32_t>, bool> visited;
+	HashTableMapPosition<bool> visited;
 	return this->bfs(std::make_tuple(x, y), visited);
 }
 void ConductionGraph::add(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, bool destination) {
@@ -68,7 +68,7 @@ void ConductionGraph::addPathBetween(std::tuple<uint32_t, uint32_t> p1, std::tup
 	this->paths[p1].insert(p2);
 	this->paths[p2].insert(p1);
 }
-bool ConductionGraph::bfs(std::tuple<uint32_t, uint32_t> current, std::map<std::tuple<uint32_t, uint32_t>, bool>& visited) const {
+bool ConductionGraph::bfs(std::tuple<uint32_t, uint32_t> current, HashTableMapPosition<bool>& visited) const {
 	if (this->isDestination.find(current) != this->isDestination.end() and this->isDestination.at(current)) {
 		return true;
 	}

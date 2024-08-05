@@ -17,7 +17,6 @@
  */
 
 
-#include <limits>
 #include "AreaControllerSpec.hpp"
 #include "SetHighlightEvent.hpp"
 #include "LandscapeGraph.hpp"
@@ -25,8 +24,8 @@
 
 
 AreaControllerSpec::AreaControllerSpec() = default;
-std::map<std::tuple<uint32_t, uint32_t>, uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const {
-    std::map<std::tuple<uint32_t, uint32_t>, bool> blocked;
+HashTableMapPosition<uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const {
+    HashTableMapPosition<bool> blocked;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
         GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
@@ -52,7 +51,7 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
         return Events();
     }
 
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
+    HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     Events events;
     for (const auto& a : available) {
@@ -62,7 +61,7 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
     return events;
 }
 bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type) const {
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
+    HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 
     for (uint32_t x = x2; x < x2 + sx2; x = x + 1) {
         for (uint32_t y = y2; y < y2 + sy2; y = y + 1) {

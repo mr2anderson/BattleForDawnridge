@@ -22,16 +22,16 @@
 #include "LandscapeGraph.hpp"
 
 
-LandscapeGraph::LandscapeGraph(uint32_t mapW, uint32_t mapH, const std::map<std::tuple<uint32_t, uint32_t>, bool> blocked) {
+LandscapeGraph::LandscapeGraph(uint32_t mapW, uint32_t mapH, const HashTableMapPosition<bool> blocked) {
     this->mapW = mapW;
     this->mapH = mapH;
     this->blocked = blocked;
 }
-std::map<std::tuple<uint32_t, uint32_t>, uint32_t> LandscapeGraph::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t l) {
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> dist;
+HashTableMapPosition<uint32_t> LandscapeGraph::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t l) {
+    HashTableMapPosition<uint32_t> dist;
     for (uint32_t x1 = x; x1 < x + sx; x1 = x1 + 1) {
         for (uint32_t y1 = y; y1 < y + sy; y1 = y1 + 1) {
-            std::map<std::tuple<uint32_t, uint32_t>, uint32_t> distTmp;
+            HashTableMapPosition<uint32_t> distTmp;
             this->bfs(x1, y1, l, distTmp);
             for (const auto &a : distTmp) {
                 if (dist.find(a.first) == dist.end()) {
@@ -46,7 +46,7 @@ std::map<std::tuple<uint32_t, uint32_t>, uint32_t> LandscapeGraph::getAvailable(
 
     return dist;
 }
-void LandscapeGraph::bfs(uint32_t x, uint32_t y, uint32_t l, std::map<std::tuple<uint32_t, uint32_t>, uint32_t> &dist) {
+void LandscapeGraph::bfs(uint32_t x, uint32_t y, uint32_t l, HashTableMapPosition<uint32_t> &dist) {
     dist[std::make_tuple(x, y)] = 0;
     std::queue<std::tuple<uint32_t, uint32_t>> q;
     q.emplace(x, y);

@@ -17,23 +17,12 @@
  */
 
 
-
-#include <set>
-#include "SetHighlightEvent.hpp"
-#include "SFColorComp.hpp"
-#include "HashTableMapPosition.hpp"
+#include <unordered_map>
+#include "MapPositionHash.hpp"
 
 
 #pragma once
 
 
-class HighlightTable {
-public:
-	HighlightTable();
-
-	void clear();
-	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
-private:
-	HashTableMapPosition<std::set<sf::Color, SFColorComp>> data;
-};
+template <typename T> 
+using HashTableMapPosition = std::unordered_map<std::tuple<uint32_t, uint32_t>, T, MapPositionHash>;

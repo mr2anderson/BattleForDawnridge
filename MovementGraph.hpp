@@ -17,12 +17,12 @@
  */
 
 
-#include <map>
+
 #include <limits>
 #include <optional>
-#include <tuple>
 #include "MovementGraphElement.hpp"
 #include "Move.hpp"
+#include "HashTableMapPosition.hpp"
 
 
 #pragma once
@@ -39,8 +39,8 @@ public:
 	std::vector<std::tuple<uint32_t, uint32_t>> getMoves(uint32_t x, uint32_t y, uint32_t movePoints);
 private:
 	uint32_t mapW, mapH;
-	std::map<std::tuple<uint32_t, uint32_t>, MovementGraphElement> table;
+	HashTableMapPosition<MovementGraphElement> table;
 
     static void REVERSE_QUEUE(std::queue<std::string> &q);
-	void djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, std::map<std::tuple<uint32_t, uint32_t>, uint32_t> &dist, std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint32_t, uint32_t>> &fromToStory);
+	void djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, HashTableMapPosition<uint32_t> &dist, HashTableMapPosition<std::tuple<uint32_t, uint32_t>> &fromToStory);
 };

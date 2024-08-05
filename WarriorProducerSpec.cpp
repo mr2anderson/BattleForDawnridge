@@ -244,7 +244,7 @@ uint8_t WarriorProducerSpec::getHighlightType() const {
     return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
 }
 std::tuple<uint32_t, uint32_t> WarriorProducerSpec::getNewWarriorPosition(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) {
-	std::map<std::tuple<uint32_t, uint32_t>, uint32_t> available = this->getAvailable(x, y, sx, sy, playerId, state);
+	HashTableMapPosition<uint32_t> available = this->getAvailable(x, y, sx, sy, playerId, state);
 	for (const auto& a : available) {
 		if (this->currentProducing->canStay(state, std::get<0>(a.first), std::get<1>(a.first))) {
 			return a.first;

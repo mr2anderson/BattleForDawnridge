@@ -17,9 +17,8 @@
  */
 
 
-#include <map>
-#include <tuple>
-#include <cstdint>
+
+#include "HashTableMapPosition.hpp"
 
 
 #pragma once
@@ -27,12 +26,12 @@
 
 class LandscapeGraph {
 public:
-    LandscapeGraph(uint32_t mapW, uint32_t mapH, const std::map<std::tuple<uint32_t, uint32_t>, bool> blocked);
+    LandscapeGraph(uint32_t mapW, uint32_t mapH, const HashTableMapPosition<bool> blocked);
 
-    std::map<std::tuple<uint32_t, uint32_t>, uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t l);
+    HashTableMapPosition<uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t l);
 private:
     uint32_t mapW, mapH;
-    std::map<std::tuple<uint32_t, uint32_t>, bool> blocked;
+    HashTableMapPosition<bool> blocked;
 
-    void bfs(uint32_t x, uint32_t y, uint32_t l, std::map<std::tuple<uint32_t, uint32_t>, uint32_t> &dist);
+    void bfs(uint32_t x, uint32_t y, uint32_t l, HashTableMapPosition<uint32_t> &dist);
 };
