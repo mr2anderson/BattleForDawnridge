@@ -23,7 +23,7 @@
 #pragma once
 
 
-class RoadSpec : public TerritoryConductorSpec {
+class RoadSpec : public ITerritoryConductorSpec {
 public:
 	RoadSpec();
 	IBuildingSpec* clone() const override;
@@ -33,7 +33,7 @@ public:
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<TerritoryConductorSpec>(*this);
+        ar & boost::serialization::base_object<ITerritoryConductorSpec>(*this);
     }
 };
 

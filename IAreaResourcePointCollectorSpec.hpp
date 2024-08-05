@@ -17,16 +17,14 @@
  */
 
 
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
 #pragma once
 
 
-class AreaResourcePointCollectorSpec : public AreaControllerSpec {
+class IAreaResourcePointCollectorSpec : public IAreaControllerSpec {
 public:
-	AreaResourcePointCollectorSpec();
-
 	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
 	uint32_t getRadius() const override;
@@ -40,9 +38,9 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(AreaResourcePointCollectorSpec)
+BOOST_CLASS_EXPORT_KEY(IAreaResourcePointCollectorSpec)

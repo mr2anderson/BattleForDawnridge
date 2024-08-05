@@ -23,8 +23,7 @@
 #include "Building.hpp"
 
 
-AreaControllerSpec::AreaControllerSpec() = default;
-HashTableMapPosition<uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const {
+HashTableMapPosition<uint32_t> IAreaControllerSpec::getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const {
     HashTableMapPosition<bool> blocked;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
@@ -46,7 +45,7 @@ HashTableMapPosition<uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint
     LandscapeGraph g(state->getMapSizePtr()->getWidth(), state->getMapSizePtr()->getHeight(), blocked);
     return g.getAvailable(x, y, sx, sy, this->getRadius());
 }
-bool AreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t type) {
+bool IAreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t type) {
     for (uint32_t x = target->getX(); x < target->getX() + target->getSX(); x = x + 1) {
         for (uint32_t y = target->getY(); y < target->getY() + target->getSY(); y = y + 1) {
             bool found = (available.find(std::make_tuple(x, y)) != available.end());
@@ -60,7 +59,7 @@ bool AreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& availab
     }
     return (type == IN_RADIUS_TYPE::FULLY);
 }
-Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) const {
+Events IAreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) const {
     if (type != HIGHLIGHT_TYPE::UNIVERSAL and type != this->getHighlightType()) {
         return Events();
     }
@@ -74,15 +73,15 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
 
     return events;
 }
-bool AreaControllerSpec::ignoreUltraHighObstacles() const {
+bool IAreaControllerSpec::ignoreUltraHighObstacles() const {
     return false;
 }
-bool AreaControllerSpec::ignoreHighObstacles() const {
+bool IAreaControllerSpec::ignoreHighObstacles() const {
     return false;
 }
-bool AreaControllerSpec::ignoreLowObstacles() const {
+bool IAreaControllerSpec::ignoreLowObstacles() const {
     return false;
 }
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(AreaControllerSpec)
+BOOST_CLASS_EXPORT_IMPLEMENT(IAreaControllerSpec)

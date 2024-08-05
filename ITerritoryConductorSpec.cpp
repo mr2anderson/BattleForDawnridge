@@ -17,16 +17,13 @@
  */
 
 
-#include <boost/serialization/base_object.hpp>
 #include "TerritoryConductorSpec.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "HighlightColors.hpp"
-#include "ArchiveType.hpp"
 
 
-TerritoryConductorSpec::TerritoryConductorSpec() = default;
-std::vector<BuildingHorizontalSelectionWindowComponent> TerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
 	if (!building->works() and !this->conductsIfNotWork()) {
 		BuildingHorizontalSelectionWindowComponent component = {
 			HorizontalSelectionWindowComponent("hammer_icon",
@@ -50,24 +47,24 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TerritoryConductorSpec::
 	}
 	return {};
 }
-Events TerritoryConductorSpec::getHighlightEvent(const Building* building, MapState* state, uint8_t type) const {
+Events ITerritoryConductorSpec::getHighlightEvent(const Building* building, MapState* state, uint8_t type) const {
 	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
 		return Events();
 	}
-	return this->AreaControllerSpec::getHighlightEvent(building, state, type);
+	return this->IAreaControllerSpec::getHighlightEvent(building, state, type);
 }
-bool TerritoryConductorSpec::isActiveConductor(const Building *building) const {
+bool ITerritoryConductorSpec::isActiveConductor(const Building *building) const {
 	return this->conductsIfNotWork() or building->works();
 }
-sf::Color TerritoryConductorSpec::getHighlightColor(uint32_t playerId) const {
+sf::Color ITerritoryConductorSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get()->getTerritoryExpandingColor(playerId);
 }
-uint8_t TerritoryConductorSpec::getHighlightType() const {
-    return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
+uint8_t ITerritoryConductorSpec::getHighlightType() const {
+    return IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
 }
-NewMoveMainPriority TerritoryConductorSpec::getNewMoveMainPriority() const {
+NewMoveMainPriority ITerritoryConductorSpec::getNewMoveMainPriority() const {
     return GO::NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR;
 }
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(TerritoryConductorSpec)
+BOOST_CLASS_EXPORT_IMPLEMENT(ITerritoryConductorSpec)

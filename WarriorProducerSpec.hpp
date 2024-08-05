@@ -24,7 +24,7 @@
 #pragma once
 
 
-class WarriorProducerSpec : public AreaControllerSpec {
+class WarriorProducerSpec : public IAreaControllerSpec {
 public:
 	WarriorProducerSpec();
 
@@ -49,7 +49,7 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
         ar & this->currentProducing;
         ar & this->currentProducingMovesLeft;
         ar & this->producing;

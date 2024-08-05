@@ -130,7 +130,7 @@ Events BuildingMode::getHighlightEvent(MapState *state) const {
 		Building* building = state->getCollectionsPtr()->getBuilding(i);
 		if (building->exist()) {
             if (building->getPlayerId() == this->playerId) {
-                result = result + building->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
+                result = result + building->getHighlightEvent(state, IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
             }
 		}
 	}
@@ -175,7 +175,7 @@ bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
 		Building* b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->playerId) {
-			Events highlightEvent = b->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
+			Events highlightEvent = b->getHighlightEvent(state, IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
 			for (uint32_t i = 0; i < highlightEvent.size(); i = i + 1) {
 				std::shared_ptr<SetHighlightEvent> e = std::static_pointer_cast<SetHighlightEvent>(highlightEvent.at(i));
 				std::tuple<uint32_t, uint32_t> t = std::make_tuple(e->getX(), e->getY());

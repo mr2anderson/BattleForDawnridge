@@ -29,8 +29,7 @@
 #include "HighlightColors.hpp"
 
 
-AreaResourcePointCollectorSpec::AreaResourcePointCollectorSpec() = default;
-Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
+Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
 	if (!building->works()) {
 		return Events();
 	}
@@ -52,7 +51,7 @@ Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bui
 	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
 		ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
-		if (rp->exist() and AreaControllerSpec::IN_RADIUS(available, rp, AreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
+		if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
 			uint32_t got = rp->tryToCollect(building->getPlayerId(), left);
 			if (got != 0) {
 				src.emplace_back(rp, got);
@@ -78,7 +77,7 @@ Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bui
 
 	return response;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> AreaResourcePointCollectorSpec::getComponents(const Building *building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollectorSpec::getComponents(const Building *building, MapState* state) {
 	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (building->works()) {
@@ -103,22 +102,22 @@ std::vector<BuildingHorizontalSelectionWindowComponent> AreaResourcePointCollect
 
 	return components;
 }
-uint32_t AreaResourcePointCollectorSpec::getRadius() const {
+uint32_t IAreaResourcePointCollectorSpec::getRadius() const {
 	return this->getCollectionRadius();
 }
-sf::Color AreaResourcePointCollectorSpec::getHighlightColor(uint32_t playerId) const {
+sf::Color IAreaResourcePointCollectorSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get()->getResourceCollectingColor(playerId);
 }
-uint8_t AreaResourcePointCollectorSpec::getHighlightType() const {
-    return AreaControllerSpec::OTHER;
+uint8_t IAreaResourcePointCollectorSpec::getHighlightType() const {
+    return IAreaControllerSpec::OTHER;
 }
-uint32_t AreaResourcePointCollectorSpec::countResourceInRadius(const Building *building, MapState *state) {
+uint32_t IAreaResourcePointCollectorSpec::countResourceInRadius(const Building *building, MapState *state) {
     uint32_t ctr = 0;
 
 	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
         ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
-        if (rp->exist() and AreaControllerSpec::IN_RADIUS(available, rp, AreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
+        if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
             ctr = ctr + rp->getHP();
         }
     }
@@ -127,4 +126,4 @@ uint32_t AreaResourcePointCollectorSpec::countResourceInRadius(const Building *b
 }
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(AreaResourcePointCollectorSpec)
+BOOST_CLASS_EXPORT_IMPLEMENT(IAreaResourcePointCollectorSpec)

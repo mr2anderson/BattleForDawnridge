@@ -241,7 +241,7 @@ sf::Color WarriorProducerSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get()->getWarriorProducingColor(playerId);
 }
 uint8_t WarriorProducerSpec::getHighlightType() const {
-    return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
+    return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
 }
 std::tuple<uint32_t, uint32_t> WarriorProducerSpec::getNewWarriorPosition(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) {
 	HashTableMapPosition<uint32_t> available = this->getAvailable(x, y, sx, sy, playerId, state);

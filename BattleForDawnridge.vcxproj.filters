@@ -775,7 +775,7 @@
     <ClInclude Include="ShootingPriorityComp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingSpec.hpp">
+    <ClInclude Include="IShootingSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SortedIndexedContainer.hpp">
@@ -922,10 +922,10 @@
     <ClInclude Include="ArableSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AreaControllerSpec.hpp">
+    <ClInclude Include="IAreaControllerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AreaResourcePointCollectorSpec.hpp">
+    <ClInclude Include="IAreaResourcePointCollectorSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BarracksSpec.hpp">
@@ -988,10 +988,10 @@
     <ClInclude Include="SpellProducerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TerritoryConductorSpec.hpp">
+    <ClInclude Include="ITerritoryConductorSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TerritoryOriginSpec.hpp">
+    <ClInclude Include="ITerritoryOriginSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TradingSpec.hpp">
@@ -1021,7 +1021,7 @@
     <ClInclude Include="WarehouseWoodSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WarriorHealerSpec.hpp">
+    <ClInclude Include="IWarriorHealerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WarriorProducerSpec.hpp">
@@ -1569,7 +1569,7 @@
     <ClCompile Include="ShootingPriorityComp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingSpec.cpp">
+    <ClCompile Include="IShootingSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpecialMove.cpp">
@@ -1713,10 +1713,10 @@
     <ClCompile Include="ArableSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AreaControllerSpec.cpp">
+    <ClCompile Include="IAreaControllerSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AreaResourcePointCollectorSpec.cpp">
+    <ClCompile Include="IAreaResourcePointCollectorSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BarracksSpec.cpp">
@@ -1779,10 +1779,10 @@
     <ClCompile Include="SpellProducerSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TerritoryConductorSpec.cpp">
+    <ClCompile Include="ITerritoryConductorSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TerritoryOriginSpec.cpp">
+    <ClCompile Include="ITerritoryOriginSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TradingSpec.cpp">
@@ -1812,7 +1812,7 @@
     <ClCompile Include="WarehouseWoodSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarriorHealerSpec.cpp">
+    <ClCompile Include="IWarriorHealerSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WarriorProducerSpec.cpp">

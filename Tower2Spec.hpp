@@ -23,7 +23,7 @@
 #pragma once
 
 
-class Tower2Spec : public ShootingSpec {
+class Tower2Spec : public IShootingSpec {
 public:
     Tower2Spec();
     IBuildingSpec* clone() const override;
@@ -35,7 +35,7 @@ public:
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<ShootingSpec>(*this);
+        ar & boost::serialization::base_object<IShootingSpec>(*this);
     }
 };
 

@@ -499,8 +499,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Arable.hpp" />
     <ClInclude Include="ArableSpec.hpp" />
     <ClInclude Include="ArchiveType.hpp" />
-    <ClInclude Include="AreaControllerSpec.hpp" />
-    <ClInclude Include="AreaResourcePointCollectorSpec.hpp" />
+    <ClInclude Include="IAreaControllerSpec.hpp" />
+    <ClInclude Include="IAreaResourcePointCollectorSpec.hpp" />
     <ClInclude Include="Barracks.hpp" />
     <ClInclude Include="BarracksSpec.hpp" />
     <ClInclude Include="BigArrow.hpp" />
@@ -784,7 +784,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="SetSpellEvent.hpp" />
     <ClInclude Include="SFColorComp.hpp" />
     <ClInclude Include="ShootingPriorityComp.hpp" />
-    <ClInclude Include="ShootingSpec.hpp" />
+    <ClInclude Include="IShootingSpec.hpp" />
     <ClInclude Include="SortedIndexedContainer.hpp" />
     <ClInclude Include="SoundQueue.hpp" />
     <ClInclude Include="Sounds.hpp" />
@@ -803,8 +803,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="SubResourceEvent.hpp" />
     <ClInclude Include="SubResourcesEvent.hpp" />
     <ClInclude Include="SuspendingAnimation.hpp" />
-    <ClInclude Include="TerritoryConductorSpec.hpp" />
-    <ClInclude Include="TerritoryOriginSpec.hpp" />
+    <ClInclude Include="ITerritoryConductorSpec.hpp" />
+    <ClInclude Include="ITerritoryOriginSpec.hpp" />
     <ClInclude Include="Textures.hpp" />
     <ClInclude Include="TilesetHandler.hpp" />
     <ClInclude Include="Tower1.hpp" />
@@ -842,7 +842,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Warrior.hpp" />
     <ClInclude Include="WarriorAttacker.hpp" />
     <ClInclude Include="WarriorHealer.hpp" />
-    <ClInclude Include="WarriorHealerSpec.hpp" />
+    <ClInclude Include="IWarriorHealerSpec.hpp" />
     <ClInclude Include="WarriorHPPointer.hpp" />
     <ClInclude Include="WarriorNearAttacker.hpp" />
     <ClInclude Include="WarriorNearMultyAttacker.hpp" />
@@ -870,8 +870,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="Arable.cpp" />
     <ClCompile Include="ArableSpec.cpp" />
-    <ClCompile Include="AreaControllerSpec.cpp" />
-    <ClCompile Include="AreaResourcePointCollectorSpec.cpp" />
+    <ClCompile Include="IAreaControllerSpec.cpp" />
+    <ClCompile Include="IAreaResourcePointCollectorSpec.cpp" />
     <ClCompile Include="Barracks.cpp" />
     <ClCompile Include="BarracksSpec.cpp" />
     <ClCompile Include="BigArrow.cpp" />
@@ -1046,7 +1046,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="SetSpellEvent.cpp" />
     <ClCompile Include="SFColorComp.cpp" />
     <ClCompile Include="ShootingPriorityComp.cpp" />
-    <ClCompile Include="ShootingSpec.cpp" />
+    <ClCompile Include="IShootingSpec.cpp" />
     <ClCompile Include="SoundQueue.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="SpecialMove.cpp" />
@@ -1064,8 +1064,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="SubResourceEvent.cpp" />
     <ClCompile Include="SubResourcesEvent.cpp" />
     <ClCompile Include="SuspendingAnimation.cpp" />
-    <ClCompile Include="TerritoryConductorSpec.cpp" />
-    <ClCompile Include="TerritoryOriginSpec.cpp" />
+    <ClCompile Include="ITerritoryConductorSpec.cpp" />
+    <ClCompile Include="ITerritoryOriginSpec.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TilesetHandler.cpp" />
     <ClCompile Include="Tower1.cpp" />
@@ -1103,7 +1103,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="Warrior.cpp" />
     <ClCompile Include="WarriorAttacker.cpp" />
     <ClCompile Include="WarriorHealer.cpp" />
-    <ClCompile Include="WarriorHealerSpec.cpp" />
+    <ClCompile Include="IWarriorHealerSpec.cpp" />
     <ClCompile Include="WarriorHPPointer.cpp" />
     <ClCompile Include="WarriorNearAttacker.cpp" />
     <ClCompile Include="WarriorNearMultyAttacker.cpp" />

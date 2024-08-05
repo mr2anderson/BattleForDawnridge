@@ -17,29 +17,28 @@
  */
 
 
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
 #pragma once
 
 
-class TerritoryConductorSpec : public AreaControllerSpec {
+class IWarriorHealerSpec : public IAreaControllerSpec {
 public:
-	TerritoryConductorSpec();
-
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	Events getHighlightEvent(const Building* building, MapState* state, uint8_t) const override;
-	bool isActiveConductor(const Building* building) const override;
+	Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
+	uint32_t getRadius() const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
-    NewMoveMainPriority getNewMoveMainPriority() const override;
-	virtual bool conductsIfNotWork() const = 0;
+	virtual uint32_t getHealingSpeed() const = 0;
+    virtual bool healVehicles() const;
+    virtual std::string getHealTextureName() const = 0;
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(TerritoryConductorSpec)
+BOOST_CLASS_EXPORT_KEY(IWarriorHealerSpec)

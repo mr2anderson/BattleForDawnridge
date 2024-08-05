@@ -17,30 +17,34 @@
  */
 
 
-#include "AreaControllerSpec.hpp"
+#include "IAreaControllerSpec.hpp"
+#include "Projectile.hpp"
+#include "Damage.hpp"
 
 
 #pragma once
 
 
-class WarriorHealerSpec : public AreaControllerSpec {
+class IShootingSpec : public IAreaControllerSpec {
 public:
-	WarriorHealerSpec();
-
-	Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
-	uint32_t getRadius() const override;
+    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
+    std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
+    uint32_t getRadius() const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
-	virtual uint32_t getHealingSpeed() const = 0;
-    virtual bool healVehicles() const;
-    virtual std::string getHealTextureName() const = 0;
+    bool ignoreLowObstacles() const override;
+    bool ignoreHighObstacles() const override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
+    virtual Damage getDamage() const = 0;
+    virtual uint32_t getShotsNumber() const = 0;
+    virtual uint32_t getShootingRadius() const = 0;
+    virtual std::shared_ptr<Projectile> getProjectile() const = 0;
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(WarriorHealerSpec)
+BOOST_CLASS_EXPORT_KEY(IShootingSpec)

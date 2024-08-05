@@ -29,8 +29,8 @@
 #include "HighlightColors.hpp"
 
 
-WarriorHealerSpec::WarriorHealerSpec() = default;
-Events WarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
+IWarriorHealerSpec::IWarriorHealerSpec() = default;
+Events IWarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
 	if (!b->works()) {
 		return Events();
 	}
@@ -42,7 +42,7 @@ Events WarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *sta
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
 		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == b->getPlayerId() and
-                w->isVehicle() == this->healVehicles() and w->getHP() != w->getMaxHP() and AreaControllerSpec::IN_RADIUS(available, w, AreaControllerSpec::IN_RADIUS_TYPE::FULLY)) {
+                w->isVehicle() == this->healVehicles() and w->getHP() != w->getMaxHP() and IAreaControllerSpec::IN_RADIUS(available, w, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY)) {
 			if (first) {
 				events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 				first = false;
@@ -59,7 +59,7 @@ Events WarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *sta
 
 	return events;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> WarriorHealerSpec::getComponents(const Building* b, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getComponents(const Building* b, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
 	if (b->works()) {
@@ -83,18 +83,18 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorHealerSpec::getCo
 
 	return { component };
 }
-uint32_t WarriorHealerSpec::getRadius() const {
+uint32_t IWarriorHealerSpec::getRadius() const {
 	return 0;
 }
-sf::Color WarriorHealerSpec::getHighlightColor(uint32_t playerId) const {
+sf::Color IWarriorHealerSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get()->getBuildingHealColor(playerId);
 }
-uint8_t WarriorHealerSpec::getHighlightType() const {
-    return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
+uint8_t IWarriorHealerSpec::getHighlightType() const {
+    return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
 }
-bool WarriorHealerSpec::healVehicles() const {
+bool IWarriorHealerSpec::healVehicles() const {
     return false;
 }
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(WarriorHealerSpec)
+BOOST_CLASS_EXPORT_IMPLEMENT(IWarriorHealerSpec)

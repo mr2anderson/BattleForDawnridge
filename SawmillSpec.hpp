@@ -23,7 +23,7 @@
 #pragma once
 
 
-class SawmillSpec : public AreaResourcePointCollectorSpec {
+class SawmillSpec : public IAreaResourcePointCollectorSpec {
 public:
 	SawmillSpec();
 	IBuildingSpec* clone() const override;
@@ -34,7 +34,7 @@ public:
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<AreaResourcePointCollectorSpec>(*this);
+        ar & boost::serialization::base_object<IAreaResourcePointCollectorSpec>(*this);
     }
 };
 

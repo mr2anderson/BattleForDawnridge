@@ -17,20 +17,23 @@
  */
 
 
-#include "TerritoryOriginSpec.hpp"
-#include "HighlightColors.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
-TerritoryOriginSpec::TerritoryOriginSpec() = default;
-bool TerritoryOriginSpec::isOrigin() const {
-	return true;
-}
-sf::Color TerritoryOriginSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getTerritoryExpandingColor(playerId);
-}
-uint8_t TerritoryOriginSpec::getHighlightType() const {
-    return AreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;
-}
+#pragma once
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(TerritoryOriginSpec)
+class ITerritoryOriginSpec : public IAreaControllerSpec {
+public:
+	bool isOrigin() const override;
+    sf::Color getHighlightColor(uint32_t playerId) const override;
+    uint8_t getHighlightType() const override;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
+    }
+};
+
+
+BOOST_CLASS_EXPORT_KEY(ITerritoryOriginSpec)

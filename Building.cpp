@@ -399,7 +399,7 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
         response.add(std::make_shared<PlaySoundEvent>("click"));
     }
 
-    response = response + this->getHighlightEvent(state, AreaControllerSpec::HIGHLIGHT_TYPE::UNIVERSAL);
+    response = response + this->getHighlightEvent(state, IAreaControllerSpec::HIGHLIGHT_TYPE::UNIVERSAL);
 
 	std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
 	response.add(std::make_shared<CreateEEvent>(w));

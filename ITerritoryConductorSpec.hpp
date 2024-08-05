@@ -17,36 +17,27 @@
  */
 
 
-#include "AreaControllerSpec.hpp"
-#include "Projectile.hpp"
-#include "Damage.hpp"
+#include "IAreaControllerSpec.hpp"
 
 
 #pragma once
 
 
-class ShootingSpec : public AreaControllerSpec {
+class ITerritoryConductorSpec : public IAreaControllerSpec {
 public:
-    ShootingSpec();
-
-    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-    std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
-    uint32_t getRadius() const override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
+	Events getHighlightEvent(const Building* building, MapState* state, uint8_t) const override;
+	bool isActiveConductor(const Building* building) const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
-    bool ignoreLowObstacles() const override;
-    bool ignoreHighObstacles() const override;
     NewMoveMainPriority getNewMoveMainPriority() const override;
-    virtual Damage getDamage() const = 0;
-    virtual uint32_t getShotsNumber() const = 0;
-    virtual uint32_t getShootingRadius() const = 0;
-    virtual std::shared_ptr<Projectile> getProjectile() const = 0;
+	virtual bool conductsIfNotWork() const = 0;
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<AreaControllerSpec>(*this);
+        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(ShootingSpec)
+BOOST_CLASS_EXPORT_KEY(ITerritoryConductorSpec)

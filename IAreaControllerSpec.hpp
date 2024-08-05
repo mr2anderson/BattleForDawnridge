@@ -25,10 +25,8 @@
 #pragma once
 
 
-class AreaControllerSpec: public IBuildingSpec{
+class IAreaControllerSpec: public IBuildingSpec{
 public:
-	AreaControllerSpec();
-
 	HashTableMapPosition<uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const;
     static bool IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t inRadiusType);
 	Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) const override;
@@ -56,4 +54,4 @@ private:
 };
 
 
-BOOST_CLASS_EXPORT_KEY(AreaControllerSpec)
+BOOST_CLASS_EXPORT_KEY(IAreaControllerSpec)

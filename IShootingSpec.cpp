@@ -18,7 +18,6 @@
 
 
 #include <algorithm>
-#include <limits>
 #include "ShootingSpec.hpp"
 #include "HighlightColors.hpp"
 #include "Locales.hpp"
@@ -29,8 +28,7 @@
 #include "FocusOnEvent.hpp"
 
 
-ShootingSpec::ShootingSpec() = default;
-Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
+Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
     if (!b->wasWithFullHP()) {
         return Events();
     }
@@ -39,7 +37,7 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
     std::vector<Unit*> toShoot;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
         Unit* u = state->getCollectionsPtr()->getUnit(i);
-        if (u->exist() and u->getPlayerId() != b->getPlayerId() and AreaControllerSpec::IN_RADIUS(available, u, AreaControllerSpec::IN_RADIUS_TYPE::PARTIALLY)) {
+        if (u->exist() and u->getPlayerId() != b->getPlayerId() and IAreaControllerSpec::IN_RADIUS(available, u, IAreaControllerSpec::IN_RADIUS_TYPE::PARTIALLY)) {
             toShoot.push_back(u);
         }
     }
@@ -88,7 +86,7 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
 
     return events;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> ShootingSpec::getComponents(const Building *b, MapState *state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getComponents(const Building *b, MapState *state) {
     BuildingHorizontalSelectionWindowComponent component;
 
     if (b->wasWithFullHP()) {
@@ -108,24 +106,24 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ShootingSpec::getCompone
 
     return {component};
 }
-uint32_t ShootingSpec::getRadius() const {
+uint32_t IShootingSpec::getRadius() const {
     return this->getShootingRadius();
 }
-sf::Color ShootingSpec::getHighlightColor(uint32_t playerId) const {
+sf::Color IShootingSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get()->getBuildingAttackColor(playerId);
 }
-uint8_t ShootingSpec::getHighlightType() const {
-    return AreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
+uint8_t IShootingSpec::getHighlightType() const {
+    return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
 }
-bool ShootingSpec::ignoreLowObstacles() const {
+bool IShootingSpec::ignoreLowObstacles() const {
     return true;
 }
-bool ShootingSpec::ignoreHighObstacles() const {
+bool IShootingSpec::ignoreHighObstacles() const {
     return true;
 }
-NewMoveMainPriority ShootingSpec::getNewMoveMainPriority() const {
+NewMoveMainPriority IShootingSpec::getNewMoveMainPriority() const {
     return GO::NEW_MOVE_MAIN_PRIORITY_SHOOTING;
 }
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(ShootingSpec)
+BOOST_CLASS_EXPORT_IMPLEMENT(IShootingSpec)
