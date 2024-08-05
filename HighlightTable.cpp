@@ -26,12 +26,8 @@ void HighlightTable::clear() {
 	this->data.clear();
 }
 void HighlightTable::mark(SetHighlightEvent e) {
-	for (uint32_t dx = 0; dx < e.getSX(); dx = dx + 1) {
-		for (uint32_t dy = 0; dy < e.getSY(); dy = dy + 1) {
-			std::tuple<uint32_t, uint32_t> key = std::make_tuple(e.getX() + dx, e.getY() + dy);
-            this->data[key].insert(e.getColor());
-		}
-	}
+    std::tuple<uint32_t, uint32_t> key = std::make_tuple(e.getX(), e.getY());
+    this->data[key].insert(e.getColor());
 }
 
 

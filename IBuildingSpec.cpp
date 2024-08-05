@@ -46,9 +46,6 @@ uint32_t IBuildingSpec::getPopulationLimit(const Building *building) const {
 bool IBuildingSpec::isVictoryCondition() const {
 	return false;
 }
-bool IBuildingSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) const {
-	return false;
-}
 bool IBuildingSpec::isOrigin() const {
 	return false;
 }

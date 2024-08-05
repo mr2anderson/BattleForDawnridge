@@ -155,15 +155,6 @@ bool Building::connectedToOrigin(MapState* state) const {
 
 	return false;
 }
-bool Building::allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const {
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->allowBuilding(this, state, x, y, sx, sy)) {
-			return true;
-		}
-	}
-
-	return false;
-}
 Events Building::destroy(MapState *state) {
     Events response;
 	response.add(std::make_shared<SubHpEvent>(this, this->getHP()));

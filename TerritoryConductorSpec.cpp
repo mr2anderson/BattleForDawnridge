@@ -56,12 +56,6 @@ Events TerritoryConductorSpec::getHighlightEvent(const Building* building, MapSt
 	}
 	return this->AreaControllerSpec::getHighlightEvent(building, state, type);
 }
-bool TerritoryConductorSpec::allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) const {
-	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
-		return false;
-	}
-	return this->AreaControllerSpec::inRadius(building, state, x2, y2, sx2, sy2);
-}
 bool TerritoryConductorSpec::isActiveConductor(const Building *building) const {
 	return this->conductsIfNotWork() or building->works();
 }

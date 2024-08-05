@@ -323,13 +323,13 @@ Events Warrior::getMoveHighlightionEvent(MapState *state) {
     std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves(state);
     for (uint32_t i = 0; i < moves.size(); i = i + 1) {
         std::tuple<uint32_t, uint32_t> move = moves.at(i);
-        event.add(std::make_shared<SetHighlightEvent>(HighlightColors::get()->getWarriorMovementColor(this->getPlayerId()), std::get<0>(move), std::get<1>(move), this->getSX(), this->getSY()));
+        event.add(std::make_shared<SetHighlightEvent>(HighlightColors::get()->getWarriorMovementColor(this->getPlayerId()), std::get<0>(move), std::get<1>(move)));
     }
 
     std::vector<SpecialMove> specialMoves = this->getSpecialMoves(state);
     for (uint32_t i = 0; i < specialMoves.size(); i = i + 1) {
         SpecialMove specMove = specialMoves.at(i);
-        event.add(std::make_shared<SetHighlightEvent>(specMove.color, specMove.targetX, specMove.targetY, this->getSX(), this->getSY()));
+        event.add(std::make_shared<SetHighlightEvent>(specMove.color, specMove.targetX, specMove.targetY));
     }
 
     return event;

@@ -49,9 +49,10 @@ Events AreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bui
 
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> src;
 
+	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
 		ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
-		if (rp->exist() and this->inRadius(building, state, rp->getX(), rp->getY(), rp->getSX(), rp->getSY()) and rp->getResourceType() == this->getResourceType()) {
+		if (rp->exist() and AreaControllerSpec::IN_RADIUS(available, rp, AreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
 			uint32_t got = rp->tryToCollect(building->getPlayerId(), left);
 			if (got != 0) {
 				src.emplace_back(rp, got);
@@ -114,9 +115,10 @@ uint8_t AreaResourcePointCollectorSpec::getHighlightType() const {
 uint32_t AreaResourcePointCollectorSpec::countResourceInRadius(const Building *building, MapState *state) {
     uint32_t ctr = 0;
 
+	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
         ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
-        if (rp->exist() and this->inRadius(building, state, rp->getX(), rp->getY(), rp->getSX(), rp->getSY()) and rp->getResourceType() == this->getResourceType()) {
+        if (rp->exist() and AreaControllerSpec::IN_RADIUS(available, rp, AreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
             ctr = ctr + rp->getHP();
         }
     }

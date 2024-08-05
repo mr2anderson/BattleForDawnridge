@@ -20,12 +20,10 @@
 #include "SetHighlightEvent.hpp"
 
 
-SetHighlightEvent::SetHighlightEvent(sf::Color color, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+SetHighlightEvent::SetHighlightEvent(sf::Color color, uint32_t x, uint32_t y) {
 	this->color = color;
 	this->x = x;
 	this->y = y;
-	this->sx = sx;
-	this->sy = sy;
 }
 sf::Color SetHighlightEvent::getColor() const {
 	return this->color;
@@ -35,10 +33,4 @@ uint32_t SetHighlightEvent::getX() const {
 }
 uint32_t SetHighlightEvent::getY() const {
 	return this->y;
-}
-uint32_t SetHighlightEvent::getSX() const {
-	return this->sx;
-}
-uint32_t SetHighlightEvent::getSY() const {
-	return this->sy;
 }

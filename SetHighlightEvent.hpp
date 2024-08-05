@@ -27,15 +27,12 @@
 
 class SetHighlightEvent : public Event {
 public:
-	SetHighlightEvent(sf::Color color, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	SetHighlightEvent(sf::Color color, uint32_t x, uint32_t y);
 
 	sf::Color getColor() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
-	uint32_t getSX() const;
-	uint32_t getSY() const;
 private:
 	sf::Color color;
 	uint32_t x, y;
-	uint32_t sx, sy;
 };

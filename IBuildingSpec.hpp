@@ -46,7 +46,6 @@ public:
 	virtual Resources getLimit(const Building *building) const;
 	virtual uint32_t getPopulationLimit(const Building *building) const;
 	virtual bool isVictoryCondition() const;
-	virtual bool allowBuilding(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) const;
 	virtual bool isOrigin() const;
 	virtual bool isActiveConductor(const Building *building) const;
 	virtual uint32_t getWarriorMovementCost(const Building *building, const Warrior *w) const;

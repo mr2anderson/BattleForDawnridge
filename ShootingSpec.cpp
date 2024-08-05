@@ -35,10 +35,11 @@ Events ShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
         return Events();
     }
 
+    HashTableMapPosition<uint32_t> available = this->getAvailable(b->getX(), b->getY(), b->getSX(), b->getSY(), b->getPlayerId(), state);
     std::vector<Unit*> toShoot;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
         Unit* u = state->getCollectionsPtr()->getUnit(i);
-        if (u->exist() and u->getPlayerId() != b->getPlayerId() and this->inRadius(b, state, u->getX(), u->getY(), u->getSX(), u->getSY(), AreaControllerSpec::IN_RADIUS_TYPE::PARTIALLY)) {
+        if (u->exist() and u->getPlayerId() != b->getPlayerId() and AreaControllerSpec::IN_RADIUS(available, u, AreaControllerSpec::IN_RADIUS_TYPE::PARTIALLY)) {
             toShoot.push_back(u);
         }
     }

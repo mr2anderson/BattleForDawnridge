@@ -46,7 +46,6 @@ public:
     void addHp(uint32_t delta) override;
 	bool connectedTo(MapState* state, GO* go) const;
 	bool connectedToOrigin(MapState* state) const;
-	bool allowBuilding(MapState* state, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) const;
 	Events destroy(MapState *state);
 	void decreaseBurningMovesLeft();
 	void setFire();

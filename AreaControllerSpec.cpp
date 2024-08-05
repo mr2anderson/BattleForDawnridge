@@ -46,6 +46,20 @@ HashTableMapPosition<uint32_t> AreaControllerSpec::getAvailable(uint32_t x, uint
     LandscapeGraph g(state->getMapSizePtr()->getWidth(), state->getMapSizePtr()->getHeight(), blocked);
     return g.getAvailable(x, y, sx, sy, this->getRadius());
 }
+bool AreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t type) {
+    for (uint32_t x = target->getX(); x < target->getX() + target->getSX(); x = x + 1) {
+        for (uint32_t y = target->getY(); y < target->getY() + target->getSY(); y = y + 1) {
+            bool found = (available.find(std::make_tuple(x, y)) != available.end());
+            if (found and type == IN_RADIUS_TYPE::PARTIALLY) {
+                return true;
+            }
+            if (!found and type == IN_RADIUS_TYPE::FULLY) {
+                return false;
+            }
+        }
+    }
+    return (type == IN_RADIUS_TYPE::FULLY);
+}
 Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) const {
     if (type != HIGHLIGHT_TYPE::UNIVERSAL and type != this->getHighlightType()) {
         return Events();
@@ -55,30 +69,10 @@ Events AreaControllerSpec::getHighlightEvent(const Building *building, MapState 
 
     Events events;
     for (const auto& a : available) {
-        events.add(std::make_shared<SetHighlightEvent>(this->getHighlightColor(building->getPlayerId()), std::get<0>(a.first), std::get<1>(a.first), 1, 1));
+        events.add(std::make_shared<SetHighlightEvent>(this->getHighlightColor(building->getPlayerId()), std::get<0>(a.first), std::get<1>(a.first)));
     }
 
     return events;
-}
-bool AreaControllerSpec::inRadius(const Building *building, MapState *state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type) const {
-    HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
-
-    for (uint32_t x = x2; x < x2 + sx2; x = x + 1) {
-        for (uint32_t y = y2; y < y2 + sy2; y = y + 1) {
-            if (available.find(std::make_tuple(x, y)) == available.end()) {
-                if (type == IN_RADIUS_TYPE::FULLY) {
-                    return false;
-                }
-            }
-            else {
-                if (type == IN_RADIUS_TYPE::PARTIALLY) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    return (type == IN_RADIUS_TYPE::FULLY);
 }
 bool AreaControllerSpec::ignoreUltraHighObstacles() const {
     return false;

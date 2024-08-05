@@ -22,9 +22,6 @@
 
 
 TerritoryOriginSpec::TerritoryOriginSpec() = default;
-bool TerritoryOriginSpec::allowBuilding(const Building* building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2) const {
-	return this->AreaControllerSpec::inRadius(building, state, x2, y2, sx2, sy2);
-}
 bool TerritoryOriginSpec::isOrigin() const {
 	return true;
 }

@@ -29,14 +29,9 @@ class AreaControllerSpec: public IBuildingSpec{
 public:
 	AreaControllerSpec();
 
-    enum IN_RADIUS_TYPE {
-        FULLY,
-        PARTIALLY
-    };
-
 	HashTableMapPosition<uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const;
+    static bool IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t inRadiusType);
 	Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) const override;
-	bool inRadius(const Building *building, MapState* state, uint32_t x2, uint32_t y2, uint32_t sx2, uint32_t sy2, uint8_t type = IN_RADIUS_TYPE::FULLY) const;
 	virtual bool ignoreUltraHighObstacles() const;
 	virtual bool ignoreHighObstacles() const;
 	virtual bool ignoreLowObstacles() const;
@@ -48,6 +43,10 @@ public:
         UNIVERSAL,
         TERRITORY,
         OTHER
+    };
+    enum IN_RADIUS_TYPE {
+        FULLY,
+        PARTIALLY
     };
 private:
     friend class boost::serialization::access;
