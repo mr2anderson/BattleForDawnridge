@@ -54,23 +54,22 @@ private:
 
     bool closeMenu;
 	std::tuple<uint8_t, std::string> response;
-    uint32_t windowW, windowH;
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
 	std::vector<Button> buttons;
 	sf::Sprite background;
 
-	void init(uint32_t windowW, uint32_t windowH);
+	void init(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
     void removeFinishedElement();
-    void processEvents();
+    void processEvents(sf::RenderWindow& window);
     void prepareToStartGame();
     void addButtonClickEventToQueue();
     void addEvents(Events &e);
 
-    void handleEvent(std::shared_ptr<Event> e);
+    void handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window);
     void handleSoundEvent(std::shared_ptr<PlaySoundEvent> e);
-    void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
+    void handleCreateEEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window);
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
     void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
     void handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e);

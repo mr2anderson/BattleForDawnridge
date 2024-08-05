@@ -40,6 +40,7 @@ public:
 	GO(uint32_t x, uint32_t y);
     virtual UUID getTypeUUID() const = 0;
 
+    bool inView(const sf::View& view) const;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     float getXInPixels() const;

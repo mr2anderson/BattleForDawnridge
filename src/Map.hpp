@@ -17,20 +17,18 @@
  */
 
 
-#include <SFML/Graphics.hpp>
 #include "MapState.hpp"
 
 
 #pragma once
 
 
-class Map : public sf::Drawable {
+class Map {
 public:
     Map();
     Map(const std::string &path);
-    ~Map() override;
+    ~Map();
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     MapState* getStatePtr();
 private:
     MapState state;

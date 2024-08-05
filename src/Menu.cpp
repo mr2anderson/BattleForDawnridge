@@ -42,7 +42,7 @@ Menu* Menu::singletone = nullptr;
 
 std::tuple<uint8_t, std::string> Menu::run(sf::RenderWindow& window) {
     window.setMouseCursorVisible(true);
-    this->init(window.getSize().x, window.getSize().y);
+    this->init(window);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
@@ -58,7 +58,7 @@ std::tuple<uint8_t, std::string> Menu::run(sf::RenderWindow& window) {
 		}
 		this->drawEverything(window);
         this->removeFinishedElement();
-        this->processEvents();
+        this->processEvents(window);
         if (this->element != nullptr) {
             this->element->update();
         }
@@ -71,14 +71,12 @@ std::tuple<uint8_t, std::string> Menu::run(sf::RenderWindow& window) {
         }
 	}
 }
-void Menu::init(uint32_t windowW, uint32_t windowH) {
+void Menu::init(sf::RenderWindow& window) {
     Music::get()->get("menu")->play();
     Music::get()->get("menu")->setVolume(50);
 
     this->closeMenu = false;
     this->response = std::tuple<uint8_t, std::string>();
-    this->windowW = windowW;
-    this->windowH = windowH;
     this->element = nullptr;
 
 
@@ -293,7 +291,7 @@ void Menu::init(uint32_t windowW, uint32_t windowH) {
 	this->buttons.emplace_back(std::make_shared<Label>(10, 500, 400, 60, *Locales::get()->get("exit")), createConfirmExitWindowEvent);
 
     this->background.setTexture(*Textures::get()->get("menu"));
-    this->background.setPosition(windowW - this->background.getLocalBounds().width, windowH - this->background.getLocalBounds().height);
+    this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 
 
@@ -322,12 +320,12 @@ void Menu::removeFinishedElement() {
         this->element = nullptr;
     }
 }
-void Menu::processEvents() {
+void Menu::processEvents(sf::RenderWindow& window) {
     while (!this->events.empty()) {
         if (this->element != nullptr) {
             break;
         }
-        this->handleEvent(this->events.front());
+        this->handleEvent(this->events.front(), window);
         this->events.pop();
     }
 }
@@ -349,12 +347,12 @@ void Menu::addEvents(Events &e) {
         this->events.push(e.at(i));
     }
 }
-void Menu::handleEvent(std::shared_ptr<Event> e) {
+void Menu::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window) {
     if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
         this->handleSoundEvent(playSoundEvent);
     }
     else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
-        this->handleCreateEEvent(createEEvent);
+        this->handleCreateEEvent(createEEvent, window);
     }
     else if (std::shared_ptr<CloseMenuEvent> closeMenuEvent = std::dynamic_pointer_cast<CloseMenuEvent>(e)) {
         this->handleCloseMenuEvent(closeMenuEvent);
@@ -378,9 +376,9 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
 void Menu::handleSoundEvent(std::shared_ptr<PlaySoundEvent> e) {
     SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }
-void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
+void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window) {
     this->element = e->getElement();
-    this->element->run(this->windowW, this->windowH);
+    this->element->run(window.getSize().x, window.getSize().y);
 }
 void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
     this->closeMenu = true;

@@ -114,12 +114,6 @@ Map::~Map() {
         delete this->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
     }
 }
-void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (uint32_t i = 0; i < this->state.getCollectionsPtr()->totalGOs(); i = i + 1) {
-        const GO* go = this->state.getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
-        target.draw(*go, states);
-    }
-}
 MapState* Map::getStatePtr() {
     return &this->state;
 }

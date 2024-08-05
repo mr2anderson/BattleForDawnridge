@@ -109,7 +109,6 @@ private:
 	ISelectable* selected;
     bool returnToMenu;
 	bool curcorVisibility;
-	uint32_t windowW, windowH;
 	std::shared_ptr<sf::View> view;
     std::vector<Button> buttons;
 
@@ -136,6 +135,7 @@ private:
 
 
 	void drawEverything(sf::RenderWindow& window);
+	void drawMap(sf::RenderWindow& window);
 	void drawResourceBar(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow& window);
 	void drawHighlightion(sf::RenderWindow& window);
@@ -143,39 +143,39 @@ private:
 
 
 	void removeFinishedElement();
-	void processNewMoveEvents();
+	void processNewMoveEvents(sf::RenderWindow& window);
 	bool allNewMoveEventsAdded() const;
 	void changeMove();
 	Player* getCurrentPlayer();
-	void addButtonClickEventToQueue();
-	void addGameObjectClickEventToQueue(uint8_t button);
-    void processBaseEvents();
-    void addEvents(Events &e);
+	void addButtonClickEventToQueue(sf::RenderWindow& window);
+	void addGameObjectClickEventToQueue(uint8_t button, sf::RenderWindow& window);
+    void processBaseEvents(sf::RenderWindow& window);
+    void addEvents(Events &e, sf::RenderWindow& window);
 	void prepareToReturnToMenu(sf::RenderWindow& window);
-	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView() const;
-	void moveView();
+	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView(sf::RenderWindow &window) const;
+	void moveView(sf::RenderWindow &window);
 
 
-	bool moveViewToNorth(uint32_t border);
-	bool moveViewToNorth();
-	bool moveViewToSouth(uint32_t border);
-	bool moveViewToSouth();
-	bool moveViewToWest(uint32_t border);
-	bool moveViewToWest();
-	bool moveViewToEast(uint32_t border);
-	bool moveViewToEast();
+	bool moveViewToNorth(uint32_t border, sf::RenderWindow& window);
+	bool moveViewToNorth(sf::RenderWindow& window);
+	bool moveViewToSouth(uint32_t border, sf::RenderWindow& window);
+	bool moveViewToSouth(sf::RenderWindow& window);
+	bool moveViewToWest(uint32_t borde, sf::RenderWindow& window);
+	bool moveViewToWest(sf::RenderWindow& window);
+	bool moveViewToEast(uint32_t border, sf::RenderWindow& window);
+	bool moveViewToEast(sf::RenderWindow& window);
 
 	bool verifyViewNorth(uint32_t border);
-	bool verifyViewNorth();
+	bool verifyViewNorth(sf::RenderWindow& window);
 	bool verifyViewSouth(uint32_t border);
-	bool verifyViewSouth();
+	bool verifyViewSouth(sf::RenderWindow& window);
 	bool verifyViewWest(uint32_t border);
-	bool verifyViewWest();
+	bool verifyViewWest(sf::RenderWindow& window);
 	bool verifyViewEast(uint32_t border);
-	bool verifyViewEast();
+	bool verifyViewEast(sf::RenderWindow& window);
 
 
-	void handleEvent(std::shared_ptr<Event> e);
+	void handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e);
@@ -185,10 +185,10 @@ private:
 	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e);
 	void handleBuild(std::shared_ptr<BuildEvent> e);
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
-	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e);
+	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window);
 	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
 	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
-	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
+	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e, sf::RenderWindow& window);
 	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e);
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
 	void handleSelectEvent(std::shared_ptr<SelectEvent> w);
@@ -204,15 +204,15 @@ private:
 	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e);
 	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e);
 	void handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e);
-	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e);
-	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e);
-	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e);
-	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e);
-	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e);
+	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, sf::RenderWindow& window);
+	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, sf::RenderWindow& window);
+	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, sf::RenderWindow& window);
+	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, sf::RenderWindow& window);
+	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, sf::RenderWindow& window);
 	void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
 	void handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e);
 	void handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e);
-	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e);
+	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, sf::RenderWindow& window);
 	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e);
 	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e);
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e);
@@ -222,7 +222,7 @@ private:
     void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e);
     void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e);
     void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e);
-    void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e);
+    void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, sf::RenderWindow& window);
     void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e);
     void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e);
     void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e);

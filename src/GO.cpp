@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "GO.hpp"
 #include "Textures.hpp"
 #include "Locales.hpp"
@@ -45,6 +46,21 @@ GO::GO() = default;
 GO::GO(uint32_t x, uint32_t y) {
 	this->x = x;
 	this->y = y;
+}
+bool GO::inView(const sf::View& view) const {
+	sf::FloatRect thisRect;
+	thisRect.left = 64 * this->x;
+	thisRect.top = 64 * this->y;
+	thisRect.width = 64 * this->getSX();
+	thisRect.height = 64 * this->getSY();
+
+	sf::FloatRect viewRect;
+	viewRect.left = view.getCenter().x - view.getSize().x / 2;
+	viewRect.top = view.getCenter().y - view.getSize().y / 2;
+	viewRect.width = viewRect.left + view.getSize().x;
+	viewRect.height = viewRect.top + view.getSize().y;
+
+	return thisRect.intersects(viewRect);
 }
 void GO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!this->exist()) {
