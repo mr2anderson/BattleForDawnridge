@@ -379,7 +379,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->curcorVisibility = true;
     this->element = nullptr;
-	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y);
+	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y, window.getSettings());
     this->selected = nullptr;
     this->animation = std::nullopt;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());

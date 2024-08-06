@@ -20,11 +20,9 @@
 #include "IlluminanceTable.hpp"
 
 
-IlluminanceTable::IlluminanceTable(uint32_t w, uint32_t h) {
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 16;
+IlluminanceTable::IlluminanceTable(uint32_t w, uint32_t h, const sf::ContextSettings &parentSettings) {
 	this->render = std::make_unique<sf::RenderTexture>();
-	this->render->create(w, h, settings);
+	this->render->create(w, h, parentSettings);
 }
 
 void IlluminanceTable::setView(const sf::View& view) {
