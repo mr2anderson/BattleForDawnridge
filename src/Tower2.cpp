@@ -21,7 +21,7 @@
 #include "Tower2Spec.hpp"
 #include "Locales.hpp"
 #include "Parameters.hpp"
-#include "UUIDS.hpp"
+#include "UUIDs.hpp"
 
 
 Tower2::Tower2() = default;
