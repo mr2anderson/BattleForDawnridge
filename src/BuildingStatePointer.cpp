@@ -63,10 +63,10 @@ void BuildingStatePointer::setTypePurple() {
     this->type = "purple";
 }
 float BuildingStatePointer::getCurrentScale() const {
-    return this->getCurrentScaleBuildingSizeIndependent() * std::pow((float)this->sx / 2, 2);
+    return this->getCurrentScaleBuildingSizeIndependent() * (1 - 0.25f * (this->sx == 1));
 }
 float BuildingStatePointer::getCurrentScaleLightSource() const {
-    return this->getCurrentScaleBuildingSizeIndependent() * ((float)this->sx / 2);
+    return this->getCurrentScaleBuildingSizeIndependent() * (1 - 0.25f * (this->sx == 1));
 }
 float BuildingStatePointer::getCurrentScaleBuildingSizeIndependent() const {
     return (0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4);
@@ -75,5 +75,5 @@ std::shared_ptr<ILightSource> BuildingStatePointer::getLightSource() const {
     return std::make_shared<CircleLightSourceStatic>(
         this->xInPixels + 8 * this->sx,
         this->yInPixels + 12 * this->sx,
-        36 * this->getCurrentScaleLightSource());
+        42 * this->getCurrentScaleLightSource());
 }
