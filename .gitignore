@@ -370,3 +370,11 @@ userdata
 extlibs
 boost_1_85_0
 bzip2-1.0.6
+
+
+CMakeLists.txt
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+BattleForDawnridge
