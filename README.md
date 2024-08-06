@@ -3,4 +3,4 @@ Here you can watch gameplay recorded on one of the early versions of the game
 [![](https://img.youtube.com/vi/bAOoODWE8Ok/0.jpg)](https://www.youtube.com/watch?v=bAOoODWE8Ok)
 ## Compilation
 * If you use _Visual Studio_, place *SFML* library in _extlibs_ directory and *boost* library, compiled with *serialization*, *iostreams* and *bzip2* support, in _boost_1_85_0_ directory.
-* In case you use Linux, install all necessary dev packages and copy CMakeLists.txt file from _linux_ dir to the root.
+* In case you use _Linux_, install all necessary dev packages and copy CMakeLists.txt file from _linux_ dir to the root.
