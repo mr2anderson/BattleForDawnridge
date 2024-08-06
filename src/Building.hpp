@@ -73,6 +73,7 @@ private:
 	bool warriorCanStay(const Warrior *w) const override;
 	uint32_t getWarriorMovementCost(const Warrior *w) const override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
+	std::shared_ptr<ILightSource> getLightSource() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive & ar, const unsigned int version) {

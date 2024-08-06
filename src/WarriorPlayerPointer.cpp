@@ -21,34 +21,18 @@
 #include "Textures.hpp"
 
 
-WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels, bool color) {
+WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels) {
     this->sprite.setPosition(xInPixels, yInPixels);
-    this->color = color;
 }
 void WarriorPlayerPointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(this->sprite, states);
 }
 void WarriorPlayerPointer::setTypeBlue() {
-    if (this->color) {
-        this->sprite.setTexture(*Textures::get()->get("warrior_blue"));
-    }
-    else {
-        this->sprite.setTexture(*Textures::get()->get("warrior_blue_no_moves"));
-    }
+    this->sprite.setTexture(*Textures::get()->get("warrior_blue"));
 }
 void WarriorPlayerPointer::setTypeGreen() {
-    if (this->color) {
-        this->sprite.setTexture(*Textures::get()->get("warrior_green"));
-    }
-    else {
-        this->sprite.setTexture(*Textures::get()->get("warrior_green_no_moves"));
-    }
+    this->sprite.setTexture(*Textures::get()->get("warrior_green"));
 }
 void WarriorPlayerPointer::setTypePurple() {
-    if (this->color) {
-        this->sprite.setTexture(*Textures::get()->get("warrior_purple"));
-    }
-    else {
-        this->sprite.setTexture(*Textures::get()->get("warrior_purple_no_moves"));
-    }
+    this->sprite.setTexture(*Textures::get()->get("warrior_purple"));
 }

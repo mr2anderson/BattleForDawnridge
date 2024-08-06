@@ -23,6 +23,7 @@
 #include "GlobalRandomGenerator32.hpp"
 #include "GlobalClock.hpp"
 #include "UUIDs.hpp"
+#include "CircleLightSourceStatic.hpp"
 
 
 const uint32_t Plant::TOTAL_TYPES = 13;
@@ -58,6 +59,9 @@ std::string Plant::getTextureName() const {
 }
 std::wstring Plant::getDescription() const {
     return *Locales::get()->get("plant_description");
+}
+std::shared_ptr<ILightSource> Plant::getLightSource() const {
+    return std::make_shared<CircleLightSourceStatic>(this->getCenterX(), this->getCenterY(), 28);
 }
 
 

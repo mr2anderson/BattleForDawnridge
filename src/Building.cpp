@@ -37,6 +37,7 @@
 #include "IAreaControllerSpec.hpp"
 #include "StaticString.hpp"
 #include "TextureNameStringSmart.hpp"
+#include "CircleLightSourceStatic.hpp"
 
 
 Building::Building() = default;
@@ -416,6 +417,12 @@ sf::Color Building::getTextureColor() const {
 }
 std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
+}
+std::shared_ptr<ILightSource> Building::getLightSource() const {
+	if (this->burningMovesLeft > 0) {
+		return std::make_shared<CircleLightSourceStatic>(this->getCenterX(), this->getCenterY(), 64 * std::max(this->getSX(), this->getSY()) * 0.75);
+	}
+	return this->Unit::getLightSource();
 }
 
 

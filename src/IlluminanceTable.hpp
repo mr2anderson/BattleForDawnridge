@@ -17,31 +17,23 @@
  */
 
 
-#include "PlayerPointer.hpp"
+#include "IWithLightSource.hpp"
 
 
 #pragma once
 
 
-class BuildingStatePointer : public PlayerPointer {
+class IlluminanceTable: public sf::Drawable {
 public:
-    BuildingStatePointer(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, uint32_t currentHP, uint32_t maxHP);
+	IlluminanceTable(uint32_t windowW, uint32_t windowH);
 
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+	void setView(const sf::View& view);
 
-    static const uint32_t TOTAL_HP_POINTERS;
+	void add(const IWithLightSource* i);
+	void add(std::shared_ptr<const IWithLightSource> i);
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-    float xInPixels, yInPixels;
-    uint32_t sx, sy;
-    uint32_t current, max;
-    std::string type;
-
-    void setTypeBlue() override;
-    void setTypeGreen() override;
-    void setTypePurple() override;
-    float getCurrentScale() const;
-    float getCurrentScaleLightSource() const;
-    float getCurrentScaleBuildingSizeIndependent() const;
-
-    std::shared_ptr<ILightSource> getLightSource() const override;
+	std::unique_ptr<sf::RenderTexture> render;
+	sf::View view;
 };

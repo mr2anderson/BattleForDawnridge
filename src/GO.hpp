@@ -25,6 +25,7 @@
 #include "ClickPriority.hpp"
 #include "NewMovePriority.hpp"
 #include "MapState.hpp"
+#include "IWithLightSource.hpp"
 #include "UUID.hpp"
 #include "ArchiveType.hpp"
 
@@ -35,7 +36,7 @@
 class Warrior;
 
 
-class GO : public sf::Drawable, public IWithTextureName {
+class GO : public sf::Drawable, public IWithTextureName, public IWithLightSource {
 public:
 	GO();
 	GO(uint32_t x, uint32_t y);
@@ -46,6 +47,8 @@ public:
 
     float getXInPixels() const;
     float getYInPixels() const;
+    float getCenterX() const;
+    float getCenterY() const;
 	uint32_t getX() const;
 	uint32_t getY() const;
 	virtual uint32_t getSX() const = 0;

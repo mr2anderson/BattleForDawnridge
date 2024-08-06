@@ -42,6 +42,7 @@ private:
 
     std::string getTextureName() const override;
     std::wstring getDescription() const override;
+    std::shared_ptr<ILightSource> getLightSource() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

@@ -73,6 +73,7 @@
 #include "IncreaseVCSMoveCtrEvent.hpp"
 #include "SaveGameEvent.hpp"
 #include "LimitResourcesEvent.hpp"
+#include "IlluminanceTable.hpp"
 
 
 #pragma once
@@ -98,6 +99,7 @@ private:
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
 	std::shared_ptr<PopUpElement> element;
+	std::shared_ptr<IlluminanceTable> illiminanceTable;
     std::optional<SuspendingAnimation> animation;
     std::queue<std::shared_ptr<Event>> events;
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;

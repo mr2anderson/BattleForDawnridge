@@ -50,6 +50,7 @@
 #include "Building.hpp"
 #include "IAreaControllerSpec.hpp"
 #include "StaticString.hpp"
+#include "CircleLightSourceSqrt.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -59,7 +60,6 @@ const uint32_t Warrior::TOTAL_WINGS = 3;
 Warrior::Warrior() {
     this->currentDirection = "e";
     this->startAnimation("talking");
-    this->hasSpecialMoves = false;
 }
 Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
 	Unit(x, y, boost::none, playerId) {
@@ -69,6 +69,7 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->toKill = false;
     this->rageModeMovesLeft = 0;
     this->hasSpecialMoves = false;
+    this->enemyMove = true;
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
@@ -354,9 +355,15 @@ std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uin
     return std::make_shared<sf::Sprite>(sprite);
 }
 void Warrior::newFrame(MapState *state, uint32_t currentPlayerId) {
-    if (this->exist() and this->getPlayerId() == currentPlayerId and this->hasSpecialMovesCheckTimer.getMS() > 100) {
-        this->hasSpecialMovesCheckTimer.restart();
-        this->hasSpecialMoves = !this->getSpecialMoves(state).empty();
+    if (this->exist() and this->newFrameUpdateTimer.getMS() > 100) {
+        this->newFrameUpdateTimer.restart();
+        if (this->getPlayerId() == currentPlayerId) {
+            this->enemyMove = false;
+            this->hasSpecialMoves = !this->getSpecialMoves(state).empty();
+        }
+        else {
+            this->enemyMove = true;
+        }
     }
 }
 Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
@@ -664,11 +671,17 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	return response;
 }
 std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
-    return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels(), (this->movementPoints.value_or(this->getMovementPoints()) > 0 or this->hasSpecialMoves));
+    return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels());
 }
 void Warrior::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const {
     WarriorHPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
     target.draw(pointer, states);
+}
+std::shared_ptr<ILightSource> Warrior::getLightSource() const {
+    if (!this->enemyMove and (this->movementPoints.value_or(1) or this->hasSpecialMoves)) {
+        return std::make_shared<CircleLightSourceSqrt>(this->getCenterX(), this->getCenterY(), 30, 0.05, 2);
+    }
+    return this->Unit::getLightSource();
 }
 
 

@@ -17,20 +17,13 @@
  */
 
 
-#include <cstdint>
-#include "IWithLightSource.hpp"
+#include <cmath>
+#include "CircleLightSourceParabolic.hpp"
 
 
-#pragma once
+CircleLightSourceParabolic::CircleLightSourceParabolic(float centerX, float centerY, float avRadius, float deltaScale, float seconds) : CircleLightSourceDynamic(centerX, centerY, avRadius, deltaScale, seconds) {
 
-
-class PlayerPointer : public sf::Drawable, public IWithLightSource {
-public:
-	PlayerPointer();
-
-    void setSide(uint32_t side);
-protected:
-    virtual void setTypeBlue() = 0;
-    virtual void setTypeGreen() = 0;
-    virtual void setTypePurple() = 0;
-};
+}
+float CircleLightSourceParabolic::getFormatedFunctionValue(float formatedArgument) const {
+	return std::pow(formatedArgument, 2);
+}

@@ -318,7 +318,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'">
     <ClCompile>
-      <WarningLevel>Level1</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -326,7 +326,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\user\source\repos\BattleForDawnridge\boost_1_85_0;extlibs\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4244;4267;4018;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -620,6 +620,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ChangeMoveEvent.hpp" />
     <ClInclude Include="src\ChangeWarriorDirectionEvent.hpp" />
     <ClInclude Include="src\ChooseLanguageEvent.hpp" />
+    <ClInclude Include="src\CircleLightSource.hpp" />
+    <ClInclude Include="src\CircleLightSourceDynamic.hpp" />
+    <ClInclude Include="src\CircleLightSourceLinear.hpp" />
+    <ClInclude Include="src\CircleLightSourceParabolic.hpp" />
+    <ClInclude Include="src\CircleLightSourceSin.hpp" />
+    <ClInclude Include="src\CircleLightSourceSqrt.hpp" />
+    <ClInclude Include="src\CircleLightSourceStatic.hpp" />
     <ClInclude Include="src\ClickPriority.hpp" />
     <ClInclude Include="src\Clock.hpp" />
     <ClInclude Include="src\CloseAnimationEvent.hpp" />
@@ -658,6 +665,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\DisableCursorEvent.hpp" />
     <ClInclude Include="src\DoTradeEvent.hpp" />
     <ClInclude Include="src\DrawingPriority.hpp" />
+    <ClInclude Include="src\EmptyLightSource.hpp" />
     <ClInclude Include="src\EnableCursorEvent.hpp" />
     <ClInclude Include="src\EnableWarriorRageModeEvent.hpp" />
     <ClInclude Include="src\Event.hpp" />
@@ -678,7 +686,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GlobalRandomGenerator32.hpp" />
     <ClInclude Include="src\GlobalRandomGenerator64.hpp" />
     <ClInclude Include="src\GO.hpp" />
+    <ClInclude Include="src\IlluminanceTable.hpp" />
+    <ClInclude Include="src\IWithLightSource.hpp" />
     <ClInclude Include="src\IWithTextureName.hpp" />
+    <ClInclude Include="src\ILightSource.hpp" />
     <ClInclude Include="src\TextureNameString.hpp" />
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
@@ -898,6 +909,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ChangeMoveEvent.cpp" />
     <ClCompile Include="src\ChangeWarriorDirectionEvent.cpp" />
     <ClCompile Include="src\ChooseLanguageEvent.cpp" />
+    <ClCompile Include="src\CircleLightSource.cpp" />
+    <ClCompile Include="src\CircleLightSourceDynamic.cpp" />
+    <ClCompile Include="src\CircleLightSourceLinear.cpp" />
+    <ClCompile Include="src\CircleLightSourceParabolic.cpp" />
+    <ClCompile Include="src\CircleLightSourceSin.cpp" />
+    <ClCompile Include="src\CircleLightSourceSqrt.cpp" />
+    <ClCompile Include="src\CircleLightSourceStatic.cpp" />
     <ClCompile Include="src\Clock.cpp" />
     <ClCompile Include="src\CloseAnimationEvent.cpp" />
     <ClCompile Include="src\CloseMenuEvent.cpp" />
@@ -933,6 +951,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\DijkstraQueueElement.cpp" />
     <ClCompile Include="src\DisableCursorEvent.cpp" />
     <ClCompile Include="src\DoTradeEvent.cpp" />
+    <ClCompile Include="src\EmptyLightSource.cpp" />
     <ClCompile Include="src\EnableCursorEvent.cpp" />
     <ClCompile Include="src\EnableWarriorRageModeEvent.cpp" />
     <ClCompile Include="src\Event.cpp" />
@@ -963,6 +982,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\IAreaResourcePointCollectorSpec.cpp" />
     <ClCompile Include="src\IBuildingSpec.cpp" />
     <ClCompile Include="src\IConductionResourcePointCollectorSpec.cpp" />
+    <ClCompile Include="src\IlluminanceTable.cpp" />
     <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\ImageFlyingE.cpp" />
     <ClCompile Include="src\IncreaseVCSMoveCtrEvent.cpp" />
@@ -979,6 +999,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ITerritoryOriginSpec.cpp" />
     <ClCompile Include="src\IWarehouseSpec.cpp" />
     <ClCompile Include="src\IWarriorHealerSpec.cpp" />
+    <ClCompile Include="src\IWithLightSource.cpp" />
     <ClCompile Include="src\KillNextTurnEvent.cpp" />
     <ClCompile Include="src\Knight.cpp" />
     <ClCompile Include="src\Label.cpp" />

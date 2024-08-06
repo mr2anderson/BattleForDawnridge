@@ -17,20 +17,12 @@
  */
 
 
-#include <cstdint>
-#include "IWithLightSource.hpp"
+#include "CircleLightSourceStatic.hpp"
 
 
-#pragma once
+CircleLightSourceStatic::CircleLightSourceStatic(float centerX, float centerY, float maxRadius) : CircleLightSource(centerX, centerY, maxRadius) {
 
-
-class PlayerPointer : public sf::Drawable, public IWithLightSource {
-public:
-	PlayerPointer();
-
-    void setSide(uint32_t side);
-protected:
-    virtual void setTypeBlue() = 0;
-    virtual void setTypeGreen() = 0;
-    virtual void setTypePurple() = 0;
-};
+}
+float CircleLightSourceStatic::getRadius() const {
+	return this->getMaxRadius();
+}

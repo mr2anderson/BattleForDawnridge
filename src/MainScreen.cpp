@@ -251,10 +251,6 @@ template<typename T> HorizontalSelectionWindowComponent GET_BUILD_COMPONENT() {
 	return component;
 }
 void MainScreen::initGraphics(sf::RenderWindow &window) {
-	window.setMouseCursorVisible(true);
-
-
-
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
@@ -383,6 +379,7 @@ void MainScreen::initGraphics(sf::RenderWindow &window) {
     this->returnToMenu = false;
 	this->curcorVisibility = true;
     this->element = nullptr;
+	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y);
     this->selected = nullptr;
     this->animation = std::nullopt;
 	this->view = std::make_shared<sf::View>(window.getDefaultView());
@@ -490,11 +487,16 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
-    sf::RectangleShape darkness;
-    darkness.setPosition(0, 0);
-    darkness.setFillColor(sf::Color(0, 0, 0, 75));
-    darkness.setSize(sf::Vector2f(64 * this->map->getStatePtr()->getMapSizePtr()->getWidth(), 64 * this->map->getStatePtr()->getMapSizePtr()->getHeight()));
-    window.draw(darkness);
+	this->illiminanceTable->setView(*this->view);
+
+	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		const GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+		if (go->exist()) {
+			this->illiminanceTable->add(go);
+		}
+	}
+
+	window.draw(*this->illiminanceTable);
 }
 
 

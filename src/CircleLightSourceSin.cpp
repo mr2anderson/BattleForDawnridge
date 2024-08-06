@@ -17,20 +17,16 @@
  */
 
 
-#include <cstdint>
-#include "IWithLightSource.hpp"
+#define _USE_MATH_DEFINES
 
 
-#pragma once
+#include <cmath>
+#include "CircleLightSourceSin.hpp"
 
 
-class PlayerPointer : public sf::Drawable, public IWithLightSource {
-public:
-	PlayerPointer();
-
-    void setSide(uint32_t side);
-protected:
-    virtual void setTypeBlue() = 0;
-    virtual void setTypeGreen() = 0;
-    virtual void setTypePurple() = 0;
-};
+CircleLightSourceSin::CircleLightSourceSin(float x, float y, float avRadius, float deltaScale, float seconds) : CircleLightSourceDynamic(x, y, avRadius, deltaScale, seconds)  {
+	
+}
+float CircleLightSourceSin::getFormatedFunctionValue(float formatedArgument) const {
+	return std::sin(formatedArgument * M_PI / 2);
+}

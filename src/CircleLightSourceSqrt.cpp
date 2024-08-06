@@ -17,20 +17,13 @@
  */
 
 
-#include <cstdint>
-#include "IWithLightSource.hpp"
+#include <cmath>
+#include "CircleLightSourceSqrt.hpp"
 
 
-#pragma once
+CircleLightSourceSqrt::CircleLightSourceSqrt(float x, float y, float avRadius, float deltaScale, float seconds) : CircleLightSourceDynamic(x, y, avRadius, deltaScale, seconds) {
 
-
-class PlayerPointer : public sf::Drawable, public IWithLightSource {
-public:
-	PlayerPointer();
-
-    void setSide(uint32_t side);
-protected:
-    virtual void setTypeBlue() = 0;
-    virtual void setTypeGreen() = 0;
-    virtual void setTypePurple() = 0;
-};
+}
+float CircleLightSourceSqrt::getFormatedFunctionValue(float formatedArgument) const {
+	return std::sqrt(formatedArgument) / std::sqrt(1);
+}

@@ -17,20 +17,10 @@
  */
 
 
-#include <cstdint>
 #include "IWithLightSource.hpp"
+#include "EmptyLightSource.hpp"
 
 
-#pragma once
-
-
-class PlayerPointer : public sf::Drawable, public IWithLightSource {
-public:
-	PlayerPointer();
-
-    void setSide(uint32_t side);
-protected:
-    virtual void setTypeBlue() = 0;
-    virtual void setTypeGreen() = 0;
-    virtual void setTypePurple() = 0;
-};
+std::shared_ptr<ILightSource> IWithLightSource::getLightSource() const {
+	return std::make_shared<EmptyLightSource>();
+}

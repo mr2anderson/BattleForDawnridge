@@ -25,12 +25,11 @@
 
 class WarriorPlayerPointer : public PlayerPointer {
 public:
-    WarriorPlayerPointer(float xInPixels, float yInPixels, bool color);
+    WarriorPlayerPointer(float xInPixels, float yInPixels);
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 private:
     sf::Sprite sprite;
-    bool color;
 
     void setTypeBlue() override;
     void setTypeGreen() override;

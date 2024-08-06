@@ -117,7 +117,7 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 
 		return response;
 	}
-	catch (CouldntFindNewWarriorPosition& e) {
+	catch (CouldntFindNewWarriorPosition&) {
 		return response;
 	}
 }

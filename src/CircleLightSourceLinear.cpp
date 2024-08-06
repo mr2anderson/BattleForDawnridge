@@ -17,20 +17,12 @@
  */
 
 
-#include <cstdint>
-#include "IWithLightSource.hpp"
+#include "CircleLightSourceLinear.hpp"
 
 
-#pragma once
+CircleLightSourceLinear::CircleLightSourceLinear(float x, float y, float avRadius, float deltaScale, float seconds) : CircleLightSourceDynamic(x, y, avRadius, deltaScale, seconds) {
 
-
-class PlayerPointer : public sf::Drawable, public IWithLightSource {
-public:
-	PlayerPointer();
-
-    void setSide(uint32_t side);
-protected:
-    virtual void setTypeBlue() = 0;
-    virtual void setTypeGreen() = 0;
-    virtual void setTypePurple() = 0;
-};
+}
+float CircleLightSourceLinear::getFormatedFunctionValue(float formatedArgument) const {
+	return formatedArgument;
+}

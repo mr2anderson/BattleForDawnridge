@@ -46,6 +46,7 @@ public:
 	virtual Resources getCost() const = 0;
 protected:
     virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const = 0;
+	std::shared_ptr<ILightSource> getLightSource() const override;
 private:
 	uint32_t playerId;
 

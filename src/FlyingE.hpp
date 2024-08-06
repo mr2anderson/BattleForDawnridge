@@ -73,9 +73,9 @@ private:
     static constexpr float TIME = 0.625;
 
     void setPosition(float dt) {
-        this->t.setPosition(this->getPosition(dt));
+        this->t.setPosition(this->calcPosition(dt));
     }
-	sf::Vector2f getPosition(float dt) const {
+	sf::Vector2f calcPosition(float dt) const {
         float v = this->dst / TIME;
 
         float currentX = this->startX;

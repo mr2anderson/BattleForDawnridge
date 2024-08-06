@@ -45,6 +45,11 @@ void Unit::changePlayer(uint32_t newPlayerId) {
 uint32_t Unit::getPlayerId() const {
 	return this->playerId;
 }
+std::shared_ptr<ILightSource> Unit::getLightSource() const {
+	std::shared_ptr<PlayerPointer> ptr = this->getPlayerPointer();
+	ptr->setSide(this->getPlayerId());
+	return ptr->getLightSource();
+}
 void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) const {
 	std::shared_ptr<PlayerPointer> ptr = this->getPlayerPointer();
     ptr->setSide(this->getPlayerId());

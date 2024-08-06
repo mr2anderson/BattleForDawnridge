@@ -75,6 +75,12 @@ float GO::getXInPixels() const {
 float GO::getYInPixels() const {
     return 64 * this->y + this->getOffsetY();
 }
+float GO::getCenterX() const {
+	return this->getXInPixels() + 64 * this->getSX() / 2;
+}
+float GO::getCenterY() const {
+	return this->getYInPixels() + 64 * this->getSY() / 2;
+}
 uint32_t GO::getX() const {
 	return this->x;
 }

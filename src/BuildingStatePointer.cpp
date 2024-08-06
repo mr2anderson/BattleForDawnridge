@@ -21,6 +21,7 @@
 #include "BuildingStatePointer.hpp"
 #include "Textures.hpp"
 #include "GlobalClock.hpp"
+#include "CircleLightSourceStatic.hpp"
 
 
 const uint32_t BuildingStatePointer::TOTAL_HP_POINTERS = 21;
@@ -62,5 +63,17 @@ void BuildingStatePointer::setTypePurple() {
     this->type = "purple";
 }
 float BuildingStatePointer::getCurrentScale() const {
-    return (0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4) * std::pow((float)this->sx / 2, 2);
+    return this->getCurrentScaleBuildingSizeIndependent() * std::pow((float)this->sx / 2, 2);
+}
+float BuildingStatePointer::getCurrentScaleLightSource() const {
+    return this->getCurrentScaleBuildingSizeIndependent() * ((float)this->sx / 2);
+}
+float BuildingStatePointer::getCurrentScaleBuildingSizeIndependent() const {
+    return (0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4);
+}
+std::shared_ptr<ILightSource> BuildingStatePointer::getLightSource() const {
+    return std::make_shared<CircleLightSourceStatic>(
+        this->xInPixels + 8 * this->sx,
+        this->yInPixels + 12 * this->sx,
+        36 * this->getCurrentScaleLightSource());
 }

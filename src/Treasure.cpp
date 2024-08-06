@@ -22,10 +22,12 @@
 #include "Parameters.hpp"
 #include "UUIDs.hpp"
 
+#include "CircleLightSourceSin.hpp"
+
 
 Treasure::Treasure() = default;
 Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
-
+	this->alreadyCollected = false;
 }
 UUID Treasure::getTypeUUID() const {
 	return UUIDs::get()->get("treasure");
@@ -61,6 +63,9 @@ std::string Treasure::getTextureName() const {
 }
 std::wstring Treasure::getDescription() const {
 	return *Locales::get()->get("treasure_description");
+}
+std::shared_ptr<ILightSource> Treasure::getLightSource() const {
+	return std::make_shared<CircleLightSourceSin>(this->getCenterX(), this->getCenterY(), 32.f, 0.5f, 3.f);
 }
 
 
