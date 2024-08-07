@@ -18,4 +18,4 @@ set_target_properties(boost::iostreams PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}"
         INTERFACE_LINK_LIBRARIES "${Boost_IOSTREAMS_LIBRARIES}")
 
-target_link_libraries(BattleForDawnridge sfml-system sfml-window sfml-graphics sfml-audio boost::serialization boost::iostreams)
+target_link_libraries(BattleForDawnridge sfml-system sfml-window sfml-graphics sfml-audio sfml-network boost::serialization boost::iostreams)
