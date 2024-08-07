@@ -35,14 +35,12 @@ public:
 
     void push(sf::SoundBuffer *soundbuffer);
     void clear();
-    bool lastFinished();
 private:
     SoundQueue();
     SoundQueue(const SoundQueue& copy);
     static SoundQueue *singletone;
 
     std::list<sf::Sound> data;
-    bool lastDeleted;
 
     void removeOldSounds();
 };
