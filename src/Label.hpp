@@ -29,17 +29,7 @@ public:
 	Label(int32_t x, int32_t y, uint32_t w, uint32_t h, std::wstring message, bool center = true);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	void setX(int32_t newX) override;
-	void setY(int32_t newY) override;
 private:
-	sf::Text text;
+	std::wstring message;
 	bool center;
-
-	void initText();
-	std::wstring putNLs(const std::wstring& message, uint32_t w);
-	std::wstring centerLines(const std::wstring& message);
-	uint32_t getLongestLineWidth(const std::wstring& message);
-	std::wstring centerLines(const std::wstring& message, uint32_t maxWidth);
-	void rerenderNewPosition();
 };

@@ -591,6 +591,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
+    <ClInclude Include="SfmlTextAline\SfmlTextAline.hpp" />
     <ClInclude Include="src\AddHpEvent.hpp" />
     <ClInclude Include="src\AddResourceEvent.hpp" />
     <ClInclude Include="src\AddResourcesEvent.hpp" />
@@ -886,6 +887,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SfmlTextAline\SfmlTextAline.cpp" />
     <ClCompile Include="src\AddHpEvent.cpp" />
     <ClCompile Include="src\AddResourceEvent.cpp" />
     <ClCompile Include="src\AddResourcesEvent.cpp" />
@@ -1163,6 +1165,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Workshop.cpp" />
     <ClCompile Include="src\WorkshopWarriorHealerSpec.cpp" />
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="SfmlTextAline\licence.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
