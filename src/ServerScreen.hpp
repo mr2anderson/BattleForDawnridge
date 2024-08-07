@@ -17,6 +17,7 @@
  */
 
 
+#include <SFML/Network.hpp>
 #include "Label.hpp"
 
 
@@ -35,6 +36,7 @@ private:
 	ServerScreen(const ServerScreen& copy) = delete;
 	static ServerScreen* singletone;
 
+	sf::IpAddress ip;
 	sf::Sprite background;
 	Label label;
 	std::wstring log;

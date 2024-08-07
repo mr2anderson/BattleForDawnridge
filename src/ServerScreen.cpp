@@ -26,6 +26,7 @@
 #include "SoundQueue.hpp"
 #include "Sounds.hpp"
 #include "Label.hpp"
+#include "UTFEncoder.hpp"
 
 
 ServerScreen* ServerScreen::singletone = nullptr;
@@ -53,10 +54,13 @@ bool ServerScreen::run(sf::RenderWindow& window) {
 void ServerScreen::init(sf::RenderWindow& window) {
 	window.setMouseCursorVisible(false);
 
+	this->ip = sf::IpAddress::getPublicAddress();
+
 	this->background.setTexture(*Textures::get()->get("menu"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 	this->addToLog(*Locales::get()->get("server_mode_welcome"), window);
+	this->addToLog(*Locales::get()->get("public_ip") + UTFEncoder::get()->utf8ToUtf16(this->ip.toString()), window);
 }
 void ServerScreen::prepareToExit() {
 	Playlist::get()->restartMusic();
