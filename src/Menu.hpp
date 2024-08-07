@@ -22,6 +22,8 @@
 #include "StartGameEvent.hpp"
 #include "LoadGameEvent.hpp"
 #include "GenerateChooseSaveWindowEvent.hpp"
+#include "GenerateNetworkGameSettingsWindowEvent.hpp"
+#include "InvertIsServerStateEvent.hpp"
 #include "DeleteSaveEvent.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
@@ -70,6 +72,8 @@ private:
     void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
     void handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e);
     void handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSaveWindowEvent> e);
+    void handleGenerateNetworkGameSettingsWindowEvent(std::shared_ptr<GenerateNetworkGameSettingsWindowEvent> e);
+    void handleInvertIsServerStateEvent(std::shared_ptr<InvertIsServerStateEvent> e);
     void handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

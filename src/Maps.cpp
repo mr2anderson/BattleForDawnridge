@@ -26,7 +26,7 @@
 Maps* Maps::singletone = nullptr;
 
 
-const uint32_t Maps::THUMBNAIL_SIZE = 128;
+const uint32_t Maps::THUMBNAIL_SIZE = 64;
 
 
 void Maps::add(const std::string &name, const std::string &path) {

@@ -676,6 +676,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\FocusOnEvent.hpp" />
     <ClInclude Include="src\Fonts.hpp" />
     <ClInclude Include="src\Forest.hpp" />
+    <ClInclude Include="src\GenerateNetworkGameSettingsWindowEvent.hpp" />
+    <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
     <ClInclude Include="src\MenuResponce.hpp" />
     <ClInclude Include="src\Program.hpp" />
@@ -964,6 +966,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\FocusOnEvent.cpp" />
     <ClCompile Include="src\Fonts.cpp" />
     <ClCompile Include="src\Forest.cpp" />
+    <ClCompile Include="src\GenerateNetworkGameSettingsWindowEvent.cpp" />
+    <ClCompile Include="src\InvertIsServerStateEvent.cpp" />
     <ClCompile Include="src\IsServerTable.cpp" />
     <ClCompile Include="src\MenuResponce.cpp" />
     <ClCompile Include="src\Program.cpp" />

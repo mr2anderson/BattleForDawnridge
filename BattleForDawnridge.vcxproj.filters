@@ -1523,6 +1523,12 @@
     <ClInclude Include="src\MenuResponce.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GenerateNetworkGameSettingsWindowEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InvertIsServerStateEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2348,6 +2354,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MenuResponce.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GenerateNetworkGameSettingsWindowEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InvertIsServerStateEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
