@@ -34,8 +34,7 @@ PAKScreen* PAKScreen::singletone = nullptr;
 
 
 bool PAKScreen::run(sf::RenderWindow &window) {
-	window.setMouseCursorVisible(false);
-    this->init(window.getSize().x, window.getSize().y);
+	this->init(window);
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
@@ -51,12 +50,14 @@ bool PAKScreen::run(sf::RenderWindow &window) {
 		this->drawEverything(window);
 	}
 }
-void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
+void PAKScreen::init(sf::RenderWindow &window) {
+	window.setMouseCursorVisible(false);
+
     Music::get()->get("intro")->play();
     Music::get()->get("intro")->setVolume(50);
 
 	this->s.setTexture(*Textures::get()->get("loading_screen"));
-	this->s.setPosition(windowW - this->s.getLocalBounds().width, windowH - this->s.getLocalBounds().height);
+	this->s.setPosition(window.getSize().x - this->s.getLocalBounds().width, window.getSize().y - this->s.getLocalBounds().height);
 
 	this->t.setFont(*Fonts::get()->get("1"));
 	this->t.setString(*Locales::get()->get("press_any_key_to_continue"));
@@ -64,7 +65,7 @@ void PAKScreen::init(uint32_t windowW, uint32_t windowH) {
 	this->t.setFillColor(sf::Color::White);
 	this->t.setOutlineColor(sf::Color::Black);
 	this->t.setOutlineThickness(2);
-	this->t.setPosition((windowW - t.getLocalBounds().width) / 2, windowH - t.getLocalBounds().height - 125);
+	this->t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 125);
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(sf::Color::Black);

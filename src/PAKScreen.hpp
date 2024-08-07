@@ -43,7 +43,7 @@ private:
 	sf::Sprite s;
 	sf::Text t;
 
-	void init(uint32_t windowW, uint32_t windowH);
+	void init(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 
 	void handleEvent(Events& e);

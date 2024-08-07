@@ -17,42 +17,49 @@
  */
 
 
-#include "Game.hpp"
+#include "Program.hpp"
+#include "IsServerTable.hpp"
 #include "LoadingScreen.hpp"
 #include "PAKScreen.hpp"
 #include "Menu.hpp"
 #include "MainScreen.hpp"
+#include "ServerScreen.hpp"
 
 
-Game* Game::singletone = nullptr;
+Program* Program::singletone = nullptr;
 
 
-void Game::run() {
+void Program::run() {
 	this->initWindow();
 	if (!LoadingScreen::get()->run(this->window)) {
         return;
     }
-	if (!PAKScreen::get()->run(this->window)) {
-		return;
-	}
-	for (; ;) {
-        std::tuple<uint8_t, std::string> response = Menu::get()->run(this->window);
-		if (std::get<1>(response).empty()) {
+    if (!PAKScreen::get()->run(this->window)) {
+        return;
+    }
+    if (IsServerTable::get()->isServer()) {
+        if (!ServerScreen::get()->run(this->window)) {
             return;
         }
-        if (std::get<0>(response) == Menu::TYPE::START_LOCAL_GAME) {
-            if (!MainScreen::get()->startLocalGame(std::get<1>(response), this->window)) {
+    }
+    for (; ;) {
+        auto responce = Menu::get()->run(this->window);
+        if (std::get<1>(responce).empty()) {
+            return;
+        }
+        if (std::get<0>(responce) == Menu::TYPE::START_LOCAL_GAME) {
+            if (!MainScreen::get()->startLocalGame(std::get<1>(responce), this->window)) {
                 return;
             }
         }
-        else if (std::get<0>(response) == Menu::TYPE::LOAD_LOCAL_GAME) {
-            if (!MainScreen::get()->loadLocalGame(std::get<1>(response), this->window)) {
+        else if (std::get<0>(responce) == Menu::TYPE::LOAD_LOCAL_GAME) {
+            if (!MainScreen::get()->loadLocalGame(std::get<1>(responce), this->window)) {
                 return;
             }
         }
-	}
+    }
 }
-void Game::initWindow() {
+void Program::initWindow() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 

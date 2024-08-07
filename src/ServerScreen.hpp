@@ -17,10 +17,32 @@
  */
 
 
-#include "Program.hpp"
+#include "Label.hpp"
 
 
-int main() {
-	Program::get()->run();
-	return 0;
-}
+class ServerScreen {
+public:
+	static ServerScreen* get() {
+		if (ServerScreen::singletone == nullptr) {
+			ServerScreen::singletone = new ServerScreen();
+		}
+		return ServerScreen::singletone;
+	}
+
+	bool run(sf::RenderWindow& window);
+private:
+	ServerScreen() = default;
+	ServerScreen(const ServerScreen& copy) = delete;
+	static ServerScreen* singletone;
+
+	sf::Sprite background;
+	Label label;
+	std::wstring log;
+
+	void init(sf::RenderWindow& window);
+	void prepareToExit();
+
+	void addToLog(const std::wstring& content, sf::RenderWindow &window);
+
+	void drawEverything(sf::RenderWindow& window);
+};

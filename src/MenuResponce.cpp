@@ -17,10 +17,23 @@
  */
 
 
-#include "Program.hpp"
+#include "MenuResponce.hpp"
 
 
-int main() {
-	Program::get()->run();
-	return 0;
+MenuResponce::MenuResponce() {
+	this->inited = false;
+}
+MenuResponce::MenuResponce(uint8_t type, const std::string& data) {
+	this->inited = true;
+	this->type = type;
+	this->data = data;
+}
+bool MenuResponce::empty() const {
+	return this->inited;
+}
+uint8_t MenuResponce::getType() const {
+	return this->type;
+}
+std::string MenuResponce::getData() const {
+	return this->data;
 }

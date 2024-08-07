@@ -50,6 +50,8 @@ LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
 bool LoadingScreen::run(sf::RenderWindow &window) {
+    window.setMouseCursorVisible(false);
+
 	this->setBaseScreen(window);
 	if (!this->loadBase(window)) {
         return false;

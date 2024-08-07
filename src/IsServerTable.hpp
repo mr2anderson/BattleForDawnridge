@@ -17,10 +17,20 @@
  */
 
 
-#include "Program.hpp"
+class IsServerTable {
+public:
+	static IsServerTable* get() {
+		if (IsServerTable::singletone == nullptr) {
+			IsServerTable::singletone = new IsServerTable();
+		}
+		return IsServerTable::singletone;
+	}
 
-
-int main() {
-	Program::get()->run();
-	return 0;
-}
+	bool isServer() const;
+	void markAsServer() const;
+	void markAsClient() const;
+private:
+	IsServerTable() = default;
+	IsServerTable(const IsServerTable& copy) = delete;
+	static IsServerTable* singletone;
+};

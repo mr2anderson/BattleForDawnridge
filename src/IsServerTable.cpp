@@ -17,10 +17,27 @@
  */
 
 
-#include "Program.hpp"
+#include <filesystem>
+#include <fstream>
+#include "IsServerTable.hpp"
+#include "Root.hpp"
 
 
-int main() {
-	Program::get()->run();
-	return 0;
+IsServerTable* IsServerTable::singletone = nullptr;
+
+
+bool IsServerTable::isServer() const {
+	return std::filesystem::is_regular_file(USERDATA_ROOT + "/network/i_am_server.cfg");
+}
+void IsServerTable::markAsServer() const {
+	if (!std::filesystem::is_directory(USERDATA_ROOT + "/network")) {
+		std::filesystem::create_directories(USERDATA_ROOT + "/network");
+	}
+	std::ofstream file(USERDATA_ROOT + "/network/i_am_server.cfg");
+	file.close();
+}
+void IsServerTable::markAsClient() const {
+	if (std::filesystem::is_regular_file(USERDATA_ROOT + "/network/i_am_server.cfg")) {
+		std::filesystem::remove(USERDATA_ROOT + "/network/i_am_server.cfg");
+	}
 }

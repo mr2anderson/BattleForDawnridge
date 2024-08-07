@@ -881,7 +881,7 @@
     <ClInclude Include="src\Forest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game.hpp">
+    <ClInclude Include="src\Program.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Gates1.hpp">
@@ -1514,6 +1514,15 @@
     <ClInclude Include="src\CircleLightSourceLinear.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ServerScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IsServerTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuResponce.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -1732,7 +1741,7 @@
     <ClCompile Include="src\Forest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="src\Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Gates1.cpp">
@@ -2330,6 +2339,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CircleLightSourceLinear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IsServerTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuResponce.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

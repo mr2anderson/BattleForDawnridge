@@ -24,20 +24,20 @@
 #pragma once
 
 
-class Game {
+class Program {
 public:
-	static Game* get() {
-		if (Game::singletone == nullptr) {
-			Game::singletone = new Game();
+	static Program* get() {
+		if (Program::singletone == nullptr) {
+			Program::singletone = new Program();
 		}
-		return Game::singletone;
+		return Program::singletone;
 	}
 
 	void run();
 private:
-	Game() = default;
-	Game(const Game& copy) = delete;
-	static Game* singletone;
+	Program() = default;
+	Program(const Program& copy) = delete;
+	static Program* singletone;
 
 	sf::RenderWindow window;
 

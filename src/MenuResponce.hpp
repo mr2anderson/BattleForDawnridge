@@ -17,10 +17,28 @@
  */
 
 
-#include "Program.hpp"
+#include <cstdint>
+#include <string>
 
 
-int main() {
-	Program::get()->run();
-	return 0;
-}
+#pragma once
+
+
+class MenuResponce {
+public:
+	MenuResponce();
+	MenuResponce(uint8_t type, const std::string& data);
+
+	bool empty() const;
+	uint8_t getType() const;
+	std::string getData() const;
+
+	enum TYPE {
+		START_LOCAL_GAME,
+		LOAD_LOCAL_GAME
+	};
+private:
+	bool inited;
+	uint8_t type;
+	std::string data;
+};
