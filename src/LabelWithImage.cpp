@@ -29,3 +29,13 @@ void LabelWithImage::draw(sf::RenderTarget& target, sf::RenderStates states) con
     target.draw(this->image, states);
     target.draw(this->label, states);
 }
+void LabelWithImage::setX(int32_t newX) {
+    this->RectangularUiElement::setX(newX);
+    this->image.setX(newX);
+    this->label.setX(newX);
+}
+void LabelWithImage::setY(int32_t newY) {
+    this->RectangularUiElement::setY(newY);
+    this->image.setY(newY);
+    this->label.setY(newY);
+}
