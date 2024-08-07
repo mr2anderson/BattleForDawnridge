@@ -50,7 +50,7 @@ LoadingScreen* LoadingScreen::singletone = nullptr;
 
 
 bool LoadingScreen::run(sf::RenderWindow &window) {
-    window.setMouseCursorVisible(false);
+    window.setMouseCursorVisible(true);
 
 	this->setBaseScreen(window);
 	if (!this->loadBase(window)) {
@@ -125,10 +125,10 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "btc", "axe_icon", "cross_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
                 "cursor", "helmet", "skull", "spell_factory", "rage_spell",
-                "infirmary", "christianity", "tower1", "tower2", "big_arrow_icon", "crystal_icon", "warehouse_crystal",
+                "infirmary", "christianity", "tower1", "tower2", "crystal_icon", "warehouse_crystal",
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon", "heart_icon", "save_icon",
-                "plain", "slow_movement_icon"}) {
+                "plain", "slow_movement_icon", "battle_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {

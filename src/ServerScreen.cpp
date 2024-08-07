@@ -51,6 +51,8 @@ bool ServerScreen::run(sf::RenderWindow& window) {
 	}
 }
 void ServerScreen::init(sf::RenderWindow& window) {
+	window.setMouseCursorVisible(false);
+
 	this->background.setTexture(*Textures::get()->get("menu"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
