@@ -591,7 +591,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
-    <ClInclude Include="SfmlTextAline\SfmlTextAline.hpp" />
     <ClInclude Include="src\AddHpEvent.hpp" />
     <ClInclude Include="src\AddResourceEvent.hpp" />
     <ClInclude Include="src\AddResourcesEvent.hpp" />
@@ -696,6 +695,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IWithTextureName.hpp" />
     <ClInclude Include="src\ILightSource.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
+    <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp" />
     <ClInclude Include="src\TextureNameString.hpp" />
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
@@ -887,7 +887,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SfmlTextAline\SfmlTextAline.cpp" />
     <ClCompile Include="src\AddHpEvent.cpp" />
     <ClCompile Include="src\AddResourceEvent.cpp" />
     <ClCompile Include="src\AddResourcesEvent.cpp" />
@@ -1088,6 +1087,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SetHighlightEvent.cpp" />
     <ClCompile Include="src\SetSpellEvent.cpp" />
     <ClCompile Include="src\SFColorComp.cpp" />
+    <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp" />
     <ClCompile Include="src\ShootingPriorityComp.cpp" />
     <ClCompile Include="src\SoundQueue.cpp" />
     <ClCompile Include="src\Sounds.cpp" />
@@ -1167,7 +1167,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="SfmlTextAline\licence.txt" />
+    <Text Include="src\SfmlTextAline\licence.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

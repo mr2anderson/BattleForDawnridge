@@ -1529,7 +1529,7 @@
     <ClInclude Include="src\InvertIsServerStateEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SfmlTextAline\SfmlTextAline.hpp">
+    <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2365,11 +2365,11 @@
     <ClCompile Include="src\InvertIsServerStateEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SfmlTextAline\SfmlTextAline.cpp">
+    <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="SfmlTextAline\licence.txt" />
+    <Text Include="src\SfmlTextAline\licence.txt" />
   </ItemGroup>
 </Project>

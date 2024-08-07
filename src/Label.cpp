@@ -19,7 +19,7 @@
 
 #include "Label.hpp"
 #include "Fonts.hpp"
-#include "../SfmlTextAline/SfmlTextAline.hpp"
+#include "SfmlTextAline/SfmlTextAline.hpp"
 
 
 Label::Label() = default;
