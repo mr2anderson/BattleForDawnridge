@@ -44,16 +44,16 @@ void Program::run() {
     }
     for (; ;) {
         auto responce = Menu::get()->run(this->window);
-        if (std::get<1>(responce).empty()) {
+        if (responce.empty()) {
             return;
         }
-        if (std::get<0>(responce) == Menu::TYPE::START_LOCAL_GAME) {
-            if (!MainScreen::get()->startLocalGame(std::get<1>(responce), this->window)) {
+        if (responce.getType() == MenuResponce::TYPE::START_LOCAL_GAME) {
+            if (!MainScreen::get()->startLocalGame(responce.getData(), this->window)) {
                 return;
             }
         }
-        else if (std::get<0>(responce) == Menu::TYPE::LOAD_LOCAL_GAME) {
-            if (!MainScreen::get()->loadLocalGame(std::get<1>(responce), this->window)) {
+        else if (responce.getType() == MenuResponce::TYPE::LOAD_LOCAL_GAME) {
+            if (!MainScreen::get()->loadLocalGame(responce.getData(), this->window)) {
                 return;
             }
         }

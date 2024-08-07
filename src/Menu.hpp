@@ -27,6 +27,7 @@
 #include "ChooseLanguageEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
+#include "MenuResponce.hpp"
 
 
 #pragma once
@@ -41,19 +42,14 @@ public:
 		return Menu::singletone;
 	}
 
-    std::tuple<uint8_t, std::string> run(sf::RenderWindow& window);
-
-    enum TYPE {
-        START_LOCAL_GAME,
-        LOAD_LOCAL_GAME
-    };
+    MenuResponce run(sf::RenderWindow& window);
 private:
 	Menu() = default;
 	Menu(const Menu& copy) = delete;
 	static Menu* singletone;
 
     bool closeMenu;
-	std::tuple<uint8_t, std::string> response;
+	MenuResponce response;
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
 	std::vector<Button> buttons;

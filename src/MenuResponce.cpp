@@ -29,7 +29,7 @@ MenuResponce::MenuResponce(uint8_t type, const std::string& data) {
 	this->data = data;
 }
 bool MenuResponce::empty() const {
-	return this->inited;
+	return !this->inited;
 }
 uint8_t MenuResponce::getType() const {
 	return this->type;

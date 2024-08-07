@@ -41,7 +41,7 @@
 Menu* Menu::singletone = nullptr;
 
 
-std::tuple<uint8_t, std::string> Menu::run(sf::RenderWindow& window) {
+MenuResponce Menu::run(sf::RenderWindow& window) {
     window.setMouseCursorVisible(true);
     this->init(window);
 	sf::Event event{};
@@ -66,7 +66,7 @@ std::tuple<uint8_t, std::string> Menu::run(sf::RenderWindow& window) {
         if (this->closeMenu) {
             return this->response;
         }
-        if (!std::get<1>(this->response).empty()) {
+        if (!this->response.empty()) {
             this->prepareToStartGame();
             return this->response;
         }
@@ -77,7 +77,7 @@ void Menu::init(sf::RenderWindow& window) {
     Music::get()->get("menu")->setVolume(50);
 
     this->closeMenu = false;
-    this->response = std::tuple<uint8_t, std::string>();
+    this->response = MenuResponce();
     this->element = nullptr;
 
 
@@ -385,10 +385,10 @@ void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
     this->closeMenu = true;
 }
 void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
-    this->response = std::make_tuple(TYPE::START_LOCAL_GAME, e->getMapName());
+    this->response = MenuResponce(MenuResponce::TYPE::START_LOCAL_GAME, e->getMapName());
 }
 void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
-    this->response = std::make_tuple(TYPE::LOAD_LOCAL_GAME, e->getSaveName());
+    this->response = MenuResponce(MenuResponce::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
 }
 void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSaveWindowEvent> e) { // It is impossible to create choose save window like other windows in menu, cuz it is content might be changed during run time
     Events clickEvent;
