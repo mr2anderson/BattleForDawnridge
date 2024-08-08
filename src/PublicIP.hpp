@@ -17,24 +17,28 @@
  */
 
 
-#include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-#include "Logs.hpp"
-#include "ServerScreenResponse.hpp"
+#include <optional>
 
 
 #pragma once
 
 
-class ServerScreen {
+class PublicIP {
 public:
-	ServerScreen(sf::RenderWindow& window);
-	ServerScreen(const ServerScreen& copy) = delete;
-	ServerScreenResponse run(sf::RenderWindow& window);
-private:
-	bool alreadyFinished;
-	sf::Sprite background;
-	Logs logs;
+    static PublicIP* get() {
+        if (PublicIP::singletone == nullptr) {
+            PublicIP::singletone = new PublicIP();
+        }
+        return PublicIP::singletone;
+    }
 
-	void drawEverything(sf::RenderWindow& window);
+    void load();
+    sf::IpAddress getIp() const;
+private:
+    PublicIP() = default;
+    PublicIP(const PublicIP& copy);
+    static PublicIP* singletone;
+
+    std::optional<sf::IpAddress> ip;
 };

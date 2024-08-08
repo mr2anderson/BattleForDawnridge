@@ -17,24 +17,20 @@
  */
 
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
-#include "Logs.hpp"
-#include "ServerScreenResponse.hpp"
+#include <iostream>
+#include "PublicIP.hpp"
 
 
-#pragma once
+PublicIP* PublicIP::singletone = nullptr;
 
 
-class ServerScreen {
-public:
-	ServerScreen(sf::RenderWindow& window);
-	ServerScreen(const ServerScreen& copy) = delete;
-	ServerScreenResponse run(sf::RenderWindow& window);
-private:
-	bool alreadyFinished;
-	sf::Sprite background;
-	Logs logs;
-
-	void drawEverything(sf::RenderWindow& window);
-};
+void PublicIP::load() {
+    this->ip = sf::IpAddress::getPublicAddress();
+}
+sf::IpAddress PublicIP::getIp() const {
+    if (!this->ip.has_value()) {
+        std::cerr << "PublicIP: warning: ip does not have value" << std::endl;
+        return sf::IpAddress::None;
+    }
+    return this->ip.value();
+}

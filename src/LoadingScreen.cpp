@@ -29,7 +29,6 @@
 #include "Knight.hpp"
 #include "BlackKnight.hpp"
 #include "WindowButton.hpp"
-
 #include "ClueManager.hpp"
 #include "Fire.hpp"
 #include "House.hpp"
@@ -45,6 +44,7 @@
 #include "Ram.hpp"
 #include "BuildingStatePointer.hpp"
 #include "ScreenAlreadyFinished.hpp"
+#include "PublicIP.hpp"
 
 
 #if defined(_WIN32) // Unix does not support coloured cursors
@@ -140,6 +140,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
             Textures::get()->add("cursor", "images/cursor.png");
         #endif
         if (this->mode == MODE::SERVER) {
+            PublicIP::get()->load();
             return true;
         }
         Music::get()->add("menu", "music/menu.ogg");

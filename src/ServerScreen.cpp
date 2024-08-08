@@ -26,23 +26,22 @@
 #include "Sounds.hpp"
 #include "Label.hpp"
 #include "ScreenAlreadyFinished.hpp"
+#include "PublicIP.hpp"
 
 
 ServerScreen::ServerScreen(sf::RenderWindow& window) {
 	this->alreadyFinished = false;
-
-	this->ip = sf::IpAddress::getPublicAddress();
 
 	this->background.setTexture(*Textures::get()->get("bg"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 	this->logs.setEntryLimit(10);
 	this->logs.add(StringLcl("{server_mode_welcome}"));
-	if (this->ip.toString() == "0.0.0.0") {
+	if (PublicIP::get()->getIp().toString() == "0.0.0.0") {
 		this->logs.add(StringLcl("{couldnt_get_public_ip}"));
 	}
 	else {
-		this->logs.add(StringLcl("{public_ip}") + StringLcl(this->ip.toString()));
+		this->logs.add(StringLcl("{public_ip}") + StringLcl(PublicIP::get()->getIp().toString()));
 	}
 	this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
 }
