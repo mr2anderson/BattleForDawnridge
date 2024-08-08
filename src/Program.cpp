@@ -29,41 +29,65 @@
 Program* Program::singletone = nullptr;
 
 
-void Program::run() {
-	this->initWindow();
-	if (!LoadingScreen::get()->run(this->window)) {
-        return;
-    }
-    if (!PAKScreen::get()->run(this->window)) {
-        return;
-    }
-    if (IsServerTable::get()->isServer()) {
-        if (!ServerScreen::get()->run(this->window)) {
-            return;
-        }
-    }
-    for (; ;) {
-        auto responce = Menu::get()->run(this->window);
-        if (responce.empty()) {
-            return;
-        }
-        if (responce.getType() == MenuResponce::TYPE::START_LOCAL_GAME) {
-            if (!MainScreen::get()->startLocalGame(responce.getData(), this->window)) {
-                return;
-            }
-        }
-        else if (responce.getType() == MenuResponce::TYPE::LOAD_LOCAL_GAME) {
-            if (!MainScreen::get()->loadLocalGame(responce.getData(), this->window)) {
-                return;
-            }
-        }
-    }
-}
-void Program::initWindow() {
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
+Program::Program() {
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
 
-	this->window.create(sf::VideoMode::getDesktopMode(), "Battle for Dawnridge", sf::Style::Fullscreen, settings);
-	this->window.setVerticalSyncEnabled(true);
-	this->window.setFramerateLimit(60);
+    this->window.create(sf::VideoMode::getDesktopMode(), "Battle for Dawnridge", sf::Style::Fullscreen, settings);
+    this->window.setVerticalSyncEnabled(true);
+    this->window.setFramerateLimit(60);
+}
+void Program::run() {
+    LoadingScreen loadingScreen(this->window);
+    LoadingScreenResponse loadingScreenResponse = loadingScreen.run(this->window);
+    switch (loadingScreenResponse.getType()) {
+    case LoadingScreenResponse::TYPE::OK: {
+        break;
+    }
+    case LoadingScreenResponse::TYPE::LOADING_ERROR: {
+        return;
+    }
+    }
+
+
+    PAKScreen pakScreen(this->window);
+    PAKScreenResponse pakScreenResponse = pakScreen.run(this->window);
+    switch (pakScreenResponse.getType()) {
+    case PAKScreenResponse::TYPE::CONTINUE: {
+        break;
+    }
+    case PAKScreenResponse::TYPE::EXIT: {
+        return;
+    }
+    }
+
+
+
+    if (IsServerTable::get()->isServer()) {
+        ServerScreen serverScreen(this->window);
+        ServerScreenResponse serverScreenResponse = serverScreen.run(this->window);
+        switch (serverScreenResponse.getType()) {
+        case ServerScreenResponse::TYPE::EXIT: {
+            return;
+        }
+        }
+    }
+    else {
+        for (; ;) {
+            Menu menu(this->window);
+            MenuResponse menuResponse = menu.run(this->window);
+            if (menuResponse.getType() == MenuResponse::TYPE::EXIT) {
+                return;
+            }
+
+
+            MainScreen mainScreen(this->window, menuResponse);
+            MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
+            switch (mainScreenResponse.getType()) {
+            case MainScreenResponse::TYPE::RETURN_TO_MENU: {
+                break;
+            }
+            }
+        }
+    }
 }

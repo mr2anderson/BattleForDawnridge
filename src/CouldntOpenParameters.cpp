@@ -23,6 +23,6 @@
 CouldntOpenParameters::CouldntOpenParameters(const std::string& path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenParameters::getUpperCaseResourceReadableName() const {
-	return "PARAMETERS";
+std::string CouldntOpenParameters::getResourceName() const {
+	return "parameters";
 }

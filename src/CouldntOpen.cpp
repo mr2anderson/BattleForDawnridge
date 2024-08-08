@@ -21,10 +21,11 @@
 
 
 CouldntOpen::CouldntOpen(const std::string &path) : LoadingError(path) {
-
+    
 }
-std::string CouldntOpen::msg() const {
-    return
-            "COULDN'T OPEN " + this->getUpperCaseResourceReadableName() + "\n"
-            "Path: " + this->getPath();
+const char* CouldntOpen::what() const {
+    std::string content =
+        ("Couldn't open " + this->getResourceName() + "\n"
+            "Path: " + this->getPath());
+    return content.c_str();
 }

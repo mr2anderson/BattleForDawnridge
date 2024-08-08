@@ -27,5 +27,5 @@ class CouldntOpenSound : public CouldntOpen {
 public:
     CouldntOpenSound(const std::string &path);
 
-    std::string getUpperCaseResourceReadableName() const override;
+    std::string getResourceName() const override;
 };

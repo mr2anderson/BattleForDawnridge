@@ -17,27 +17,7 @@
  */
 
 
-
-#include <SFML/Graphics.hpp>
-#include "LoadingError.hpp"
-#include "LoadingScreenResponse.hpp"
+#include "ScreenAlreadyFinished.hpp"
 
 
-#pragma once
-
-
-class LoadingScreen {
-public:
-	LoadingScreen(sf::RenderWindow &window);
-	LoadingScreen(const LoadingScreen& copy) = delete;
-
-	LoadingScreenResponse run(sf::RenderWindow &window);
-private:
-	bool alreadyFinished;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	bool loadBase(sf::RenderWindow &window);
-	void setNormalScreen(sf::RenderWindow& window);
-	bool loadAll(sf::RenderWindow &window);
-    void loadingError(LoadingError *e, sf::RenderWindow &window);
-};
+ScreenAlreadyFinished::ScreenAlreadyFinished() = default;

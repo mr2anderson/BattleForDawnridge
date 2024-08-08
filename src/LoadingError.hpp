@@ -26,8 +26,6 @@
 class LoadingError : public std::exception {
 public:
     LoadingError(const std::string &path);
-
-    virtual std::string msg() const = 0;
 protected:
     std::string getPath() const;
 private:

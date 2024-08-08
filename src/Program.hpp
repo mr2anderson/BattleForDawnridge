@@ -35,11 +35,9 @@ public:
 
 	void run();
 private:
-	Program() = default;
+	Program();
 	Program(const Program& copy) = delete;
 	static Program* singletone;
 
 	sf::RenderWindow window;
-
-	void initWindow();
 };

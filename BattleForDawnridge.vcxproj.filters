@@ -1520,7 +1520,7 @@
     <ClInclude Include="src\IsServerTable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MenuResponce.hpp">
+    <ClInclude Include="src\MenuResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GenerateNetworkGameSettingsWindowEvent.hpp">
@@ -1530,6 +1530,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerScreenResponse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainScreenResponse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAKScreenResponse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoadingScreenResponse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScreenAlreadyFinished.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2356,7 +2371,7 @@
     <ClCompile Include="src\IsServerTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuResponce.cpp">
+    <ClCompile Include="src\MenuResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GenerateNetworkGameSettingsWindowEvent.cpp">
@@ -2366,6 +2381,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerScreenResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainScreenResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAKScreenResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadingScreenResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScreenAlreadyFinished.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

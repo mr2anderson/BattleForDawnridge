@@ -20,6 +20,7 @@
 #include "Button.hpp"
 #include "PlaySoundEvent.hpp"
 #include "NextClueEvent.hpp"
+#include "PAKScreenResponse.hpp"
 
 
 #pragma once
@@ -27,23 +28,14 @@
 
 class PAKScreen {
 public:
-	static PAKScreen* get() {
-		if (PAKScreen::singletone == nullptr) {
-			PAKScreen::singletone = new PAKScreen();
-		}
-		return PAKScreen::singletone;
-	}
-
-	bool run(sf::RenderWindow &window);
-private:
-	PAKScreen() = default;
+	PAKScreen(sf::RenderWindow &window);
 	PAKScreen(const PAKScreen& copy) = delete;
-	static PAKScreen* singletone;
-
+	PAKScreenResponse run(sf::RenderWindow &window);
+private:
+	bool alreadyFinished;
 	sf::Sprite s;
 	sf::Text t;
 
-	void init(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 
 	void handleEvent(Events& e);

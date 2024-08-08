@@ -33,7 +33,7 @@ public:
     }
 
     void update();
-    void restartMusic();
+    void stop();
 
     static const uint32_t SOUNDTRACKS_N;
 private:

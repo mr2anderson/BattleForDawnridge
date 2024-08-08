@@ -23,6 +23,6 @@
 CouldntOpenLocales::CouldntOpenLocales(const std::string &path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenLocales::getUpperCaseResourceReadableName() const {
-    return "LOCALES";
+std::string CouldntOpenLocales::getResourceName() const {
+    return "locales";
 }

@@ -37,49 +37,18 @@
 #include "Root.hpp"
 #include "StaticString.hpp"
 #include "IsServerTable.hpp"
+#include "ScreenAlreadyFinished.hpp"
 
 
-Menu* Menu::singletone = nullptr;
+Menu::Menu(sf::RenderWindow& window) {
+    this->alreadyFinished = false;
 
 
-MenuResponce Menu::run(sf::RenderWindow& window) {
-    window.setMouseCursorVisible(true);
-    this->init(window);
-	sf::Event event{};
-	for (; ;) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
-                if (this->element == nullptr) {
-                    this->addButtonClickEventToQueue();
-                }
-                else {
-                    Events elementEvents = this->element->click();
-                    this->addEvents(elementEvents);
-                }
-			}
-		}
-		this->drawEverything(window);
-        this->removeFinishedElement();
-        this->processEvents(window);
-        if (this->element != nullptr) {
-            this->element->update();
-        }
-        if (this->closeMenu) {
-            return this->response;
-        }
-        if (!this->response.empty()) {
-            this->prepareToStartGame();
-            return this->response;
-        }
-	}
-}
-void Menu::init(sf::RenderWindow& window) {
-    Music::get()->get("menu")->play();
-    Music::get()->get("menu")->setVolume(50);
+
 
     this->closeMenu = false;
-    this->response = MenuResponce();
     this->element = nullptr;
+
 
 
 
@@ -147,7 +116,7 @@ void Menu::init(sf::RenderWindow& window) {
 
 
 
-    
+
     Events createNetworkGameSettingsWindowEvent = clickEvent;
     createNetworkGameSettingsWindowEvent.add(std::make_shared<GenerateNetworkGameSettingsWindowEvent>());
 
@@ -183,7 +152,7 @@ void Menu::init(sf::RenderWindow& window) {
     Events createNetworkGameWindowEvent = clickEvent;
     createNetworkGameWindowEvent.add(std::make_shared<CreateEEvent>(networkGameWindow));
     this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60, *Locales::get()->get("network_game")), createNetworkGameWindowEvent);
-    
+
 
 
 
@@ -222,9 +191,9 @@ void Menu::init(sf::RenderWindow& window) {
     );
     educationWindowComponents.emplace_back(
         std::make_shared<StaticString>("crystal_icon"),
-            *Locales::get()->get("guide_crystal_description"),
-            false,
-            Events()
+        *Locales::get()->get("guide_crystal_description"),
+        false,
+        Events()
     );
     educationWindowComponents.emplace_back(
         std::make_shared<StaticString>("gold_icon"),
@@ -322,7 +291,7 @@ void Menu::init(sf::RenderWindow& window) {
     std::shared_ptr<WindowButtonImage> supportWindow = std::make_shared<WindowButtonImage>(*Locales::get()->get("support"), *Locales::get()->get("close"), "btc", clickEvent, 400, 300);
     Events supportEvent = clickEvent;
     supportEvent.add(std::make_shared<CreateEEvent>(supportWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60,  *Locales::get()->get("show_support")), supportEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, *Locales::get()->get("show_support")), supportEvent);
 
 
 
@@ -348,13 +317,14 @@ void Menu::init(sf::RenderWindow& window) {
     std::shared_ptr<WindowTwoButtons> confirmExitWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("confirm_exit"), *Locales::get()->get("yes"), *Locales::get()->get("no"), exitEvent, clickEvent);
     Events createConfirmExitWindowEvent = clickEvent;
     createConfirmExitWindowEvent.add(std::make_shared<CreateEEvent>(confirmExitWindow));
-	this->buttons.emplace_back(std::make_shared<Label>(10, 500, 400, 60, *Locales::get()->get("exit")), createConfirmExitWindowEvent);
+    this->buttons.emplace_back(std::make_shared<Label>(10, 500, 400, 60, *Locales::get()->get("exit")), createConfirmExitWindowEvent);
 
 
 
 
     this->background.setTexture(*Textures::get()->get("menu"));
     this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
+
 
 
 
@@ -365,6 +335,47 @@ void Menu::init(sf::RenderWindow& window) {
         createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
         this->addEvents(createWelcomeWindowEvent);
     }
+}
+MenuResponse Menu::run(sf::RenderWindow& window) {
+    if (this->alreadyFinished) {
+        throw ScreenAlreadyFinished();
+    }
+    this->alreadyFinished = true;
+    window.setMouseCursorVisible(true);
+    Music::get()->get("menu")->play();
+    Music::get()->get("menu")->setVolume(50);
+
+	sf::Event event{};
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
+                if (this->element == nullptr) {
+                    this->addButtonClickEventToQueue();
+                }
+                else {
+                    Events elementEvents = this->element->click();
+                    this->addEvents(elementEvents);
+                }
+			}
+		}
+		this->drawEverything(window);
+        this->processEvents(window);
+        if (this->element != nullptr) {
+            this->element->update();
+            if (this->element->finished()) {
+                this->element->restart();
+                this->element = nullptr;
+            }
+        }
+        if (this->closeMenu) {
+            Music::get()->get("menu")->stop();
+            return MenuResponse(MenuResponse::TYPE::EXIT, "");
+        }
+        if (this->response.has_value()) {
+            Music::get()->get("menu")->stop();
+            return this->response.value();
+        }
+	}
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear(sf::Color::Black);
@@ -377,12 +388,6 @@ void Menu::drawEverything(sf::RenderWindow &window) {
     }
 	window.display();
 }
-void Menu::removeFinishedElement() {
-    if (this->element != nullptr and this->element->finished()) {
-        this->element->restart();
-        this->element = nullptr;
-    }
-}
 void Menu::processEvents(sf::RenderWindow& window) {
     while (!this->events.empty()) {
         if (this->element != nullptr) {
@@ -391,10 +396,6 @@ void Menu::processEvents(sf::RenderWindow& window) {
         this->handleEvent(this->events.front(), window);
         this->events.pop();
     }
-}
-void Menu::prepareToStartGame() {
-    Music::get()->get("menu")->stop();
-    this->buttons.clear();
 }
 void Menu::addButtonClickEventToQueue() {
     for (const auto& b : this->buttons) {
@@ -453,10 +454,10 @@ void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
     this->closeMenu = true;
 }
 void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
-    this->response = MenuResponce(MenuResponce::TYPE::START_LOCAL_GAME, e->getMapName());
+    this->response = MenuResponse(MenuResponse::TYPE::START_LOCAL_GAME, e->getMapName());
 }
 void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
-    this->response = MenuResponce(MenuResponce::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
+    this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
 }
 void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSaveWindowEvent> e) { // It is impossible to create choose save window like other windows in menu, cuz it is content might be changed during run time
     Events clickEvent;

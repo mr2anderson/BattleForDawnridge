@@ -23,6 +23,6 @@
 CouldntOpenTexture::CouldntOpenTexture(const std::string &path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenTexture::getUpperCaseResourceReadableName() const {
-    return "TEXTURE";
+std::string CouldntOpenTexture::getResourceName() const {
+    return "texture";
 }

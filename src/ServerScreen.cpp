@@ -27,32 +27,11 @@
 #include "Sounds.hpp"
 #include "Label.hpp"
 #include "UTFEncoder.hpp"
+#include "ScreenAlreadyFinished.hpp"
 
 
-ServerScreen* ServerScreen::singletone = nullptr;
-
-
-bool ServerScreen::run(sf::RenderWindow& window) {
-	this->init(window);
-	sf::Event event;
-	for (; ;) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::KeyPressed) {
-				if (event.key.code == sf::Keyboard::Escape) {
-					return false;
-				}
-				if (event.key.code == sf::Keyboard::Delete) {
-					this->prepareToExit();
-					return true;
-				}
-			}
-		}
-		Playlist::get()->update();
-		this->drawEverything(window);
-	}
-}
-void ServerScreen::init(sf::RenderWindow& window) {
-	window.setMouseCursorVisible(false);
+ServerScreen::ServerScreen(sf::RenderWindow& window) {
+	this->alreadyFinished = false;
 
 	this->ip = sf::IpAddress::getPublicAddress();
 
@@ -67,8 +46,26 @@ void ServerScreen::init(sf::RenderWindow& window) {
 		this->addToLog(*Locales::get()->get("public_ip") + UTFEncoder::get()->utf8ToUtf16(this->ip.toString()), window);
 	}
 }
-void ServerScreen::prepareToExit() {
-	Playlist::get()->restartMusic();
+ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
+	if (this->alreadyFinished) {
+		throw ScreenAlreadyFinished();
+	}
+	this->alreadyFinished = true;
+	window.setMouseCursorVisible(false);
+
+	sf::Event event;
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Escape) {
+					Playlist::get()->stop();
+					return ServerScreenResponse(ServerScreenResponse::TYPE::EXIT);
+				}
+			}
+		}
+		Playlist::get()->update();
+		this->drawEverything(window);
+	}
 }
 void ServerScreen::addToLog(const std::wstring &content, sf::RenderWindow &window) {
 	this->log = this->log + content + L"\n";

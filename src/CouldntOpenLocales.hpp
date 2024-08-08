@@ -27,5 +27,5 @@ class CouldntOpenLocales : public CouldntOpen {
 public:
     CouldntOpenLocales(const std::string &path);
 
-    std::string getUpperCaseResourceReadableName() const override;
+    std::string getResourceName() const override;
 };

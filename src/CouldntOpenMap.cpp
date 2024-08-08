@@ -23,6 +23,6 @@
 CouldntOpenMap::CouldntOpenMap(const std::string &path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenMap::getUpperCaseResourceReadableName() const {
-    return "MAP";
+std::string CouldntOpenMap::getResourceName() const {
+    return "map";
 }

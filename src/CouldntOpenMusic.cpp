@@ -23,6 +23,6 @@
 CouldntOpenMusic::CouldntOpenMusic(const std::string &path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenMusic::getUpperCaseResourceReadableName() const {
+std::string CouldntOpenMusic::getResourceName() const {
     return "MUSIC";
 }

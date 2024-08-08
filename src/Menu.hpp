@@ -29,7 +29,7 @@
 #include "ChooseLanguageEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
-#include "MenuResponce.hpp"
+#include "MenuResponse.hpp"
 
 
 #pragma once
@@ -37,31 +37,20 @@
 
 class Menu {
 public:
-	static Menu* get() {
-		if (Menu::singletone == nullptr) {
-			Menu::singletone = new Menu();
-		}
-		return Menu::singletone;
-	}
-
-    MenuResponce run(sf::RenderWindow& window);
+    Menu(sf::RenderWindow &window);
+    Menu(const Menu& copy) = delete;
+    MenuResponse run(sf::RenderWindow& window);
 private:
-	Menu() = default;
-	Menu(const Menu& copy) = delete;
-	static Menu* singletone;
-
+    bool alreadyFinished;
     bool closeMenu;
-	MenuResponce response;
+	std::optional<MenuResponse> response;
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
 	std::vector<Button> buttons;
 	sf::Sprite background;
 
-	void init(sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
-    void removeFinishedElement();
     void processEvents(sf::RenderWindow& window);
-    void prepareToStartGame();
     void addButtonClickEventToQueue();
     void addEvents(Events &e);
 

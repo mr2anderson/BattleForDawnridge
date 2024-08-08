@@ -19,32 +19,21 @@
 
 #include <SFML/Network.hpp>
 #include "Label.hpp"
+#include "ServerScreenResponse.hpp"
 
 
 class ServerScreen {
 public:
-	static ServerScreen* get() {
-		if (ServerScreen::singletone == nullptr) {
-			ServerScreen::singletone = new ServerScreen();
-		}
-		return ServerScreen::singletone;
-	}
-
-	bool run(sf::RenderWindow& window);
-private:
-	ServerScreen() = default;
+	ServerScreen(sf::RenderWindow& window);
 	ServerScreen(const ServerScreen& copy) = delete;
-	static ServerScreen* singletone;
-
+	ServerScreenResponse run(sf::RenderWindow& window);
+private:
+	bool alreadyFinished;
 	sf::IpAddress ip;
 	sf::Sprite background;
 	Label label;
 	std::wstring log;
 
-	void init(sf::RenderWindow& window);
-	void prepareToExit();
-
 	void addToLog(const std::wstring& content, sf::RenderWindow &window);
-
 	void drawEverything(sf::RenderWindow& window);
 };

@@ -27,5 +27,5 @@ class CouldntOpenTexture : public CouldntOpen {
 public:
     CouldntOpenTexture(const std::string &path);
 
-    std::string getUpperCaseResourceReadableName() const override;
+    std::string getResourceName() const override;
 };

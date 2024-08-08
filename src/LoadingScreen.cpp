@@ -44,29 +44,43 @@
 #include "HealerProjectile.hpp"
 #include "Ram.hpp"
 #include "BuildingStatePointer.hpp"
+#include "ScreenAlreadyFinished.hpp"
 
 
-LoadingScreen* LoadingScreen::singletone = nullptr;
 
+LoadingScreen::LoadingScreen(sf::RenderWindow &window) {
+    this->alreadyFinished = false;
+}
+LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
+    if (this->alreadyFinished) {
+        throw ScreenAlreadyFinished();
+    }
+    this->alreadyFinished = true;
 
-bool LoadingScreen::run(sf::RenderWindow &window) {
     window.setMouseCursorVisible(true);
 
 	this->setBaseScreen(window);
 	if (!this->loadBase(window)) {
-        return false;
+        return LoadingScreenResponse(LoadingScreenResponse::TYPE::LOADING_ERROR);
     }
 
 	this->setNormalScreen(window);
 	if (!this->loadAll(window)) {
-        return false;
+        return LoadingScreenResponse(LoadingScreenResponse::TYPE::LOADING_ERROR);
     }
 
     #if defined(_WIN32) // Unix does not support coloured cursors
-        this->setCursor(window);
+        sf::Texture* cursorTexture = Textures::get()->get("cursor");
+        sf::Image image = cursorTexture->copyToImage();
+        const sf::Uint8* pixels = image.getPixelsPtr();
+
+        sf::Cursor cursor;
+        if (cursor.loadFromPixels(pixels, image.getSize(), sf::Vector2u(0, 0))) {
+            window.setMouseCursor(cursor);
+        }
     #endif
 
-    return true;
+    return LoadingScreenResponse(LoadingScreenResponse::TYPE::OK);
 }
 void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.clear(sf::Color::Black);
@@ -227,7 +241,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
     s.setTexture(*Textures::get()->get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
-    WindowButton element = WindowButton(UTFEncoder::get()->utf8ToUtf16(e->msg()), L"OK");
+    WindowButton element = WindowButton(UTFEncoder::get()->utf8ToUtf16(e->what()), L"OK");
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {
@@ -245,15 +259,5 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
         window.draw(s);
         window.draw(element);
         window.display();
-    }
-}
-void LoadingScreen::setCursor(sf::RenderWindow& window) {
-    sf::Texture* cursorTexture = Textures::get()->get("cursor");
-    sf::Image image = cursorTexture->copyToImage();
-    const sf::Uint8* pixels = image.getPixelsPtr();
-
-    sf::Cursor cursor;
-    if (cursor.loadFromPixels(pixels, image.getSize(), sf::Vector2u(0, 0))) {
-        window.setMouseCursor(cursor);
     }
 }

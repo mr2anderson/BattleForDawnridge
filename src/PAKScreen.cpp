@@ -28,33 +28,12 @@
 #include "ClueManager.hpp"
 #include "Label.hpp"
 #include "SoundQueue.hpp"
+#include "ScreenAlreadyFinished.hpp"
 
 
-PAKScreen* PAKScreen::singletone = nullptr;
 
-
-bool PAKScreen::run(sf::RenderWindow &window) {
-	this->init(window);
-	sf::Event event{};
-	for (; ;) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::KeyPressed) {
-				auto code = event.key.code;
-				if (code == sf::Keyboard::Escape) {
-					return false;
-				}
-				Music::get()->get("intro")->stop();
-				return true;
-			}
-		}
-		this->drawEverything(window);
-	}
-}
-void PAKScreen::init(sf::RenderWindow &window) {
-	window.setMouseCursorVisible(false);
-
-    Music::get()->get("intro")->play();
-    Music::get()->get("intro")->setVolume(50);
+PAKScreen::PAKScreen(sf::RenderWindow &window) {
+	this->alreadyFinished = false;
 
 	this->s.setTexture(*Textures::get()->get("loading_screen"));
 	this->s.setPosition(window.getSize().x - this->s.getLocalBounds().width, window.getSize().y - this->s.getLocalBounds().height);
@@ -66,6 +45,30 @@ void PAKScreen::init(sf::RenderWindow &window) {
 	this->t.setOutlineColor(sf::Color::Black);
 	this->t.setOutlineThickness(2);
 	this->t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 125);
+}
+PAKScreenResponse PAKScreen::run(sf::RenderWindow &window) {
+	if (this->alreadyFinished) {
+		throw ScreenAlreadyFinished();
+	}
+	this->alreadyFinished = true;
+	window.setMouseCursorVisible(false);
+	Music::get()->get("intro")->play();
+	Music::get()->get("intro")->setVolume(50);
+
+	sf::Event event{};
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::KeyPressed) {
+				auto code = event.key.code;
+				Music::get()->get("intro")->stop();
+				if (code == sf::Keyboard::Escape) {
+					return PAKScreenResponse(PAKScreenResponse::TYPE::EXIT);
+				}
+				return PAKScreenResponse(PAKScreenResponse::TYPE::CONTINUE);
+			}
+		}
+		this->drawEverything(window);
+	}
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear(sf::Color::Black);

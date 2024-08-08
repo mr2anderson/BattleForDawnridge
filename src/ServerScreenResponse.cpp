@@ -17,27 +17,12 @@
  */
 
 
-
-#include <SFML/Graphics.hpp>
-#include "LoadingError.hpp"
-#include "LoadingScreenResponse.hpp"
+#include "ServerScreenResponse.hpp"
 
 
-#pragma once
-
-
-class LoadingScreen {
-public:
-	LoadingScreen(sf::RenderWindow &window);
-	LoadingScreen(const LoadingScreen& copy) = delete;
-
-	LoadingScreenResponse run(sf::RenderWindow &window);
-private:
-	bool alreadyFinished;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	bool loadBase(sf::RenderWindow &window);
-	void setNormalScreen(sf::RenderWindow& window);
-	bool loadAll(sf::RenderWindow &window);
-    void loadingError(LoadingError *e, sf::RenderWindow &window);
-};
+ServerScreenResponse::ServerScreenResponse(uint8_t type) {
+	this->type = type;
+}
+uint8_t ServerScreenResponse::getType() const {
+	return this->type;
+}

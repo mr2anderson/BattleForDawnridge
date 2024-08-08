@@ -17,23 +17,12 @@
  */
 
 
-#include "MenuResponce.hpp"
+#include "MainScreenResponse.hpp"
 
 
-MenuResponce::MenuResponce() {
-	this->inited = false;
-}
-MenuResponce::MenuResponce(uint8_t type, const std::string& data) {
-	this->inited = true;
+MainScreenResponse::MainScreenResponse(uint8_t type) {
 	this->type = type;
-	this->data = data;
 }
-bool MenuResponce::empty() const {
-	return !this->inited;
-}
-uint8_t MenuResponce::getType() const {
+uint8_t MainScreenResponse::getType() const {
 	return this->type;
-}
-std::string MenuResponce::getData() const {
-	return this->data;
 }

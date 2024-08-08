@@ -41,7 +41,7 @@ void Playlist::update() {
     Music::get()->get(std::to_string(this->index))->play();
     Music::get()->get(std::to_string(this->index))->setVolume(MUSIC_VOLUME);
 }
-void Playlist::restartMusic() {
+void Playlist::stop() {
     for (uint32_t i = 0; i < SOUNDTRACKS_N; i = i + 1) {
         Music::get()->get(std::to_string(this->index))->stop();
     }

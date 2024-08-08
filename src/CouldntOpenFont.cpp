@@ -23,6 +23,6 @@
 CouldntOpenFont::CouldntOpenFont(const std::string &path) : CouldntOpen(path) {
 
 }
-std::string CouldntOpenFont::getUpperCaseResourceReadableName() const {
-    return "FONT";
+std::string CouldntOpenFont::getResourceName() const {
+    return "font";
 }

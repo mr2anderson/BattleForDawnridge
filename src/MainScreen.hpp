@@ -74,6 +74,8 @@
 #include "SaveGameEvent.hpp"
 #include "LimitResourcesEvent.hpp"
 #include "IlluminanceTable.hpp"
+#include "MenuResponse.hpp"
+#include "MainScreenResponse.hpp"
 
 
 #pragma once
@@ -81,20 +83,11 @@
 
 class MainScreen {
 public:
-	static MainScreen* get() {
-		if (MainScreen::singletone == nullptr) {
-			MainScreen::singletone = new MainScreen();
-		}
-		return MainScreen::singletone;
-	}
-
-	bool startLocalGame(const std::string &mapName, sf::RenderWindow& window);
-    bool loadLocalGame(const std::string &saveName, sf::RenderWindow& window);
-private:
-	MainScreen() = default;
+	MainScreen(sf::RenderWindow &window, const MenuResponse &response);
 	MainScreen(const MainScreen& copy) = delete;
-	static MainScreen* singletone;
-
+	MainScreenResponse run(sf::RenderWindow& window);
+private:
+	bool alreadyFinished;
     std::shared_ptr<Map> map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
@@ -115,11 +108,6 @@ private:
     std::vector<Button> buttons;
 
 
-    bool gameCycle(sf::RenderWindow &window);
-
-	void initFromMap(const std::string &mapName, sf::RenderWindow &window);
-    void initFromSave(const std::string &saveName, sf::RenderWindow &window);
-
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive & ar, const unsigned int version) {
         ar & this->map;
@@ -127,13 +115,7 @@ private:
         ar & this->currentPlayerId;
         ar & this->move;
     }
-    void save();
-
-	void initMap(std::shared_ptr<Map> mapPtr);
-	void initPlayerIsActiveTable();
-	void initCurrentPlayerId();
-	void initMoveCtr();
-	void initGraphics(sf::RenderWindow &window);
+    void save() const;
 
 
 	void drawEverything(sf::RenderWindow& window);
@@ -153,7 +135,6 @@ private:
 	void addGameObjectClickEventToQueue(uint8_t button, sf::RenderWindow& window);
     void processBaseEvents(sf::RenderWindow& window);
     void addEvents(Events &e, sf::RenderWindow& window);
-	void prepareToReturnToMenu(sf::RenderWindow& window);
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView(sf::RenderWindow &window) const;
 	void moveView(sf::RenderWindow &window);
 

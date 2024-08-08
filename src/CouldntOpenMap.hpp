@@ -27,5 +27,5 @@ class CouldntOpenMap : public CouldntOpen {
 public:
     CouldntOpenMap(const std::string &path);
 private:
-    std::string getUpperCaseResourceReadableName() const override;
+    std::string getResourceName() const override;
 };
