@@ -263,6 +263,8 @@ MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y, window.getSettings());
 	this->selected = nullptr;
 	this->animation = std::nullopt;
+    this->currentGOIndexNewMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->totalGONewMoveEvents = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->view = sf::View(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 60, StringLcl("{to_menu}")), createConfirmReturnToMenuWindowEvent);
@@ -405,7 +407,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 }
 void MainScreen::drawMap(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		const GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
+		GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
 		if (go->exist() and go->inView(this->view)) {
 			window.draw(*go);
 		}
