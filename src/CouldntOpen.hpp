@@ -27,7 +27,7 @@ class CouldntOpen : public LoadingError {
 public:
     CouldntOpen(const std::string &path);
 
-    const char* what() const override;
+    const char* what() const noexcept override;
 protected:
     virtual std::string getResourceName() const = 0;
 };
