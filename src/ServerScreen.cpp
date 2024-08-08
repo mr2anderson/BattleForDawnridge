@@ -38,7 +38,7 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 
 	this->logs.setEntryLimit(10);
 	this->logs.add(StringLcl("{server_mode_welcome}"));
-	if (this->ip == sf::IpAddress::Any) {
+	if (this->ip.toString() == "0.0.0.0") {
 		this->logs.add(StringLcl("{couldnt_get_public_ip}"));
 	}
 	else {
