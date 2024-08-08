@@ -17,22 +17,23 @@
  */
 
 
-#include <string>
+#include <deque>
+#include "StringLcl.hpp"
 
 
 #pragma once
 
 
-class StringLcl {
+class Logs {
 public:
-	StringLcl();
-	StringLcl(const std::string& data);
-
-	std::wstring get() const;
-	StringLcl operator+(const StringLcl& b) const;
-	StringLcl operator+(const std::string& b) const;
-	StringLcl operator+(char c) const;
-	void clear();
+	Logs();
+	
+	void setEntryLimit(uint32_t newLimit);
+	uint32_t getEntryLimit() const;
+	void add(const StringLcl &lcl);
+	StringLcl get() const;
 private:
-	std::string data;
+	uint32_t limit;
+	std::deque<StringLcl> content;
+	StringLcl contentCached;
 };

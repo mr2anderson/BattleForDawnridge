@@ -36,13 +36,15 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 	this->background.setTexture(*Textures::get()->get("bg"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
-	this->addToLog(StringLcl("{server_mode_welcome}"), window);
+	this->logs.setEntryLimit(10);
+	this->logs.add(StringLcl("{server_mode_welcome}"));
 	if (this->ip == sf::IpAddress::Any) {
-		this->addToLog(StringLcl("{couldnt_get_public_ip}"), window);
+		this->logs.add(StringLcl("{couldnt_get_public_ip}"));
 	}
 	else {
-		this->addToLog(StringLcl("{public_ip}") + StringLcl(this->ip.toString()), window);
+		this->logs.add(StringLcl("{public_ip}") + StringLcl(this->ip.toString()));
 	}
+	this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
 }
 ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 	if (this->alreadyFinished) {
@@ -62,10 +64,10 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 				if (event.key.code == sf::Keyboard::Delete) {
 					IsServerTable::get()->invert();
 					if (IsServerTable::get()->isServer()) {
-						this->addToLog(StringLcl("{switched_to_server_mode}"), window);
+						this->logs.add(StringLcl("{switched_to_server_mode}"));
 					}
 					else {
-						this->addToLog(StringLcl("{switched_to_client_mode}"), window);
+						this->logs.add(StringLcl("{switched_to_client_mode}"));
 					}
 				}
 			}
@@ -74,12 +76,9 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 		this->drawEverything(window);
 	}
 }
-void ServerScreen::addToLog(const StringLcl &content, sf::RenderWindow &window) {
-	this->log = this->log + content + StringLcl("\n");
-}
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();
 	window.draw(this->background);
-	window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->log));
+	window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
 	window.display();
 }

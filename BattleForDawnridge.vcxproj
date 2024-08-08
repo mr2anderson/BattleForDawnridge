@@ -680,6 +680,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
     <ClInclude Include="src\LoadingScreenResponse.hpp" />
+    <ClInclude Include="src\Logs.hpp" />
     <ClInclude Include="src\MainScreenResponse.hpp" />
     <ClInclude Include="src\MenuResponse.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
@@ -977,6 +978,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\InvertIsServerStateEvent.cpp" />
     <ClCompile Include="src\IsServerTable.cpp" />
     <ClCompile Include="src\LoadingScreenResponse.cpp" />
+    <ClCompile Include="src\Logs.cpp" />
     <ClCompile Include="src\MainScreenResponse.cpp" />
     <ClCompile Include="src\MenuResponse.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />

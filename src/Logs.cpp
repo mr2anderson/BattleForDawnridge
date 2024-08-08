@@ -17,22 +17,29 @@
  */
 
 
-#include <string>
+#include "Logs.hpp"
 
 
-#pragma once
+Logs::Logs() {
+	this->limit = 0;
+}
+void Logs::setEntryLimit(uint32_t newLimit) {
+	this->limit = newLimit;
+}
+uint32_t Logs::getEntryLimit() const {
+	return this->limit;
+}
+void Logs::add(const StringLcl& str) {
+	this->content.push_back(str);
+	while (this->content.size() > this->limit) {
+		this->content.pop_front();
+	}
 
-
-class StringLcl {
-public:
-	StringLcl();
-	StringLcl(const std::string& data);
-
-	std::wstring get() const;
-	StringLcl operator+(const StringLcl& b) const;
-	StringLcl operator+(const std::string& b) const;
-	StringLcl operator+(char c) const;
-	void clear();
-private:
-	std::string data;
-};
+	this->contentCached.clear();
+	for (const auto& a : this->content) {
+		this->contentCached = this->contentCached + a + "\n\n";
+	}
+}
+StringLcl Logs::get() const {
+	return this->contentCached;
+}

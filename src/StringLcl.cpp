@@ -62,3 +62,6 @@ StringLcl StringLcl::operator+(char c) const {
 	result.data.push_back(c);
 	return result;
 }
+void StringLcl::clear() {
+	this->data.clear();
+}

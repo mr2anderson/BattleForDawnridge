@@ -17,9 +17,13 @@
  */
 
 
+#include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-#include "Label.hpp"
+#include "Logs.hpp"
 #include "ServerScreenResponse.hpp"
+
+
+#pragma once
 
 
 class ServerScreen {
@@ -31,8 +35,7 @@ private:
 	bool alreadyFinished;
 	sf::IpAddress ip;
 	sf::Sprite background;
-	StringLcl log;
+	Logs logs;
 
-	void addToLog(const StringLcl& content, sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);
 };
