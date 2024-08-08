@@ -59,8 +59,8 @@ Events WarriorNearMultyAttacker::startAttack(Unit *u, uint32_t targetX, uint32_t
 
     return events;
 }
-std::wstring WarriorNearMultyAttacker::getSpecialInfoString() const {
-    return *Locales::get()->get("damage") + this->getDamage().getReadable() + L". " + *Locales::get()->get("multy_attack");
+StringLcl WarriorNearMultyAttacker::getSpecialInfoString() const {
+    return StringLcl("{damage}") + this->getDamage().getReadable() + ". " + StringLcl("{multy_attack}");
 }
 
 

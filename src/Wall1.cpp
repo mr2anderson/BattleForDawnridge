@@ -59,8 +59,8 @@ std::string Wall1::getTextureName() const {
 std::string Wall1::getSoundName() const {
 	return "stone";
 }
-std::wstring Wall1::getDescription() const {
-	return *Locales::get()->get("wall1_description");
+StringLcl Wall1::getDescription() const {
+	return StringLcl("{wall1_description}");
 }
 
 

@@ -39,7 +39,7 @@ PAKScreen::PAKScreen(sf::RenderWindow &window) {
 	this->s.setPosition(window.getSize().x - this->s.getLocalBounds().width, window.getSize().y - this->s.getLocalBounds().height);
 
 	this->t.setFont(*Fonts::get()->get("1"));
-	this->t.setString(*Locales::get()->get("press_any_key_to_continue"));
+	this->t.setString(StringLcl("{press_any_key_to_continue}").get());
 	this->t.setCharacterSize(31);
 	this->t.setFillColor(sf::Color::White);
 	this->t.setOutlineColor(sf::Color::Black);

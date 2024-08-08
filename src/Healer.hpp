@@ -35,7 +35,7 @@ public:
     Resources getCost() const override;
     uint32_t getTimeToProduce() const override;
     std::string getSoundName() const override;
-    std::wstring getDescription() const override;
+    StringLcl getDescription() const override;
     bool isFlying() const override;
     bool delayBetweenTalkingAnimations() const override;
 private:

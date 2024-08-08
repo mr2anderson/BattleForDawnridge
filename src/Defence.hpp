@@ -17,7 +17,7 @@
  */
 
 
-#include <string>
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -32,7 +32,7 @@ public:
 	double getCut() const;
 	double getStab() const;
 	double getCrush() const;
-	std::wstring getReadable() const;
+	StringLcl getReadable() const;
 private:
 	double cut, stab, crush;
 };

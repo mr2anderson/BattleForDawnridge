@@ -65,8 +65,8 @@ std::string House::getTextureName() const {
 std::string House::getSoundName() const {
 	return "hooray";
 }
-std::wstring House::getDescription() const {
-	return *Locales::get()->get("house_description");
+StringLcl House::getDescription() const {
+	return StringLcl("{house_description}");
 }
 uint32_t House::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("house_regeneration_speed");

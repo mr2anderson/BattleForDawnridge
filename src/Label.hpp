@@ -18,6 +18,7 @@
 
 
 #include "RectangularUIElement.hpp"
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -26,10 +27,10 @@
 class Label : public RectangularUiElement {
 public:
 	Label();
-	Label(int32_t x, int32_t y, uint32_t w, uint32_t h, std::wstring message, bool center = true);
+	Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center = true);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-	std::wstring message;
+	StringLcl message;
 	bool center;
 };

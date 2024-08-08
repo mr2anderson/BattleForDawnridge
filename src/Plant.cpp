@@ -57,8 +57,8 @@ std::string Plant::getSoundName() const {
 std::string Plant::getTextureName() const {
     return "plant" + std::to_string(this->type) + "_" + std::to_string((GlobalClock::get()->getMs() / (1000 / ANIMATION_NUMBER[this->type - 1])) % ANIMATION_NUMBER[this->type - 1] + 1);
 }
-std::wstring Plant::getDescription() const {
-    return *Locales::get()->get("plant_description");
+StringLcl Plant::getDescription() const {
+    return StringLcl("{plant_description}");
 }
 std::shared_ptr<ILightSource> Plant::getLightSource() const {
     return std::make_shared<CircleLightSourceStatic>(this->getCenterX(), this->getCenterY(), 28);

@@ -23,8 +23,8 @@
 
 
 Label::Label() = default;
-Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, std::wstring message, bool center) : RectangularUiElement(x, y, w, h) {
-	this->message = message;
+Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center) : RectangularUiElement(x, y, w, h) {
+	this->message = str;
 	this->center = center;
 }
 static sf::String WRAP_TEXT(sf::String string, unsigned width, const sf::Font* font, unsigned charicterSize) {
@@ -69,6 +69,6 @@ void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	text.setMinWidth(this->getW() - 10);
 	text.setColor(sf::Color::White);
 	text.setFont(*Fonts::get()->get("1"));
-	text.setString(WRAP_TEXT(this->message, this->getW() - 10, text.getFont(), text.getCharacterSize()));
+	text.setString(WRAP_TEXT(this->message.get(), this->getW() - 10, text.getFont(), text.getCharacterSize()));
 	target.draw(text, states);
 }

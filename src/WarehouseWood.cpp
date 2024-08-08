@@ -59,8 +59,8 @@ std::string WarehouseWood::getTextureName() const {
 std::string WarehouseWood::getSoundName() const {
 	return "wood";
 }
-std::wstring WarehouseWood::getDescription() const {
-	return *Locales::get()->get("warehouse_wood_description");
+StringLcl WarehouseWood::getDescription() const {
+	return StringLcl("{warehouse_wood_description}");
 }
 
 

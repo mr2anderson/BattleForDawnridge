@@ -58,8 +58,8 @@ uint32_t Ram::getTimeToProduce() const {
 std::string Ram::getSoundName() const {
     return "vehicle";
 }
-std::wstring Ram::getDescription() const {
-    return *Locales::get()->get("ram_description");
+StringLcl Ram::getDescription() const {
+    return StringLcl("{ram_description}");
 }
 bool Ram::isVehicle() const {
     return true;

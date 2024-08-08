@@ -23,7 +23,7 @@
 #include "StaticString.hpp"
 
 
-WindowButtonImage::WindowButtonImage(const std::wstring& message, const std::wstring& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
+WindowButtonImage::WindowButtonImage(const StringLcl& message, const StringLcl& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
     this->onFinish = onFinish;

@@ -175,7 +175,7 @@ HorizontalSelectionWindowComponent GO::getExitComponent() const {
 
 	HorizontalSelectionWindowComponent component = {
 		std::make_shared<StaticString>("exit_icon"),
-		*Locales::get()->get("leave"),
+		StringLcl("{leave}"),
 		true,
 		exitEvent
 	};

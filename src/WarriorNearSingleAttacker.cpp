@@ -60,16 +60,16 @@ void WarriorNearSingleAttacker::refreshAbility() {
 void WarriorNearSingleAttacker::wipeAbility() {
     this->attackAbility = false;
 }
-std::wstring WarriorNearSingleAttacker::getSpecialInfoString() const {
-    std::wstring str =
-            *Locales::get()->get("damage") + this->getDamage().getReadable() + L". " +
-            *Locales::get()->get("single_attack") + L". ";
+StringLcl WarriorNearSingleAttacker::getSpecialInfoString() const {
+    StringLcl str =
+            StringLcl("{damage}") + this->getDamage().getReadable() + ". " +
+            StringLcl("{single_attack}") + ". ";
 
     if (this->attackAbility) {
-        str = str + *Locales::get()->get("can_attack");
+        str = str + StringLcl("{can_attack}");
     }
     else {
-        str = str + *Locales::get()->get("cant_attack_until_next_move");
+        str = str + StringLcl("{cant_attack_until_next_move}");
     }
 
     return str;

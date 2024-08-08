@@ -60,8 +60,8 @@ std::string Sawmill::getTextureName() const {
 std::string Sawmill::getSoundName() const {
 	return "wood";
 }
-std::wstring Sawmill::getDescription() const {
-	return *Locales::get()->get("sawmill_description");
+StringLcl Sawmill::getDescription() const {
+	return StringLcl("{sawmill_description}");
 }
 
 

@@ -64,7 +64,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component = {
 		HorizontalSelectionWindowComponent(std::make_shared<StaticString>("bell"),
-		*Locales::get()->get("victory_condition_building_description") + std::to_wstring(this->moveCtr),
+		StringLcl("{victory_condition_building_description}") + std::to_string(this->moveCtr),
 		false,
 		Events()),
         true

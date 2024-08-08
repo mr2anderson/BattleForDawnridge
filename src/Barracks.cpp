@@ -56,8 +56,8 @@ std::string Barracks::getTextureName() const {
 std::string Barracks::getSoundName() const {
 	return "hooray";
 }
-std::wstring Barracks::getDescription() const {
-	return *Locales::get()->get("barracks_description");
+StringLcl Barracks::getDescription() const {
+	return StringLcl("{barracks_description}");
 }
 uint32_t Barracks::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("barracks_regeneration_speed");

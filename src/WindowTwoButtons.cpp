@@ -21,7 +21,7 @@
 #include "CloseWindowEvent.hpp"
 
 
-WindowTwoButtons::WindowTwoButtons(const std::wstring& message, const std::wstring& buttonText1, const std::wstring& buttonText2, const Events& events1, const Events &events2, uint32_t w, uint32_t h) {
+WindowTwoButtons::WindowTwoButtons(const StringLcl& message, const StringLcl& buttonText1, const StringLcl& buttonText2, const Events& events1, const Events &events2, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
     this->message = message;

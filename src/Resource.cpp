@@ -26,14 +26,14 @@ Resource::Resource(const std::string& type, uint32_t n) {
 	this->type = type;
 	this->n = n;
 }
-std::wstring Resource::getReadableInfo() const {
-	std::wstring result;
+StringLcl Resource::getReadableInfo() const {
+	StringLcl result;
 	if (this->n == 0) {
 		return result;
 	}
 
-	result = result + *Locales::get()->get(this->type + "_number");
-	result = result + std::to_wstring(this->n) + L")";
+	result = result + StringLcl("{" + this->type + "_number}");
+	result = result + StringLcl(std::to_string(this->n) + ")");
 
 	return result;
 }

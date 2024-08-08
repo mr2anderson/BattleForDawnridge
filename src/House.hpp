@@ -37,7 +37,7 @@ public:
 	Resources getCost() const override;
 	std::string getTextureName() const override;
 	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	StringLcl getDescription() const override;
 	uint32_t getRegenerationSpeed() const override;
 
     static const uint32_t TOTAL_TYPES;

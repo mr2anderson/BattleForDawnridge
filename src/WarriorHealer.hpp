@@ -44,7 +44,7 @@ private:
     bool canHeal(Warrior *w) const;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
-    std::wstring getSpecialInfoString() const override;
+    StringLcl getSpecialInfoString() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

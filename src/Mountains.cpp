@@ -49,8 +49,8 @@ sf::IntRect Mountains::getTextureRect() const {
 std::string Mountains::getSoundName() const {
 	return "wind";
 }
-std::wstring Mountains::getDescription() const {
-	return *Locales::get()->get("mountains_description");
+StringLcl Mountains::getDescription() const {
+	return StringLcl("{mountains_description}");
 }
 bool Mountains::isUltraHighObstacle(uint32_t playerId) const {
     return true;

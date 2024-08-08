@@ -55,8 +55,8 @@ std::string SpellFactory::getTextureName() const {
 std::string SpellFactory::getSoundName() const {
 	return "spell_factory";
 }
-std::wstring SpellFactory::getDescription() const {
-	return *Locales::get()->get("spell_factory_description");
+StringLcl SpellFactory::getDescription() const {
+	return StringLcl("{spell_factory_description}");
 }
 uint32_t SpellFactory::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("spell_factory_regeneration_speed");

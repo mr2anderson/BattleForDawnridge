@@ -1547,6 +1547,9 @@
     <ClInclude Include="src\ScreenAlreadyFinished.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\StringLcl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2396,6 +2399,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ScreenAlreadyFinished.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StringLcl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

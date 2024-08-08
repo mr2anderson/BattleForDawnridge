@@ -22,6 +22,7 @@
 #include "UTFEncoder.hpp"
 
 
+
 UTFEncoder *UTFEncoder::singletone = nullptr;
 
 

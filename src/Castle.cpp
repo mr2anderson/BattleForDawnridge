@@ -66,8 +66,8 @@ std::string Castle::getTextureName() const {
 std::string Castle::getSoundName() const {
 	return "hooray";
 }
-std::wstring Castle::getDescription() const {
-	return *Locales::get()->get("castle_description");
+StringLcl Castle::getDescription() const {
+	return StringLcl("{castle_description}");
 }
 uint32_t Castle::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("castle_regeneration_speed");

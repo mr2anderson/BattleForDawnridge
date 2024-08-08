@@ -45,7 +45,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
     if (building->wasWithFullHP()) {
         component = {HorizontalSelectionWindowComponent(
                         std::make_shared<StaticString>("resources_icon"),
-                        *Locales::get()->get("resource_storage_building_description") + this->getActiveLimit().getReadableInfo(),
+                        StringLcl("{resource_storage_building_description}") + this->getActiveLimit().getReadableInfo(),
                         false,
                         Events()),
                 true
@@ -55,7 +55,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
         component = {
                 HorizontalSelectionWindowComponent(
                         std::make_shared<StaticString>("hammer_icon"),
-                        *Locales::get()->get("does_not_increase_resource_limit_if_isnt_built_yet"),
+                        StringLcl("{does_not_increase_resource_limit_if_isnt_built_yet}"),
                         false,
                         Events()
                         ),

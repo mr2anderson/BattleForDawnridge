@@ -110,7 +110,7 @@ Events Warrior::killNextTurn() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("will_be_killed_on_next_turn"), *Locales::get()->get("OK"), clickSoundEvent);
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{will_be_killed_on_next_turn}"), StringLcl("{OK}"), clickSoundEvent);
 
     Events event = clickSoundEvent;
     event.add(std::make_shared<CreateEEvent>(w));
@@ -123,7 +123,7 @@ Events Warrior::revertKillNextTurn() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("wont_be_killed_on_next_turn"), *Locales::get()->get("OK"), clickSoundEvent);
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{wont_be_killed_on_next_turn}"), StringLcl("{OK}"), clickSoundEvent);
 
     Events event = clickSoundEvent;
     event.add(std::make_shared<ResetHighlightEvent>());
@@ -527,8 +527,8 @@ sf::Color Warrior::getTextureColor() const {
 HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
         std::make_shared<StaticString>("rage_spell"),
-        *Locales::get()->get("rage_spell_description") + L"\n" +
-        *Locales::get()->get("moves_left") + std::to_wstring(this->rageModeMovesLeft),
+        StringLcl("{rage_spell_description}") + "\n" +
+        StringLcl("{moves_left}") + std::to_string(this->rageModeMovesLeft),
         false,
         Events()
     };
@@ -540,7 +540,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     Events killNextTurnEvent = clickSoundEvent;
     killNextTurnEvent.add(std::make_shared<KillNextTurnEvent>(this));
 
-    std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(*Locales::get()->get("verify_kill"), *Locales::get()->get("yes"), *Locales::get()->get("no"), killNextTurnEvent, clickSoundEvent);
+    std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{verify_kill}"), StringLcl("{yes}"), StringLcl("{no}"), killNextTurnEvent, clickSoundEvent);
 
     Events killNextTurnEventVerify = clickSoundEvent;
     killNextTurnEventVerify.add(std::make_shared<ResetHighlightEvent>());
@@ -548,7 +548,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
 
     return {
         std::make_shared<StaticString>("skull"),
-        *Locales::get()->get("kill"),
+        StringLcl("{kill}"),
         true,
         killNextTurnEventVerify
     };
@@ -562,7 +562,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 
     return {
         std::make_shared<StaticString>("skull"),
-        *Locales::get()->get("revert_kill"),
+        StringLcl("{revert_kill}"),
         true,
         revertKillNextTurnEvent
     };
@@ -570,10 +570,10 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
         std::make_shared<StaticString>("helmet"),
-        *Locales::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
-        this->getSpecialInfoString() + L"\n" +
-        *Locales::get()->get("movement_points") + std::to_wstring(this->movementPoints.value_or(this->getMovementPoints())) + L" / " + std::to_wstring(this->getMovementPoints()) + L"\n" +
-        *Locales::get()->get("population") + std::to_wstring(this->getPopulation()),
+        StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " (" + this->getDefence().getReadable() + ")\n" +
+        this->getSpecialInfoString() + "\n" +
+        StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + std::to_string(this->getMovementPoints()) + "\n" +
+        StringLcl("{population}") + std::to_string(this->getPopulation()),
         false,
         Events()
     };
@@ -581,7 +581,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
 HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const {
     return {
         std::make_shared<StaticString>("destroyed_icon"),
-        *Locales::get()->get("blocking_building"),
+        StringLcl("{blocking_building}"),
         false,
         Events()
     };
@@ -589,7 +589,7 @@ HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
         std::make_shared<StaticString>("lord_icon"),
-        *Locales::get()->get("warrior_of_enemy"),
+        StringLcl("{warrior_of_enemy}"),
         false,
         Events()
     };
@@ -657,7 +657,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 
             selectThisEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(*Locales::get()->get("warrior_selection_guide"), *Locales::get()->get("OK"), selectThisEvent);
+            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(StringLcl("{warrior_selection_guide}"), StringLcl("{OK}"), selectThisEvent);
             response.add(std::make_shared<CreateEEvent>(warriorSelectionGuide));
         }
     }
@@ -665,7 +665,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
         Events clickSoundEvent;
         clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-        std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_more_movement_points"), *Locales::get()->get("OK"), clickSoundEvent);
+        std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_more_movement_points}"), StringLcl("{OK}"), clickSoundEvent);
         response.add(std::make_shared<CreateEEvent>(w));
     }
 	return response;

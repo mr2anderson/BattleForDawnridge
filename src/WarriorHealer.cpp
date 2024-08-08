@@ -111,13 +111,13 @@ Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint3
 
     return {};
 }
-std::wstring WarriorHealer::getSpecialInfoString() const {
-    std::wstring str = *Locales::get()->get("healing_speed") + std::to_wstring(this->getHealingSpeed()) + L". ";
+StringLcl WarriorHealer::getSpecialInfoString() const {
+    StringLcl str = StringLcl("{healing_speed}") + std::to_string(this->getHealingSpeed()) + ". ";
     if (this->healingAvailable) {
-        str = str + *Locales::get()->get("can_heal");
+        str = str + StringLcl("{can_heal}");
     }
     else {
-        str = str + *Locales::get()->get("cant_heal_until_next_move");
+        str = str + StringLcl("{cant_heal_until_next_move}");
     }
 
     return str;

@@ -40,7 +40,7 @@ private:
 
 	std::string getTextureName() const override;
 	sf::IntRect getTextureRect() const override;
-	std::wstring getDescription() const override;
+	StringLcl getDescription() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

@@ -17,8 +17,8 @@
  */
 
 
-#include <string>
 #include <cstdint>
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -28,7 +28,7 @@ struct Resource {
 	Resource();
 	Resource(const std::string& type, uint32_t n);
 
-	std::wstring getReadableInfo() const;
+	StringLcl getReadableInfo() const;
 
 	std::string type;
 	uint32_t n;

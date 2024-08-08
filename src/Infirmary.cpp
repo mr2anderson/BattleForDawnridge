@@ -58,8 +58,8 @@ std::string Infirmary::getTextureName() const {
 std::string Infirmary::getSoundName() const {
 	return "hooray";
 }
-std::wstring Infirmary::getDescription() const {
-	return *Locales::get()->get("infirmary_description");
+StringLcl Infirmary::getDescription() const {
+	return StringLcl("{infirmary_description}");
 }
 uint32_t Infirmary::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("infirmary_regeneration_speed");

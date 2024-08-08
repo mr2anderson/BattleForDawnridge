@@ -60,8 +60,8 @@ std::string Mine::getTextureName() const {
 std::string Mine::getSoundName() const {
 	return "iron";
 }
-std::wstring Mine::getDescription() const {
-	return *Locales::get()->get("mine_description");
+StringLcl Mine::getDescription() const {
+	return StringLcl("{mine_description}");
 }
 
 

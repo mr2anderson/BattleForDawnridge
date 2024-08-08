@@ -58,8 +58,8 @@ uint32_t Knight::getTimeToProduce() const {
 std::string Knight::getSoundName() const {
 	return "knight";
 }
-std::wstring Knight::getDescription() const {
-	return *Locales::get()->get("knight_description");
+StringLcl Knight::getDescription() const {
+	return StringLcl("{knight_description}");
 }
 uint32_t Knight::getTalkingAnimationsNumberInSet() const {
 	return 12;

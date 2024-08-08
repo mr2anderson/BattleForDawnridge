@@ -93,14 +93,14 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getCompon
 
     if (b->wasWithFullHP()) {
         component = {HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(this->getProjectile()),
-                                                       *Locales::get()->get("this_building_shoots_to_enemies") + this->getDamage().getReadable() + L" x " + std::to_wstring(this->getShotsNumber()),
+                                                       StringLcl("{this_building_shoots_to_enemies}") + this->getDamage().getReadable() + " x " + std::to_string(this->getShotsNumber()),
                                                        false,
                                                        Events()),
                 true};
     }
     else {
         component = {HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-                                                        *Locales::get()->get("does_not_shoot_if_isnt_built_yet"),
+                                                        StringLcl("{does_not_shoot_if_isnt_built_yet}"),
                                                         false,
                                                         Events()),
                      true};

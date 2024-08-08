@@ -59,8 +59,8 @@ std::string WarehouseFood::getTextureName() const {
 std::string WarehouseFood::getSoundName() const {
 	return "food";
 }
-std::wstring WarehouseFood::getDescription() const {
-	return *Locales::get()->get("warehouse_food_description");
+StringLcl WarehouseFood::getDescription() const {
+	return StringLcl("{warehouse_food_description}");
 }
 
 

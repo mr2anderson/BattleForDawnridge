@@ -56,8 +56,8 @@ std::string Market::getTextureName() const {
 std::string Market::getSoundName() const {
 	return "gold";
 }
-std::wstring Market::getDescription() const {
-	return *Locales::get()->get("market_description");
+StringLcl Market::getDescription() const {
+	return StringLcl("{market_description}");
 }
 uint32_t Market::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("market_regeneration_speed");

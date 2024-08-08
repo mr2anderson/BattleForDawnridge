@@ -44,7 +44,7 @@ public:
 	Events use();
 	bool wasUsed() const;
 	void markAsUsed();
-	virtual std::wstring getDescription() const = 0;
+	virtual StringLcl getDescription() const = 0;
 	virtual Resources getCost() const = 0;
 	virtual uint32_t getCreationTime() const = 0;
 protected:

@@ -47,5 +47,5 @@ void ClueManager::nextClue() {
 	this->regenerateLabel();
 }
 void ClueManager::regenerateLabel() {
-	this->label = Label(0, 0, W, H, *Locales::get()->get("clue" + std::to_string(this->currentClue)));
+	this->label = Label(0, 0, W, H, StringLcl("{clue" + std::to_string(this->currentClue) + "}"));
 }

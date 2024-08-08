@@ -27,7 +27,7 @@
 
 class WindowTwoButtons : public CameraIndependentPopUpElement {
 public:
-	WindowTwoButtons(const std::wstring& message, const std::wstring& buttonText1, const std::wstring& buttonText2, const Events& events1, const Events &events2, uint32_t w = 400, uint32_t h = 225);
+	WindowTwoButtons(const StringLcl& message, const StringLcl& buttonText1, const StringLcl& buttonText2, const Events& events1, const Events &events2, uint32_t w = 400, uint32_t h = 225);
 
     void addEvent1(const Events &events);
 	void addEvent2(const Events& events);
@@ -36,8 +36,8 @@ public:
 	Events click() override;
 private:
 	uint32_t w, h;
-	std::wstring message;
-	std::wstring buttonText1, buttonText2;
+	StringLcl message;
+	StringLcl buttonText1, buttonText2;
 	Label label;
 	Button button1, button2;
 	Events events1, events2;

@@ -38,7 +38,7 @@ void HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
 		int32_t y;
 		for (uint32_t i = 0; i < this->components.size(); i = i + 1) {
 			std::shared_ptr<const IDynamicString> pictureName = this->components.at(i).pictureName;
-			std::wstring message = this->components.at(i).message;
+			StringLcl message = this->components.at(i).message;
 			bool clickable = this->components.at(i).clickable;
 			Events onClick = this->components.at(i).gEvent;
 			std::optional<sf::IntRect> rect = this->components.at(i).rect;

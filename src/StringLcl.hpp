@@ -17,27 +17,21 @@
  */
 
 
-#include "CameraIndependentPopUpElement.hpp"
-#include "Label.hpp"
-#include "Button.hpp"
+#include <string>
 
 
 #pragma once
 
 
-class WindowButton : public CameraIndependentPopUpElement {
+class StringLcl {
 public:
-	WindowButton(const StringLcl& message, const StringLcl &buttonText, const Events &onFinish = Events(), uint32_t w = 400, uint32_t h = 225);
+	StringLcl();
+	StringLcl(const std::string& data);
 
-	void run(uint32_t windowW, uint32_t windowH) override;
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click() override;
+	std::wstring get() const;
+	StringLcl operator+(const StringLcl& b) const;
+	StringLcl operator+(const std::string& b) const;
+	StringLcl operator+(char c) const;
 private:
-    uint32_t w, h;
-	Events onFinish;
-	StringLcl message;
-    StringLcl buttonText;
-	Label label;
-	Button button;
-	bool inited;
+	std::string data;
 };

@@ -58,8 +58,8 @@ uint32_t BlackKnight::getTimeToProduce() const {
 std::string BlackKnight::getSoundName() const {
 	return "breath";
 }
-std::wstring BlackKnight::getDescription() const {
-	return *Locales::get()->get("black_knight_description");
+StringLcl BlackKnight::getDescription() const {
+	return StringLcl("{black_knight_description}");
 }
 uint32_t BlackKnight::getTalkingAnimationsNumberInSet() const {
 	return 9;

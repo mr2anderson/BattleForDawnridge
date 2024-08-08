@@ -58,8 +58,8 @@ uint32_t Legioner::getTimeToProduce() const {
 std::string Legioner::getSoundName() const {
 	return "sword";
 }
-std::wstring Legioner::getDescription() const {
-	return *Locales::get()->get("legioner_description");
+StringLcl Legioner::getDescription() const {
+	return StringLcl("{legioner_description}");
 }
 uint32_t Legioner::getTalkingAnimationsNumberInSet() const {
 	return 8;

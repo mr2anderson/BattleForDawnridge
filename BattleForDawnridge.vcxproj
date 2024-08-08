@@ -701,6 +701,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
     <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp" />
+    <ClInclude Include="src\StringLcl.hpp" />
     <ClInclude Include="src\TextureNameString.hpp" />
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
@@ -1113,6 +1114,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\StartWarriorProducingEvent.cpp" />
     <ClCompile Include="src\StaticString.cpp" />
     <ClCompile Include="src\Stone.cpp" />
+    <ClCompile Include="src\StringLcl.cpp" />
     <ClCompile Include="src\SubHpEvent.cpp" />
     <ClCompile Include="src\SubResourceEvent.cpp" />
     <ClCompile Include="src\SubResourcesEvent.cpp" />

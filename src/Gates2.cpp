@@ -59,8 +59,8 @@ std::string Gates2::getTextureName() const {
 std::string Gates2::getSoundName() const {
     return "stone";
 }
-std::wstring Gates2::getDescription() const {
-    return *Locales::get()->get("gates2_description");
+StringLcl Gates2::getDescription() const {
+    return StringLcl("{gates2_description}");
 }
 
 

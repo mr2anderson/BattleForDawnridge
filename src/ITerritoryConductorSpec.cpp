@@ -29,7 +29,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec:
 	if (!building->works() and !this->conductsIfNotWork()) {
 		BuildingHorizontalSelectionWindowComponent component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-			*Locales::get()->get("does_not_expand_territory_if_hp_isnt_full"),
+			StringLcl("{does_not_expand_territory_if_hp_isnt_full}"),
 			false,
 			Events()),
             true
@@ -40,7 +40,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec:
 		BuildingHorizontalSelectionWindowComponent component = {
              HorizontalSelectionWindowComponent(
 			std::make_shared<TextureNameString>(building),
-			*Locales::get()->get("does_not_lead_to_city_center"),
+			StringLcl("{does_not_lead_to_city_center}"),
 			false,
 			Events()),
             true

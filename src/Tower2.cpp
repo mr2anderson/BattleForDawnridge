@@ -56,8 +56,8 @@ std::string Tower2::getTextureName() const {
 std::string Tower2::getSoundName() const {
     return "big_arrow1";
 }
-std::wstring Tower2::getDescription() const {
-    return *Locales::get()->get("tower2_description");
+StringLcl Tower2::getDescription() const {
+    return StringLcl("{tower2_description}");
 }
 uint32_t Tower2::getRegenerationSpeed() const {
     return Parameters::get()->getInt("tower2_regeneration_speed");

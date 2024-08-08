@@ -48,8 +48,8 @@ std::string Iron::getTextureName() const {
 std::string Iron::getSoundName() const {
 	return "iron";
 }
-std::wstring Iron::getDescription() const {
-	return *Locales::get()->get("iron_description");
+StringLcl Iron::getDescription() const {
+	return StringLcl("{iron_description}");
 }
 
 

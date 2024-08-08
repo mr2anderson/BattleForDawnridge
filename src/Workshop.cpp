@@ -58,8 +58,8 @@ std::string Workshop::getTextureName() const {
 std::string Workshop::getSoundName() const {
     return "vehicle";
 }
-std::wstring Workshop::getDescription() const {
-    return *Locales::get()->get("workshop_description");
+StringLcl Workshop::getDescription() const {
+    return StringLcl("{workshop_description}");
 }
 uint32_t Workshop::getRegenerationSpeed() const {
     return Parameters::get()->getInt("workshop_regeneration_speed");

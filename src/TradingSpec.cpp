@@ -45,8 +45,8 @@ Events TradingSpec::doTrade(const Building *b, const Trade& trade) {
 	response.add(std::make_shared<PlaySoundEvent>(b->getSoundName()));
 
 	std::shared_ptr<WindowButton> window = std::make_shared<WindowButton>(
-            *Locales::get()->get("trade_started") + L'\n' +
-            trade.getReadableInfo(), *Locales::get()->get("OK"), clickSoundEvent);
+            StringLcl("{trade_started}") + '\n' +
+            trade.getReadableInfo(), StringLcl("{OK}"), clickSoundEvent);
 	response.add(std::make_shared<CreateEEvent>(window));
 
 	response.add(std::make_shared<SubResourceEvent>(trade.sell));
@@ -98,7 +98,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 		if (this->busy()) {
 			components.emplace_back(
 				HorizontalSelectionWindowComponent(std::make_shared<StaticString>("trade_icon"),
-                *Locales::get()->get("trading_building_is_busy") + this->currentTrade.getReadableInfo(),
+                StringLcl("{trading_building_is_busy}") + this->currentTrade.getReadableInfo(),
 				false,
 				Events()),
                 true
@@ -114,7 +114,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 	else {
 		components.emplace_back(
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-			*Locales::get()->get("this_building_cant_do_trades_if_hp_isnt_full"),
+			StringLcl("{this_building_cant_do_trades_if_hp_isnt_full}"),
 			false,
 			Events()),
             true
@@ -166,21 +166,21 @@ BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const 
             events = events + doTradeEvent;
         }
 		else {
-            std::shared_ptr<WindowTwoButtons> w = std::make_shared<WindowTwoButtons>(*Locales::get()->get("no_space_for_trade"), *Locales::get()->get("yes"), *Locales::get()->get("no"), doTradeEvent, clickEvent);
+            std::shared_ptr<WindowTwoButtons> w = std::make_shared<WindowTwoButtons>(StringLcl("{no_space_for_trade}"), StringLcl("{yes}"), StringLcl("{no}"), doTradeEvent, clickEvent);
             events = events + clickEvent;
             events.add(std::make_shared<CreateEEvent>(w));
         }
 	}
 	else {
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_trade"), *Locales::get()->get("OK"), clickEvent);
+		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_resources_for_trade}"), StringLcl("{OK}"), clickEvent);
 		events = events + clickEvent;
 		events.add(std::make_shared<CreateEEvent>(w));
 	}
 
 	BuildingHorizontalSelectionWindowComponent component = {
 		HorizontalSelectionWindowComponent(std::make_shared<StaticString>(trade.buy.type + "_icon"),
-        *Locales::get()->get("buy") + trade.buy.getReadableInfo() +
-        *Locales::get()->get("for") + trade.sell.getReadableInfo(),
+        StringLcl("{buy}") + trade.buy.getReadableInfo() +
+        StringLcl("{for}") + trade.sell.getReadableInfo(),
 		true,
 		events),
         false

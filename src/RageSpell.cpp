@@ -31,8 +31,8 @@ RageSpell::RageSpell(uint32_t playerId) : Spell(playerId) {
 Spell* RageSpell::clone() const {
 	return new RageSpell(*this);
 }
-std::wstring RageSpell::getDescription() const {
-	return *Locales::get()->get("rage_spell_description");
+StringLcl RageSpell::getDescription() const {
+	return StringLcl("{rage_spell_description}");
 }
 std::string RageSpell::getTextureName() const {
 	return "rage_spell";

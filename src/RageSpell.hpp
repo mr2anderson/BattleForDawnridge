@@ -30,7 +30,7 @@ public:
 private:
 	Spell* clone() const override;
 
-	std::wstring getDescription() const override;
+	StringLcl getDescription() const override;
 	std::string getTextureName() const override;
 	Resources getCost() const override;
 	uint32_t getCreationTime() const override;

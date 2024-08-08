@@ -48,8 +48,8 @@ std::string Stone::getSoundName() const {
 std::string Stone::getTextureName() const {
 	return "stone";
 }
-std::wstring Stone::getDescription() const {
-	return *Locales::get()->get("stone_description");
+StringLcl Stone::getDescription() const {
+	return StringLcl("{stone_description}");
 }
 
 

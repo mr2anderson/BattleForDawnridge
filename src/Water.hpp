@@ -34,7 +34,7 @@ public:
 	std::string getTextureName() const override;
 	sf::IntRect getTextureRect() const override;
 	std::string getSoundName() const override;
-	std::wstring getDescription() const override;
+	StringLcl getDescription() const override;
     bool isLowObstacle(uint32_t playerId) const override;
 	bool warriorCanStay(const Warrior *w) const override;
 	uint32_t getWarriorMovementCost(const Warrior *w) const override;

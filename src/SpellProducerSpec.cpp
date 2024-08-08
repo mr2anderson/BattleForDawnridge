@@ -62,22 +62,22 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				Events event;
 				event.add(std::make_shared<ResetHighlightEvent>());
 				if (resources >= spell->getCost()) {
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("spell_producing_started"), *Locales::get()->get("OK"), clickSoundEvent);
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{spell_producing_started}"), StringLcl("{OK}"), clickSoundEvent);
 					event.add(std::make_shared<PlaySoundEvent>(building->getSoundName()));
 					event.add(std::make_shared<SubResourcesEvent>(spell->getCost()));
 					event.add(std::make_shared<CreateEEvent>(w));
 					event.add(std::make_shared<SetSpellEvent>(this, spell));
 				}
 				else {
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(*Locales::get()->get("no_resources_for_spell_producing"), *Locales::get()->get("OK"), clickSoundEvent);
+					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_resources_for_spell_producing}"), StringLcl("{OK}"), clickSoundEvent);
 					event = event + clickSoundEvent;
 					event.add(std::make_shared<CreateEEvent>(w));
 				}
 
 				components.emplace_back(
 					HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(spell),
-                    spell->getDescription() + L"\n" +
-                    *Locales::get()->get("cost") + spell->getCost().getReadableInfo() + L". " + *Locales::get()->get("time_to_make_spell") + std::to_wstring(spell->getCreationTime()),
+                    spell->getDescription() + StringLcl("\n") +
+                    StringLcl("{cost}") + spell->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_make_spell}") + StringLcl(std::to_string(spell->getCreationTime())),
 					true,
 					event),
                     false
@@ -99,7 +99,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
                         clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
                         FirstTimeTipsTable::get()->markAsDisplayed("spell_mode_guide");
-                        std::shared_ptr<WindowButton> guide = std::make_shared<WindowButton>(*Locales::get()->get("spell_mode_guide"), *Locales::get()->get("OK"), clickSoundEvent + useSpellEvent);
+                        std::shared_ptr<WindowButton> guide = std::make_shared<WindowButton>(StringLcl("{spell_mode_guide}"), StringLcl("{OK}"), clickSoundEvent + useSpellEvent);
                         event = event + clickSoundEvent;
                         event.add(std::make_shared<CreateEEvent>(guide));
                     }
@@ -115,7 +115,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				else {
 					components.emplace_back(
 						HorizontalSelectionWindowComponent(std::make_shared<TextureNameString>(spell),
-                        *Locales::get()->get("spell_producing_in_progress") + std::to_wstring(spell->getCreationMovesLeft()) + L"\n" +
+                        StringLcl("{spell_producing_in_progress}") + StringLcl(std::to_string(spell->getCreationMovesLeft())) + StringLcl("\n") +
                         spell->getDescription(),
 						false,
 						Events()),
@@ -128,7 +128,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 	else {
 		components.emplace_back(
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-			*Locales::get()->get("does_not_produce_spells_if_hp_isnt_full"),
+			StringLcl("{does_not_produce_spells_if_hp_isnt_full}"),
 			false,
 			Events()),
             true

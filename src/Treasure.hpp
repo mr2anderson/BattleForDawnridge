@@ -40,7 +40,7 @@ private:
 	bool alreadyCollected;
 
 	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
+	StringLcl getDescription() const override;
 	std::shared_ptr<ILightSource> getLightSource() const override;
 
     friend class boost::serialization::access;

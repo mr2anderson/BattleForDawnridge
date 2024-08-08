@@ -29,12 +29,12 @@ Trade::Trade(const Resource& sell, const Resource& buy, uint32_t movesLeft) {
 	this->buy = buy;
 	this->movesLeft = movesLeft;
 }
-std::wstring Trade::getReadableInfo() const {
-	std::wstring result;
-	result = result + *Locales::get()->get("buy_noun") + this->sell.getReadableInfo() + L". ";
-	result = result + *Locales::get()->get("sell_noun") + this->buy.getReadableInfo() + L". ";
+StringLcl Trade::getReadableInfo() const {
+	StringLcl result;
+	result = result + StringLcl("{buy_noun}") + this->sell.getReadableInfo() + StringLcl(". ");
+	result = result + StringLcl("{sell_noun}") + this->buy.getReadableInfo() + StringLcl(". ");
 	if (this->movesLeft != 0) {
-		result = result + *Locales::get()->get("moves_number") + std::to_wstring(this->movesLeft) + L'.';
+		result = result + StringLcl("{moves_number}" + std::to_string(this->movesLeft) + ".");
 	}
 	return result;
 }

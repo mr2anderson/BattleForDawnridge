@@ -28,7 +28,7 @@
 
 class WindowButtonImage : public CameraIndependentPopUpElement {
 public:
-	WindowButtonImage(const std::wstring& message, const std::wstring& buttonText, const std::string& pictureName, const Events& onFinish = Events(), uint32_t w = 400, uint32_t h = 225);
+	WindowButtonImage(const StringLcl& message, const StringLcl& buttonText, const std::string& pictureName, const Events& onFinish = Events(), uint32_t w = 400, uint32_t h = 225);
 
 	void run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -36,8 +36,8 @@ public:
 private:
 	uint32_t w, h;
 	Events onFinish;
-	std::wstring message;
-	std::wstring buttonText;
+	StringLcl message;
+	StringLcl buttonText;
 	std::string pictureName;
 	Label label;
 	Image image;

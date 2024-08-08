@@ -60,8 +60,8 @@ std::string Quarry::getTextureName() const {
 std::string Quarry::getSoundName() const {
 	return "stone";
 }
-std::wstring Quarry::getDescription() const {
-	return *Locales::get()->get("quarry_description");
+StringLcl Quarry::getDescription() const {
+	return StringLcl("{quarry_description}");
 }
 
 

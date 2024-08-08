@@ -69,8 +69,8 @@ std::string Well::getTextureName() const {
 std::string Well::getSoundName() const {
     return "crystal";
 }
-std::wstring Well::getDescription() const {
-    return *Locales::get()->get("well_description");
+StringLcl Well::getDescription() const {
+    return StringLcl("{well_description}");
 }
 
 

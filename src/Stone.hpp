@@ -36,7 +36,7 @@ public:
 	std::string getSoundName() const override;
 private:
 	std::string getTextureName() const override;
-	std::wstring getDescription() const override;
+	StringLcl getDescription() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

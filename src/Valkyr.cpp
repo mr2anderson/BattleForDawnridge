@@ -58,8 +58,8 @@ uint32_t Valkyr::getTimeToProduce() const {
 std::string Valkyr::getSoundName() const {
     return "valkyr";
 }
-std::wstring Valkyr::getDescription() const {
-    return *Locales::get()->get("valkyr_description");
+StringLcl Valkyr::getDescription() const {
+    return StringLcl("{valkyr_description}");
 }
 uint32_t Valkyr::getTalkingAnimationsNumberInSet() const {
     return 9;

@@ -225,19 +225,19 @@ bool Building::isLowObstacle(uint32_t playerId) const {
 }
 HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 	std::shared_ptr<IDynamicString> textureName;
-	std::wstring secondLine;
+	StringLcl secondLine;
 	if (this->burningMovesLeft == 0) {
 		textureName = std::make_shared<StaticString>("shield_icon");
-		secondLine = *Locales::get()->get("building_speed") + std::to_wstring(this->getRegenerationSpeed()) + *Locales::get()->get("p_per_move") + L". " + *Locales::get()->get("everything_is_alright");
+		secondLine = StringLcl("{building_speed}" + std::to_string(this->getRegenerationSpeed()) + "{p_per_move}. {everything_is_alright}");
 	}
 	else {
 		textureName = std::make_shared<TextureNameStringSmart>(std::make_shared<Fire>());
-		secondLine = *Locales::get()->get("building_on_fire") + std::to_wstring(this->burningMovesLeft);
+		secondLine = StringLcl("{building_on_fire}" + std::to_string(this->burningMovesLeft));
 	}
 
 	HorizontalSelectionWindowComponent component = {
 		textureName,
-        *Locales::get()->get("hp") + std::to_wstring(this->getHP()) + L" / " + std::to_wstring(this->getMaxHP()) + L" (" + this->getDefence().getReadable() + L")\n" +
+		StringLcl("{hp}" + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " (") + this->getDefence().getReadable() + StringLcl(")\n") +
         secondLine,
 		false,
 		Events()
@@ -254,12 +254,12 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	Events destroyEvent;
     destroyEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
 	destroyEvent.add(std::make_shared<DestroyEvent>(this));
-	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(*Locales::get()->get("verify_destroy"), *Locales::get()->get("yes"), *Locales::get()->get("no"), resetHighlightEvent + destroyEvent, resetHighlightEvent + clickSoundEvent);
+	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(StringLcl("{verify_destroy}"), StringLcl("{yes}"), StringLcl("{no}"), resetHighlightEvent + destroyEvent, resetHighlightEvent + clickSoundEvent);
 	Events createVerify = clickSoundEvent;
 	createVerify.add(std::make_shared<CreateEEvent>(verify));
 	HorizontalSelectionWindowComponent component = {
 		std::make_shared<StaticString>("destroy_icon"),
-		*Locales::get()->get("destroy_this_building"),
+		StringLcl("{destroy_this_building}"),
 		true,
 		createVerify
 	};
@@ -268,7 +268,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
     return {
         std::make_shared<StaticString>("lord_icon"),
-        *Locales::get()->get("building_of_enemy"),
+        StringLcl("{building_of_enemy}"),
         false,
         Events()
     };

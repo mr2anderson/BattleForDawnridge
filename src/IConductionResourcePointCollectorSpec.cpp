@@ -84,17 +84,17 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 			n = n + (rp->exist() and rp->getResourceType() == this->getResourceType() and building->connectedTo(state, rp));
 		}
 
-		std::wstring s;
+		StringLcl s;
 		if (n == 0) {
-			s = *Locales::get()->get("no_conducted_resource_points");
+			s = StringLcl("{no_conducted_resource_points}");
 		}
 		else {
-			s = *Locales::get()->get("conducted_resource_points_number") + std::to_wstring(n);
+			s = StringLcl("{conducted_resource_points_number}") + StringLcl(std::to_string(n));
 		}
 
 		component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getResourceType() + "_icon"),
-            *Locales::get()->get("this_building_collects_resources_from_conducted_resource_points") + std::to_wstring(this->getCollectionSpeed()) + L". " + s,
+            StringLcl("{this_building_collects_resources_from_conducted_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())) + StringLcl(". ") + s,
 			false,
 			Events()),
             true
@@ -103,7 +103,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 	else {
 		component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-			*Locales::get()->get("this_building_cant_collect_resources_if_hp_isnt_full"),
+			StringLcl("{this_building_cant_collect_resources_if_hp_isnt_full}"),
 			false,
 			Events()),
             true

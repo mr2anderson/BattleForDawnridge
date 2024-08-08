@@ -58,8 +58,8 @@ uint32_t Infantryman::getTimeToProduce() const {
 std::string Infantryman::getSoundName() const {
 	return "infantryman";
 }
-std::wstring Infantryman::getDescription() const {
-	return *Locales::get()->get("infantryman_description");
+StringLcl Infantryman::getDescription() const {
+	return StringLcl("{infantryman_description}");
 }
 uint32_t Infantryman::getTalkingAnimationsNumberInSet() const {
 	return 7;

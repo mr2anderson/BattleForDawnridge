@@ -29,7 +29,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 	if (building->works()) {
 		component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("helmet"),
-            *Locales::get()->get("this_building_increases_population_limit") + std::to_wstring(this->getPopulationLimit(building)),
+            StringLcl("{this_building_increases_population_limit}") + std::to_string(this->getPopulationLimit(building)),
 			false,
 			Events()),
             true
@@ -38,7 +38,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 	else {
 		component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-			*Locales::get()->get("does_not_increase_population_limit_if_hp_isnt_full"),
+			StringLcl("{does_not_increase_population_limit_if_hp_isnt_full}"),
 			false,
 			Events()),
             true

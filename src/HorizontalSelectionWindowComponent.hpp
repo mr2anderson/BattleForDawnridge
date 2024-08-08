@@ -22,6 +22,7 @@
 #include <memory>
 #include "Events.hpp"
 #include "IDynamicString.hpp"
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -29,10 +30,10 @@
 
 struct HorizontalSelectionWindowComponent {
 	HorizontalSelectionWindowComponent();
-	HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const std::wstring& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect = std::nullopt);
+	HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const StringLcl& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect = std::nullopt);
 
 	std::shared_ptr<const IDynamicString> pictureName;
-	std::wstring message;
+	StringLcl message;
 	bool clickable;
 	Events gEvent;
 	std::optional<sf::IntRect> rect;

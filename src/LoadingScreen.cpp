@@ -29,7 +29,7 @@
 #include "Knight.hpp"
 #include "BlackKnight.hpp"
 #include "WindowButton.hpp"
-#include "UTFEncoder.hpp"
+
 #include "ClueManager.hpp"
 #include "Fire.hpp"
 #include "House.hpp"
@@ -116,7 +116,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
-	t.setString(*Locales::get()->get("please_wait"));
+	t.setString(StringLcl("{please_wait}").get());
 	t.setCharacterSize(31);
 	t.setFillColor(sf::Color::White);
 	t.setOutlineColor(sf::Color::Black);
@@ -243,7 +243,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
     s.setTexture(*Textures::get()->get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
-    WindowButton element = WindowButton(UTFEncoder::get()->utf8ToUtf16(e->what()), L"OK");
+    WindowButton element = WindowButton(StringLcl(e->what()), StringLcl("OK"));
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {

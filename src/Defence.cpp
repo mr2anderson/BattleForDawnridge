@@ -41,17 +41,17 @@ double Defence::getStab() const {
 double Defence::getCrush() const {
 	return this->crush;
 }
-static std::wstring FORMAT_K(double a) {
-	std::wstringstream ss;
+static std::string FORMAT_K(double a) {
+	std::stringstream ss;
 	ss << std::setprecision(8) << std::noshowpoint << a;
 	return ss.str();
 }
-std::wstring Defence::getReadable() const {
-	std::wstring result;
+StringLcl Defence::getReadable() const {
+	StringLcl result;
 
-	result += *Locales::get()->get("cut") + FORMAT_K(this->cut) + L", ";
-	result += *Locales::get()->get("stab") + FORMAT_K(this->stab) + L", ";
-	result += *Locales::get()->get("crush") + FORMAT_K(this->crush) + L"";
+	result = result + StringLcl("{cut}" + FORMAT_K(this->cut) + ", ");
+	result = result + StringLcl("{stab}" + FORMAT_K(this->stab) + ", ");
+	result = result + StringLcl("{crush}" + FORMAT_K(this->crush));
 
 	return result;
 }

@@ -59,8 +59,8 @@ std::string WarehouseCrystal::getTextureName() const {
 std::string WarehouseCrystal::getSoundName() const {
     return "crystal";
 }
-std::wstring WarehouseCrystal::getDescription() const {
-    return *Locales::get()->get("warehouse_crystal_description");
+StringLcl WarehouseCrystal::getDescription() const {
+    return StringLcl("{warehouse_crystal_description}");
 }
 
 

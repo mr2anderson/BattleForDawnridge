@@ -34,7 +34,7 @@ private:
     Events newMove(MapState *state, uint32_t currentPlayerId) override;
     std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const override;
     Events startAttack(Unit *u, uint32_t targetX, uint32_t targetY) override;
-    std::wstring getSpecialInfoString() const override;
+    StringLcl getSpecialInfoString() const override;
     void refreshAbility() override;
     void wipeAbility() override;
 

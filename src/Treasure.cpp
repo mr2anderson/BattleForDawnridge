@@ -61,8 +61,8 @@ std::string Treasure::getSoundName() const {
 std::string Treasure::getTextureName() const {
 	return "treasure";
 }
-std::wstring Treasure::getDescription() const {
-	return *Locales::get()->get("treasure_description");
+StringLcl Treasure::getDescription() const {
+	return StringLcl("{treasure_description}");
 }
 std::shared_ptr<ILightSource> Treasure::getLightSource() const {
 	return std::make_shared<CircleLightSourceSin>(this->getCenterX(), this->getCenterY(), 32.f, 0.5f, 3.f);

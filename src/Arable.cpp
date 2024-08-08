@@ -56,8 +56,8 @@ std::string Arable::getTextureName() const {
 std::string Arable::getSoundName() const {
 	return "food";
 }
-std::wstring Arable::getDescription() const {
-	return *Locales::get()->get("arable_description");
+StringLcl Arable::getDescription() const {
+	return StringLcl("{arable_description}");
 }
 uint32_t Arable::getRegenerationSpeed() const {
 	return Parameters::get()->getInt("arable_regeneration_speed");

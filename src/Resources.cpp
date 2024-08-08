@@ -75,14 +75,11 @@ std::vector<Resource> Resources::getAll() const {
 
     return result;
 }
-std::wstring Resources::getReadableInfo() const {
-	std::wstring result;
+StringLcl Resources::getReadableInfo() const {
+	StringLcl result;
 	for (const auto& a : this->map) {
 		Resource r(a.first, a.second);
-		result = result + r.getReadableInfo() + L' ';
-	}
-	if (!result.empty()) {
-		result.pop_back();
+		result = result + r.getReadableInfo() + StringLcl(" ");
 	}
 	return result;
 }

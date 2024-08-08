@@ -21,7 +21,7 @@
 
 
 HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent() = default;
-HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const std::wstring& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect) {
+HorizontalSelectionWindowComponent::HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const StringLcl& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect) {
 	this->pictureName = pictureName;
 	this->message = message;
 	this->clickable = clickable;

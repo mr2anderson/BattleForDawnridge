@@ -43,7 +43,7 @@ public:
 	void limit(const Resources& resources);
 	uint32_t get(const std::string& id) const;
     std::vector<Resource> getAll() const;
-	std::wstring getReadableInfo() const;
+	StringLcl getReadableInfo() const;
 	friend bool operator>=(const Resources& a, const Resources& b);
 private:
 	std::map<std::string, uint32_t, ResourceOrderComp> map;

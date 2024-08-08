@@ -47,22 +47,22 @@ uint32_t Damage::getHpLoss(Defence defence) const {
 	}
 	return k * this->points;
 }
-std::wstring Damage::getReadable() const {
-	std::wstring result;
+StringLcl Damage::getReadable() const {
+	StringLcl result;
 	switch (this->type) {
 	case TYPE::CUT: {
-		result += *Locales::get()->get("cut");
+		result = result + StringLcl("{cut}");
 		break;
 	}
 	case TYPE::CRUSH: {
-		result += *Locales::get()->get("crush");
+		result = result + StringLcl("{crush}");
 		break;
 	}
 	case TYPE::STAB: {
-		result += *Locales::get()->get("stab");
+		result = result + StringLcl("{stab}");
 		break;
 	}
 	}
-	result += std::to_wstring(this->points);
+	result = result + StringLcl(std::to_string(this->points));
 	return result;
 }

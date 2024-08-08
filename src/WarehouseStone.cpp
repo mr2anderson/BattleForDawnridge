@@ -59,8 +59,8 @@ std::string WarehouseStone::getTextureName() const {
 std::string WarehouseStone::getSoundName() const {
 	return "stone";
 }
-std::wstring WarehouseStone::getDescription() const {
-	return *Locales::get()->get("warehouse_stone_description");
+StringLcl WarehouseStone::getDescription() const {
+	return StringLcl("{warehouse_stone_description}");
 }
 
 

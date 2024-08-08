@@ -53,8 +53,8 @@ std::string Forest::getTextureName() const {
 sf::IntRect Forest::getTextureRect() const {
 	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
 }
-std::wstring Forest::getDescription() const {
-	return *Locales::get()->get("forest_description");
+StringLcl Forest::getDescription() const {
+	return StringLcl("{forest_description}");
 }
 
 

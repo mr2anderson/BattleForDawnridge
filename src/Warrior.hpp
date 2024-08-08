@@ -73,7 +73,7 @@ public:
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
-    virtual std::wstring getSpecialInfoString() const = 0;
+    virtual StringLcl getSpecialInfoString() const = 0;
     virtual std::string getBeenHitSoundName() const = 0;
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;

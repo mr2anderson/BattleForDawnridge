@@ -50,8 +50,8 @@ sf::IntRect Water::getTextureRect() const {
 std::string Water::getSoundName() const {
 	return "water";
 }
-std::wstring Water::getDescription() const {
-	return *Locales::get()->get("water_description");
+StringLcl Water::getDescription() const {
+	return StringLcl("{water_description}");
 }
 bool Water::isLowObstacle(uint32_t playerId) const {
     return true;

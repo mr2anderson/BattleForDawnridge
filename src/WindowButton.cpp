@@ -21,7 +21,7 @@
 #include "CloseWindowEvent.hpp"
 
 
-WindowButton::WindowButton(const std::wstring& message, const std::wstring &buttonText, const Events &onFinish, uint32_t w, uint32_t h) {
+WindowButton::WindowButton(const StringLcl& message, const StringLcl &buttonText, const Events &onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
     this->onFinish = onFinish;

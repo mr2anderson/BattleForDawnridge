@@ -22,11 +22,9 @@
 #include "Textures.hpp"
 #include "Playlist.hpp"
 #include "Fonts.hpp"
-#include "Locales.hpp"
 #include "SoundQueue.hpp"
 #include "Sounds.hpp"
 #include "Label.hpp"
-#include "UTFEncoder.hpp"
 #include "ScreenAlreadyFinished.hpp"
 
 
@@ -38,14 +36,12 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 	this->background.setTexture(*Textures::get()->get("bg"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
-	this->linesNumber = 0;
-	this->linesLimit = (window.getSize().y - 20) / 15;
-	this->addToLog(*Locales::get()->get("server_mode_welcome"), window);
+	this->addToLog(StringLcl("{server_mode_welcome}"), window);
 	if (this->ip == sf::IpAddress::Any) {
-		this->addToLog(*Locales::get()->get("couldnt_get_public_ip"), window);
+		this->addToLog(StringLcl("{couldnt_get_public_ip}"), window);
 	}
 	else {
-		this->addToLog(*Locales::get()->get("public_ip") + UTFEncoder::get()->utf8ToUtf16(this->ip.toString()), window);
+		this->addToLog(StringLcl("{public_ip}") + StringLcl(this->ip.toString()), window);
 	}
 }
 ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
@@ -66,10 +62,10 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 				if (event.key.code == sf::Keyboard::Delete) {
 					IsServerTable::get()->invert();
 					if (IsServerTable::get()->isServer()) {
-						this->addToLog(*Locales::get()->get("switched_to_server_mode"), window);
+						this->addToLog(StringLcl("{switched_to_server_mode}"), window);
 					}
 					else {
-						this->addToLog(*Locales::get()->get("switched_to_client_mode"), window);
+						this->addToLog(StringLcl("{switched_to_client_mode}"), window);
 					}
 				}
 			}
@@ -78,29 +74,8 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 		this->drawEverything(window);
 	}
 }
-void ServerScreen::addToLog(const std::wstring &content, sf::RenderWindow &window) {
-	this->linesNumber = this->linesNumber + std::count(content.begin(), content.end(), L'\n') + 1;
-	if (this->linesNumber > this->linesLimit) {
-		uint32_t toDelete = this->linesNumber - this->linesLimit;
-		this->linesNumber = this->linesLimit;
-		std::wstring newLog;
-		bool writeToNewLog = false;
-		for (uint32_t i = 0; i < this->log.size(); i = i + 1) {
-			if (writeToNewLog) {
-				newLog = newLog + this->log[i];
-			}
-			else {
-				if (this->log[i] == L'\n') {
-					toDelete = toDelete - 1;
-					if (toDelete == 0) {
-						writeToNewLog = true;
-					}
-				}
-			}
-		}
-		this->log = newLog;
-	}
-	this->log = this->log + content + L"\n";
+void ServerScreen::addToLog(const StringLcl &content, sf::RenderWindow &window) {
+	this->log = this->log + content + StringLcl("\n");
 }
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();

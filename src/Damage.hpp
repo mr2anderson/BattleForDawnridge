@@ -31,7 +31,7 @@ public:
 
 	friend Damage operator*(double k, Damage damage);
 	uint32_t getHpLoss(Defence defence) const;
-	std::wstring getReadable() const;
+	StringLcl getReadable() const;
 
 	enum TYPE {
 		CUT,

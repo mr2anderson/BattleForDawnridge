@@ -65,7 +65,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getC
 	if (b->works()) {
 		component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getHealTextureName()),
-            *Locales::get()->get("this_building_heals_warriors") + std::to_wstring(this->getHealingSpeed()),
+            StringLcl("{this_building_heals_warriors}") + std::to_string(this->getHealingSpeed()),
 			false,
 			Events()),
             true
@@ -74,7 +74,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getC
 	else {
 		component = {
 			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
-			*Locales::get()->get("does_not_heal_if_hp_isnt_full"),
+			StringLcl("{does_not_heal_if_hp_isnt_full}"),
 			false,
 			Events()),
             true

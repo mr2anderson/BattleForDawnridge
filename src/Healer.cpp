@@ -58,8 +58,8 @@ uint32_t Healer::getTimeToProduce() const {
 std::string Healer::getSoundName() const {
     return "healer";
 }
-std::wstring Healer::getDescription() const {
-    return *Locales::get()->get("healer_description");
+StringLcl Healer::getDescription() const {
+    return StringLcl("{healer_description}");
 }
 bool Healer::isFlying() const {
     return true;
