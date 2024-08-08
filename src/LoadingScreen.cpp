@@ -45,6 +45,8 @@
 #include "BuildingStatePointer.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "PublicIP.hpp"
+#include "LoadingScreenBg.hpp"
+#include "IsServerTable.hpp"
 
 
 #if defined(_WIN32) // Unix does not support coloured cursors
@@ -53,8 +55,7 @@
 
 
 
-LoadingScreen::LoadingScreen(sf::RenderWindow &window, uint8_t mode) {
-    this->mode = mode;
+LoadingScreen::LoadingScreen(sf::RenderWindow &window) {
     this->alreadyFinished = false;
 }
 LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
@@ -110,9 +111,7 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     }
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
-    sf::Sprite s;
-    s.setTexture(*Textures::get()->get("loading_screen"));
-    s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
+    LoadingScreenBg bg;
 
 	sf::Text t;
 	t.setFont(*Fonts::get()->get("1"));
@@ -123,8 +122,8 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 	t.setOutlineThickness(2);
 	t.setPosition((window.getSize().x - t.getLocalBounds().width) / 2, window.getSize().y - t.getLocalBounds().height - 125);
 
-	window.clear(sf::Color::Black);
-    window.draw(s);
+	window.clear();
+    window.draw(bg);
     window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(t);
 	window.display();
@@ -139,7 +138,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         #if defined(USE_CUSTOM_CURSOR)
             Textures::get()->add("cursor", "images/cursor.png");
         #endif
-        if (this->mode == MODE::SERVER) {
+        if (IsServerTable::get()->isServer()) {
             PublicIP::get()->load();
             return true;
         }

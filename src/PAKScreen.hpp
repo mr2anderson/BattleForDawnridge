@@ -21,6 +21,7 @@
 #include "PlaySoundEvent.hpp"
 #include "NextClueEvent.hpp"
 #include "PAKScreenResponse.hpp"
+#include "LoadingScreenBg.hpp"
 
 
 #pragma once
@@ -33,7 +34,7 @@ public:
 	PAKScreenResponse run(sf::RenderWindow &window);
 private:
 	bool alreadyFinished;
-	sf::Sprite s;
+    LoadingScreenBg bg;
 	sf::Text t;
 
 	void drawEverything(sf::RenderWindow& window);

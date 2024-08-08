@@ -21,9 +21,7 @@
 #include "IsServerTable.hpp"
 #include "Textures.hpp"
 #include "Playlist.hpp"
-#include "Fonts.hpp"
 #include "SoundQueue.hpp"
-#include "Sounds.hpp"
 #include "Label.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "PublicIP.hpp"
@@ -31,9 +29,6 @@
 
 ServerScreen::ServerScreen(sf::RenderWindow& window) {
 	this->alreadyFinished = false;
-
-	this->background.setTexture(*Textures::get()->get("bg"));
-	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 	this->logs.setEntryLimit(10);
 	this->logs.add(StringLcl("{server_mode_welcome}"));
@@ -77,7 +72,7 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 }
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();
-	window.draw(this->background);
+	window.draw(this->bg);
 	window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
 	window.display();
 }

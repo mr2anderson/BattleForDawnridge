@@ -30,6 +30,7 @@
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "MenuResponse.hpp"
+#include "MenuBg.hpp"
 
 
 #pragma once
@@ -47,7 +48,7 @@ private:
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
 	std::vector<Button> buttons;
-	sf::Sprite background;
+	MenuBg bg;
 
 	void drawEverything(sf::RenderWindow& window);
     void processEvents(sf::RenderWindow& window);

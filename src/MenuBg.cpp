@@ -17,26 +17,21 @@
  */
 
 
-
-#include <SFML/Graphics.hpp>
-#include "LoadingError.hpp"
-#include "LoadingScreenResponse.hpp"
+#include "MenuBg.hpp"
+#include "Textures.hpp"
 
 
-#pragma once
+MenuBg::MenuBg() = default;
+void MenuBg::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    sf::RectangleShape rect;
+    rect.setPosition(0, 0);
+    rect.setSize(sf::Vector2f(target.getSize().x, target.getSize().y));
+    rect.setFillColor(sf::Color(11, 16, 20));
 
+    sf::Sprite s;
+    s.setTexture(*Textures::get()->get("bg"));
+    s.setPosition(target.getSize().x - s.getLocalBounds().width, target.getSize().y - s.getLocalBounds().height);
 
-class LoadingScreen {
-public:
-	LoadingScreen(sf::RenderWindow &window);
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	LoadingScreenResponse run(sf::RenderWindow &window);
-private:
-	bool alreadyFinished;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	bool loadBase(sf::RenderWindow &window);
-	void setNormalScreen(sf::RenderWindow& window);
-	bool loadAll(sf::RenderWindow &window);
-    void loadingError(LoadingError *e, sf::RenderWindow &window);
-};
+    target.draw(rect, states);
+    target.draw(s, states);
+}

@@ -17,10 +17,10 @@
  */
 
 
-#include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 #include "Logs.hpp"
 #include "ServerScreenResponse.hpp"
+#include "MenuBg.hpp"
 
 
 #pragma once
@@ -33,7 +33,7 @@ public:
 	ServerScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
-	sf::Sprite background;
+	MenuBg bg;
 	Logs logs;
 
 	void drawEverything(sf::RenderWindow& window);

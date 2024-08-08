@@ -321,10 +321,6 @@ Menu::Menu(sf::RenderWindow& window) {
 
 
 
-    this->background.setTexture(*Textures::get()->get("bg"));
-    this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
-
-
 
 
     if (!FirstTimeTipsTable::get()->wasDisplayed("welcome")) {
@@ -377,8 +373,8 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
 	}
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
-    window.clear(sf::Color::Black);
-    window.draw(this->background);
+    window.clear();
+    window.draw(this->bg);
 	for (const auto& b : this->buttons) {
         window.draw(b);
     }

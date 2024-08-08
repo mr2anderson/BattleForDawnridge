@@ -17,26 +17,15 @@
  */
 
 
-
 #include <SFML/Graphics.hpp>
-#include "LoadingError.hpp"
-#include "LoadingScreenResponse.hpp"
 
 
 #pragma once
 
 
-class LoadingScreen {
+class LoadingScreenBg : public sf::Drawable {
 public:
-	LoadingScreen(sf::RenderWindow &window);
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	LoadingScreenResponse run(sf::RenderWindow &window);
-private:
-	bool alreadyFinished;
+    LoadingScreenBg();
 
-	void setBaseScreen(sf::RenderWindow &window);
-	bool loadBase(sf::RenderWindow &window);
-	void setNormalScreen(sf::RenderWindow& window);
-	bool loadAll(sf::RenderWindow &window);
-    void loadingError(LoadingError *e, sf::RenderWindow &window);
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

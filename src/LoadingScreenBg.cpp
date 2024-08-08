@@ -17,26 +17,21 @@
  */
 
 
-
-#include <SFML/Graphics.hpp>
-#include "LoadingError.hpp"
-#include "LoadingScreenResponse.hpp"
+#include "LoadingScreenBg.hpp"
+#include "Textures.hpp"
 
 
-#pragma once
+LoadingScreenBg::LoadingScreenBg() = default;
+void LoadingScreenBg::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    sf::RectangleShape rect;
+    rect.setPosition(0, 0);
+    rect.setSize(sf::Vector2f(target.getSize().x, target.getSize().y));
+    rect.setFillColor(sf::Color(4, 8, 11));
 
+    sf::Sprite s;
+    s.setTexture(*Textures::get()->get("loading_screen"));
+    s.setPosition(0, target.getSize().y - s.getLocalBounds().height);
 
-class LoadingScreen {
-public:
-	LoadingScreen(sf::RenderWindow &window);
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	LoadingScreenResponse run(sf::RenderWindow &window);
-private:
-	bool alreadyFinished;
-
-	void setBaseScreen(sf::RenderWindow &window);
-	bool loadBase(sf::RenderWindow &window);
-	void setNormalScreen(sf::RenderWindow& window);
-	bool loadAll(sf::RenderWindow &window);
-    void loadingError(LoadingError *e, sf::RenderWindow &window);
-};
+    target.draw(rect, states);
+    target.draw(s, states);
+}

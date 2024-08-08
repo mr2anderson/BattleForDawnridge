@@ -35,9 +35,6 @@
 PAKScreen::PAKScreen(sf::RenderWindow &window) {
 	this->alreadyFinished = false;
 
-	this->s.setTexture(*Textures::get()->get("loading_screen"));
-	this->s.setPosition(window.getSize().x - this->s.getLocalBounds().width, window.getSize().y - this->s.getLocalBounds().height);
-
 	this->t.setFont(*Fonts::get()->get("1"));
 	this->t.setString(StringLcl("{press_any_key_to_continue}").get());
 	this->t.setCharacterSize(31);
@@ -71,8 +68,8 @@ PAKScreenResponse PAKScreen::run(sf::RenderWindow &window) {
 	}
 }
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
-	window.clear(sf::Color::Black);
-	window.draw(this->s);
+	window.clear();
+	window.draw(this->bg);
 	window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(this->t);
 	window.display();
