@@ -31,8 +31,9 @@ private:
 	bool alreadyFinished;
 	sf::IpAddress ip;
 	sf::Sprite background;
-	Label label;
 	std::wstring log;
+	uint32_t linesNumber;
+	uint32_t linesLimit;
 
 	void addToLog(const std::wstring& content, sf::RenderWindow &window);
 	void drawEverything(sf::RenderWindow& window);

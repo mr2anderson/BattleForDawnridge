@@ -47,6 +47,11 @@
 #include "ScreenAlreadyFinished.hpp"
 
 
+#if defined(_WIN32) // Unix does not support coloured cursors
+    #define USE_CUSTOM_CURSOR
+#endif
+
+
 
 LoadingScreen::LoadingScreen(sf::RenderWindow &window, uint8_t mode) {
     this->mode = mode;
@@ -70,7 +75,7 @@ LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
         return LoadingScreenResponse(LoadingScreenResponse::TYPE::LOADING_ERROR);
     }
 
-    #if defined(_WIN32) // Unix does not support coloured cursors
+    #if defined(USE_CUSTOM_CURSOR)
         sf::Texture* cursorTexture = Textures::get()->get("cursor");
         sf::Image image = cursorTexture->copyToImage();
         const sf::Uint8* pixels = image.getPixelsPtr();
@@ -131,7 +136,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
             Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
         Textures::get()->add("bg", "images/bg.jpg");
-        Textures::get()->add("cursor", "images/cursor.png");
+        #if defined(USE_CUSTOM_CURSOR)
+            Textures::get()->add("cursor", "images/cursor.png");
+        #endif
         if (this->mode == MODE::SERVER) {
             return true;
         }

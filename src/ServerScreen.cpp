@@ -38,6 +38,8 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 	this->background.setTexture(*Textures::get()->get("bg"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
+	this->linesNumber = 0;
+	this->linesLimit = (window.getSize().y - 20) / 15;
 	this->addToLog(*Locales::get()->get("server_mode_welcome"), window);
 	if (this->ip == sf::IpAddress::Any) {
 		this->addToLog(*Locales::get()->get("couldnt_get_public_ip"), window);
@@ -77,12 +79,32 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 	}
 }
 void ServerScreen::addToLog(const std::wstring &content, sf::RenderWindow &window) {
+	this->linesNumber = this->linesNumber + std::count(content.begin(), content.end(), L'\n') + 1;
+	if (this->linesNumber > this->linesLimit) {
+		uint32_t toDelete = this->linesNumber - this->linesLimit;
+		this->linesNumber = this->linesLimit;
+		std::wstring newLog;
+		bool writeToNewLog = false;
+		for (uint32_t i = 0; i < this->log.size(); i = i + 1) {
+			if (writeToNewLog) {
+				newLog = newLog + this->log[i];
+			}
+			else {
+				if (this->log[i] == L'\n') {
+					toDelete = toDelete - 1;
+					if (toDelete == 0) {
+						writeToNewLog = true;
+					}
+				}
+			}
+		}
+		this->log = newLog;
+	}
 	this->log = this->log + content + L"\n";
-	this->label = Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->log);
 }
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();
 	window.draw(this->background);
-	window.draw(this->label);
+	window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->log));
 	window.display();
 }
