@@ -26,6 +26,7 @@
 class LoadingError : public std::exception {
 public:
     LoadingError(const std::string &path);
+    virtual std::string details() const = 0; // what the fuck is wrong with this fucking what(); who the fuck could come up with the idea to use a fucking raw pointer to const char in STL
 protected:
     std::string getPath() const;
 private:

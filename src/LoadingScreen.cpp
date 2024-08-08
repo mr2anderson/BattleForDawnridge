@@ -243,7 +243,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
     s.setTexture(*Textures::get()->get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
-    WindowButton element = WindowButton(StringLcl(e->what()), StringLcl("OK"));
+    WindowButton element = WindowButton(StringLcl(e->details()), StringLcl("OK"));
     element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {

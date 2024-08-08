@@ -23,9 +23,9 @@
 CouldntOpen::CouldntOpen(const std::string &path) : LoadingError(path) {
     
 }
-const char* CouldntOpen::what() const noexcept {
+std::string CouldntOpen::details() const {
     std::string content =
         ("Couldn't open " + this->getResourceName() + "\n"
             "Path: " + this->getPath());
-    return content.c_str();
+    return content;
 }
