@@ -60,7 +60,12 @@ void ServerScreen::init(sf::RenderWindow& window) {
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 	this->addToLog(*Locales::get()->get("server_mode_welcome"), window);
-	this->addToLog(*Locales::get()->get("public_ip") + UTFEncoder::get()->utf8ToUtf16(this->ip.toString()), window);
+	if (this->ip == sf::IpAddress::Any) {
+		this->addToLog(*Locales::get()->get("couldnt_get_public_ip"), window);
+	}
+	else {
+		this->addToLog(*Locales::get()->get("public_ip") + UTFEncoder::get()->utf8ToUtf16(this->ip.toString()), window);
+	}
 }
 void ServerScreen::prepareToExit() {
 	Playlist::get()->restartMusic();
