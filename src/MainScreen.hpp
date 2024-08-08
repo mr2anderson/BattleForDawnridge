@@ -104,7 +104,7 @@ private:
 	ISelectable* selected;
     bool returnToMenu;
 	bool curcorVisibility;
-	std::shared_ptr<sf::View> view;
+	sf::View view;
     std::vector<Button> buttons;
 
 

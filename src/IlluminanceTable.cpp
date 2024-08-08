@@ -25,7 +25,7 @@ IlluminanceTable::IlluminanceTable(uint32_t w, uint32_t h, const sf::ContextSett
 	this->render->create(w, h, parentSettings);
 }
 
-void IlluminanceTable::setView(const sf::View& view) {
+void IlluminanceTable::newFrame(const sf::View& view) {
 	this->view = view;
 
 	this->render->clear(sf::Color(0, 0, 0, 100));

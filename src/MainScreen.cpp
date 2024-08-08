@@ -263,7 +263,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y, window.getSettings());
 	this->selected = nullptr;
 	this->animation = std::nullopt;
-	this->view = std::make_shared<sf::View>(window.getDefaultView());
+	this->view = sf::View(window.getDefaultView());
 
 	this->buttons.emplace_back(std::make_shared<Label>(5, 40, 200, 60, *Locales::get()->get("to_menu")), createConfirmReturnToMenuWindowEvent);
 	this->buttons.emplace_back(std::make_shared<Label>(5, 110, 200, 60, *Locales::get()->get("save_game")), saveGameEvent);
@@ -382,7 +382,7 @@ void MainScreen::save() const {
 
 void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();
-	window.setView(*this->view);
+	window.setView(this->view);
 	this->drawCells(window);
 	this->drawMap(window);
 	this->drawHighlightion(window);
@@ -406,7 +406,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 void MainScreen::drawMap(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		const GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
-		if (go->exist() and go->inView(*this->view)) {
+		if (go->exist() and go->inView(this->view)) {
 			window.draw(*go);
 		}
 	}
@@ -464,7 +464,7 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
-	this->illiminanceTable->setView(*this->view);
+	this->illiminanceTable->newFrame(this->view);
 
 	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		const GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
@@ -563,8 +563,8 @@ void MainScreen::addEvents(Events &e, sf::RenderWindow& window) {
     }
 }
 std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView(sf::RenderWindow &window) const {
-	uint32_t mouseX = sf::Mouse::getPosition().x + this->view->getCenter().x - window.getSize().x / 2;
-	uint32_t mouseY = sf::Mouse::getPosition().y + this->view->getCenter().y - window.getSize().y / 2;
+	uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
+	uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - window.getSize().y / 2;
 	return std::make_tuple(mouseX, mouseY);
 }
 void MainScreen::moveView(sf::RenderWindow &window) {
@@ -587,8 +587,8 @@ void MainScreen::moveView(sf::RenderWindow &window) {
 		uint32_t currentX, currentY;
 		std::tie(currentX, currentY) = this->viewMovingQueue.front();
 
-		uint32_t viewX = this->view->getCenter().x;
-		uint32_t viewY = this->view->getCenter().y;
+		uint32_t viewX = this->view.getCenter().x;
+		uint32_t viewY = this->view.getCenter().y;
 
 		bool horizontalOk = false;
 		bool verticalOk = false;
@@ -629,40 +629,40 @@ void MainScreen::moveView(sf::RenderWindow &window) {
 static float VIEW_MOVING_DELTA = 10;
 static float VIEW_MOVING_BIG_DELTA = 1.25f * VIEW_MOVING_DELTA;
 bool MainScreen::moveViewToNorth(uint32_t border, sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
+	this->view.setCenter(this->view.getCenter() - sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
 	return this->verifyViewNorth(window) and this->verifyViewNorth(border);
 }
 bool MainScreen::moveViewToNorth(sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(0, VIEW_MOVING_DELTA));
+	this->view.setCenter(this->view.getCenter() - sf::Vector2f(0, VIEW_MOVING_DELTA));
 	return this->verifyViewNorth(window);
 }
 bool MainScreen::moveViewToSouth(uint32_t border, sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
+	this->view.setCenter(this->view.getCenter() + sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
 	return this->verifyViewSouth(window) and this->verifyViewSouth(border);
 }
 bool MainScreen::moveViewToSouth(sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(0, VIEW_MOVING_DELTA));
+	this->view.setCenter(this->view.getCenter() + sf::Vector2f(0, VIEW_MOVING_DELTA));
 	return this->verifyViewSouth(window);
 }
 bool MainScreen::moveViewToWest(uint32_t border, sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
+	this->view.setCenter(this->view.getCenter() - sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
 	return this->verifyViewWest(window) and this->verifyViewWest(border);
 }
 bool MainScreen::moveViewToWest(sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() - sf::Vector2f(VIEW_MOVING_DELTA, 0));
+	this->view.setCenter(this->view.getCenter() - sf::Vector2f(VIEW_MOVING_DELTA, 0));
 	return this->verifyViewWest(window);
 }
 bool MainScreen::moveViewToEast(uint32_t border, sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
+	this->view.setCenter(this->view.getCenter() + sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
 	return this->verifyViewEast(window) and this->verifyViewEast(border);
 }
 bool MainScreen::moveViewToEast(sf::RenderWindow& window) {
-	this->view->setCenter(this->view->getCenter() + sf::Vector2f(VIEW_MOVING_DELTA, 0));
+	this->view.setCenter(this->view.getCenter() + sf::Vector2f(VIEW_MOVING_DELTA, 0));
 	return this->verifyViewEast(window);
 }
 bool MainScreen::verifyViewNorth(uint32_t border) {
-	if (this->view->getCenter().y < border) {
-		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, border));
+	if (this->view.getCenter().y < border) {
+		this->view.setCenter(sf::Vector2f(this->view.getCenter().x, border));
 		return false;
 	}
 	return true;
@@ -671,8 +671,8 @@ bool MainScreen::verifyViewNorth(sf::RenderWindow& window) {
 	return this->verifyViewNorth(window.getSize().y / 2);
 }
 bool MainScreen::verifyViewSouth(uint32_t border) {
-	if (this->view->getCenter().y > border) {
-		this->view->setCenter(sf::Vector2f(this->view->getCenter().x, border));
+	if (this->view.getCenter().y > border) {
+		this->view.setCenter(sf::Vector2f(this->view.getCenter().x, border));
 		return false;
 	}
 	return true;
@@ -681,8 +681,8 @@ bool MainScreen::verifyViewSouth(sf::RenderWindow& window) {
 	return this->verifyViewSouth(64 * this->map->getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2);
 }
 bool MainScreen::verifyViewWest(uint32_t border) {
-	if (this->view->getCenter().x < border) {
-		this->view->setCenter(sf::Vector2f(border, this->view->getCenter().y));
+	if (this->view.getCenter().x < border) {
+		this->view.setCenter(sf::Vector2f(border, this->view.getCenter().y));
 		return false;
 	}
 	return true;
@@ -691,8 +691,8 @@ bool MainScreen::verifyViewWest(sf::RenderWindow& window) {
 	return this->verifyViewWest(window.getSize().x / 2);
 }
 bool MainScreen::verifyViewEast(uint32_t border) {
-	if (this->view->getCenter().x > border) {
-		this->view->setCenter(sf::Vector2f(border, this->view->getCenter().y));
+	if (this->view.getCenter().x > border) {
+		this->view.setCenter(sf::Vector2f(border, this->view.getCenter().y));
 		return false;
 	}
 	return true;

@@ -27,7 +27,7 @@ class IlluminanceTable: public sf::Drawable {
 public:
 	IlluminanceTable(uint32_t windowW, uint32_t windowH, const sf::ContextSettings &parentSettings);
 
-	void setView(const sf::View& view);
+	void newFrame(const sf::View& view);
 
 	void add(const IWithLightSource* i);
 	void add(std::shared_ptr<const IWithLightSource> i);
