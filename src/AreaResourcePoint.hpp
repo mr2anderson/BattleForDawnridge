@@ -17,37 +17,25 @@
  */
 
 
-#include "HPGO.hpp"
+#include "ResourcePoint.hpp"
 
 
 #pragma once
 
 
-class ResourcePoint : public HPGO {
+class AreaResourcePoint : public ResourcePoint {
 public:
-	ResourcePoint();
-	ResourcePoint(uint32_t x, uint32_t y);
-
-	Events newMove(MapState *state, uint32_t playerId) override;
-	virtual uint32_t tryToCollect(uint32_t playerId, uint32_t value);
-	virtual std::string getResourceType() const = 0;
-	bool warriorCanStay(const Warrior *w) const override;
-	uint32_t getWarriorMovementCost(const Warrior *w) const override;
-protected:
-    virtual bool isArea() const = 0;
-    virtual bool isConduction() const = 0;
+    AreaResourcePoint();
+    AreaResourcePoint(uint32_t x, uint32_t y);
 private:
-	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
-	Events getSelectionWindow();
-	HorizontalSelectionWindowComponent getResourceLeftComponent() const;
-	HorizontalSelectionWindowComponent getSlowMovementComponent() const;
-	uint32_t getWalkingWarriorMovementCost() const;
+    bool isArea() const override;
+    bool isConduction() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive & ar, const unsigned int version) {
-        ar & boost::serialization::base_object<HPGO>(*this);
+        ar & boost::serialization::base_object<ResourcePoint>(*this);
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(ResourcePoint)
+BOOST_CLASS_EXPORT_KEY(AreaResourcePoint)

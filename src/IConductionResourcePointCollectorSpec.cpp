@@ -18,7 +18,7 @@
 
 
 #include "IConductionResourcePointCollectorSpec.hpp"
-#include "ResourcePoint.hpp"
+#include "ConductionResourcePoint.hpp"
 #include "Building.hpp"
 #include "ImageFlyingE.hpp"
 #include "FocusOnEvent.hpp"
@@ -46,8 +46,8 @@ Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Buildi
 
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> src;
 
-	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
-		ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalConductionRPs(); i = i + 1) {
+		ConductionResourcePoint* rp = state->getCollectionsPtr()->getConductionRP(i);
 		if (rp->exist() and rp->getResourceType() == this->getResourceType() and building->connectedTo(state, rp)) {
 			uint32_t got = rp->tryToCollect(building->getPlayerId(), std::min(leftSpace, this->getCollectionSpeed()));
 			if (got != 0) {
@@ -79,8 +79,8 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 
 	if (building->works()) {
 		uint32_t n = 0;
-		for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
-			ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
+		for (uint32_t i = 0; i < state->getCollectionsPtr()->totalConductionRPs(); i = i + 1) {
+			ConductionResourcePoint* rp = state->getCollectionsPtr()->getConductionRP(i);
 			n = n + (rp->exist() and rp->getResourceType() == this->getResourceType() and building->connectedTo(state, rp));
 		}
 

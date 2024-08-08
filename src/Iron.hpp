@@ -18,13 +18,13 @@
 
 
 
-#include "ResourcePoint.hpp"
+#include "AreaResourcePoint.hpp"
 
 
 #pragma once
 
 
-class Iron : public ResourcePoint {
+class Iron : public AreaResourcePoint {
 public:
 	Iron();
 	Iron(uint32_t x, uint32_t y);

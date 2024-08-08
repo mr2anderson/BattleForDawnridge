@@ -24,7 +24,7 @@
 
 
 Stone::Stone() = default;
-Stone::Stone(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
+Stone::Stone(uint32_t x, uint32_t y) : AreaResourcePoint(x, y) {
 
 }
 UUID Stone::getTypeUUID() const {

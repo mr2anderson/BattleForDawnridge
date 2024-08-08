@@ -26,8 +26,8 @@
 
 
 class GO;
-class Effect;
-class ResourcePoint;
+class AreaResourcePoint;
+class ConductionResourcePoint;
 class Unit;
 class Building;
 class Warrior;
@@ -40,20 +40,23 @@ public:
 	void add(GO *object);
 
 	uint32_t totalGOs() const;
-	uint32_t totalRPs() const;
+	uint32_t totalAreaRPs() const;
+    uint32_t totalConductionRPs() const;
     uint32_t totalUnits() const;
 	uint32_t totalBuildings() const;
 	uint32_t totalWarriors() const;
 
 	GO* getGO(uint32_t i, uint8_t filter);
     const GO* getGO(uint32_t i, uint8_t filter) const;
-    ResourcePoint* getRP(uint32_t i);
+    AreaResourcePoint* getAreaRP(uint32_t i);
+    ConductionResourcePoint* getConductionRP(uint32_t i);
     Unit* getUnit(uint32_t i);
 	Building* getBuilding(uint32_t i);
 	Warrior* getWarrior(uint32_t i);
 private:
 	Collection<GO> gos;
-	Collection<ResourcePoint> rps;
+	Collection<AreaResourcePoint> areaRps;
+    Collection<ConductionResourcePoint> conductionRps;
     Collection<Unit> units;
 	Collection<Building> buildings;
 	Collection<Warrior> warriors;
@@ -63,11 +66,15 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & this->gos;
         if (Archive::is_loading::value) {
+            *this = Collections();
+            ar & this->gos;
             for (uint32_t i = 0; i < this->gos.size(); i = i + 1) {
                 this->addToSubClassCollections(this->gos.at(i, FILTER::DEFAULT_PRIORITY));
             }
+        }
+        else {
+            ar & this->gos;
         }
     }
 };

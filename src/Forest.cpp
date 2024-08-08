@@ -26,7 +26,7 @@
 
 
 Forest::Forest() = default;
-Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : ResourcePoint(x, y) {
+Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : AreaResourcePoint(x, y) {
 	this->type = type;
 }
 UUID Forest::getTypeUUID() const {

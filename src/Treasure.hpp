@@ -17,28 +17,24 @@
  */
 
 
-#include "ResourcePoint.hpp"
+#include "ConductionResourcePoint.hpp"
 
 
 #pragma once
 
 
-class Treasure : public ResourcePoint {
+class Treasure : public ConductionResourcePoint {
 public:
 	Treasure();
 	Treasure(uint32_t x, uint32_t y);
 	UUID getTypeUUID() const override;
 
-	Events newMove(MapState *state, uint32_t playerId) override;
-	uint32_t tryToCollect(uint32_t playerId, uint32_t value) override;
     uint32_t getSX() const override;
     uint32_t getSY() const override;
     uint32_t getMaxHP() const override;
 	std::string getResourceType() const override;
 	std::string getSoundName() const override;
 private:
-	bool alreadyCollected;
-
 	std::string getTextureName() const override;
 	StringLcl getDescription() const override;
 	std::shared_ptr<ILightSource> getLightSource() const override;
@@ -46,7 +42,6 @@ private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<ResourcePoint>(*this);
-        ar & this->alreadyCollected;
     }
 };
 

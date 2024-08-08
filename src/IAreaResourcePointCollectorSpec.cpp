@@ -18,7 +18,7 @@
 
 
 #include "IAreaResourcePointCollectorSpec.hpp"
-#include "ResourcePoint.hpp"
+#include "AreaResourcePoint.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "FocusOnEvent.hpp"
@@ -50,8 +50,8 @@ Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bu
 	std::vector<std::tuple<ResourcePoint*, uint32_t>> src;
 
 	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
-	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
-		ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
+	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalAreaRPs(); i = i + 1) {
+		AreaResourcePoint* rp = state->getCollectionsPtr()->getAreaRP(i);
 		if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
 			uint32_t got = rp->tryToCollect(building->getPlayerId(), left);
 			if (got != 0) {
@@ -116,8 +116,8 @@ uint32_t IAreaResourcePointCollectorSpec::countResourceInRadius(const Building *
     uint32_t ctr = 0;
 
 	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
-    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalRPs(); i = i + 1) {
-        ResourcePoint* rp = state->getCollectionsPtr()->getRP(i);
+    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalAreaRPs(); i = i + 1) {
+        AreaResourcePoint* rp = state->getCollectionsPtr()->getAreaRP(i);
         if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
             ctr = ctr + rp->getHP();
         }

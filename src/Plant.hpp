@@ -17,13 +17,13 @@
  */
 
 
-#include "ResourcePoint.hpp"
+#include "AreaResourcePoint.hpp"
 
 
 #pragma once
 
 
-class Plant : public ResourcePoint {
+class Plant : public AreaResourcePoint {
 public:
     Plant();
     Plant(uint32_t x, uint32_t y);

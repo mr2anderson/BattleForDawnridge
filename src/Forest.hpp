@@ -18,13 +18,13 @@
 
 
 
-#include "ResourcePoint.hpp"
+#include "AreaResourcePoint.hpp"
 
 
 #pragma once
 
 
-class Forest : public ResourcePoint {
+class Forest : public AreaResourcePoint {
 public:
 	Forest();
 	Forest(uint32_t x, uint32_t y, uint32_t type);

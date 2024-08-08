@@ -24,7 +24,7 @@
 
 
 Iron::Iron() = default;
-Iron::Iron(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
+Iron::Iron(uint32_t x, uint32_t y) : AreaResourcePoint(x, y) {
 
 }
 UUID Iron::getTypeUUID() const {

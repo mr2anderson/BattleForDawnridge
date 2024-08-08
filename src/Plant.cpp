@@ -33,7 +33,7 @@ const uint32_t Plant::ANIMATION_NUMBER[Plant::TOTAL_TYPES] = {60, 60, 90, 90, 90
 Plant::Plant() {
     this->type = 1;
 }
-Plant::Plant(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
+Plant::Plant(uint32_t x, uint32_t y) : AreaResourcePoint(x, y) {
     this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
 }
 UUID Plant::getTypeUUID() const {

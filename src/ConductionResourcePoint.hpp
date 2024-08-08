@@ -17,32 +17,31 @@
  */
 
 
-#include "AreaResourcePoint.hpp"
+#include "ResourcePoint.hpp"
 
 
 #pragma once
 
 
-class Stone : public AreaResourcePoint {
+class ConductionResourcePoint : public ResourcePoint {
 public:
-	Stone();
-	Stone(uint32_t x, uint32_t y);
-    UUID getTypeUUID() const override;
+    ConductionResourcePoint();
+    ConductionResourcePoint(uint32_t x, uint32_t y);
 
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-	std::string getResourceType() const override;
-	std::string getSoundName() const override;
+    Events newMove(MapState *state, uint32_t playerId) override;
+    uint32_t tryToCollect(uint32_t playerId, uint32_t value) override;
 private:
-	std::string getTextureName() const override;
-	StringLcl getDescription() const override;
+    bool alreadyCollected;
+
+    bool isArea() const override;
+    bool isConduction() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<ResourcePoint>(*this);
+        ar & this->alreadyCollected;
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(Stone)
+BOOST_CLASS_EXPORT_KEY(ConductionResourcePoint)

@@ -19,7 +19,8 @@
 
 #include "Collections.hpp"
 #include "GO.hpp"
-#include "ResourcePoint.hpp"
+#include "AreaResourcePoint.hpp"
+#include "ConductionResourcePoint.hpp"
 #include "Unit.hpp"
 #include "Building.hpp"
 #include "Warrior.hpp"
@@ -37,8 +38,11 @@ void Collections::add(GO *object) {
 uint32_t Collections::totalGOs() const {
 	return this->gos.size();
 }
-uint32_t Collections::totalRPs() const {
-	return this->rps.size();
+uint32_t Collections::totalAreaRPs() const {
+	return this->areaRps.size();
+}
+uint32_t Collections::totalConductionRPs() const {
+    return this->conductionRps.size();
 }
 uint32_t Collections::totalUnits() const {
     return this->units.size();
@@ -57,8 +61,11 @@ GO* Collections::getGO(uint32_t i, uint8_t filter) {
 const GO* Collections::getGO(uint32_t i, uint8_t filter) const {
     return this->gos.at(i, filter);
 }
-ResourcePoint* Collections::getRP(uint32_t i) {
-	return this->rps.at(i);
+AreaResourcePoint* Collections::getAreaRP(uint32_t i) {
+	return this->areaRps.at(i);
+}
+ConductionResourcePoint* Collections::getConductionRP(uint32_t i) {
+    return this->conductionRps.at(i);
 }
 Unit* Collections::getUnit(uint32_t i) {
     return this->units.at(i);
@@ -70,8 +77,11 @@ Warrior* Collections::getWarrior(uint32_t i)  {
 	return this->warriors.at(i);
 }
 void Collections::addToSubClassCollections(GO *object) {
-    if (ResourcePoint* rp = dynamic_cast<ResourcePoint*>(object)) {
-        this->rps.push(rp);
+    if (AreaResourcePoint* areaRp = dynamic_cast<AreaResourcePoint*>(object)) {
+        this->areaRps.push(areaRp);
+    }
+    if (ConductionResourcePoint* conductionRp = dynamic_cast<ConductionResourcePoint*>(object)) {
+        this->conductionRps.push(conductionRp);
     }
     if (Unit* u = dynamic_cast<Unit*>(object)) {
         this->units.push(u);

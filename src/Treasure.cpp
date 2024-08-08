@@ -26,22 +26,10 @@
 
 
 Treasure::Treasure() = default;
-Treasure::Treasure(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
-	this->alreadyCollected = false;
+Treasure::Treasure(uint32_t x, uint32_t y) : ConductionResourcePoint(x, y) {
 }
 UUID Treasure::getTypeUUID() const {
 	return UUIDs::get()->get("treasure");
-}
-Events Treasure::newMove(MapState *state, uint32_t playerId) {
-	this->alreadyCollected = false;
-	return Events();
-}
-uint32_t Treasure::tryToCollect(uint32_t playerId, uint32_t value) {
-	if (!this->alreadyCollected) {
-		this->alreadyCollected = true;
-		return this->ResourcePoint::tryToCollect(playerId, value);
-	}
-	return 0;
 }
 uint32_t Treasure::getSX() const {
 	return Parameters::get()->getInt("treasure_sx");

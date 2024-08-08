@@ -20,29 +20,16 @@
 #include "AreaResourcePoint.hpp"
 
 
-#pragma once
+AreaResourcePoint::AreaResourcePoint() = default;
+AreaResourcePoint::AreaResourcePoint(uint32_t x, uint32_t y) : ResourcePoint(x, y) {
+
+}
+bool AreaResourcePoint::isArea() const {
+    return true;
+}
+bool AreaResourcePoint::isConduction() const {
+    return false;
+}
 
 
-class Stone : public AreaResourcePoint {
-public:
-	Stone();
-	Stone(uint32_t x, uint32_t y);
-    UUID getTypeUUID() const override;
-
-    uint32_t getSX() const override;
-    uint32_t getSY() const override;
-    uint32_t getMaxHP() const override;
-	std::string getResourceType() const override;
-	std::string getSoundName() const override;
-private:
-	std::string getTextureName() const override;
-	StringLcl getDescription() const override;
-
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<ResourcePoint>(*this);
-    }
-};
-
-
-BOOST_CLASS_EXPORT_KEY(Stone)
+BOOST_CLASS_EXPORT_IMPLEMENT(AreaResourcePoint)
