@@ -35,7 +35,7 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 
 	this->ip = sf::IpAddress::getPublicAddress();
 
-	this->background.setTexture(*Textures::get()->get("menu"));
+	this->background.setTexture(*Textures::get()->get("bg"));
 	this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 	this->addToLog(*Locales::get()->get("server_mode_welcome"), window);
@@ -60,6 +60,15 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 				if (event.key.code == sf::Keyboard::Escape) {
 					Playlist::get()->stop();
 					return ServerScreenResponse(ServerScreenResponse::TYPE::EXIT);
+				}
+				if (event.key.code == sf::Keyboard::Delete) {
+					IsServerTable::get()->invert();
+					if (IsServerTable::get()->isServer()) {
+						this->addToLog(*Locales::get()->get("switched_to_server_mode"), window);
+					}
+					else {
+						this->addToLog(*Locales::get()->get("switched_to_client_mode"), window);
+					}
 				}
 			}
 		}

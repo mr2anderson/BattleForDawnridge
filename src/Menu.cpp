@@ -322,7 +322,7 @@ Menu::Menu(sf::RenderWindow& window) {
 
 
 
-    this->background.setTexture(*Textures::get()->get("menu"));
+    this->background.setTexture(*Textures::get()->get("bg"));
     this->background.setPosition(window.getSize().x - this->background.getLocalBounds().width, window.getSize().y - this->background.getLocalBounds().height);
 
 
@@ -556,12 +556,7 @@ void Menu::handleGenerateNetworkGameSettingsWindowEvent(std::shared_ptr<Generate
     this->addEvents(events);
 }
 void Menu::handleInvertIsServerStateEvent(std::shared_ptr<InvertIsServerStateEvent> e) {
-    if (IsServerTable::get()->isServer()) {
-        IsServerTable::get()->markAsClient();
-    }
-    else {
-        IsServerTable::get()->markAsServer();
-    }
+    IsServerTable::get()->invert();
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
     std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());

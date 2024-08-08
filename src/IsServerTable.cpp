@@ -41,3 +41,11 @@ void IsServerTable::markAsClient() const {
 		std::filesystem::remove(USERDATA_ROOT + "/network/i_am_server.cfg");
 	}
 }
+void IsServerTable::invert() const {
+	if (this->isServer()) {
+		this->markAsClient();
+	}
+	else {
+		this->markAsServer();
+	}
+}

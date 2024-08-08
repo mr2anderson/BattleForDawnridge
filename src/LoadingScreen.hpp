@@ -28,11 +28,16 @@
 
 class LoadingScreen {
 public:
-	LoadingScreen(sf::RenderWindow &window);
+	LoadingScreen(sf::RenderWindow &window, uint8_t mode);
 	LoadingScreen(const LoadingScreen& copy) = delete;
-
 	LoadingScreenResponse run(sf::RenderWindow &window);
+
+	enum MODE {
+		DEFAULT,
+		SERVER
+	};
 private:
+	uint8_t mode;
 	bool alreadyFinished;
 
 	void setBaseScreen(sf::RenderWindow &window);

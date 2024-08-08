@@ -29,6 +29,7 @@ public:
 	bool isServer() const;
 	void markAsServer() const;
 	void markAsClient() const;
+	void invert() const;
 private:
 	IsServerTable() = default;
 	IsServerTable(const IsServerTable& copy) = delete;

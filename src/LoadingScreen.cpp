@@ -48,7 +48,8 @@
 
 
 
-LoadingScreen::LoadingScreen(sf::RenderWindow &window) {
+LoadingScreen::LoadingScreen(sf::RenderWindow &window, uint8_t mode) {
+    this->mode = mode;
     this->alreadyFinished = false;
 }
 LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
@@ -57,7 +58,7 @@ LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
     }
     this->alreadyFinished = true;
 
-    window.setMouseCursorVisible(true);
+    window.setMouseCursorVisible(false);
 
 	this->setBaseScreen(window);
 	if (!this->loadBase(window)) {
@@ -94,16 +95,14 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
 	catch (CouldntOpen&) {
         return false;
     }
-
     try {
         Locales::get()->load();
+        return true;
     }
 	catch (CouldntOpen &e) {
         this->loadingError(&e, window);
         return false;
     }
-
-    return true;
 }
 void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
     sf::Sprite s;
@@ -127,6 +126,16 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 }
 bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
+        Music::get()->add("intro", "music/intro.ogg");
+        for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
+            Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
+        }
+        Textures::get()->add("bg", "images/bg.jpg");
+        Textures::get()->add("cursor", "images/cursor.png");
+        if (this->mode == MODE::SERVER) {
+            return true;
+        }
+        Music::get()->add("menu", "music/menu.ogg");
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
@@ -138,7 +147,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "down_icon", "russian_icon", "english_icon", "bell", "destroy_icon",
                 "btc", "axe_icon", "cross_icon", "barracks", "treasure", "hand", "gates1", "gates2", "water",
                 "forest_icon", "water_icon", "warrior_purple", "warrior_green", "warrior_blue",
-                "cursor", "helmet", "skull", "spell_factory", "rage_spell",
+                "helmet", "skull", "spell_factory", "rage_spell",
                 "infirmary", "christianity", "tower1", "tower2", "crystal_icon", "warehouse_crystal",
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon", "heart_icon", "save_icon",
@@ -148,7 +157,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
             Textures::get()->add("road_" + a, "images/road/" + a + ".png");
         }
-        Textures::get()->add("menu", "images/menu.jpg");
         for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over"}) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
                 for (std::tuple<std::string, uint32_t> w : {
@@ -192,8 +200,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 0; i < BuildingStatePointer::TOTAL_HP_POINTERS; i = i + 1) {
             Textures::get()->add("building_hp_pointer" + std::to_string(i), "images/building_hp_pointer/" + std::to_string(i) + ".png");
         }
-
-
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
                                       "destroy", "sword", "breath", "knight", "fire",
@@ -212,31 +218,20 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
             Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
-
-
-        Music::get()->add("intro", "music/intro.ogg");
-        Music::get()->add("menu", "music/menu.ogg");
-        for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
-            Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
-        }
-
-
         Parameters::get()->load();
-
-
         for (const std::string& a : { "ridge" }) {
             Maps::get()->add(a, "levels/" + a + ".tmx");
         }
+        return true;
     }
 	catch (CouldntOpen &e) {
         loadingError(&e, window);
         return false;
     }
-
-
-    return true;
 }
 void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
+    window.setMouseCursorVisible(true);
+
     sf::Sprite s;
     s.setTexture(*Textures::get()->get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);

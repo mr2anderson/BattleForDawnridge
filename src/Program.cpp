@@ -38,7 +38,10 @@ Program::Program() {
     this->window.setFramerateLimit(60);
 }
 void Program::run() {
-    LoadingScreen loadingScreen(this->window);
+    bool serverMode = IsServerTable::get()->isServer();
+
+
+    LoadingScreen loadingScreen(this->window, LoadingScreen::MODE::SERVER * serverMode + LoadingScreen::MODE::DEFAULT * !serverMode);
     LoadingScreenResponse loadingScreenResponse = loadingScreen.run(this->window);
     switch (loadingScreenResponse.getType()) {
     case LoadingScreenResponse::TYPE::OK: {
@@ -63,7 +66,7 @@ void Program::run() {
 
 
 
-    if (IsServerTable::get()->isServer()) {
+    if (serverMode) {
         ServerScreen serverScreen(this->window);
         ServerScreenResponse serverScreenResponse = serverScreen.run(this->window);
         switch (serverScreenResponse.getType()) {
