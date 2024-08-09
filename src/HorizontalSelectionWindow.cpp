@@ -24,104 +24,62 @@
 #include "StaticString.hpp"
 
 
-
 HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize) {
 	this->components = components;
 	this->componentSize = componentSize;
-	this->inited = false;
+	this->offset = 0;
 }
-void HorizontalSelectionWindow::run(uint32_t windowW, uint32_t windowH) {
-	Events event;
-	if (!this->inited) {
-		this->inited = true;
-		this->buttons.resize(this->components.size());
-		int32_t y;
-		for (uint32_t i = 0; i < this->components.size(); i = i + 1) {
-			std::shared_ptr<const IDynamicString> pictureName = this->components.at(i).pictureName;
-			StringLcl message = this->components.at(i).message;
-			bool clickable = this->components.at(i).clickable;
-			Events onClick = this->components.at(i).gEvent;
-			std::optional<sf::IntRect> rect = this->components.at(i).rect;
-			if (clickable) {
-				onClick.add(std::make_shared<CloseWindowEvent>());
-			}
-
-			Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message, rect), onClick);
-			this->buttons.at(i) = button;
-			if (button.getY() > (int32_t)(windowH / 2)) {
-				y = button.getY() - 10;
-			}
-		}
-		Events upEvent;
-		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
-		upEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		this->up = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
-		Events downEvent;
-		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
-		downEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		this->down = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
-		this->rect = std::make_unique<RectangularUiElement>(10, y, windowW - 20, windowH - y - 10);
-	}
+void HorizontalSelectionWindow::onRestart() {
+	this->offset = 0;
 }
 void HorizontalSelectionWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(*this->rect.get(), states);
-	if (this->possibleToMoveUp()) {
-		target.draw(this->up);
+	HorizontalSelectionWindowStructure structure = this->getStructure(target.getSize().x, target.getSize().y);
+	target.draw(structure.rect);
+	if (structure.buttonUp.has_value()) {
+		target.draw(structure.buttonUp.value());
 	}
-	if (this->possibleToMoveDown()) {
-		target.draw(this->down);
+	if (structure.buttonDown.has_value()) {
+		target.draw(structure.buttonDown.value());
 	}
-	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		if (this->show(this->buttons.at(i))) {
-			target.draw(this->buttons.at(i), states);
-		}
+	for (uint32_t i = 0; i < structure.contentButtons.size(); i = i + 1) {
+		target.draw(structure.contentButtons.at(i), states);
 	}
 }
-Events HorizontalSelectionWindow::click() {
-	if (this->possibleToMoveUp()) {
-		Events events = this->up.click();
+Events HorizontalSelectionWindow::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+	HorizontalSelectionWindowStructure structure = this->getStructure(windowW, windowH);
+	if (structure.buttonUp.has_value()) {
+		Events events = structure.buttonUp.value().click(mouseX, mouseY);
 		this->handle(events);
 	}
-	if (this->possibleToMoveDown()) {
-		Events events = this->down.click();
+	if (structure.buttonDown.has_value()) {
+		Events events = structure.buttonDown.value().click(mouseX, mouseY);
 		this->handle(events);
 	}
-	for (const auto& b : buttons) {
-		if (this->show(b)) {
-			Events event = b.click();
-			for (uint32_t i = 0; i < event.size(); i = i + 1) {
-				if (std::shared_ptr<CloseWindowEvent> e = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
-					this->finish();
-					return event;
-				}
+	for (const auto& b : structure.contentButtons) {
+		Events event = b.click(mouseX, mouseY);
+		for (uint32_t i = 0; i < event.size(); i = i + 1) {
+			if (std::shared_ptr<CloseWindowEvent> e = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
+				this->finish();
+				return event;
 			}
 		}
 	}
 	return Events();
 }
-void HorizontalSelectionWindow::finish() {
-	this->PopUpElement::finish();
-}
-bool HorizontalSelectionWindow::show(const Button& button) const {
-	return (button.getY() + button.getH() > this->rect->getY() and 
-			button.getY() + button.getH() < this->rect->getY() + this->rect->getH());
-}
-bool HorizontalSelectionWindow::possibleToMoveUp() const {
-	return (this->buttons.back().getY() < this->rect->getY());
+bool HorizontalSelectionWindow::possibleToMoveUp(uint32_t componentsInFrame) const {
+	return (this->offset + componentsInFrame < this->components.size());
 }
 bool HorizontalSelectionWindow::possibleToMoveDown() const {
-	return (this->buttons.front().getY() + this->buttons.front().getH() > this->rect->getY() + this->rect->getH());
+	return this->offset > 0;
 }
 void HorizontalSelectionWindow::moveUp() {
-	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons.at(i).setY(this->buttons.at(i).getY() + (this->componentSize + 10));
-	}
+	this->offset = this->offset + 1;
 }
 void HorizontalSelectionWindow::moveDown() {
-	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		this->buttons.at(i).setY(this->buttons.at(i).getY() - (this->componentSize + 10));
-	}
+	this->offset = this->offset - 1;
 }
+
+
 void HorizontalSelectionWindow::handle(Events& events) {
 	for (uint32_t i = 0; i < events.size(); i = i + 1) {
 		std::shared_ptr<Event> e = events.at(i);
@@ -144,4 +102,51 @@ void HorizontalSelectionWindow::handleMoveDownEvent(std::shared_ptr<MoveHorizont
 }
 void HorizontalSelectionWindow::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
 	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
+}
+
+
+
+uint32_t HorizontalSelectionWindow::getComponentsInFrame(uint32_t windowW, uint32_t windowH) const {
+	return std::min((uint32_t)this->components.size(), windowH * 3 / 4 / this->componentSize);
+}
+HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint32_t windowW, uint32_t windowH) const {
+	HorizontalSelectionWindowStructure structure;
+
+	structure.contentButtons.resize(this->getComponentsInFrame(windowW, windowH));
+	int32_t y;
+	for (uint32_t i = 0; i < structure.contentButtons.size(); i = i + 1) {
+		HorizontalSelectionWindowComponent component = this->components.at(i + this->offset);
+		std::shared_ptr<const IDynamicString> pictureName = component.pictureName;
+		StringLcl message = component.message;
+		bool clickable = component.clickable;
+		Events onClick = component.gEvent;
+		std::optional<sf::IntRect> rect = component.rect;
+		if (clickable) {
+			onClick.add(std::make_shared<CloseWindowEvent>());
+		}
+
+		Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message, rect), onClick);
+		structure.contentButtons.at(i) = button;
+		if (button.getY() > (int32_t)(windowH / 2)) {
+			y = button.getY() - 10;
+		}
+	}
+
+	if (this->possibleToMoveUp(structure.contentButtons.size())) {
+		Events upEvent;
+		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
+		upEvent.add(std::make_shared<PlaySoundEvent>("click"));
+		structure.buttonUp = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
+	}
+	
+	if (this->possibleToMoveDown()) {
+		Events downEvent;
+		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
+		downEvent.add(std::make_shared<PlaySoundEvent>("click"));
+		structure.buttonDown = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
+	}
+
+	structure.rect = RectangularUiElement(10, y, windowW - 20, windowH - y - 10);
+
+	return structure;
 }

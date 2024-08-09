@@ -1568,6 +1568,9 @@
     <ClInclude Include="src\LoadingScreenBg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">

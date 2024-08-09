@@ -244,7 +244,6 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
     WindowButton element = WindowButton(StringLcl(e->details()), StringLcl("OK"));
-    element.run(window.getSize().x, window.getSize().y);
     sf::Event event;
     while (!element.finished()) {
         while (window.pollEvent(event)) {
@@ -254,7 +253,7 @@ void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
                 }
             }
             if (event.type == sf::Event::MouseButtonPressed) {
-                element.click();
+                element.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
             }
         }
         window.clear(sf::Color::Black);

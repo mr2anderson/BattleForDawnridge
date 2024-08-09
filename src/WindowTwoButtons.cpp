@@ -29,7 +29,8 @@ WindowTwoButtons::WindowTwoButtons(const StringLcl& message, const StringLcl& bu
     this->buttonText2 = buttonText2;
     this->events1 = events1;
     this->events2 = events2;
-    this->inited = false;
+    this->events1.add(std::make_shared<CloseWindowEvent>());
+    this->events2.add(std::make_shared<CloseWindowEvent>());
 }
 void WindowTwoButtons::addEvent1(const Events& events) {
     this->events1 = this->events1 + events;
@@ -37,28 +38,13 @@ void WindowTwoButtons::addEvent1(const Events& events) {
 void WindowTwoButtons::addEvent2(const Events& events) {
     this->events2 = this->events2 + events;
 }
-void WindowTwoButtons::run(uint32_t windowW, uint32_t windowH) {
-    if (!this->inited) {
-        this->inited = true;
-
-        uint32_t buttonW = 95;
-        uint32_t buttonH = 30;
-
-        Events onClick;
-        onClick.add(std::make_shared<CloseWindowEvent>());
-
-        this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
-        this->button1 = Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w / 5 + 5, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText1), onClick + this->events1);
-        this->button2 = Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w - buttonW - this->w / 5 - 5, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText2), onClick + this->events2);
-    }
-}
 void WindowTwoButtons::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(label, states);
-    target.draw(button1, states);
-    target.draw(button2, states);
+    target.draw(this->getLabel(target.getSize().x, target.getSize().y), states);
+    target.draw(this->getButton1(target.getSize().x, target.getSize().y), states);
+    target.draw(this->getButton2(target.getSize().x, target.getSize().y), states);
 }
-Events WindowTwoButtons::click() {
-    Events event = this->button1.click();
+Events WindowTwoButtons::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+    Events event = this->getButton1(windowW, windowH).click(mouseX, mouseY);
     for (uint32_t i = 0; i < event.size(); i = i + 1) {
         if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
             this->finish();
@@ -66,7 +52,7 @@ Events WindowTwoButtons::click() {
         }
     }
 
-    event = this->button2.click();
+    event = this->getButton2(windowW, windowH).click(mouseX, mouseY);
     for (uint32_t i = 0; i < event.size(); i = i + 1) {
         if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
             this->finish();
@@ -75,4 +61,24 @@ Events WindowTwoButtons::click() {
     }
    
     return Events();
+}
+
+
+Label WindowTwoButtons::getLabel(uint32_t windowW, uint32_t windowH) const {
+    return Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, this->message);
+}
+
+
+
+static const uint32_t BUTTON_W = 95;
+static const uint32_t BUTTON_H = 30;
+
+
+Button WindowTwoButtons::getButton1(uint32_t windowW, uint32_t windowH) const {
+    return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w / 5 + 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, buttonText1), this->events1);
+}
+
+
+Button WindowTwoButtons::getButton2(uint32_t windowW, uint32_t windowH) const {
+    return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w - BUTTON_W - this->w / 5 - 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, buttonText2), this->events2);
 }

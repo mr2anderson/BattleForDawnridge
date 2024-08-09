@@ -33,7 +33,7 @@ public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Events click() const;
+	Events click(uint32_t mouseX, uint32_t mouseY) const;
 	void setX(int32_t x);
 	void setY(int32_t y);
 	int32_t getX() const;

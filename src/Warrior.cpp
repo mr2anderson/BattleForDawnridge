@@ -355,7 +355,7 @@ std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uin
     return std::make_shared<sf::Sprite>(sprite);
 }
 void Warrior::newFrame(MapState *state, uint32_t currentPlayerId) {
-    if (this->exist() and this->newFrameUpdateTimer.getMS() > 100) {
+    if (this->exist() and this->newFrameUpdateTimer.getMS() > 250) {
         this->newFrameUpdateTimer.restart();
         if (this->getPlayerId() == currentPlayerId) {
             this->enemyMove = false;

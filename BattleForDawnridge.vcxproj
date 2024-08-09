@@ -679,6 +679,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Fonts.hpp" />
     <ClInclude Include="src\Forest.hpp" />
     <ClInclude Include="src\GenerateNetworkGameSettingsWindowEvent.hpp" />
+    <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp" />
     <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
     <ClInclude Include="src\LoadingScreenBg.hpp" />

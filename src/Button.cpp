@@ -29,13 +29,11 @@ Button::Button(std::shared_ptr<RectangularUiElement> element, const Events &onCl
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(*this->element, states);
 }
-Events Button::click() const {
-    uint32_t x = sf::Mouse::getPosition().x;
-    uint32_t y = sf::Mouse::getPosition().y;
-	if (x >= this->element->getX() and
-        y >= this->element->getY() and
-        x < this->element->getX() + this->element->getW() and
-        y < this->element->getY() + this->element->getH()) {
+Events Button::click(uint32_t mouseX, uint32_t mouseY) const {
+	if (mouseX >= this->element->getX() and
+        mouseY >= this->element->getY() and
+        mouseX < this->element->getX() + this->element->getW() and
+        mouseY < this->element->getY() + this->element->getH()) {
         return this->onClick;
     }
     return Events();

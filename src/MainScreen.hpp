@@ -126,15 +126,14 @@ private:
     void drawDarkness(sf::RenderWindow& window);
 
 
-	void removeFinishedElement();
 	void processNewMoveEvents(sf::RenderWindow& window);
 	bool allNewMoveEventsAdded() const;
 	void changeMove();
 	Player* getCurrentPlayer();
 	void addButtonClickEventToQueue(sf::RenderWindow& window);
 	void addGameObjectClickEventToQueue(uint8_t button, sf::RenderWindow& window);
-    void processBaseEvents(sf::RenderWindow& window);
-    void addEvents(Events &e, sf::RenderWindow& window);
+    void processBaseEvents();
+    void addEvents(Events &e);
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView(sf::RenderWindow &window) const;
 	void moveView(sf::RenderWindow &window);
 
@@ -158,7 +157,7 @@ private:
 	bool verifyViewEast(sf::RenderWindow& window);
 
 
-	void handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window);
+	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e);
@@ -168,10 +167,10 @@ private:
 	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e);
 	void handleBuild(std::shared_ptr<BuildEvent> e);
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
-	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window);
+	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e);
 	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e);
 	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
-	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e, sf::RenderWindow& window);
+	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e);
 	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e);
 	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e);
 	void handleSelectEvent(std::shared_ptr<SelectEvent> w);
@@ -187,15 +186,15 @@ private:
 	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e);
 	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e);
 	void handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e);
-	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, sf::RenderWindow& window);
-	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, sf::RenderWindow& window);
-	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, sf::RenderWindow& window);
-	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, sf::RenderWindow& window);
-	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, sf::RenderWindow& window);
+	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e);
+	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e);
+	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e);
+	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e);
+	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e);
 	void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e);
 	void handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e);
 	void handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e);
-	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, sf::RenderWindow& window);
+	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e);
 	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e);
 	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e);
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e);
@@ -205,7 +204,7 @@ private:
     void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e);
     void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e);
     void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e);
-    void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, sf::RenderWindow& window);
+    void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e);
     void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e);
     void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e);
     void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e);

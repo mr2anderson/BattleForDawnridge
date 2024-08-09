@@ -31,12 +31,11 @@ public:
 	bool finished() const;
 	void restart();
 	virtual void update();
-
-	virtual void run(uint32_t windowW, uint32_t windowH) = 0;
-	virtual Events click() = 0;
+	virtual Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
 	virtual bool isCameraDependent() const = 0;
 protected:
-	virtual void finish();
+	virtual void onRestart();
+	void finish();
 private:
 	bool _finished;
 };

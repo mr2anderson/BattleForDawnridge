@@ -29,11 +29,10 @@ class Projectile : public CameraDependentPopUpElement, public IWithTextureName {
 public:
     Projectile();
 
+    void onRestart() override;
     void setSrc(float xInPixels, float yInPixels);
     void setDst(float xInPixels, float yInPixels);
-    void run(uint32_t windowW, uint32_t windowH) override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    Events click() override;
     void update() override;
     virtual std::string getSoundName() const = 0;
     virtual float getTime() const = 0;

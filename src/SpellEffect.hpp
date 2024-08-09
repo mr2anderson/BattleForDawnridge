@@ -25,9 +25,7 @@ class SpellEffect : public CameraDependentPopUpElement {
 public:
     SpellEffect(const std::string &textureName, uint32_t x, uint32_t y);
 
-    void run(uint32_t windowW, uint32_t windowH) override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    Events click() override;
     void update() override;
 private:
     sf::Sprite sprite;

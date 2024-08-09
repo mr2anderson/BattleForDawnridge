@@ -31,15 +31,15 @@ public:
 
     void addEvent1(const Events &events);
 	void addEvent2(const Events& events);
-	void run(uint32_t windowW, uint32_t windowH) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click() override;
+	Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) override;
 private:
 	uint32_t w, h;
 	StringLcl message;
 	StringLcl buttonText1, buttonText2;
-	Label label;
-	Button button1, button2;
 	Events events1, events2;
-	bool inited;
+
+	Label getLabel(uint32_t windowW, uint32_t windowH) const;
+	Button getButton1(uint32_t windowW, uint32_t windowH) const;
+	Button getButton2(uint32_t windowW, uint32_t windowH) const;
 };

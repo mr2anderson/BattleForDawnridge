@@ -25,7 +25,12 @@
 #include "Textures.hpp"
 
 
-Projectile::Projectile() = default;
+Projectile::Projectile() {
+    this->clock.restart();
+}
+void Projectile::onRestart() {
+    this->clock.restart();
+}
 void Projectile::setSrc(float xInPixels, float yInPixels) {
     this->x1 = xInPixels;
     this->y1 = yInPixels;
@@ -58,9 +63,6 @@ void Projectile::setDst(float xInPixels, float yInPixels) {
     }
     this->rotation = (360 - this->rotation); // SFML uses clocking order
 }
-void Projectile::run(uint32_t windowW, uint32_t windowH) {
-    this->clock.restart();
-}
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     float dt = this->clock.getSecondsAsFloat();
 
@@ -70,9 +72,6 @@ void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sprite.setPosition(this->x1 + dt * this->vx, this->y1 + dt * this->vy);
     sprite.setRotation(this->rotation);
     target.draw(sprite, states);
-}
-Events Projectile::click() {
-    return Events();
 }
 void Projectile::update() {
     float dt = this->clock.getSecondsAsFloat();

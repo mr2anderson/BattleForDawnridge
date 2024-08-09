@@ -31,14 +31,8 @@ SpellEffect::SpellEffect(const std::string& textureName, uint32_t x, uint32_t y)
 	this->startX = 64 * x + 64 / 2 - this->sprite.getLocalBounds().width / 2;
 	this->startY = 64 * (float)y - DST;
 }
-void SpellEffect::run(uint32_t windowW, uint32_t windowH) {
-	this->clock.restart();
-}
 void SpellEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(this->sprite, states);
-}
-Events SpellEffect::click() {
-	return Events();
 }
 void SpellEffect::update() {
 	float dt = this->clock.getSecondsAsFloat();

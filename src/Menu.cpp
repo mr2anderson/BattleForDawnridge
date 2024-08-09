@@ -348,17 +348,16 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
                     this->addButtonClickEventToQueue();
                 }
                 else {
-                    Events elementEvents = this->element->click();
+                    Events elementEvents = this->element->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
                     this->addEvents(elementEvents);
                 }
 			}
 		}
 		this->drawEverything(window);
-        this->processEvents(window);
+        this->processEvents();
         if (this->element != nullptr) {
             this->element->update();
             if (this->element->finished()) {
-                this->element->restart();
                 this->element = nullptr;
             }
         }
@@ -383,18 +382,18 @@ void Menu::drawEverything(sf::RenderWindow &window) {
     }
 	window.display();
 }
-void Menu::processEvents(sf::RenderWindow& window) {
+void Menu::processEvents() {
     while (!this->events.empty()) {
         if (this->element != nullptr) {
             break;
         }
-        this->handleEvent(this->events.front(), window);
+        this->handleEvent(this->events.front());
         this->events.pop();
     }
 }
 void Menu::addButtonClickEventToQueue() {
     for (const auto& b : this->buttons) {
-        Events event = b.click();
+        Events event = b.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
         if (!event.empty()) {
             this->addEvents(event);
             break;
@@ -406,12 +405,12 @@ void Menu::addEvents(Events &e) {
         this->events.push(e.at(i));
     }
 }
-void Menu::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window) {
+void Menu::handleEvent(std::shared_ptr<Event> e) {
     if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
         this->handleSoundEvent(playSoundEvent);
     }
     else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
-        this->handleCreateEEvent(createEEvent, window);
+        this->handleCreateEEvent(createEEvent);
     }
     else if (std::shared_ptr<CloseMenuEvent> closeMenuEvent = std::dynamic_pointer_cast<CloseMenuEvent>(e)) {
         this->handleCloseMenuEvent(closeMenuEvent);
@@ -441,9 +440,9 @@ void Menu::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window) {
 void Menu::handleSoundEvent(std::shared_ptr<PlaySoundEvent> e) {
     SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }
-void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window) {
+void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
     this->element = e->getElement();
-    this->element->run(window.getSize().x, window.getSize().y);
+    this->element->restart();
 }
 void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
     this->closeMenu = true;

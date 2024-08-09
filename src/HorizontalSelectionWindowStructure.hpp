@@ -17,29 +17,18 @@
  */
 
 
-#include "PopUpElement.hpp"
-#include "PlaySoundEvent.hpp"
+#include <vector>
+#include <optional>
+#include "Button.hpp"
+#include "Label.hpp"
 
 
-PopUpElement::PopUpElement() {
-	this->_finished = false;
-}
-bool PopUpElement::finished() const {
-	return this->_finished;
-}
-void PopUpElement::restart() {
-	this->_finished = false;
-	this->onRestart();
-}
-void PopUpElement::update() {
+#pragma once
 
-}
-Events PopUpElement::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
-	return Events();
-}
-void PopUpElement::onRestart() {
 
-}
-void PopUpElement::finish() {
-	this->_finished = true;
-}
+struct HorizontalSelectionWindowStructure {
+	RectangularUiElement rect;
+	std::vector<Button> contentButtons;
+	std::optional<Button> buttonUp;
+	std::optional<Button> buttonDown;
+};

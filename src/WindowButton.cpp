@@ -25,31 +25,16 @@ WindowButton::WindowButton(const StringLcl& message, const StringLcl &buttonText
     this->w = w;
     this->h = h;
     this->onFinish = onFinish;
+    this->onFinish.add(std::make_shared<CloseWindowEvent>());
 	this->message = message;
     this->buttonText = buttonText;
-    this->inited = false;
-}
-void WindowButton::run(uint32_t windowW, uint32_t windowH) {
-    if (!this->inited) {
-        this->inited = true;
-
-        uint32_t buttonW = 95;
-        uint32_t buttonH = 30;
-
-        Events onClick;
-        onClick.add(std::make_shared<CloseWindowEvent>());
-        onClick = onClick + onFinish;
-
-        this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
-        this->button = Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - buttonW) / 2, (windowH - this->h) / 2 + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
-    }
 }
 void WindowButton::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(label, states);
-	target.draw(button, states);
+	target.draw(this->getLabel(target.getSize().x, target.getSize().y), states);
+	target.draw(this->getButton(target.getSize().x, target.getSize().y), states);
 }
-Events WindowButton::click() {
-    Events event = this->button.click();
+Events WindowButton::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+    Events event = this->getButton(windowW, windowH).click(mouseX, mouseY);
     for (uint32_t i = 0; i < event.size(); i = i + 1) {
         if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
             this->finish();
@@ -57,4 +42,18 @@ Events WindowButton::click() {
         }
     }
 	return event;
+}
+
+
+Label WindowButton::getLabel(uint32_t windowW, uint32_t windowH) const {
+    return Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, this->message);
+}
+
+
+static const uint32_t BUTTON_W = 95;
+static const uint32_t BUTTON_H = 30;
+
+
+Button WindowButton::getButton(uint32_t windowW, uint32_t windowH) const {
+    return Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - BUTTON_W) / 2, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, this->buttonText), this->onFinish);
 }

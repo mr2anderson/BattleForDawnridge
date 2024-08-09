@@ -24,6 +24,7 @@
 #include "MoveHorizontalSelectionWindowUpEvent.hpp"
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "HorizontalSelectionWindowStructure.hpp"
 
 
 #pragma once
@@ -33,21 +34,16 @@ class HorizontalSelectionWindow : public CameraIndependentPopUpElement {
 public:
 	HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64);
 
-	void run(uint32_t windowW, uint32_t windowH) override;
+	void onRestart() override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	Events click() override;
+	Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) override;
 private:
-	std::unique_ptr<RectangularUiElement> rect;
+	RectangularUiElement rect;
 	std::vector<HorizontalSelectionWindowComponent> components;
 	uint32_t componentSize;
-	std::vector<Button> buttons;
-	Button up;
-	Button down;
-	bool inited;
+	uint32_t offset;
 
-	void finish() override;
-	bool show(const Button& button) const;
-	bool possibleToMoveUp() const;
+	bool possibleToMoveUp(uint32_t componentsInFrame) const;
 	bool possibleToMoveDown() const;
 	void moveUp();
 	void moveDown();
@@ -56,4 +52,7 @@ private:
 	void handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e);
 	void handleMoveDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e);
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
+
+	uint32_t getComponentsInFrame(uint32_t windowW, uint32_t windowH) const;
+	HorizontalSelectionWindowStructure getStructure(uint32_t windowW, uint32_t windowH) const;
 };

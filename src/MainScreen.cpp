@@ -305,15 +305,15 @@ MainScreenResponse MainScreen::run(sf::RenderWindow &window) {
                                 else {
                                     std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView(window);
                                     Events unselectEvent = this->selected->unselect(this->map->getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
-                                    this->addEvents(unselectEvent, window);
+                                    this->addEvents(unselectEvent);
                                 }
                             }
                         }
                     }
                     else  {
                         if (event.mouseButton.button == sf::Mouse::Button::Left) {
-                            Events elementClickEvent = this->element->click();
-                            this->addEvents(elementClickEvent, window);
+                            Events elementClickEvent = this->element->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
+                            this->addEvents(elementClickEvent);
                         }
                     }
                 }
@@ -324,16 +324,18 @@ MainScreenResponse MainScreen::run(sf::RenderWindow &window) {
             this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
         }
         Playlist::get()->update();
-        this->removeFinishedElement();
         this->processNewMoveEvents(window);
-        this->processBaseEvents(window);
+        this->processBaseEvents();
         if (this->element != nullptr) {
             this->element->update();
+			if (this->element->finished()) {
+				this->element = nullptr;
+			}
         }
         if (this->animation.has_value()) {
             Events animationEvent;
             animationEvent = this->animation.value().process(this->map->getStatePtr());
-            this->addEvents(animationEvent, window);
+            this->addEvents(animationEvent);
         }
         this->moveView(window);
         if (this->returnToMenu) {
@@ -487,21 +489,15 @@ void MainScreen::drawDarkness(sf::RenderWindow &window) {
 
 
 
-void MainScreen::removeFinishedElement() {
-    if (this->element != nullptr and this->element->finished()) {
-        this->element->restart();
-        this->element = nullptr;
-    }
-}
 void MainScreen::processNewMoveEvents(sf::RenderWindow& window) {
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
 		}
 		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
-		this->addEvents(newMoveEvent, window);
+		this->addEvents(newMoveEvent);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-        this->processBaseEvents(window);
+        this->processBaseEvents();
 	}
 }
 bool MainScreen::allNewMoveEventsAdded() const {
@@ -524,9 +520,9 @@ Player* MainScreen::getCurrentPlayer() {
 }
 void MainScreen::addButtonClickEventToQueue(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		Events buttonClickEvent = this->buttons.at(i).click();
+		Events buttonClickEvent = this->buttons.at(i).click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 		if (!buttonClickEvent.empty()) {
-			this->addEvents(buttonClickEvent, window);
+			this->addEvents(buttonClickEvent);
 			break;
 		}
 	}
@@ -539,25 +535,25 @@ void MainScreen::addGameObjectClickEventToQueue(uint8_t button, sf::RenderWindow
         GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
         Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
         if (!gor.empty()) {
-            this->addEvents(gor, window);
+            this->addEvents(gor);
             return;
         }
     }
 }
-void MainScreen::processBaseEvents(sf::RenderWindow& window) {
+void MainScreen::processBaseEvents() {
     while (!this->events.empty()) {
         if (this->element != nullptr or this->animation.has_value() or !this->viewMovingQueue.empty()) {
             break;
         }
-        this->handleEvent(this->events.front(), window);
+        this->handleEvent(this->events.front());
         this->events.pop();
     }
 }
-void MainScreen::addEvents(Events &e, sf::RenderWindow& window) {
+void MainScreen::addEvents(Events &e) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
 		std::shared_ptr<Event> event = e.at(i);
 		if (event->isUrgent()) {
-			this->handleEvent(event, window);
+			this->handleEvent(event);
 		}
 		else {
 			this->events.push(event);
@@ -712,7 +708,7 @@ bool MainScreen::verifyViewEast(sf::RenderWindow& window) {
 
 
 
-void MainScreen::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window) {
+void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
         this->handleAddResourceEvent(addResourceEvent);
     }
@@ -741,7 +737,7 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window)
         this->handlePlaySoundEvent(playSoundEvent);
     }
     else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
-        this->handleCreatePopUpElementEvent(createEEvent, window);
+        this->handleCreatePopUpElementEvent(createEEvent);
     }
     else if (std::shared_ptr<ChangeMoveEvent> changeMoveEvent = std::dynamic_pointer_cast<ChangeMoveEvent>(e)) {
         this->handleChangeMoveEvent(changeMoveEvent);
@@ -750,7 +746,7 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window)
         this->handleReturnToMenuEvent(returnToMenuEvent);
     }
     else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
-        this->handleDestroyEvent(destroyEvent, window);
+        this->handleDestroyEvent(destroyEvent);
     }
     else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e)) {
         this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent);
@@ -798,19 +794,19 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window)
 		this->handleResetHighlightEvent(resetHighlightEvent);
 	}
 	else if (std::shared_ptr<DoTradeEvent> doTradeEvent = std::dynamic_pointer_cast<DoTradeEvent>(e)) {
-		this->handleDoTradeEvent(doTradeEvent, window);
+		this->handleDoTradeEvent(doTradeEvent);
 	}
 	else if (std::shared_ptr<StartWarriorProducingEvent> startWarriorProducingEvent = std::dynamic_pointer_cast<StartWarriorProducingEvent>(e)) {
-		this->handleStartWarriorProducingEvent(startWarriorProducingEvent, window);
+		this->handleStartWarriorProducingEvent(startWarriorProducingEvent);
 	}
 	else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
-		this->handleTryToBuildEvent(tryToBuildEvent, window);
+		this->handleTryToBuildEvent(tryToBuildEvent);
 	}
 	else if (std::shared_ptr<KillNextTurnEvent> killNextTurnEvent = std::dynamic_pointer_cast<KillNextTurnEvent>(e)) {
-		this->handleKillNextTurnEvent(killNextTurnEvent, window);
+		this->handleKillNextTurnEvent(killNextTurnEvent);
 	}
 	else if (std::shared_ptr<RevertKillNextTurnEvent> revertKillNextTurnEvent = std::dynamic_pointer_cast<RevertKillNextTurnEvent>(e)) {
-		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent, window);
+		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent);
 	}
 	else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
 		this->handleCloseAnimationEvent(closeAnimationEvent);
@@ -822,7 +818,7 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window)
 		this->handleSetSpellEvent(setSpellEvent);
 	}
 	else if (std::shared_ptr<UseSpellEvent> useSpellEvent = std::dynamic_pointer_cast<UseSpellEvent>(e)) {
-		this->handleUseSpellEvent(useSpellEvent, window);
+		this->handleUseSpellEvent(useSpellEvent);
 	}
 	else if (std::shared_ptr<MarkSpellAsUsedEvent> markSpellAsUsedEvent = std::dynamic_pointer_cast<MarkSpellAsUsedEvent>(e)) {
 		this->handleMarkSpellAsUsedEvent(markSpellAsUsedEvent);
@@ -852,7 +848,7 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window)
         this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent);
     }
     else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
-        this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent, window);
+        this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent);
     }
     else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
         this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent);
@@ -897,9 +893,9 @@ void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
     }
 	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }
-void MainScreen::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e) {
     this->element = e->getElement();
-    this->element->run(window.getSize().x, window.getSize().y);
+	this->element->restart();
 }
 void MainScreen::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e) {
 	this->changeMove();
@@ -907,9 +903,9 @@ void MainScreen::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e) {
 void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
 	this->returnToMenu = true;
 }
-void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map->getStatePtr());
-	this->addEvents(destroyBuildingEvent, window);
+	this->addEvents(destroyBuildingEvent);
 }
 void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
 	e->getSpec()->decreaseCurrentProducingMovesLeft();
@@ -959,19 +955,19 @@ void MainScreen::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e) {
 void MainScreen::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e) {
 	this->highlightTable.clear();
 }
-void MainScreen::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e) {
 	Events events = e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
-	this->addEvents(events, window);
+	this->addEvents(events);
 }
-void MainScreen::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e) {
 	Events events = e->getSpec()->startProducing(e->getWarrior());
-	this->addEvents(events, window);
+	this->addEvents(events);
 }
-void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
 		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
 		Events bmStartEvent = bm.start(this->map->getStatePtr());
-		this->addEvents(bmStartEvent, window);
+		this->addEvents(bmStartEvent);
 	}
 	else {
 		Events clickEvent;
@@ -980,16 +976,16 @@ void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, sf::R
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_resources_for_building}"), StringLcl("{OK}"), clickEvent);
 		Events unableToBuildEvent;
 		unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
-		this->addEvents(unableToBuildEvent, window);
+		this->addEvents(unableToBuildEvent);
 	}
 }
-void MainScreen::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e) {
 	Events events = e->getWarrior()->killNextTurn();
-	this->addEvents(events, window);
+	this->addEvents(events);
 }
-void MainScreen::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e) {
 	Events events = e->getWarrior()->revertKillNextTurn();
-	this->addEvents(events, window);
+	this->addEvents(events);
 }
 void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
 	this->animation = std::nullopt;
@@ -1000,9 +996,9 @@ void MainScreen::handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<Decre
 void MainScreen::handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e) {
 	e->getSpec()->setSpell(e->getSpell());
 }
-void MainScreen::handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e) {
 	Events events = e->getSpell()->use();
-	this->addEvents(events, window);
+	this->addEvents(events);
 }
 void MainScreen::handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e) {
 	e->getSpell()->markAsUsed();
@@ -1031,7 +1027,7 @@ void MainScreen::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealing
 void MainScreen::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e) {
     e->getWarrior()->wipeHealingAbility();
 }
-void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, sf::RenderWindow& window) {
+void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e) {
     this->playerIsActive[e->getPlayerId() - 1] = false;
     uint32_t count = 0;
     for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
@@ -1053,7 +1049,7 @@ void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsIna
         w = std::make_shared<WindowButton>(StringLcl("{player_is_out}"), StringLcl("{OK}"), event);
     }
     std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
-    this->handleCreatePopUpElementEvent(createW, window);
+    this->handleCreatePopUpElementEvent(createW);
 }
 void MainScreen::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e) {
     e->getSpec()->increaseMoveCtr();

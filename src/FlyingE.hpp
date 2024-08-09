@@ -26,17 +26,15 @@
 
 template<typename T> class FlyingE : public CameraDependentPopUpElement {
 public:
-	FlyingE() = default;
-
-	void run(uint32_t windowW, uint32_t windowH) override {
+    FlyingE() {
         this->clock.restart();
-        this->dst = 128;
+    }
+
+    void onRestart() override {
+        this->clock.restart();
     }
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
         target.draw(this->t, states);
-    }
-	Events click() override {
-        return Events();
     }
 	void update() override {
         float dt = this->clock.getSecondsAsFloat();
@@ -68,15 +66,15 @@ private:
     T t;
     float startX, startY;
 	Clock clock;
-	float dst;
 
+    static constexpr float DST = 128;
     static constexpr float TIME = 0.625;
 
     void setPosition(float dt) {
         this->t.setPosition(this->calcPosition(dt));
     }
 	sf::Vector2f calcPosition(float dt) const {
-        float v = this->dst / TIME;
+        float v = DST / TIME;
 
         float currentX = this->startX;
         float currentY = this->startY - v * dt;

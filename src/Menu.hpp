@@ -51,13 +51,13 @@ private:
 	MenuBg bg;
 
 	void drawEverything(sf::RenderWindow& window);
-    void processEvents(sf::RenderWindow& window);
+    void processEvents();
     void addButtonClickEventToQueue();
     void addEvents(Events &e);
 
-    void handleEvent(std::shared_ptr<Event> e, sf::RenderWindow& window);
+    void handleEvent(std::shared_ptr<Event> e);
     void handleSoundEvent(std::shared_ptr<PlaySoundEvent> e);
-    void handleCreateEEvent(std::shared_ptr<CreateEEvent> e, sf::RenderWindow& window);
+    void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
     void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
     void handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e);

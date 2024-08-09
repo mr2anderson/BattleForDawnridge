@@ -27,35 +27,18 @@ WindowButtonImage::WindowButtonImage(const StringLcl& message, const StringLcl& 
     this->w = w;
     this->h = h;
     this->onFinish = onFinish;
+    this->onFinish.add(std::make_shared<CloseWindowEvent>());
     this->message = message;
     this->buttonText = buttonText;
     this->pictureName = pictureName;
-    this->inited = false;
-}
-void WindowButtonImage::run(uint32_t windowW, uint32_t windowH) {
-    if (!this->inited) {
-        this->inited = true;
-
-        uint32_t buttonW = 95;
-        uint32_t buttonH = 30;
-
-        Events onClick;
-        onClick.add(std::make_shared<CloseWindowEvent>());
-        onClick = onClick + onFinish;
-
-        this->label = Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, message);
-        this->button = Button(std::make_shared<Label>(this->label.getX() + (this->w - buttonW) / 2, this->label.getY() + h - buttonH - 15, buttonW, buttonH, buttonText), onClick);
-        sf::Texture* t = Textures::get()->get(this->pictureName);
-        this->image = Image(this->label.getX() + (this->w - t->getSize().x) / 2, this->button.getY() - 15 - t->getSize().y, std::make_shared<StaticString>(this->pictureName));
-    }
 }
 void WindowButtonImage::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(this->label, states);
-    target.draw(this->image, states);
-    target.draw(this->button, states);
+    target.draw(this->getLabel(target.getSize().x, target.getSize().y), states);
+    target.draw(this->getImage(target.getSize().x, target.getSize().y), states);
+    target.draw(this->getButton(target.getSize().x, target.getSize().y), states);
 }
-Events WindowButtonImage::click() {
-    Events event = this->button.click();
+Events WindowButtonImage::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+    Events event = this->getButton(windowW, windowH).click(mouseX, mouseY);
     for (uint32_t i = 0; i < event.size(); i = i + 1) {
         if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
             this->finish();
@@ -63,4 +46,24 @@ Events WindowButtonImage::click() {
         }
     }
     return event;
+}
+
+
+Label WindowButtonImage::getLabel(uint32_t windowW, uint32_t windowH) const {
+    return Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, this->message);
+}
+
+
+static const uint32_t BUTTON_W = 95;
+static const uint32_t BUTTON_H = 30;
+
+
+Image WindowButtonImage::getImage(uint32_t windowW, uint32_t windowH) const {
+    sf::Texture* t = Textures::get()->get(this->pictureName);
+    return Image((windowW - this->w) / 2 + (this->w - t->getSize().x) / 2, (windowH - this->h) / 2 + this->h - BUTTON_H - 30 - t->getSize().y, std::make_shared<StaticString>(this->pictureName));
+}
+
+
+Button WindowButtonImage::getButton(uint32_t windowW, uint32_t windowH) const {
+    return Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - BUTTON_W) / 2, (windowH - this->h) / 2 + this->h - BUTTON_H - 15, BUTTON_W, BUTTON_H, buttonText), this->onFinish);
 }
