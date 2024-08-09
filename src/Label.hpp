@@ -17,7 +17,7 @@
  */
 
 
-#include "RectangularUIElement.hpp"
+#include "RectangularUiElement.hpp"
 #include "StringLcl.hpp"
 
 
