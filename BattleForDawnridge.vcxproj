@@ -609,6 +609,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\BarracksSpec.hpp" />
     <ClInclude Include="src\BigArrow.hpp" />
     <ClInclude Include="src\BlackKnight.hpp" />
+    <ClInclude Include="src\BuildButtonSpec.hpp" />
     <ClInclude Include="src\BuildEvent.hpp" />
     <ClInclude Include="src\Building.hpp" />
     <ClInclude Include="src\BuildingHorizontalSelectionWindowComponent.hpp" />
@@ -616,6 +617,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\BuildingShortInfo.hpp" />
     <ClInclude Include="src\BuildingStatePointer.hpp" />
     <ClInclude Include="src\Button.hpp" />
+    <ClInclude Include="src\EndTurnButtonSpec.hpp" />
     <ClInclude Include="src\IButtonSpec.hpp" />
     <ClInclude Include="src\CameraDependentPopUpElement.hpp" />
     <ClInclude Include="src\CameraIndependentPopUpElement.hpp" />
@@ -697,6 +699,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LoadingScreenResponse.hpp" />
     <ClInclude Include="src\LocalGameButtonSpec.hpp" />
     <ClInclude Include="src\Logs.hpp" />
+    <ClInclude Include="src\MainScreenButtonSpec.hpp" />
     <ClInclude Include="src\MainScreenResponse.hpp" />
     <ClInclude Include="src\MenuBg.hpp" />
     <ClInclude Include="src\MenuButtonSpec.hpp" />
@@ -717,6 +720,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IWithTextureName.hpp" />
     <ClInclude Include="src\ILightSource.hpp" />
     <ClInclude Include="src\PublicIP.hpp" />
+    <ClInclude Include="src\ReturnToMenuButtonSpec.hpp" />
+    <ClInclude Include="src\SaveGameButtonSpec.hpp" />
     <ClInclude Include="src\ScreenAlreadyFinished.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
@@ -925,6 +930,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\BarracksSpec.cpp" />
     <ClCompile Include="src\BigArrow.cpp" />
     <ClCompile Include="src\BlackKnight.cpp" />
+    <ClCompile Include="src\BuildButtonSpec.cpp" />
     <ClCompile Include="src\BuildEvent.cpp" />
     <ClCompile Include="src\Building.cpp" />
     <ClCompile Include="src\BuildingHorizontalSelectionWindowComponent.cpp" />
@@ -993,6 +999,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\EmptyLightSource.cpp" />
     <ClCompile Include="src\EnableCursorEvent.cpp" />
     <ClCompile Include="src\EnableWarriorRageModeEvent.cpp" />
+    <ClCompile Include="src\EndTurnButtonSpec.cpp" />
     <ClCompile Include="src\Event.cpp" />
     <ClCompile Include="src\Events.cpp" />
     <ClCompile Include="src\ExitButtonSpec.cpp" />
@@ -1010,6 +1017,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\LoadingScreenResponse.cpp" />
     <ClCompile Include="src\LocalGameButtonSpec.cpp" />
     <ClCompile Include="src\Logs.cpp" />
+    <ClCompile Include="src\MainScreenButtonSpec.cpp" />
     <ClCompile Include="src\MainScreenResponse.cpp" />
     <ClCompile Include="src\MenuBg.cpp" />
     <ClCompile Include="src\MenuButtonSpec.cpp" />
@@ -1118,11 +1126,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ResourceOrderPriorityTable.cpp" />
     <ClCompile Include="src\ResourcePoint.cpp" />
     <ClCompile Include="src\Resources.cpp" />
+    <ClCompile Include="src\ReturnToMenuButtonSpec.cpp" />
     <ClCompile Include="src\ReturnToMenuEvent.cpp" />
     <ClCompile Include="src\RevertKillNextTurnEvent.cpp" />
     <ClCompile Include="src\Road.cpp" />
     <ClCompile Include="src\RoadSpec.cpp" />
     <ClCompile Include="src\Root.cpp" />
+    <ClCompile Include="src\SaveGameButtonSpec.cpp" />
     <ClCompile Include="src\SaveGameEvent.cpp" />
     <ClCompile Include="src\Sawmill.cpp" />
     <ClCompile Include="src\SawmillSpec.cpp" />

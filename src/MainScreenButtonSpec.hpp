@@ -17,23 +17,21 @@
  */
 
 
-#include "Label.hpp"
-#include "Image.hpp"
+#include "IButtonSpec.hpp"
 
 
 #pragma once
 
 
-class LabelWithImage : public RectangularUiElement {
+class MainScreenButtonSpec : public IButtonSpec {
 public:
-    LabelWithImage();
-    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, std::shared_ptr<const IDynamicString> textureName, const StringLcl &message, std::optional<sf::IntRect> rect = std::nullopt);
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-    void setX(int32_t newX) override;
-    void setY(int32_t newY) override;
+	MainScreenButtonSpec();
+	MainScreenButtonSpec(uint32_t index);
+protected:
+	uint32_t getX() const;
+	uint32_t getY() const;
+	uint32_t getW() const;
+	uint32_t getH() const;
 private:
-    Label label;
-    Image image;
+	uint32_t index;
 };
