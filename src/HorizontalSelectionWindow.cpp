@@ -24,9 +24,10 @@
 #include "StaticString.hpp"
 
 
-HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize) {
+HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize, uint32_t marginSize) {
 	this->components = components;
 	this->componentSize = componentSize;
+	this->marginSize = marginSize;
 	this->offset = 0;
 }
 void HorizontalSelectionWindow::onRestart() {
@@ -128,10 +129,10 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 			onClick.add(std::make_shared<CloseWindowEvent>());
 		}
 
-		Button button(std::make_shared<LabelWithImage>(30 + this->componentSize, windowH - 10 - (this->componentSize + 10) * (i + 1), windowW - (50 + this->componentSize), this->componentSize, pictureName, message, rect), onClick);
+		Button button(std::make_shared<LabelWithImage>(3 * this->marginSize + this->componentSize, windowH - this->marginSize - (this->componentSize + this->marginSize) * (i + 1), windowW - (5 * this->marginSize + this->componentSize), this->componentSize, pictureName, message, rect), onClick);
 		structure.contentButtons.at(i) = button;
 		if (button.getY() > (int32_t)(windowH / 2)) {
-			y = button.getY() - 10;
+			y = button.getY() - this->marginSize;
 		}
 	}
 
@@ -139,17 +140,17 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 		Events upEvent;
 		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
 		upEvent.add(std::make_shared<PlaySoundEvent>("click", true));
-		structure.buttonUp = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
+		structure.buttonUp = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - 2 * (this->componentSize + this->marginSize), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
 	}
 	
 	if (this->possibleToMoveDown()) {
 		Events downEvent;
 		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
 		downEvent.add(std::make_shared<PlaySoundEvent>("click", true));
-		structure.buttonDown = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
+		structure.buttonDown = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - (this->componentSize + this->marginSize), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
 	}
 
-	structure.rect = RectangularUiElement(10, y, windowW - 20, windowH - y - 10);
+	structure.rect = RectangularUiElement(this->marginSize, y, windowW - 2 * this->marginSize, windowH - y - this->marginSize);
 
 	return structure;
 }

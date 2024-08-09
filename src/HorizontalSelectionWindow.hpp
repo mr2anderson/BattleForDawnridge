@@ -32,7 +32,7 @@
 
 class HorizontalSelectionWindow : public CameraIndependentPopUpElement {
 public:
-	HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64);
+	HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64, uint32_t marginSize = 10);
 
 	void onRestart() override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -40,7 +40,7 @@ public:
 private:
 	RectangularUiElement rect;
 	std::vector<HorizontalSelectionWindowComponent> components;
-	uint32_t componentSize;
+	uint32_t componentSize, marginSize;
 	uint32_t offset;
 
 	bool possibleToMoveUp(uint32_t componentsInFrame) const;
