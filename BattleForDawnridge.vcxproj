@@ -598,6 +598,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Arable.hpp" />
     <ClInclude Include="src\ArableSpec.hpp" />
     <ClInclude Include="src\ArchiveType.hpp" />
+    <ClInclude Include="src\AreaResourcePoint.hpp" />
     <ClInclude Include="src\Barracks.hpp" />
     <ClInclude Include="src\BarracksSpec.hpp" />
     <ClInclude Include="src\BigArrow.hpp" />
@@ -641,6 +642,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CompByDrawPriority.hpp" />
     <ClInclude Include="src\CompByNewMovePriority.hpp" />
     <ClInclude Include="src\ConductionGraph.hpp" />
+    <ClInclude Include="src\ConductionResourcePoint.hpp" />
     <ClInclude Include="src\CouldntFindNewWarriorPosition.hpp" />
     <ClInclude Include="src\CouldntOpen.hpp" />
     <ClInclude Include="src\CouldntOpenFont.hpp" />
@@ -679,9 +681,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GenerateNetworkGameSettingsWindowEvent.hpp" />
     <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
+    <ClInclude Include="src\LoadingScreenBg.hpp" />
     <ClInclude Include="src\LoadingScreenResponse.hpp" />
     <ClInclude Include="src\Logs.hpp" />
     <ClInclude Include="src\MainScreenResponse.hpp" />
+    <ClInclude Include="src\MenuBg.hpp" />
     <ClInclude Include="src\MenuResponse.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
     <ClInclude Include="src\Program.hpp" />
@@ -698,6 +702,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IWithLightSource.hpp" />
     <ClInclude Include="src\IWithTextureName.hpp" />
     <ClInclude Include="src\ILightSource.hpp" />
+    <ClInclude Include="src\PublicIP.hpp" />
     <ClInclude Include="src\ScreenAlreadyFinished.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
@@ -900,6 +905,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\AnimationState.cpp" />
     <ClCompile Include="src\Arable.cpp" />
     <ClCompile Include="src\ArableSpec.cpp" />
+    <ClCompile Include="src\AreaResourcePoint.cpp" />
     <ClCompile Include="src\Barracks.cpp" />
     <ClCompile Include="src\BarracksSpec.cpp" />
     <ClCompile Include="src\BigArrow.cpp" />
@@ -941,6 +947,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CompByDrawPriority.cpp" />
     <ClCompile Include="src\CompByNewMovePriority.cpp" />
     <ClCompile Include="src\ConductionGraph.cpp" />
+    <ClCompile Include="src\ConductionResourcePoint.cpp" />
     <ClCompile Include="src\CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="src\CouldntOpen.cpp" />
     <ClCompile Include="src\CouldntOpenFont.cpp" />
@@ -977,9 +984,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\GenerateNetworkGameSettingsWindowEvent.cpp" />
     <ClCompile Include="src\InvertIsServerStateEvent.cpp" />
     <ClCompile Include="src\IsServerTable.cpp" />
+    <ClCompile Include="src\LoadingScreenBg.cpp" />
     <ClCompile Include="src\LoadingScreenResponse.cpp" />
     <ClCompile Include="src\Logs.cpp" />
     <ClCompile Include="src\MainScreenResponse.cpp" />
+    <ClCompile Include="src\MenuBg.cpp" />
     <ClCompile Include="src\MenuResponse.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
     <ClCompile Include="src\Program.cpp" />
@@ -1068,6 +1077,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\PlaySoundEvent.cpp" />
     <ClCompile Include="src\PopUpElement.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
+    <ClCompile Include="src\PublicIP.cpp" />
     <ClCompile Include="src\Quarry.cpp" />
     <ClCompile Include="src\QuarrySpec.cpp" />
     <ClCompile Include="src\RageSpell.cpp" />
