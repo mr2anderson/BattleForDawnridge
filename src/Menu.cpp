@@ -48,6 +48,7 @@ Menu::Menu(sf::RenderWindow& window) {
     this->alreadyFinished = false;
     this->closeMenu = false;
     this->element = nullptr;
+    this->regenerateButtons();
     if (!FirstTimeTipsTable::get()->wasDisplayed("welcome")) {
         FirstTimeTipsTable::get()->markAsDisplayed("welcome");
         Events clickEvent;
@@ -98,8 +99,8 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
         }
 	}
 }
-std::vector<Button> Menu::getButtons() const {
-    return {
+void Menu::regenerateButtons() {
+    this->buttons = {
         Button(LocalGameButtonSpec()),
         Button(NetworkGameButtonSpec(1)),
         Button(GuideButtonSpec(2)),
@@ -120,8 +121,7 @@ void Menu::drawEverything(sf::RenderWindow &window) {
 	window.display();
 }
 void Menu::drawButtons(sf::RenderWindow& window) {
-    std::vector<Button> buttons = this->getButtons();
-    for (const auto& b : buttons) {
+    for (const auto& b : this->buttons) {
         window.draw(b);
     }
 }
@@ -135,7 +135,7 @@ void Menu::processEvents() {
     }
 }
 void Menu::addButtonClickEventToQueue() {
-    std::vector<Button> buttons = this->getButtons();
+    this->regenerateButtons(); // On click button events can be changed during run time
     for (const auto& b : buttons) {
         Events event = b.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
         if (!event.empty()) {

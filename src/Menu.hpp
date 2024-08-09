@@ -46,8 +46,9 @@ private:
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
 	MenuBg bg;
+    std::vector<Button> buttons;
 
-    std::vector<Button> getButtons() const;
+    void regenerateButtons();
 
 	void drawEverything(sf::RenderWindow& window);
     void drawButtons(sf::RenderWindow& window);
