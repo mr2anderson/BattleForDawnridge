@@ -18,7 +18,6 @@
 
 
 #include "SaveGameButtonSpec.hpp"
-#include "LabelWithImage.hpp"
 #include "SaveGameEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
@@ -30,8 +29,11 @@ SaveGameButtonSpec::SaveGameButtonSpec() = default;
 SaveGameButtonSpec::SaveGameButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<RectangularUiElement> SaveGameButtonSpec::getBase() const {
-	return std::make_shared<LabelWithImage>(this->getX(), this->getY(), this->getW(), this->getH(), std::make_shared<StaticString>("save_icon"), StringLcl("{save_game}"));
+std::shared_ptr<IDynamicString> SaveGameButtonSpec::getTextureName() const {
+	return std::make_shared<StaticString>("save_icon");
+}
+StringLcl SaveGameButtonSpec::getString() const {
+	return StringLcl("{save_game}");
 }
 Events SaveGameButtonSpec::getEvents() const {
 	Events clickEvent;

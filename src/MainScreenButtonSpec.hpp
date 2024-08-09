@@ -18,6 +18,8 @@
 
 
 #include "IButtonSpec.hpp"
+#include "IDynamicString.hpp"
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -28,10 +30,10 @@ public:
 	MainScreenButtonSpec();
 	MainScreenButtonSpec(uint32_t index);
 protected:
-	uint32_t getX() const;
-	uint32_t getY() const;
-	uint32_t getW() const;
-	uint32_t getH() const;
+	virtual std::shared_ptr<IDynamicString> getTextureName() const = 0;
+	virtual StringLcl getString() const = 0;
 private:
 	uint32_t index;
+
+	std::shared_ptr<RectangularUiElement> getBase() const override;
 };

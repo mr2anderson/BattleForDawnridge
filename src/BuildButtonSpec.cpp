@@ -18,7 +18,6 @@
 
 
 #include "BuildButtonSpec.hpp"
-#include "LabelWithImage.hpp"
 #include "StaticString.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "PlaySoundEvent.hpp"
@@ -55,8 +54,11 @@ BuildButtonSpec::BuildButtonSpec() = default;
 BuildButtonSpec::BuildButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<RectangularUiElement> BuildButtonSpec::getBase() const {
-	return std::make_shared<LabelWithImage>(this->getX(), this->getY(), this->getW(), this->getH(), std::make_shared<StaticString>("hammer_icon"), StringLcl("{open_build_menu}"));
+std::shared_ptr<IDynamicString> BuildButtonSpec::getTextureName() const {
+	return std::make_shared<StaticString>("hammer_icon");
+}
+StringLcl BuildButtonSpec::getString() const {
+	return StringLcl("{open_build_menu}");
 }
 
 

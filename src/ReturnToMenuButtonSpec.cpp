@@ -18,19 +18,22 @@
 
 
 #include "ReturnToMenuButtonSpec.hpp"
-#include "Label.hpp"
 #include "WindowTwoButtons.hpp"
 #include "ReturnToMenuEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "StaticString.hpp"
 
 
 ReturnToMenuButtonSpec::ReturnToMenuButtonSpec() = default;
 ReturnToMenuButtonSpec::ReturnToMenuButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<RectangularUiElement> ReturnToMenuButtonSpec::getBase() const {
-	return std::make_shared<Label>(this->getX(), this->getY(), this->getW(), this->getH(), StringLcl("{to_menu}"));
+std::shared_ptr<IDynamicString> ReturnToMenuButtonSpec::getTextureName() const {
+	return std::make_shared<StaticString>("to_menu_icon");
+}
+StringLcl ReturnToMenuButtonSpec::getString() const {
+	return StringLcl("{to_menu}");
 }
 Events ReturnToMenuButtonSpec::getEvents() const {
 	Events clickEvent;

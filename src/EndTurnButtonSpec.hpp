@@ -28,6 +28,7 @@ public:
 	EndTurnButtonSpec();
 	EndTurnButtonSpec(uint32_t index);
 private:
-	std::shared_ptr<RectangularUiElement> getBase() const override;
+	std::shared_ptr<IDynamicString> getTextureName() const override;
+	StringLcl getString() const override;
 	Events getEvents() const override;
 };

@@ -18,7 +18,6 @@
 
 
 #include "EndTurnButtonSpec.hpp"
-#include "LabelWithImage.hpp"
 #include "ChangeMoveEvent.hpp"
 #include "WindowTwoButtons.hpp"
 #include "CreateEEvent.hpp"
@@ -30,8 +29,11 @@ EndTurnButtonSpec::EndTurnButtonSpec() = default;
 EndTurnButtonSpec::EndTurnButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<RectangularUiElement> EndTurnButtonSpec::getBase() const {
-	return std::make_shared<LabelWithImage>(this->getX(), this->getY(), this->getW(), this->getH(), std::make_shared<StaticString>("new_turn_icon"), StringLcl("{new_move}"));
+std::shared_ptr<IDynamicString> EndTurnButtonSpec::getTextureName() const {
+	return std::make_shared<StaticString>("new_turn_icon");
+}
+StringLcl EndTurnButtonSpec::getString() const {
+	return StringLcl("{new_move}");
 }
 Events EndTurnButtonSpec::getEvents() const {
 	Events clickEvent;

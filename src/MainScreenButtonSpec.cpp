@@ -18,6 +18,7 @@
 
 
 #include "MainScreenButtonSpec.hpp"
+#include "LabelWithImage.hpp"
 
 
 MainScreenButtonSpec::MainScreenButtonSpec() {
@@ -26,15 +27,6 @@ MainScreenButtonSpec::MainScreenButtonSpec() {
 MainScreenButtonSpec::MainScreenButtonSpec(uint32_t index) {
 	this->index = index;
 }
-uint32_t MainScreenButtonSpec::getX() const {
-	return 5;
-}
-uint32_t MainScreenButtonSpec::getY() const {
-	return 40 + this->index * (64 + 10);
-}
-uint32_t MainScreenButtonSpec::getW() const {
-	return 200;
-}
-uint32_t MainScreenButtonSpec::getH() const {
-	return 64;
+std::shared_ptr<RectangularUiElement> MainScreenButtonSpec::getBase() const {
+	return std::make_shared<LabelWithImage>(5, 40 + this->index * (64 + 10), 200, 64, this->getTextureName(), this->getString());
 }
