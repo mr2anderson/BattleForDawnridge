@@ -112,13 +112,12 @@ void HorizontalSelectionWindow::handleMoveDownEvent(std::shared_ptr<MoveHorizont
 
 
 uint32_t HorizontalSelectionWindow::getComponentsInFrame(uint32_t windowW, uint32_t windowH) const {
-	return std::min((uint32_t)this->components.size(), windowH * 3 / 4 / this->componentSize);
+	return std::min((uint32_t)this->components.size(), windowH / 2 / this->componentSize);
 }
 HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint32_t windowW, uint32_t windowH) const {
 	HorizontalSelectionWindowStructure structure;
 
 	structure.contentButtons.resize(this->getComponentsInFrame(windowW, windowH));
-	int32_t y;
 	for (uint32_t i = 0; i < structure.contentButtons.size(); i = i + 1) {
 		HorizontalSelectionWindowComponent component = this->components.at(i + this->offset);
 		std::shared_ptr<const IDynamicString> pictureName = component.pictureName;
@@ -132,9 +131,6 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 
 		Button button(std::make_shared<LabelWithImage>(3 * this->marginSize + this->componentSize, windowH - this->marginSize - (this->componentSize + this->marginSize) * (i + 1), windowW - (5 * this->marginSize + this->componentSize), this->componentSize, pictureName, message, rect), onClick);
 		structure.contentButtons.at(i) = button;
-		if (button.getY() > (int32_t)(windowH / 2)) {
-			y = button.getY() - this->marginSize;
-		}
 	}
 
 	if (this->possibleToMoveUp(structure.contentButtons.size())) {
@@ -151,7 +147,8 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 		structure.buttonDown = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - (this->componentSize + this->marginSize), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
 	}
 
-	structure.rect = RectangularUiElement(this->marginSize, y, windowW - 2 * this->marginSize, windowH - y - this->marginSize);
+
+	structure.rect = RectangularUiElement(this->marginSize, structure.contentButtons.back().getY() - this->marginSize, windowW - 2 * this->marginSize, windowH - (structure.contentButtons.back().getY() - this->marginSize) - this->marginSize);
 
 	return structure;
 }
