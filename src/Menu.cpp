@@ -506,7 +506,7 @@ void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSav
                     createChooseActionWindowEvent
             );
         }
-        window = std::make_shared<HorizontalSelectionWindow>(components, 32, 5);
+        window = std::make_shared<HorizontalSelectionWindow>(components, 48, 6);
     }
 
     Events result;
