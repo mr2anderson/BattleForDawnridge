@@ -328,6 +328,12 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;4244;4267;4018;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -951,7 +957,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ClueManager.cpp" />
     <ClCompile Include="src\Collections.cpp" />
     <ClCompile Include="src\ColorBlender.cpp" />
-    <ClCompile Include="src\ColorTheme.cpp" />
+    <ClCompile Include="src\ColorTheme.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'">Disabled</Optimization>
+      <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'">false</WholeProgramOptimization>
+    </ClCompile>
     <ClCompile Include="src\CompByClickPriority.cpp" />
     <ClCompile Include="src\CompByDrawPriority.cpp" />
     <ClCompile Include="src\CompByNewMovePriority.cpp" />
