@@ -51,13 +51,13 @@ Events LanguageButtonSpec::getEvents() const {
     );
     chooseLanguageWindowComponents.emplace_back(
         std::make_shared<StaticString>("english_icon"),
-        StringLcl("English"),
+        StringLcl("{english}"),
         true,
         chooseLanguageEnglishEvent
     );
     chooseLanguageWindowComponents.emplace_back(
         std::make_shared<StaticString>("russian_icon"),
-        StringLcl("Russian"),
+        StringLcl("{russian}"),
         true,
         chooseLanguageRussianEvent
     );
