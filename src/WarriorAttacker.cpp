@@ -22,6 +22,7 @@
 #include "CreateAnimationEvent.hpp"
 #include "CloseAnimationEvent.hpp"
 #include "HighlightColors.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 WarriorAttacker::WarriorAttacker() {

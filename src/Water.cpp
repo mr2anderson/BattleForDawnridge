@@ -25,6 +25,7 @@
 #include "Parameters.hpp"
 #include "Warrior.hpp"
 #include "UUIDs.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 Water::Water() = default;

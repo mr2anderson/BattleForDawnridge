@@ -18,11 +18,8 @@
 
 
 #include <filesystem>
-#include <set>
 #include "Menu.hpp"
 #include "Maps.hpp"
-#include "WindowTwoButtons.hpp"
-#include "WindowButtonImage.hpp"
 #include "SoundQueue.hpp"
 #include "Playlist.hpp"
 #include "ColorTheme.hpp"
@@ -37,294 +34,24 @@
 #include "StaticString.hpp"
 #include "IsServerTable.hpp"
 #include "ScreenAlreadyFinished.hpp"
+#include "LocalGameButtonSpec.hpp"
+#include "NetworkGameButtonSpec.hpp"
+#include "GuideButtonSpec.hpp"
+#include "LanguageButtonSpec.hpp"
+#include "SupportButtonSpec.hpp"
+#include "CreditsButtonSpec.hpp"
+#include "LicenceButtonSpec.hpp"
+#include "ExitButtonSpec.hpp"
 
 
 Menu::Menu(sf::RenderWindow& window) {
     this->alreadyFinished = false;
-
-
-
-
     this->closeMenu = false;
     this->element = nullptr;
-
-
-
-
-    Events clickEvent;
-    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-
-
-
-    Events startGameOnRidgeEvent = clickEvent;
-    startGameOnRidgeEvent.add(std::make_shared<StartGameEvent>("ridge"));
-    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{local_ridge_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
-    Events createStartGameOnRidgeVerifyWindow = clickEvent;
-    createStartGameOnRidgeVerifyWindow.add(std::make_shared<CreateEEvent>(startGameOnRidgeVerifyWindow));
-
-    std::vector<HorizontalSelectionWindowComponent> chooseLevelWindowComponents;
-    chooseLevelWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
-        StringLcl("{exit}"),
-        true,
-        clickEvent
-    );
-    chooseLevelWindowComponents.emplace_back(
-        std::make_shared<StaticString>("ridge"),
-        StringLcl("{ridge_description}"),
-        true,
-        createStartGameOnRidgeVerifyWindow
-    );
-    std::shared_ptr<HorizontalSelectionWindow> chooseLevelWindow = std::make_shared<HorizontalSelectionWindow>(chooseLevelWindowComponents, Maps::THUMBNAIL_SIZE);
-    Events createChooseLevelWindowEvent = clickEvent;
-    createChooseLevelWindowEvent.add(std::make_shared<CreateEEvent>(chooseLevelWindow));
-
-
-
-
-    Events createChooseSaveWindowEvent = clickEvent;
-    createChooseSaveWindowEvent.add(std::make_shared<GenerateChooseSaveWindowEvent>());
-
-
-
-
-    std::vector<HorizontalSelectionWindowComponent> localGameWindowComponent;
-    localGameWindowComponent.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
-        StringLcl("{exit}"),
-        true,
-        clickEvent
-    );
-    localGameWindowComponent.emplace_back(
-        std::make_shared<StaticString>("save_icon"),
-        StringLcl("{choose_save}"),
-        true,
-        createChooseSaveWindowEvent
-    );
-    localGameWindowComponent.emplace_back(
-        std::make_shared<StaticString>("battle_icon"),
-        StringLcl("{choose_map}"),
-        true,
-        createChooseLevelWindowEvent
-    );
-    std::shared_ptr<HorizontalSelectionWindow> localGameWindow = std::make_shared<HorizontalSelectionWindow>(localGameWindowComponent);
-    Events createLocalGameWindowEvent = clickEvent;
-    createLocalGameWindowEvent.add(std::make_shared<CreateEEvent>(localGameWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 10, 400, 60, StringLcl("{local_game}")), createLocalGameWindowEvent);
-
-
-
-
-    Events createNetworkGameSettingsWindowEvent = clickEvent;
-    createNetworkGameSettingsWindowEvent.add(std::make_shared<GenerateNetworkGameSettingsWindowEvent>());
-
-
-
-
-    std::vector<HorizontalSelectionWindowComponent> networkGameWindowComponents;
-    networkGameWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
-        StringLcl("{exit}"),
-        true,
-        clickEvent
-    );
-    networkGameWindowComponents.emplace_back(
-        std::make_shared<StaticString>("advanced_settings_icon"),
-        StringLcl("{advanced_settings}"),
-        true,
-        createNetworkGameSettingsWindowEvent
-    );
-    networkGameWindowComponents.emplace_back(
-        std::make_shared<StaticString>("save_icon"),
-        StringLcl("{choose_save}"),
-        true,
-        createChooseSaveWindowEvent
-    );
-    networkGameWindowComponents.emplace_back(
-        std::make_shared<StaticString>("battle_icon"),
-        StringLcl("{choose_map}"),
-        true,
-        createChooseLevelWindowEvent
-    );
-    std::shared_ptr<HorizontalSelectionWindow> networkGameWindow = std::make_shared<HorizontalSelectionWindow>(networkGameWindowComponents);
-    Events createNetworkGameWindowEvent = clickEvent;
-    createNetworkGameWindowEvent.add(std::make_shared<CreateEEvent>(networkGameWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 80, 400, 60, StringLcl("{network_game}")), createNetworkGameWindowEvent);
-
-
-
-
-
-
-    std::vector<HorizontalSelectionWindowComponent> educationWindowComponents;
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
-        StringLcl("{leave}"),
-        true,
-        clickEvent
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("food_icon"),
-        StringLcl("{guide_food_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("wood_icon"),
-        StringLcl("{guide_wood_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("stone_icon"),
-        StringLcl("{guide_stone_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("iron_icon"),
-        StringLcl("{guide_iron_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("crystal_icon"),
-        StringLcl("{guide_crystal_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("gold_icon"),
-        StringLcl("{guide_gold_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("road_none"),
-        StringLcl("{guide_road_system_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("shield_icon"),
-        StringLcl("{guide_damage_mods_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("fire1"),
-        StringLcl("{guide_fire_system_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("warehouse_food"),
-        StringLcl("{guide_storage_system_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("wall2"),
-        StringLcl("{guide_wall_system_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("forest_icon"),
-        StringLcl("{guide_movement_cost_system_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("water_icon"),
-        StringLcl("{guide_obstacle_system_description}"),
-        false,
-        Events()
-    );
-    educationWindowComponents.emplace_back(
-        std::make_shared<StaticString>("helmet"),
-        StringLcl("{guide_population_limit_system_description}"),
-        false,
-        Events()
-    );
-    std::shared_ptr<HorizontalSelectionWindow> educationWindow = std::make_shared<HorizontalSelectionWindow>(educationWindowComponents);
-    Events createEducationWindowEvent = clickEvent;
-    createEducationWindowEvent.add(std::make_shared<CreateEEvent>(educationWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 150, 400, 60, StringLcl("{education}")), createEducationWindowEvent);
-
-
-
-
-    Events chooseLanguageEnglishEvent;
-    chooseLanguageEnglishEvent.add(std::make_shared<ChooseLanguageEvent>("en.cfg"));
-    Events chooseLanguageRussianEvent;
-    chooseLanguageRussianEvent.add(std::make_shared<ChooseLanguageEvent>("ru.cfg"));
-    std::vector<HorizontalSelectionWindowComponent> chooseLanguageWindowComponents;
-    chooseLanguageWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
-        StringLcl("{exit}"),
-        true,
-        clickEvent
-    );
-    chooseLanguageWindowComponents.emplace_back(
-        std::make_shared<StaticString>("english_icon"),
-        StringLcl("English"),
-        true,
-        chooseLanguageEnglishEvent
-    );
-    chooseLanguageWindowComponents.emplace_back(
-        std::make_shared<StaticString>("russian_icon"),
-        StringLcl("Russian"),
-        true,
-        chooseLanguageRussianEvent
-    );
-    std::shared_ptr<HorizontalSelectionWindow> chooseLanguageWindow = std::make_shared<HorizontalSelectionWindow>(chooseLanguageWindowComponents);
-    Events createChooseLanguageWindowEvent = clickEvent;
-    createChooseLanguageWindowEvent.add(std::make_shared<CreateEEvent>(chooseLanguageWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 220, 400, 60, StringLcl("{language}")), createChooseLanguageWindowEvent);
-
-
-
-
-    std::shared_ptr<WindowButtonImage> supportWindow = std::make_shared<WindowButtonImage>(StringLcl("{support}"), StringLcl("{close}"), "btc", clickEvent, 400, 300);
-    Events supportEvent = clickEvent;
-    supportEvent.add(std::make_shared<CreateEEvent>(supportWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 290, 400, 60, StringLcl("{show_support}")), supportEvent);
-
-
-
-
-    std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>(StringLcl("{credits}"), StringLcl("{close}"), clickEvent, 600, 600);
-    Events creditsEvent = clickEvent;
-    creditsEvent.add(std::make_shared<CreateEEvent>(creditsWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 360, 400, 60, StringLcl("{show_credits}")), creditsEvent);
-
-
-
-
-    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>(StringLcl("{license}"), StringLcl("{close}"), clickEvent, 600, 600);
-    Events licenseEvent = clickEvent;
-    licenseEvent.add(std::make_shared<CreateEEvent>(licenseWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 430, 400, 60, StringLcl("{show_license}")), licenseEvent);
-
-
-
-
-    Events exitEvent;
-    exitEvent.add(std::make_shared<CloseMenuEvent>());
-    std::shared_ptr<WindowTwoButtons> confirmExitWindow = std::make_shared<WindowTwoButtons>(StringLcl("{confirm_exit}"), StringLcl("{yes}"), StringLcl("{no}"), exitEvent, clickEvent);
-    Events createConfirmExitWindowEvent = clickEvent;
-    createConfirmExitWindowEvent.add(std::make_shared<CreateEEvent>(confirmExitWindow));
-    this->buttons.emplace_back(std::make_shared<Label>(10, 500, 400, 60, StringLcl("{exit}")), createConfirmExitWindowEvent);
-
-
-
-
-
-
     if (!FirstTimeTipsTable::get()->wasDisplayed("welcome")) {
         FirstTimeTipsTable::get()->markAsDisplayed("welcome");
+        Events clickEvent;
+        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
         std::shared_ptr<WindowButton> welcomeWindow = std::make_shared<WindowButton>(StringLcl("{welcome}"), StringLcl("{OK}"), clickEvent);
         Events createWelcomeWindowEvent = clickEvent;
         createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
@@ -371,16 +98,32 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
         }
 	}
 }
+std::vector<Button> Menu::getButtons() const {
+    return {
+        Button(LocalGameButtonSpec()),
+        Button(NetworkGameButtonSpec(1)),
+        Button(GuideButtonSpec(2)),
+        Button(LanguageButtonSpec(3)),
+        Button(SupportButtonSpec(4)),
+        Button(CreditsButtonSpec(5)),
+        Button(LanguageButtonSpec(6)),
+        Button(ExitButtonSpec(7))
+    };
+}
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear();
     window.draw(this->bg);
-	for (const auto& b : this->buttons) {
-        window.draw(b);
-    }
+    this->drawButtons(window);
     if (this->element != nullptr) {
         window.draw(*this->element);
     }
 	window.display();
+}
+void Menu::drawButtons(sf::RenderWindow& window) {
+    std::vector<Button> buttons = this->getButtons();
+    for (const auto& b : buttons) {
+        window.draw(b);
+    }
 }
 void Menu::processEvents() {
     while (!this->events.empty()) {
@@ -392,7 +135,8 @@ void Menu::processEvents() {
     }
 }
 void Menu::addButtonClickEventToQueue() {
-    for (const auto& b : this->buttons) {
+    std::vector<Button> buttons = this->getButtons();
+    for (const auto& b : buttons) {
         Events event = b.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
         if (!event.empty()) {
             this->addEvents(event);
@@ -426,12 +170,6 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<LoadGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadGameEvent>(e)) {
         this->handleLoadGameEvent(loadGameEvent);
     }
-    else if (std::shared_ptr<GenerateChooseSaveWindowEvent> generateChooseSaveWindowEvent = std::dynamic_pointer_cast<GenerateChooseSaveWindowEvent>(e)) {
-        this->handleGenerateChooseSaveWindowEvent(generateChooseSaveWindowEvent);
-    }
-    else if (std::shared_ptr<GenerateNetworkGameSettingsWindowEvent> generateNetworkGameWindowEvent = std::dynamic_pointer_cast<GenerateNetworkGameSettingsWindowEvent>(e)) {
-        this->handleGenerateNetworkGameSettingsWindowEvent(generateNetworkGameWindowEvent);
-    }
     else if (std::shared_ptr<InvertIsServerStateEvent> invertIsServerStateEvent = std::dynamic_pointer_cast<InvertIsServerStateEvent>(e)) {
         this->handleInvertIsServerStateEvent(invertIsServerStateEvent);
     }
@@ -457,102 +195,6 @@ void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
 }
 void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
-}
-void Menu::handleGenerateChooseSaveWindowEvent(std::shared_ptr<GenerateChooseSaveWindowEvent> e) { // It is impossible to create choose save window like other windows in menu, cuz it is content might be changed during run time
-    Events clickEvent;
-    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-    std::set<std::string> saves;
-    if (std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
-        for (const auto & entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
-            saves.insert(entry.path().filename().string());
-        }
-    }
-
-    std::shared_ptr<PopUpElement> window;
-    if (saves.empty()) {
-        window = std::make_shared<WindowButton>(StringLcl("{you_do_not_have_any_saves_yet}"), StringLcl("{OK}"), clickEvent);
-    }
-    else {
-        std::vector<HorizontalSelectionWindowComponent> components;
-        components.emplace_back(
-                std::make_shared<StaticString>("exit_icon"),
-                StringLcl("{exit}"),
-                true,
-                clickEvent
-        );
-        for (const auto &save : saves) {
-
-            Events loadSaveEvent = clickEvent;
-            loadSaveEvent.add(std::make_shared<LoadGameEvent>(save));
-            std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{load}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), loadSaveEvent, clickEvent);
-            Events createLoadSaveVerifyWindowEvent = clickEvent;
-            createLoadSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(loadSaveVerifyWindow));
-
-            Events deleteSaveEvent = clickEvent;
-            deleteSaveEvent.add(std::make_shared<DeleteSaveEvent>(save));
-            std::shared_ptr<WindowTwoButtons> deleteSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{delete}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), deleteSaveEvent, clickEvent);
-            Events createDeleteSaveVerifyWindowEvent = clickEvent;
-            createDeleteSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(deleteSaveVerifyWindow));
-
-            std::shared_ptr<WindowTwoButtons> chooseActionWindow = std::make_shared<WindowTwoButtons>(StringLcl("{save}") + save, StringLcl("{load}"), StringLcl("{delete}"), createLoadSaveVerifyWindowEvent, createDeleteSaveVerifyWindowEvent);
-            Events createChooseActionWindowEvent = clickEvent;
-            createChooseActionWindowEvent.add(std::make_shared<CreateEEvent>(chooseActionWindow));
-
-            components.emplace_back(
-                    std::make_shared<StaticString>("save_icon"),
-                    StringLcl("{save}") + save,
-                    true,
-                    createChooseActionWindowEvent
-            );
-        }
-        window = std::make_shared<HorizontalSelectionWindow>(components, 48, 6);
-    }
-
-    Events result;
-    result.add(std::make_shared<CreateEEvent>(window));
-    this->addEvents(result);
-}
-void Menu::handleGenerateNetworkGameSettingsWindowEvent(std::shared_ptr<GenerateNetworkGameSettingsWindowEvent> e) {
-    Events clickEvent;
-    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-    std::vector<HorizontalSelectionWindowComponent> components;
-    components.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
-        StringLcl("{exit}"),
-        true,
-        clickEvent
-    );
-    if (IsServerTable::get()->isServer()) {
-        std::shared_ptr<WindowButton> doneWindow = std::make_shared<WindowButton>(StringLcl("{switched_to_client_mode}"), StringLcl("{OK}"), clickEvent);
-        Events events = clickEvent;
-        events.add(std::make_shared<InvertIsServerStateEvent>());
-        events.add(std::make_shared<CreateEEvent>(doneWindow));
-        components.emplace_back(
-            std::make_shared<StaticString>("switch_to_client_icon"),
-            StringLcl("{switch_to_client}"),
-            true,
-            events
-        );
-    }
-    else {
-        std::shared_ptr<WindowButton> doneWindow = std::make_shared<WindowButton>(StringLcl("{switched_to_server_mode}"), StringLcl("{OK}"), clickEvent);
-        Events events = clickEvent;
-        events.add(std::make_shared<InvertIsServerStateEvent>());
-        events.add(std::make_shared<CreateEEvent>(doneWindow));
-        components.emplace_back(
-            std::make_shared<StaticString>("switch_to_server_icon"),
-            StringLcl("{switch_to_server}"),
-            true,
-            events
-        );
-    }
-
-    std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
-    Events events;
-    events.add(std::make_shared<CreateEEvent>(w));
-    this->addEvents(events);
 }
 void Menu::handleInvertIsServerStateEvent(std::shared_ptr<InvertIsServerStateEvent> e) {
     IsServerTable::get()->invert();

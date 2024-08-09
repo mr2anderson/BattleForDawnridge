@@ -28,6 +28,7 @@
 #include "AddResourceEvent.hpp"
 #include "HighlightColors.hpp"
 #include "StaticString.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {

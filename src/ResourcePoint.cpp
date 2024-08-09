@@ -23,6 +23,7 @@
 #include "Parameters.hpp"
 #include "Warrior.hpp"
 #include "StaticString.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 ResourcePoint::ResourcePoint() = default;

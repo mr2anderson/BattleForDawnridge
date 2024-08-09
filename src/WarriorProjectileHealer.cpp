@@ -21,6 +21,7 @@
 #include "CreateEEvent.hpp"
 #include "HPFlyingE.hpp"
 #include "AddHpEvent.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 WarriorProjectileHealer::WarriorProjectileHealer() = default;

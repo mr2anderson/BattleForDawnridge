@@ -24,6 +24,7 @@
 #include "ResetHighlightEvent.hpp"
 #include "StaticString.hpp"
 #include "TextureNameString.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_FLYING = {3};

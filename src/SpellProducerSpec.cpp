@@ -30,6 +30,7 @@
 #include "StaticString.hpp"
 #include "TextureNameString.hpp"
 #include "TextureNameStringSmart.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 SpellProducerSpec::SpellProducerSpec() {

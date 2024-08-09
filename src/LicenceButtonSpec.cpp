@@ -17,29 +17,27 @@
  */
 
 
+#include "LicenceButtonSpec.hpp"
+#include "WindowButton.hpp"
+#include "PlaySoundEvent.hpp"
+#include "CreateEEvent.hpp"
 
-#include "IButtonSpec.hpp"
 
+LicenceButtonSpec::LicenceButtonSpec() = default;
+LicenceButtonSpec::LicenceButtonSpec(uint32_t index) : MenuButtonSpec(index) {
 
-#pragma once
+}
+StringLcl LicenceButtonSpec::getString() const {
+    return { "{show_license}" };
+}
+Events LicenceButtonSpec::getEvents() const {
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
+    std::shared_ptr<WindowButton> licenseWindow = std::make_shared<WindowButton>(StringLcl("{license}"), StringLcl("{close}"), clickEvent, 600, 600);
 
-class Button : public sf::Drawable {
-public:
-	Button();
-	Button(std::shared_ptr<RectangularUiElement> element, const Events &onClick);
-	Button(const IButtonSpec& spec);
+    Events licenseEvent = clickEvent;
+    licenseEvent.add(std::make_shared<CreateEEvent>(licenseWindow));
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Events click(uint32_t mouseX, uint32_t mouseY) const;
-	void setX(int32_t x);
-	void setY(int32_t y);
-	int32_t getX() const;
-	int32_t getY() const;
-	uint32_t getW() const;
-	uint32_t getH() const;
-private:
-    std::shared_ptr<RectangularUiElement> element;
-    Events onClick;
-};
+    return licenseEvent;
+}

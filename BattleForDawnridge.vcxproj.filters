@@ -893,9 +893,6 @@
     <ClInclude Include="src\GatesSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GenerateChooseSaveWindowEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\GlobalClock.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1523,9 +1520,6 @@
     <ClInclude Include="src\MenuResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GenerateNetworkGameSettingsWindowEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\InvertIsServerStateEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1569,6 +1563,36 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExitButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LicenceButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CreditsButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SupportButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuideButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LanguageButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NetworkGameButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LocalGameButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1799,9 +1823,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GatesSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GenerateChooseSaveWindowEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GlobalClock.cpp">
@@ -2398,9 +2419,6 @@
     <ClCompile Include="src\MenuResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GenerateNetworkGameSettingsWindowEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\InvertIsServerStateEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2441,6 +2459,33 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\LoadingScreenBg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ExitButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LicenceButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CreditsButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SupportButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuideButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LanguageButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NetworkGameButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LocalGameButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

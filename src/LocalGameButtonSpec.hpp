@@ -17,29 +17,22 @@
  */
 
 
-
-#include "IButtonSpec.hpp"
+#include "MenuButtonSpec.hpp"
 
 
 #pragma once
 
 
-class Button : public sf::Drawable {
+class LocalGameButtonSpec : public MenuButtonSpec {
 public:
-	Button();
-	Button(std::shared_ptr<RectangularUiElement> element, const Events &onClick);
-	Button(const IButtonSpec& spec);
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Events click(uint32_t mouseX, uint32_t mouseY) const;
-	void setX(int32_t x);
-	void setY(int32_t y);
-	int32_t getX() const;
-	int32_t getY() const;
-	uint32_t getW() const;
-	uint32_t getH() const;
+	LocalGameButtonSpec();
+	LocalGameButtonSpec(uint32_t index);
 private:
-    std::shared_ptr<RectangularUiElement> element;
-    Events onClick;
+	StringLcl getString() const override;
+	Events getEvents() const override;
+
+	Events getChooseMapEvent() const;
+	Events getChooseSaveEvent() const;
+	
+	Events getChooseRidgeEvent() const;
 };

@@ -51,6 +51,7 @@
 #include "IAreaControllerSpec.hpp"
 #include "StaticString.hpp"
 #include "CircleLightSourceSqrt.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;

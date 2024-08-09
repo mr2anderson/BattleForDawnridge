@@ -26,6 +26,9 @@ Button::Button(std::shared_ptr<RectangularUiElement> element, const Events &onCl
     this->element = element;
     this->onClick = onClick;
 }
+Button::Button(const IButtonSpec& spec) : Button(spec.getBase(), spec.getEvents()) {
+
+}
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(*this->element, states);
 }

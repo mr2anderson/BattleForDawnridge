@@ -17,7 +17,19 @@
  */
 
 
-#include "GenerateChooseSaveWindowEvent.hpp"
+#include "MenuButtonSpec.hpp"
 
 
-GenerateChooseSaveWindowEvent::GenerateChooseSaveWindowEvent() = default;
+#pragma once
+
+
+class NetworkGameButtonSpec : public MenuButtonSpec {
+public:
+	NetworkGameButtonSpec();
+	NetworkGameButtonSpec(uint32_t index);
+private:
+	StringLcl getString() const override;
+	Events getEvents() const override;
+
+	Events getAdvancedSettingsWindowEvent() const;
+};

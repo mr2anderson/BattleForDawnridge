@@ -23,7 +23,6 @@
 #include "LabelWithImage.hpp"
 #include "MoveHorizontalSelectionWindowUpEvent.hpp"
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
-#include "PlaySoundEvent.hpp"
 #include "HorizontalSelectionWindowStructure.hpp"
 
 

@@ -22,6 +22,7 @@
 #include "Sounds.hpp"
 #include "CloseWindowEvent.hpp"
 #include "StaticString.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize, uint32_t marginSize) {

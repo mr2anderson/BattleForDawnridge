@@ -17,7 +17,20 @@
  */
 
 
-#include "GenerateNetworkGameSettingsWindowEvent.hpp"
+#include "IButtonSpec.hpp"
+#include "StringLcl.hpp"
 
 
-GenerateNetworkGameSettingsWindowEvent::GenerateNetworkGameSettingsWindowEvent() = default;
+#pragma once
+
+
+class MenuButtonSpec : public IButtonSpec {
+public:
+	MenuButtonSpec();
+	MenuButtonSpec(uint32_t index);
+private:
+	uint32_t index;
+
+	std::shared_ptr<RectangularUiElement> getBase() const override;
+	virtual StringLcl getString() const = 0;
+};

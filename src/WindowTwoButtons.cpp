@@ -75,10 +75,10 @@ static const uint32_t BUTTON_H = 30;
 
 
 Button WindowTwoButtons::getButton1(uint32_t windowW, uint32_t windowH) const {
-    return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w / 5 + 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, buttonText1), this->events1);
+    return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w / 5 + 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, this->buttonText1), this->events1);
 }
 
 
 Button WindowTwoButtons::getButton2(uint32_t windowW, uint32_t windowH) const {
-    return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w - BUTTON_W - this->w / 5 - 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, buttonText2), this->events2);
+    return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w - BUTTON_W - this->w / 5 - 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, this->buttonText2), this->events2);
 }

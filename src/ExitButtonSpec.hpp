@@ -17,13 +17,17 @@
  */
 
 
-#include "Event.hpp"
+#include "MenuButtonSpec.hpp"
 
 
 #pragma once
 
 
-class GenerateChooseSaveWindowEvent : public Event {
+class ExitButtonSpec : public MenuButtonSpec {
 public:
-    GenerateChooseSaveWindowEvent();
+	ExitButtonSpec();
+	ExitButtonSpec(uint32_t index);
+private:
+	StringLcl getString() const override;
+	Events getEvents() const override;
 };

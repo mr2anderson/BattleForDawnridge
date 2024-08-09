@@ -28,6 +28,7 @@
 #include "FocusOnEvent.hpp"
 #include "StaticString.hpp"
 #include "TextureNameStringSmart.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {

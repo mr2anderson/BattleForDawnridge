@@ -17,29 +17,16 @@
  */
 
 
-
-#include "IButtonSpec.hpp"
-
-
-#pragma once
+#include "MenuButtonSpec.hpp"
+#include "Label.hpp"
 
 
-class Button : public sf::Drawable {
-public:
-	Button();
-	Button(std::shared_ptr<RectangularUiElement> element, const Events &onClick);
-	Button(const IButtonSpec& spec);
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Events click(uint32_t mouseX, uint32_t mouseY) const;
-	void setX(int32_t x);
-	void setY(int32_t y);
-	int32_t getX() const;
-	int32_t getY() const;
-	uint32_t getW() const;
-	uint32_t getH() const;
-private:
-    std::shared_ptr<RectangularUiElement> element;
-    Events onClick;
-};
+MenuButtonSpec::MenuButtonSpec() {
+	this->index = 0;
+}
+MenuButtonSpec::MenuButtonSpec(uint32_t index) {
+	this->index = index;
+}
+std::shared_ptr<RectangularUiElement> MenuButtonSpec::getBase() const {
+	return std::make_shared<Label>(10, 10 + this->index * (10 + 60), 400, 60, this->getString());
+}

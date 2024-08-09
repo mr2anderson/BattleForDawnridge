@@ -24,6 +24,7 @@
 #include "CreateEEvent.hpp"
 #include "Parameters.hpp"
 #include "UUIDs.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 Mountains::Mountains() = default;

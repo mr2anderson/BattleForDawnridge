@@ -27,6 +27,7 @@
 #include "Locales.hpp"
 #include "SubHpEvent.hpp"
 #include "StaticString.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Building* building, MapState* state) {

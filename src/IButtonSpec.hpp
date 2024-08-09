@@ -17,13 +17,16 @@
  */
 
 
-#include "Event.hpp"
+#include <memory>
+#include "RectangularUiElement.hpp"
+#include "Events.hpp"
 
 
 #pragma once
 
 
-class GenerateNetworkGameSettingsWindowEvent : public Event {
+class IButtonSpec {
 public:
-	GenerateNetworkGameSettingsWindowEvent();
+	virtual std::shared_ptr<RectangularUiElement> getBase() const = 0;
+	virtual Events getEvents() const = 0;
 };
