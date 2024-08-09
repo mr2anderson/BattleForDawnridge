@@ -51,7 +51,6 @@ private:
 
 	void handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e);
 	void handleMoveDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e);
-	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
 
 	uint32_t getComponentsInFrame(uint32_t windowW, uint32_t windowH) const;
 	HorizontalSelectionWindowStructure getStructure(uint32_t windowW, uint32_t windowH) const;

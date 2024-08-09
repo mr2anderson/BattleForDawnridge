@@ -46,25 +46,34 @@ void HorizontalSelectionWindow::draw(sf::RenderTarget& target, sf::RenderStates 
 	}
 }
 Events HorizontalSelectionWindow::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
+	Events result;
+
 	HorizontalSelectionWindowStructure structure = this->getStructure(windowW, windowH);
+
 	if (structure.buttonUp.has_value()) {
 		Events events = structure.buttonUp.value().click(mouseX, mouseY);
 		this->handle(events);
+		result = result + events;
 	}
+
 	if (structure.buttonDown.has_value()) {
 		Events events = structure.buttonDown.value().click(mouseX, mouseY);
 		this->handle(events);
+		result = result + events;
 	}
+
 	for (const auto& b : structure.contentButtons) {
 		Events event = b.click(mouseX, mouseY);
 		for (uint32_t i = 0; i < event.size(); i = i + 1) {
 			if (std::shared_ptr<CloseWindowEvent> e = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
 				this->finish();
-				return event;
+				result = result + event;
+				break;
 			}
 		}
 	}
-	return Events();
+
+	return result;
 }
 bool HorizontalSelectionWindow::possibleToMoveUp(uint32_t componentsInFrame) const {
 	return (this->offset + componentsInFrame < this->components.size());
@@ -89,9 +98,6 @@ void HorizontalSelectionWindow::handle(Events& events) {
 		else if (std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> moveDown = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowDownEvent>(e)) {
 			this->handleMoveDownEvent(moveDown);
 		}
-		else if (std::shared_ptr<PlaySoundEvent> playSound = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
-			this->handlePlaySoundEvent(playSound);
-		}
 	}
 }
 void HorizontalSelectionWindow::handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e) {
@@ -99,9 +105,6 @@ void HorizontalSelectionWindow::handleMoveUpEvent(std::shared_ptr<MoveHorizontal
 }
 void HorizontalSelectionWindow::handleMoveDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e) {
 	this->moveDown();
-}
-void HorizontalSelectionWindow::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
-	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }
 
 
@@ -135,14 +138,14 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 	if (this->possibleToMoveUp(structure.contentButtons.size())) {
 		Events upEvent;
 		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
-		upEvent.add(std::make_shared<PlaySoundEvent>("click"));
+		upEvent.add(std::make_shared<PlaySoundEvent>("click", true));
 		structure.buttonUp = Button(std::make_shared<Image>(20, windowH - 10 - 2 * (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
 	}
 	
 	if (this->possibleToMoveDown()) {
 		Events downEvent;
 		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
-		downEvent.add(std::make_shared<PlaySoundEvent>("click"));
+		downEvent.add(std::make_shared<PlaySoundEvent>("click", true));
 		structure.buttonDown = Button(std::make_shared<Image>(20, windowH - 10 - (this->componentSize + 10), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
 	}
 

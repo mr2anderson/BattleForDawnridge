@@ -402,7 +402,12 @@ void Menu::addButtonClickEventToQueue() {
 }
 void Menu::addEvents(Events &e) {
     for (uint32_t i = 0; i < e.size(); i = i + 1) {
-        this->events.push(e.at(i));
+        if (e.at(i)->isUrgent()) {
+            this->handleEvent(e.at(i));
+        }
+        else {
+            this->events.push(e.at(i));
+        }
     }
 }
 void Menu::handleEvent(std::shared_ptr<Event> e) {
