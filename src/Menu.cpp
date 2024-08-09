@@ -354,13 +354,13 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
 			}
 		}
 		this->drawEverything(window);
-        this->processEvents();
         if (this->element != nullptr) {
             this->element->update();
             if (this->element->finished()) {
                 this->element = nullptr;
             }
         }
+        this->processEvents();
         if (this->closeMenu) {
             Music::get()->get("menu")->stop();
             return MenuResponse(MenuResponse::TYPE::EXIT, "");

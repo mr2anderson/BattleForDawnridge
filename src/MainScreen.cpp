@@ -319,30 +319,30 @@ MainScreenResponse MainScreen::run(sf::RenderWindow &window) {
                 }
             }
         }
+		window.setMouseCursorVisible(this->curcorVisibility);
         this->drawEverything(window);
-        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-            this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
-        }
-        Playlist::get()->update();
-        this->processNewMoveEvents(window);
-        this->processBaseEvents();
-        if (this->element != nullptr) {
-            this->element->update();
+		Playlist::get()->update();
+		if (this->element != nullptr) {
+			this->element->update();
 			if (this->element->finished()) {
 				this->element = nullptr;
 			}
+		}
+		if (this->animation.has_value()) {
+			Events animationEvent;
+			animationEvent = this->animation.value().process(this->map->getStatePtr());
+			this->addEvents(animationEvent);
+		}
+        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+            this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
         }
-        if (this->animation.has_value()) {
-            Events animationEvent;
-            animationEvent = this->animation.value().process(this->map->getStatePtr());
-            this->addEvents(animationEvent);
-        }
+        this->processNewMoveEvents(window);
+        this->processBaseEvents();
         this->moveView(window);
         if (this->returnToMenu) {
 			Playlist::get()->stop();
 			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
         }
-        window.setMouseCursorVisible(this->curcorVisibility);
     }
 }
 
