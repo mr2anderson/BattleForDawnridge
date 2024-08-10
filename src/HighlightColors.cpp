@@ -26,7 +26,7 @@
 HighlightColors* HighlightColors::singletone = nullptr;
 
 
-static const sf::Color BLUE = sf::Color(0, 191, 255); // Bright colors were chosen cuz it is easier to blend them
+static const sf::Color BLUE = sf::Color(0, 191, 255);
 static const sf::Color GREEN = sf::Color(154, 205, 50);
 static const sf::Color PURPLE = sf::Color(238, 130, 238);
 
@@ -58,7 +58,7 @@ HighlightColors::HighlightColors() = default;
 
 static const sf::Color SPRING_GREEN = sf::Color(0, 255, 127);
 static const sf::Color ORANGE_RED = sf::Color(255, 69, 0);
-static const sf::Color AQUA = sf::Color(0, 255, 255);
+static const sf::Color DARK_BLUE = sf::Color(0, 0, 255);
 static const sf::Color PERU = sf::Color(205, 133, 63);
 static const sf::Color RED = sf::Color(255, 0, 0);
 static const sf::Color TURQUOISE = sf::Color(64, 224, 208);
@@ -73,7 +73,7 @@ sf::Color HighlightColors::getWarriorAttackColor(uint32_t playerId) const {
     return EVAL(ORANGE_RED, playerId);
 }
 sf::Color HighlightColors::getWarriorHealColor(uint32_t playerId) const {
-    return EVAL(AQUA, playerId);
+    return EVAL(DARK_BLUE, playerId);
 }
 sf::Color HighlightColors::getTerritoryExpandingColor(uint32_t playerId) const {
     return EVAL(PERU, playerId);
