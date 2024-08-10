@@ -18,12 +18,12 @@
 
 
 #include "BuildButtonSpec.hpp"
-#include "StaticString.hpp"
+
 #include "HorizontalSelectionWindow.hpp"
 #include "PlaySoundEvent.hpp"
 #include "TryToBuildEvent.hpp"
 #include "CreateEEvent.hpp"
-#include "TextureNameStringSmart.hpp"
+
 #include "Road.hpp"
 #include "House.hpp"
 #include "Arable.hpp"
@@ -54,8 +54,8 @@ BuildButtonSpec::BuildButtonSpec() = default;
 BuildButtonSpec::BuildButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<IDynamicString> BuildButtonSpec::getTextureName() const {
-	return std::make_shared<StaticString>("hammer_icon");
+std::string BuildButtonSpec::getTextureName() const {
+	return   "hammer_icon";
 }
 StringLcl BuildButtonSpec::getString() const {
 	return StringLcl("{open_build_menu}");
@@ -78,7 +78,7 @@ template<typename T> HorizontalSelectionWindowComponent GET_BUILD_COMPONENT() {
 	createBuildingModeEvent.add(std::make_shared<TryToBuildEvent>(std::make_shared<T>(0, 0, 0)));
 
 	HorizontalSelectionWindowComponent component = {
-		std::make_shared<TextureNameStringSmart>(std::make_shared<T>()),
+		T().getTextureName(),
 		GET_BUILD_DESCRIPTION<T>(),
 		true,
 		createBuildingModeEvent
@@ -97,7 +97,7 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionMainComponents;
-	buildMenuSectionMainComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
+	buildMenuSectionMainComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<Road>());
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<House>());
 
@@ -108,7 +108,7 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionResourceCollectorsComponents;
-	buildMenuSectionResourceCollectorsComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
+	buildMenuSectionResourceCollectorsComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Arable>());
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Sawmill>());
 	buildMenuSectionResourceCollectorsComponents.emplace_back(GET_BUILD_COMPONENT<Quarry>());
@@ -122,7 +122,7 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionWarehousesComponents;
-	buildMenuSectionWarehousesComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
+	buildMenuSectionWarehousesComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseFood>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseWood>());
 	buildMenuSectionWarehousesComponents.emplace_back(GET_BUILD_COMPONENT<WarehouseStone>());
@@ -137,7 +137,7 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
-	buildMenuSectionTroopsComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
+	buildMenuSectionTroopsComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
@@ -149,7 +149,7 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionDefenceComponents;
-	buildMenuSectionDefenceComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
+	buildMenuSectionDefenceComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower1>());
@@ -164,7 +164,7 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
-	buildMenuSectionOtherComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
+	buildMenuSectionOtherComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<Market>());
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
 
@@ -175,13 +175,13 @@ Events BuildButtonSpec::getEvents() const {
 
 
 	std::vector<HorizontalSelectionWindowComponent> buildMenuComponents;
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{leave}"), true, clickEvent);
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{main}"), true, createBuildWindowSectionMainEvent);
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{resource_collectors}"), true, createBuildWindowSectionResourceCollectorsEvent);
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{warehouses}"), true, createBuildWindowSectionWarehousesEvent);
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{troops}"), true, createBuildWindowSectionTroopsEvent);
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{defence}"), true, createBuildWindowSectionDefenceEvent);
-	buildMenuComponents.emplace_back(std::make_shared<StaticString>("hammer_icon"), StringLcl("{other}"), true, createBuildWindowSectionOtherEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{main}"), true, createBuildWindowSectionMainEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{resource_collectors}"), true, createBuildWindowSectionResourceCollectorsEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{warehouses}"), true, createBuildWindowSectionWarehousesEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{troops}"), true, createBuildWindowSectionTroopsEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{defence}"), true, createBuildWindowSectionDefenceEvent);
+	buildMenuComponents.emplace_back(  "hammer_icon", StringLcl("{other}"), true, createBuildWindowSectionOtherEvent);
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindow = std::make_shared<HorizontalSelectionWindow>(buildMenuComponents);
 	Events buildEvent = clickEvent;

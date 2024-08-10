@@ -21,7 +21,7 @@
 #include "Locales.hpp"
 #include "Building.hpp"
 #include "LimitResourcesEvent.hpp"
-#include "StaticString.hpp"
+
 
 
 Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *state) const {
@@ -44,7 +44,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
 
     if (building->wasWithFullHP()) {
         component = {HorizontalSelectionWindowComponent(
-                        std::make_shared<StaticString>("resources_icon"),
+                          "resources_icon",
                         StringLcl("{resource_storage_building_description}") + this->getActiveLimit().getReadableInfo(),
                         false,
                         Events()),
@@ -54,7 +54,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
     else {
         component = {
                 HorizontalSelectionWindowComponent(
-                        std::make_shared<StaticString>("hammer_icon"),
+                          "hammer_icon",
                         StringLcl("{does_not_increase_resource_limit_if_isnt_built_yet}"),
                         false,
                         Events()

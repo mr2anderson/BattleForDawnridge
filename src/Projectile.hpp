@@ -18,14 +18,13 @@
 
 
 #include "CameraDependentPopUpElement.hpp"
-#include "IWithTextureName.hpp"
 #include "Clock.hpp"
 
 
 #pragma once
 
 
-class Projectile : public CameraDependentPopUpElement, public IWithTextureName {
+class Projectile : public CameraDependentPopUpElement {
 public:
     Projectile();
 
@@ -34,6 +33,7 @@ public:
     void setDst(float xInPixels, float yInPixels);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void update() override;
+    virtual std::string getTextureName() const = 0;
     virtual std::string getSoundName() const = 0;
     virtual float getTime() const = 0;
 private:

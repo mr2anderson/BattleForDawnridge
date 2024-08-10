@@ -49,7 +49,7 @@
 #include "FocusOnEvent.hpp"
 #include "Building.hpp"
 #include "IAreaControllerSpec.hpp"
-#include "StaticString.hpp"
+
 #include "CircleLightSourceSqrt.hpp"
 #include "PlaySoundEvent.hpp"
 
@@ -527,7 +527,7 @@ sf::Color Warrior::getTextureColor() const {
 }
 HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
-        std::make_shared<StaticString>("rage_spell"),
+          "rage_spell",
         StringLcl("{rage_spell_description}") + "\n" +
         StringLcl("{moves_left}") + std::to_string(this->rageModeMovesLeft),
         false,
@@ -548,7 +548,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     killNextTurnEventVerify.add(std::make_shared<CreateEEvent>(verifyWindow));
 
     return {
-        std::make_shared<StaticString>("skull"),
+          "skull",
         StringLcl("{kill}"),
         true,
         killNextTurnEventVerify
@@ -562,7 +562,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
     revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this));
 
     return {
-        std::make_shared<StaticString>("skull"),
+          "skull",
         StringLcl("{revert_kill}"),
         true,
         revertKillNextTurnEvent
@@ -570,7 +570,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 }
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
-        std::make_shared<StaticString>("helmet"),
+          "helmet",
         StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " (" + this->getDefence().getReadable() + ")\n" +
         this->getSpecialInfoString() + "\n" +
         StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + std::to_string(this->getMovementPoints()) + "\n" +
@@ -581,7 +581,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
 }
 HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const {
     return {
-        std::make_shared<StaticString>("destroyed_icon"),
+          "destroyed_icon",
         StringLcl("{blocking_building}"),
         false,
         Events()
@@ -589,7 +589,7 @@ HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const
 }
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
-        std::make_shared<StaticString>("lord_icon"),
+          "lord_icon",
         StringLcl("{warrior_of_enemy}"),
         false,
         Events()

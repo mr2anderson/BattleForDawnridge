@@ -39,9 +39,9 @@ void Fire::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sprite.setPosition(this->x, this->y);
 	target.draw(sprite, states);
 }
-std::string Fire::getTextureName() const {
-    return "fire" + std::to_string(this->getCurrentFrame());
-}
 uint32_t Fire::getCurrentFrame() const {
 	return GlobalClock::get()->getMs() / (1000 / TOTAL_FRAMES) % TOTAL_FRAMES + 1;
+}
+std::string Fire::getTextureName() const {
+	return "fire" + std::to_string(this->getCurrentFrame());
 }

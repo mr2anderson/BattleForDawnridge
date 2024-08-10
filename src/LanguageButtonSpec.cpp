@@ -20,7 +20,7 @@
 #include "LanguageButtonSpec.hpp"
 #include "ChooseLanguageEvent.hpp"
 #include "HorizontalSelectionWindow.hpp"
-#include "StaticString.hpp"
+
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
 
@@ -44,19 +44,19 @@ Events LanguageButtonSpec::getEvents() const {
 
     std::vector<HorizontalSelectionWindowComponent> chooseLanguageWindowComponents;
     chooseLanguageWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
+          "exit_icon",
         StringLcl("{exit}"),
         true,
         clickEvent
     );
     chooseLanguageWindowComponents.emplace_back(
-        std::make_shared<StaticString>("english_icon"),
+          "english_icon",
         StringLcl("{english}"),
         true,
         chooseLanguageEnglishEvent
     );
     chooseLanguageWindowComponents.emplace_back(
-        std::make_shared<StaticString>("russian_icon"),
+          "russian_icon",
         StringLcl("{russian}"),
         true,
         chooseLanguageRussianEvent

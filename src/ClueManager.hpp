@@ -40,12 +40,9 @@ private:
     static ClueManager* singletone;
 
     uint32_t currentClue;
-    Label label;
 
     static const uint32_t TOTAL_CLUES;
     
     static const uint32_t W;
     static const uint32_t H;
-
-    void regenerateLabel();
 };

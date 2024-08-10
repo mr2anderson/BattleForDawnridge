@@ -22,8 +22,8 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
-#include "StaticString.hpp"
-#include "TextureNameString.hpp"
+
+
 #include "PlaySoundEvent.hpp"
 
 
@@ -175,7 +175,7 @@ HorizontalSelectionWindowComponent GO::getExitComponent() const {
 	exitEvent.add(std::make_shared<ResetHighlightEvent>());
 
 	HorizontalSelectionWindowComponent component = {
-		std::make_shared<StaticString>("exit_icon"),
+		  "exit_icon",
 		StringLcl("{leave}"),
 		true,
 		exitEvent
@@ -184,7 +184,7 @@ HorizontalSelectionWindowComponent GO::getExitComponent() const {
 }
 HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 	HorizontalSelectionWindowComponent component = {
-		std::make_shared<TextureNameString>(this),
+		this->getTextureName(),
 		this->getDescription(),
 		false,
 		Events(),

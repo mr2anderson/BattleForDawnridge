@@ -23,15 +23,15 @@
 #include "PlaySoundEvent.hpp"
 #include "WindowButton.hpp"
 #include "WindowTwoButtons.hpp"
-#include "StaticString.hpp"
+
 
 
 SaveGameButtonSpec::SaveGameButtonSpec() = default;
 SaveGameButtonSpec::SaveGameButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<IDynamicString> SaveGameButtonSpec::getTextureName() const {
-	return std::make_shared<StaticString>("save_icon");
+std::string SaveGameButtonSpec::getTextureName() const {
+	return   "save_icon";
 }
 StringLcl SaveGameButtonSpec::getString() const {
 	return StringLcl("{save_game}");

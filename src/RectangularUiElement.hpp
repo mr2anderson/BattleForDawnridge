@@ -35,8 +35,6 @@ public:
     int32_t getY() const;
     uint32_t getW() const;
     uint32_t getH() const;
-    virtual void setX(int32_t newX);
-    virtual void setY(int32_t newY);
 private:
     int32_t x, y;
     uint32_t w, h;

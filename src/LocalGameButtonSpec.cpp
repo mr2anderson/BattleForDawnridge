@@ -21,7 +21,7 @@
 #include <filesystem>
 #include "LocalGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
-#include "StaticString.hpp"
+
 #include "WindowTwoButtons.hpp"
 #include "StartGameEvent.hpp"
 #include "CreateEEvent.hpp"
@@ -51,19 +51,19 @@ Events LocalGameButtonSpec::getEvents() const {
 
     std::vector<HorizontalSelectionWindowComponent> localGameWindowComponent;
     localGameWindowComponent.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
+          "exit_icon",
         StringLcl("{exit}"),
         true,
         clickEvent
     );
     localGameWindowComponent.emplace_back(
-        std::make_shared<StaticString>("save_icon"),
+          "save_icon",
         StringLcl("{choose_save}"),
         true,
         this->getChooseSaveEvent()
     );
     localGameWindowComponent.emplace_back(
-        std::make_shared<StaticString>("battle_icon"),
+          "battle_icon",
         StringLcl("{choose_map}"),
         true,
         this->getChooseMapEvent()
@@ -86,13 +86,13 @@ Events LocalGameButtonSpec::getChooseMapEvent() const {
 
     std::vector<HorizontalSelectionWindowComponent> chooseLevelWindowComponents;
     chooseLevelWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
+          "exit_icon",
         StringLcl("{exit}"),
         true,
         clickEvent
     );
     chooseLevelWindowComponents.emplace_back(
-        std::make_shared<StaticString>("ridge"),
+          "ridge",
         StringLcl("{ridge_description}"),
         true,
         this->getChooseRidgeEvent()
@@ -127,7 +127,7 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
     else {
         std::vector<HorizontalSelectionWindowComponent> components;
         components.emplace_back(
-            std::make_shared<StaticString>("exit_icon"),
+              "exit_icon",
             StringLcl("{exit}"),
             true,
             clickEvent
@@ -151,7 +151,7 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
             createChooseActionWindowEvent.add(std::make_shared<CreateEEvent>(chooseActionWindow));
 
             components.emplace_back(
-                std::make_shared<StaticString>("save_icon"),
+                  "save_icon",
                 StringLcl("{save}") + save,
                 true,
                 createChooseActionWindowEvent

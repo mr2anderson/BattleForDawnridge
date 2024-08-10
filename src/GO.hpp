@@ -19,7 +19,6 @@
 
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/base_object.hpp>
-#include "IWithTextureName.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "DrawingPriority.hpp"
 #include "ClickPriority.hpp"
@@ -36,7 +35,7 @@
 class Warrior;
 
 
-class GO : public sf::Drawable, public IWithTextureName, public IWithLightSource {
+class GO : public sf::Drawable, public IWithLightSource {
 public:
 	GO();
 	GO(uint32_t x, uint32_t y);
@@ -73,6 +72,7 @@ public:
     NewMovePriority getNewMovePriority() const;
 	virtual sf::IntRect getTextureRect() const;
 	virtual sf::Color getTextureColor() const;
+    virtual std::string getTextureName() const = 0;
 	virtual std::string getSoundName() const = 0;
 	virtual StringLcl getDescription() const = 0;
 

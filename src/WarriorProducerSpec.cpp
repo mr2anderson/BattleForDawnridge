@@ -33,8 +33,6 @@
 #include "SubResourcesEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
 #include "HighlightColors.hpp"
-#include "StaticString.hpp"
-#include "TextureNameStringSmart.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -134,7 +132,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 				text = StringLcl("{couldnt_place_warrior}");
 			}
 			components.emplace_back(
-				HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(currentProducing),
+				HorizontalSelectionWindowComponent(currentProducing->getTextureName(),
 				text,
 				false,
 				Events()),
@@ -188,7 +186,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 				}
 
 				components.emplace_back(
-					HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(w),
+					HorizontalSelectionWindowComponent(w->getTextureName(),
                     w->getDescription() + StringLcl("\n") +
                     StringLcl("{hp}") + StringLcl(std::to_string(w->getMaxHP())) + StringLcl(" (") + w->getDefence().getReadable() + StringLcl(")\n") +
                     w->getSpecialInfoString() + StringLcl("\n") +
@@ -202,7 +200,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+			HorizontalSelectionWindowComponent(  "hammer_icon",
 			StringLcl("{does_not_train_if_hp_isnt_full}"),
 			false,
 			Events()),

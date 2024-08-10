@@ -25,7 +25,7 @@
 #include "CreateEEvent.hpp"
 #include "Locales.hpp"
 #include "Building.hpp"
-#include "StaticString.hpp"
+
 
 
 Events IResourceGeneratorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
@@ -61,7 +61,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IResourceGeneratorSpec::
 	if (building->works()) {
 		component = {
             HorizontalSelectionWindowComponent(
-			std::make_shared<StaticString>(this->getProduct().type + "_icon"),
+			this->getProduct().type + "_icon",
             StringLcl("{this_building_produces_resources_every_move}") + this->getProduct().getReadableInfo(),
 			false,
 			Events()),
@@ -70,7 +70,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IResourceGeneratorSpec::
 	}
 	else {
 		component = {
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+			HorizontalSelectionWindowComponent(  "hammer_icon",
 			StringLcl("{this_building_cant_produce_resources_if_hp_isnt_full}"),
 			false,
 			Events()),

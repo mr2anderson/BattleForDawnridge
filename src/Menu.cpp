@@ -31,7 +31,7 @@
 #include "FirstTimeTipsTable.hpp"
 #include "LanguageAlreadyInUse.hpp"
 #include "Root.hpp"
-#include "StaticString.hpp"
+
 #include "IsServerTable.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "LocalGameButtonSpec.hpp"

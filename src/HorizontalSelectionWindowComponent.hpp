@@ -19,9 +19,7 @@
 
 #include <optional>
 #include <SFML/Graphics.hpp>
-#include <memory>
 #include "Events.hpp"
-#include "IDynamicString.hpp"
 #include "StringLcl.hpp"
 
 
@@ -30,9 +28,9 @@
 
 struct HorizontalSelectionWindowComponent {
 	HorizontalSelectionWindowComponent();
-	HorizontalSelectionWindowComponent(std::shared_ptr<const IDynamicString> pictureName, const StringLcl& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect = std::nullopt);
+	HorizontalSelectionWindowComponent(const std::string& pictureName, const StringLcl& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect = std::nullopt);
 
-	std::shared_ptr<const IDynamicString> pictureName;
+	std::string pictureName;
 	StringLcl message;
 	bool clickable;
 	Events gEvent;

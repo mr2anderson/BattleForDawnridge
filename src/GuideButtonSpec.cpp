@@ -19,7 +19,6 @@
 
 #include "GuideButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
-#include "StaticString.hpp"
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
 
@@ -37,91 +36,91 @@ Events GuideButtonSpec::getEvents() const {
 
     std::vector<HorizontalSelectionWindowComponent> guideWindowComponents;
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
+          "exit_icon",
         StringLcl("{leave}"),
         true,
         clickEvent
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("food_icon"),
+          "food_icon",
         StringLcl("{guide_food_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("wood_icon"),
+          "wood_icon",
         StringLcl("{guide_wood_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("stone_icon"),
+          "stone_icon",
         StringLcl("{guide_stone_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("iron_icon"),
+          "iron_icon",
         StringLcl("{guide_iron_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("crystal_icon"),
+          "crystal_icon",
         StringLcl("{guide_crystal_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("gold_icon"),
+          "gold_icon",
         StringLcl("{guide_gold_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("road_none"),
+          "road_none",
         StringLcl("{guide_road_system_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("shield_icon"),
+          "shield_icon",
         StringLcl("{guide_damage_mods_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("fire1"),
+          "fire1",
         StringLcl("{guide_fire_system_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("warehouse_food"),
+          "warehouse_food",
         StringLcl("{guide_storage_system_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("wall2"),
+          "wall2",
         StringLcl("{guide_wall_system_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("forest_icon"),
+          "forest_icon",
         StringLcl("{guide_movement_cost_system_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("water_icon"),
+          "water_icon",
         StringLcl("{guide_obstacle_system_description}"),
         false,
         Events()
     );
     guideWindowComponents.emplace_back(
-        std::make_shared<StaticString>("helmet"),
+          "helmet",
         StringLcl("{guide_population_limit_system_description}"),
         false,
         Events()

@@ -37,21 +37,21 @@ static uint32_t GET_TEXTURE_H(const std::string& imageName, std::optional<sf::In
 
 
 Image::Image() = default;
-Image::Image(int32_t x, int32_t y, std::shared_ptr<const IDynamicString> textureName, std::optional<sf::IntRect> rect) :
-        RectangularUiElement(x, y, GET_TEXTURE_W(textureName->get(), rect), GET_TEXTURE_H(textureName->get(), rect)) {
+Image::Image(int32_t x, int32_t y, const std::string& textureName, std::optional<sf::IntRect> rect) :
+        RectangularUiElement(x, y, GET_TEXTURE_W(textureName, rect), GET_TEXTURE_H(textureName, rect)) {
     this->textureName = textureName;
     this->textureRect = rect;
 }
-Image::Image(int32_t x, int32_t y, uint32_t size, std::shared_ptr<const IDynamicString> textureName, std::optional<sf::IntRect> rect) :
+Image::Image(int32_t x, int32_t y, uint32_t size, const std::string& textureName, std::optional<sf::IntRect> rect) :
         RectangularUiElement(x, y, size, size) {
     this->textureName = textureName;
     this->textureRect = rect;
 
-    this->scaleX = (float)size / GET_TEXTURE_W(textureName->get(), rect);
-    this->scaleY = (float)size / GET_TEXTURE_H(textureName->get(), rect);
+    this->scaleX = (float)size / GET_TEXTURE_W(textureName, rect);
+    this->scaleY = (float)size / GET_TEXTURE_H(textureName, rect);
 
     if (this->scaleX >= 1) {
-        float dw = GET_TEXTURE_W(textureName->get(), rect) * (this->scaleX.value() - 1);
+        float dw = GET_TEXTURE_W(textureName, rect) * (this->scaleX.value() - 1);
         this->dPosX = dw / 2;
         this->scaleX = 1;
     }
@@ -60,7 +60,7 @@ Image::Image(int32_t x, int32_t y, uint32_t size, std::shared_ptr<const IDynamic
     }
 
     if (scaleY >= 1) {
-        float dh = GET_TEXTURE_H(textureName->get(), rect) * (this->scaleY.value() - 1);
+        float dh = GET_TEXTURE_H(textureName, rect) * (this->scaleY.value() - 1);
         this->dPosY = dh / 2;
         this->scaleY = 1;
     }
@@ -72,7 +72,7 @@ void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
     
     sf::Sprite sprite;
-    sprite.setTexture(*Textures::get()->get(this->textureName->get()));
+    sprite.setTexture(*Textures::get()->get(this->textureName));
     sprite.setPosition(this->getX() + this->dPosX.value_or(0), this->getY() + this->dPosY.value_or(0));
     if (this->textureRect.has_value()) {
         sprite.setTextureRect(this->textureRect.value());

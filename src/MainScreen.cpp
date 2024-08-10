@@ -34,7 +34,7 @@
 #include "ResourceBar.hpp"
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
-#include "TextureNameStringSmart.hpp"
+
 #include "BuildingMode.hpp"
 #include "Sounds.hpp"
 #include "WindowButton.hpp"
@@ -53,7 +53,7 @@
 #include "VictoryConditionSpec.hpp"
 #include "Root.hpp"
 #include "Maps.hpp"
-#include "StaticString.hpp"
+
 #include "ScreenAlreadyFinished.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
 #include "SaveGameButtonSpec.hpp"

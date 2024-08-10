@@ -50,9 +50,3 @@ uint32_t RectangularUiElement::getW() const {
 uint32_t RectangularUiElement::getH() const {
     return this->h;
 }
-void RectangularUiElement::setX(int32_t newX) {
-    this->x = newX;
-}
-void RectangularUiElement::setY(int32_t newY) {
-    this->y = newY;
-}

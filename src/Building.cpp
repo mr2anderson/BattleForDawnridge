@@ -35,8 +35,8 @@
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
 #include "IAreaControllerSpec.hpp"
-#include "StaticString.hpp"
-#include "TextureNameStringSmart.hpp"
+
+
 #include "CircleLightSourceStatic.hpp"
 
 
@@ -224,14 +224,14 @@ bool Building::isLowObstacle(uint32_t playerId) const {
 	return false;
 }
 HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
-	std::shared_ptr<IDynamicString> textureName;
+	std::string textureName;
 	StringLcl secondLine;
 	if (this->burningMovesLeft == 0) {
-		textureName = std::make_shared<StaticString>("shield_icon");
+		textureName =   "shield_icon";
 		secondLine = StringLcl("{building_speed}" + std::to_string(this->getRegenerationSpeed()) + "{p_per_move}. {everything_is_alright}");
 	}
 	else {
-		textureName = std::make_shared<TextureNameStringSmart>(std::make_shared<Fire>());
+		textureName = "fire1";
 		secondLine = StringLcl("{building_on_fire}" + std::to_string(this->burningMovesLeft));
 	}
 
@@ -258,7 +258,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 	Events createVerify = clickSoundEvent;
 	createVerify.add(std::make_shared<CreateEEvent>(verify));
 	HorizontalSelectionWindowComponent component = {
-		std::make_shared<StaticString>("destroy_icon"),
+		  "destroy_icon",
 		StringLcl("{destroy_this_building}"),
 		true,
 		createVerify
@@ -267,7 +267,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 }
 HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
     return {
-        std::make_shared<StaticString>("lord_icon"),
+          "lord_icon",
         StringLcl("{building_of_enemy}"),
         false,
         Events()

@@ -19,7 +19,7 @@
 
 #include "NetworkGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
-#include "StaticString.hpp"
+
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "IsServerTable.hpp"
@@ -44,13 +44,13 @@ Events NetworkGameButtonSpec::getEvents() const {
 
     std::vector<HorizontalSelectionWindowComponent> networkGameWindowComponents;
     networkGameWindowComponents.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
+          "exit_icon",
         StringLcl("{exit}"),
         true,
         clickEvent
     );
     networkGameWindowComponents.emplace_back(
-        std::make_shared<StaticString>("advanced_settings_icon"),
+          "advanced_settings_icon",
         StringLcl("{advanced_settings}"),
         true,
         this->getAdvancedSettingsWindowEvent()
@@ -71,7 +71,7 @@ Events NetworkGameButtonSpec::getAdvancedSettingsWindowEvent() const {
 
     std::vector<HorizontalSelectionWindowComponent> components;
     components.emplace_back(
-        std::make_shared<StaticString>("exit_icon"),
+          "exit_icon",
         StringLcl("{exit}"),
         true,
         clickEvent
@@ -82,7 +82,7 @@ Events NetworkGameButtonSpec::getAdvancedSettingsWindowEvent() const {
         events.add(std::make_shared<InvertIsServerStateEvent>());
         events.add(std::make_shared<CreateEEvent>(doneWindow));
         components.emplace_back(
-            std::make_shared<StaticString>("switch_to_client_icon"),
+              "switch_to_client_icon",
             StringLcl("{switch_to_client}"),
             true,
             events
@@ -94,7 +94,7 @@ Events NetworkGameButtonSpec::getAdvancedSettingsWindowEvent() const {
         events.add(std::make_shared<InvertIsServerStateEvent>());
         events.add(std::make_shared<CreateEEvent>(doneWindow));
         components.emplace_back(
-            std::make_shared<StaticString>("switch_to_server_icon"),
+              "switch_to_server_icon",
             StringLcl("{switch_to_server}"),
             true,
             events

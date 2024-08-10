@@ -26,8 +26,8 @@
 #include "Damage.hpp"
 #include "CreateEEvent.hpp"
 #include "FocusOnEvent.hpp"
-#include "StaticString.hpp"
-#include "TextureNameStringSmart.hpp"
+
+
 #include "PlaySoundEvent.hpp"
 
 
@@ -93,14 +93,14 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getCompon
     BuildingHorizontalSelectionWindowComponent component;
 
     if (b->wasWithFullHP()) {
-        component = {HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(this->getProjectile()),
+        component = {HorizontalSelectionWindowComponent(this->getProjectile()->getTextureName(),
                                                        StringLcl("{this_building_shoots_to_enemies}") + this->getDamage().getReadable() + " x " + std::to_string(this->getShotsNumber()),
                                                        false,
                                                        Events()),
                 true};
     }
     else {
-        component = {HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+        component = {HorizontalSelectionWindowComponent(  "hammer_icon",
                                                         StringLcl("{does_not_shoot_if_isnt_built_yet}"),
                                                         false,
                                                         Events()),

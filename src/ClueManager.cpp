@@ -34,18 +34,10 @@ const uint32_t ClueManager::H = 80;
 
 ClueManager::ClueManager() {
 	this->currentClue = GlobalRandomGenerator32::get()->gen() % TOTAL_CLUES;
-	this->regenerateLabel();
 }
 Label ClueManager::getClueLabel(uint32_t windowW, uint32_t windowH) {
-	label.setX(windowW - label.getW() - 20);
-	label.setY(windowH - label.getH() - 20);
-
-	return label;
+	return Label(windowW - W - 20, windowH - H - 20, W, H, StringLcl("{clue" + std::to_string(this->currentClue) + "}"));
 }
 void ClueManager::nextClue() {
 	this->currentClue = (this->currentClue + 1) % TOTAL_CLUES;
-	this->regenerateLabel();
-}
-void ClueManager::regenerateLabel() {
-	this->label = Label(0, 0, W, H, StringLcl("{clue" + std::to_string(this->currentClue) + "}"));
 }

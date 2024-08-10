@@ -26,7 +26,7 @@
 #include "AddResourceEvent.hpp"
 #include "Locales.hpp"
 #include "SubHpEvent.hpp"
-#include "StaticString.hpp"
+
 #include "PlaySoundEvent.hpp"
 
 
@@ -94,7 +94,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 		}
 
 		component = {
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getResourceType() + "_icon"),
+			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
             StringLcl("{this_building_collects_resources_from_conducted_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())) + StringLcl(". ") + s,
 			false,
 			Events()),
@@ -103,7 +103,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 	}
 	else {
 		component = {
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+			HorizontalSelectionWindowComponent(  "hammer_icon",
 			StringLcl("{this_building_cant_collect_resources_if_hp_isnt_full}"),
 			false,
 			Events()),

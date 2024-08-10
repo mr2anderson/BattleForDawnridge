@@ -41,12 +41,6 @@ Events Button::click(uint32_t mouseX, uint32_t mouseY) const {
     }
     return Events();
 }
-void Button::setX(int32_t newX) {
-    this->element->setX(newX);
-}
-void Button::setY(int32_t newY) {
-    this->element->setY(newY);
-}
 int32_t Button::getX() const {
     return this->element->getX();
 }

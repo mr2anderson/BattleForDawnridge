@@ -21,7 +21,6 @@
 #include "SoundQueue.hpp"
 #include "Sounds.hpp"
 #include "CloseWindowEvent.hpp"
-#include "StaticString.hpp"
 #include "PlaySoundEvent.hpp"
 
 
@@ -120,7 +119,7 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 	structure.contentButtons.resize(this->getComponentsInFrame(windowW, windowH));
 	for (uint32_t i = 0; i < structure.contentButtons.size(); i = i + 1) {
 		HorizontalSelectionWindowComponent component = this->components.at(i + this->offset);
-		std::shared_ptr<const IDynamicString> pictureName = component.pictureName;
+		std::string pictureName = component.pictureName;
 		StringLcl message = component.message;
 		bool clickable = component.clickable;
 		Events onClick = component.gEvent;
@@ -137,14 +136,14 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 		Events upEvent;
 		upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>());
 		upEvent.add(std::make_shared<PlaySoundEvent>("click", true));
-		structure.buttonUp = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - 2 * (this->componentSize + this->marginSize), this->componentSize, std::make_shared<StaticString>("up_icon")), upEvent);
+		structure.buttonUp = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - 2 * (this->componentSize + this->marginSize), this->componentSize, "up_icon"), upEvent);
 	}
 	
 	if (this->possibleToMoveDown()) {
 		Events downEvent;
 		downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>());
 		downEvent.add(std::make_shared<PlaySoundEvent>("click", true));
-		structure.buttonDown = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - (this->componentSize + this->marginSize), this->componentSize, std::make_shared<StaticString>("down_icon")), downEvent);
+		structure.buttonDown = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - (this->componentSize + this->marginSize), this->componentSize, "down_icon"), downEvent);
 	}
 
 

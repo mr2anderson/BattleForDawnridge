@@ -27,9 +27,6 @@
 #include "SetSpellEvent.hpp"
 #include "UseSpellEvent.hpp"
 #include "FirstTimeTipsTable.hpp"
-#include "StaticString.hpp"
-#include "TextureNameString.hpp"
-#include "TextureNameStringSmart.hpp"
 #include "PlaySoundEvent.hpp"
 
 
@@ -76,7 +73,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				}
 
 				components.emplace_back(
-					HorizontalSelectionWindowComponent(std::make_shared<TextureNameStringSmart>(spell),
+					HorizontalSelectionWindowComponent(spell->getTextureName(),
                     spell->getDescription() + StringLcl("\n") +
                     StringLcl("{cost}") + spell->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_make_spell}") + StringLcl(std::to_string(spell->getCreationTime())),
 					true,
@@ -106,7 +103,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
                     }
 
 					components.emplace_back(
-						HorizontalSelectionWindowComponent(std::make_shared<TextureNameString>(spell),
+						HorizontalSelectionWindowComponent(spell->getTextureName(),
 						spell->getDescription(),
 						true,
 						event),
@@ -115,7 +112,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				}
 				else {
 					components.emplace_back(
-						HorizontalSelectionWindowComponent(std::make_shared<TextureNameString>(spell),
+						HorizontalSelectionWindowComponent(spell->getTextureName(),
                         StringLcl("{spell_producing_in_progress}") + StringLcl(std::to_string(spell->getCreationMovesLeft())) + StringLcl("\n") +
                         spell->getDescription(),
 						false,
@@ -128,7 +125,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+			HorizontalSelectionWindowComponent(  "hammer_icon",
 			StringLcl("{does_not_produce_spells_if_hp_isnt_full}"),
 			false,
 			Events()),

@@ -30,7 +30,7 @@
 #include "Building.hpp"
 #include "DoTradeEvent.hpp"
 #include "WindowTwoButtons.hpp"
-#include "StaticString.hpp"
+
 
 
 TradingSpec::TradingSpec() = default;
@@ -97,7 +97,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 	if (b->works()) {
 		if (this->busy()) {
 			components.emplace_back(
-				HorizontalSelectionWindowComponent(std::make_shared<StaticString>("trade_icon"),
+				HorizontalSelectionWindowComponent(  "trade_icon",
                 StringLcl("{trading_building_is_busy}") + this->currentTrade.getReadableInfo(),
 				false,
 				Events()),
@@ -113,7 +113,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+			HorizontalSelectionWindowComponent(  "hammer_icon",
 			StringLcl("{this_building_cant_do_trades_if_hp_isnt_full}"),
 			false,
 			Events()),
@@ -178,7 +178,7 @@ BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const 
 	}
 
 	BuildingHorizontalSelectionWindowComponent component = {
-		HorizontalSelectionWindowComponent(std::make_shared<StaticString>(trade.buy.type + "_icon"),
+		HorizontalSelectionWindowComponent(trade.buy.type + "_icon",
         StringLcl("{buy}") + trade.buy.getReadableInfo() +
         StringLcl("{for}") + trade.sell.getReadableInfo(),
 		true,

@@ -27,7 +27,7 @@
 #include "SubHpEvent.hpp"
 #include "AddResourceEvent.hpp"
 #include "HighlightColors.hpp"
-#include "StaticString.hpp"
+
 #include "PlaySoundEvent.hpp"
 
 
@@ -84,7 +84,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollec
 
 	if (building->works()) {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>(this->getResourceType() + "_icon"),
+			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
             StringLcl("{this_building_collects_resources_from_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())) + StringLcl(". ") +
             StringLcl("{resource_in_radius}") + StringLcl(std::to_string(this->countResourceInRadius(building, state))),
 			false,
@@ -94,7 +94,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollec
 	}
 	else {
 		components.emplace_back(
-			HorizontalSelectionWindowComponent(std::make_shared<StaticString>("hammer_icon"),
+			HorizontalSelectionWindowComponent(  "hammer_icon",
 			StringLcl("{this_building_cant_collect_resources_if_hp_isnt_full}"),
 			false,
 			Events()),

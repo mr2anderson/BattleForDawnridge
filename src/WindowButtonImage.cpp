@@ -20,7 +20,6 @@
 #include "WindowButtonImage.hpp"
 #include "CloseWindowEvent.hpp"
 #include "Textures.hpp"
-#include "StaticString.hpp"
 
 
 WindowButtonImage::WindowButtonImage(const StringLcl& message, const StringLcl& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
@@ -60,7 +59,7 @@ static const uint32_t BUTTON_H = 30;
 
 Image WindowButtonImage::getImage(uint32_t windowW, uint32_t windowH) const {
     sf::Texture* t = Textures::get()->get(this->pictureName);
-    return Image((windowW - this->w) / 2 + (this->w - t->getSize().x) / 2, (windowH - this->h) / 2 + this->h - BUTTON_H - 30 - t->getSize().y, std::make_shared<StaticString>(this->pictureName));
+    return Image((windowW - this->w) / 2 + (this->w - t->getSize().x) / 2, (windowH - this->h) / 2 + this->h - BUTTON_H - 30 - t->getSize().y, this->pictureName);
 }
 
 

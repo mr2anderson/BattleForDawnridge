@@ -22,15 +22,15 @@
 #include "WindowTwoButtons.hpp"
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
-#include "StaticString.hpp"
+
 
 
 EndTurnButtonSpec::EndTurnButtonSpec() = default;
 EndTurnButtonSpec::EndTurnButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<IDynamicString> EndTurnButtonSpec::getTextureName() const {
-	return std::make_shared<StaticString>("new_turn_icon");
+std::string EndTurnButtonSpec::getTextureName() const {
+	return   "new_turn_icon";
 }
 StringLcl EndTurnButtonSpec::getString() const {
 	return StringLcl("{new_move}");

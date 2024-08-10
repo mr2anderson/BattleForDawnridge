@@ -22,15 +22,15 @@
 #include "ReturnToMenuEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
-#include "StaticString.hpp"
+
 
 
 ReturnToMenuButtonSpec::ReturnToMenuButtonSpec() = default;
 ReturnToMenuButtonSpec::ReturnToMenuButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-std::shared_ptr<IDynamicString> ReturnToMenuButtonSpec::getTextureName() const {
-	return std::make_shared<StaticString>("to_menu_icon");
+std::string ReturnToMenuButtonSpec::getTextureName() const {
+	return   "to_menu_icon";
 }
 StringLcl ReturnToMenuButtonSpec::getString() const {
 	return StringLcl("{to_menu}");

@@ -18,7 +18,6 @@
 
 
 #include "IButtonSpec.hpp"
-#include "IDynamicString.hpp"
 #include "StringLcl.hpp"
 
 
@@ -30,7 +29,7 @@ public:
 	MainScreenButtonSpec();
 	MainScreenButtonSpec(uint32_t index);
 protected:
-	virtual std::shared_ptr<IDynamicString> getTextureName() const = 0;
+	virtual std::string getTextureName() const = 0;
 	virtual StringLcl getString() const = 0;
 private:
 	uint32_t index;

@@ -22,7 +22,7 @@
 #include "WarriorHPPointer.hpp"
 #include "Parameters.hpp"
 #include "Warrior.hpp"
-#include "StaticString.hpp"
+
 #include "PlaySoundEvent.hpp"
 
 
@@ -66,7 +66,7 @@ Events ResourcePoint::getSelectionWindow() {
 }
 HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() const {
 	HorizontalSelectionWindowComponent component = {
-		std::make_shared<StaticString>(this->getResourceType() + "_icon"),
+		this->getResourceType() + "_icon",
         StringLcl("{left}") + std::to_string(this->getHP()),
 		false,
 		Events()
@@ -75,7 +75,7 @@ HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() con
 }
 HorizontalSelectionWindowComponent ResourcePoint::getSlowMovementComponent() const {
 	HorizontalSelectionWindowComponent component = {
-		std::make_shared<StaticString>("slow_movement_icon"),
+		  "slow_movement_icon",
 		StringLcl("{slow_movement}") + std::to_string(this->getWalkingWarriorMovementCost()),
 		false,
 		Events()
