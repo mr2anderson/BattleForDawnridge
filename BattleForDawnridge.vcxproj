@@ -719,6 +719,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IWithLightSource.hpp" />
     <ClInclude Include="src\ILightSource.hpp" />
     <ClInclude Include="src\PublicIP.hpp" />
+    <ClInclude Include="src\RemotePlayer.hpp" />
+    <ClInclude Include="src\RemotePlayers.hpp" />
     <ClInclude Include="src\ReturnToMenuButtonSpec.hpp" />
     <ClInclude Include="src\Room.hpp" />
     <ClInclude Include="src\SaveGameButtonSpec.hpp" />
@@ -913,6 +915,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Workshop.hpp" />
     <ClInclude Include="src\WorkshopWarriorHealerSpec.hpp" />
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp" />
+    <ClInclude Include="src\WorldState.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp" />
@@ -1115,6 +1118,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\RefreshAttackedTableEvent.cpp" />
     <ClCompile Include="src\RefreshHealingAbilityEvent.cpp" />
     <ClCompile Include="src\RefreshMovementPointsEvent.cpp" />
+    <ClCompile Include="src\RemotePlayer.cpp" />
+    <ClCompile Include="src\RemotePlayers.cpp" />
     <ClCompile Include="src\ResetHighlightEvent.cpp" />
     <ClCompile Include="src\Resource.cpp" />
     <ClCompile Include="src\ResourceBar.cpp" />
@@ -1218,6 +1223,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Workshop.cpp" />
     <ClCompile Include="src\WorkshopWarriorHealerSpec.cpp" />
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
+    <ClCompile Include="src\WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\SfmlTextAline\licence.txt" />

@@ -17,41 +17,12 @@
  */
 
 
-#include <fstream>
-#include <filesystem>
-#include <ctime>
-#include <iomanip>
-#include <sstream>
-#include <boost/iostreams/filter/bzip2.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
 #include "MainScreen.hpp"
-#include "WindowTwoButtons.hpp"
-#include "ResourceBar.hpp"
-#include "Playlist.hpp"
-#include "SoundQueue.hpp"
-#include "BuildingMode.hpp"
-#include "Sounds.hpp"
-#include "WindowButton.hpp"
-#include "Textures.hpp"
-#include "Locales.hpp"
-#include "TradingSpec.hpp"
-#include "ResourcePoint.hpp"
-#include "WarriorProducerSpec.hpp"
-#include "Building.hpp"
-#include "Warrior.hpp"
-#include "Spell.hpp"
-#include "SpellProducerSpec.hpp"
-#include "ISingleAttacker.hpp"
-#include "WarriorNearMultyAttacker.hpp"
-#include "WarriorHealer.hpp"
-#include "VictoryConditionSpec.hpp"
-#include "Root.hpp"
-#include "Maps.hpp"
 #include "ScreenAlreadyFinished.hpp"
-#include "ReturnToMenuButtonSpec.hpp"
-#include "SaveGameButtonSpec.hpp"
-#include "EndTurnButtonSpec.hpp"
-#include "BuildButtonSpec.hpp"
+#include "Building.hpp"
+#include "Textures.hpp"
+#include "Playlist.hpp"
+#include "ResourceBar.hpp"
 
 
 
@@ -61,37 +32,9 @@
 
 MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 	this->alreadyFinished = false;
-	switch (response.getType()) {
-	case MenuResponse::TYPE::START_LOCAL_GAME: {
-		Maps::get()->load(response.getData(), &this->map);
-		this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
-		this->currentPlayerId = 1;
-		this->move = 1;
-		break;
-	}
-	case MenuResponse::TYPE::LOAD_LOCAL_GAME: {
-		std::ifstream ifs(USERDATA_ROOT + "/saves/" + response.getData(), std::ios::binary);
-		boost::iostreams::filtering_istreambuf fis;
-		fis.push(boost::iostreams::bzip2_decompressor());
-		fis.push(ifs);
-		iarchive ia(fis);
-		ia >> *this;
-		break;
-	}
-	}
 	this->returnToMenu = false;
-	this->curcorVisibility = true;
-	this->element = nullptr;
-	this->illiminanceTable.createRender(window.getSize().x, window.getSize().y, window.getSettings());
-	this->selected = nullptr;
-	this->animation = std::nullopt;
-    this->currentGOIndexNewMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
-    this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->view = sf::View(window.getDefaultView());
-	this->buttons.emplace_back(ReturnToMenuButtonSpec());
-	this->buttons.emplace_back(SaveGameButtonSpec(1));
-	this->buttons.emplace_back(EndTurnButtonSpec(2));
-	this->buttons.emplace_back(BuildButtonSpec(3));
+	this->illiminanceTable.createRender(window.getSize().x, window.getSize().y, window.getSettings());
 }
 
 
@@ -101,95 +44,28 @@ MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 
 
 
-MainScreenResponse MainScreen::run(sf::RenderWindow &window) {
+MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 	if (this->alreadyFinished) {
 		throw ScreenAlreadyFinished();
 	}
 	this->alreadyFinished = true;
 
-    sf::Event event{};
-    for (; ;) {
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (!this->animation.has_value() and this->viewMovingQueue.empty()) {
-                    if (this->element == nullptr) {
-                        if (event.mouseButton.button == sf::Mouse::Button::Left or event.mouseButton.button == sf::Mouse::Button::Right) {
-                            if (this->events.empty() and this->allNewMoveEventsAdded()) {
-                                if (this->selected == nullptr) {
-                                    if (event.mouseButton.button == sf::Mouse::Button::Left) {
-                                        this->addButtonClickEventToQueue(window);
-                                    }
-                                    if (this->events.empty()) {
-                                        this->addGameObjectClickEventToQueue(event.mouseButton.button, window);
-                                    }
-                                }
-                                else {
-                                    std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView(window);
-                                    Events unselectEvent = this->selected->unselect(this->map.getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
-                                    this->addEvents(unselectEvent);
-                                }
-                            }
-                        }
-                    }
-                    else  {
-                        if (event.mouseButton.button == sf::Mouse::Button::Left) {
-                            Events elementClickEvent = this->element->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
-                            this->addEvents(elementClickEvent);
-                        }
-                    }
-                }
-            }
-        }
-		window.setMouseCursorVisible(this->curcorVisibility);
-        this->drawEverything(window);
-		Playlist::get()->update();
-		if (this->element != nullptr) {
-			this->element->update();
-			if (this->element->finished()) {
-				this->element = nullptr;
+	sf::Event event{};
+	for (; ;) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::MouseButtonPressed) {
+				// TODO sending clicks to room
 			}
 		}
-		if (this->animation.has_value()) {
-			Events animationEvent;
-			animationEvent = this->animation.value().process(this->map.getStatePtr());
-			this->addEvents(animationEvent);
-		}
-        for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-            this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
-        }
-        this->processNewMoveEvents(window);
-        this->processBaseEvents();
-        this->moveView(window);
-        if (this->returnToMenu) {
+		window.setMouseCursorVisible(this->curcorVisibility);
+		this->drawEverything(window);
+		Playlist::get()->update();
+		this->moveView(window);
+		if (this->returnToMenu) {
 			Playlist::get()->stop();
 			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-void MainScreen::save() const {
-    if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
-        std::filesystem::create_directories(USERDATA_ROOT + "/saves");
-    }
-	auto t = std::time(nullptr);
-	auto tm = *std::localtime(&t);
-	std::stringstream ss;
-	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
-    std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
-    boost::iostreams::filtering_ostreambuf fos;
-    fos.push(boost::iostreams::bzip2_compressor());
-    fos.push(ofs);
-    oarchive oa(fos);
-    oa << *this;
+		}
+	}
 }
 
 
@@ -310,77 +186,7 @@ void MainScreen::drawDarkness(sf::RenderWindow &window) {
 
 
 
-void MainScreen::processNewMoveEvents(sf::RenderWindow& window) {
-	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
-		if (this->element != nullptr or !this->events.empty()) {
-			break;
-		}
-		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
-		this->addEvents(newMoveEvent);
-		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-        this->processBaseEvents();
-	}
-}
-bool MainScreen::allNewMoveEventsAdded() const {
-	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
-}
-void MainScreen::changeMove() {
-	this->move = this->move + 1;
-	this->currentGOIndexNewMoveEvent = 0;
-	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
-	do {
-		this->currentPlayerId = this->currentPlayerId + 1;
-        if (this->currentPlayerId > this->map.getStatePtr()->getPlayersPtr()->total()) {
-            this->currentPlayerId = 1;
-        }
-	}
-	while (!this->playerIsActive.at(this->currentPlayerId - 1));
-}
-Player* MainScreen::getCurrentPlayer() {
-	return this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
-}
-void MainScreen::addButtonClickEventToQueue(sf::RenderWindow& window) {
-	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		Events buttonClickEvent = this->buttons.at(i).click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
-		if (!buttonClickEvent.empty()) {
-			this->addEvents(buttonClickEvent);
-			break;
-		}
-	}
-}
-void MainScreen::addGameObjectClickEventToQueue(uint8_t button, sf::RenderWindow& window) {
-	uint32_t mouseX, mouseY;
-	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView(window);
 
-    for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
-        Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
-        if (!gor.empty()) {
-            this->addEvents(gor);
-            return;
-        }
-    }
-}
-void MainScreen::processBaseEvents() {
-    while (!this->events.empty()) {
-        if (this->element != nullptr or this->animation.has_value() or !this->viewMovingQueue.empty()) {
-            break;
-        }
-        this->handleEvent(this->events.front());
-        this->events.pop();
-    }
-}
-void MainScreen::addEvents(Events &e) {
-	for (uint32_t i = 0; i < e.size(); i = i + 1) {
-		std::shared_ptr<Event> event = e.at(i);
-		if (event->isUrgent()) {
-			this->handleEvent(event);
-		}
-		else {
-			this->events.push(event);
-		}
-    }
-}
 std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView(sf::RenderWindow &window) const {
 	uint32_t mouseX = sf::Mouse::getPosition().x + this->view.getCenter().x - window.getSize().x / 2;
 	uint32_t mouseY = sf::Mouse::getPosition().y + this->view.getCenter().y - window.getSize().y / 2;
@@ -518,366 +324,4 @@ bool MainScreen::verifyViewEast(uint32_t border) {
 }
 bool MainScreen::verifyViewEast(sf::RenderWindow& window) {
 	return this->verifyViewEast(64 * this->map.getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2);
-}
-
-
-
-
-
-
-
-
-
-
-void MainScreen::handleEvent(std::shared_ptr<Event> e) {
-    if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
-        this->handleAddResourceEvent(addResourceEvent);
-    }
-    else if (std::shared_ptr<SubResourceEvent> subResourceEvent = std::dynamic_pointer_cast<SubResourceEvent>(e)) {
-        this->handleSubResourceEvent(subResourceEvent);
-    }
-    else if (std::shared_ptr<AddResourcesEvent> addResourcesEvent = std::dynamic_pointer_cast<AddResourcesEvent>(e)) {
-        this->handleAddResourcesEvent(addResourcesEvent);
-    }
-    else if (std::shared_ptr<SubResourcesEvent> subResourcesEvent = std::dynamic_pointer_cast<SubResourcesEvent>(e)) {
-        this->handleSubResourcesEvent(subResourcesEvent);
-    }
-    else if (std::shared_ptr<SetHighlightEvent> changeHighlightEvent = std::dynamic_pointer_cast<SetHighlightEvent>(e)) {
-        this->handleSetHighlightEvent(changeHighlightEvent);
-    }
-    else if (std::shared_ptr<AddHpEvent> addHpEvent = std::dynamic_pointer_cast<AddHpEvent>(e)) {
-        this->handleAddHpEvent(addHpEvent);
-    }
-    else if (std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> decreaseCurrentTradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentTradeMovesLeftEvent>(e)) {
-        this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent);
-    }
-    else if (std::shared_ptr<BuildEvent> buildEvent = std::dynamic_pointer_cast<BuildEvent>(e)) {
-        this->handleBuild(buildEvent);
-    }
-    else if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
-        this->handlePlaySoundEvent(playSoundEvent);
-    }
-    else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
-        this->handleCreatePopUpElementEvent(createEEvent);
-    }
-    else if (std::shared_ptr<ChangeMoveEvent> changeMoveEvent = std::dynamic_pointer_cast<ChangeMoveEvent>(e)) {
-        this->handleChangeMoveEvent(changeMoveEvent);
-    }
-    else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e)) {
-        this->handleReturnToMenuEvent(returnToMenuEvent);
-    }
-    else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
-        this->handleDestroyEvent(destroyEvent);
-    }
-    else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e)) {
-        this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent);
-    }
-    else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e)) {
-        this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent);
-    }
-    else if (std::shared_ptr<SelectEvent> selectEvent = std::dynamic_pointer_cast<SelectEvent>(e)) {
-        this->handleSelectEvent(selectEvent);
-    }
-    else if (std::shared_ptr<UnselectEvent> unselectEvent = std::dynamic_pointer_cast<UnselectEvent>(e)) {
-        this->handleUnselectEvent(unselectEvent);
-    }
-    else if (std::shared_ptr<StartWarriorAnimationEvent> startWarriorAnimationEvent = std::dynamic_pointer_cast<StartWarriorAnimationEvent>(e)) {
-        this->handleStartWarriorAnimationEvent(startWarriorAnimationEvent);
-    }
-    else if (std::shared_ptr<RefreshMovementPointsEvent> refreshMovementPointsEvent = std::dynamic_pointer_cast<RefreshMovementPointsEvent>(e)) {
-        this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent);
-    }
-    else if (std::shared_ptr<EnableCursorEvent> enableCursorEvent = std::dynamic_pointer_cast<EnableCursorEvent>(e)) {
-        this->handleEnableCursorEvent(enableCursorEvent);
-    }
-    else if (std::shared_ptr<DisableCursorEvent> disableCursorEvent = std::dynamic_pointer_cast<DisableCursorEvent>(e)) {
-        this->handleDisableCursorEvent(disableCursorEvent);
-    }
-    else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
-        this->handleCreateAnimationEvent(createAnimationEvent);
-    }
-	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
-		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent);
-	}
-	else if (std::shared_ptr<SubHpEvent> subHpEvent = std::dynamic_pointer_cast<SubHpEvent>(e)) {
-		this->handleSubHpEvent(subHpEvent);
-	}
-	else if (std::shared_ptr<SetFireEvent> setFireEvent = std::dynamic_pointer_cast<SetFireEvent>(e)) {
-		this->handleSetFireEvent(setFireEvent);
-	}
-	else if (std::shared_ptr<ChangeWarriorDirectionEvent> changeWarriorDirectionEvent = std::dynamic_pointer_cast<ChangeWarriorDirectionEvent>(e)) {
-		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent);
-	}
-	else if (std::shared_ptr<FocusOnEvent> focusOnEvent = std::dynamic_pointer_cast<FocusOnEvent>(e)) {
-		this->handleFocusOnEvent(focusOnEvent);
-	}
-	else if (std::shared_ptr<ResetHighlightEvent> resetHighlightEvent = std::dynamic_pointer_cast<ResetHighlightEvent>(e)) {
-		this->handleResetHighlightEvent(resetHighlightEvent);
-	}
-	else if (std::shared_ptr<DoTradeEvent> doTradeEvent = std::dynamic_pointer_cast<DoTradeEvent>(e)) {
-		this->handleDoTradeEvent(doTradeEvent);
-	}
-	else if (std::shared_ptr<StartWarriorProducingEvent> startWarriorProducingEvent = std::dynamic_pointer_cast<StartWarriorProducingEvent>(e)) {
-		this->handleStartWarriorProducingEvent(startWarriorProducingEvent);
-	}
-	else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
-		this->handleTryToBuildEvent(tryToBuildEvent);
-	}
-	else if (std::shared_ptr<KillNextTurnEvent> killNextTurnEvent = std::dynamic_pointer_cast<KillNextTurnEvent>(e)) {
-		this->handleKillNextTurnEvent(killNextTurnEvent);
-	}
-	else if (std::shared_ptr<RevertKillNextTurnEvent> revertKillNextTurnEvent = std::dynamic_pointer_cast<RevertKillNextTurnEvent>(e)) {
-		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent);
-	}
-	else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
-		this->handleCloseAnimationEvent(closeAnimationEvent);
-	}
-	else if (std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> decreaseSpellCreationMovesLeftEvent = std::dynamic_pointer_cast<DecreaseSpellCreationMovesLeftEvent>(e)) {
-		this->handleDecreaseSpellCreationMovesLeftEvent(decreaseSpellCreationMovesLeftEvent);
-	}
-	else if (std::shared_ptr<SetSpellEvent> setSpellEvent = std::dynamic_pointer_cast<SetSpellEvent>(e)) {
-		this->handleSetSpellEvent(setSpellEvent);
-	}
-	else if (std::shared_ptr<UseSpellEvent> useSpellEvent = std::dynamic_pointer_cast<UseSpellEvent>(e)) {
-		this->handleUseSpellEvent(useSpellEvent);
-	}
-	else if (std::shared_ptr<MarkSpellAsUsedEvent> markSpellAsUsedEvent = std::dynamic_pointer_cast<MarkSpellAsUsedEvent>(e)) {
-		this->handleMarkSpellAsUsedEvent(markSpellAsUsedEvent);
-	}
-	else if (std::shared_ptr<EnableWarriorRageModeEvent> enableWarriorRageModeEvent = std::dynamic_pointer_cast<EnableWarriorRageModeEvent>(e)) {
-		this->handleEnableWarriorRageModeEvent(enableWarriorRageModeEvent);
-	}
-	else if (std::shared_ptr<DecreaseRageModeMovesLeftEvent> decreaseRageModeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseRageModeMovesLeftEvent>(e)) {
-		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent);
-	}
-    else if (std::shared_ptr<RefreshAttackAbilityEvent> refreshAttackAbilityEvent = std::dynamic_pointer_cast<RefreshAttackAbilityEvent>(e)) {
-        this->handleRefreshAttackAbilityEvent(refreshAttackAbilityEvent);
-    }
-    else if (std::shared_ptr<WipeAttackAbilityEvent> wipeAttackAbilityEvent = std::dynamic_pointer_cast<WipeAttackAbilityEvent>(e)) {
-        this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent);
-    }
-    else if (std::shared_ptr<RefreshAttackedTableEvent> refreshAttackedTableEvent = std::dynamic_pointer_cast<RefreshAttackedTableEvent>(e)) {
-        this->handleRefreshAttackedTableEvent(refreshAttackedTableEvent);
-    }
-    else if (std::shared_ptr<MarkAsAttackedEvent> markAsAttackedEvent = std::dynamic_pointer_cast<MarkAsAttackedEvent>(e)) {
-        this->handleMarkAsAttackedEvent(markAsAttackedEvent);
-    }
-    else if (std::shared_ptr<RefreshHealingAbilityEvent> refreshHealingAbilityEvent = std::dynamic_pointer_cast<RefreshHealingAbilityEvent>(e)) {
-        this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent);
-    }
-    else if (std::shared_ptr<WipeHealingAbilityEvent> wipeHealingAbilityEvent = std::dynamic_pointer_cast<WipeHealingAbilityEvent>(e)) {
-        this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent);
-    }
-    else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
-        this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent);
-    }
-    else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
-        this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent);
-    }
-    else if (std::shared_ptr<SaveGameEvent> saveGameEvent = std::dynamic_pointer_cast<SaveGameEvent>(e)) {
-        this->handleSaveGameEvent(saveGameEvent);
-    }
-    else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
-        this->handleLimitResourcesEvent(limitResourcesEvent);
-    }
-}
-void MainScreen::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e) {
-	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
-}
-void MainScreen::handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e) {
-	this->getCurrentPlayer()->subResource(e->getResource());
-}
-void MainScreen::handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e) {
-	this->getCurrentPlayer()->addResources(e->getResources(), e->getLimit());
-}
-void MainScreen::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e) {
-	this->getCurrentPlayer()->subResources(e->getResources());
-}
-void MainScreen::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e) {
-	this->highlightTable.mark(*e);
-}
-void MainScreen::handleAddHpEvent(std::shared_ptr<AddHpEvent> e) {
-	HPGO* go = e->getHPGO();
-	uint32_t n = e->getN();
-	go->addHp(n);
-}
-void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e) {
-	e->getSpec()->decreaseCurrentTradeMovesLeft();
-}
-void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
-	Building* b = e->getBuilding();
-	this->map.getStatePtr()->getCollectionsPtr()->add(b);
-}
-void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
-    if (e->getSoundName().empty()) {
-        return;
-    }
-	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
-}
-void MainScreen::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e) {
-    this->element = e->getElement();
-	this->element->restart();
-}
-void MainScreen::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e) {
-	this->changeMove();
-}
-void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
-	this->returnToMenu = true;
-}
-void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
-	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());
-	this->addEvents(destroyBuildingEvent);
-}
-void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
-	e->getSpec()->decreaseCurrentProducingMovesLeft();
-}
-void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e) {
-	e->getSpec()->stopProducing();
-	this->map.getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
-}
-void MainScreen::handleSelectEvent(std::shared_ptr<SelectEvent> e) {
-	this->selected = e->getSelectable();
-}
-void MainScreen::handleUnselectEvent(std::shared_ptr<UnselectEvent> e) {
-	this->selected = nullptr;
-}
-void MainScreen::handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e) {
-	e->getWarrior()->startAnimation(e->getAnimation());
-}
-void MainScreen::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e) {
-	e->getWarrior()->refreshMovementPoints();
-}
-void MainScreen::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e) {
-	this->curcorVisibility = true;
-}
-void MainScreen::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e) {
-	this->curcorVisibility = false;
-}
-void MainScreen::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e) {
-    this->animation = e->getAnimation();
-}
-void MainScreen::handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e) {
-	e->getBuilding()->decreaseBurningMovesLeft();
-}
-void MainScreen::handleSubHpEvent(std::shared_ptr<SubHpEvent> e) {
-	e->getHPGO()->subHp(e->getValue());
-}
-void MainScreen::handleSetFireEvent(std::shared_ptr<SetFireEvent> e) {
-	e->getBuilding()->setFire();
-}
-void MainScreen::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e) {
-	e->getWarrior()->changeDirection(e->getDirection());
-}
-void MainScreen::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e) {
-	this->viewMovingQueue.emplace(
-		64 * e->getX() + 64 * e->getSX() / 2,
-		64 * e->getY() + 64 * e->getSY() / 2);
-}
-void MainScreen::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e) {
-	this->highlightTable.clear();
-}
-void MainScreen::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e) {
-	Events events = e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
-	this->addEvents(events);
-}
-void MainScreen::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e) {
-	Events events = e->getSpec()->startProducing(e->getWarrior());
-	this->addEvents(events);
-}
-void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
-	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
-		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
-		Events bmStartEvent = bm.start(this->map.getStatePtr());
-		this->addEvents(bmStartEvent);
-	}
-	else {
-		Events clickEvent;
-		clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_resources_for_building}"), StringLcl("{OK}"), clickEvent);
-		Events unableToBuildEvent;
-		unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
-		this->addEvents(unableToBuildEvent);
-	}
-}
-void MainScreen::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e) {
-	Events events = e->getWarrior()->killNextTurn();
-	this->addEvents(events);
-}
-void MainScreen::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e) {
-	Events events = e->getWarrior()->revertKillNextTurn();
-	this->addEvents(events);
-}
-void MainScreen::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e) {
-	this->animation = std::nullopt;
-}
-void MainScreen::handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e) {
-	e->getSpell()->decreaseCreationMovesLeft();
-}
-void MainScreen::handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e) {
-	e->getSpec()->setSpell(e->getSpell());
-}
-void MainScreen::handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e) {
-	Events events = e->getSpell()->use();
-	this->addEvents(events);
-}
-void MainScreen::handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e) {
-	e->getSpell()->markAsUsed();
-}
-void MainScreen::handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e) {
-	e->getWarrior()->enableRageMode();
-}
-void MainScreen::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e) {
-	e->getWarrior()->decreaseRageModeMovesLeft();
-}
-void MainScreen::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e) {
-    e->getI()->refreshAbility();
-}
-void MainScreen::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e) {
-    e->getI()->wipeAbility();
-}
-void MainScreen::handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e) {
-    e->getWarrior()->refreshAttackedTable();
-}
-void MainScreen::handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e) {
-    e->getAttacker()->markAsAttacked(e->getTarget());
-}
-void MainScreen::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e) {
-    e->getWarrior()->refreshHealingAbility();
-}
-void MainScreen::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e) {
-    e->getWarrior()->wipeHealingAbility();
-}
-void MainScreen::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e) {
-    this->playerIsActive[e->getPlayerId() - 1] = false;
-    uint32_t count = 0;
-    for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
-        count = count + this->playerIsActive.at(i);
-    }
-    std::shared_ptr<WindowButton> w;
-    if (count == 1) {
-        Events returnToMenuEvent;
-        returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
-        returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
-        w = std::make_shared<WindowButton>(StringLcl("{game_finished}"), StringLcl("{OK}"), returnToMenuEvent);
-    }
-    else {
-        Events event;
-        event.add(std::make_shared<PlaySoundEvent>("click"));
-        if (this->currentPlayerId == e->getPlayerId()) {
-            event.add(std::make_shared<ChangeMoveEvent>());
-        }
-        w = std::make_shared<WindowButton>(StringLcl("{player_is_out}"), StringLcl("{OK}"), event);
-    }
-    std::shared_ptr<CreateEEvent> createW = std::make_shared<CreateEEvent>(w);
-    this->handleCreatePopUpElementEvent(createW);
-}
-void MainScreen::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e) {
-    e->getSpec()->increaseMoveCtr();
-}
-void MainScreen::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e) {
-    this->save();
-}
-void MainScreen::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e) {
-    this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
 }
