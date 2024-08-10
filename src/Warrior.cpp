@@ -672,17 +672,23 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	return response;
 }
 std::shared_ptr<PlayerPointer> Warrior::getPlayerPointer() const {
-    return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels());
+    uint8_t state;
+    if (this->enemyMove) {
+        state = WarriorPlayerPointer::ENEMY_MOVE;
+    }
+    else {
+        if (this->movementPoints.value_or(1) or this->hasSpecialMoves) {
+            state = WarriorPlayerPointer::HAS_MOVES;
+        }
+        else {
+            state = WarriorPlayerPointer::DOES_NOT_HAVE_MOVES;
+        }
+    }
+    return std::make_shared<WarriorPlayerPointer>(this->getXInPixels(), this->getYInPixels(), state);
 }
 void Warrior::drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const {
     WarriorHPPointer pointer(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
     target.draw(pointer, states);
-}
-std::shared_ptr<ILightSource> Warrior::getLightSource() const {
-    if (!this->enemyMove and (this->movementPoints.value_or(1) or this->hasSpecialMoves)) {
-        return std::make_shared<CircleLightSourceSqrt>(this->getCenterX(), this->getCenterY(), 30, 0.05, 2);
-    }
-    return this->Unit::getLightSource();
 }
 
 

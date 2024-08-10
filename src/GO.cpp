@@ -35,8 +35,8 @@ const DrawingPriority GO::DRAWING_PRIORITY_LOWEST = {0};
 const ClickPriority GO::CLICK_PRIORITY_WARRIOR {1};
 const ClickPriority GO::CLICK_PRIORITY_LOWEST = {0};
 
-const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_WARRIOR = {6};
-const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION = {5};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION = {6};
+const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_WARRIOR = { 5 };
 const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_SHOOTING = {4};
 const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR = {3};
 const NewMoveMainPriority GO::NEW_MOVE_MAIN_PRIORITY_HOUSE = {2};

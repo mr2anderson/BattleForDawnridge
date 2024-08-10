@@ -21,18 +21,30 @@
 #include "Textures.hpp"
 
 
-WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels) {
+WarriorPlayerPointer::WarriorPlayerPointer(float xInPixels, float yInPixels, uint8_t state) {
     this->sprite.setPosition(xInPixels, yInPixels);
+    this->state = state;
 }
 void WarriorPlayerPointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(this->sprite, states);
 }
 void WarriorPlayerPointer::setTypeBlue() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_blue"));
+    this->sprite.setTexture(*Textures::get()->get("warrior_blue" + this->getTextureNameSuffix()));
 }
 void WarriorPlayerPointer::setTypeGreen() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_green"));
+    this->sprite.setTexture(*Textures::get()->get("warrior_green" + this->getTextureNameSuffix()));
 }
 void WarriorPlayerPointer::setTypePurple() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_purple"));
+    this->sprite.setTexture(*Textures::get()->get("warrior_purple" + this->getTextureNameSuffix()));
+}
+std::string WarriorPlayerPointer::getTextureNameSuffix() const {
+    switch (this->state) {
+    case ENEMY_MOVE:
+        return "";
+    case DOES_NOT_HAVE_MOVES:
+        return "0";
+    case HAS_MOVES:
+        return "1";
+    }
+    return "";
 }

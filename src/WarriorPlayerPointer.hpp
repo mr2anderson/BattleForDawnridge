@@ -25,13 +25,21 @@
 
 class WarriorPlayerPointer : public PlayerPointer {
 public:
-    WarriorPlayerPointer(float xInPixels, float yInPixels);
+    WarriorPlayerPointer(float xInPixels, float yInPixels, uint8_t state);
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+    enum STATE {
+        ENEMY_MOVE,
+        HAS_MOVES,
+        DOES_NOT_HAVE_MOVES
+    };
 private:
     sf::Sprite sprite;
+    uint8_t state;
 
     void setTypeBlue() override;
     void setTypeGreen() override;
     void setTypePurple() override;
+    std::string getTextureNameSuffix() const;
 };

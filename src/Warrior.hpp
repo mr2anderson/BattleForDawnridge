@@ -130,7 +130,6 @@ private:
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 	void drawHPPointer(sf::RenderTarget& target, sf::RenderStates states) const;
-    std::shared_ptr<ILightSource> getLightSource() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
