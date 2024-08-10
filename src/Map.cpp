@@ -37,7 +37,7 @@
 
 
 Map::Map() = default;
-Map::Map(const std::string &path) {
+void Map::load(const std::string &path) {
     std::ifstream file(DATA_ROOT + "/" + path);
     if (!file.is_open()) {
         throw CouldntOpenMap(path);

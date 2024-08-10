@@ -88,7 +88,7 @@ public:
 	MainScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
-    std::shared_ptr<Map> map;
+    Map map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
 	std::shared_ptr<PopUpElement> element;

@@ -15,29 +15,3 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
-#include "MapState.hpp"
-
-
-#pragma once
-
-
-class Map {
-public:
-    Map();
-    ~Map();
-
-    void load(const std::string& path);
-    MapState* getStatePtr();
-private:
-    MapState state;
-
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & this->state;
-    }
-};
-
-
-BOOST_CLASS_EXPORT_KEY(Map)

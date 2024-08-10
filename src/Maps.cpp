@@ -33,18 +33,18 @@ void Maps::add(const std::string &name, const std::string &path) {
     this->paths[name] = path;
     this->generateThumbnail(name);
 }
-std::shared_ptr<Map> Maps::load(const std::string& name) {
+void Maps::load(const std::string& name, Map *dst) {
     auto it = this->paths.find(name);
     if (it == this->paths.end()) {
         std::cerr << "Invalid map uid: " << name << std::endl;
     }
-    std::shared_ptr<Map> map = std::make_shared<Map>(it->second);
-    return map;
+    dst->load(it->second);
 }
 void Maps::generateThumbnail(const std::string& name) {
-    std::shared_ptr<Map> map = this->load(name);
+    Map map;
+    this->load(name, &map);
 
-    float sx = std::min((float)THUMBNAIL_SIZE / (float)map->getStatePtr()->getMapSizePtr()->getWidth(), (float)THUMBNAIL_SIZE / (float)map->getStatePtr()->getMapSizePtr()->getHeight());
+    float sx = std::min((float)THUMBNAIL_SIZE / (float)map.getStatePtr()->getMapSizePtr()->getWidth(), (float)THUMBNAIL_SIZE / (float)map.getStatePtr()->getMapSizePtr()->getHeight());
     float sy = sx;
     float scaleX = sx / 64.f;
     float scaleY = scaleX;
@@ -52,8 +52,8 @@ void Maps::generateThumbnail(const std::string& name) {
     sf::RenderTexture renderTexture;
     renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 
-    for (uint32_t i = 0; i < map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+    for (uint32_t i = 0; i < map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         float x = go->getX() * sx;
         float y = (go->getY() + 1) * sy;
         sf::Sprite sprite;

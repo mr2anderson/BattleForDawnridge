@@ -18,7 +18,6 @@
 
 
 #include <unordered_map>
-#include <memory>
 #include "Map.hpp"
 
 
@@ -35,7 +34,7 @@ public:
     }
 
     void add(const std::string &name, const std::string& path);
-    std::shared_ptr<Map> load(const std::string& name);
+    void load(const std::string& name, Map *dst);
 
     static const uint32_t THUMBNAIL_SIZE;
 private:

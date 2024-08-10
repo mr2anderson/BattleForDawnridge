@@ -28,6 +28,7 @@
 template <typename T> class Collection {
 public:
 	Collection() = default;
+    Collection(const Collection& collection) = delete;
 
 	void push(T* t) {
         this->content.push_back(t);
@@ -69,6 +70,7 @@ class GO;
 template<> class Collection<GO> {
 public:
     Collection() = default;
+    Collection(const Collection& collection) = delete;
 
     void push(GO* t) {
         this->newMovePriority.insert(t);

@@ -17,11 +17,6 @@
  */
 
 
-
-
-
-
-
 #include <fstream>
 #include <filesystem>
 #include <ctime>
@@ -34,7 +29,6 @@
 #include "ResourceBar.hpp"
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
-
 #include "BuildingMode.hpp"
 #include "Sounds.hpp"
 #include "WindowButton.hpp"
@@ -53,7 +47,6 @@
 #include "VictoryConditionSpec.hpp"
 #include "Root.hpp"
 #include "Maps.hpp"
-
 #include "ScreenAlreadyFinished.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
 #include "SaveGameButtonSpec.hpp"
@@ -70,8 +63,8 @@ MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 	this->alreadyFinished = false;
 	switch (response.getType()) {
 	case MenuResponse::TYPE::START_LOCAL_GAME: {
-		this->map = Maps::get()->load(response.getData());
-		this->playerIsActive.resize(this->map->getStatePtr()->getPlayersPtr()->total(), true);
+		Maps::get()->load(response.getData(), &this->map);
+		this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
 		this->currentPlayerId = 1;
 		this->move = 1;
 		break;
@@ -92,8 +85,8 @@ MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y, window.getSettings());
 	this->selected = nullptr;
 	this->animation = std::nullopt;
-    this->currentGOIndexNewMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
-    this->totalGONewMoveEvents = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->currentGOIndexNewMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->view = sf::View(window.getDefaultView());
 	this->buttons.emplace_back(ReturnToMenuButtonSpec());
 	this->buttons.emplace_back(SaveGameButtonSpec(1));
@@ -132,7 +125,7 @@ MainScreenResponse MainScreen::run(sf::RenderWindow &window) {
                                 }
                                 else {
                                     std::tuple<uint32_t, uint32_t> pos = this->getMousePositionBasedOnView(window);
-                                    Events unselectEvent = this->selected->unselect(this->map->getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
+                                    Events unselectEvent = this->selected->unselect(this->map.getStatePtr(), std::get<0>(pos) / 64, std::get<1>(pos) / 64, event.mouseButton.button);
                                     this->addEvents(unselectEvent);
                                 }
                             }
@@ -158,11 +151,11 @@ MainScreenResponse MainScreen::run(sf::RenderWindow &window) {
 		}
 		if (this->animation.has_value()) {
 			Events animationEvent;
-			animationEvent = this->animation.value().process(this->map->getStatePtr());
+			animationEvent = this->animation.value().process(this->map.getStatePtr());
 			this->addEvents(animationEvent);
 		}
-        for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-            this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
+        for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+            this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
         }
         this->processNewMoveEvents(window);
         this->processBaseEvents();
@@ -236,8 +229,8 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.display();
 }
 void MainScreen::drawMap(sf::RenderWindow& window) {
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
 		if (go->exist() and go->inView(this->view)) {
 			window.draw(*go);
 		}
@@ -249,8 +242,8 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	bar.setResources(this->getCurrentPlayer()->getResources());
 
 	Resources limit;
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			limit.plus(b->getLimit());
 		}
@@ -258,8 +251,8 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	bar.setLimit(limit);
 
 	uint32_t population = 0;
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-		Warrior* w = this->map->getStatePtr()->getCollectionsPtr()->getWarrior(i);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+		Warrior* w = this->map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			population = population + w->getPopulation();
 		}
@@ -267,8 +260,8 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	bar.setPopulation(population);
 
 	uint32_t populationLimit = 0;
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map->getStatePtr()->getCollectionsPtr()->getBuilding(i);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			populationLimit = populationLimit + b->getPopulationLimit();
 		}
@@ -280,8 +273,8 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 void MainScreen::drawCells(sf::RenderWindow& window) {
     uint32_t sx = Textures::get()->get("plain")->getSize().x / 64;
     uint32_t sy = Textures::get()->get("plain")->getSize().y / 64;
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getMapSizePtr()->getWidth(); i = i + sx) {
-		for (uint32_t j = 0; j < this->map->getStatePtr()->getMapSizePtr()->getHeight(); j = j + sy) {
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getMapSizePtr()->getWidth(); i = i + sx) {
+		for (uint32_t j = 0; j < this->map.getStatePtr()->getMapSizePtr()->getHeight(); j = j + sy) {
 			sf::Sprite s;
 			s.setTexture(*Textures::get()->get("plain"));
 			s.setPosition(64 * i, 64 * j);
@@ -298,8 +291,8 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
 	this->illiminanceTable->newFrame(this->view);
 
-	for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		const GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		const GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (go->exist()) {
 			this->illiminanceTable->add(go);
 		}
@@ -322,7 +315,7 @@ void MainScreen::processNewMoveEvents(sf::RenderWindow& window) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
 		}
-		Events newMoveEvent = this->map->getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map->getStatePtr(), this->getCurrentPlayer()->getId());
+		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
         this->processBaseEvents();
@@ -334,17 +327,17 @@ bool MainScreen::allNewMoveEventsAdded() const {
 void MainScreen::changeMove() {
 	this->move = this->move + 1;
 	this->currentGOIndexNewMoveEvent = 0;
-	this->totalGONewMoveEvents = this->map->getStatePtr()->getCollectionsPtr()->totalGOs();
+	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	do {
 		this->currentPlayerId = this->currentPlayerId + 1;
-        if (this->currentPlayerId > this->map->getStatePtr()->getPlayersPtr()->total()) {
+        if (this->currentPlayerId > this->map.getStatePtr()->getPlayersPtr()->total()) {
             this->currentPlayerId = 1;
         }
 	}
 	while (!this->playerIsActive.at(this->currentPlayerId - 1));
 }
 Player* MainScreen::getCurrentPlayer() {
-	return this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
+	return this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
 }
 void MainScreen::addButtonClickEventToQueue(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
@@ -359,9 +352,9 @@ void MainScreen::addGameObjectClickEventToQueue(uint8_t button, sf::RenderWindow
 	uint32_t mouseX, mouseY;
 	std::tie(mouseX, mouseY) = this->getMousePositionBasedOnView(window);
 
-    for (uint32_t i = 0; i < this->map->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = this->map->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
-        Events gor = go->click(this->map->getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
+    for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
+        Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, mouseX, mouseY);
         if (!gor.empty()) {
             this->addEvents(gor);
             return;
@@ -504,7 +497,7 @@ bool MainScreen::verifyViewSouth(uint32_t border) {
 	return true;
 }
 bool MainScreen::verifyViewSouth(sf::RenderWindow& window) {
-	return this->verifyViewSouth(64 * this->map->getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2);
+	return this->verifyViewSouth(64 * this->map.getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2);
 }
 bool MainScreen::verifyViewWest(uint32_t border) {
 	if (this->view.getCenter().x < border) {
@@ -524,7 +517,7 @@ bool MainScreen::verifyViewEast(uint32_t border) {
 	return true;
 }
 bool MainScreen::verifyViewEast(sf::RenderWindow& window) {
-	return this->verifyViewEast(64 * this->map->getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2);
+	return this->verifyViewEast(64 * this->map.getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2);
 }
 
 
@@ -713,7 +706,7 @@ void MainScreen::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCur
 }
 void MainScreen::handleBuild(std::shared_ptr<BuildEvent> e) {
 	Building* b = e->getBuilding();
-	this->map->getStatePtr()->getCollectionsPtr()->add(b);
+	this->map.getStatePtr()->getCollectionsPtr()->add(b);
 }
 void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
     if (e->getSoundName().empty()) {
@@ -732,7 +725,7 @@ void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
 	this->returnToMenu = true;
 }
 void MainScreen::handleDestroyEvent(std::shared_ptr<DestroyEvent> e) {
-	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map->getStatePtr());
+	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());
 	this->addEvents(destroyBuildingEvent);
 }
 void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e) {
@@ -740,7 +733,7 @@ void MainScreen::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<De
 }
 void MainScreen::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e) {
 	e->getSpec()->stopProducing();
-	this->map->getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
+	this->map.getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
 }
 void MainScreen::handleSelectEvent(std::shared_ptr<SelectEvent> e) {
 	this->selected = e->getSelectable();
@@ -794,7 +787,7 @@ void MainScreen::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorPr
 void MainScreen::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
 		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
-		Events bmStartEvent = bm.start(this->map->getStatePtr());
+		Events bmStartEvent = bm.start(this->map.getStatePtr());
 		this->addEvents(bmStartEvent);
 	}
 	else {
@@ -886,5 +879,5 @@ void MainScreen::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e) {
     this->save();
 }
 void MainScreen::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e) {
-    this->map->getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
+    this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
 }
