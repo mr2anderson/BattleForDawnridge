@@ -82,7 +82,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
 	this->returnToMenu = false;
 	this->curcorVisibility = true;
 	this->element = nullptr;
-	this->illiminanceTable = std::make_shared<IlluminanceTable>(window.getSize().x, window.getSize().y, window.getSettings());
+	this->illiminanceTable.createRender(window.getSize().x, window.getSize().y, window.getSettings());
 	this->selected = nullptr;
 	this->animation = std::nullopt;
     this->currentGOIndexNewMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
@@ -289,16 +289,16 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
-	this->illiminanceTable->newFrame(this->view);
+	this->illiminanceTable.newFrame(this->view);
 
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		const GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (go->exist()) {
-			this->illiminanceTable->add(go);
+			this->illiminanceTable.add(go);
 		}
 	}
 
-	window.draw(*this->illiminanceTable);
+	window.draw(this->illiminanceTable);
 }
 
 

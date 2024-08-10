@@ -20,10 +20,14 @@
 #include "IlluminanceTable.hpp"
 
 
-IlluminanceTable::IlluminanceTable(uint32_t w, uint32_t h, const sf::ContextSettings &parentSettings) {
+IlluminanceTable::IlluminanceTable() = default;
+
+
+void IlluminanceTable::createRender(uint32_t windowW, uint32_t windowH, const sf::ContextSettings& parentSettings) {
 	this->render = std::make_unique<sf::RenderTexture>();
-	this->render->create(w, h, parentSettings);
+	this->render->create(windowW, windowH, parentSettings);
 }
+
 
 void IlluminanceTable::newFrame(const sf::View& view) {
 	this->view = view;
@@ -31,6 +35,7 @@ void IlluminanceTable::newFrame(const sf::View& view) {
 	this->render->clear(sf::Color(0, 0, 0, 100));
 	this->render->setView(view);
 }
+
 
 void IlluminanceTable::add(const IWithLightSource* i) {
 	if (i->getLightSource()->inView(this->view)) {
