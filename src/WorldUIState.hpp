@@ -18,6 +18,7 @@
 
 
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/set.hpp>
 #include "Map.hpp"
 #include "PopUpElement.hpp"
 #include "HighlightTable.hpp"
@@ -27,15 +28,20 @@
 #pragma once
 
 
-class WorldState {
+class WorldUIState {
 public:
-	WorldState();
-    WorldState(const WorldState& state) = delete;
+	WorldUIState(Map *mapPtr, std::shared_ptr<PopUpElement> *element, HighlightTable *table, bool *cursorVisibility);
+    WorldUIState(const WorldUIState& state) = delete;
+
+    enum FLAG {
+        SAVE,
+        LOAD
+    };
 private:
-    Map map;
-    std::shared_ptr<PopUpElement> element;
-    HighlightTable highlightTable;
-    bool curcorVisibility;
+    Map *map;
+    std::shared_ptr<PopUpElement> *element;
+    HighlightTable *highlightTable;
+    bool *curcorVisibility;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive& ar, const unsigned int version) {

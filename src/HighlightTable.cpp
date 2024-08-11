@@ -27,14 +27,14 @@ void HighlightTable::clear() {
 }
 void HighlightTable::mark(SetHighlightEvent e) {
     std::tuple<uint32_t, uint32_t> key = std::make_tuple(e.getX(), e.getY());
-    this->data[key].insert(e.getColor());
+    this->data[key].insert(SerializableColor(e.getColor()));
 }
 
 
-static std::vector<sf::Color> SET_TO_VECTOR(const std::set<sf::Color, SFColorComp> &set) {
+static std::vector<sf::Color> TO_SF_VECTOR(const std::set<SerializableColor> &set) {
     std::vector<sf::Color> v;
     for (const auto &c : set) {
-        v.push_back(c);
+        v.push_back(c.getSfColor());
     }
     return v;
 }
@@ -47,7 +47,7 @@ std::vector<sf::RectangleShape> HighlightTable::getRects() const {
         sf::RectangleShape rect;
         rect.setSize(sf::Vector2f(64, 64));
         rect.setPosition(64 * std::get<0>(p.first), 64 * std::get<1>(p.first));
-        rect.setFillColor(ColorBlender::get()->blend(SET_TO_VECTOR(p.second)));
+        rect.setFillColor(ColorBlender::get()->blend(TO_SF_VECTOR(p.second)));
         rect.setOutlineThickness(1);
         rect.setOutlineColor(sf::Color::Black);
         rects.push_back(rect);

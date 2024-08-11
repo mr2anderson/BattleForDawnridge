@@ -17,33 +17,54 @@
  */
 
 
-#include "SFColorComp.hpp"
+#include "SerializableColor.hpp"
 
 
-bool SFColorComp::operator()(const sf::Color &c1, const sf::Color &c2) const {
-    if (c1.r < c2.r) {
+SerializableColor::SerializableColor() {
+    this->r = 0;
+    this->g = 0;
+    this->b = 0;
+    this->a = 255;
+}
+SerializableColor::SerializableColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    this->r = r;
+    this->g = g;
+    this->b = b;
+    this->a = a;
+}
+SerializableColor::SerializableColor(sf::Color c) {
+    this->r = c.r;
+    this->g = c.g;
+    this->b = c.b;
+    this->a = c.a;
+}
+bool SerializableColor::operator<(const SerializableColor &c) const {
+    if (this->r < c.r) {
         return true;
     }
-    if (c1.r > c2.r) {
+    if (this->r > c.r) {
         return false;
     }
 
-    if (c1.g < c2.g) {
+    if (this->g < c.g) {
         return true;
     }
-    if (c1.g > c2.g) {
+    if (this->g > c.g) {
         return false;
     }
 
-    if (c1.b < c2.b) {
+    if (this->b < c.b) {
         return true;
     }
-    if (c1.b > c2.b) {
+    if (this->b > c.b) {
         return false;
     }
 
-    if (c1.a < c2.a) {
+    if (this->a < c.a) {
         return true;
     }
     return false;
+}
+sf::Color SerializableColor::getSfColor() const {
+    return {this->r, this->g, this->b, this->a};
 }

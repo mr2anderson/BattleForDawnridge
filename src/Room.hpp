@@ -110,6 +110,7 @@ private:
 	void addGameObjectClickEventToQueue(uint8_t button);
 	void processBaseEvents();
 	void addEvents(Events& e);
+    void sendWorldUIStateToClients(sf::UdpSocket &socket);
 
 	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);

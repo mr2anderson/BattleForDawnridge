@@ -24,7 +24,7 @@
 #pragma once
 
 
-template<typename T> class FlyingE : public CameraDependentPopUpElement {
+class FlyingE : public CameraDependentPopUpElement {
 public:
     FlyingE() {
         this->clock.restart();
@@ -66,6 +66,11 @@ private:
     T t;
     float startX, startY;
 	Clock clock;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar & this->_finished;
+    }
 
     static constexpr float DST = 128;
     static constexpr float TIME = 0.625;

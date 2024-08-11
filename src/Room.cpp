@@ -17,6 +17,9 @@
  */
 
 
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <sstream>
 #include "Room.hpp"
 #include "Maps.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
@@ -34,6 +37,7 @@
 #include "WarriorHealer.hpp"
 #include "WarriorNearMultyAttacker.hpp"
 #include "ISingleAttacker.hpp"
+#include "WorldUIState.hpp"
 
 
 
@@ -81,6 +85,7 @@ void Room::newFrame(sf::UdpSocket& socket, const RemotePlayers& players) {
 	}
 	this->processNewMoveEvents();
 	this->processBaseEvents();
+    this->sendWorldUIStateToClients(socket);
 }
 
 
@@ -142,6 +147,12 @@ void Room::addEvents(Events& e) {
 			this->events.push(event);
 		}
 	}
+}
+void Room::sendWorldUIStateToClients(sf::UdpSocket &socket) {
+    WorldUIState state(&this->map, &this->element, &this->highlightTable &this->curcorVisibility);
+    std::stringstream stream;
+    boost::archive::binary_oarchive ar(stream, boost::archive::no_header);
+    ar << state;
 }
 
 

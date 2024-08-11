@@ -18,7 +18,9 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <boost/serialization/access.hpp>
 #include "Events.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -38,4 +40,9 @@ protected:
 	void finish();
 private:
 	bool _finished;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar & this->_finished;
+    }
 };

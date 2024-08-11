@@ -15,3 +15,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Battle for Dawnridge.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
+#include "WorldUIState.hpp"
+
+
+WorldUIState::WorldUIState(Map *mapPtr, std::shared_ptr<PopUpElement> *element, HighlightTable *table, bool *cursorVisibility) {
+    this->map = mapPtr;
+    this->element = element;
+    this->highlightTable = table;
+    this->curcorVisibility = cursorVisibility;
+}

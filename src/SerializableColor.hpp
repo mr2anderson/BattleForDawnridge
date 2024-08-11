@@ -18,11 +18,30 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <cstdint>
+#include "ArchiveType.hpp"
 
 
 #pragma once
 
 
-struct SFColorComp {
-    bool operator()(const sf::Color &c1, const sf::Color &c2) const;
+class SerializableColor {
+public:
+    SerializableColor();
+    SerializableColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+    SerializableColor(sf::Color c);
+
+    bool operator<(const SerializableColor &c) const;
+
+    sf::Color getSfColor() const;
+private:
+    uint8_t r, g, b, a;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar & this->r;
+        ar & this->g;
+        ar & this->b;
+        ar & this->a;
+    }
 };

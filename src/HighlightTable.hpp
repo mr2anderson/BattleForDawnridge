@@ -19,9 +19,12 @@
 
 
 #include <set>
+#include <boost/serialization/access.hpp>
+#include "serialize-tuple/serialize_tuple.h"
 #include "SetHighlightEvent.hpp"
-#include "SFColorComp.hpp"
 #include "HashTableMapPosition.hpp"
+#include "SerializableColor.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -35,5 +38,10 @@ public:
 	void mark(SetHighlightEvent e);
 	std::vector<sf::RectangleShape> getRects() const;
 private:
-	HashTableMapPosition<std::set<sf::Color, SFColorComp>> data;
+	HashTableMapPosition<std::set<SerializableColor>> data;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar & this->data;
+    }
 };

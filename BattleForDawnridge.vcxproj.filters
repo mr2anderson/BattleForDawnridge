@@ -1604,7 +1604,7 @@
     <ClInclude Include="src\RemotePlayer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\WorldState.hpp">
+    <ClInclude Include="src\WorldUIState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2515,7 +2515,7 @@
     <ClCompile Include="src\RemotePlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\WorldState.cpp">
+    <ClCompile Include="src\WorldUIState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

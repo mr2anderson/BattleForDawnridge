@@ -915,7 +915,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Workshop.hpp" />
     <ClInclude Include="src\WorkshopWarriorHealerSpec.hpp" />
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp" />
-    <ClInclude Include="src\WorldState.hpp" />
+    <ClInclude Include="src\WorldUIState.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp" />
@@ -1223,7 +1223,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Workshop.cpp" />
     <ClCompile Include="src\WorkshopWarriorHealerSpec.cpp" />
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
-    <ClCompile Include="src\WorldState.cpp" />
+    <ClCompile Include="src\WorldUIState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\SfmlTextAline\licence.txt" />
