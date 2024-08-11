@@ -25,7 +25,7 @@ PublicIP* PublicIP::singletone = nullptr;
 
 
 void PublicIP::load() {
-    this->ip = sf::IpAddress::getPublicAddress();
+    this->ip = sf::IpAddress::getPublicAddress(sf::seconds(5));
 }
 sf::IpAddress PublicIP::getIp() const {
     if (!this->ip.has_value()) {
