@@ -18,7 +18,7 @@
 
 
 #include <SFML/System/Sleep.hpp>
-#include "LocalRoom.hpp"
+#include "LocalServer.hpp"
 
 
 static void F(std::shared_ptr<Room> room) {
@@ -48,8 +48,8 @@ static void F(std::shared_ptr<Room> room) {
 }
 
 
-LocalRoom::LocalRoom() = default;
-void LocalRoom::launch(std::shared_ptr<Room> room) {
+LocalServer::LocalServer() = default;
+void LocalServer::launch(std::shared_ptr<Room> room) {
 	this->thread = std::make_unique<sf::Thread>(&F, room);
 	this->thread->launch();
 }

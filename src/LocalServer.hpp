@@ -24,10 +24,10 @@
 #pragma once
 
 
-class LocalRoom {
+class LocalServer {
 public:
-	LocalRoom();
-	LocalRoom(const LocalRoom& copy) = delete;
+	LocalServer();
+	LocalServer(const LocalServer& copy) = delete;
 
 	void launch(std::shared_ptr<Room> room);
 private:

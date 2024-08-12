@@ -24,7 +24,7 @@
 #include "Menu.hpp"
 #include "MainScreen.hpp"
 #include "ServerScreen.hpp"
-#include "LocalRoom.hpp"
+#include "LocalServer.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -84,8 +84,8 @@ void Program::run() {
 
 
             std::shared_ptr<Room> room = std::make_shared<Room>(menuResponse.getData());
-            LocalRoom localRoom;
-            localRoom.launch(room);
+            LocalServer LocalServer;
+            LocalServer.launch(room);
             MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), room->getID());
             MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
             switch (mainScreenResponse.getType()) {
