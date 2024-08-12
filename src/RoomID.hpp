@@ -17,37 +17,30 @@
  */
 
 
+#include <cstdint>
+#include <string>
 #include <boost/serialization/access.hpp>
-#include <boost/serialization/set.hpp>
-#include "Map.hpp"
-#include "PopUpElement.hpp"
-#include "HighlightTable.hpp"
-#include "Button.hpp"
 
 
 #pragma once
 
 
-class WorldUIState {
+class RoomID {
 public:
-	WorldUIState(Map *mapPtr, std::shared_ptr<PopUpElement> *element, HighlightTable *table, bool *cursorVisibility);
-    WorldUIState(const WorldUIState& state) = delete;
+	RoomID();
+	RoomID(uint64_t value);
+	RoomID(const std::string& readableValue);
 
-    enum FLAG {
-        SAVE,
-        LOAD
-    };
+	bool operator==(const RoomID& b) const;
+	bool operator!=(const RoomID& b) const;
+
+	uint64_t value() const;
+	std::string readableValue() const;
 private:
-    Map *map;
-    std::shared_ptr<PopUpElement> *element;
-    HighlightTable *highlightTable;
-    bool *curcorVisibility;
+	uint64_t _value;
 
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-        ar & this->map;
-        ar & this->element;
-        ar & this->highlightTable;
-        ar & this->curcorVisibility;
-    }
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar & this->_value;
+	}
 };

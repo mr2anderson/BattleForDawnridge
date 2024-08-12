@@ -41,6 +41,9 @@ Events Button::click(uint32_t mouseX, uint32_t mouseY) const {
     }
     return Events();
 }
+std::shared_ptr<const RectangularUiElement> Button::getBase() const {
+    return this->element;
+}
 int32_t Button::getX() const {
     return this->element->getX();
 }

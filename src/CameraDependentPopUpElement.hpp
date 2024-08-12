@@ -26,4 +26,12 @@
 class CameraDependentPopUpElement : public PopUpElement {
 private:
 	bool isCameraDependent() const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<PopUpElement>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(CameraDependentPopUpElement)

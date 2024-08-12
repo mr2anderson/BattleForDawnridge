@@ -79,3 +79,6 @@ void Projectile::update() {
         this->finish();
     }
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Projectile)

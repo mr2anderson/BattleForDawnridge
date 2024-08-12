@@ -19,6 +19,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstdint>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/base_object.hpp>
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -38,4 +42,15 @@ public:
 private:
     int32_t x, y;
     uint32_t w, h;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& this->x;
+        ar& this->y;
+        ar& this->w;
+        ar& this->h;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(RectangularUiElement)

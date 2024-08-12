@@ -17,9 +17,11 @@
  */
 
 
-#include <optional>
+#include <boost/optional.hpp>
+#include <boost/serialization/optional.hpp>
 #include <memory>
 #include "RectangularUiElement.hpp"
+#include "IntRectSerializable.hpp"
 
 
 #pragma once
@@ -28,14 +30,23 @@
 class Image : public RectangularUiElement {
 public:
     Image();
-    Image(int32_t x, int32_t y, const std::string &textureName, std::optional<sf::IntRect> rect = std::nullopt); // creating image with size of texture
-    Image(int32_t x, int32_t y, uint32_t size, const std::string &textureName, std::optional<sf::IntRect> rect = std::nullopt); // creating image making it fit in specified size by scaling
+    Image(int32_t x, int32_t y, const std::string &textureName, boost::optional<IntRectSerializable> rect = boost::none); // creating image with size of texture
+    Image(int32_t x, int32_t y, uint32_t size, const std::string &textureName, boost::optional<IntRectSerializable> rect = boost::none); // creating image making it fit in specified size by scaling
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
     std::string textureName;
+    boost::optional<uint32_t> size;
+    boost::optional<IntRectSerializable> textureRect;
 
-    std::optional<float> dPosX, dPosY;
-    std::optional<sf::IntRect> textureRect;
-    std::optional<float> scaleX, scaleY;
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<RectangularUiElement>(*this);
+        ar& this->textureName;
+        ar& this->size;
+        ar& this->textureRect;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Image)

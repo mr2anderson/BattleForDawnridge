@@ -41,4 +41,18 @@ private:
     float vx, vy;
     float rotation;
     Clock clock;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<CameraDependentPopUpElement>(*this);
+        ar& this->x1;
+        ar& this->y1;
+        ar& this->vx;
+        ar& this->vy;
+        ar& this->rotation;
+        ar& this->clock;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Projectile)

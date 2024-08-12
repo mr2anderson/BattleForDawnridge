@@ -32,7 +32,7 @@ public:
 	void decreaseCurrentTradeMovesLeft();
 	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
-	std::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
+	boost::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
 	virtual std::vector<Trade> getTrades() const = 0;
 private:
 	Trade currentTrade;

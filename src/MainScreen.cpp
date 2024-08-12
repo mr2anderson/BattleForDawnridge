@@ -17,12 +17,16 @@
  */
 
 
+#include <sstream>
+#include <boost/serialization/shared_ptr.hpp>
 #include "MainScreen.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "Building.hpp"
 #include "Textures.hpp"
 #include "Playlist.hpp"
 #include "ResourceBar.hpp"
+#include "NoServerResponse.hpp"
+#include "Ports.hpp"
 
 
 
@@ -30,8 +34,16 @@
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, const MenuResponse& response) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, RoomID roomID) {
 	this->alreadyFinished = false;
+	this->serverIP = serverIP;
+	this->port = Ports::get()->getClientPort();
+	this->socket.bind(this->port);
+	this->socket.setBlocking(false);
+	this->roomID = roomID;
+
+	this->uiPackageGotten = false;
+
 	this->returnToMenu = false;
 	this->view = sf::View(window.getDefaultView());
 	this->illiminanceTable.createRender(window.getSize().x, window.getSize().y, window.getSettings());
@@ -57,14 +69,39 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 				// TODO sending clicks to room
 			}
 		}
-		window.setMouseCursorVisible(this->curcorVisibility);
-		this->drawEverything(window);
+		this->receive();
+		if (!this->uiPackageGotten) {
+			continue;
+		}
 		Playlist::get()->update();
+		window.setMouseCursorVisible(this->cursorVisibility);
+		this->drawEverything(window);
 		this->moveView(window);
 		if (this->returnToMenu) {
 			Playlist::get()->stop();
 			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
 		}
+	}
+}
+
+
+
+
+
+
+
+void MainScreen::receive() {
+	sf::Packet packet;
+
+	if (this->socket.receive(packet, this->serverIP, this->port) == sf::Socket::Status::Done) {
+		std::string data;
+		packet >> data;
+
+		std::stringstream stream(data);
+		iarchive ar(stream);
+		ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
+
+		this->uiPackageGotten = true;
 	}
 }
 
@@ -99,8 +136,8 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
         window.draw(*this->element);
     }
 	this->drawResourceBar(window);
-	for (const auto& b : this->buttons) {
-		window.draw(b);
+	for (const auto& b : this->buttonBases) {
+		window.draw(*b);
 	}
 	window.display();
 }
@@ -113,38 +150,7 @@ void MainScreen::drawMap(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawResourceBar(sf::RenderWindow& window) {
-	ResourceBar bar;
-
-	bar.setResources(this->getCurrentPlayer()->getResources());
-
-	Resources limit;
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			limit.plus(b->getLimit());
-		}
-	}
-	bar.setLimit(limit);
-
-	uint32_t population = 0;
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-		Warrior* w = this->map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
-		if (w->exist() and w->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			population = population + w->getPopulation();
-		}
-	}
-	bar.setPopulation(population);
-
-	uint32_t populationLimit = 0;
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
-		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
-			populationLimit = populationLimit + b->getPopulationLimit();
-		}
-	}
-	bar.setPopulationLimit(populationLimit);
-
-	window.draw(bar);
+	window.draw(resourceBar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
     uint32_t sx = Textures::get()->get("plain")->getSize().x / 64;

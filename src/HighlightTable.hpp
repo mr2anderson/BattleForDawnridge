@@ -20,6 +20,8 @@
 
 #include <set>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/set.hpp>
+#include <boost/serialization/unordered_map.hpp>
 #include "serialize-tuple/serialize_tuple.h"
 #include "SetHighlightEvent.hpp"
 #include "HashTableMapPosition.hpp"

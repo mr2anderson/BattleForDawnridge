@@ -34,4 +34,13 @@ public:
     static const uint32_t TOTAL_TYPES;
 private:
     Clock animationClock;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<Projectile>(*this);
+        ar& this->animationClock;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(HealerProjectile)

@@ -26,7 +26,6 @@
 class Map {
 public:
     Map();
-    ~Map();
 
     void load(const std::string& path);
     MapState* getStatePtr();

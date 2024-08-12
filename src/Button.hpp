@@ -19,6 +19,7 @@
 
 
 #include "IButtonSpec.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -33,6 +34,9 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	Events click(uint32_t mouseX, uint32_t mouseY) const;
+
+	std::shared_ptr<const RectangularUiElement> getBase() const;
+
 	int32_t getX() const;
 	int32_t getY() const;
 	uint32_t getW() const;

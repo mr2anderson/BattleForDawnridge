@@ -33,4 +33,12 @@ public:
 
     static const uint32_t TOTAL_TYPES;
     static const uint32_t TOTAL_SOUNDS;
+private:
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<Projectile>(*this);
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(BigArrow)

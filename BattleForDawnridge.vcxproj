@@ -617,7 +617,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\BuildingShortInfo.hpp" />
     <ClInclude Include="src\BuildingStatePointer.hpp" />
     <ClInclude Include="src\Button.hpp" />
+    <ClInclude Include="src\CollectionsImpl.hpp" />
+    <ClInclude Include="src\CouldntOpenPorts.hpp" />
     <ClInclude Include="src\EndTurnButtonSpec.hpp" />
+    <ClInclude Include="src\Filter.hpp" />
     <ClInclude Include="src\IButtonSpec.hpp" />
     <ClInclude Include="src\CameraDependentPopUpElement.hpp" />
     <ClInclude Include="src\CameraIndependentPopUpElement.hpp" />
@@ -691,6 +694,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Forest.hpp" />
     <ClInclude Include="src\GuideButtonSpec.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp" />
+    <ClInclude Include="src\IntRectSerializable.hpp" />
+    <ClInclude Include="src\int_math.hpp" />
+    <ClInclude Include="src\InvalidRoomIDFormat.hpp" />
     <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
     <ClInclude Include="src\LanguageButtonSpec.hpp" />
@@ -698,6 +704,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LoadingScreenBg.hpp" />
     <ClInclude Include="src\LoadingScreenResponse.hpp" />
     <ClInclude Include="src\LocalGameButtonSpec.hpp" />
+    <ClInclude Include="src\LocalRoom.hpp" />
     <ClInclude Include="src\Logs.hpp" />
     <ClInclude Include="src\MainScreenButtonSpec.hpp" />
     <ClInclude Include="src\MainScreenResponse.hpp" />
@@ -705,7 +712,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\MenuButtonSpec.hpp" />
     <ClInclude Include="src\MenuResponse.hpp" />
     <ClInclude Include="src\NetworkGameButtonSpec.hpp" />
+    <ClInclude Include="src\NoServerResponse.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
+    <ClInclude Include="src\Ports.hpp" />
     <ClInclude Include="src\Program.hpp" />
     <ClInclude Include="src\Gates1.hpp" />
     <ClInclude Include="src\Gates2.hpp" />
@@ -723,8 +732,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\RemotePlayers.hpp" />
     <ClInclude Include="src\ReturnToMenuButtonSpec.hpp" />
     <ClInclude Include="src\Room.hpp" />
+    <ClInclude Include="src\RoomID.hpp" />
     <ClInclude Include="src\SaveGameButtonSpec.hpp" />
     <ClInclude Include="src\ScreenAlreadyFinished.hpp" />
+    <ClInclude Include="src\SerializableColor.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
     <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp" />
@@ -815,7 +826,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\QuarrySpec.hpp" />
     <ClInclude Include="src\RageSpell.hpp" />
     <ClInclude Include="src\Ram.hpp" />
-    <ClInclude Include="src\RectangularUIElement.hpp" />
+    <ClInclude Include="src\RectangularUiElement.hpp" />
     <ClInclude Include="src\RefreshAttackAbilityEvent.hpp" />
     <ClInclude Include="src\RefreshAttackedTableEvent.hpp" />
     <ClInclude Include="src\RefreshHealingAbilityEvent.hpp" />
@@ -839,7 +850,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SetFireEvent.hpp" />
     <ClInclude Include="src\SetHighlightEvent.hpp" />
     <ClInclude Include="src\SetSpellEvent.hpp" />
-    <ClInclude Include="src\SFColorComp.hpp" />
     <ClInclude Include="src\ShootingPriorityComp.hpp" />
     <ClInclude Include="src\SortedIndexedContainer.hpp" />
     <ClInclude Include="src\SoundQueue.hpp" />
@@ -861,6 +871,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SuspendingAnimation.hpp" />
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
+    <ClInclude Include="src\Timer.hpp" />
     <ClInclude Include="src\Tower1.hpp" />
     <ClInclude Include="src\Tower1Spec.hpp" />
     <ClInclude Include="src\Tower2.hpp" />
@@ -915,7 +926,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Workshop.hpp" />
     <ClInclude Include="src\WorkshopWarriorHealerSpec.hpp" />
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp" />
-    <ClInclude Include="src\WorldUIState.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp" />
@@ -978,6 +988,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CouldntOpenMap.cpp" />
     <ClCompile Include="src\CouldntOpenMusic.cpp" />
     <ClCompile Include="src\CouldntOpenParameters.cpp" />
+    <ClCompile Include="src\CouldntOpenPorts.cpp" />
     <ClCompile Include="src\CouldntOpenSound.cpp" />
     <ClCompile Include="src\CouldntOpenTexture.cpp" />
     <ClCompile Include="src\CreateAnimationEvent.cpp" />
@@ -1004,10 +1015,13 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ExitButtonSpec.cpp" />
     <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\FirstTimeTipsTable.cpp" />
+    <ClCompile Include="src\FlyingE.cpp" />
     <ClCompile Include="src\FocusOnEvent.cpp" />
     <ClCompile Include="src\Fonts.cpp" />
     <ClCompile Include="src\Forest.cpp" />
     <ClCompile Include="src\GuideButtonSpec.cpp" />
+    <ClCompile Include="src\IntRectSerializable.cpp" />
+    <ClCompile Include="src\InvalidRoomIDFormat.cpp" />
     <ClCompile Include="src\InvertIsServerStateEvent.cpp" />
     <ClCompile Include="src\IsServerTable.cpp" />
     <ClCompile Include="src\LanguageButtonSpec.cpp" />
@@ -1015,6 +1029,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\LoadingScreenBg.cpp" />
     <ClCompile Include="src\LoadingScreenResponse.cpp" />
     <ClCompile Include="src\LocalGameButtonSpec.cpp" />
+    <ClCompile Include="src\LocalRoom.cpp" />
     <ClCompile Include="src\Logs.cpp" />
     <ClCompile Include="src\MainScreenButtonSpec.cpp" />
     <ClCompile Include="src\MainScreenResponse.cpp" />
@@ -1022,7 +1037,9 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\MenuButtonSpec.cpp" />
     <ClCompile Include="src\MenuResponse.cpp" />
     <ClCompile Include="src\NetworkGameButtonSpec.cpp" />
+    <ClCompile Include="src\NoServerResponse.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
+    <ClCompile Include="src\Ports.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Gates1.cpp" />
     <ClCompile Include="src\Gates2.cpp" />
@@ -1133,6 +1150,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Road.cpp" />
     <ClCompile Include="src\RoadSpec.cpp" />
     <ClCompile Include="src\Room.cpp" />
+    <ClCompile Include="src\RoomID.cpp" />
     <ClCompile Include="src\Root.cpp" />
     <ClCompile Include="src\SaveGameButtonSpec.cpp" />
     <ClCompile Include="src\SaveGameEvent.cpp" />
@@ -1140,12 +1158,12 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SawmillSpec.cpp" />
     <ClCompile Include="src\ScreenAlreadyFinished.cpp" />
     <ClCompile Include="src\SelectEvent.cpp" />
+    <ClCompile Include="src\SerializableColor.cpp" />
     <ClCompile Include="src\ServerScreen.cpp" />
     <ClCompile Include="src\ServerScreenResponse.cpp" />
     <ClCompile Include="src\SetFireEvent.cpp" />
     <ClCompile Include="src\SetHighlightEvent.cpp" />
     <ClCompile Include="src\SetSpellEvent.cpp" />
-    <ClCompile Include="src\SFColorComp.cpp" />
     <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp" />
     <ClCompile Include="src\ShootingPriorityComp.cpp" />
     <ClCompile Include="src\SoundQueue.cpp" />
@@ -1169,6 +1187,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SuspendingAnimation.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\TilesetHandler.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Tower1.cpp" />
     <ClCompile Include="src\Tower1Spec.cpp" />
     <ClCompile Include="src\Tower2.cpp" />
@@ -1223,7 +1242,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Workshop.cpp" />
     <ClCompile Include="src\WorkshopWarriorHealerSpec.cpp" />
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
-    <ClCompile Include="src\WorldUIState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\SfmlTextAline\licence.txt" />

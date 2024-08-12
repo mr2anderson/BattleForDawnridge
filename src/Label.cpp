@@ -72,3 +72,6 @@ void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	text.setString(WRAP_TEXT(this->message.get(), this->getW() - 10, text.getFont(), text.getCharacterSize()));
 	target.draw(text, states);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Label)

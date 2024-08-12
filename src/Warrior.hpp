@@ -21,7 +21,6 @@
 #include <boost/serialization/stack.hpp>
 #include <boost/serialization/queue.hpp>
 #include "Unit.hpp"
-#include "Collection.hpp"
 #include "ISelectable.hpp"
 #include "IWithSuspendingAnimation.hpp"
 #include "MovementGraph.hpp"
@@ -29,6 +28,7 @@
 #include "Damage.hpp"
 #include "SpecialMove.hpp"
 #include "Clock.hpp"
+#include "Timer.hpp"
 
 
 #pragma once
@@ -98,12 +98,12 @@ private:
 	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;
     bool enemyMove;
-    Clock newFrameUpdateTimer;
+    Timer newFrameUpdateTimer;
 	std::string currentDirection;
 	std::string currentAnimation;
 	Clock animationClock;
     std::queue<std::string> currentMovement;
-	Clock footstepsClock;
+    Clock footstepsClock;
 	bool toKill;
 	uint32_t rageModeMovesLeft;
 
@@ -142,6 +142,7 @@ private:
         ar & this->currentAnimation;
         ar & this->animationClock;
         ar & this->currentMovement;
+        ar & this->footstepsClock;
         ar & this->toKill;
         ar & this->rageModeMovesLeft;
     }

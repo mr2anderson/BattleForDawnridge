@@ -19,7 +19,7 @@
 
 
 #include <limits>
-#include <optional>
+#include <boost/optional.hpp>
 #include "MovementGraphElement.hpp"
 #include "Move.hpp"
 #include "HashTableMapPosition.hpp"

@@ -25,3 +25,9 @@ RemotePlayer::RemotePlayer(uint32_t id, sf::IpAddress ip) {
 	this->id = id;
 	this->ip = ip;
 }
+uint32_t RemotePlayer::getId() const {
+	return this->id;
+}
+sf::IpAddress RemotePlayer::getIp() const {
+	return this->ip;
+}

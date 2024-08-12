@@ -19,9 +19,16 @@
 
 #include <SFML/Graphics.hpp>
 #include <queue>
+#include <SFML/Network.hpp>
 #include "MainScreenResponse.hpp"
-#include "MenuResponse.hpp"
 #include "IlluminanceTable.hpp"
+#include "RoomID.hpp"
+#include "Map.hpp"
+#include "RectangularUiElement.hpp"
+#include "PopUpElement.hpp"
+#include "ISelectable.hpp"
+#include "HighlightTable.hpp"
+#include "ResourceBar.hpp"
 
 
 #pragma once
@@ -29,15 +36,32 @@
 
 class MainScreen {
 public:
-	MainScreen(sf::RenderWindow &window, const MenuResponse &response);
+	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
 	MainScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
+	sf::IpAddress serverIP;
+	unsigned short port;
+	sf::UdpSocket socket;
+	RoomID roomID;
+
+	bool uiPackageGotten;
+	Map map;
+	std::shared_ptr<PopUpElement> element;
+	ISelectable* selected;
+	HighlightTable highlightTable;
+	bool cursorVisibility;
+	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
+	ResourceBar resourceBar;
+
 	bool returnToMenu;
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	sf::View view;
 	IlluminanceTable illiminanceTable;
+
+
+	void receive();
 
 
 	void drawEverything(sf::RenderWindow& window);

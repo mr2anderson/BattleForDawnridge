@@ -188,7 +188,7 @@ HorizontalSelectionWindowComponent GO::getDescriptionComponent() const {
 		this->getDescription(),
 		false,
 		Events(),
-		this->getTextureRect()
+		IntRectSerializable(this->getTextureRect())
 	};
 	return component;
 }

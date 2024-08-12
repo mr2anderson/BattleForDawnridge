@@ -21,7 +21,7 @@
 
 
 LabelWithImage::LabelWithImage() = default;
-LabelWithImage::LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, const std::string& textureName, const StringLcl &message, std::optional<sf::IntRect> rect) : RectangularUiElement(x, y, sumW, size) {
+LabelWithImage::LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, const std::string& textureName, const StringLcl &message, boost::optional<IntRectSerializable> rect) : RectangularUiElement(x, y, sumW, size) {
     this->image = Image(x, y, size, textureName, rect);
     this->label = Label(x + size + 5, y, sumW - this->image.getW() - 5, size, message, false);
 }
@@ -29,3 +29,6 @@ void LabelWithImage::draw(sf::RenderTarget& target, sf::RenderStates states) con
     target.draw(this->image, states);
     target.draw(this->label, states);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(LabelWithImage)

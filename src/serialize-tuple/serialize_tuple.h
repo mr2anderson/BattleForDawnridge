@@ -28,11 +28,12 @@ or implied, of Christopher Allen Ogden.
 
 #pragma once
 #include <tuple>
+#include <cstdint>
 
 namespace boost {
 namespace serialization {
 
-template<uint N>
+template<uint32_t N>
 struct Serialize
 {
     template<class Archive, typename... Args>

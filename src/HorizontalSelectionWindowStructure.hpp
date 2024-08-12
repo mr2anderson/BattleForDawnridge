@@ -18,7 +18,7 @@
 
 
 #include <vector>
-#include <optional>
+#include <boost/optional.hpp>
 #include "Button.hpp"
 #include "Label.hpp"
 
@@ -29,6 +29,6 @@
 struct HorizontalSelectionWindowStructure {
 	RectangularUiElement rect;
 	std::vector<Button> contentButtons;
-	std::optional<Button> buttonUp;
-	std::optional<Button> buttonDown;
+	boost::optional<Button> buttonUp;
+	boost::optional<Button> buttonDown;
 };

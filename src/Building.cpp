@@ -294,7 +294,7 @@ void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states)
     }
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		std::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this);
+		boost::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this);
 		if (bsi.has_value()) {
 			target.draw(bsi.value(), states);
 		}

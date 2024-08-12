@@ -22,13 +22,13 @@
 
 
 
-static uint32_t GET_TEXTURE_W(const std::string& imageName, std::optional<sf::IntRect> rect) {
+static uint32_t GET_TEXTURE_W(const std::string& imageName, boost::optional<IntRectSerializable> rect) {
     if (rect.has_value()) {
         return rect.value().width;
     }
     return Textures::get()->get(imageName)->getSize().x;
 }
-static uint32_t GET_TEXTURE_H(const std::string& imageName, std::optional<sf::IntRect> rect) {
+static uint32_t GET_TEXTURE_H(const std::string& imageName, boost::optional<IntRectSerializable> rect) {
     if (rect.has_value()) {
         return rect.value().height;
     }
@@ -37,46 +37,60 @@ static uint32_t GET_TEXTURE_H(const std::string& imageName, std::optional<sf::In
 
 
 Image::Image() = default;
-Image::Image(int32_t x, int32_t y, const std::string& textureName, std::optional<sf::IntRect> rect) :
+Image::Image(int32_t x, int32_t y, const std::string& textureName, boost::optional<IntRectSerializable> rect) :
         RectangularUiElement(x, y, GET_TEXTURE_W(textureName, rect), GET_TEXTURE_H(textureName, rect)) {
     this->textureName = textureName;
     this->textureRect = rect;
 }
-Image::Image(int32_t x, int32_t y, uint32_t size, const std::string& textureName, std::optional<sf::IntRect> rect) :
+Image::Image(int32_t x, int32_t y, uint32_t size, const std::string& textureName, boost::optional<IntRectSerializable> rect) :
         RectangularUiElement(x, y, size, size) {
     this->textureName = textureName;
+    this->size = size;
     this->textureRect = rect;
-
-    this->scaleX = (float)size / GET_TEXTURE_W(textureName, rect);
-    this->scaleY = (float)size / GET_TEXTURE_H(textureName, rect);
-
-    if (this->scaleX >= 1) {
-        float dw = GET_TEXTURE_W(textureName, rect) * (this->scaleX.value() - 1);
-        this->dPosX = dw / 2;
-        this->scaleX = 1;
-    }
-    else {
-        this->dPosX = 0;
-    }
-
-    if (scaleY >= 1) {
-        float dh = GET_TEXTURE_H(textureName, rect) * (this->scaleY.value() - 1);
-        this->dPosY = dh / 2;
-        this->scaleY = 1;
-    }
-    else {
-        this->dPosY = 0;
-    }
 }
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
+
+    float scaleX, scaleY;
+    if (this->size.has_value()) {
+        scaleX = (float)this->size.value() / GET_TEXTURE_W(textureName, this->textureRect);
+        scaleY = (float)this->size.value() / GET_TEXTURE_H(textureName, this->textureRect);
+    }
+    else {
+        scaleX = 1;
+        scaleY = 1;
+    }
+   
+
+    float dPosX;
+    if (scaleX >= 1) {
+        float dw = GET_TEXTURE_W(textureName, this->textureRect) * (scaleX - 1);
+        dPosX = dw / 2;
+        scaleX = 1;
+    }
+    else {
+        dPosX = 0;
+    }
+
+    float dPosY;
+    if (scaleY >= 1) {
+        float dh = GET_TEXTURE_H(textureName, this->textureRect) * (scaleY - 1);
+        dPosY = dh / 2;
+        scaleY = 1;
+    }
+    else {
+        dPosY = 0;
+    }
     
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get()->get(this->textureName));
-    sprite.setPosition(this->getX() + this->dPosX.value_or(0), this->getY() + this->dPosY.value_or(0));
+    sprite.setPosition(this->getX() + dPosX, this->getY() + dPosY);
     if (this->textureRect.has_value()) {
-        sprite.setTextureRect(this->textureRect.value());
+        sprite.setTextureRect(this->textureRect.value().getSfRect());
     }
-    sprite.setScale(this->scaleX.value_or(1), this->scaleY.value_or(1));
+    sprite.setScale(scaleX, scaleY);
     target.draw(sprite, states);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(Image)

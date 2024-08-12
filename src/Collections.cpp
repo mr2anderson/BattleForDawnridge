@@ -18,78 +18,96 @@
 
 
 #include "Collections.hpp"
-#include "GO.hpp"
-#include "AreaResourcePoint.hpp"
-#include "ConductionResourcePoint.hpp"
-#include "Unit.hpp"
-#include "Building.hpp"
-#include "Warrior.hpp"
+#include "CollectionsImpl.hpp"
 
 
-Collections::Collections() = default;
+Collections::Collections() {
+    this->impl = std::make_unique<CollectionsImpl>();
+}
+Collections::~Collections() = default;
 
 
 void Collections::add(GO *object) {
-    this->gos.push(object);
+    this->impl->gos.push(object);
     this->addToSubClassCollections(object);
 }
 
 
 uint32_t Collections::totalGOs() const {
-	return this->gos.size();
+	return this->impl->gos.size();
 }
 uint32_t Collections::totalAreaRPs() const {
-	return this->areaRps.size();
+	return this->impl->areaRps.size();
 }
 uint32_t Collections::totalConductionRPs() const {
-    return this->conductionRps.size();
+    return this->impl->conductionRps.size();
 }
 uint32_t Collections::totalUnits() const {
-    return this->units.size();
+    return this->impl->units.size();
 }
 uint32_t Collections::totalBuildings() const {
-	return this->buildings.size();
+	return this->impl->buildings.size();
 }
 uint32_t Collections::totalWarriors() const {
-	return this->warriors.size();
+	return this->impl->warriors.size();
 }
 
 
 GO* Collections::getGO(uint32_t i, uint8_t filter) {
-	return this->gos.at(i, filter);
+	return this->impl->gos.at(i, filter);
 }
 const GO* Collections::getGO(uint32_t i, uint8_t filter) const {
-    return this->gos.at(i, filter);
+    return this->impl->gos.at(i, filter);
 }
 AreaResourcePoint* Collections::getAreaRP(uint32_t i) {
-	return this->areaRps.at(i);
+	return this->impl->areaRps.at(i);
 }
 ConductionResourcePoint* Collections::getConductionRP(uint32_t i) {
-    return this->conductionRps.at(i);
+    return this->impl->conductionRps.at(i);
 }
 Unit* Collections::getUnit(uint32_t i) {
-    return this->units.at(i);
+    return this->impl->units.at(i);
 }
 Building* Collections::getBuilding(uint32_t i) {
-	return this->buildings.at(i);
+	return this->impl->buildings.at(i);
 }
 Warrior* Collections::getWarrior(uint32_t i)  {
-	return this->warriors.at(i);
+	return this->impl->warriors.at(i);
+}
+void Collections::clearSubClassCollections() {
+    this->impl->areaRps.clear();
+    this->impl->conductionRps.clear();
+    this->impl->units.clear();
+    this->impl->buildings.clear();
+    this->impl->warriors.clear();
 }
 void Collections::addToSubClassCollections(GO *object) {
     if (AreaResourcePoint* areaRp = dynamic_cast<AreaResourcePoint*>(object)) {
-        this->areaRps.push(areaRp);
+        this->impl->areaRps.push(areaRp);
     }
     if (ConductionResourcePoint* conductionRp = dynamic_cast<ConductionResourcePoint*>(object)) {
-        this->conductionRps.push(conductionRp);
+        this->impl->conductionRps.push(conductionRp);
     }
     if (Unit* u = dynamic_cast<Unit*>(object)) {
-        this->units.push(u);
+        this->impl->units.push(u);
     }
     if (Building* b = dynamic_cast<Building*>(object)) {
-        this->buildings.push(b);
+        this->impl->buildings.push(b);
     }
     if (Warrior* w = dynamic_cast<Warrior*>(object)) {
-        this->warriors.push(w);
+        this->impl->warriors.push(w);
     }
 }
+
+
+template<class Archive> void Collections::serialize(Archive& ar, const unsigned int version) {
+    ar& this->impl->gos;
+    if (Archive::is_loading::value) {
+        this->clearSubClassCollections();
+        for (uint32_t i = 0; i < this->impl->gos.size(); i = i + 1) {
+            this->addToSubClassCollections(this->impl->gos.at(i, FILTER::DEFAULT_PRIORITY));
+        }
+    }
+}
+template void Collections::serialize(iarchive& ar, const unsigned int version);
+template void Collections::serialize(oarchive& ar, const unsigned int version);

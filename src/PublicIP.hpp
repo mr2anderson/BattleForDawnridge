@@ -18,7 +18,7 @@
 
 
 #include <SFML/Network.hpp>
-#include <optional>
+#include <boost/optional.hpp>
 
 
 #pragma once
@@ -40,5 +40,5 @@ private:
     PublicIP(const PublicIP& copy);
     static PublicIP* singletone;
 
-    std::optional<sf::IpAddress> ip;
+    boost::optional<sf::IpAddress> ip;
 };

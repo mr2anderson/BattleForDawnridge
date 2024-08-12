@@ -37,3 +37,6 @@ std::string BigArrow::getSoundName() const {
 float BigArrow::getTime() const {
     return 0.2f;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(BigArrow)

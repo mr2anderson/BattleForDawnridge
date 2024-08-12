@@ -26,64 +26,29 @@
 
 class FlyingE : public CameraDependentPopUpElement {
 public:
-    FlyingE() {
-        this->clock.restart();
-    }
+    FlyingE();
+    FlyingE(float x, float y);
 
-    void onRestart() override {
-        this->clock.restart();
-    }
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
-        target.draw(this->t, states);
-    }
-	void update() override {
-        float dt = this->clock.getSecondsAsFloat();
-
-        this->setTransparentColor(dt);
-        this->setPosition(dt);
-
-        if (dt >= TIME) {
-            this->finish();
-        }
-    }
+    void onRestart() override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void update() override;
 protected:
-    void set(const T &t1) {
-        this->t = t1;
-        this->startX = this->t.getPosition().x;
-        this->startY = this->t.getPosition().y;
-    }
-
-    virtual void setTransparentColor(float dt) = 0;
-    sf::Color getTransparencyLevel(float dt) const {
-        sf::Color color = sf::Color::White;
-        color.a = 255 - std::min(255.f, 255 * dt / TIME);
-        return color;
-    }
-    T* getTPtr() {
-        return &this->t;
-    }
+    virtual std::unique_ptr<sf::Drawable> getDrawable(sf::Vector2f position, sf::Color color) const = 0;
 private:
-    T t;
     float startX, startY;
 	Clock clock;
 
+    sf::Color getTransparencyLevel() const;
+    sf::Vector2f getPosition() const;
+
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-        ar & this->_finished;
-    }
-
-    static constexpr float DST = 128;
-    static constexpr float TIME = 0.625;
-
-    void setPosition(float dt) {
-        this->t.setPosition(this->calcPosition(dt));
-    }
-	sf::Vector2f calcPosition(float dt) const {
-        float v = DST / TIME;
-
-        float currentX = this->startX;
-        float currentY = this->startY - v * dt;
-
-        return sf::Vector2f(currentX, currentY);
+        ar& boost::serialization::base_object<CameraDependentPopUpElement>(*this);
+        ar& this->startX;
+        ar& this->startY;
+        ar& this->clock;
     }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(FlyingE)

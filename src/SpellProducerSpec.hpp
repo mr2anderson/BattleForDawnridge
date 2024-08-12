@@ -31,7 +31,7 @@ public:
 
 	Events getActiveNewMoveEvent(const Building* building, MapState* state) override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	std::optional<BuildingShortInfo> getShortInfo(const Building* building) const override;
+	boost::optional<BuildingShortInfo> getShortInfo(const Building* building) const override;
 	void setSpell(std::shared_ptr<Spell> newSpell);
 	virtual std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const = 0;
 private:

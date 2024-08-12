@@ -21,6 +21,7 @@
 #include "CloseWindowEvent.hpp"
 
 
+WindowTwoButtons::WindowTwoButtons() = default;
 WindowTwoButtons::WindowTwoButtons(const StringLcl& message, const StringLcl& buttonText1, const StringLcl& buttonText2, const Events& events1, const Events &events2, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
@@ -82,3 +83,6 @@ Button WindowTwoButtons::getButton1(uint32_t windowW, uint32_t windowH) const {
 Button WindowTwoButtons::getButton2(uint32_t windowW, uint32_t windowH) const {
     return Button(std::make_shared<Label>((windowW - this->w) / 2 + this->w - BUTTON_W - this->w / 5 - 5, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, this->buttonText2), this->events2);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WindowTwoButtons)

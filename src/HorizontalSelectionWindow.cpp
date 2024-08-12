@@ -123,7 +123,7 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 		StringLcl message = component.message;
 		bool clickable = component.clickable;
 		Events onClick = component.gEvent;
-		std::optional<sf::IntRect> rect = component.rect;
+		boost::optional<IntRectSerializable> rect = component.rect;
 		if (clickable) {
 			onClick.add(std::make_shared<CloseWindowEvent>());
 		}

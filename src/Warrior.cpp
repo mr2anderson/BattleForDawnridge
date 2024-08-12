@@ -49,7 +49,6 @@
 #include "FocusOnEvent.hpp"
 #include "Building.hpp"
 #include "IAreaControllerSpec.hpp"
-
 #include "CircleLightSourceSqrt.hpp"
 #include "PlaySoundEvent.hpp"
 
@@ -71,6 +70,7 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->rageModeMovesLeft = 0;
     this->hasSpecialMoves = false;
     this->enemyMove = true;
+    this->newFrameUpdateTimer = Timer(250, Timer::FIRST_INSTANTLY);
 }
 void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->Unit::draw(target, states);
@@ -356,8 +356,8 @@ std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uin
     return std::make_shared<sf::Sprite>(sprite);
 }
 void Warrior::newFrame(MapState *state, uint32_t currentPlayerId) {
-    if (this->exist() and this->newFrameUpdateTimer.getMS() > 250) {
-        this->newFrameUpdateTimer.restart();
+    if (this->exist() and this->newFrameUpdateTimer.ready()) {
+        this->newFrameUpdateTimer.reset();
         if (this->getPlayerId() == currentPlayerId) {
             this->enemyMove = false;
             this->hasSpecialMoves = !this->getSpecialMoves(state).empty();

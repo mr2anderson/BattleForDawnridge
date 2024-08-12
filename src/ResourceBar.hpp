@@ -38,4 +38,12 @@ private:
 	uint32_t population, populationLimit;
 
 	void drawEverything(sf::RenderTarget& target, sf::RenderStates states) const;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& this->resources;
+		ar& this->limit;
+		ar& this->population;
+		ar& this->populationLimit;
+	}
 };

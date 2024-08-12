@@ -24,6 +24,7 @@
 #include "Menu.hpp"
 #include "MainScreen.hpp"
 #include "ServerScreen.hpp"
+#include "LocalRoom.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -79,9 +80,13 @@ void Program::run() {
             if (menuResponse.getType() == MenuResponse::TYPE::EXIT) {
                 return;
             }
+            // TODO: Network game
 
 
-            MainScreen mainScreen(this->window, menuResponse);
+            std::shared_ptr<Room> room = std::make_shared<Room>(menuResponse.getData());
+            LocalRoom localRoom;
+            localRoom.launch(room);
+            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), room->getID());
             MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
             switch (mainScreenResponse.getType()) {
             case MainScreenResponse::TYPE::RETURN_TO_MENU: {

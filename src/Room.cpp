@@ -17,9 +17,11 @@
  */
 
 
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <sstream>
+#include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <iostream>
 #include "Room.hpp"
 #include "Maps.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
@@ -37,7 +39,8 @@
 #include "WarriorHealer.hpp"
 #include "WarriorNearMultyAttacker.hpp"
 #include "ISingleAttacker.hpp"
-#include "WorldUIState.hpp"
+#include "Ports.hpp"
+#include "ResourceBar.hpp"
 
 
 
@@ -45,6 +48,8 @@
 
 
 Room::Room(const std::string& mapName) {
+	this->sendWorldUIStateTimer = Timer(250, Timer::TYPE::FIRST_INSTANTLY);
+
 	Maps::get()->load(mapName, &this->map);
 	this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
 	this->currentPlayerId = 1;
@@ -65,9 +70,26 @@ Room::Room(const std::string& mapName) {
 
 
 
+RoomID Room::getID() const {
+	return this->id;
+}
 
 
-void Room::newFrame(sf::UdpSocket& socket, const RemotePlayers& players) {
+
+
+
+
+uint32_t Room::playersNumber() {
+	return this->map.getStatePtr()->getPlayersPtr()->total();
+}
+
+
+
+
+
+
+
+void Room::update(sf::UdpSocket &socket, const RemotePlayers &remotePlayers) {
 	// TODO handling clicks getting from remote players
 	if (this->element != nullptr) {
 		this->element->update();
@@ -85,7 +107,7 @@ void Room::newFrame(sf::UdpSocket& socket, const RemotePlayers& players) {
 	}
 	this->processNewMoveEvents();
 	this->processBaseEvents();
-    this->sendWorldUIStateToClients(socket);
+    this->sendWorldUIStateToClients(socket, remotePlayers);
 }
 
 
@@ -148,11 +170,81 @@ void Room::addEvents(Events& e) {
 		}
 	}
 }
-void Room::sendWorldUIStateToClients(sf::UdpSocket &socket) {
-    WorldUIState state(&this->map, &this->element, &this->highlightTable &this->curcorVisibility);
-    std::stringstream stream;
-    boost::archive::binary_oarchive ar(stream, boost::archive::no_header);
-    ar << state;
+std::vector<std::shared_ptr<const RectangularUiElement>> Room::makeButtonBases() {
+	std::vector<std::shared_ptr<const RectangularUiElement>> bases(this->buttons.size());
+
+	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
+		bases.at(i) = this->buttons.at(i).getBase();
+	}
+
+	return bases;
+}
+ResourceBar Room::makeResourceBar() {
+	ResourceBar bar;
+
+	bar.setResources(this->getCurrentPlayer()->getResources());
+
+	Resources limit;
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			limit.plus(b->getLimit());
+		}
+	}
+	bar.setLimit(limit);
+
+	uint32_t population = 0;
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+		Warrior* w = this->map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
+		if (w->exist() and w->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			population = population + w->getPopulation();
+		}
+	}
+	bar.setPopulation(population);
+
+	uint32_t populationLimit = 0;
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
+			populationLimit = populationLimit + b->getPopulationLimit();
+		}
+	}
+	bar.setPopulationLimit(populationLimit);
+	
+	return bar;
+}
+void Room::sendWorldUIStateToClients(sf::UdpSocket &socket, const RemotePlayers &remotePlayers) {
+	if (this->sendWorldUIStateTimer.ready()) {
+		return;
+	}
+	this->sendWorldUIStateTimer.reset();
+
+	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
+	ResourceBar resourceBar = this->makeResourceBar();
+
+	std::string serialStr;
+	boost::iostreams::back_insert_device<std::string> inserter(serialStr);
+	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+	oarchive ar(s);
+	ar << this->map << this->element << this->selected << this->highlightTable << this->curcorVisibility << buttonBases << resourceBar;
+	s.flush();
+
+	if (serialStr.size() > sf::UdpSocket::MaxDatagramSize) {
+		std::cerr << "Room: warning: current implementation can't send data if it is size is bigger than udp package limit (64 kb)" << std::endl;
+	}
+
+	sf::Packet packet;
+	packet << serialStr;
+
+	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
+	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
+		sf::IpAddress clientIp = remotePlayers.get(i).getIp();
+		uint32_t clientIpInt = clientIp.toInteger();
+		if (clientTable.find(clientIpInt) == clientTable.end()) {
+			clientTable[clientIpInt] = true;
+			socket.send(packet, clientIp, Ports::get()->getClientPort());
+		}
+	}
 }
 
 

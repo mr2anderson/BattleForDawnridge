@@ -27,6 +27,7 @@
 
 class WindowTwoButtons : public CameraIndependentPopUpElement {
 public:
+	WindowTwoButtons();
 	WindowTwoButtons(const StringLcl& message, const StringLcl& buttonText1, const StringLcl& buttonText2, const Events& events1, const Events &events2, uint32_t w = 400, uint32_t h = 225);
 
     void addEvent1(const Events &events);
@@ -42,4 +43,17 @@ private:
 	Label getLabel(uint32_t windowW, uint32_t windowH) const;
 	Button getButton1(uint32_t windowW, uint32_t windowH) const;
 	Button getButton2(uint32_t windowW, uint32_t windowH) const;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& boost::serialization::base_object<CameraIndependentPopUpElement>(*this);
+		ar& this->w;
+		ar& this->h;
+		ar& this->message;
+		ar& this->buttonText1;
+		ar& this->buttonText2;
+	}
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WindowTwoButtons)

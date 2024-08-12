@@ -18,7 +18,7 @@
 
 
 #include "Building.hpp"
-#include "Clock.hpp"
+#include "Timer.hpp"
 
 
 #pragma once
@@ -42,7 +42,7 @@ public:
 	uint32_t getRegenerationSpeed() const override;
 private:
     std::string type;
-    Clock verifyingTypeTimer;
+    Timer verifyingTypeTimer;
 
     void newFrame(MapState *state, uint32_t playerId) override;
     std::string getProperType(MapState *state) const;

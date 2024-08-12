@@ -36,6 +36,9 @@ public:
 	uint32_t size() const {
 		return this->content.size();
 	}
+    void clear() {
+        this->content.clear();
+    }
     T* at(uint32_t i) {
         return this->content.at(i);
     }
@@ -55,21 +58,19 @@ private:
 
 
 #include "SortedIndexedContainer.hpp"
+#include "GO.hpp"
 #include "CompByClickPriority.hpp"
 #include "CompByDrawPriority.hpp"
 #include "CompByNewMovePriority.hpp"
 
 
-enum FILTER {
-    NEW_MOVE_PRIORITY,
-    DRAW_PRIORITY,
-    CLICK_PRIORITY,
-    DEFAULT_PRIORITY = CLICK_PRIORITY
-};
-class GO;
+
 template<> class Collection<GO> {
 public:
     Collection() = default;
+    ~Collection() {
+        this->clear();
+    }
     Collection(const Collection& collection) = delete;
 
     void push(GO* t) {
@@ -79,6 +80,14 @@ public:
     }
     uint32_t size() const {
         return this->newMovePriority.size();
+    }
+    void clear() {
+        for (uint32_t i = 0; i < this->newMovePriority.size(); i = i + 1) {
+            delete this->newMovePriority.at(i);
+        }
+        this->newMovePriority.clear();
+        this->drawPriority.clear();
+        this->clickPriority.clear();
     }
     GO* at(uint32_t i, uint8_t filter) {
         switch (filter) {
@@ -109,10 +118,11 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        if (Archive::is_loading::value) {
+            this->clear();
+        }
         ar & this->newMovePriority;
         if (Archive::is_loading::value) {
-            this->drawPriority.clear();
-            this->clickPriority.clear();
             for (uint32_t i = 0; i < this->newMovePriority.size(); i = i + 1) {
                 this->drawPriority.insert(this->newMovePriority.at(i));
                 this->clickPriority.insert(this->newMovePriority.at(i));

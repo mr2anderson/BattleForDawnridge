@@ -21,3 +21,6 @@
 
 
 ISelectable::~ISelectable() = default;
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(ISelectable)

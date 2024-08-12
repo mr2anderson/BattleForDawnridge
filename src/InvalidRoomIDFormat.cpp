@@ -17,12 +17,7 @@
  */
 
 
-#include "WorldUIState.hpp"
+#include "InvalidRoomIDFormat.hpp"
 
 
-WorldUIState::WorldUIState(Map *mapPtr, std::shared_ptr<PopUpElement> *element, HighlightTable *table, bool *cursorVisibility) {
-    this->map = mapPtr;
-    this->element = element;
-    this->highlightTable = table;
-    this->curcorVisibility = cursorVisibility;
-}
+InvalidRoomIDFormat::InvalidRoomIDFormat() = default;

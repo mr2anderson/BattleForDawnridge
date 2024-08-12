@@ -210,9 +210,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 
 	return components;
 }
-std::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Building *b) const {
+boost::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Building *b) const {
 	if (!b->works()) {
-		return std::nullopt;
+		return boost::none;
 	}
 
     std::string pictureName;

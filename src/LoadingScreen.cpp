@@ -47,6 +47,7 @@
 #include "PublicIP.hpp"
 #include "LoadingScreenBg.hpp"
 #include "IsServerTable.hpp"
+#include "Ports.hpp"
 
 
 #if defined(_WIN32) // Unix does not support coloured cursors
@@ -138,6 +139,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         #if defined(USE_CUSTOM_CURSOR)
             Textures::get()->add("cursor", "images/cursor.png");
         #endif
+        Ports::get()->load();
         if (IsServerTable::get()->isServer()) {
             PublicIP::get()->load();
             return true;

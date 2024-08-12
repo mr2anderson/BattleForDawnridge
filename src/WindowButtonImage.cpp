@@ -22,6 +22,7 @@
 #include "Textures.hpp"
 
 
+WindowButtonImage::WindowButtonImage() = default;
 WindowButtonImage::WindowButtonImage(const StringLcl& message, const StringLcl& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
@@ -66,3 +67,6 @@ Image WindowButtonImage::getImage(uint32_t windowW, uint32_t windowH) const {
 Button WindowButtonImage::getButton(uint32_t windowW, uint32_t windowH) const {
     return Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - BUTTON_W) / 2, (windowH - this->h) / 2 + this->h - BUTTON_H - 15, BUTTON_W, BUTTON_H, buttonText), this->onFinish);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WindowButtonImage)

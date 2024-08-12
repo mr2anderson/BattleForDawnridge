@@ -23,9 +23,21 @@
 #pragma once
 
 
-class ImageFlyingE : public FlyingE<sf::Sprite> {
+class ImageFlyingE : public FlyingE {
 public:
+    ImageFlyingE();
     ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 private:
-    void setTransparentColor(float dt) override;
+    std::string textureName;
+
+    std::unique_ptr<sf::Drawable> getDrawable(sf::Vector2f position, sf::Color color) const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<FlyingE>(*this);
+        ar& this->textureName;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(ImageFlyingE)

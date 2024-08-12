@@ -34,8 +34,8 @@ Events IBuildingSpec::getEventOnDestroy(const Building *building, MapState* stat
 std::vector<BuildingHorizontalSelectionWindowComponent> IBuildingSpec::getComponents(const Building *building, MapState* state) {
 	return std::vector<BuildingHorizontalSelectionWindowComponent>();
 }
-std::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *building) const {
-	return std::nullopt;
+boost::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *building) const {
+	return boost::none;
 }
 Resources IBuildingSpec::getLimit(const Building *building) const {
 	return Resources();

@@ -33,3 +33,6 @@ std::string HealerProjectile::getSoundName() const {
 float HealerProjectile::getTime() const {
     return 0.5;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(HealerProjectile)

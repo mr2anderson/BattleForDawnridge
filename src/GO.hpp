@@ -27,6 +27,7 @@
 #include "IWithLightSource.hpp"
 #include "UUID.hpp"
 #include "ArchiveType.hpp"
+#include "Filter.hpp"
 
 
 #pragma once

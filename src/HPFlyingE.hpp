@@ -23,9 +23,23 @@
 #pragma once
 
 
-class HPFlyingE : public FlyingE<sf::Text> {
+class HPFlyingE : public FlyingE {
 public:
+    HPFlyingE();
     HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 private:
-    void setTransparentColor(float dt) override;
+    uint32_t delta;
+    bool plus;
+
+    std::unique_ptr<sf::Drawable> getDrawable(sf::Vector2f position, sf::Color color) const override;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<FlyingE>(*this);
+        ar& this->delta;
+        ar& this->plus;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(HPFlyingE)

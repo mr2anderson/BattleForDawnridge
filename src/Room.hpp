@@ -20,6 +20,9 @@
 #include <queue>
 #include <boost/optional.hpp>
 #include "RemotePlayers.hpp"
+#include "Timer.hpp"
+#include "RoomID.hpp"
+#include "ResourceBar.hpp"
 #include "Map.hpp"
 #include "PopUpElement.hpp"
 #include "SuspendingAnimation.hpp"
@@ -85,8 +88,16 @@ public:
 	Room(const std::string &mapName); // TODO save system support
 	Room(const Room& copy) = delete;
 
-	void newFrame(sf::UdpSocket& socket, const RemotePlayers& remotePlayers);
+	RoomID getID() const;
+
+	uint32_t playersNumber();
+
+	void update(sf::UdpSocket &socket, const RemotePlayers &remotePlayers);
 private:
+	RoomID id;
+
+	Timer sendWorldUIStateTimer;
+
 	Map map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
@@ -110,7 +121,10 @@ private:
 	void addGameObjectClickEventToQueue(uint8_t button);
 	void processBaseEvents();
 	void addEvents(Events& e);
-    void sendWorldUIStateToClients(sf::UdpSocket &socket);
+
+	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
+	ResourceBar makeResourceBar();
+    void sendWorldUIStateToClients(sf::UdpSocket &socket, const RemotePlayers &remotePlayers);
 
 	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);

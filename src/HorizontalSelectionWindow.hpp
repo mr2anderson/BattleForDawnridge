@@ -17,6 +17,7 @@
  */
 
 
+#include <boost/serialization/vector.hpp>
 #include "CameraIndependentPopUpElement.hpp"
 #include "Button.hpp"
 #include "HorizontalSelectionWindowComponent.hpp"
@@ -37,7 +38,6 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) override;
 private:
-	RectangularUiElement rect;
 	std::vector<HorizontalSelectionWindowComponent> components;
 	uint32_t componentSize, marginSize;
 	uint32_t offset;
@@ -53,4 +53,13 @@ private:
 
 	uint32_t getComponentsInFrame(uint32_t windowW, uint32_t windowH) const;
 	HorizontalSelectionWindowStructure getStructure(uint32_t windowW, uint32_t windowH) const;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& boost::serialization::base_object<CameraIndependentPopUpElement>(*this);
+		ar& this->components;
+		ar& this->componentSize;
+		ar& this->marginSize;
+		ar& this->offset;
+	}
 };

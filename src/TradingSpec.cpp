@@ -123,9 +123,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 
 	return components;
 }
-std::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) const {
+boost::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) const {
     if (!b->works()) {
-        return std::nullopt;
+        return boost::none;
     }
 
     std::string pictureName;

@@ -109,11 +109,6 @@ void Map::load(const std::string &path) {
     this->state.getMapSizePtr()->setWidth(x);
     this->state.getMapSizePtr()->setHeight(y);
 }
-Map::~Map() {
-    for (uint32_t i = 0; i < this->getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        delete this->getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
-    }
-}
 MapState* Map::getStatePtr() {
     return &this->state;
 }

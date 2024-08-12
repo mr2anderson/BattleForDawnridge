@@ -17,10 +17,11 @@
  */
 
 
-#include <optional>
+#include <boost/optional.hpp>
 #include <SFML/Graphics.hpp>
 #include "Events.hpp"
 #include "StringLcl.hpp"
+#include "IntRectSerializable.hpp"
 
 
 #pragma once
@@ -28,11 +29,17 @@
 
 struct HorizontalSelectionWindowComponent {
 	HorizontalSelectionWindowComponent();
-	HorizontalSelectionWindowComponent(const std::string& pictureName, const StringLcl& message, bool clickable, Events gEvent, std::optional<sf::IntRect> rect = std::nullopt);
+	HorizontalSelectionWindowComponent(const std::string& pictureName, const StringLcl& message, bool clickable, Events gEvent, boost::optional<IntRectSerializable> rect = boost::none);
 
 	std::string pictureName;
 	StringLcl message;
 	bool clickable;
 	Events gEvent;
-	std::optional<sf::IntRect> rect;
+	boost::optional<IntRectSerializable> rect;
+
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& this->pictureName;
+		ar& this->message;
+		ar& this->rect;
+	}
 };

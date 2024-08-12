@@ -21,6 +21,7 @@
 #include "CloseWindowEvent.hpp"
 
 
+WindowButton::WindowButton() = default;
 WindowButton::WindowButton(const StringLcl& message, const StringLcl &buttonText, const Events &onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
@@ -57,3 +58,6 @@ static const uint32_t BUTTON_H = 30;
 Button WindowButton::getButton(uint32_t windowW, uint32_t windowH) const {
     return Button(std::make_shared<Label>((windowW - this->w) / 2 + (this->w - BUTTON_W) / 2, (windowH - this->h) / 2 + h - BUTTON_H - 15, BUTTON_W, BUTTON_H, this->buttonText), this->onFinish);
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(WindowButton)

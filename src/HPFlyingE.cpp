@@ -21,22 +21,29 @@
 #include "Fonts.hpp"
 
 
-HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+static const uint32_t CHAR_SIZE = 18;
+
+
+HPFlyingE::HPFlyingE() = default;
+HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : FlyingE(64 * x + 64 * sx / 2 - CHAR_SIZE * std::to_string(delta).size() / 2, 64 * y + 64 * sy / 2 - CHAR_SIZE * std::to_string(delta).size() / 2)  {
+    this->delta = delta;
+    this->plus = plus;
+}
+std::unique_ptr<sf::Drawable> HPFlyingE::getDrawable(sf::Vector2f position, sf::Color color) const {
     sf::Text text;
     text.setFont(*Fonts::get()->get("1"));
     text.setString(std::to_string(delta));
     if (plus) {
-        text.setFillColor(sf::Color(0, 255, 0));
+        text.setFillColor(sf::Color(0, 255, 0, color.a));
     }
     else {
-        text.setFillColor(sf::Color(255, 0, 0));
+        text.setFillColor(sf::Color(255, 0, 0, color.a));
     }
-    text.setCharacterSize(18);
-    text.setPosition(64 * x + 64 * sx / 2 - text.getGlobalBounds().width / 2, 64 * y + 64 * sy / 2 - text.getGlobalBounds().height / 2);
-    this->set(text);
+    text.setCharacterSize(CHAR_SIZE);
+    text.setPosition(position);
+
+    return std::make_unique<sf::Text>(text);
 }
-void HPFlyingE::setTransparentColor(float dt) {
-    sf::Color old = this->getTPtr()->getFillColor();
-    old.a = this->getTransparencyLevel(dt).a;
-    this->getTPtr()->setFillColor(old);
-}
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(HPFlyingE)

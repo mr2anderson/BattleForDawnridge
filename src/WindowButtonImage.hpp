@@ -28,6 +28,7 @@
 
 class WindowButtonImage : public CameraIndependentPopUpElement {
 public:
+	WindowButtonImage();
 	WindowButtonImage(const StringLcl& message, const StringLcl& buttonText, const std::string& pictureName, const Events& onFinish = Events(), uint32_t w = 400, uint32_t h = 225);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -42,4 +43,17 @@ private:
 	Label getLabel(uint32_t windowW, uint32_t windowH) const;
 	Image getImage(uint32_t windowW, uint32_t windowH) const;
 	Button getButton(uint32_t windowW, uint32_t windowH) const;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& boost::serialization::base_object<CameraIndependentPopUpElement>(*this);
+		ar& this->w;
+		ar& this->h;
+		ar& this->message;
+		ar& this->buttonText;
+		ar& this->pictureName;
+	}
 };
+
+
+BOOST_CLASS_EXPORT_KEY(WindowButtonImage)

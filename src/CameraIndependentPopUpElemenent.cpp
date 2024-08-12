@@ -23,3 +23,6 @@
 bool CameraIndependentPopUpElement::isCameraDependent() const {
 	return false;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(CameraIndependentPopUpElement)

@@ -18,6 +18,8 @@
 
 
 #include <string>
+#include <boost/serialization/access.hpp>
+#include "ArchiveType.hpp"
 
 
 #pragma once
@@ -35,4 +37,9 @@ public:
 	void clear();
 private:
 	std::string data;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& this->data;
+	}
 };

@@ -136,9 +136,9 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 
 	return components;
 }
-std::optional<BuildingShortInfo> SpellProducerSpec::getShortInfo(const Building* building) const {
+boost::optional<BuildingShortInfo> SpellProducerSpec::getShortInfo(const Building* building) const {
 	if (!building->works()) {
-		return std::nullopt;
+		return boost::none;
 	}
 
     std::string pictureName;

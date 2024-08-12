@@ -50,3 +50,6 @@ uint32_t RectangularUiElement::getW() const {
 uint32_t RectangularUiElement::getH() const {
     return this->h;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(RectangularUiElement)

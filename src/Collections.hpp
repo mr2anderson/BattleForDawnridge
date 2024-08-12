@@ -18,13 +18,15 @@
 
 
 
+#include <memory>
 #include "ArchiveType.hpp"
-#include "Collection.hpp"
+
 
 
 #pragma once
 
 
+struct CollectionsImpl;
 class GO;
 class AreaResourcePoint;
 class ConductionResourcePoint;
@@ -36,6 +38,7 @@ class Warrior;
 class Collections {
 public:
 	Collections();
+    ~Collections();
 
 	void add(GO *object);
 
@@ -54,27 +57,11 @@ public:
 	Building* getBuilding(uint32_t i);
 	Warrior* getWarrior(uint32_t i);
 private:
-	Collection<GO> gos;
-	Collection<AreaResourcePoint> areaRps;
-    Collection<ConductionResourcePoint> conductionRps;
-    Collection<Unit> units;
-	Collection<Building> buildings;
-	Collection<Warrior> warriors;
+    std::unique_ptr<CollectionsImpl> impl;
 
+    void clearSubClassCollections();
     void addToSubClassCollections(GO *object);
 
-
     friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        if (Archive::is_loading::value) {
-            *this = Collections();
-            ar & this->gos;
-            for (uint32_t i = 0; i < this->gos.size(); i = i + 1) {
-                this->addToSubClassCollections(this->gos.at(i, FILTER::DEFAULT_PRIORITY));
-            }
-        }
-        else {
-            ar & this->gos;
-        }
-    }
+    template<class Archive> void serialize(Archive& ar, const unsigned int version);
 };

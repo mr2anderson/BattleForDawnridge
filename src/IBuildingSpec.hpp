@@ -42,7 +42,7 @@ public:
 	virtual Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) const;
 	virtual Events getEventOnDestroy(const Building *building, MapState* state) const;
 	virtual std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
-	virtual std::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
+	virtual boost::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
 	virtual Resources getLimit(const Building *building) const;
 	virtual uint32_t getPopulationLimit(const Building *building) const;
 	virtual bool isVictoryCondition() const;

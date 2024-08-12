@@ -33,4 +33,14 @@ public:
 private:
 	StringLcl message;
 	bool center;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& boost::serialization::base_object<RectangularUiElement>(*this);
+		ar& this->message;
+		ar& this->center;
+	}
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Label)

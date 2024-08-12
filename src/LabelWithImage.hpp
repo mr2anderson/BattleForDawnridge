@@ -27,10 +27,20 @@
 class LabelWithImage : public RectangularUiElement {
 public:
     LabelWithImage();
-    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, const std::string& textureName, const StringLcl &message, std::optional<sf::IntRect> rect = std::nullopt);
+    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, const std::string& textureName, const StringLcl &message, boost::optional<IntRectSerializable> rect = boost::none);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
     Label label;
     Image image;
+
+    friend class boost::serialization::access;
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<RectangularUiElement>(*this);
+        ar& this->label;
+        ar& this->image;
+    }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(LabelWithImage)

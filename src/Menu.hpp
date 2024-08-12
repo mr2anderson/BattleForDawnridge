@@ -42,7 +42,7 @@ public:
 private:
     bool alreadyFinished;
     bool closeMenu;
-	std::optional<MenuResponse> response;
+	boost::optional<MenuResponse> response;
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
 	MenuBg bg;

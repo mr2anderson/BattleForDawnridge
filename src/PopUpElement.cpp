@@ -43,3 +43,6 @@ void PopUpElement::onRestart() {
 void PopUpElement::finish() {
 	this->_finished = true;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(PopUpElement)

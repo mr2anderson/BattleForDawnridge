@@ -19,6 +19,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/base_object.hpp>
 #include "Events.hpp"
 #include "ArchiveType.hpp"
 
@@ -46,3 +48,6 @@ private:
         ar & this->_finished;
     }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(PopUpElement)
