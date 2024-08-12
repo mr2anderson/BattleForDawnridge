@@ -89,7 +89,7 @@ uint32_t Room::playersNumber() {
 
 
 
-void Room::update(sf::UdpSocket &socket, const RemotePlayers &remotePlayers) {
+void Room::update(const std::vector<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
 	// TODO handling clicks getting from remote players
 	if (this->element != nullptr) {
 		this->element->update();
@@ -107,7 +107,7 @@ void Room::update(sf::UdpSocket &socket, const RemotePlayers &remotePlayers) {
 	}
 	this->processNewMoveEvents();
 	this->processBaseEvents();
-    this->sendWorldUIStateToClients(socket, remotePlayers);
+    this->sendWorldUIStateToClients(toSend, remotePlayers);
 }
 
 
@@ -213,7 +213,7 @@ ResourceBar Room::makeResourceBar() {
 	
 	return bar;
 }
-void Room::sendWorldUIStateToClients(sf::UdpSocket &socket, const RemotePlayers &remotePlayers) {
+void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
 	if (this->sendWorldUIStateTimer.ready()) {
 		return;
 	}
@@ -242,7 +242,7 @@ void Room::sendWorldUIStateToClients(sf::UdpSocket &socket, const RemotePlayers 
 		uint32_t clientIpInt = clientIp.toInteger();
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
 			clientTable[clientIpInt] = true;
-			socket.send(packet, clientIp, Ports::get()->getClientPort());
+			toSend->emplace_back(packet, clientIp, Ports::get()->getClientPort());
 		}
 	}
 }

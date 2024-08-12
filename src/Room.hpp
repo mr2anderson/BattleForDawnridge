@@ -92,7 +92,7 @@ public:
 
 	uint32_t playersNumber();
 
-	void update(sf::UdpSocket &socket, const RemotePlayers &remotePlayers);
+	void update(const std::vector<std::tuple<sf::Packet, sf::IpAddress>> &received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> *toSend, const RemotePlayers& remotePlayers);
 private:
 	RoomID id;
 
@@ -124,7 +124,7 @@ private:
 
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
-    void sendWorldUIStateToClients(sf::UdpSocket &socket, const RemotePlayers &remotePlayers);
+    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers);
 
 	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);

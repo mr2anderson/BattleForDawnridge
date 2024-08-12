@@ -25,6 +25,9 @@ static void F(std::shared_ptr<Room> room) {
 	sf::UdpSocket socket;
 	socket.setBlocking(false);
 
+	std::vector<std::tuple<sf::Packet, sf::IpAddress>> received;
+	std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> toSend;
+
 	RemotePlayers players;
 	for (uint32_t i = 1; i <= room->playersNumber(); i = i + 1) {
 		players.add(RemotePlayer(i, sf::IpAddress::getLocalAddress()));
@@ -33,7 +36,12 @@ static void F(std::shared_ptr<Room> room) {
 	for (; ;) {
 		Clock clock;
 
-		room->update(socket, players);
+		room->update(received, &toSend, players);
+
+		while (!toSend.empty()) {
+			socket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), std::get<2>(toSend.back()));
+			toSend.pop_back();
+		}
 
 		sf::sleep(sf::milliseconds(1000 / 60 - clock.getMS()));
 	}
