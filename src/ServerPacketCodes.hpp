@@ -17,23 +17,13 @@
  */
 
 
-#include "Timer.hpp"
+#include <cstdint>
 
 
-Timer::Timer() {
-	this->ms = 0;
-	this->type = TYPE::FIRST_DEFAULT;
-	this->first = true;
-}
-Timer::Timer(uint32_t ms, uint8_t type) {
-	this->ms = ms;
-	this->type = type;
-	this->first = true;
-}
-bool Timer::ready() const {
-	return ((this->first and type == TYPE::FIRST_INSTANTLY) or this->clock.getMS() > this->ms);
-}
-void Timer::reset() {
-	this->clock.restart();
-	this->first = false;
-}
+#pragma once
+
+
+namespace ServerPacketCodes {
+	const uint8_t OK = 0;
+	const uint8_t GAME_UI_STATE = 1;
+};

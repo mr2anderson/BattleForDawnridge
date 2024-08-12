@@ -18,6 +18,7 @@
 
 
 #include <sstream>
+#include <iostream>
 #include <boost/serialization/shared_ptr.hpp>
 #include "MainScreen.hpp"
 #include "ScreenAlreadyFinished.hpp"
@@ -27,6 +28,8 @@
 #include "ResourceBar.hpp"
 #include "NoServerResponse.hpp"
 #include "Ports.hpp"
+#include "ServerPacketCodes.hpp"
+#include "ClientPacketCodes.hpp"
 
 
 
@@ -94,14 +97,23 @@ void MainScreen::receive() {
 	sf::Packet packet;
 
 	if (this->socket.receive(packet, this->serverIP, this->port) == sf::Socket::Status::Done) {
-		std::string data;
-		packet >> data;
+		uint8_t code;
+		packet >> code;
 
-		std::stringstream stream(data);
-		iarchive ar(stream);
-		ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
-
-		this->uiPackageGotten = true;
+		if (code == ServerPacketCodes::OK) {
+			
+		}
+		else if (code == ServerPacketCodes::GAME_UI_STATE) {
+			std::string data;
+			packet >> data;
+			std::stringstream stream(data);
+			iarchive ar(stream);
+			ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
+			this->uiPackageGotten = true;
+		}
+		else {
+			std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
+		}
 	}
 }
 

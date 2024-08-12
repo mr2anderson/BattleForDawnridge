@@ -617,6 +617,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\BuildingShortInfo.hpp" />
     <ClInclude Include="src\BuildingStatePointer.hpp" />
     <ClInclude Include="src\Button.hpp" />
+    <ClInclude Include="src\ClientPacketCodes.hpp" />
     <ClInclude Include="src\CollectionsImpl.hpp" />
     <ClInclude Include="src\CouldntOpenPorts.hpp" />
     <ClInclude Include="src\EndTurnButtonSpec.hpp" />
@@ -736,6 +737,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SaveGameButtonSpec.hpp" />
     <ClInclude Include="src\ScreenAlreadyFinished.hpp" />
     <ClInclude Include="src\SerializableColor.hpp" />
+    <ClInclude Include="src\ServerPacketCodes.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
     <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp" />

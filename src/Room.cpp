@@ -41,6 +41,8 @@
 #include "ISingleAttacker.hpp"
 #include "Ports.hpp"
 #include "ResourceBar.hpp"
+#include "ServerPacketCodes.hpp"
+#include "ClientPacketCodes.hpp"
 
 
 
@@ -48,6 +50,7 @@
 
 
 Room::Room(const std::string& mapName) {
+	this->sendOKTimer = Timer(500, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(250, Timer::TYPE::FIRST_INSTANTLY);
 
 	Maps::get()->load(mapName, &this->map);
@@ -107,7 +110,7 @@ void Room::update(const std::vector<std::tuple<sf::Packet, sf::IpAddress>>& rece
 	}
 	this->processNewMoveEvents();
 	this->processBaseEvents();
-    this->sendWorldUIStateToClients(toSend, remotePlayers);
+	this->sendEverythingToClients(toSend, remotePlayers);
 }
 
 
@@ -170,6 +173,30 @@ void Room::addEvents(Events& e) {
 		}
 	}
 }
+void Room::sendEverythingToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers) {
+	this->sendOKToClients(toSend, remotePlayers);
+	this->sendWorldUIStateToClients(toSend, remotePlayers);
+}
+
+
+
+
+void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers) {
+	if (!this->sendOKTimer.ready()) {
+		return;
+	}
+	this->sendOKTimer.reset();
+
+	sf::Packet packet;
+	packet << ServerPacketCodes::OK;
+
+	this->sendToClients(packet, toSend, remotePlayers);
+}
+
+
+
+
+
 std::vector<std::shared_ptr<const RectangularUiElement>> Room::makeButtonBases() {
 	std::vector<std::shared_ptr<const RectangularUiElement>> bases(this->buttons.size());
 
@@ -214,7 +241,7 @@ ResourceBar Room::makeResourceBar() {
 	return bar;
 }
 void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
-	if (this->sendWorldUIStateTimer.ready()) {
+	if (!this->sendWorldUIStateTimer.ready()) {
 		return;
 	}
 	this->sendWorldUIStateTimer.reset();
@@ -234,15 +261,23 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	}
 
 	sf::Packet packet;
+	packet << ServerPacketCodes::GAME_UI_STATE;
 	packet << serialStr;
 
+	this->sendToClients(packet, toSend, remotePlayers);
+}
+
+
+
+
+void Room::sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers) {
 	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
 		sf::IpAddress clientIp = remotePlayers.get(i).getIp();
 		uint32_t clientIpInt = clientIp.toInteger();
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
 			clientTable[clientIpInt] = true;
-			toSend->emplace_back(packet, clientIp, Ports::get()->getClientPort());
+			toSend->emplace_back(what, clientIp, Ports::get()->getClientPort());
 		}
 	}
 }
