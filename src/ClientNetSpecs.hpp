@@ -23,7 +23,6 @@
 #pragma once
 
 
-namespace ServerPacketCodes {
-	const uint8_t OK = 0;
-	const uint8_t GAME_UI_STATE = 1;
+namespace CLIENT_NET_SPECS { // enum is not used cuz it is implementation-defined
+
 };

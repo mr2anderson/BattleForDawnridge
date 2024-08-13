@@ -41,8 +41,8 @@
 #include "ISingleAttacker.hpp"
 #include "Ports.hpp"
 #include "ResourceBar.hpp"
-#include "ServerPacketCodes.hpp"
-#include "ClientPacketCodes.hpp"
+#include "ServerNetSpecs.hpp"
+#include "ClientNetSpecs.hpp"
 
 
 
@@ -188,7 +188,7 @@ void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uin
 	this->sendOKTimer.reset();
 
 	sf::Packet packet;
-	packet << ServerPacketCodes::OK;
+	packet << SERVER_NET_SPECS::OK;
 
 	this->sendToClients(packet, toSend, remotePlayers);
 }
@@ -261,7 +261,7 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	}
 
 	sf::Packet packet;
-	packet << ServerPacketCodes::GAME_UI_STATE;
+	packet << SERVER_NET_SPECS::WORLD_UI_STATE;
 	packet << serialStr;
 
 	this->sendToClients(packet, toSend, remotePlayers);

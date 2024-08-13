@@ -28,8 +28,8 @@
 #include "ResourceBar.hpp"
 #include "NoServerResponse.hpp"
 #include "Ports.hpp"
-#include "ServerPacketCodes.hpp"
-#include "ClientPacketCodes.hpp"
+#include "ServerNetSpecs.hpp"
+#include "ClientNetSpecs.hpp"
 
 
 
@@ -100,10 +100,10 @@ void MainScreen::receive() {
 		uint8_t code;
 		packet >> code;
 
-		if (code == ServerPacketCodes::OK) {
+		if (code == SERVER_NET_SPECS::OK) {
 			
 		}
-		else if (code == ServerPacketCodes::GAME_UI_STATE) {
+		else if (code == SERVER_NET_SPECS::WORLD_UI_STATE) {
 			std::string data;
 			packet >> data;
 			std::stringstream stream(data);

@@ -23,6 +23,7 @@
 #pragma once
 
 
-namespace ClientPacketCodes {
-
+namespace SERVER_NET_SPECS { // enum is not used cuz it is implementation-defined
+	static constexpr uint8_t OK = 0;
+	static constexpr uint8_t WORLD_UI_STATE = 1;
 };
