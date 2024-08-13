@@ -57,7 +57,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	}
 	this->roomID = roomID;
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
-	this->noOKReceivedTimer = Timer(20 * 1000, Timer::TYPE::FIRST_DEFAULT);
+	this->noOKReceivedTimer = Timer(10 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
 	this->uiPackageGotten = false;
 
