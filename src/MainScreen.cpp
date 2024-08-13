@@ -98,7 +98,7 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 void MainScreen::receive() {
 	sf::Packet packet;
 
-	if (this->socket.receive(packet, this->serverIP, this->port) == sf::Socket::Status::Done) {
+	if (this->socket.receive(packet, this->serverIP, this->serverPort) == sf::Socket::Status::Done) {
 		uint8_t code;
 		packet >> code;
 
