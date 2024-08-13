@@ -67,7 +67,7 @@ private:
 	IlluminanceTable illiminanceTable;
 
 
-	void send();
+	void sendOK();
 
 
 	void receive();

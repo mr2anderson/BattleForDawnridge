@@ -19,8 +19,11 @@
 
 #include <cstdint>
 #include <SFML/Graphics.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/access.hpp>
 #include "MapState.hpp"
 #include "Events.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once

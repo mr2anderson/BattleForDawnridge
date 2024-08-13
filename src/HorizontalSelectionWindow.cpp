@@ -18,12 +18,11 @@
 
 
 #include "HorizontalSelectionWindow.hpp"
-#include "SoundQueue.hpp"
-#include "Sounds.hpp"
 #include "CloseWindowEvent.hpp"
 #include "PlaySoundEvent.hpp"
 
 
+HorizontalSelectionWindow::HorizontalSelectionWindow() = default;
 HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize, uint32_t marginSize) {
 	this->components = components;
 	this->componentSize = componentSize;
@@ -151,3 +150,6 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 
 	return structure;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(HorizontalSelectionWindow)

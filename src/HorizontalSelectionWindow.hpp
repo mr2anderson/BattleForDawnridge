@@ -32,6 +32,7 @@
 
 class HorizontalSelectionWindow : public CameraIndependentPopUpElement {
 public:
+	HorizontalSelectionWindow();
 	HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent>& components, uint32_t componentSize = 64, uint32_t marginSize = 10);
 
 	void onRestart() override;
@@ -63,3 +64,6 @@ private:
 		ar& this->offset;
 	}
 };
+
+
+BOOST_CLASS_EXPORT_KEY(HorizontalSelectionWindow)

@@ -26,6 +26,8 @@
 #include "Textures.hpp"
 #include "Playlist.hpp"
 #include "ResourceBar.hpp"
+#include "SoundQueue.hpp"
+#include "Sounds.hpp"
 #include "NoServerResponse.hpp"
 #include "Ports.hpp"
 #include "ServerNetSpecs.hpp"
@@ -79,10 +81,21 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed) {
-				// TODO sending clicks to room
+				sf::Packet packet;
+				packet << CLIENT_NET_SPECS::ROOM;
+				packet << this->roomID.value();
+				packet << CLIENT_NET_SPECS::ROOM_CODES::CLICK;
+				packet << (uint8_t)event.mouseButton.button;
+				packet << (uint32_t)sf::Mouse::getPosition().x;
+				packet << (uint32_t)sf::Mouse::getPosition().y;
+				packet << (uint32_t)std::get<0>(this->getMousePositionBasedOnView(window));
+				packet << (uint32_t)std::get<1>(this->getMousePositionBasedOnView(window));
+				packet << (uint32_t)window.getSize().x;
+				packet << (uint32_t)window.getSize().y;
+				this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
 			}
 		}
-		this->send();
+		this->sendOK();
 		this->receive();
 		if (!this->uiPackageGotten) {
 			continue;
@@ -105,7 +118,7 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 
 
 
-void MainScreen::send() {
+void MainScreen::sendOK() {
 	if (this->sendOKTimer.ready()) {
 		this->sendOKTimer.reset();
 		sf::Packet packet;
@@ -131,7 +144,6 @@ void MainScreen::receive() {
 		receivedPacket >> code;
 
 		if (code == SERVER_NET_SPECS::OK) {
-			std::cout << "MainScreen: received OK from server!" << std::endl;
 			this->noOKReceivedTimer.reset();
 		}
 		else if (code == SERVER_NET_SPECS::WORLD_UI_STATE) {
@@ -141,6 +153,16 @@ void MainScreen::receive() {
 			iarchive ar(stream);
 			ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
 			this->uiPackageGotten = true;
+		}
+		else if (code == SERVER_NET_SPECS::SOUND) {
+			std::string soundName;
+			receivedPacket >> soundName;
+			SoundQueue::get()->push(Sounds::get()->get(soundName));
+		}
+		else if (code == SERVER_NET_SPECS::FOCUS) {
+			uint32_t x, y, sx, sy;
+			receivedPacket >> x >> y >> sx >> sy;
+			this->viewMovingQueue.emplace(64 * x + 64 / 2 * sx, 64 * y + 64 / 2 * sy);
 		}
 		else {
 			std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
@@ -301,7 +323,7 @@ void MainScreen::moveView(sf::RenderWindow &window) {
 
 
 static float VIEW_MOVING_DELTA = 10;
-static float VIEW_MOVING_BIG_DELTA = 1.25f * VIEW_MOVING_DELTA;
+static float VIEW_MOVING_BIG_DELTA = 1e+10;
 bool MainScreen::moveViewToNorth(uint32_t border, sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() - sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
 	return this->verifyViewNorth(window) and this->verifyViewNorth(border);

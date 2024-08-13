@@ -18,6 +18,7 @@
 
 
 #include <boost/optional.hpp>
+#include <boost/serialization/optional.hpp>
 #include <SFML/Graphics.hpp>
 #include "Events.hpp"
 #include "StringLcl.hpp"
