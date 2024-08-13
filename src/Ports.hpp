@@ -33,8 +33,9 @@ public:
         return Ports::singletone;
     }
 
-    uint16_t getServerPort() const;
     uint16_t getClientPort() const;
+    uint16_t getLocalServerPort() const;
+    uint16_t getServerPort() const;
 
     void load();
 private:
@@ -43,6 +44,7 @@ private:
 
     static Ports* singletone;
     
-    boost::optional<uint16_t> serverPort;
     boost::optional<uint16_t> clientPort;
+    boost::optional<uint16_t> localServerPort;
+    boost::optional<uint16_t> serverPort;
 };

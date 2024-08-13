@@ -39,7 +39,6 @@
 #include "WarriorHealer.hpp"
 #include "WarriorNearMultyAttacker.hpp"
 #include "ISingleAttacker.hpp"
-#include "Ports.hpp"
 #include "ResourceBar.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
@@ -92,7 +91,7 @@ uint32_t Room::playersNumber() {
 
 
 
-void Room::update(const std::tuple<sf::Packet, sf::IpAddress>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
+void Room::update(const std::tuple<sf::Packet, sf::IpAddress>& received, std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers) {
 	// TODO handling clicks getting from remote players
 	if (this->element != nullptr) {
 		this->element->update();
@@ -173,7 +172,7 @@ void Room::addEvents(Events& e) {
 		}
 	}
 }
-void Room::sendEverythingToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers) {
+void Room::sendEverythingToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
 	this->sendOKToClients(toSend, remotePlayers);
 	this->sendWorldUIStateToClients(toSend, remotePlayers);
 }
@@ -181,7 +180,7 @@ void Room::sendEverythingToClients(std::vector<std::tuple<sf::Packet, sf::IpAddr
 
 
 
-void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers) {
+void Room::sendOKToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
 	if (!this->sendOKTimer.ready()) {
 		return;
 	}
@@ -240,7 +239,7 @@ ResourceBar Room::makeResourceBar() {
 	
 	return bar;
 }
-void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
+void Room::sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers) {
 	if (!this->sendWorldUIStateTimer.ready()) {
 		return;
 	}
@@ -270,14 +269,14 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 
 
 
-void Room::sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers) {
+void Room::sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
 	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
 		sf::IpAddress clientIp = remotePlayers.get(i).getIp();
 		uint32_t clientIpInt = clientIp.toInteger();
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
 			clientTable[clientIpInt] = true;
-			toSend->emplace_back(what, clientIp, Ports::get()->getClientPort());
+			toSend->emplace_back(what);
 		}
 	}
 }

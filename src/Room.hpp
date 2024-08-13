@@ -92,7 +92,7 @@ public:
 
 	uint32_t playersNumber();
 
-	void update(const std::tuple<sf::Packet, sf::IpAddress> &received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> *toSend, const RemotePlayers& remotePlayers);
+	void update(const std::tuple<sf::Packet, sf::IpAddress> &received, std::vector<sf::Packet> *toSend, const RemotePlayers& remotePlayers);
 private:
 	RoomID id;
 
@@ -122,15 +122,16 @@ private:
 	void addGameObjectClickEventToQueue(uint8_t button);
 	void processBaseEvents();
 	void addEvents(Events& e);
-	void sendEverythingToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers);
 
-	void sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers);
+	void sendEverythingToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers);
+
+	void sendOKToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers);
 
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
-    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers);
+    void sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers);
 
-	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers& remotePlayers);
+	void sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers);
 
 	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);

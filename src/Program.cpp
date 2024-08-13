@@ -25,6 +25,7 @@
 #include "MainScreen.hpp"
 #include "ServerScreen.hpp"
 #include "LocalServer.hpp"
+#include "Ports.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -86,7 +87,7 @@ void Program::run() {
             std::shared_ptr<Room> room = std::make_shared<Room>(menuResponse.getData());
             LocalServer LocalServer;
             LocalServer.launch(room);
-            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), room->getID());
+            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerPort(), room->getID());
             MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
             switch (mainScreenResponse.getType()) {
             case MainScreenResponse::TYPE::RETURN_TO_MENU: {

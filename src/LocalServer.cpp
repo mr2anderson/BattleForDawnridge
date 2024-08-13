@@ -18,15 +18,20 @@
 
 
 #include <SFML/System/Sleep.hpp>
+#include <iostream>
 #include "LocalServer.hpp"
+#include "Ports.hpp"
 
 
 static void F(std::shared_ptr<Room> room) {
 	sf::UdpSocket socket;
 	socket.setBlocking(false);
+	if (socket.bind(Ports::get()->getLocalServerPort()) != sf::Socket::Done) {
+		std::cerr << "LocalServer: warning: unable to bind port" << std::endl;
+	}
 
 	std::tuple<sf::Packet, sf::IpAddress> received;
-	std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> toSend;
+	std::vector<sf::Packet> toSend;
 
 	RemotePlayers players;
 	for (uint32_t i = 1; i <= room->playersNumber(); i = i + 1) {
@@ -39,7 +44,7 @@ static void F(std::shared_ptr<Room> room) {
 		room->update(received, &toSend, players);
 
 		while (!toSend.empty()) {
-			socket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), std::get<2>(toSend.back()));
+			socket.send(toSend.back(), sf::IpAddress::getLocalAddress(), Ports::get()->getClientPort());
 			toSend.pop_back();
 		}
 

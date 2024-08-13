@@ -28,11 +28,14 @@
 Ports* Ports::singletone = nullptr;
 
 
-uint16_t Ports::getServerPort() const {
-	return this->serverPort.value();
-}
 uint16_t Ports::getClientPort() const {
 	return this->clientPort.value();
+}
+uint16_t Ports::getLocalServerPort() const {
+	return this->localServerPort.value();
+}
+uint16_t Ports::getServerPort() const {
+	return this->serverPort.value();
 }
 void Ports::load() {
 	std::string path = DATA_ROOT + "/configs/ports.cfg";
@@ -45,19 +48,23 @@ void Ports::load() {
 
 		std::string word;
 		ss >> word;
-		if (word == "server") {
-			ss >> word;
-			this->serverPort = std::stoi(word);
-		}
-		else if (word == "client") {
+		if (word == "client") {
 			ss >> word;
 			this->clientPort = std::stoi(word);
+		}
+		else if (word == "local_server") {
+			ss >> word;
+			this->localServerPort = std::stoi(word);
+		}
+		else if (word == "server") {
+			ss >> word;
+			this->serverPort = std::stoi(word);
 		}
 	}
 
 	file.close();
 
-	if (!this->serverPort.has_value() or !this->clientPort.has_value()) {
+	if (!this->clientPort.has_value() or !this->localServerPort.has_value() or !this->serverPort.has_value()) {
 		throw CouldntOpenPorts(path);
 	}
 }

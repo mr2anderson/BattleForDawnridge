@@ -37,9 +37,11 @@
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, RoomID roomID) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverPort, RoomID roomID) {
 	this->alreadyFinished = false;
+
 	this->serverIP = serverIP;
+	this->serverPort = serverPort;
 	this->port = Ports::get()->getClientPort();
 	this->socket.bind(this->port);
 	this->socket.setBlocking(false);

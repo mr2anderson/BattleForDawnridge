@@ -36,12 +36,14 @@
 
 class MainScreen {
 public:
-	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, RoomID roomID);
+	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverPort, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
 	MainScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
+
 	sf::IpAddress serverIP;
+	uint16_t serverPort;
 	unsigned short port;
 	sf::UdpSocket socket;
 	RoomID roomID;
