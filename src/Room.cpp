@@ -192,15 +192,22 @@ void Room::processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>*
 	}
 }
 void Room::addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
+    bool urgentHandled = false;
+
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
 		std::shared_ptr<Event> event = e.at(i);
 		if (event->isUrgent()) {
 			this->handleEvent(event, toSend, remotePlayers);
+            urgentHandled = true;
 		}
 		else {
 			this->events.push(event);
 		}
 	}
+
+    if (urgentHandled) {
+        this->sendWorldUIStateToClients(toSend, remotePlayers);
+    }
 }
 
 
