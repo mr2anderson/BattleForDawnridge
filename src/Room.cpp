@@ -110,6 +110,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	this->processNewMoveEvents();
 	this->processBaseEvents();
 	this->sendEverythingToClients(toSend, remotePlayers);
+	this->receive(received);
 }
 
 
@@ -172,14 +173,18 @@ void Room::addEvents(Events& e) {
 		}
 	}
 }
+
+
+
+
+
+
+
+
 void Room::sendEverythingToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
 	this->sendOKToClients(toSend, remotePlayers);
 	this->sendWorldUIStateToClients(toSend, remotePlayers);
 }
-
-
-
-
 void Room::sendOKToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
 	if (!this->sendOKTimer.ready()) {
 		return;
@@ -191,11 +196,6 @@ void Room::sendOKToClients(std::vector<sf::Packet>* toSend, const RemotePlayers&
 
 	this->sendToClients(packet, toSend, remotePlayers);
 }
-
-
-
-
-
 std::vector<std::shared_ptr<const RectangularUiElement>> Room::makeButtonBases() {
 	std::vector<std::shared_ptr<const RectangularUiElement>> bases(this->buttons.size());
 
@@ -265,10 +265,6 @@ void Room::sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const Remo
 
 	this->sendToClients(packet, toSend, remotePlayers);
 }
-
-
-
-
 void Room::sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
 	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
@@ -280,6 +276,35 @@ void Room::sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend
 		}
 	}
 }
+
+
+
+
+
+void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received) {
+	if (!received.has_value()) {
+		return;
+	}
+
+	sf::Packet packet = std::get<0>(received.value());
+	sf::IpAddress ip = std::get<1>(received.value());
+
+	uint8_t code;
+	packet >> code;
+
+	if (code == CLIENT_NET_SPECS::ROOM) {
+		uint64_t roomId;
+		packet >> roomId;
+		if (this->id.value() == roomId) {
+			packet >> code;
+			if (code == CLIENT_NET_SPECS::ROOM_CODES::OK) {
+				std::cout << "Room: received OK from client!" << std::endl;
+			}
+		}
+	}
+}
+
+
 
 
 

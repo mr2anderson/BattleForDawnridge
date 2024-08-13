@@ -104,7 +104,9 @@ void MainScreen::send() {
 	if (this->sendOKTimer.ready()) {
 		this->sendOKTimer.reset();
 		sf::Packet packet;
-		packet << CLIENT_NET_SPECS::OK;
+		packet << CLIENT_NET_SPECS::ROOM;
+		packet << this->roomID.value();
+		packet << CLIENT_NET_SPECS::ROOM_CODES::OK;
 		this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
 	}
 }

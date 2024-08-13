@@ -124,14 +124,13 @@ private:
 	void addEvents(Events& e);
 
 	void sendEverythingToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers);
-
 	void sendOKToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers);
-
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
     void sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers);
-
 	void sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers);
+
+	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received);
 
 	void handleEvent(std::shared_ptr<Event> e);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e);

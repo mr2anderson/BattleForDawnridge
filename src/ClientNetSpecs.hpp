@@ -24,5 +24,8 @@
 
 
 namespace CLIENT_NET_SPECS { // enum is not used cuz it is implementation-defined
-	static constexpr uint8_t OK = 0;
+	static constexpr uint8_t ROOM = 0;
+	namespace ROOM_CODES {
+		static constexpr uint8_t OK = 0;
+	}
 };

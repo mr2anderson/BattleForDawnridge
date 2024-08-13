@@ -68,14 +68,6 @@ static void F(std::shared_ptr<Room> room) {
 		uint16_t senderPort;
 		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == clientIP and senderPort == clientSendPort) {
 			received = std::make_tuple(receivedPacket, senderIP);
-			uint8_t code;
-			receivedPacket >> code;
-			if (code == CLIENT_NET_SPECS::OK) {
-				std::cout << "LocalServer: received OK from client!" << std::endl;
-			}
-			else {
-				std::cerr << "LocalServer: warning: unknown code received" << std::endl;
-			}
 		}
 
 		room->update(received, &toSend, players);
