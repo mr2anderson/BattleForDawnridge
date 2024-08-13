@@ -164,6 +164,9 @@ void MainScreen::receive() {
 			receivedPacket >> x >> y >> sx >> sy;
 			this->viewMovingQueue.emplace(64 * x + 64 / 2 * sx, 64 * y + 64 / 2 * sy);
 		}
+		else if (code == SERVER_NET_SPECS::RETURN_TO_MENU) {
+			this->returnToMenu = true;
+		}
 		else {
 			std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
 		}

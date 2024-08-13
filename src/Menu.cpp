@@ -48,20 +48,20 @@ Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additiona
     this->closeMenu = false;
     this->element = nullptr;
     this->regenerateButtons();
+
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+    this->addEvents(clickEvent);
     if (!FirstTimeTipsTable::get()->wasDisplayed("welcome")) {
         FirstTimeTipsTable::get()->markAsDisplayed("welcome");
-        Events clickEvent;
-        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-        std::shared_ptr<WindowButton> welcomeWindow = std::make_shared<WindowButton>(StringLcl("{welcome}"), StringLcl("{OK}"), clickEvent);
-        Events createWelcomeWindowEvent = clickEvent;
+        std::shared_ptr<WindowButton> welcomeWindow = std::make_shared<WindowButton>(StringLcl("{welcome_first_time}"), StringLcl("{OK}"), clickEvent);
+        Events createWelcomeWindowEvent;
         createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
         this->addEvents(createWelcomeWindowEvent);
     }
     if (additionalWelcomeMsg.has_value()) {
-        Events clickEvent;
-        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
         std::shared_ptr<WindowButton> msgWindow = std::make_shared<WindowButton>(additionalWelcomeMsg.value(), StringLcl("{OK}"), clickEvent);
-        Events createMsgWindowEvent = clickEvent;
+        Events createMsgWindowEvent;
         createMsgWindowEvent.add(std::make_shared<CreateEEvent>(msgWindow));
         this->addEvents(createMsgWindowEvent);
     }

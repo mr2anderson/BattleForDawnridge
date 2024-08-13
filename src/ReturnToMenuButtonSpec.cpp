@@ -30,7 +30,7 @@ ReturnToMenuButtonSpec::ReturnToMenuButtonSpec(uint32_t index) : MainScreenButto
 
 }
 std::string ReturnToMenuButtonSpec::getTextureName() const {
-	return   "to_menu_icon";
+	return "to_menu_icon";
 }
 StringLcl ReturnToMenuButtonSpec::getString() const {
 	return StringLcl("{to_menu}");
@@ -39,7 +39,7 @@ Events ReturnToMenuButtonSpec::getEvents() const {
 	Events clickEvent;
 	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	Events returnToMenuEvent = clickEvent;
+	Events returnToMenuEvent; // Return to menu event does not have click sound cuz it might be ignored in case package with return to menu event comes earlier than package with play sound event
 	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
 
 	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(StringLcl("{confirm_return_to_menu}"), StringLcl("{yes}"), StringLcl("{no}"), returnToMenuEvent, clickEvent);

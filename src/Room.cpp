@@ -545,7 +545,9 @@ void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector
 	this->changeMove();
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	// TODO
+	sf::Packet packet;
+	packet << SERVER_NET_SPECS::RETURN_TO_MENU;
+	toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
 }
 void Room::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());

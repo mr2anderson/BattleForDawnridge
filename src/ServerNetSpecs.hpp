@@ -28,4 +28,5 @@ namespace SERVER_NET_SPECS { // enum is not used cuz it is implementation-define
 	static constexpr uint8_t WORLD_UI_STATE = 1;
 	static constexpr uint8_t SOUND = 2;
 	static constexpr uint8_t FOCUS = 3;
+	static constexpr uint8_t RETURN_TO_MENU = 4;
 };
