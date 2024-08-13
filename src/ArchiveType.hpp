@@ -17,12 +17,12 @@
  */
 
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 
 
 #pragma once
 
 
-typedef boost::archive::binary_iarchive iarchive;
-typedef boost::archive::binary_oarchive oarchive;
+typedef boost::archive::text_iarchive iarchive; // Binary archives are implementation-defined
+typedef boost::archive::text_oarchive oarchive;
