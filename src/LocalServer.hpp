@@ -18,6 +18,7 @@
 
 
 #include <SFML/System/Thread.hpp>
+#include <atomic>
 #include "Room.hpp"
 
 
@@ -33,6 +34,6 @@ public:
 	void launch(std::shared_ptr<Room> room);
 private:
 	sf::UdpSocket sendSocket, receiveSocket;
-	std::atomic_bool stopThread;
+	std::atomic<bool> stopThread;
 	std::unique_ptr<sf::Thread> thread;
 };

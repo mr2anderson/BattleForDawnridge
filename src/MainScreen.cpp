@@ -85,7 +85,7 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 			if (event.type == sf::Event::MouseButtonPressed) {
 				sf::Packet packet;
 				packet << CLIENT_NET_SPECS::ROOM;
-				packet << this->roomID.value();
+				packet << (sf::Uint64)this->roomID.value();
 				packet << CLIENT_NET_SPECS::ROOM_CODES::CLICK;
 				packet << (uint8_t)event.mouseButton.button;
 				packet << (uint32_t)sf::Mouse::getPosition().x;
@@ -125,7 +125,7 @@ void MainScreen::sendOK() {
 		this->sendOKTimer.reset();
 		sf::Packet packet;
 		packet << CLIENT_NET_SPECS::ROOM;
-		packet << this->roomID.value();
+		packet << (sf::Uint64)this->roomID.value();
 		packet << CLIENT_NET_SPECS::ROOM_CODES::OK;
 		this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
 	}

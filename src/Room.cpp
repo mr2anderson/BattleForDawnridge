@@ -318,7 +318,7 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 	packet >> code;
 
 	if (code == CLIENT_NET_SPECS::ROOM) {
-		uint64_t roomId;
+		sf::Uint64 roomId;
 		packet >> roomId;
 		if (this->id.value() == roomId) {
 			packet >> code;
