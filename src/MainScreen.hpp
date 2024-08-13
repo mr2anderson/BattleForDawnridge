@@ -24,6 +24,7 @@
 #include "IlluminanceTable.hpp"
 #include "RoomID.hpp"
 #include "Map.hpp"
+#include "Timer.hpp"
 #include "RectangularUiElement.hpp"
 #include "PopUpElement.hpp"
 #include "ISelectable.hpp"
@@ -36,17 +37,19 @@
 
 class MainScreen {
 public:
-	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverPort, RoomID roomID);
+	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverSendPort, uint16_t serverReceivePort, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
 	MainScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
 
 	sf::IpAddress serverIP;
-	uint16_t serverPort;
-	unsigned short port;
-	sf::UdpSocket socket;
+	uint16_t serverSendPort;
+	uint16_t serverReceivePort;
+	sf::UdpSocket sendSocket;
+	sf::UdpSocket receiveSocket;
 	RoomID roomID;
+	Timer sendOKTimer;
 
 	bool uiPackageGotten;
 	Map map;
@@ -61,6 +64,9 @@ private:
 	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	sf::View view;
 	IlluminanceTable illiminanceTable;
+
+
+	void send();
 
 
 	void receive();

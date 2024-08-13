@@ -17,38 +17,70 @@
  */
 
 
-#include <SFML/System/Sleep.hpp>
 #include <iostream>
 #include "LocalServer.hpp"
 #include "Ports.hpp"
+#include "ClientNetSpecs.hpp"
+#include "math.hpp"
 
 
 static void F(std::shared_ptr<Room> room) {
-	sf::UdpSocket socket;
-	socket.setBlocking(false);
-	if (socket.bind(Ports::get()->getLocalServerPort()) != sf::Socket::Done) {
-		std::cerr << "LocalServer: warning: unable to bind port" << std::endl;
+	uint16_t sendPort = Ports::get()->getLocalServerSendPort();
+	uint16_t receivePort = Ports::get()->getLocalServerReceivePort();
+	uint16_t clientSendPort = Ports::get()->getClientSendPort();
+	uint16_t clientReceivePort = Ports::get()->getClientReceivePort();
+
+	sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+	sf::IpAddress clientIP = sf::IpAddress::getLocalAddress();
+
+	sf::UdpSocket sendSocket;
+	sendSocket.setBlocking(false);
+	if (sendSocket.bind(sendPort) != sf::Socket::Done) {
+		std::cerr << "LocalServer: warning: unable to bind send port" << std::endl;
+		return;
+	}
+	sf::UdpSocket receiveSocket;
+	receiveSocket.setBlocking(false);
+	if (receiveSocket.bind(receivePort) != sf::Socket::Done) {
+		std::cerr << "LocalServer: warning: unable to bind receive port" << std::endl;
+		return;
 	}
 
-	std::tuple<sf::Packet, sf::IpAddress> received;
+	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
 	std::vector<sf::Packet> toSend;
 
 	RemotePlayers players;
 	for (uint32_t i = 1; i <= room->playersNumber(); i = i + 1) {
-		players.add(RemotePlayer(i, sf::IpAddress::getLocalAddress()));
+		players.add(RemotePlayer(i, clientIP));
 	}
 
 	for (; ;) {
 		Clock clock;
 
-		room->update(received, &toSend, players);
-
 		while (!toSend.empty()) {
-			socket.send(toSend.back(), sf::IpAddress::getLocalAddress(), Ports::get()->getClientPort());
+			sendSocket.send(toSend.back(), clientIP, clientReceivePort);
 			toSend.pop_back();
 		}
 
-		sf::sleep(sf::milliseconds(1000 / 60 - clock.getMS()));
+		received = boost::none;
+		sf::Packet receivedPacket;
+		sf::IpAddress senderIP;
+		uint16_t senderPort;
+		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == clientIP and senderPort == clientSendPort) {
+			received = std::make_tuple(receivedPacket, senderIP);
+			uint8_t code;
+			receivedPacket >> code;
+			if (code == CLIENT_NET_SPECS::OK) {
+				std::cout << "LocalServer: received OK from client!" << std::endl;
+			}
+			else {
+				std::cerr << "LocalServer: warning: unknown code received" << std::endl;
+			}
+		}
+
+		room->update(received, &toSend, players);
+
+		sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));
 	}
 }
 

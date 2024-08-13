@@ -24,5 +24,5 @@
 
 
 namespace CLIENT_NET_SPECS { // enum is not used cuz it is implementation-defined
-
+	static constexpr uint8_t OK = 0;
 };

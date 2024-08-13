@@ -28,15 +28,28 @@
 Ports* Ports::singletone = nullptr;
 
 
-uint16_t Ports::getClientPort() const {
-	return this->clientPort.value();
+uint16_t Ports::getClientSendPort() const {
+	return this->clientSendPort.value();
 }
-uint16_t Ports::getLocalServerPort() const {
-	return this->localServerPort.value();
+uint16_t Ports::getClientReceivePort() const {
+	return this->clientReceivePort.value();
 }
-uint16_t Ports::getServerPort() const {
-	return this->serverPort.value();
+
+uint16_t Ports::getLocalServerSendPort() const {
+	return this->localServerSendPort.value();
 }
+uint16_t Ports::getLocalServerReceivePort() const {
+	return this->localServerReceivePort.value();
+}
+
+uint16_t Ports::getServerSendPort() const {
+	return this->serverSendPort.value();
+}
+uint16_t Ports::getServerReceivePort() const {
+	return this->serverReceivePort.value();
+}
+
+
 void Ports::load() {
 	std::string path = DATA_ROOT + "/configs/ports.cfg";
 
@@ -48,23 +61,35 @@ void Ports::load() {
 
 		std::string word;
 		ss >> word;
-		if (word == "client") {
+		if (word == "client_send_port") {
 			ss >> word;
-			this->clientPort = std::stoi(word);
+			this->clientSendPort = std::stoi(word);
 		}
-		else if (word == "local_server") {
+		else if (word == "client_receive_port") {
 			ss >> word;
-			this->localServerPort = std::stoi(word);
+			this->clientReceivePort = std::stoi(word);
 		}
-		else if (word == "server") {
+		else if (word == "local_server_send_port") {
 			ss >> word;
-			this->serverPort = std::stoi(word);
+			this->localServerSendPort = std::stoi(word);
+		}
+		else if (word == "local_server_receive_port") {
+			ss >> word;
+			this->localServerReceivePort = std::stoi(word);
+		}
+		else if (word == "server_send_port") {
+			ss >> word;
+			this->serverSendPort = std::stoi(word);
+		}
+		else if (word == "server_receive_port") {
+			ss >> word;
+			this->serverReceivePort = std::stoi(word);
 		}
 	}
 
 	file.close();
 
-	if (!this->clientPort.has_value() or !this->localServerPort.has_value() or !this->serverPort.has_value()) {
+	if (!this->clientSendPort.has_value() or !this->clientReceivePort.has_value() or !this->localServerSendPort.has_value() or !this->localServerReceivePort.has_value() or !this->serverSendPort.has_value() or !this->serverReceivePort.has_value()) {
 		throw CouldntOpenPorts(path);
 	}
 }

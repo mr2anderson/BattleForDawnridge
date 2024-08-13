@@ -33,9 +33,14 @@ public:
         return Ports::singletone;
     }
 
-    uint16_t getClientPort() const;
-    uint16_t getLocalServerPort() const;
-    uint16_t getServerPort() const;
+    uint16_t getClientSendPort() const;
+    uint16_t getClientReceivePort() const;
+
+    uint16_t getLocalServerSendPort() const;
+    uint16_t getLocalServerReceivePort() const;
+
+    uint16_t getServerSendPort() const;
+    uint16_t getServerReceivePort() const;
 
     void load();
 private:
@@ -44,7 +49,12 @@ private:
 
     static Ports* singletone;
     
-    boost::optional<uint16_t> clientPort;
-    boost::optional<uint16_t> localServerPort;
-    boost::optional<uint16_t> serverPort;
+    boost::optional<uint16_t> clientSendPort;
+    boost::optional<uint16_t> clientReceivePort;
+
+    boost::optional<uint16_t> localServerSendPort;
+    boost::optional<uint16_t> localServerReceivePort;
+
+    boost::optional<uint16_t> serverSendPort;
+    boost::optional<uint16_t> serverReceivePort;
 };

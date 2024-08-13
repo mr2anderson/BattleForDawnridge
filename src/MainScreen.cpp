@@ -37,15 +37,22 @@
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverPort, RoomID roomID) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverSendPort, uint16_t serverReceivePort, RoomID roomID) {
 	this->alreadyFinished = false;
 
 	this->serverIP = serverIP;
-	this->serverPort = serverPort;
-	this->port = Ports::get()->getClientPort();
-	this->socket.bind(this->port);
-	this->socket.setBlocking(false);
+	this->serverSendPort = serverSendPort;
+	this->serverReceivePort = serverReceivePort;
+	this->sendSocket.setBlocking(false);
+	if (this->sendSocket.bind(Ports::get()->getClientSendPort()) != sf::Socket::Done) {
+		std::cerr << "MainScreen: warning: unable to bind send socket" << std::endl;
+	}
+	this->receiveSocket.setBlocking(false);
+	if (this->receiveSocket.bind(Ports::get()->getClientReceivePort()) != sf::Socket::Done) {
+		std::cerr << "MainScreen: warning: unable to bind receive socket" << std::endl;
+	}
 	this->roomID = roomID;
+	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 
 	this->uiPackageGotten = false;
 
@@ -74,6 +81,7 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 				// TODO sending clicks to room
 			}
 		}
+		this->send();
 		this->receive();
 		if (!this->uiPackageGotten) {
 			continue;
@@ -92,22 +100,35 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 
 
 
+void MainScreen::send() {
+	if (this->sendOKTimer.ready()) {
+		this->sendOKTimer.reset();
+		sf::Packet packet;
+		packet << CLIENT_NET_SPECS::OK;
+		this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
+	}
+}
+
+
+
+
 
 
 
 void MainScreen::receive() {
-	sf::Packet packet;
-
-	if (this->socket.receive(packet, this->serverIP, this->serverPort) == sf::Socket::Status::Done) {
+	sf::Packet receivedPacket;
+	sf::IpAddress senderIP;
+	uint16_t senderPort;
+	if (this->receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == this->serverIP and senderPort == this->serverSendPort) {
 		uint8_t code;
-		packet >> code;
+		receivedPacket >> code;
 
 		if (code == SERVER_NET_SPECS::OK) {
 			std::cout << "MainScreen: received OK from server!" << std::endl;
 		}
 		else if (code == SERVER_NET_SPECS::WORLD_UI_STATE) {
 			std::string data;
-			packet >> data;
+			receivedPacket >> data;
 			std::stringstream stream(data);
 			iarchive ar(stream);
 			ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;

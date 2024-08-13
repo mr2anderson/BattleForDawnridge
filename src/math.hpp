@@ -41,5 +41,11 @@ namespace bfdlib {
 
             return result;
         }
+        template<typename T> constexpr T subu(T a, T b) {
+            if (b > a) {
+                return 0;
+            }
+            return a - b;
+        }
     }
 }
