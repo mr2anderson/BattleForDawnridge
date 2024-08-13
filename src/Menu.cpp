@@ -47,7 +47,6 @@ Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additiona
     this->alreadyFinished = false;
     this->closeMenu = false;
     this->element = nullptr;
-    this->regenerateButtons();
 
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -106,8 +105,8 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
         }
 	}
 }
-void Menu::regenerateButtons() {
-    this->buttons = {
+std::vector<Button> Menu::generateButtons() {
+    return {
         Button(LocalGameButtonSpec()),
         Button(NetworkGameButtonSpec(1)),
         Button(GuideButtonSpec(2)),
@@ -128,7 +127,8 @@ void Menu::drawEverything(sf::RenderWindow &window) {
 	window.display();
 }
 void Menu::drawButtons(sf::RenderWindow& window) {
-    for (const auto& b : this->buttons) {
+    std::vector<Button> buttons = this->generateButtons();
+    for (const auto& b : buttons) {
         window.draw(b);
     }
 }
@@ -142,7 +142,7 @@ void Menu::processEvents() {
     }
 }
 void Menu::addButtonClickEventToQueue() {
-    this->regenerateButtons(); // On click button events can be changed during run time
+    std::vector<Button> buttons = this->generateButtons();
     for (const auto& b : buttons) {
         Events event = b.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
         if (!event.empty()) {
