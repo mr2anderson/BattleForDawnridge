@@ -34,6 +34,7 @@
 #include "ClientNetSpecs.hpp"
 #include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
+#include "MenuBg.hpp"
 
 
 
@@ -79,9 +80,17 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 	}
 	this->alreadyFinished = true;
 
+    MenuBg tempBg;
+    window.clear();
+    window.draw(tempBg);
+    window.display();
+
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
+            if (!this->uiPackageGotten) {
+                continue;
+            }
 			if (event.type == sf::Event::MouseButtonPressed) {
 				sf::Packet packet;
 				packet << CLIENT_NET_SPECS::ROOM;
@@ -99,6 +108,10 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 		}
 		this->sendOK();
 		this->receive();
+        if (this->noOKReceivedTimer.ready()) {
+            Playlist::get()->stop();
+            throw NoServerConnection();
+        }
 		if (!this->uiPackageGotten) {
 			continue;
 		}
@@ -109,10 +122,6 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 		if (this->returnToMenu) {
 			Playlist::get()->stop();
 			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
-		}
-		if (this->noOKReceivedTimer.ready()) {
-			Playlist::get()->stop();
-			throw NoServerConnection();
 		}
 	}
 }
