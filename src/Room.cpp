@@ -49,7 +49,7 @@
 
 
 Room::Room(const std::string& mapName) {
-	this->sendOKTimer = Timer(500, Timer::TYPE::FIRST_INSTANTLY);
+	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(250, Timer::TYPE::FIRST_INSTANTLY);
 
 	Maps::get()->load(mapName, &this->map);

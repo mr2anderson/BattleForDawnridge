@@ -103,7 +103,7 @@ void MainScreen::receive() {
 		packet >> code;
 
 		if (code == SERVER_NET_SPECS::OK) {
-			
+			std::cout << "MainScreen: received OK from server!" << std::endl;
 		}
 		else if (code == SERVER_NET_SPECS::WORLD_UI_STATE) {
 			std::string data;
