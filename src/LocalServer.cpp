@@ -22,6 +22,7 @@
 #include "Ports.hpp"
 #include "ClientNetSpecs.hpp"
 #include "math.hpp"
+#include "RoomWasClosed.hpp"
 
 
 static void F(std::shared_ptr<Room> room) {
@@ -70,7 +71,12 @@ static void F(std::shared_ptr<Room> room) {
 			received = std::make_tuple(receivedPacket, senderIP);
 		}
 
-		room->update(received, &toSend, players);
+		try {
+			room->update(received, &toSend, players);
+		}
+		catch (RoomWasClosed&) {
+			break;
+		}
 
 		sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));
 	}

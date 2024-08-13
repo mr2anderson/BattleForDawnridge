@@ -42,6 +42,7 @@
 #include "ResourceBar.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
+#include "RoomWasClosed.hpp"
 
 
 
@@ -51,6 +52,8 @@
 Room::Room(const std::string& mapName) {
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(250, Timer::TYPE::FIRST_INSTANTLY);
+
+	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
 	Maps::get()->load(mapName, &this->map);
 	this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
@@ -92,7 +95,14 @@ uint32_t Room::playersNumber() {
 
 
 void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers) {
+	if (this->noOKReceivedTimer.ready()) {
+		throw RoomWasClosed();
+	}
+	this->sendEverythingToClients(toSend, remotePlayers);
+	this->receive(received);
+
 	// TODO handling clicks getting from remote players
+
 	if (this->element != nullptr) {
 		this->element->update();
 		if (this->element->finished()) {
@@ -109,8 +119,6 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	}
 	this->processNewMoveEvents();
 	this->processBaseEvents();
-	this->sendEverythingToClients(toSend, remotePlayers);
-	this->receive(received);
 }
 
 
@@ -299,6 +307,7 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 			packet >> code;
 			if (code == CLIENT_NET_SPECS::ROOM_CODES::OK) {
 				std::cout << "Room: received OK from client!" << std::endl;
+				this->noOKReceivedTimer.reset();
 			}
 		}
 	}

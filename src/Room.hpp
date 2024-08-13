@@ -99,6 +99,8 @@ private:
 	Timer sendOKTimer;
 	Timer sendWorldUIStateTimer;
 
+	Timer noOKReceivedTimer;
+
 	Map map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
