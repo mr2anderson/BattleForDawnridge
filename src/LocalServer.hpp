@@ -31,5 +31,5 @@ public:
 
 	void launch(std::shared_ptr<Room> room);
 private:
-	std::unique_ptr<sf::Thread> thread;
+	std::unique_ptr<sf::Thread> thread; // destructor is WAITING until thread finished
 };
