@@ -126,6 +126,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 
 
 void Room::processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
+	if (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents) {
+		return;
+	}
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
@@ -133,8 +136,9 @@ void Room::processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress
 		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent, toSend, remotePlayers);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-		this->processBaseEvents(toSend, remotePlayers);
+		this->processBaseEvents(toSend, remotePlayers, false);
 	}
+	this->sendWorldUIStateToClients(toSend, remotePlayers);
 }
 bool Room::allNewMoveEventsAdded() const {
 	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
@@ -172,13 +176,19 @@ void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32
 		}
 	}
 }
-void Room::processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
+void Room::processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, bool sendToClients) {
+	if (this->events.empty()) {
+		return;
+	}
 	while (!this->events.empty()) {
 		if (this->element != nullptr or this->animation.has_value()) {
 			break;
 		}
 		this->handleEvent(this->events.front(), toSend, remotePlayers);
 		this->events.pop();
+	}
+	if (sendToClients) {
+		this->sendWorldUIStateToClients(toSend, remotePlayers);
 	}
 }
 void Room::addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
@@ -201,15 +211,16 @@ void Room::addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress
 
 
 void Room::sendTimeCommandsToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	this->sendOKToClients(toSend, remotePlayers);
-	this->sendWorldUIStateToClients(toSend, remotePlayers);
+	if (this->sendOKTimer.ready()) {
+		this->sendOKTimer.reset();
+		this->sendOKToClients(toSend, remotePlayers);
+	}
+	if (this->sendWorldUIStateTimer.ready()) {
+		this->sendWorldUIStateTimer.reset();
+		this->sendWorldUIStateToClients(toSend, remotePlayers);
+	}
 }
 void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	if (!this->sendOKTimer.ready()) {
-		return;
-	}
-	this->sendOKTimer.reset();
-
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::OK;
 
@@ -259,11 +270,6 @@ ResourceBar Room::makeResourceBar() {
 	return bar;
 }
 void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers) {
-	if (!this->sendWorldUIStateTimer.ready()) {
-		return;
-	}
-	this->sendWorldUIStateTimer.reset();
-
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
 	ResourceBar resourceBar = this->makeResourceBar();
 
