@@ -92,7 +92,7 @@ uint32_t Room::playersNumber() {
 
 
 
-void Room::update(const std::vector<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
+void Room::update(const std::tuple<sf::Packet, sf::IpAddress>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>>* toSend, const RemotePlayers &remotePlayers) {
 	// TODO handling clicks getting from remote players
 	if (this->element != nullptr) {
 		this->element->update();

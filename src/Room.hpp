@@ -92,7 +92,7 @@ public:
 
 	uint32_t playersNumber();
 
-	void update(const std::vector<std::tuple<sf::Packet, sf::IpAddress>> &received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> *toSend, const RemotePlayers& remotePlayers);
+	void update(const std::tuple<sf::Packet, sf::IpAddress> &received, std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> *toSend, const RemotePlayers& remotePlayers);
 private:
 	RoomID id;
 

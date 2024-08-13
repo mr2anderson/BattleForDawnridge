@@ -25,7 +25,7 @@ static void F(std::shared_ptr<Room> room) {
 	sf::UdpSocket socket;
 	socket.setBlocking(false);
 
-	std::vector<std::tuple<sf::Packet, sf::IpAddress>> received;
+	std::tuple<sf::Packet, sf::IpAddress> received;
 	std::vector<std::tuple<sf::Packet, sf::IpAddress, uint16_t>> toSend;
 
 	RemotePlayers players;
