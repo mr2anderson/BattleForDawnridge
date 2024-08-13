@@ -255,7 +255,7 @@ void Room::sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const Remo
 	ar << this->map << this->element << this->selected << this->highlightTable << this->curcorVisibility << buttonBases << resourceBar;
 	s.flush();
 
-	if (serialStr.size() > sf::UdpSocket::MaxDatagramSize) {
+	if (serialStr.size() + 100 > sf::UdpSocket::MaxDatagramSize) {
 		std::cerr << "Room: warning: current implementation can't send data if it is size is bigger than udp package limit (64 kb)" << std::endl;
 	}
 
