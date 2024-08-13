@@ -20,26 +20,26 @@
 #include <array>
 #include "RoomID.hpp"
 #include "GlobalRandomGenerator64.hpp"
-#include "int_math.hpp"
+#include "math.hpp"
 #include "InvalidRoomIDFormat.hpp"
 
 
 static constexpr uint32_t CHAR_NUMBER = 26 + 10;
 static constexpr uint32_t READABLE_LEN = 12;
-static constexpr uint64_t COMBINATIONS = int_math::pow<uint64_t>(CHAR_NUMBER, READABLE_LEN);
+static constexpr uint64_t COMBINATIONS = bfdlib::math::pow<uint64_t>(CHAR_NUMBER, READABLE_LEN);
 static constexpr std::array<uint64_t, READABLE_LEN> EXPONENTS = {
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 0),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 1),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 2),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 3),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 4),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 5),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 6),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 7),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 8),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 9),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 10),
-	 int_math::pow<uint64_t>(CHAR_NUMBER, 11)
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 0),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 1),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 2),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 3),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 4),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 5),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 6),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 7),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 8),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 9),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 10),
+	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 11)
 };
 
 

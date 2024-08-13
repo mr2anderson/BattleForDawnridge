@@ -23,21 +23,23 @@
 #pragma once
 
 
-namespace int_math {
-    template<typename T> constexpr T pow(T base, uint32_t exponent) { // what the hell why should i implement fucking pow function by myself
-        T result = 1;
+namespace bfdlib {
+    namespace math {
+        template<typename T> constexpr T pow(T base, uint32_t exponent) { // what the hell why should i implement fucking pow function by myself
+            T result = 1;
 
-        while (exponent) {
-            if (exponent % 2 == 0) {
-                exponent = exponent / 2;
-                base = base * base;
+            while (exponent) {
+                if (exponent % 2 == 0) {
+                    exponent = exponent / 2;
+                    base = base * base;
+                }
+                else {
+                    exponent = exponent - 1;
+                    result = result * base;
+                }
             }
-            else {
-                exponent = exponent - 1;
-                result = result * base;
-            }
+
+            return result;
         }
-
-        return result;
     }
 }

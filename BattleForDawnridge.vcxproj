@@ -696,7 +696,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GuideButtonSpec.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp" />
     <ClInclude Include="src\IntRectSerializable.hpp" />
-    <ClInclude Include="src\int_math.hpp" />
+    <ClInclude Include="src\math.hpp" />
     <ClInclude Include="src\InvalidRoomIDFormat.hpp" />
     <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
