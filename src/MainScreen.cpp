@@ -32,6 +32,8 @@
 #include "Ports.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
+#include "PortIsBusy.hpp"
+#include "NoServerConnection.hpp"
 
 
 
@@ -47,11 +49,11 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	this->serverReceivePort = serverReceivePort;
 	this->sendSocket.setBlocking(false);
 	if (this->sendSocket.bind(Ports::get()->getClientSendPort()) != sf::Socket::Done) {
-		std::cerr << "MainScreen: warning: unable to bind send socket" << std::endl;
+		throw PortIsBusy(Ports::get()->getClientSendPort());
 	}
 	this->receiveSocket.setBlocking(false);
 	if (this->receiveSocket.bind(Ports::get()->getClientReceivePort()) != sf::Socket::Done) {
-		std::cerr << "MainScreen: warning: unable to bind receive socket" << std::endl;
+		throw PortIsBusy(Ports::get()->getClientReceivePort());
 	}
 	this->roomID = roomID;
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
@@ -106,11 +108,11 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 		this->moveView(window);
 		if (this->returnToMenu) {
 			Playlist::get()->stop();
-			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU, StringLcl(""));
+			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
 		}
 		if (this->noOKReceivedTimer.ready()) {
 			Playlist::get()->stop();
-			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU_ERROR, StringLcl("{disconnect_error}"));
+			throw NoServerConnection();
 		}
 	}
 }

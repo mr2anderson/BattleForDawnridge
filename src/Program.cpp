@@ -26,6 +26,8 @@
 #include "ServerScreen.hpp"
 #include "LocalServer.hpp"
 #include "Ports.hpp"
+#include "PortIsBusy.hpp"
+#include "NoServerConnection.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -85,20 +87,24 @@ void Program::run() {
             // TODO: Network game
 
 
-            std::shared_ptr<Room> room = std::make_shared<Room>(menuResponse.getData());
-            LocalServer LocalServer;
-            LocalServer.launch(room);
-            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerSendPort(), Ports::get()->getLocalServerReceivePort(), room->getID());
-            MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
             error = boost::none;
-            switch (mainScreenResponse.getType()) {
-            case MainScreenResponse::TYPE::RETURN_TO_MENU: {
-                break;
+            try {
+                std::shared_ptr<Room> room = std::make_shared<Room>(menuResponse.getData());
+                LocalServer LocalServer;
+                LocalServer.launch(room);
+                MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerSendPort(), Ports::get()->getLocalServerReceivePort(), room->getID());
+                MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
+                switch (mainScreenResponse.getType()) {
+                case MainScreenResponse::TYPE::RETURN_TO_MENU: {
+                    break;
+                }
+                }
             }
-            case MainScreenResponse::TYPE::RETURN_TO_MENU_ERROR: {
-                error = mainScreenResponse.getData();
-                break;
+            catch (PortIsBusy& e) {
+                error = StringLcl("{port_is_busy}" + std::to_string(e.getPort()));
             }
+            catch (NoServerConnection&) {
+                error = StringLcl("{disconnect_error}");
             }
         }
     }

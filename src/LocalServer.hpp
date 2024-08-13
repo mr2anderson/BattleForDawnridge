@@ -32,6 +32,7 @@ public:
 
 	void launch(std::shared_ptr<Room> room);
 private:
-	std::unique_ptr<sf::Thread> thread;
+	sf::UdpSocket sendSocket, receiveSocket;
 	std::atomic_bool stopThread;
+	std::unique_ptr<sf::Thread> thread;
 };

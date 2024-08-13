@@ -17,49 +17,28 @@
  */
 
 
-#include <iostream>
 #include "LocalServer.hpp"
 #include "Ports.hpp"
 #include "ClientNetSpecs.hpp"
 #include "math.hpp"
 #include "RoomWasClosed.hpp"
+#include "PortIsBusy.hpp"
 
 
-static void F(std::tuple<std::shared_ptr<Room>, std::atomic_bool*> p) {
-	uint16_t sendPort = Ports::get()->getLocalServerSendPort();
-	uint16_t receivePort = Ports::get()->getLocalServerReceivePort();
-	uint16_t clientSendPort = Ports::get()->getClientSendPort();
-	uint16_t clientReceivePort = Ports::get()->getClientReceivePort();
-
-	sf::IpAddress ip = sf::IpAddress::getLocalAddress();
-	sf::IpAddress clientIP = sf::IpAddress::getLocalAddress();
-
-	sf::UdpSocket sendSocket;
-	sendSocket.setBlocking(false);
-	if (sendSocket.bind(sendPort) != sf::Socket::Done) {
-		std::cerr << "LocalServer: warning: unable to bind send port" << std::endl;
-		return;
-	}
-	sf::UdpSocket receiveSocket;
-	receiveSocket.setBlocking(false);
-	if (receiveSocket.bind(receivePort) != sf::Socket::Done) {
-		std::cerr << "LocalServer: warning: unable to bind receive port" << std::endl;
-		return;
-	}
-
+static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSocket *receiveSocket, std::atomic_bool* p) {
 	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
 	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
 
 	RemotePlayers players;
-	for (uint32_t i = 1; i <= std::get<0>(p)->playersNumber(); i = i + 1) {
-		players.add(RemotePlayer(i, clientIP));
+	for (uint32_t i = 1; i <= room->playersNumber(); i = i + 1) {
+		players.add(RemotePlayer(i, sf::IpAddress::getLocalAddress()));
 	}
 
 	for (; ;) {
 		Clock clock;
 
 		while (!toSend.empty()) {
-			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), clientReceivePort);
+			sendSocket->send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), Ports::get()->getClientReceivePort());
 			toSend.pop_back();
 		}
 
@@ -67,18 +46,18 @@ static void F(std::tuple<std::shared_ptr<Room>, std::atomic_bool*> p) {
 		sf::Packet receivedPacket;
 		sf::IpAddress senderIP;
 		uint16_t senderPort;
-		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == clientIP and senderPort == clientSendPort) {
+		if (receiveSocket->receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == Ports::get()->getClientSendPort()) {
 			received = std::make_tuple(receivedPacket, senderIP);
 		}
 
 		try {
-			std::get<0>(p)->update(received, &toSend, players);
+			room->update(received, &toSend, players);
 		}
 		catch (RoomWasClosed&) {
 			break;
 		}
 
-		if (*std::get<1>(p)) {
+		if (*p) {
 			break;
 		}
 
@@ -89,6 +68,15 @@ static void F(std::tuple<std::shared_ptr<Room>, std::atomic_bool*> p) {
 
 LocalServer::LocalServer() {
 	this->thread = nullptr;
+
+	this->sendSocket.setBlocking(false);
+	if (this->sendSocket.bind(Ports::get()->getLocalServerSendPort()) != sf::Socket::Done) {
+		throw PortIsBusy(Ports::get()->getLocalServerSendPort());
+	}
+	this->receiveSocket.setBlocking(false);
+	if (this->receiveSocket.bind(Ports::get()->getLocalServerReceivePort()) != sf::Socket::Done) {
+		throw PortIsBusy(Ports::get()->getLocalServerReceivePort());
+	}
 }
 LocalServer::~LocalServer() {
 	if (this->thread != nullptr) {
@@ -98,6 +86,6 @@ LocalServer::~LocalServer() {
 }
 void LocalServer::launch(std::shared_ptr<Room> room) {
 	this->stopThread = false;
-	this->thread = std::make_unique<sf::Thread>(&F, std::make_tuple(room, &this->stopThread));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&F, room, &this->sendSocket, &this->receiveSocket, &this->stopThread));
 	this->thread->launch();
 }

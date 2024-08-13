@@ -17,12 +17,12 @@
  */
 
 
-#include "MainScreenResponse.hpp"
+#include "PortIsBusy.hpp"
 
 
-MainScreenResponse::MainScreenResponse(uint8_t type) {
-	this->type = type;
+PortIsBusy::PortIsBusy(uint16_t port) {
+	this->port = port;
 }
-uint8_t MainScreenResponse::getType() const {
-	return this->type;
+uint16_t PortIsBusy::getPort() const {
+	return this->port;
 }

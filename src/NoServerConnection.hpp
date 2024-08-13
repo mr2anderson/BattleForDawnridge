@@ -17,12 +17,13 @@
  */
 
 
-#include "MainScreenResponse.hpp"
+#include <stdexcept>
 
 
-MainScreenResponse::MainScreenResponse(uint8_t type) {
-	this->type = type;
-}
-uint8_t MainScreenResponse::getType() const {
-	return this->type;
-}
+#pragma once
+
+
+class NoServerConnection : public std::exception {
+public:
+	NoServerConnection();
+};

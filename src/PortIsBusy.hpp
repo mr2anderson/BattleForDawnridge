@@ -17,12 +17,18 @@
  */
 
 
-#include "MainScreenResponse.hpp"
+#include <stdexcept>
+#include <cstdint>
 
 
-MainScreenResponse::MainScreenResponse(uint8_t type) {
-	this->type = type;
-}
-uint8_t MainScreenResponse::getType() const {
-	return this->type;
-}
+#pragma once
+
+
+class PortIsBusy : public std::exception {
+public:
+	PortIsBusy(uint16_t port);
+
+	uint16_t getPort() const;
+private:
+	uint16_t port;
+};
