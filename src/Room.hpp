@@ -98,7 +98,6 @@ private:
 
 	Timer sendOKTimer;
 	Timer sendWorldUIStateTimer;
-
 	Timer noOKReceivedTimer;
 
 	Map map;

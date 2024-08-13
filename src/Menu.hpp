@@ -36,7 +36,7 @@
 
 class Menu {
 public:
-    Menu(sf::RenderWindow &window);
+    Menu(sf::RenderWindow &window, const boost::optional<StringLcl> &additionalWelcomeMsg);
     Menu(const Menu& copy) = delete;
     MenuResponse run(sf::RenderWindow& window);
 private:

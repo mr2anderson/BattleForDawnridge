@@ -28,8 +28,10 @@ class LocalServer {
 public:
 	LocalServer();
 	LocalServer(const LocalServer& copy) = delete;
+	~LocalServer();
 
 	void launch(std::shared_ptr<Room> room);
 private:
-	std::unique_ptr<sf::Thread> thread; // destructor is WAITING until thread finished
+	std::unique_ptr<sf::Thread> thread;
+	std::atomic_bool stopThread;
 };

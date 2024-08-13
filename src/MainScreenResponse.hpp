@@ -18,6 +18,7 @@
 
 
 #include <cstdint>
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -26,13 +27,16 @@
 class MainScreenResponse {
 public:
 	uint8_t getType() const;
+	StringLcl getData() const;
 
 	enum TYPE {
-		RETURN_TO_MENU
+		RETURN_TO_MENU,
+		RETURN_TO_MENU_ERROR
 	};
 private:
 	uint8_t type;
+	StringLcl data;
 
 	friend class MainScreen;
-	MainScreenResponse(uint8_t type);
+	MainScreenResponse(uint8_t type, const StringLcl &str);
 };

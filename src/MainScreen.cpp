@@ -53,6 +53,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	}
 	this->roomID = roomID;
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
+	this->noOKReceivedTimer = Timer(20 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
 	this->uiPackageGotten = false;
 
@@ -92,7 +93,11 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 		this->moveView(window);
 		if (this->returnToMenu) {
 			Playlist::get()->stop();
-			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
+			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU, StringLcl(""));
+		}
+		if (this->noOKReceivedTimer.ready()) {
+			Playlist::get()->stop();
+			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU_ERROR, StringLcl("{disconnect_error}"));
 		}
 	}
 }
@@ -127,6 +132,7 @@ void MainScreen::receive() {
 
 		if (code == SERVER_NET_SPECS::OK) {
 			std::cout << "MainScreen: received OK from server!" << std::endl;
+			this->noOKReceivedTimer.reset();
 		}
 		else if (code == SERVER_NET_SPECS::WORLD_UI_STATE) {
 			std::string data;

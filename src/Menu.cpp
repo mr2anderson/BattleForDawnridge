@@ -31,7 +31,6 @@
 #include "FirstTimeTipsTable.hpp"
 #include "LanguageAlreadyInUse.hpp"
 #include "Root.hpp"
-
 #include "IsServerTable.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "LocalGameButtonSpec.hpp"
@@ -44,7 +43,7 @@
 #include "ExitButtonSpec.hpp"
 
 
-Menu::Menu(sf::RenderWindow& window) {
+Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additionalWelcomeMsg) {
     this->alreadyFinished = false;
     this->closeMenu = false;
     this->element = nullptr;
@@ -57,6 +56,14 @@ Menu::Menu(sf::RenderWindow& window) {
         Events createWelcomeWindowEvent = clickEvent;
         createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
         this->addEvents(createWelcomeWindowEvent);
+    }
+    if (additionalWelcomeMsg.has_value()) {
+        Events clickEvent;
+        clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+        std::shared_ptr<WindowButton> msgWindow = std::make_shared<WindowButton>(additionalWelcomeMsg.value(), StringLcl("{OK}"), clickEvent);
+        Events createMsgWindowEvent = clickEvent;
+        createMsgWindowEvent.add(std::make_shared<CreateEEvent>(msgWindow));
+        this->addEvents(createMsgWindowEvent);
     }
 }
 MenuResponse Menu::run(sf::RenderWindow& window) {

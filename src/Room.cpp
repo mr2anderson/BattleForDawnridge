@@ -52,8 +52,7 @@
 Room::Room(const std::string& mapName) {
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(250, Timer::TYPE::FIRST_INSTANTLY);
-
-	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
+	this->noOKReceivedTimer = Timer(20 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
 	Maps::get()->load(mapName, &this->map);
 	this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);

@@ -20,9 +20,13 @@
 #include "MainScreenResponse.hpp"
 
 
-MainScreenResponse::MainScreenResponse(uint8_t type) {
+MainScreenResponse::MainScreenResponse(uint8_t type, const StringLcl &str) {
 	this->type = type;
+	this->data = str;
 }
 uint8_t MainScreenResponse::getType() const {
 	return this->type;
+}
+StringLcl MainScreenResponse::getData() const {
+	return this->data;
 }

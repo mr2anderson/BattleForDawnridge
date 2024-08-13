@@ -25,7 +25,7 @@
 #include "RoomWasClosed.hpp"
 
 
-static void F(std::shared_ptr<Room> room) {
+static void F(std::tuple<std::shared_ptr<Room>, std::atomic_bool*> p) {
 	uint16_t sendPort = Ports::get()->getLocalServerSendPort();
 	uint16_t receivePort = Ports::get()->getLocalServerReceivePort();
 	uint16_t clientSendPort = Ports::get()->getClientSendPort();
@@ -51,7 +51,7 @@ static void F(std::shared_ptr<Room> room) {
 	std::vector<sf::Packet> toSend;
 
 	RemotePlayers players;
-	for (uint32_t i = 1; i <= room->playersNumber(); i = i + 1) {
+	for (uint32_t i = 1; i <= std::get<0>(p)->playersNumber(); i = i + 1) {
 		players.add(RemotePlayer(i, clientIP));
 	}
 
@@ -72,9 +72,13 @@ static void F(std::shared_ptr<Room> room) {
 		}
 
 		try {
-			room->update(received, &toSend, players);
+			std::get<0>(p)->update(received, &toSend, players);
 		}
 		catch (RoomWasClosed&) {
+			break;
+		}
+
+		if (*std::get<1>(p)) {
 			break;
 		}
 
@@ -83,8 +87,17 @@ static void F(std::shared_ptr<Room> room) {
 }
 
 
-LocalServer::LocalServer() = default;
+LocalServer::LocalServer() {
+	this->thread = nullptr;
+}
+LocalServer::~LocalServer() {
+	if (this->thread != nullptr) {
+		this->stopThread = true;
+		this->thread->wait();
+	}
+}
 void LocalServer::launch(std::shared_ptr<Room> room) {
-	this->thread = std::make_unique<sf::Thread>(&F, room);
+	this->stopThread = false;
+	this->thread = std::make_unique<sf::Thread>(&F, std::make_tuple(room, &this->stopThread));
 	this->thread->launch();
 }

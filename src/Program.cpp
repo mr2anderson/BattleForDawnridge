@@ -75,8 +75,9 @@ void Program::run() {
         }
     }
     else {
+        boost::optional<StringLcl> error;
         for (; ;) {
-            Menu menu(this->window);
+            Menu menu(this->window, error);
             MenuResponse menuResponse = menu.run(this->window);
             if (menuResponse.getType() == MenuResponse::TYPE::EXIT) {
                 return;
@@ -89,8 +90,13 @@ void Program::run() {
             LocalServer.launch(room);
             MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerSendPort(), Ports::get()->getLocalServerReceivePort(), room->getID());
             MainScreenResponse mainScreenResponse = mainScreen.run(this->window);
+            error = boost::none;
             switch (mainScreenResponse.getType()) {
             case MainScreenResponse::TYPE::RETURN_TO_MENU: {
+                break;
+            }
+            case MainScreenResponse::TYPE::RETURN_TO_MENU_ERROR: {
+                error = mainScreenResponse.getData();
                 break;
             }
             }

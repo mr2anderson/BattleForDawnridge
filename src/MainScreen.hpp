@@ -50,6 +50,7 @@ private:
 	sf::UdpSocket receiveSocket;
 	RoomID roomID;
 	Timer sendOKTimer;
+	Timer noOKReceivedTimer;
 
 	bool uiPackageGotten;
 	Map map;
