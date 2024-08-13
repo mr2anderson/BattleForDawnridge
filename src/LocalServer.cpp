@@ -48,7 +48,7 @@ static void F(std::tuple<std::shared_ptr<Room>, std::atomic_bool*> p) {
 	}
 
 	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
-	std::vector<sf::Packet> toSend;
+	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
 
 	RemotePlayers players;
 	for (uint32_t i = 1; i <= std::get<0>(p)->playersNumber(); i = i + 1) {
@@ -59,7 +59,7 @@ static void F(std::tuple<std::shared_ptr<Room>, std::atomic_bool*> p) {
 		Clock clock;
 
 		while (!toSend.empty()) {
-			sendSocket.send(toSend.back(), clientIP, clientReceivePort);
+			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), clientReceivePort);
 			toSend.pop_back();
 		}
 

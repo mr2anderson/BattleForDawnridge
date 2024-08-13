@@ -92,14 +92,14 @@ uint32_t Room::playersNumber() {
 
 
 
-void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers) {
+void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers) {
 	if (this->noOKReceivedTimer.ready()) {
 		throw RoomWasClosed();
 	}
 
 	this->sendTimeCommandsToClients(toSend, remotePlayers);
 
-	this->receive(received, toSend);
+	this->receive(received, toSend, remotePlayers);
 
 	if (this->element != nullptr) {
 		this->element->update();
@@ -110,13 +110,13 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	if (this->animation.has_value()) {
 		Events animationEvent;
 		animationEvent = this->animation.value().process(this->map.getStatePtr());
-		this->addEvents(animationEvent, toSend);
+		this->addEvents(animationEvent, toSend, remotePlayers);
 	}
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 	}
-	this->processNewMoveEvents(toSend);
-	this->processBaseEvents(toSend);
+	this->processNewMoveEvents(toSend, remotePlayers);
+	this->processBaseEvents(toSend, remotePlayers);
 }
 
 
@@ -125,15 +125,15 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 
 
 
-void Room::processNewMoveEvents(std::vector<sf::Packet>* toSend) {
+void Room::processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
 		}
 		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
-		this->addEvents(newMoveEvent, toSend);
+		this->addEvents(newMoveEvent, toSend, remotePlayers);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-		this->processBaseEvents(toSend);
+		this->processBaseEvents(toSend, remotePlayers);
 	}
 }
 bool Room::allNewMoveEventsAdded() const {
@@ -153,39 +153,39 @@ void Room::changeMove() {
 Player* Room::getCurrentPlayer() {
 	return this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
 }
-void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, std::vector<sf::Packet>* toSend) {
+void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
 		Events buttonClickEvent = this->buttons.at(i).click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 		if (!buttonClickEvent.empty()) {
-			this->addEvents(buttonClickEvent, toSend);
+			this->addEvents(buttonClickEvent, toSend, remotePlayers);
 			break;
 		}
 	}
 }
-void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, std::vector<sf::Packet>* toSend) {
+void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
 		Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, viewX, viewY);
 		if (!gor.empty()) {
-			this->addEvents(gor, toSend);
+			this->addEvents(gor, toSend, remotePlayers);
 			return;
 		}
 	}
 }
-void Room::processBaseEvents(std::vector<sf::Packet>* toSend) {
+void Room::processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	while (!this->events.empty()) {
 		if (this->element != nullptr or this->animation.has_value()) {
 			break;
 		}
-		this->handleEvent(this->events.front(), toSend);
+		this->handleEvent(this->events.front(), toSend, remotePlayers);
 		this->events.pop();
 	}
 }
-void Room::addEvents(Events& e, std::vector<sf::Packet>* toSend) {
+void Room::addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
 		std::shared_ptr<Event> event = e.at(i);
 		if (event->isUrgent()) {
-			this->handleEvent(event, toSend);
+			this->handleEvent(event, toSend, remotePlayers);
 		}
 		else {
 			this->events.push(event);
@@ -200,11 +200,11 @@ void Room::addEvents(Events& e, std::vector<sf::Packet>* toSend) {
 
 
 
-void Room::sendTimeCommandsToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
+void Room::sendTimeCommandsToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->sendOKToClients(toSend, remotePlayers);
 	this->sendWorldUIStateToClients(toSend, remotePlayers);
 }
-void Room::sendOKToClients(std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
+void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	if (!this->sendOKTimer.ready()) {
 		return;
 	}
@@ -258,7 +258,7 @@ ResourceBar Room::makeResourceBar() {
 	
 	return bar;
 }
-void Room::sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const RemotePlayers &remotePlayers) {
+void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers) {
 	if (!this->sendWorldUIStateTimer.ready()) {
 		return;
 	}
@@ -284,14 +284,14 @@ void Room::sendWorldUIStateToClients(std::vector<sf::Packet>* toSend, const Remo
 
 	this->sendToClients(packet, toSend, remotePlayers);
 }
-void Room::sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend, const RemotePlayers& remotePlayers) {
+void Room::sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
 		sf::IpAddress clientIp = remotePlayers.get(i).getIp();
 		uint32_t clientIpInt = clientIp.toInteger();
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
 			clientTable[clientIpInt] = true;
-			toSend->emplace_back(what);
+			toSend->emplace_back(what, clientIp);
 		}
 	}
 }
@@ -300,7 +300,7 @@ void Room::sendToClients(const sf::Packet& what, std::vector<sf::Packet>* toSend
 
 
 
-void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<sf::Packet>* toSend) {
+void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	if (!received.has_value()) {
 		return;
 	}
@@ -325,15 +325,15 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 				packet >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
 				if (this->element == nullptr) {
 					if (mouseButton == sf::Mouse::Button::Left) {
-						this->addButtonClickEventToQueue(x, y, toSend);
+						this->addButtonClickEventToQueue(x, y, toSend, remotePlayers);
 					}
 					if (this->events.empty()) {
-						this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend);
+						this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend, remotePlayers);
 					}
 				}
 				else if (mouseButton == sf::Mouse::Button::Left) {
 					Events events = this->element->click(x, y, w, h);
-					this->addEvents(events, toSend);
+					this->addEvents(events, toSend, remotePlayers);
 				}
 			}
 		}
@@ -346,270 +346,270 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 
 
 
-void Room::handleEvent(std::shared_ptr<Event> e, std::vector<sf::Packet>* toSend) {
+void Room::handleEvent(std::shared_ptr<Event> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
-		this->handleAddResourceEvent(addResourceEvent, toSend);
+		this->handleAddResourceEvent(addResourceEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SubResourceEvent> subResourceEvent = std::dynamic_pointer_cast<SubResourceEvent>(e)) {
-		this->handleSubResourceEvent(subResourceEvent, toSend);
+		this->handleSubResourceEvent(subResourceEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<AddResourcesEvent> addResourcesEvent = std::dynamic_pointer_cast<AddResourcesEvent>(e)) {
-		this->handleAddResourcesEvent(addResourcesEvent, toSend);
+		this->handleAddResourcesEvent(addResourcesEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SubResourcesEvent> subResourcesEvent = std::dynamic_pointer_cast<SubResourcesEvent>(e)) {
-		this->handleSubResourcesEvent(subResourcesEvent, toSend);
+		this->handleSubResourcesEvent(subResourcesEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SetHighlightEvent> changeHighlightEvent = std::dynamic_pointer_cast<SetHighlightEvent>(e)) {
-		this->handleSetHighlightEvent(changeHighlightEvent, toSend);
+		this->handleSetHighlightEvent(changeHighlightEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<AddHpEvent> addHpEvent = std::dynamic_pointer_cast<AddHpEvent>(e)) {
-		this->handleAddHpEvent(addHpEvent, toSend);
+		this->handleAddHpEvent(addHpEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> decreaseCurrentTradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentTradeMovesLeftEvent>(e)) {
-		this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent, toSend);
+		this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<BuildEvent> buildEvent = std::dynamic_pointer_cast<BuildEvent>(e)) {
-		this->handleBuild(buildEvent, toSend);
+		this->handleBuild(buildEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
-		this->handlePlaySoundEvent(playSoundEvent, toSend);
+		this->handlePlaySoundEvent(playSoundEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
-		this->handleCreatePopUpElementEvent(createEEvent, toSend);
+		this->handleCreatePopUpElementEvent(createEEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<ChangeMoveEvent> changeMoveEvent = std::dynamic_pointer_cast<ChangeMoveEvent>(e)) {
-		this->handleChangeMoveEvent(changeMoveEvent, toSend);
+		this->handleChangeMoveEvent(changeMoveEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e)) {
-		this->handleReturnToMenuEvent(returnToMenuEvent, toSend);
+		this->handleReturnToMenuEvent(returnToMenuEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
-		this->handleDestroyEvent(destroyEvent, toSend);
+		this->handleDestroyEvent(destroyEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e)) {
-		this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent, toSend);
+		this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e)) {
-		this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent, toSend);
+		this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SelectEvent> selectEvent = std::dynamic_pointer_cast<SelectEvent>(e)) {
-		this->handleSelectEvent(selectEvent, toSend);
+		this->handleSelectEvent(selectEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<UnselectEvent> unselectEvent = std::dynamic_pointer_cast<UnselectEvent>(e)) {
-		this->handleUnselectEvent(unselectEvent, toSend);
+		this->handleUnselectEvent(unselectEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<StartWarriorAnimationEvent> startWarriorAnimationEvent = std::dynamic_pointer_cast<StartWarriorAnimationEvent>(e)) {
-		this->handleStartWarriorAnimationEvent(startWarriorAnimationEvent, toSend);
+		this->handleStartWarriorAnimationEvent(startWarriorAnimationEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<RefreshMovementPointsEvent> refreshMovementPointsEvent = std::dynamic_pointer_cast<RefreshMovementPointsEvent>(e)) {
-		this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent, toSend);
+		this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<EnableCursorEvent> enableCursorEvent = std::dynamic_pointer_cast<EnableCursorEvent>(e)) {
-		this->handleEnableCursorEvent(enableCursorEvent, toSend);
+		this->handleEnableCursorEvent(enableCursorEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DisableCursorEvent> disableCursorEvent = std::dynamic_pointer_cast<DisableCursorEvent>(e)) {
-		this->handleDisableCursorEvent(disableCursorEvent, toSend);
+		this->handleDisableCursorEvent(disableCursorEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
-		this->handleCreateAnimationEvent(createAnimationEvent, toSend);
+		this->handleCreateAnimationEvent(createAnimationEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
-		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent, toSend);
+		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SubHpEvent> subHpEvent = std::dynamic_pointer_cast<SubHpEvent>(e)) {
-		this->handleSubHpEvent(subHpEvent, toSend);
+		this->handleSubHpEvent(subHpEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SetFireEvent> setFireEvent = std::dynamic_pointer_cast<SetFireEvent>(e)) {
-		this->handleSetFireEvent(setFireEvent, toSend);
+		this->handleSetFireEvent(setFireEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<ChangeWarriorDirectionEvent> changeWarriorDirectionEvent = std::dynamic_pointer_cast<ChangeWarriorDirectionEvent>(e)) {
-		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent, toSend);
+		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<FocusOnEvent> focusOnEvent = std::dynamic_pointer_cast<FocusOnEvent>(e)) {
-		this->handleFocusOnEvent(focusOnEvent, toSend);
+		this->handleFocusOnEvent(focusOnEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<ResetHighlightEvent> resetHighlightEvent = std::dynamic_pointer_cast<ResetHighlightEvent>(e)) {
-		this->handleResetHighlightEvent(resetHighlightEvent, toSend);
+		this->handleResetHighlightEvent(resetHighlightEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DoTradeEvent> doTradeEvent = std::dynamic_pointer_cast<DoTradeEvent>(e)) {
-		this->handleDoTradeEvent(doTradeEvent, toSend);
+		this->handleDoTradeEvent(doTradeEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<StartWarriorProducingEvent> startWarriorProducingEvent = std::dynamic_pointer_cast<StartWarriorProducingEvent>(e)) {
-		this->handleStartWarriorProducingEvent(startWarriorProducingEvent, toSend);
+		this->handleStartWarriorProducingEvent(startWarriorProducingEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
-		this->handleTryToBuildEvent(tryToBuildEvent, toSend);
+		this->handleTryToBuildEvent(tryToBuildEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<KillNextTurnEvent> killNextTurnEvent = std::dynamic_pointer_cast<KillNextTurnEvent>(e)) {
-		this->handleKillNextTurnEvent(killNextTurnEvent, toSend);
+		this->handleKillNextTurnEvent(killNextTurnEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<RevertKillNextTurnEvent> revertKillNextTurnEvent = std::dynamic_pointer_cast<RevertKillNextTurnEvent>(e)) {
-		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent, toSend);
+		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
-		this->handleCloseAnimationEvent(closeAnimationEvent, toSend);
+		this->handleCloseAnimationEvent(closeAnimationEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> decreaseSpellCreationMovesLeftEvent = std::dynamic_pointer_cast<DecreaseSpellCreationMovesLeftEvent>(e)) {
-		this->handleDecreaseSpellCreationMovesLeftEvent(decreaseSpellCreationMovesLeftEvent, toSend);
+		this->handleDecreaseSpellCreationMovesLeftEvent(decreaseSpellCreationMovesLeftEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SetSpellEvent> setSpellEvent = std::dynamic_pointer_cast<SetSpellEvent>(e)) {
-		this->handleSetSpellEvent(setSpellEvent, toSend);
+		this->handleSetSpellEvent(setSpellEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<UseSpellEvent> useSpellEvent = std::dynamic_pointer_cast<UseSpellEvent>(e)) {
-		this->handleUseSpellEvent(useSpellEvent, toSend);
+		this->handleUseSpellEvent(useSpellEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<MarkSpellAsUsedEvent> markSpellAsUsedEvent = std::dynamic_pointer_cast<MarkSpellAsUsedEvent>(e)) {
-		this->handleMarkSpellAsUsedEvent(markSpellAsUsedEvent, toSend);
+		this->handleMarkSpellAsUsedEvent(markSpellAsUsedEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<EnableWarriorRageModeEvent> enableWarriorRageModeEvent = std::dynamic_pointer_cast<EnableWarriorRageModeEvent>(e)) {
-		this->handleEnableWarriorRageModeEvent(enableWarriorRageModeEvent, toSend);
+		this->handleEnableWarriorRageModeEvent(enableWarriorRageModeEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<DecreaseRageModeMovesLeftEvent> decreaseRageModeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseRageModeMovesLeftEvent>(e)) {
-		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent, toSend);
+		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<RefreshAttackAbilityEvent> refreshAttackAbilityEvent = std::dynamic_pointer_cast<RefreshAttackAbilityEvent>(e)) {
-		this->handleRefreshAttackAbilityEvent(refreshAttackAbilityEvent, toSend);
+		this->handleRefreshAttackAbilityEvent(refreshAttackAbilityEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<WipeAttackAbilityEvent> wipeAttackAbilityEvent = std::dynamic_pointer_cast<WipeAttackAbilityEvent>(e)) {
-		this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent, toSend);
+		this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<RefreshAttackedTableEvent> refreshAttackedTableEvent = std::dynamic_pointer_cast<RefreshAttackedTableEvent>(e)) {
-		this->handleRefreshAttackedTableEvent(refreshAttackedTableEvent, toSend);
+		this->handleRefreshAttackedTableEvent(refreshAttackedTableEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<MarkAsAttackedEvent> markAsAttackedEvent = std::dynamic_pointer_cast<MarkAsAttackedEvent>(e)) {
-		this->handleMarkAsAttackedEvent(markAsAttackedEvent, toSend);
+		this->handleMarkAsAttackedEvent(markAsAttackedEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<RefreshHealingAbilityEvent> refreshHealingAbilityEvent = std::dynamic_pointer_cast<RefreshHealingAbilityEvent>(e)) {
-		this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent, toSend);
+		this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<WipeHealingAbilityEvent> wipeHealingAbilityEvent = std::dynamic_pointer_cast<WipeHealingAbilityEvent>(e)) {
-		this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent, toSend);
+		this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
-		this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent, toSend);
+		this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
-		this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent, toSend);
+		this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<SaveGameEvent> saveGameEvent = std::dynamic_pointer_cast<SaveGameEvent>(e)) {
-		this->handleSaveGameEvent(saveGameEvent, toSend);
+		this->handleSaveGameEvent(saveGameEvent, toSend, remotePlayers);
 	}
 	else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
-		this->handleLimitResourcesEvent(limitResourcesEvent, toSend);
+		this->handleLimitResourcesEvent(limitResourcesEvent, toSend, remotePlayers);
 	}
 }
-void Room::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
 }
-void Room::handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->getCurrentPlayer()->subResource(e->getResource());
 }
-void Room::handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->getCurrentPlayer()->addResources(e->getResources(), e->getLimit());
 }
-void Room::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->getCurrentPlayer()->subResources(e->getResources());
 }
-void Room::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->highlightTable.mark(*e);
 }
-void Room::handleAddHpEvent(std::shared_ptr<AddHpEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleAddHpEvent(std::shared_ptr<AddHpEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	HPGO* go = e->getHPGO();
 	uint32_t n = e->getN();
 	go->addHp(n);
 }
-void Room::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpec()->decreaseCurrentTradeMovesLeft();
 }
-void Room::handleBuild(std::shared_ptr<BuildEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleBuild(std::shared_ptr<BuildEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Building* b = e->getBuilding();
 	this->map.getStatePtr()->getCollectionsPtr()->add(b);
 }
-void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::SOUND;
 	packet << e->getSoundName();
-	toSend->push_back(packet);
+	this->sendToClients(packet, toSend, remotePlayers);
 }
-void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->element = e->getElement();
 	this->element->restart();
 }
-void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->changeMove();
 }
-void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	// TODO
 }
-void Room::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());
-	this->addEvents(destroyBuildingEvent, toSend);
+	this->addEvents(destroyBuildingEvent, toSend, remotePlayers);
 }
-void Room::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpec()->decreaseCurrentProducingMovesLeft();
 }
-void Room::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpec()->stopProducing();
 	this->map.getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
 }
-void Room::handleSelectEvent(std::shared_ptr<SelectEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSelectEvent(std::shared_ptr<SelectEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->selected = e->getSelectable();
 }
-void Room::handleUnselectEvent(std::shared_ptr<UnselectEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleUnselectEvent(std::shared_ptr<UnselectEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->selected = nullptr;
 }
-void Room::handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->startAnimation(e->getAnimation());
 }
-void Room::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->refreshMovementPoints();
 }
-void Room::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->curcorVisibility = true;
 }
-void Room::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->curcorVisibility = false;
 }
-void Room::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->animation = e->getAnimation();
 }
-void Room::handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getBuilding()->decreaseBurningMovesLeft();
 }
-void Room::handleSubHpEvent(std::shared_ptr<SubHpEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSubHpEvent(std::shared_ptr<SubHpEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getHPGO()->subHp(e->getValue());
 }
-void Room::handleSetFireEvent(std::shared_ptr<SetFireEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSetFireEvent(std::shared_ptr<SetFireEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getBuilding()->setFire();
 }
-void Room::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->changeDirection(e->getDirection());
 }
-void Room::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::FOCUS;
 	packet << e->getX();
 	packet << e->getY();
 	packet << e->getSX();
 	packet << e->getSY();
-	toSend->push_back(packet);
+	this->sendToClients(packet, toSend, remotePlayers);
 }
-void Room::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->highlightTable.clear();
 }
-void Room::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events events = e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
-	this->addEvents(events, toSend);
+	this->addEvents(events, toSend, remotePlayers);
 }
-void Room::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events events = e->getSpec()->startProducing(e->getWarrior());
-	this->addEvents(events, toSend);
+	this->addEvents(events, toSend, remotePlayers);
 }
-void Room::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
 		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
 		Events bmStartEvent = bm.start(this->map.getStatePtr());
-		this->addEvents(bmStartEvent, toSend);
+		this->addEvents(bmStartEvent, toSend, remotePlayers);
 	}
 	else {
 		Events clickEvent;
@@ -618,58 +618,58 @@ void Room::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, std::vector
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_resources_for_building}"), StringLcl("{OK}"), clickEvent);
 		Events unableToBuildEvent;
 		unableToBuildEvent.add(std::make_shared<CreateEEvent>(w));
-		this->addEvents(unableToBuildEvent, toSend);
+		this->addEvents(unableToBuildEvent, toSend, remotePlayers);
 	}
 }
-void Room::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events events = e->getWarrior()->killNextTurn();
-	this->addEvents(events, toSend);
+	this->addEvents(events, toSend, remotePlayers);
 }
-void Room::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events events = e->getWarrior()->revertKillNextTurn();
-	this->addEvents(events, toSend);
+	this->addEvents(events, toSend, remotePlayers);
 }
-void Room::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->animation = boost::none;
 }
-void Room::handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpell()->decreaseCreationMovesLeft();
 }
-void Room::handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpec()->setSpell(e->getSpell());
 }
-void Room::handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events events = e->getSpell()->use();
-	this->addEvents(events, toSend);
+	this->addEvents(events, toSend, remotePlayers);
 }
-void Room::handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpell()->markAsUsed();
 }
-void Room::handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->enableRageMode();
 }
-void Room::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->decreaseRageModeMovesLeft();
 }
-void Room::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getI()->refreshAbility();
 }
-void Room::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getI()->wipeAbility();
 }
-void Room::handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->refreshAttackedTable();
 }
-void Room::handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getAttacker()->markAsAttacked(e->getTarget());
 }
-void Room::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->refreshHealingAbility();
 }
-void Room::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getWarrior()->wipeHealingAbility();
 }
-void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->playerIsActive[e->getPlayerId() - 1] = false;
 	uint32_t count = 0;
 	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
@@ -692,14 +692,14 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 	}
 	Events result;
 	result.add(std::make_shared<CreateEEvent>(w));
-	this->addEvents(result, toSend);
+	this->addEvents(result, toSend, remotePlayers);
 }
-void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	e->getSpec()->increaseMoveCtr();
 }
-void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	// TODO
 }
-void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, std::vector<sf::Packet>* toSend) {
+void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
 }
