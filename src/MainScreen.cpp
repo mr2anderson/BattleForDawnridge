@@ -28,7 +28,6 @@
 #include "ResourceBar.hpp"
 #include "SoundQueue.hpp"
 #include "Sounds.hpp"
-#include "NoServerResponse.hpp"
 #include "Ports.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
