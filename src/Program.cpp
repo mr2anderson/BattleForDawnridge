@@ -28,6 +28,7 @@
 #include "Ports.hpp"
 #include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
+#include "CouldntOpenMap.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -105,6 +106,9 @@ void Program::run() {
             }
             catch (NoServerConnection&) {
                 error = StringLcl("{disconnect_error}");
+            }
+            catch (CouldntOpenMap&) {
+                error = StringLcl("{map_is_apcent}");
             }
         }
     }
