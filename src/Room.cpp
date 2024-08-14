@@ -562,7 +562,14 @@ void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::RETURN_TO_MENU;
-	toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
+	switch (e->getType()) {
+	case ReturnToMenuEvent::Type::CURRENT_PLAYER:
+		toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
+		break;
+	case ReturnToMenuEvent::Type::EVERY_PLAYER:
+		this->sendToClients(packet, toSend, remotePlayers);
+		break;
+	}
 }
 void Room::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());
@@ -702,7 +709,7 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 	if (count == 1) {
 		Events returnToMenuEvent;
 		returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
+		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>(ReturnToMenuEvent::Type::EVERY_PLAYER));
 		w = std::make_shared<WindowButton>(StringLcl("{game_finished}"), StringLcl("{OK}"), returnToMenuEvent);
 	}
 	else {

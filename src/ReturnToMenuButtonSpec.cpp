@@ -40,7 +40,7 @@ Events ReturnToMenuButtonSpec::getEvents() const {
 	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
 	Events returnToMenuEvent; // Return to menu event does not have click sound cuz it might be ignored in case package with return to menu event comes earlier than package with play sound event
-	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
+	returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>(ReturnToMenuEvent::Type::CURRENT_PLAYER));
 
 	std::shared_ptr<WindowTwoButtons> confirmReturnToMenuWindow = std::make_shared<WindowTwoButtons>(StringLcl("{confirm_return_to_menu}"), StringLcl("{yes}"), StringLcl("{no}"), returnToMenuEvent, clickEvent);
 
