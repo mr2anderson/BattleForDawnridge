@@ -53,13 +53,11 @@ Events HorizontalSelectionWindow::click(uint32_t mouseX, uint32_t mouseY, uint32
 	if (structure.buttonUp.has_value()) {
 		Events events = structure.buttonUp.value().click(mouseX, mouseY);
 		this->handle(events);
-		result = result + events;
 	}
 
 	if (structure.buttonDown.has_value()) {
 		Events events = structure.buttonDown.value().click(mouseX, mouseY);
 		this->handle(events);
-		result = result + events;
 	}
 
 	for (const auto& b : structure.contentButtons) {
