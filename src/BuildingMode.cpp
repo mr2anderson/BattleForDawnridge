@@ -209,3 +209,6 @@ bool BuildingMode::noEnemyWarriors(MapState *state, const Building *clonedB) con
 
     return true;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(BuildingMode)

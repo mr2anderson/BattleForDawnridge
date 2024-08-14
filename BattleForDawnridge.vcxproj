@@ -696,6 +696,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GuideButtonSpec.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp" />
     <ClInclude Include="src\IntRectSerializable.hpp" />
+    <ClInclude Include="src\LocalServerAlreadyLaunched.hpp" />
     <ClInclude Include="src\math.hpp" />
     <ClInclude Include="src\InvalidRoomIDFormat.hpp" />
     <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
@@ -708,13 +709,11 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LocalServer.hpp" />
     <ClInclude Include="src\Logs.hpp" />
     <ClInclude Include="src\MainScreenButtonSpec.hpp" />
-    <ClInclude Include="src\MainScreenResponse.hpp" />
     <ClInclude Include="src\MenuBg.hpp" />
     <ClInclude Include="src\MenuButtonSpec.hpp" />
     <ClInclude Include="src\MenuResponse.hpp" />
     <ClInclude Include="src\NetworkGameButtonSpec.hpp" />
     <ClInclude Include="src\NoServerConnection.hpp" />
-    <ClInclude Include="src\NoServerResponse.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
     <ClInclude Include="src\PortIsBusy.hpp" />
     <ClInclude Include="src\Ports.hpp" />
@@ -986,6 +985,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CompByNewMovePriority.cpp" />
     <ClCompile Include="src\ConductionGraph.cpp" />
     <ClCompile Include="src\ConductionResourcePoint.cpp" />
+    <ClCompile Include="src\CouldnOpenPorts.cpp" />
     <ClCompile Include="src\CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="src\CouldntOpen.cpp" />
     <ClCompile Include="src\CouldntOpenFont.cpp" />
@@ -1035,15 +1035,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\LoadingScreenResponse.cpp" />
     <ClCompile Include="src\LocalGameButtonSpec.cpp" />
     <ClCompile Include="src\LocalServer.cpp" />
+    <ClCompile Include="src\LocalServerAlreadyLaunched.cpp" />
     <ClCompile Include="src\Logs.cpp" />
     <ClCompile Include="src\MainScreenButtonSpec.cpp" />
-    <ClCompile Include="src\MainScreenResponse.cpp" />
     <ClCompile Include="src\MenuBg.cpp" />
     <ClCompile Include="src\MenuButtonSpec.cpp" />
     <ClCompile Include="src\MenuResponse.cpp" />
     <ClCompile Include="src\NetworkGameButtonSpec.cpp" />
     <ClCompile Include="src\NoServerConnection.cpp" />
-    <ClCompile Include="src\NoServerResponse.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
     <ClCompile Include="src\PortIsBusy.cpp" />
     <ClCompile Include="src\Ports.cpp" />

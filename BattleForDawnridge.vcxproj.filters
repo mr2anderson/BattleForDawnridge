@@ -1511,9 +1511,6 @@
     <ClInclude Include="src\ServerScreenResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainScreenResponse.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\PAKScreenResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1601,13 +1598,7 @@
     <ClInclude Include="src\RemotePlayer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\int_math.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\InvalidRoomIDFormat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NoServerResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RoomID.hpp">
@@ -1622,9 +1613,6 @@
     <ClInclude Include="src\Filter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LocalRoom.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Timer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1635,6 +1623,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IntRectSerializable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ClientNetSpecs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LocalServer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NoServerConnection.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PortIsBusy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoomWasClosed.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerNetSpecs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LocalServerAlreadyLaunched.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2458,9 +2470,6 @@
     <ClCompile Include="src\ServerScreenResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainScreenResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\PAKScreenResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2548,16 +2557,10 @@
     <ClCompile Include="src\InvalidRoomIDFormat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\NoServerResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\RoomID.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SerializableColor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LocalRoom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Timer.cpp">
@@ -2570,6 +2573,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IntRectSerializable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LocalServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NoServerConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PortIsBusy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoomWasClosed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CouldnOpenPorts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LocalServerAlreadyLaunched.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

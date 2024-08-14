@@ -31,6 +31,7 @@
 
 class ISelectable {
 public:
+    ISelectable(); // TODO
 	virtual ~ISelectable();
 
 	virtual Events unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) = 0;

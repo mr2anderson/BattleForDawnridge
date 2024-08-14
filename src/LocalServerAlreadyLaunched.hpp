@@ -17,22 +17,13 @@
  */
 
 
-#include <cstdint>
+#include <stdexcept>
 
 
 #pragma once
 
 
-class MainScreenResponse {
+class LocalServerAlreadyLaunched : public std::exception {
 public:
-	uint8_t getType() const;
-
-	enum TYPE {
-		RETURN_TO_MENU,
-	};
-private:
-	uint8_t type;
-
-	friend class MainScreen;
-	MainScreenResponse(uint8_t type);
+	LocalServerAlreadyLaunched();
 };

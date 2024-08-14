@@ -23,9 +23,10 @@
 #include "math.hpp"
 #include "RoomWasClosed.hpp"
 #include "PortIsBusy.hpp"
+#include "LocalServerAlreadyLaunched.hpp"
 
 
-static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSocket *receiveSocket, std::atomic_bool* p) {
+static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSocket *receiveSocket, std::exception_ptr *error, std::atomic_bool* p) {
 	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
 	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
 
@@ -56,6 +57,10 @@ static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSock
 		catch (RoomWasClosed&) {
 			break;
 		}
+		catch (std::exception& e) {
+			*error = std::current_exception();
+			break;
+		}
 
 		if (*p) {
 			break;
@@ -67,6 +72,7 @@ static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSock
 
 
 LocalServer::LocalServer() {
+	this->stopThread = false;
 	this->thread = nullptr;
 
 	this->sendSocket.setBlocking(false);
@@ -85,7 +91,14 @@ LocalServer::~LocalServer() {
 	}
 }
 void LocalServer::launch(std::shared_ptr<Room> room) {
-	this->stopThread = false;
-	this->thread = std::make_unique<sf::Thread>(std::bind(&F, room, &this->sendSocket, &this->receiveSocket, &this->stopThread));
+	if (this->thread != nullptr) {
+		throw LocalServerAlreadyLaunched();
+	}
+	this->thread = std::make_unique<sf::Thread>(std::bind(&F, room, &this->sendSocket, &this->receiveSocket, &this->threadError, &this->stopThread));
 	this->thread->launch();
+}
+void LocalServer::fine() {
+	if (this->threadError != nullptr) {
+		std::rethrow_exception(this->threadError);
+	}
 }

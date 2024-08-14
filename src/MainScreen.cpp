@@ -73,7 +73,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 
 
 
-MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
+void MainScreen::run(sf::RenderWindow& window) {
 	if (this->alreadyFinished) {
 		throw ScreenAlreadyFinished();
 	}
@@ -120,7 +120,7 @@ MainScreenResponse MainScreen::run(sf::RenderWindow& window) {
 		this->moveView(window);
 		if (this->returnToMenu) {
 			Playlist::get()->stop();
-			return MainScreenResponse(MainScreenResponse::TYPE::RETURN_TO_MENU);
+			return;
 		}
 	}
 }

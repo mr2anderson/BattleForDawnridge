@@ -17,12 +17,7 @@
  */
 
 
-#include "MainScreenResponse.hpp"
+#include "LocalServerAlreadyLaunched.hpp"
 
 
-MainScreenResponse::MainScreenResponse(uint8_t type) {
-	this->type = type;
-}
-uint8_t MainScreenResponse::getType() const {
-	return this->type;
-}
+LocalServerAlreadyLaunched::LocalServerAlreadyLaunched() = default;

@@ -32,8 +32,10 @@ public:
 	~LocalServer();
 
 	void launch(std::shared_ptr<Room> room);
+	void fine();
 private:
 	sf::UdpSocket sendSocket, receiveSocket;
+	std::exception_ptr threadError;
 	std::atomic<bool> stopThread;
 	std::unique_ptr<sf::Thread> thread;
 };

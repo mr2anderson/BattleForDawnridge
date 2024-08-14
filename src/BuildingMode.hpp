@@ -18,6 +18,7 @@
 
 
 
+#include <boost/serialization/shared_ptr.hpp>
 #include "ISelectable.hpp"
 
 
@@ -43,4 +44,13 @@ private:
 	bool empty(MapState* state, const Building *clonedB) const;
 	bool controlled(MapState* state, const Building *clonedB) const;
     bool noEnemyWarriors(MapState* state, const Building *clonedB) const;
+
+	friend class boost::serialization::access;
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& this->b;
+		ar& this->playerId;
+	}
 };
+
+
+BOOST_CLASS_EXPORT_KEY(BuildingMode)

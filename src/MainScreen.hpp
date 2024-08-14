@@ -20,7 +20,6 @@
 #include <SFML/Graphics.hpp>
 #include <queue>
 #include <SFML/Network.hpp>
-#include "MainScreenResponse.hpp"
 #include "IlluminanceTable.hpp"
 #include "RoomID.hpp"
 #include "Map.hpp"
@@ -39,7 +38,7 @@ class MainScreen {
 public:
 	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverSendPort, uint16_t serverReceivePort, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
-	MainScreenResponse run(sf::RenderWindow& window);
+	void run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
 

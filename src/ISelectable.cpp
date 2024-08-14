@@ -20,6 +20,7 @@
 #include "ISelectable.hpp"
 
 
+ISelectable::ISelectable() = default;
 ISelectable::~ISelectable() = default;
 
 
