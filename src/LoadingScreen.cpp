@@ -130,6 +130,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 }
 bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
+        IsServerTable::get()->load();
         Music::get()->add("intro", "music/intro.ogg");
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
             Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
@@ -160,7 +161,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "infirmary", "christianity", "tower1", "tower2", "crystal_icon", "warehouse_crystal",
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon", "heart_icon", "save_icon",
-                "plain", "slow_movement_icon", "battle_icon", "advanced_settings_icon", "switch_to_server_icon", "switch_to_client_icon", "new_turn_icon",
+                "plain", "slow_movement_icon", "battle_icon", "new_turn_icon",
                 "to_menu_icon"}) {
             Textures::get()->add(a, "images/" + a + ".png");
         }

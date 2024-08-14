@@ -21,7 +21,6 @@
 #include "CloseMenuEvent.hpp"
 #include "StartGameEvent.hpp"
 #include "LoadGameEvent.hpp"
-#include "InvertIsServerStateEvent.hpp"
 #include "DeleteSaveEvent.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
@@ -62,7 +61,6 @@ private:
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
     void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
     void handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e);
-    void handleInvertIsServerStateEvent(std::shared_ptr<InvertIsServerStateEvent> e);
     void handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

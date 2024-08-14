@@ -55,15 +55,6 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 					Playlist::get()->stop();
 					return ServerScreenResponse(ServerScreenResponse::TYPE::EXIT);
 				}
-				if (event.key.code == sf::Keyboard::Delete) {
-					IsServerTable::get()->invert();
-					if (IsServerTable::get()->isServer()) {
-						this->logs.add(StringLcl("{switched_to_server_mode}"));
-					}
-					else {
-						this->logs.add(StringLcl("{switched_to_client_mode}"));
-					}
-				}
 			}
 		}
 		Playlist::get()->update();

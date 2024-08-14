@@ -17,6 +17,12 @@
  */
 
 
+#include <boost/optional.hpp>
+
+
+#pragma once
+
+
 class IsServerTable {
 public:
 	static IsServerTable* get() {
@@ -27,11 +33,12 @@ public:
 	}
 
 	bool isServer() const;
-	void markAsServer() const;
-	void markAsClient() const;
-	void invert() const;
+
+	void load();
 private:
 	IsServerTable() = default;
 	IsServerTable(const IsServerTable& copy) = delete;
 	static IsServerTable* singletone;
+
+	boost::optional<bool> val;
 };

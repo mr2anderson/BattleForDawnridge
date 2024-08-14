@@ -619,6 +619,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Button.hpp" />
     <ClInclude Include="src\ClientNetSpecs.hpp" />
     <ClInclude Include="src\CollectionsImpl.hpp" />
+    <ClInclude Include="src\CouldntOpenIsServerTable.hpp" />
     <ClInclude Include="src\CouldntOpenPorts.hpp" />
     <ClInclude Include="src\EndTurnButtonSpec.hpp" />
     <ClInclude Include="src\Filter.hpp" />
@@ -699,7 +700,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LocalServerAlreadyLaunched.hpp" />
     <ClInclude Include="src\math.hpp" />
     <ClInclude Include="src\InvalidRoomIDFormat.hpp" />
-    <ClInclude Include="src\InvertIsServerStateEvent.hpp" />
     <ClInclude Include="src\IsServerTable.hpp" />
     <ClInclude Include="src\LanguageButtonSpec.hpp" />
     <ClInclude Include="src\LicenceButtonSpec.hpp" />
@@ -989,6 +989,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="src\CouldntOpen.cpp" />
     <ClCompile Include="src\CouldntOpenFont.cpp" />
+    <ClCompile Include="src\CouldntOpenIsServerTable.cpp" />
     <ClCompile Include="src\CouldntOpenLocales.cpp" />
     <ClCompile Include="src\CouldntOpenMap.cpp" />
     <ClCompile Include="src\CouldntOpenMusic.cpp" />
@@ -1027,7 +1028,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\GuideButtonSpec.cpp" />
     <ClCompile Include="src\IntRectSerializable.cpp" />
     <ClCompile Include="src\InvalidRoomIDFormat.cpp" />
-    <ClCompile Include="src\InvertIsServerStateEvent.cpp" />
     <ClCompile Include="src\IsServerTable.cpp" />
     <ClCompile Include="src\LanguageButtonSpec.cpp" />
     <ClCompile Include="src\LicenceButtonSpec.cpp" />

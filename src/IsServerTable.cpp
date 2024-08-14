@@ -21,31 +21,32 @@
 #include <fstream>
 #include "IsServerTable.hpp"
 #include "Root.hpp"
+#include "CouldntOpenIsServerTable.hpp"
 
 
 IsServerTable* IsServerTable::singletone = nullptr;
 
 
 bool IsServerTable::isServer() const {
-	return std::filesystem::is_regular_file(USERDATA_ROOT + "/network/i_am_server.cfg");
+	return this->val.value();
 }
-void IsServerTable::markAsServer() const {
-	if (!std::filesystem::is_directory(USERDATA_ROOT + "/network")) {
-		std::filesystem::create_directories(USERDATA_ROOT + "/network");
+void IsServerTable::load() {
+	std::string path = DATA_ROOT + "/configs/is_server.cfg";
+
+	std::ifstream file;
+	file.open(path);
+
+	std::string buff;
+	std::getline(file, buff);
+
+	if (buff == "yes") {
+		this->val = true;
 	}
-	std::ofstream file(USERDATA_ROOT + "/network/i_am_server.cfg");
-	file.close();
-}
-void IsServerTable::markAsClient() const {
-	if (std::filesystem::is_regular_file(USERDATA_ROOT + "/network/i_am_server.cfg")) {
-		std::filesystem::remove(USERDATA_ROOT + "/network/i_am_server.cfg");
+	else if (buff == "no") {
+		this->val = false;
 	}
-}
-void IsServerTable::invert() const {
-	if (this->isServer()) {
-		this->markAsClient();
-	}
-	else {
-		this->markAsServer();
+
+	if (!this->val.has_value()) {
+		throw CouldntOpenIsServerTable(path);
 	}
 }

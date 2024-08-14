@@ -17,13 +17,15 @@
  */
 
 
-#include "Event.hpp"
+#include "CouldntOpen.hpp"
 
 
 #pragma once
 
 
-class InvertIsServerStateEvent : public Event {
+class CouldntOpenIsServerTable : public CouldntOpen {
 public:
-	InvertIsServerStateEvent();
+	CouldntOpenIsServerTable(const std::string& path);
+private:
+	std::string getResourceName() const override;
 };

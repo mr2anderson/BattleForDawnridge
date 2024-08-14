@@ -30,6 +30,4 @@ public:
 private:
 	StringLcl getString() const override;
 	Events getEvents() const override;
-
-	Events getAdvancedSettingsWindowEvent() const;
 };

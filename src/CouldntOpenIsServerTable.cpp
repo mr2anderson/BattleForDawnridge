@@ -17,7 +17,12 @@
  */
 
 
-#include "InvertIsServerStateEvent.hpp"
+#include "CouldntOpenIsServerTable.hpp"
 
 
-InvertIsServerStateEvent::InvertIsServerStateEvent() = default;
+CouldntOpenIsServerTable::CouldntOpenIsServerTable(const std::string& path) : CouldntOpen(path) {
+
+}
+std::string CouldntOpenIsServerTable::getResourceName() const {
+	return "isServerTable";
+}

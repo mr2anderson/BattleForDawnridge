@@ -19,12 +19,10 @@
 
 #include "NetworkGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
-
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "IsServerTable.hpp"
 #include "WindowButton.hpp"
-#include "InvertIsServerStateEvent.hpp"
 
 
 NetworkGameButtonSpec::NetworkGameButtonSpec() = default;
@@ -49,61 +47,10 @@ Events NetworkGameButtonSpec::getEvents() const {
         true,
         clickEvent
     );
-    networkGameWindowComponents.emplace_back(
-          "advanced_settings_icon",
-        StringLcl("{advanced_settings}"),
-        true,
-        this->getAdvancedSettingsWindowEvent()
-    );
 
     std::shared_ptr<HorizontalSelectionWindow> networkGameWindow = std::make_shared<HorizontalSelectionWindow>(networkGameWindowComponents);
     Events createNetworkGameWindowEvent = clickEvent;
     createNetworkGameWindowEvent.add(std::make_shared<CreateEEvent>(networkGameWindow));
 
     return createNetworkGameWindowEvent;
-}
-
-
-
-Events NetworkGameButtonSpec::getAdvancedSettingsWindowEvent() const {
-    Events clickEvent;
-    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-    std::vector<HorizontalSelectionWindowComponent> components;
-    components.emplace_back(
-          "exit_icon",
-        StringLcl("{exit}"),
-        true,
-        clickEvent
-    );
-    if (IsServerTable::get()->isServer()) {
-        std::shared_ptr<WindowButton> doneWindow = std::make_shared<WindowButton>(StringLcl("{switched_to_client_mode}"), StringLcl("{OK}"), clickEvent);
-        Events events = clickEvent;
-        events.add(std::make_shared<InvertIsServerStateEvent>());
-        events.add(std::make_shared<CreateEEvent>(doneWindow));
-        components.emplace_back(
-              "switch_to_client_icon",
-            StringLcl("{switch_to_client}"),
-            true,
-            events
-        );
-    }
-    else {
-        std::shared_ptr<WindowButton> doneWindow = std::make_shared<WindowButton>(StringLcl("{switched_to_server_mode}"), StringLcl("{OK}"), clickEvent);
-        Events events = clickEvent;
-        events.add(std::make_shared<InvertIsServerStateEvent>());
-        events.add(std::make_shared<CreateEEvent>(doneWindow));
-        components.emplace_back(
-              "switch_to_server_icon",
-            StringLcl("{switch_to_server}"),
-            true,
-            events
-        );
-    }
-
-    std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
-    Events events = clickEvent;
-    events.add(std::make_shared<CreateEEvent>(w));
-    
-    return events;
 }

@@ -180,9 +180,6 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<LoadGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadGameEvent>(e)) {
         this->handleLoadGameEvent(loadGameEvent);
     }
-    else if (std::shared_ptr<InvertIsServerStateEvent> invertIsServerStateEvent = std::dynamic_pointer_cast<InvertIsServerStateEvent>(e)) {
-        this->handleInvertIsServerStateEvent(invertIsServerStateEvent);
-    }
     else if (std::shared_ptr<DeleteSaveEvent> deleteSaveEvent = std::dynamic_pointer_cast<DeleteSaveEvent>(e)) {
         this->handleDeleteSaveEvent(deleteSaveEvent);
     }
@@ -212,9 +209,6 @@ void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
     buffer << t.rdbuf();
     t.close();
     this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, buffer.str());
-}
-void Menu::handleInvertIsServerStateEvent(std::shared_ptr<InvertIsServerStateEvent> e) {
-    IsServerTable::get()->invert();
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
     std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());
