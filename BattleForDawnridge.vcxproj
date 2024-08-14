@@ -787,7 +787,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Legioner.hpp" />
     <ClInclude Include="src\LimitResourcesEvent.hpp" />
     <ClInclude Include="src\LoadGameEvent.hpp" />
-    <ClInclude Include="src\LoadingError.hpp" />
     <ClInclude Include="src\LoadingScreen.hpp" />
     <ClInclude Include="src\Locales.hpp" />
     <ClInclude Include="src\MainScreen.hpp" />
@@ -1093,7 +1092,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Legioner.cpp" />
     <ClCompile Include="src\LimitResourcesEvent.cpp" />
     <ClCompile Include="src\LoadGameEvent.cpp" />
-    <ClCompile Include="src\LoadingError.cpp" />
     <ClCompile Include="src\LoadingScreen.cpp" />
     <ClCompile Include="src\Locales.cpp" />
     <ClCompile Include="src\main.cpp" />

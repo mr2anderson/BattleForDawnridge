@@ -97,12 +97,12 @@ void Program::run() {
                 try {
                     mainScreen.run(this->window);
                 }
-                catch (std::exception& clientError) {
+                catch (std::exception&) {
                     try {
                         localServer.fine();
                         std::rethrow_exception(std::current_exception());
                     }
-                    catch (std::exception& localServerError) {
+                    catch (std::exception&) {
                         std::rethrow_exception(std::current_exception());
                     }
                 }

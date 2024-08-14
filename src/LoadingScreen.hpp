@@ -19,7 +19,7 @@
 
 
 #include <SFML/Graphics.hpp>
-#include "LoadingError.hpp"
+#include "CouldntOpen.hpp"
 #include "LoadingScreenResponse.hpp"
 
 
@@ -38,5 +38,5 @@ private:
 	bool loadBase(sf::RenderWindow &window);
 	void setNormalScreen(sf::RenderWindow& window);
 	bool loadAll(sf::RenderWindow &window);
-    void loadingError(LoadingError *e, sf::RenderWindow &window);
+    void loadingError(CouldntOpen *e, sf::RenderWindow &window);
 };

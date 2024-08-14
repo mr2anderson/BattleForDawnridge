@@ -1034,9 +1034,6 @@
     <ClInclude Include="src\LoadGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LoadingError.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\LoadingScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2000,9 +1997,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\LoadGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LoadingError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\LoadingScreen.cpp">

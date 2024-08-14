@@ -57,7 +57,7 @@ static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSock
 		catch (RoomWasClosed&) {
 			break;
 		}
-		catch (std::exception& e) {
+		catch (std::exception&) {
 			*error = std::current_exception();
 			break;
 		}

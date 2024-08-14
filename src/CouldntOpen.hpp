@@ -17,17 +17,18 @@
  */
 
 
-#include "LoadingError.hpp"
+#include <stdexcept>
 
 
 #pragma once
 
 
-class CouldntOpen : public LoadingError {
+class CouldntOpen : public std::exception {
 public:
     CouldntOpen(const std::string &path);
 
-    std::string details() const override;
-protected:
+    std::string getPath() const;
     virtual std::string getResourceName() const = 0;
+private:
+    std::string path;
 };

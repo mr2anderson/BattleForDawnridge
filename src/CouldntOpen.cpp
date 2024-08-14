@@ -20,12 +20,9 @@
 #include "CouldntOpen.hpp"
 
 
-CouldntOpen::CouldntOpen(const std::string &path) : LoadingError(path) {
-    
+CouldntOpen::CouldntOpen(const std::string &path) {
+    this->path = path;
 }
-std::string CouldntOpen::details() const {
-    std::string content =
-        ("Couldn't open " + this->getResourceName() + "\n"
-            "Path: " + this->getPath());
-    return content;
+std::string CouldntOpen::getPath() const {
+    return this->path;
 }

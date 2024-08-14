@@ -55,7 +55,6 @@
 #endif
 
 
-
 LoadingScreen::LoadingScreen(sf::RenderWindow &window) {
     this->alreadyFinished = false;
 }
@@ -240,14 +239,14 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         return false;
     }
 }
-void LoadingScreen::loadingError(LoadingError *e, sf::RenderWindow &window) {
+void LoadingScreen::loadingError(CouldntOpen *e, sf::RenderWindow &window) {
     window.setMouseCursorVisible(true);
 
     sf::Sprite s;
     s.setTexture(*Textures::get()->get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
-    WindowButton element = WindowButton(StringLcl(e->details()), StringLcl("OK"));
+    WindowButton element = WindowButton(StringLcl("Couldn't open " + e->getResourceName() + "\nPath: " + e->getPath()), StringLcl("OK")); // Avoid using locales cuz they can be not loaded yet
     sf::Event event;
     while (!element.finished()) {
         while (window.pollEvent(event)) {
