@@ -85,10 +85,10 @@
 
 class Room {
 public:
-	enum Type {
+	typedef enum Type {
 		CreateFromMap,
 		CreateFromSave
-	} typedef;
+	} Type;
 
 	Room(Type type, const std::string& data);
 	Room(const Room& copy) = delete;
