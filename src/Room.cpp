@@ -21,6 +21,7 @@
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #include <iostream>
+#include <sstream>
 #include "Room.hpp"
 #include "Maps.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
@@ -49,15 +50,23 @@
 
 
 
-Room::Room(const std::string& mapName) {
+Room::Room(Type type, const std::string& data) {
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(10000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
-	Maps::get()->load(mapName, &this->map);
-	this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
-	this->currentPlayerId = 1;
-	this->move = 1;
+	switch (type) {
+	case Type::CreateFromMap:
+		Maps::get()->load(data, &this->map);
+		this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
+		this->currentPlayerId = 1;
+		this->move = 1;
+		break;
+	case Type::CreateFromSave:
+		this->loadSaveData(data);
+		break;
+	}
+
 	this->curcorVisibility = true;
 	this->element = nullptr;
 	this->selected = nullptr;
@@ -117,6 +126,29 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 }
 
 
+
+
+
+
+
+std::string Room::getSaveData() const {
+	std::string serialStr;
+
+	boost::iostreams::back_insert_device<std::string> inserter(serialStr);
+	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+
+	oarchive ar(s);
+	ar << this->map << this->playerIsActive << this->currentPlayerId << this->move;
+
+	s.flush();
+
+	return serialStr;
+}
+void Room::loadSaveData(const std::string &data) {
+	std::stringstream stream(data);
+	iarchive ar(stream);
+	ar >> this->map >> this->playerIsActive >> this->currentPlayerId >> this->move;
+}
 
 
 
@@ -288,13 +320,13 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	ar << this->map << this->element << this->selected << this->highlightTable << this->curcorVisibility << buttonBases << resourceBar;
 	s.flush();
 
-	if (serialStr.size() + 100 > sf::UdpSocket::MaxDatagramSize) {
-		throw PackageLimit(); // TODO
-	}
-
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::WORLD_UI_STATE;
 	packet << serialStr;
+
+	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
+		throw PackageLimit(); // TODO
+	}
 
 	this->sendToClients(packet, toSend, remotePlayers);
 }
@@ -740,7 +772,13 @@ void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent
 	e->getSpec()->increaseMoveCtr();
 }
 void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	// TODO
+	sf::Packet packet;
+	packet << SERVER_NET_SPECS::SAVE;
+	packet << this->getSaveData();
+	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
+		throw PackageLimit();
+	}
+	toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
 }
 void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());

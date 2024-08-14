@@ -19,6 +19,8 @@
 
 #include <sstream>
 #include <iostream>
+#include <filesystem>
+#include <fstream>
 #include <boost/serialization/shared_ptr.hpp>
 #include "MainScreen.hpp"
 #include "ScreenAlreadyFinished.hpp"
@@ -34,6 +36,7 @@
 #include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
 #include "MenuBg.hpp"
+#include "Root.hpp"
 
 
 
@@ -168,6 +171,9 @@ void MainScreen::receive(sf::RenderWindow &window) {
 		else if (code == SERVER_NET_SPECS::RETURN_TO_MENU) {
 			this->receiveReturnToMenu();
 		}
+		else if (code == SERVER_NET_SPECS::SAVE) {
+			this->receiveSave(receivedPacket);
+		}
 		else {
 			std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
 		}
@@ -207,6 +213,20 @@ void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
 }
 void MainScreen::receiveReturnToMenu() {
 	this->returnToMenu = true;
+}
+void MainScreen::receiveSave(sf::Packet& remPacket) {
+	std::string data;
+	remPacket >> data;
+	if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
+		std::filesystem::create_directories(USERDATA_ROOT + "/saves");
+	}
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	std::stringstream ss;
+	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
+	std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save");
+	ofs.write(data.c_str(), data.size());
+	ofs.close();
 }
 
 

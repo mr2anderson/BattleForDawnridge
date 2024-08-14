@@ -86,45 +86,54 @@ void Program::run() {
             if (menuResponse.getType() == MenuResponse::TYPE::EXIT) {
                 return;
             }
+
             // TODO: Network game
 
-
             error = boost::none;
-            try {
-                std::shared_ptr<Room> room = std::make_shared<Room>(menuResponse.getData());
-                LocalServer localServer;
-                localServer.launch(room);
-                MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerSendPort(), Ports::get()->getLocalServerReceivePort(), room->getID());
+
+            if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME or menuResponse.getType() == MenuResponse::TYPE::LOAD_LOCAL_GAME) {
                 try {
-                    mainScreen.run(this->window);
-                }
-                catch (std::exception&) {
+                    std::shared_ptr<Room> room;
+                    if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME) {
+                        room = std::make_shared<Room>(Room::Type::CreateFromMap, menuResponse.getData());
+                    }
+                    else {
+                        room = std::make_shared<Room>(Room::Type::CreateFromSave, menuResponse.getData());
+                    }
+                    LocalServer localServer;
+                    localServer.launch(room);
+                    MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerSendPort(), Ports::get()->getLocalServerReceivePort(), room->getID());
                     try {
-                        localServer.fine();
-                        std::rethrow_exception(std::current_exception());
+                        mainScreen.run(this->window);
                     }
                     catch (std::exception&) {
-                        std::rethrow_exception(std::current_exception());
+                        try {
+                            localServer.fine();
+                            std::rethrow_exception(std::current_exception());
+                        }
+                        catch (std::exception&) {
+                            std::rethrow_exception(std::current_exception());
+                        }
                     }
                 }
-            }
-            catch (PortIsBusy& e) {
-                error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
-            }
-            catch (CouldntOpenMap&) {
-                error = StringLcl("{map_is_apcent_client}");
-            }
-            catch (PackageLimit&) {
-                error = StringLcl("{package_limit_client}");
-            }
-            catch (boost::archive::archive_exception& e) {
-                error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
-            }
-            catch (NoServerConnection&) {
-                error = StringLcl("{disconnect_error_client}");
-            }
-            catch (std::exception&) {
-                error = StringLcl("{unknown_error_client}");
+                catch (PortIsBusy& e) {
+                    error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
+                }
+                catch (CouldntOpenMap&) {
+                    error = StringLcl("{map_is_apcent_client}");
+                }
+                catch (PackageLimit&) {
+                    error = StringLcl("{package_limit_client}");
+                }
+                catch (boost::archive::archive_exception& e) {
+                    error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
+                }
+                catch (NoServerConnection&) {
+                    error = StringLcl("{disconnect_error_client}");
+                }
+                catch (std::exception&) {
+                    error = StringLcl("{unknown_error_client}");
+                }
             }
         }
     }

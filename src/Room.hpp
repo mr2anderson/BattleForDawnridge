@@ -85,7 +85,12 @@
 
 class Room {
 public:
-	Room(const std::string &mapName); // TODO save system support
+	enum Type {
+		CreateFromMap,
+		CreateFromSave
+	} typedef;
+
+	Room(Type type, const std::string& data);
 	Room(const Room& copy) = delete;
 
 	RoomID getID() const;
@@ -114,6 +119,9 @@ private:
 	ISelectable* selected;
 	bool curcorVisibility;
 	std::vector<Button> buttons;
+
+	std::string getSaveData() const;
+	void loadSaveData(const std::string& data);
 
 	void processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 	bool allNewMoveEventsAdded() const;

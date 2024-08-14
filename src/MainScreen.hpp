@@ -74,6 +74,7 @@ private:
 	void receiveSound(sf::Packet& remPacket);
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
 	void receiveReturnToMenu();
+	void receiveSave(sf::Packet& remPacket);
 
 
 	void drawEverything(sf::RenderWindow& window);
