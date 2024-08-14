@@ -18,6 +18,7 @@
 
 
 #include <filesystem>
+#include <iostream>
 #include "Menu.hpp"
 #include "Maps.hpp"
 #include "SoundQueue.hpp"
@@ -185,6 +186,9 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     }
     else if (std::shared_ptr<ChooseLanguageEvent> chooseLanguageEvent = std::dynamic_pointer_cast<ChooseLanguageEvent>(e)) {
         this->handleChooseLanguageEvent(chooseLanguageEvent);
+    }
+    else {
+        std::cerr << "Menu: warning: unknown event handled" << std::endl;
     }
 }
 void Menu::handleSoundEvent(std::shared_ptr<PlaySoundEvent> e) {

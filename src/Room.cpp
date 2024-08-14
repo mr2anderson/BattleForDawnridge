@@ -288,7 +288,7 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	s.flush();
 
 	if (serialStr.size() + 100 > sf::UdpSocket::MaxDatagramSize) {
-		throw PackageLimit();
+		throw PackageLimit(); // TODO
 	}
 
 	sf::Packet packet;
@@ -512,6 +512,9 @@ void Room::handleEvent(std::shared_ptr<Event> e, std::vector<std::tuple<sf::Pack
 	}
 	else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
 		this->handleLimitResourcesEvent(limitResourcesEvent, toSend, remotePlayers);
+	}
+	else {
+		std::cerr << "Room: warning: unknown event handled" << std::endl;
 	}
 }
 void Room::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {

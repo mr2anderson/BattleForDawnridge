@@ -66,6 +66,7 @@ Events HorizontalSelectionWindow::click(uint32_t mouseX, uint32_t mouseY, uint32
 		Events event = b.click(mouseX, mouseY);
 		for (uint32_t i = 0; i < event.size(); i = i + 1) {
 			if (std::shared_ptr<CloseWindowEvent> e = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
+				event.erase(i);
 				this->finish();
 				result = result + event;
 				break;

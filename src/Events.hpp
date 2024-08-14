@@ -34,6 +34,7 @@ public:
 	void add(std::shared_ptr<Event> event);
 	uint32_t size() const;
 	std::shared_ptr<Event> at(uint32_t i);
+	void erase(uint32_t i);
 private:
     std::vector<std::shared_ptr<Event>> events;
 };

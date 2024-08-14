@@ -48,6 +48,7 @@ Events WindowTwoButtons::click(uint32_t mouseX, uint32_t mouseY, uint32_t window
     Events event = this->getButton1(windowW, windowH).click(mouseX, mouseY);
     for (uint32_t i = 0; i < event.size(); i = i + 1) {
         if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
+            event.erase(i);
             this->finish();
             return event;
         }
@@ -56,6 +57,7 @@ Events WindowTwoButtons::click(uint32_t mouseX, uint32_t mouseY, uint32_t window
     event = this->getButton2(windowW, windowH).click(mouseX, mouseY);
     for (uint32_t i = 0; i < event.size(); i = i + 1) {
         if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
+            event.erase(i);
             this->finish();
             return event;
         }

@@ -39,3 +39,6 @@ uint32_t Events::size() const {
 std::shared_ptr<Event> Events::at(uint32_t i) {
 	return this->events.at(i);
 }
+void Events::erase(uint32_t i) {
+	this->events.erase(this->events.begin() + i);
+}
