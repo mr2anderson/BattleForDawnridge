@@ -32,7 +32,7 @@ public:
 	~LocalServer();
 
 	void launch(std::shared_ptr<Room> room);
-	void fine();
+	void fine() const;
 private:
 	sf::UdpSocket sendSocket, receiveSocket;
 	std::exception_ptr threadError;

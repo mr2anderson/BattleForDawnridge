@@ -97,7 +97,7 @@ void LocalServer::launch(std::shared_ptr<Room> room) {
 	this->thread = std::make_unique<sf::Thread>(std::bind(&F, room, &this->sendSocket, &this->receiveSocket, &this->threadError, &this->stopThread));
 	this->thread->launch();
 }
-void LocalServer::fine() {
+void LocalServer::fine() const {
 	if (this->threadError != nullptr) {
 		std::rethrow_exception(this->threadError);
 	}
