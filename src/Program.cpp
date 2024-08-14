@@ -29,6 +29,7 @@
 #include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
+#include "PackageLimit.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -108,19 +109,22 @@ void Program::run() {
                 }
             }
             catch (PortIsBusy& e) {
-                error = StringLcl("{port_is_busy}" + std::to_string(e.getPort()));
+                error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
             }
             catch (CouldntOpenMap&) {
-                error = StringLcl("{map_is_apcent}");
+                error = StringLcl("{map_is_apcent_client}");
+            }
+            catch (PackageLimit&) {
+                error = StringLcl("{package_limit_client}");
             }
             catch (boost::archive::archive_exception& e) {
-                error = StringLcl("{boost_archive_exception} " + std::to_string(e.code));
+                error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
             }
             catch (NoServerConnection&) {
-                error = StringLcl("{disconnect_error}");
+                error = StringLcl("{disconnect_error_client}");
             }
             catch (std::exception&) {
-                error = StringLcl("{unknown_error}");
+                error = StringLcl("{unknown_error_client}");
             }
         }
     }

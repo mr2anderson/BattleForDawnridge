@@ -17,32 +17,13 @@
  */
 
 
-#include <cstdint>
-#include <SFML/Graphics.hpp>
-#include <boost/serialization/export.hpp>
-#include <boost/serialization/access.hpp>
-#include <boost/serialization/base_object.hpp>
-#include "MapState.hpp"
-#include "Events.hpp"
-#include "ArchiveType.hpp"
+#include <stdexcept>
 
 
 #pragma once
 
 
-class ISelectable {
+class PackageLimit : public std::exception {
 public:
-    ISelectable(); // For boost serialization
-	virtual ~ISelectable();
-
-	virtual Events unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) = 0;
-	virtual std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const = 0;
-private:
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-        
-    }
+	PackageLimit();
 };
-
-
-BOOST_CLASS_EXPORT_KEY(ISelectable)

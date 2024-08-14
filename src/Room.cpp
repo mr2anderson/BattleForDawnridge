@@ -42,6 +42,7 @@
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
 #include "RoomWasClosed.hpp"
+#include "PackageLimit.hpp"
 
 
 
@@ -287,7 +288,7 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	s.flush();
 
 	if (serialStr.size() + 100 > sf::UdpSocket::MaxDatagramSize) {
-		std::cerr << "Room: warning: current implementation can't send data if it is size is bigger than udp package limit (64 kb)" << std::endl;
+		throw PackageLimit();
 	}
 
 	sf::Packet packet;
@@ -331,21 +332,24 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 			if (code == CLIENT_NET_SPECS::ROOM_CODES::OK) {
 				this->noOKReceivedTimer.reset();
 			}
-			else if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded() and code == CLIENT_NET_SPECS::ROOM_CODES::CLICK) {
-				uint8_t mouseButton;
-				uint32_t x, y, viewX, viewY, w, h;
-				packet >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
-				if (this->element == nullptr) {
-					if (mouseButton == sf::Mouse::Button::Left) {
-						this->addButtonClickEventToQueue(x, y, toSend, remotePlayers);
+			else if (code == CLIENT_NET_SPECS::ROOM_CODES::CLICK) {
+				std::cout << "received click from client " << this->events.size() << std::endl;
+				if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
+					uint8_t mouseButton;
+					uint32_t x, y, viewX, viewY, w, h;
+					packet >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
+					if (this->element == nullptr) {
+						if (mouseButton == sf::Mouse::Button::Left) {
+							this->addButtonClickEventToQueue(x, y, toSend, remotePlayers);
+						}
+						if (this->events.empty()) {
+							this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend, remotePlayers);
+						}
 					}
-					if (this->events.empty()) {
-						this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend, remotePlayers);
+					else if (mouseButton == sf::Mouse::Button::Left) {
+						Events events = this->element->click(x, y, w, h);
+						this->addEvents(events, toSend, remotePlayers);
 					}
-				}
-				else if (mouseButton == sf::Mouse::Button::Left) {
-					Events events = this->element->click(x, y, w, h);
-					this->addEvents(events, toSend, remotePlayers);
 				}
 			}
 		}

@@ -714,6 +714,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\MenuResponse.hpp" />
     <ClInclude Include="src\NetworkGameButtonSpec.hpp" />
     <ClInclude Include="src\NoServerConnection.hpp" />
+    <ClInclude Include="src\PackageLimit.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
     <ClInclude Include="src\PortIsBusy.hpp" />
     <ClInclude Include="src\Ports.hpp" />
@@ -1042,6 +1043,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\MenuResponse.cpp" />
     <ClCompile Include="src\NetworkGameButtonSpec.cpp" />
     <ClCompile Include="src\NoServerConnection.cpp" />
+    <ClCompile Include="src\PackageLimit.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
     <ClCompile Include="src\PortIsBusy.cpp" />
     <ClCompile Include="src\Ports.cpp" />

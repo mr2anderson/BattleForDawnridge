@@ -47,6 +47,7 @@ private:
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& boost::serialization::base_object<ISelectable>(*this); // ISelectable is an interface, so it does not contain any data. However, program must register type relationship for boost
 		ar& this->b;
 		ar& this->playerId;
 	}
