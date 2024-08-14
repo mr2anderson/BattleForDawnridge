@@ -51,6 +51,9 @@ std::wstring StringLcl::get() const {
 
 	return result;
 }
+std::string StringLcl::toRawString() const {
+	return this->data;
+}
 StringLcl StringLcl::operator+(const StringLcl& b) const {
 	return StringLcl(this->data + b.data);
 }

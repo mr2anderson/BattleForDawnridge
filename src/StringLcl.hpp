@@ -31,9 +31,12 @@ public:
 	StringLcl(const std::string& data);
 
 	std::wstring get() const;
+	std::string toRawString() const;
+
 	StringLcl operator+(const StringLcl& b) const;
 	StringLcl operator+(const std::string& b) const;
 	StringLcl operator+(char c) const;
+
 	void clear();
 private:
 	std::string data;

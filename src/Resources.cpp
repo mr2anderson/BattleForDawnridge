@@ -76,12 +76,15 @@ std::vector<Resource> Resources::getAll() const {
     return result;
 }
 StringLcl Resources::getReadableInfo() const {
-	StringLcl result;
+	std::string stringLclData;
 	for (const auto& a : this->map) {
 		Resource r(a.first, a.second);
-		result = result + r.getReadableInfo() + StringLcl(" ");
+		stringLclData = stringLclData + r.getReadableInfo().toRawString() + " ";
 	}
-	return result;
+	if (!stringLclData.empty()) {
+		stringLclData.pop_back();
+	}
+	return { stringLclData };
 }
 bool operator >=(const Resources& a, const Resources& b) {
 	for (const auto& o : b.map) {
