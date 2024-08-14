@@ -31,7 +31,6 @@ Road::Road(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 
     this->type = "none";
-    this->verifyingTypeTimer = Timer(250, Timer::TYPE::FIRST_DEFAULT);
 
 	this->addSpec(new RoadSpec());
 }
@@ -68,12 +67,9 @@ std::string Road::getSoundName() const {
 StringLcl Road::getDescription() const {
 	return StringLcl("{road_description}");
 }
-void Road::newFrame(MapState *state, uint32_t playerId) {
-    if (this->verifyingTypeTimer.ready() and this->exist() and this->works()) { // There is no effort to call verifying every single frame
-        this->verifyingTypeTimer.reset();
-        std::string properType = this->getProperType(state);
-        this->type = properType;
-    }
+void Road::update(MapState *state, uint32_t playerId) {
+    std::string properType = this->getProperType(state);
+    this->type = properType;
 }
 std::string Road::getProperType(MapState *state) const {
     bool horizontal = false;

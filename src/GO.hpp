@@ -63,7 +63,7 @@ public:
     virtual bool isLowObstacle(uint32_t playerId) const;
 	virtual bool exist() const;
 	Events click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint32_t mouseX, uint32_t mouseY);
-    virtual void newFrame(MapState *state, uint32_t playerId);
+    virtual void update(MapState *state, uint32_t playerId);
 	bool intersects(GO* go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);

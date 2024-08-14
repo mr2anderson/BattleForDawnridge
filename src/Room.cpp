@@ -98,6 +98,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw RoomWasClosed();
 	}
 
+	this->sendTimeCommandsToClients(toSend, remotePlayers);
+	this->receive(received, toSend, remotePlayers);
+
 	if (this->element != nullptr) {
 		this->element->update();
 		if (this->element->finished()) {
@@ -109,14 +112,8 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		animationEvent = this->animation.value().process(this->map.getStatePtr());
 		this->addEvents(animationEvent, toSend, remotePlayers);
 	}
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->newFrame(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
-	}
 	this->processNewMoveEvents(toSend, remotePlayers);
 	this->processBaseEvents(toSend, remotePlayers);
-
-	this->sendTimeCommandsToClients(toSend, remotePlayers);
-	this->receive(received, toSend, remotePlayers);
 }
 
 
@@ -277,6 +274,10 @@ ResourceBar Room::makeResourceBar() {
 	return bar;
 }
 void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers) {
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
+	}
+
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
 	ResourceBar resourceBar = this->makeResourceBar();
 

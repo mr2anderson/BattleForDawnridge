@@ -124,7 +124,7 @@ Events GO::click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint
 	}
 	return Events();
 }
-void GO::newFrame(MapState *state, uint32_t playerId) {
+void GO::update(MapState *state, uint32_t playerId) {
 
 }
 bool GO::intersects(GO* go) const {

@@ -18,7 +18,6 @@
 
 
 #include "Building.hpp"
-#include "Timer.hpp"
 
 
 #pragma once
@@ -42,16 +41,14 @@ public:
 	uint32_t getRegenerationSpeed() const override;
 private:
     std::string type;
-    Timer verifyingTypeTimer;
 
-    void newFrame(MapState *state, uint32_t playerId) override;
+    void update(MapState *state, uint32_t playerId) override;
     std::string getProperType(MapState *state) const;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<Building>(*this);
         ar & this->type;
-        ar & this->verifyingTypeTimer;
     }
 };
 
