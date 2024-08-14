@@ -97,7 +97,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
                         clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
                         FirstTimeTipsTable::get()->markAsDisplayed("spell_mode_guide");
-                        std::shared_ptr<WindowButton> guide = std::make_shared<WindowButton>(StringLcl("{spell_mode_guide}"), StringLcl("{OK}"), clickSoundEvent + useSpellEvent);
+                        std::shared_ptr<WindowButton> guide = std::make_shared<WindowButton>(StringLcl("{spell_mode_guide}"), StringLcl("{OK}"), useSpellEvent);
                         event = event + clickSoundEvent;
                         event.add(std::make_shared<CreateEEvent>(guide));
                     }
