@@ -26,22 +26,27 @@ static constexpr float DST = 384;
 static constexpr float TIME = 1;
 
 
+SpellEffect::SpellEffect() = default;
 SpellEffect::SpellEffect(const std::string& textureName, uint32_t x, uint32_t y) {
-	this->sprite.setTexture(*Textures::get()->get(textureName));
-	this->startX = 64 * x + 64 / 2 - this->sprite.getLocalBounds().width / 2;
+	this->textureName = textureName;
+	this->startX = 64 * x + 64 / 2;
 	this->startY = 64 * (float)y - DST;
 }
+void SpellEffect::onRestart() {
+	this->clock.restart();
+}
 void SpellEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(this->sprite, states);
+	sf::Sprite sprite;
+	sprite.setTexture(*Textures::get()->get(this->textureName));
+	sprite.setPosition(this->startX, this->startY + DST * std::pow(this->clock.getSecondsAsFloat(), 2) / std::pow(TIME, 2));
+	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+	target.draw(sprite, states);
 }
 void SpellEffect::update() {
-	float dt = this->clock.getSecondsAsFloat();
-
-	if (dt >= TIME) {
+	if (this->clock.getSecondsAsFloat() >= TIME) {
 		this->finish();
 	}
-	else {
-		float s = DST * std::pow(dt, 2) / std::pow(TIME, 2);
-		this->sprite.setPosition(this->startX, this->startY + s);
-	}
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(SpellEffect)
