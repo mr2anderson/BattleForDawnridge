@@ -22,7 +22,7 @@
 
 
 ImageFlyingE::ImageFlyingE() = default;
-ImageFlyingE::ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : FlyingE(64 * x + sx * 64 / 2 - Textures::get()->get(textureName)->getSize().x / 2, 64 * y + sy * 64 / 2 - Textures::get()->get(textureName)->getSize().y / 2)  {
+ImageFlyingE::ImageFlyingE(const std::string &textureName, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : FlyingE(64 * x + sx * 64 / 2, 64 * y + sy * 64 / 2)  {
     this->textureName = textureName;
 }
 std::unique_ptr<sf::Drawable> ImageFlyingE::getDrawable(sf::Vector2f position, sf::Color color) const {
@@ -31,6 +31,7 @@ std::unique_ptr<sf::Drawable> ImageFlyingE::getDrawable(sf::Vector2f position, s
     sprite.setColor(color);
     sprite.setTexture(*Textures::get()->get(this->textureName));
     sprite.setScale(32 / sprite.getLocalBounds().width, 32 / sprite.getLocalBounds().height);
+    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 
     return std::make_unique<sf::Sprite>(sprite);
 }

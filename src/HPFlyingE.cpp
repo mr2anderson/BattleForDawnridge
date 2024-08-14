@@ -21,11 +21,8 @@
 #include "Fonts.hpp"
 
 
-static const uint32_t CHAR_SIZE = 18;
-
-
 HPFlyingE::HPFlyingE() = default;
-HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : FlyingE(64 * x + 64 * sx / 2 - CHAR_SIZE * std::to_string(delta).size() / 2, 64 * y + 64 * sy / 2 - CHAR_SIZE * std::to_string(delta).size() / 2)  {
+HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : FlyingE(64 * x + 64 * sx / 2, 64 * y + 64 * sy / 2)  {
     this->delta = delta;
     this->plus = plus;
 }
@@ -39,8 +36,9 @@ std::unique_ptr<sf::Drawable> HPFlyingE::getDrawable(sf::Vector2f position, sf::
     else {
         text.setFillColor(sf::Color(255, 0, 0, color.a));
     }
-    text.setCharacterSize(CHAR_SIZE);
+    text.setCharacterSize(18);
     text.setPosition(position);
+    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 
     return std::make_unique<sf::Text>(text);
 }
