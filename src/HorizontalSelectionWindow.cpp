@@ -53,11 +53,13 @@ Events HorizontalSelectionWindow::click(uint32_t mouseX, uint32_t mouseY, uint32
 	if (structure.buttonUp.has_value()) {
 		Events events = structure.buttonUp.value().click(mouseX, mouseY);
 		this->handle(events);
+		result = result + events;
 	}
 
 	if (structure.buttonDown.has_value()) {
 		Events events = structure.buttonDown.value().click(mouseX, mouseY);
 		this->handle(events);
+		result = result + events;
 	}
 
 	for (const auto& b : structure.contentButtons) {
@@ -89,6 +91,8 @@ void HorizontalSelectionWindow::moveDown() {
 
 
 void HorizontalSelectionWindow::handle(Events& events) {
+	Events modified;
+
 	for (uint32_t i = 0; i < events.size(); i = i + 1) {
 		std::shared_ptr<Event> e = events.at(i);
 		if (std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> moveUp = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowUpEvent>(e)) {
@@ -97,7 +101,12 @@ void HorizontalSelectionWindow::handle(Events& events) {
 		else if (std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> moveDown = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowDownEvent>(e)) {
 			this->handleMoveDownEvent(moveDown);
 		}
+		else {
+			modified.add(e);
+		}
 	}
+
+	events = modified;
 }
 void HorizontalSelectionWindow::handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e) {
 	this->moveUp();
