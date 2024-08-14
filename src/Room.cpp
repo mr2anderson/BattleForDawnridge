@@ -178,17 +178,16 @@ void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32
 	}
 }
 void Room::processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, bool sendToClients) {
-	if (this->events.empty()) {
-		return;
-	}
+	bool somethingProcessed = false;
 	while (!this->events.empty()) {
 		if (this->element != nullptr or this->animation.has_value()) {
 			break;
 		}
 		this->handleEvent(this->events.front(), toSend, remotePlayers);
 		this->events.pop();
+		somethingProcessed = true;
 	}
-	if (sendToClients) {
+	if (sendToClients and somethingProcessed) {
 		this->sendWorldUIStateToClients(toSend, remotePlayers);
 	}
 }
