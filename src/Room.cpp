@@ -97,10 +97,6 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw RoomWasClosed();
 	}
 
-	this->sendTimeCommandsToClients(toSend, remotePlayers);
-
-	this->receive(received, toSend, remotePlayers);
-
 	if (this->element != nullptr) {
 		this->element->update();
 		if (this->element->finished()) {
@@ -117,6 +113,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	}
 	this->processNewMoveEvents(toSend, remotePlayers);
 	this->processBaseEvents(toSend, remotePlayers);
+
+	this->sendTimeCommandsToClients(toSend, remotePlayers);
+	this->receive(received, toSend, remotePlayers);
 }
 
 
