@@ -330,34 +330,40 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 		if (this->id.value() == roomId) {
 			packet >> code;
 			if (code == CLIENT_NET_SPECS::ROOM_CODES::OK) {
-				this->noOKReceivedTimer.reset();
+				this->receiveOK();
 			}
 			else if (code == CLIENT_NET_SPECS::ROOM_CODES::CLICK) {
-				uint8_t mouseButton;
-				uint32_t x, y, viewX, viewY, w, h;
-				packet >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
-				if (this->selected == nullptr) {
-					if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
-						if (this->element == nullptr) {
-							if (mouseButton == sf::Mouse::Button::Left) {
-								this->addButtonClickEventToQueue(x, y, toSend, remotePlayers);
-							}
-							if (this->events.empty()) {
-								this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend, remotePlayers);
-							}
-						}
-						else if (mouseButton == sf::Mouse::Button::Left) {
-							Events events = this->element->click(x, y, w, h);
-							this->addEvents(events, toSend, remotePlayers);
-						}
-					}
-				}
-				else {
-					Events events = this->selected->unselect(this->map.getStatePtr(), viewX / 64, viewY / 64, mouseButton);
-					this->addEvents(events, toSend, remotePlayers);
-				}
+				this->receiveClick(packet, ip, toSend, remotePlayers);
 			}
 		}
+	}
+}
+void Room::receiveOK() {
+	this->noOKReceivedTimer.reset();
+}
+void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
+	uint8_t mouseButton;
+	uint32_t x, y, viewX, viewY, w, h;
+	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
+	if (this->selected == nullptr) {
+		if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
+			if (this->element == nullptr) {
+				if (mouseButton == sf::Mouse::Button::Left) {
+					this->addButtonClickEventToQueue(x, y, toSend, remotePlayers);
+				}
+				if (this->events.empty()) {
+					this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend, remotePlayers);
+				}
+			}
+			else if (mouseButton == sf::Mouse::Button::Left) {
+				Events events = this->element->click(x, y, w, h);
+				this->addEvents(events, toSend, remotePlayers);
+			}
+		}
+	}
+	else {
+		Events events = this->selected->unselect(this->map.getStatePtr(), viewX / 64, viewY / 64, mouseButton);
+		this->addEvents(events, toSend, remotePlayers);
 	}
 }
 

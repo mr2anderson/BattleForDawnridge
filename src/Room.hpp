@@ -132,6 +132,8 @@ private:
 	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 
 	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+	void receiveOK();
+	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 
 	void handleEvent(std::shared_ptr<Event> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);

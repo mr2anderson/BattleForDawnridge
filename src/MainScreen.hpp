@@ -61,7 +61,6 @@ private:
 	ResourceBar resourceBar;
 
 	bool returnToMenu;
-	std::queue<std::tuple<uint32_t, uint32_t>> viewMovingQueue;
 	sf::View view;
 	IlluminanceTable illiminanceTable;
 
@@ -69,7 +68,12 @@ private:
 	void sendOK();
 
 
-	void receive();
+	void receive(sf::RenderWindow &window);
+	void receiveOK();
+	void receiveWorldUIState(sf::Packet& remPacket);
+	void receiveSound(sf::Packet& remPacket);
+	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
+	void receiveReturnToMenu();
 
 
 	void drawEverything(sf::RenderWindow& window);
@@ -84,22 +88,15 @@ private:
 	void moveView(sf::RenderWindow &window);
 
 
-	bool moveViewToNorth(uint32_t border, sf::RenderWindow& window);
-	bool moveViewToNorth(sf::RenderWindow& window);
-	bool moveViewToSouth(uint32_t border, sf::RenderWindow& window);
-	bool moveViewToSouth(sf::RenderWindow& window);
-	bool moveViewToWest(uint32_t borde, sf::RenderWindow& window);
-	bool moveViewToWest(sf::RenderWindow& window);
-	bool moveViewToEast(uint32_t border, sf::RenderWindow& window);
-	bool moveViewToEast(sf::RenderWindow& window);
+	void moveViewToNorth(sf::RenderWindow& window);
+	void moveViewToSouth(sf::RenderWindow& window);
+	void moveViewToWest(sf::RenderWindow& window);
+	void moveViewToEast(sf::RenderWindow& window);
 
 
-	bool verifyViewNorth(uint32_t border);
-	bool verifyViewNorth(sf::RenderWindow& window);
-	bool verifyViewSouth(uint32_t border);
-	bool verifyViewSouth(sf::RenderWindow& window);
-	bool verifyViewWest(uint32_t border);
-	bool verifyViewWest(sf::RenderWindow& window);
-	bool verifyViewEast(uint32_t border);
-	bool verifyViewEast(sf::RenderWindow& window);
+	void verifyView(sf::RenderWindow& window);
+	void verifyViewNorth(sf::RenderWindow& window);
+	void verifyViewSouth(sf::RenderWindow& window);
+	void verifyViewWest(sf::RenderWindow& window);
+	void verifyViewEast(sf::RenderWindow& window);
 };

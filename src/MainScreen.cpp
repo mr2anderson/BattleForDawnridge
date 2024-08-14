@@ -106,7 +106,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 			}
 		}
 		this->sendOK();
-		this->receive();
+		this->receive(window);
         if (this->noOKReceivedTimer.ready()) {
             Playlist::get()->stop();
             throw NoServerConnection();
@@ -145,7 +145,7 @@ void MainScreen::sendOK() {
 
 
 
-void MainScreen::receive() {
+void MainScreen::receive(sf::RenderWindow &window) {
 	sf::Packet receivedPacket;
 	sf::IpAddress senderIP;
 	uint16_t senderPort;
@@ -154,33 +154,49 @@ void MainScreen::receive() {
 		receivedPacket >> code;
 
 		if (code == SERVER_NET_SPECS::OK) {
-			this->noOKReceivedTimer.reset();
+			this->receiveOK();
 		}
 		else if (code == SERVER_NET_SPECS::WORLD_UI_STATE) {
-			std::string data;
-			receivedPacket >> data;
-			std::stringstream stream(data);
-			iarchive ar(stream);
-			ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
-			this->uiPackageGotten = true;
+			this->receiveWorldUIState(receivedPacket);
 		}
 		else if (code == SERVER_NET_SPECS::SOUND) {
-			std::string soundName;
-			receivedPacket >> soundName;
-			SoundQueue::get()->push(Sounds::get()->get(soundName));
+			this->receiveSound(receivedPacket);
 		}
 		else if (code == SERVER_NET_SPECS::FOCUS) {
-			uint32_t x, y, sx, sy;
-			receivedPacket >> x >> y >> sx >> sy;
-			this->viewMovingQueue.emplace(64 * x + 64 / 2 * sx, 64 * y + 64 / 2 * sy);
+			this->receiveFocus(receivedPacket, window);
 		}
 		else if (code == SERVER_NET_SPECS::RETURN_TO_MENU) {
-			this->returnToMenu = true;
+			this->receiveReturnToMenu();
 		}
 		else {
 			std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
 		}
 	}
+}
+void MainScreen::receiveOK() {
+	this->noOKReceivedTimer.reset();
+}
+void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
+	std::string data;
+	remPacket >> data;
+	std::stringstream stream(data);
+	iarchive ar(stream);
+	ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
+	this->uiPackageGotten = true;
+}
+void MainScreen::receiveSound(sf::Packet& remPacket) {
+	std::string soundName;
+	remPacket >> soundName;
+	SoundQueue::get()->push(Sounds::get()->get(soundName));
+}
+void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
+	uint32_t x, y, sx, sy;
+	remPacket >> x >> y >> sx >> sy;
+	this->view.setCenter(64 * x + 64 / 2 * sx, 64 * y + 64 / 2 * sy);
+	this->verifyView(window);
+}
+void MainScreen::receiveReturnToMenu() {
+	this->returnToMenu = true;
 }
 
 
@@ -277,54 +293,18 @@ std::tuple<uint32_t, uint32_t> MainScreen::getMousePositionBasedOnView(sf::Rende
 	return std::make_tuple(mouseX, mouseY);
 }
 void MainScreen::moveView(sf::RenderWindow &window) {
-	if (this->viewMovingQueue.empty()) {
-		auto p = sf::Mouse::getPosition();
-		if (p.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			this->moveViewToWest(window);
-		}
-		else if (p.x > window.getSize().x - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			this->moveViewToEast(window);
-		}
-		if (p.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			this->moveViewToNorth(window);
-		}
-		else if (p.y > window.getSize().y - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			this->moveViewToSouth(window);
-		}
+	auto p = sf::Mouse::getPosition();
+	if (p.x < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		this->moveViewToWest(window);
 	}
-	else {
-		uint32_t currentX, currentY;
-		std::tie(currentX, currentY) = this->viewMovingQueue.front();
-
-		uint32_t viewX = this->view.getCenter().x;
-		uint32_t viewY = this->view.getCenter().y;
-
-		bool horizontalOk = false;
-		bool verticalOk = false;
-
-		if (currentX < viewX) {
-			horizontalOk = horizontalOk or !this->moveViewToWest(currentX, window);
-		}
-		else if (currentX > viewX) {
-			horizontalOk = horizontalOk or !this->moveViewToEast(currentX, window);
-		}
-		else {
-			horizontalOk = true;
-		}
-
-		if (currentY < viewY) {
-			verticalOk = verticalOk or !this->moveViewToNorth(currentY, window);
-		}
-		else if (currentY > viewY) {
-			verticalOk = verticalOk or !this->moveViewToSouth(currentY, window);
-		}
-		else {
-			verticalOk = true;
-		}
-
-		if (horizontalOk and verticalOk) {
-			this->viewMovingQueue.pop();
-		}
+	else if (p.x > window.getSize().x - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::D) or sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		this->moveViewToEast(window);
+	}
+	if (p.y < 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::W) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		this->moveViewToNorth(window);
+	}
+	else if (p.y > window.getSize().y - 10 or sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		this->moveViewToSouth(window);
 	}
 }
 
@@ -336,76 +316,55 @@ void MainScreen::moveView(sf::RenderWindow &window) {
 
 
 static float VIEW_MOVING_DELTA = 10;
-static float VIEW_MOVING_BIG_DELTA = 1e+10;
-bool MainScreen::moveViewToNorth(uint32_t border, sf::RenderWindow& window) {
-	this->view.setCenter(this->view.getCenter() - sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
-	return this->verifyViewNorth(window) and this->verifyViewNorth(border);
-}
-bool MainScreen::moveViewToNorth(sf::RenderWindow& window) {
+void MainScreen::moveViewToNorth(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() - sf::Vector2f(0, VIEW_MOVING_DELTA));
-	return this->verifyViewNorth(window);
+	this->verifyViewNorth(window);
 }
-bool MainScreen::moveViewToSouth(uint32_t border, sf::RenderWindow& window) {
-	this->view.setCenter(this->view.getCenter() + sf::Vector2f(0, VIEW_MOVING_BIG_DELTA));
-	return this->verifyViewSouth(window) and this->verifyViewSouth(border);
-}
-bool MainScreen::moveViewToSouth(sf::RenderWindow& window) {
+void MainScreen::moveViewToSouth(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() + sf::Vector2f(0, VIEW_MOVING_DELTA));
-	return this->verifyViewSouth(window);
+	this->verifyViewSouth(window);
 }
-bool MainScreen::moveViewToWest(uint32_t border, sf::RenderWindow& window) {
-	this->view.setCenter(this->view.getCenter() - sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
-	return this->verifyViewWest(window) and this->verifyViewWest(border);
-}
-bool MainScreen::moveViewToWest(sf::RenderWindow& window) {
+void MainScreen::moveViewToWest(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() - sf::Vector2f(VIEW_MOVING_DELTA, 0));
-	return this->verifyViewWest(window);
+	this->verifyViewWest(window);
 }
-bool MainScreen::moveViewToEast(uint32_t border, sf::RenderWindow& window) {
-	this->view.setCenter(this->view.getCenter() + sf::Vector2f(VIEW_MOVING_BIG_DELTA, 0));
-	return this->verifyViewEast(window) and this->verifyViewEast(border);
-}
-bool MainScreen::moveViewToEast(sf::RenderWindow& window) {
+void MainScreen::moveViewToEast(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() + sf::Vector2f(VIEW_MOVING_DELTA, 0));
-	return this->verifyViewEast(window);
+	this->verifyViewEast(window);
 }
-bool MainScreen::verifyViewNorth(uint32_t border) {
+
+
+
+
+
+
+void MainScreen::verifyView(sf::RenderWindow& window) {
+	this->verifyViewNorth(window);
+	this->verifyViewSouth(window);
+	this->verifyViewWest(window);
+	this->verifyViewEast(window);
+}
+void MainScreen::verifyViewNorth(sf::RenderWindow& window) {
+	uint32_t border = window.getSize().y / 2;
 	if (this->view.getCenter().y < border) {
 		this->view.setCenter(sf::Vector2f(this->view.getCenter().x, border));
-		return false;
 	}
-	return true;
 }
-bool MainScreen::verifyViewNorth(sf::RenderWindow& window) {
-	return this->verifyViewNorth(window.getSize().y / 2);
-}
-bool MainScreen::verifyViewSouth(uint32_t border) {
+void MainScreen::verifyViewSouth(sf::RenderWindow& window) {
+	uint32_t border = 64 * this->map.getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2;
 	if (this->view.getCenter().y > border) {
 		this->view.setCenter(sf::Vector2f(this->view.getCenter().x, border));
-		return false;
 	}
-	return true;
 }
-bool MainScreen::verifyViewSouth(sf::RenderWindow& window) {
-	return this->verifyViewSouth(64 * this->map.getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2);
-}
-bool MainScreen::verifyViewWest(uint32_t border) {
+void MainScreen::verifyViewWest(sf::RenderWindow& window) {
+	uint32_t border = window.getSize().x / 2;
 	if (this->view.getCenter().x < border) {
 		this->view.setCenter(sf::Vector2f(border, this->view.getCenter().y));
-		return false;
 	}
-	return true;
 }
-bool MainScreen::verifyViewWest(sf::RenderWindow& window) {
-	return this->verifyViewWest(window.getSize().x / 2);
-}
-bool MainScreen::verifyViewEast(uint32_t border) {
+void MainScreen::verifyViewEast(sf::RenderWindow& window) {
+	uint32_t border = 64 * this->map.getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2;
 	if (this->view.getCenter().x > border) {
 		this->view.setCenter(sf::Vector2f(border, this->view.getCenter().y));
-		return false;
 	}
-	return true;
-}
-bool MainScreen::verifyViewEast(sf::RenderWindow& window) {
-	return this->verifyViewEast(64 * this->map.getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2);
 }
