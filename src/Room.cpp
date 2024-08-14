@@ -126,9 +126,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 
 
 void Room::processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	if (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents) {
-		return;
-	}
+	bool somethingProcessed = false;
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
@@ -137,8 +135,11 @@ void Room::processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress
 		this->addEvents(newMoveEvent, toSend, remotePlayers);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
 		this->processBaseEvents(toSend, remotePlayers, false);
+		somethingProcessed = true;
 	}
-	this->sendWorldUIStateToClients(toSend, remotePlayers);
+	if (somethingProcessed) {
+		this->sendWorldUIStateToClients(toSend, remotePlayers);
+	}
 }
 bool Room::allNewMoveEventsAdded() const {
 	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
@@ -290,6 +291,8 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	if (serialStr.size() + 100 > sf::UdpSocket::MaxDatagramSize) {
 		throw PackageLimit(); // TODO
 	}
+
+	std::cout << "Room: world ui state was sent to clients" << std::endl;
 
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::WORLD_UI_STATE;
