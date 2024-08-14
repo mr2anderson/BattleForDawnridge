@@ -224,7 +224,7 @@ void MainScreen::receiveSave(sf::Packet& remPacket) {
 	auto tm = *std::localtime(&t);
 	std::stringstream ss;
 	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
-	std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save");
+	std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
 	ofs.write(data.c_str(), data.size());
 	ofs.close();
 }

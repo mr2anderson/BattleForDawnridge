@@ -21,6 +21,7 @@
 #include <vector>
 #include <cstdint>
 #include <algorithm>
+#include <boost/serialization/vector.hpp>
 #include "ArchiveType.hpp"
 
 

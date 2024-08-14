@@ -618,10 +618,14 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\BuildingStatePointer.hpp" />
     <ClInclude Include="src\Button.hpp" />
     <ClInclude Include="src\ClientNetSpecs.hpp" />
-    <ClInclude Include="src\CollectionsImpl.hpp" />
     <ClInclude Include="src\CouldntOpenIsServerTable.hpp" />
     <ClInclude Include="src\CouldntOpenPorts.hpp" />
     <ClInclude Include="src\EndTurnButtonSpec.hpp" />
+    <ClInclude Include="src\eos\polymorphic_portable_archive.hpp" />
+    <ClInclude Include="src\eos\portable_archive.hpp" />
+    <ClInclude Include="src\eos\portable_archive_exception.hpp" />
+    <ClInclude Include="src\eos\portable_iarchive.hpp" />
+    <ClInclude Include="src\eos\portable_oarchive.hpp" />
     <ClInclude Include="src\Filter.hpp" />
     <ClInclude Include="src\IButtonSpec.hpp" />
     <ClInclude Include="src\CameraDependentPopUpElement.hpp" />
@@ -696,6 +700,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Forest.hpp" />
     <ClInclude Include="src\GuideButtonSpec.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp" />
+    <ClInclude Include="src\ICollections.hpp" />
     <ClInclude Include="src\IntRectSerializable.hpp" />
     <ClInclude Include="src\LocalServerAlreadyLaunched.hpp" />
     <ClInclude Include="src\math.hpp" />
@@ -1026,6 +1031,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Fonts.cpp" />
     <ClCompile Include="src\Forest.cpp" />
     <ClCompile Include="src\GuideButtonSpec.cpp" />
+    <ClCompile Include="src\ICollections.cpp" />
     <ClCompile Include="src\IntRectSerializable.cpp" />
     <ClCompile Include="src\InvalidRoomIDFormat.cpp" />
     <ClCompile Include="src\IsServerTable.cpp" />

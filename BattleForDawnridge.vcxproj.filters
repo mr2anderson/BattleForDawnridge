@@ -1499,9 +1499,6 @@
     <ClInclude Include="src\MenuResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InvertIsServerStateEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1604,9 +1601,6 @@
     <ClInclude Include="src\SerializableColor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollectionsImpl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Filter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1647,6 +1641,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PackageLimit.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CouldntOpenIsServerTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\polymorphic_portable_archive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_archive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_archive_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_iarchive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_oarchive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ICollections.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2458,9 +2473,6 @@
     <ClCompile Include="src\MenuResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InvertIsServerStateEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2591,6 +2603,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PackageLimit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CouldntOpenIsServerTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ICollections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

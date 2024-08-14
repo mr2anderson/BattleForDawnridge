@@ -17,12 +17,29 @@
  */
 
 
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-
-
 #pragma once
 
 
-typedef boost::archive::text_iarchive iarchive; // Binary archives are implementation-defined
+#define USE_EOS_PORTABLE_ARCHIVE
+
+
+
+#if defined(USE_EOS_PORTABLE_ARCHIVE)
+
+
+#include "eos/portable_archive.hpp"
+typedef eos::portable_iarchive iarchive;
+typedef eos::portable_oarchive oarchive;
+
+
+#else
+
+
+// Boost binary archives are implementation-definied
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+typedef boost::archive::text_iarchive iarchive;
 typedef boost::archive::text_oarchive oarchive;
+
+
+#endif

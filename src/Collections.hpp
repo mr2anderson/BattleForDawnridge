@@ -18,50 +18,60 @@
 
 
 
-#include <memory>
-#include "ArchiveType.hpp"
-
+#include "ICollections.hpp"
+#include "Collection.hpp"
+#include "AreaResourcePoint.hpp"
+#include "ConductionResourcePoint.hpp"
+#include "Unit.hpp"
+#include "Building.hpp"
+#include "Warrior.hpp"
 
 
 #pragma once
 
 
-struct CollectionsImpl;
-class GO;
-class AreaResourcePoint;
-class ConductionResourcePoint;
-class Unit;
-class Building;
-class Warrior;
-
-
-class Collections {
+class Collections : public ICollections {
 public:
 	Collections();
-    ~Collections();
 
-	void add(GO *object);
+	void add(GO *object) override;
 
-	uint32_t totalGOs() const;
-	uint32_t totalAreaRPs() const;
-    uint32_t totalConductionRPs() const;
-    uint32_t totalUnits() const;
-	uint32_t totalBuildings() const;
-	uint32_t totalWarriors() const;
+	uint32_t totalGOs() const override;
+	uint32_t totalAreaRPs() const override;
+    uint32_t totalConductionRPs() const override;
+    uint32_t totalUnits() const override;
+	uint32_t totalBuildings() const override;
+	uint32_t totalWarriors() const override;
 
-	GO* getGO(uint32_t i, uint8_t filter);
-    const GO* getGO(uint32_t i, uint8_t filter) const;
-    AreaResourcePoint* getAreaRP(uint32_t i);
-    ConductionResourcePoint* getConductionRP(uint32_t i);
-    Unit* getUnit(uint32_t i);
-	Building* getBuilding(uint32_t i);
-	Warrior* getWarrior(uint32_t i);
+	GO* getGO(uint32_t i, uint8_t filter) override;
+    AreaResourcePoint* getAreaRP(uint32_t i) override;
+    ConductionResourcePoint* getConductionRP(uint32_t i) override;
+    Unit* getUnit(uint32_t i) override;
+	Building* getBuilding(uint32_t i) override;
+	Warrior* getWarrior(uint32_t i) override;
 private:
-    std::unique_ptr<CollectionsImpl> impl;
+	Collection<GO> gos;
+	Collection<AreaResourcePoint> areaRps;
+	Collection<ConductionResourcePoint> conductionRps;
+	Collection<Unit> units;
+	Collection<Building> buildings;
+	Collection<Warrior> warriors;
 
-    void clearSubClassCollections();
-    void addToSubClassCollections(GO *object);
+	void clearSubClassCollections();
+	void addToSubClassCollections(GO* object);
 
     friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive& ar, const unsigned int version);
+	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& boost::serialization::base_object<ICollections>(*this); // ICollection is an interface, but serialization is necessary in order to register inheritance in boost
+		ar& this->gos;
+		if (Archive::is_loading::value) {
+			this->clearSubClassCollections();
+			for (uint32_t i = 0; i < this->gos.size(); i = i + 1) {
+				this->addToSubClassCollections(this->gos.at(i, FILTER::DEFAULT_PRIORITY));
+			}
+		}
+	}
 };
+
+
+BOOST_CLASS_EXPORT_KEY(Collections)

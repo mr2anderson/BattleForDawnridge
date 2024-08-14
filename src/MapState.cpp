@@ -18,22 +18,20 @@
 
 
 #include "MapState.hpp"
+#include "Collections.hpp"
 
 
-MapState::MapState() = default;
+MapState::MapState() {
+	this->icollections = std::make_shared<Collections>();
+}
 
 
-Collections* MapState::getCollectionsPtr() {
-	return &this->collections;
+std::shared_ptr<ICollections> MapState::getCollectionsPtr() {
+	return this->icollections;
 }
 MapSize* MapState::getMapSizePtr() {
 	return &this->mapSize;
 }
 Players* MapState::getPlayersPtr() {
 	return &this->players;
-}
-
-
-const Collections* MapState::getCollectionsPtr() const {
-	return &this->collections;
 }

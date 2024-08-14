@@ -21,7 +21,6 @@
 #include <filesystem>
 #include "LocalGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
-
 #include "WindowTwoButtons.hpp"
 #include "StartGameEvent.hpp"
 #include "CreateEEvent.hpp"

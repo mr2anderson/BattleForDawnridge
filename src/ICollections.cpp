@@ -17,22 +17,11 @@
  */
 
 
-#include "Collection.hpp"
-#include "AreaResourcePoint.hpp"
-#include "ConductionResourcePoint.hpp"
-#include "Unit.hpp"
-#include "Building.hpp"
-#include "Warrior.hpp"
+#include "ICollections.hpp"
 
 
-#pragma once
+ICollections::ICollections() = default;
+ICollections::~ICollections() = default;
 
 
-struct CollectionsImpl {
-	Collection<GO> gos;
-	Collection<AreaResourcePoint> areaRps;
-	Collection<ConductionResourcePoint> conductionRps;
-	Collection<Unit> units;
-	Collection<Building> buildings;
-	Collection<Warrior> warriors;
-};
+BOOST_CLASS_EXPORT_IMPLEMENT(ICollections)

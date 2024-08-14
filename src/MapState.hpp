@@ -17,7 +17,9 @@
  */
 
 
-#include "Collections.hpp"
+#include <memory>
+#include <boost/serialization/shared_ptr.hpp>
+#include "ICollections.hpp"
 #include "MapSize.hpp"
 #include "Players.hpp"
 
@@ -29,19 +31,17 @@ class MapState {
 public:
 	MapState();
 
-	Collections* getCollectionsPtr();
+	std::shared_ptr<ICollections> getCollectionsPtr();
 	MapSize* getMapSizePtr();
 	Players* getPlayersPtr();
-
-	const Collections* getCollectionsPtr() const;
 private:
-	Collections collections;
+	std::shared_ptr<ICollections> icollections;
 	MapSize mapSize;
 	Players players;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & this->collections;
+        ar & this->icollections;
         ar & this->mapSize;
         ar & this->players;
     }
