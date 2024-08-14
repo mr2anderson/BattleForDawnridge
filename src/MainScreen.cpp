@@ -192,8 +192,18 @@ void MainScreen::receiveSound(sf::Packet& remPacket) {
 void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
 	uint32_t x, y, sx, sy;
 	remPacket >> x >> y >> sx >> sy;
-	this->view.setCenter(64 * x + 64 / 2 * sx, 64 * y + 64 / 2 * sy);
-	this->verifyView(window);
+	uint32_t centerX = 64 * x + 64 / 2 * sx;
+	uint32_t centerY = 64 * y + 64 / 2 * sy;
+	if (centerX >= view.getCenter().x - window.getSize().x / 2 and
+		centerY >= view.getCenter().y - window.getSize().y / 2 and
+		centerX < view.getCenter().x + window.getSize().x / 2 and
+		centerY < view.getCenter().y + window.getSize().y / 2) {
+
+	}
+	else {
+		this->view.setCenter(64 * x + 64 / 2 * sx, 64 * y + 64 / 2 * sy);
+		this->verifyView(window);
+	}
 }
 void MainScreen::receiveReturnToMenu() {
 	this->returnToMenu = true;
