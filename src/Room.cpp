@@ -347,8 +347,8 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, std::vec
 	uint32_t x, y, viewX, viewY, w, h;
 	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
 	if (this->selected == nullptr) {
-		if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
-			if (this->element == nullptr) {
+		if (this->element == nullptr) {
+			if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
 				if (mouseButton == sf::Mouse::Button::Left) {
 					this->addButtonClickEventToQueue(x, y, toSend, remotePlayers);
 				}
@@ -356,10 +356,12 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, std::vec
 					this->addGameObjectClickEventToQueue(mouseButton, viewX, viewY, toSend, remotePlayers);
 				}
 			}
-			else if (mouseButton == sf::Mouse::Button::Left) {
+		}
+		else {
+			if (mouseButton == sf::Mouse::Button::Left) {
 				Events events = this->element->click(x, y, w, h);
 				this->addEvents(events, toSend, remotePlayers);
-			}
+			}	
 		}
 	}
 	else {
