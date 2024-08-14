@@ -291,8 +291,6 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 		throw PackageLimit(); // TODO
 	}
 
-	std::cout << "Room: world ui state was sent to clients" << std::endl;
-
 	sf::Packet packet;
 	packet << SERVER_NET_SPECS::WORLD_UI_STATE;
 	packet << serialStr;
@@ -335,7 +333,6 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 				this->noOKReceivedTimer.reset();
 			}
 			else if (code == CLIENT_NET_SPECS::ROOM_CODES::CLICK) {
-				std::cout << "received click from client " << this->events.size() << std::endl;
 				uint8_t mouseButton;
 				uint32_t x, y, viewX, viewY, w, h;
 				packet >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
