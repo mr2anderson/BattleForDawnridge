@@ -67,7 +67,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	this->data = data;
 	this->playersAtThisHost = playersAtThisHost;
 	this->roomID = roomID;
-	this->sendInitTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
+	this->sendInitTimer = Timer(2500, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(10 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
