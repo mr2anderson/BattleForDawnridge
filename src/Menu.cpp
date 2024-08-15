@@ -72,8 +72,7 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
     }
     this->alreadyFinished = true;
     window.setMouseCursorVisible(true);
-    Music::get()->get("menu")->play();
-    Music::get()->get("menu")->setVolume(50);
+    Music::get()->play("menu");
 
 	sf::Event event{};
 	for (; ;) {
@@ -97,11 +96,9 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
         }
         this->processEvents();
         if (this->closeMenu) {
-            Music::get()->get("menu")->stop();
             return MenuResponse(MenuResponse::TYPE::EXIT, "");
         }
         if (this->response.has_value()) {
-            Music::get()->get("menu")->stop();
             return this->response.value();
         }
 	}

@@ -26,15 +26,32 @@
 Music *Music::singletone = nullptr;
 
 
+Music::Music() {
+    this->volume = 100;
+}
 void Music::add(const std::string& name, const std::string& path) {
     if (!this->music[name].openFromFile(std::string(DATA_ROOT) + "/" + path)) {
         throw CouldntOpenMusic(path);
     }
 }
-sf::Music *Music::get(const std::string& name) {
+void Music::play(const std::string &name) {
     auto it = this->music.find(name);
     if (it == this->music.end()) {
         std::cerr << "Invalid music uid: " << name << std::endl;
     }
-    return &it->second;
+    for (auto& m : this->music) {
+        m.second.stop();
+    }
+    it->second.setVolume(this->volume);
+    it->second.play();
+}
+sf::Music::Status Music::getStatus(const std::string &name) {
+    auto it = this->music.find(name);
+    if (it == this->music.end()) {
+        std::cerr << "Invalid music uid: " << name << std::endl;
+    }
+    return it->second.getStatus();
+}
+void Music::setDefaultVolume(uint32_t newVolume) {
+    this->volume = newVolume;
 }

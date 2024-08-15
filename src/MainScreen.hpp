@@ -36,11 +36,11 @@
 
 class MainScreen {
 public:
-	enum Type {
+	typedef enum Type {
 		CreateFromMap,
 		CreateFromSave,
 		Connect
-	} typedef;
+	} Type;
 
 	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverSendPort, uint16_t serverReceivePort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
@@ -61,6 +61,7 @@ private:
 	RoomID roomID;
 	Timer sendInitTimer;
 	Timer sendOKTimer;
+    Timer noInitReceivedTimer;
 	Timer noOKReceivedTimer;
 
 	bool initPackageGotten;
@@ -77,9 +78,9 @@ private:
 	IlluminanceTable illiminanceTable;
 
 
-	void send();
 	void sendInit();
 	void sendOK();
+    void sendClick(sf::RenderWindow &window, uint8_t button);
 
 
 	void receive(sf::RenderWindow &window);

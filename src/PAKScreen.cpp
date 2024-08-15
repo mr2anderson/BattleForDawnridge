@@ -49,15 +49,13 @@ PAKScreenResponse PAKScreen::run(sf::RenderWindow &window) {
 	}
 	this->alreadyFinished = true;
 	window.setMouseCursorVisible(false);
-	Music::get()->get("intro")->play();
-	Music::get()->get("intro")->setVolume(50);
+	Music::get()->play("intro");
 
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::KeyPressed) {
 				auto code = event.key.code;
-				Music::get()->get("intro")->stop();
 				if (code == sf::Keyboard::Escape) {
 					return PAKScreenResponse(PAKScreenResponse::TYPE::EXIT);
 				}

@@ -19,6 +19,9 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <boost/optional.hpp>
+#include "MenuResponse.hpp"
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -40,4 +43,8 @@ private:
 	static Program* singletone;
 
 	sf::RenderWindow window;
+
+    void localGame(const MenuResponse &response, boost::optional<StringLcl> &error);
+
+    void handleMainScreenException(std::exception_ptr exception, boost::optional<StringLcl> &error);
 };

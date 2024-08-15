@@ -19,12 +19,12 @@
 
 #include <iostream>
 #include "LocalServer.hpp"
-#include "Ports.hpp"
 #include "ClientNetSpecs.hpp"
 #include "math.hpp"
 #include "RoomWasClosed.hpp"
 #include "PortIsBusy.hpp"
 #include "LocalServerAlreadyLaunched.hpp"
+#include "ServerNetSpecs.hpp"
 
 
 
@@ -36,12 +36,12 @@
 static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) {
 	sf::UdpSocket sendSocket, receiveSocket;
 	sendSocket.setBlocking(false);
-	if (sendSocket.bind(Ports::get()->getLocalServerSendPort()) != sf::Socket::Done) {
-		throw PortIsBusy(Ports::get()->getLocalServerSendPort());
+	if (sendSocket.bind(SERVER_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
+		throw PortIsBusy(SERVER_NET_SPECS::PORTS::SEND);
 	}
 	receiveSocket.setBlocking(false);
-	if (receiveSocket.bind(Ports::get()->getLocalServerReceivePort()) != sf::Socket::Done) {
-		throw PortIsBusy(Ports::get()->getLocalServerReceivePort());
+	if (receiveSocket.bind(SERVER_NET_SPECS::PORTS::RECEIVE) != sf::Socket::Done) {
+		throw PortIsBusy(SERVER_NET_SPECS::PORTS::RECEIVE);
 	}
 
 
@@ -61,48 +61,45 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 		while (receiveSocket.receive(receivedPacket, senderIP, senderPort) != sf::Socket::Status::Done) {
 			sf::sleep(sf::milliseconds(50));
 		}
-		if (senderIP != sf::IpAddress::getLocalAddress() or senderPort != Ports::get()->getClientSendPort()) {
+		if (senderIP != sf::IpAddress::getLocalAddress() or senderPort != CLIENT_NET_SPECS::PORTS::SEND) {
 			continue;
 		}
-		uint8_t code;
-		receivedPacket >> code;
-		if (code == CLIENT_NET_SPECS::ROOM) {
-			sf::Uint64 roomIdVal;
-			receivedPacket >> roomIdVal;
-			receivedPacket >> code;
-			if (code == CLIENT_NET_SPECS::ROOM_CODES::CREATE) {
-				if (room == nullptr) {
-					std::string data;
-					receivedPacket >> data;
-					room = std::make_unique<Room>(RoomID(roomIdVal), data);
-					std::cout << "Room was created" << std::endl;
+        sf::Uint64 roomIdVal;
+        receivedPacket >> roomIdVal;
+        uint8_t code;
+        receivedPacket >> code;
+        if (code == CLIENT_NET_SPECS::CODES::CREATE) {
+            if (room == nullptr) {
+                std::string data;
+                receivedPacket >> data;
+                room = std::make_unique<Room>(RoomID(roomIdVal), data);
+                std::cout << "Room was created" << std::endl;
 
-					uint32_t playersAtHost;
-					receivedPacket >> playersAtHost;
-					while (playersAtHost and players.size() != room->playersNumber()) {
-						players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
-						playersAtHost = playersAtHost - 1;
-						std::cout << "Added player to room. Total players: " << players.size() << std::endl;
-					}
-				}
-			}
-			else if (code == CLIENT_NET_SPECS::ROOM_CODES::CONNECT) {
-				if (room != nullptr) {
-					if (room->getID().value() == roomIdVal) {
-						uint32_t playersAtHost;
-						receivedPacket >> playersAtHost;
-						while (playersAtHost and players.size() != room->playersNumber()) {
-							players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
-							playersAtHost = playersAtHost - 1;
-							std::cout << "Added player to room. Total players: " << players.size() << std::endl;
-						}
-					}
-					else {
-						std::cout << "Player used incorrect room id." << std::endl;
-					}
-				}
-			}
-		}
+                uint32_t playersAtHost;
+                receivedPacket >> playersAtHost;
+                while (playersAtHost and players.size() != room->playersNumber()) {
+                    players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+                    playersAtHost = playersAtHost - 1;
+                    std::cout << "Added player to room. Total players: " << players.size() << std::endl;
+                }
+            }
+        }
+        else if (code == CLIENT_NET_SPECS::CODES::CONNECT) {
+            if (room != nullptr) {
+                if (room->getID().value() == roomIdVal) {
+                    uint32_t playersAtHost;
+                    receivedPacket >> playersAtHost;
+                    while (playersAtHost and players.size() != room->playersNumber()) {
+                        players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+                        playersAtHost = playersAtHost - 1;
+                        std::cout << "Added player to room. Total players: " << players.size() << std::endl;
+                    }
+                }
+                else {
+                    std::cout << "Player used incorrect room id." << std::endl;
+                }
+            }
+        }
 	}
 
 
@@ -114,7 +111,7 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 		Clock clock;
 
 		while (!toSend.empty()) {
-			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), Ports::get()->getClientReceivePort());
+			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
 			toSend.pop_back();
 		}
 
@@ -122,7 +119,7 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 		sf::Packet receivedPacket;
 		sf::IpAddress senderIP;
 		uint16_t senderPort;
-		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == Ports::get()->getClientSendPort()) {
+		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
 			received = std::make_tuple(receivedPacket, senderIP);
 		}
 

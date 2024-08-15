@@ -25,12 +25,11 @@
 #include "MainScreen.hpp"
 #include "ServerScreen.hpp"
 #include "LocalServer.hpp"
-#include "Ports.hpp"
 #include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
 #include "PackageLimit.hpp"
-#include "LocalServerAlreadyLaunched.hpp"
+#include "ServerNetSpecs.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -82,8 +81,6 @@ void Program::run() {
     else {
         boost::optional<StringLcl> error;
         
-        LocalServer localServer;
-        
         for (; ;) {
             Menu menu(this->window, error);
             MenuResponse menuResponse = menu.run(this->window);
@@ -94,59 +91,69 @@ void Program::run() {
             error = boost::none;
 
             if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME or menuResponse.getType() == MenuResponse::TYPE::LOAD_LOCAL_GAME) {
-                localServer.launch();
-
-                try {
-                    MainScreen::Type mainScreenType;
-                    if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME) {
-                        mainScreenType = MainScreen::Type::CreateFromMap;
-                    }
-                    else {
-                        mainScreenType = MainScreen::Type::CreateFromSave;
-                    }
-
-                    try {
-                        MainScreen mainScreen(
-                            this->window,
-                            sf::IpAddress::getLocalAddress(),
-                            Ports::get()->getLocalServerSendPort(),
-                            Ports::get()->getLocalServerReceivePort(),
-                            mainScreenType, menuResponse.getData(), MainScreen::EVERYONE, RoomID());
-                        mainScreen.run(this->window);
-                    }
-                    catch (NoServerConnection&) {
-                        try {
-                            localServer.fine();
-                            std::rethrow_exception(std::current_exception());
-                        }
-                        catch (std::exception&) {
-                            std::rethrow_exception(std::current_exception());
-                        }
-                    }
-
-                }
-
-                catch (PortIsBusy& e) {
-                    error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
-                }
-                catch (CouldntOpenMap&) {
-                    error = StringLcl("{map_is_apcent_client}");
-                }
-                catch (PackageLimit&) {
-                    error = StringLcl("{package_limit_client}");
-                }
-                catch (boost::archive::archive_exception& e) {
-                    error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
-                }
-                catch (NoServerConnection&) {
-                    error = StringLcl("{disconnect_client}");
-                }
-                catch (std::exception& e) {
-                    error = StringLcl("{unknown_error_client}\n" + std::string(e.what()));
-                }
-
-                localServer.finish();
+                this->localGame(menuResponse, error);
             }
         }
+    }
+}
+void Program::localGame(const MenuResponse &response, boost::optional<StringLcl> &error) {
+    LocalServer localServer;
+    localServer.launch();
+
+    MainScreen::Type mainScreenType;
+    if (response.getType() == MenuResponse::TYPE::START_LOCAL_GAME) {
+        mainScreenType = MainScreen::Type::CreateFromMap;
+    }
+    else {
+        mainScreenType = MainScreen::Type::CreateFromSave;
+    }
+
+    try {
+        try {
+            MainScreen mainScreen(
+                    this->window,
+                    sf::IpAddress::getLocalAddress(),
+                    SERVER_NET_SPECS::PORTS::SEND,
+                    SERVER_NET_SPECS::PORTS::RECEIVE,
+                    mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
+            mainScreen.run(this->window);
+        }
+        catch (NoServerConnection&) {
+            try {
+                localServer.fine();
+                std::rethrow_exception(std::current_exception());
+            }
+            catch (std::exception&) {
+                std::rethrow_exception(std::current_exception());
+            }
+        }
+    }
+    catch (std::exception&) {
+        this->handleMainScreenException(std::current_exception(), error);
+    }
+
+    localServer.finish();
+}
+void Program::handleMainScreenException(std::exception_ptr exception, boost::optional<StringLcl> &error) {
+    try {
+        std::rethrow_exception(exception);
+    }
+    catch (PortIsBusy& e) {
+        error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
+    }
+    catch (CouldntOpenMap&) {
+        error = StringLcl("{map_is_apcent_client}");
+    }
+    catch (PackageLimit&) {
+        error = StringLcl("{package_limit_client}");
+    }
+    catch (boost::archive::archive_exception& e) {
+        error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
+    }
+    catch (NoServerConnection&) {
+        error = StringLcl("{disconnect_client}");
+    }
+    catch (std::exception& e) {
+        error = StringLcl("{unknown_error_client}\n" + std::string(e.what()));
     }
 }

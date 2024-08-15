@@ -249,7 +249,8 @@ void Room::sendTimeCommandsToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 }
 void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
-	packet << SERVER_NET_SPECS::OK;
+    packet << (sf::Uint64)this->getID().value();
+	packet << SERVER_NET_SPECS::CODES::OK;
 
 	this->sendToClients(packet, toSend, remotePlayers);
 }
@@ -312,7 +313,8 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	s.flush();
 
 	sf::Packet packet;
-	packet << SERVER_NET_SPECS::WORLD_UI_STATE;
+    packet << (sf::Uint64)this->getID().value();
+	packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
 	packet << serialStr;
 
 	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
@@ -345,22 +347,18 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 	sf::Packet packet = std::get<0>(received.value());
 	sf::IpAddress ip = std::get<1>(received.value());
 
-	uint8_t code;
-	packet >> code;
-
-	if (code == CLIENT_NET_SPECS::ROOM) {
-		sf::Uint64 roomId;
-		packet >> roomId;
-		if (this->id.value() == roomId) {
-			packet >> code;
-			if (code == CLIENT_NET_SPECS::ROOM_CODES::OK) {
-				this->receiveOK();
-			}
-			else if (code == CLIENT_NET_SPECS::ROOM_CODES::CLICK) {
-				this->receiveClick(packet, ip, toSend, remotePlayers);
-			}
-		}
-	}
+    sf::Uint64 roomId;
+    packet >> roomId;
+    if (this->id.value() == roomId) {
+        uint8_t code;
+        packet >> code;
+        if (code == CLIENT_NET_SPECS::CODES::OK) {
+            this->receiveOK();
+        }
+        else if (code == CLIENT_NET_SPECS::CODES::CLICK) {
+            this->receiveClick(packet, ip, toSend, remotePlayers);
+        }
+    }
 }
 void Room::receiveOK() {
 	this->noOKReceivedTimer.reset();
@@ -583,7 +581,8 @@ void Room::handleBuild(std::shared_ptr<BuildEvent> e, std::vector<std::tuple<sf:
 }
 void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
-	packet << SERVER_NET_SPECS::SOUND;
+    packet << (sf::Uint64)this->id.value();
+	packet << SERVER_NET_SPECS::CODES::SOUND;
 	packet << e->getSoundName();
 	this->sendToClients(packet, toSend, remotePlayers);
 }
@@ -596,7 +595,8 @@ void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
-	packet << SERVER_NET_SPECS::RETURN_TO_MENU;
+    packet << (sf::Uint64 )this->id.value();
+	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
 	switch (e->getType()) {
 	case ReturnToMenuEvent::Type::CURRENT_PLAYER:
 		toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
@@ -652,7 +652,8 @@ void Room::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirect
 }
 void Room::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
-	packet << SERVER_NET_SPECS::FOCUS;
+    packet << (sf::Uint64)this->id.value();
+	packet << SERVER_NET_SPECS::CODES::FOCUS;
 	packet << e->getX();
 	packet << e->getY();
 	packet << e->getSX();
@@ -764,7 +765,8 @@ void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent
 }
 void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	sf::Packet packet;
-	packet << SERVER_NET_SPECS::SAVE;
+    packet << (sf::Uint64)this->getID().value();
+	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
 	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
 		throw PackageLimit();

@@ -34,11 +34,14 @@ public:
     }
 
     void add(const std::string& name, const std::string& path);
-    sf::Music *get(const std::string& name);
+    void play(const std::string& name);
+    sf::Music::Status getStatus(const std::string &name);
+    void setDefaultVolume(uint32_t newVolume);
 private:
-    Music() = default;
+    Music();
     Music(const Music& copy);
     static Music *singletone;
 
+    uint32_t volume;
     std::unordered_map<std::string, sf::Music> music;
 };

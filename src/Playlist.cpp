@@ -26,23 +26,15 @@ Playlist *Playlist::singletone = nullptr;
 
 
 const uint32_t Playlist::SOUNDTRACKS_N = 7;
-const uint32_t Playlist::MUSIC_VOLUME = 50;
 
 
 Playlist::Playlist() {
     this->index = GlobalRandomGenerator32::get()->gen() % SOUNDTRACKS_N;
 }
 void Playlist::update() {
-    if (Music::get()->get(std::to_string(this->index))->getStatus() == sf::Music::Status::Playing) {
+    if (Music::get()->getStatus(std::to_string(this->index)) == sf::Music::Status::Playing) {
         return;
     }
-    Music::get()->get(std::to_string(this->index))->stop();
     this->index = (this->index + 1) % SOUNDTRACKS_N;
-    Music::get()->get(std::to_string(this->index))->play();
-    Music::get()->get(std::to_string(this->index))->setVolume(MUSIC_VOLUME);
-}
-void Playlist::stop() {
-    for (uint32_t i = 0; i < SOUNDTRACKS_N; i = i + 1) {
-        Music::get()->get(std::to_string(this->index))->stop();
-    }
+    Music::get()->play(std::to_string(this->index));
 }

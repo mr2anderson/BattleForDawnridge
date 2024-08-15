@@ -52,7 +52,6 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Escape) {
-					Playlist::get()->stop();
 					return ServerScreenResponse(ServerScreenResponse::TYPE::EXIT);
 				}
 			}

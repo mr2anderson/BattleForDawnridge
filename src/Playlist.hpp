@@ -33,7 +33,6 @@ public:
     }
 
     void update();
-    void stop();
 
     static const uint32_t SOUNDTRACKS_N;
 private:
@@ -42,6 +41,4 @@ private:
     static Playlist *singletone;
 
     uint32_t index;
-
-    static const uint32_t MUSIC_VOLUME;
 };

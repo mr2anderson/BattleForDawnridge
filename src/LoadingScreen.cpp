@@ -47,7 +47,6 @@
 #include "PublicIP.hpp"
 #include "LoadingScreenBg.hpp"
 #include "IsServerTable.hpp"
-#include "Ports.hpp"
 
 
 #if defined(_WIN32) // Unix does not support coloured cursors
@@ -131,6 +130,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         IsServerTable::get()->load();
+        Music::get()->setDefaultVolume(40);
         Music::get()->add("intro", "music/intro.ogg");
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
             Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
@@ -139,7 +139,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         #if defined(USE_CUSTOM_CURSOR)
             Textures::get()->add("cursor", "images/cursor.png");
         #endif
-        Ports::get()->load();
         if (IsServerTable::get()->isServer()) {
             PublicIP::get()->load();
             return true;
