@@ -19,8 +19,8 @@
 
 #include <queue>
 #include "CloseMenuEvent.hpp"
-#include "StartGameEvent.hpp"
-#include "LoadGameEvent.hpp"
+#include "StartLocalGameEvent.hpp"
+#include "LoadLocalGameEvent.hpp"
 #include "DeleteSaveEvent.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "ChooseLanguageEvent.hpp"
@@ -59,8 +59,8 @@ private:
     void handleSoundEvent(std::shared_ptr<PlaySoundEvent> e);
     void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
-    void handleStartGameEvent(std::shared_ptr<StartGameEvent> e);
-    void handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e);
+    void handleStartLocalGameEvent(std::shared_ptr<StartLocalGameEvent> e);
+    void handleLoadLocalGameEvent(std::shared_ptr<LoadLocalGameEvent> e);
     void handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

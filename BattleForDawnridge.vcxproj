@@ -792,7 +792,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LanguageAlreadyInUse.hpp" />
     <ClInclude Include="src\Legioner.hpp" />
     <ClInclude Include="src\LimitResourcesEvent.hpp" />
-    <ClInclude Include="src\LoadGameEvent.hpp" />
+    <ClInclude Include="src\LoadLocalGameEvent.hpp" />
     <ClInclude Include="src\LoadingScreen.hpp" />
     <ClInclude Include="src\Locales.hpp" />
     <ClInclude Include="src\MainScreen.hpp" />
@@ -870,7 +870,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SpellFactorySpec.hpp" />
     <ClInclude Include="src\SpellPreview.hpp" />
     <ClInclude Include="src\SpellProducerSpec.hpp" />
-    <ClInclude Include="src\StartGameEvent.hpp" />
+    <ClInclude Include="src\StartLocalGameEvent.hpp" />
     <ClInclude Include="src\StartWarriorAnimationEvent.hpp" />
     <ClInclude Include="src\StartWarriorProducingEvent.hpp" />
     <ClInclude Include="src\Stone.hpp" />
@@ -1099,7 +1099,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\LanguageAlreadyInUse.cpp" />
     <ClCompile Include="src\Legioner.cpp" />
     <ClCompile Include="src\LimitResourcesEvent.cpp" />
-    <ClCompile Include="src\LoadGameEvent.cpp" />
+    <ClCompile Include="src\LoadLocalGameEvent.cpp" />
     <ClCompile Include="src\LoadingScreen.cpp" />
     <ClCompile Include="src\Locales.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -1188,7 +1188,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SpellFactorySpec.cpp" />
     <ClCompile Include="src\SpellPreview.cpp" />
     <ClCompile Include="src\SpellProducerSpec.cpp" />
-    <ClCompile Include="src\StartGameEvent.cpp" />
+    <ClCompile Include="src\StartLocalGameEvent.cpp" />
     <ClCompile Include="src\StartWarriorAnimationEvent.cpp" />
     <ClCompile Include="src\StartWarriorProducingEvent.cpp" />
     <ClCompile Include="src\Stone.cpp" />

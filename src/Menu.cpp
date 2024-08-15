@@ -71,6 +71,7 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
         throw ScreenAlreadyFinished();
     }
     this->alreadyFinished = true;
+
     window.setMouseCursorVisible(true);
     Music::get()->play("menu");
 
@@ -169,11 +170,11 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<CloseMenuEvent> closeMenuEvent = std::dynamic_pointer_cast<CloseMenuEvent>(e)) {
         this->handleCloseMenuEvent(closeMenuEvent);
     }
-    else if (std::shared_ptr<StartGameEvent> startGameEvent = std::dynamic_pointer_cast<StartGameEvent>(e)) {
-        this->handleStartGameEvent(startGameEvent);
+    else if (std::shared_ptr<StartLocalGameEvent> startGameEvent = std::dynamic_pointer_cast<StartLocalGameEvent>(e)) {
+        this->handleStartLocalGameEvent(startGameEvent);
     }
-    else if (std::shared_ptr<LoadGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadGameEvent>(e)) {
-        this->handleLoadGameEvent(loadGameEvent);
+    else if (std::shared_ptr<LoadLocalGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadLocalGameEvent>(e)) {
+        this->handleLoadLocalGameEvent(loadGameEvent);
     }
     else if (std::shared_ptr<DeleteSaveEvent> deleteSaveEvent = std::dynamic_pointer_cast<DeleteSaveEvent>(e)) {
         this->handleDeleteSaveEvent(deleteSaveEvent);
@@ -195,10 +196,10 @@ void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
 void Menu::handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e) {
     this->closeMenu = true;
 }
-void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
+void Menu::handleStartLocalGameEvent(std::shared_ptr<StartLocalGameEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::START_LOCAL_GAME, e->getMapName());
 }
-void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
+void Menu::handleLoadLocalGameEvent(std::shared_ptr<LoadLocalGameEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {

@@ -17,12 +17,18 @@
  */
 
 
-#include "StartGameEvent.hpp"
+#include <string>
+#include "Event.hpp"
 
 
-StartGameEvent::StartGameEvent(const std::string& mapName) {
-	this->mapName = mapName;
-}
-std::string StartGameEvent::getMapName() const {
-	return this->mapName;
-}
+#pragma once
+
+
+class StartLocalGameEvent : public Event {
+public:
+	StartLocalGameEvent(const std::string &mapName);
+
+	std::string getMapName() const;
+private:
+	std::string mapName;
+};

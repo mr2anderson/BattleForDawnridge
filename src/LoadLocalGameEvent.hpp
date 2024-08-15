@@ -17,12 +17,18 @@
  */
 
 
-#include "LoadGameEvent.hpp"
+#include <string>
+#include "Event.hpp"
 
 
-LoadGameEvent::LoadGameEvent(const std::string &saveName) {
-    this->saveName = saveName;
-}
-std::string LoadGameEvent::getSaveName() const {
-    return this->saveName;
-}
+#pragma once
+
+
+class LoadLocalGameEvent : public Event {
+public:
+    LoadLocalGameEvent(const std::string &saveName);
+
+    std::string getSaveName() const;
+private:
+    std::string saveName;
+};

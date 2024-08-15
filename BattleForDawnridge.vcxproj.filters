@@ -1031,7 +1031,7 @@
     <ClInclude Include="src\LimitResourcesEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LoadGameEvent.hpp">
+    <ClInclude Include="src\LoadLocalGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LoadingScreen.hpp">
@@ -1265,7 +1265,7 @@
     <ClInclude Include="src\SpellProducerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\StartGameEvent.hpp">
+    <ClInclude Include="src\StartLocalGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\StartWarriorAnimationEvent.hpp">
@@ -2014,7 +2014,7 @@
     <ClCompile Include="src\LimitResourcesEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\LoadGameEvent.cpp">
+    <ClCompile Include="src\LoadLocalGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\LoadingScreen.cpp">
@@ -2242,7 +2242,7 @@
     <ClCompile Include="src\SpellProducerSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\StartGameEvent.cpp">
+    <ClCompile Include="src\StartLocalGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StartWarriorAnimationEvent.cpp">

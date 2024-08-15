@@ -22,10 +22,10 @@
 #include "LocalGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "WindowTwoButtons.hpp"
-#include "StartGameEvent.hpp"
+#include "StartLocalGameEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "WindowButton.hpp"
-#include "LoadGameEvent.hpp"
+#include "LoadLocalGameEvent.hpp"
 #include "DeleteSaveEvent.hpp"
 #include "Root.hpp"
 #include "PlaySoundEvent.hpp"
@@ -134,7 +134,7 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
         for (const auto& save : saves) {
 
             Events loadSaveEvent = clickEvent;
-            loadSaveEvent.add(std::make_shared<LoadGameEvent>(save));
+            loadSaveEvent.add(std::make_shared<LoadLocalGameEvent>(save));
             std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{load}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), loadSaveEvent, clickEvent);
             Events createLoadSaveVerifyWindowEvent = clickEvent;
             createLoadSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(loadSaveVerifyWindow));
@@ -173,7 +173,7 @@ Events LocalGameButtonSpec::getChooseRidgeEvent() const {
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
     Events startGameOnRidgeEvent = clickEvent;
-    startGameOnRidgeEvent.add(std::make_shared<StartGameEvent>("ridge"));
+    startGameOnRidgeEvent.add(std::make_shared<StartLocalGameEvent>("ridge"));
 
     std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{local_ridge_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
 
