@@ -43,8 +43,6 @@ Program::Program() {
     this->window.create(sf::VideoMode::getDesktopMode(), "Battle for Dawnridge", sf::Style::Fullscreen, settings);
     this->window.setVerticalSyncEnabled(true);
     this->window.setFramerateLimit(60);
-
-    this->localServer = new LocalServer();
 }
 void Program::run() {
     LoadingScreen loadingScreen(this->window);
