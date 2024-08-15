@@ -129,12 +129,12 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
         }
     }
     catch (std::exception&) {
-        this->handleMainScreenException(std::current_exception(), error);
+        this->handleException(std::current_exception(), error);
     }
 
     localServer.finish();
 }
-void Program::handleMainScreenException(std::exception_ptr exception, boost::optional<StringLcl> &error) {
+void Program::handleException(std::exception_ptr exception, boost::optional<StringLcl> &error) {
     try {
         std::rethrow_exception(exception);
     }

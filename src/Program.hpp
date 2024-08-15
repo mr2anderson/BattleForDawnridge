@@ -46,5 +46,5 @@ private:
 
     void localGame(const MenuResponse &response, boost::optional<StringLcl> &error);
 
-    void handleMainScreenException(std::exception_ptr exception, boost::optional<StringLcl> &error);
+    void handleException(std::exception_ptr exception, boost::optional<StringLcl> &error);
 };
