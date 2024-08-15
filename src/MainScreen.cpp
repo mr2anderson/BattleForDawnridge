@@ -20,8 +20,11 @@
 #include <sstream>
 #include <iostream>
 #include <filesystem>
+#include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
 #include <fstream>
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/vector.hpp>
 #include "MainScreen.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "Building.hpp"
@@ -37,6 +40,8 @@
 #include "NoServerConnection.hpp"
 #include "MenuBg.hpp"
 #include "Root.hpp"
+#include "PackageLimit.hpp"
+#include "Maps.hpp"
 
 
 
@@ -44,7 +49,7 @@
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverSendPort, uint16_t serverReceivePort, RoomID roomID) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverSendPort, uint16_t serverReceivePort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
 	this->alreadyFinished = false;
 
 	this->serverIP = serverIP;
@@ -58,11 +63,15 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	if (this->receiveSocket.bind(Ports::get()->getClientReceivePort()) != sf::Socket::Done) {
 		throw PortIsBusy(Ports::get()->getClientReceivePort());
 	}
+	this->type = type;
+	this->data = data;
+	this->playersAtThisHost = playersAtThisHost;
 	this->roomID = roomID;
+	this->sendInitTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(10 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
-	this->uiPackageGotten = false;
+	this->initPackageGotten = false;
 
 	this->returnToMenu = false;
 	this->view = sf::View(window.getDefaultView());
@@ -90,7 +99,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 	sf::Event event{};
 	for (; ;) {
 		while (window.pollEvent(event)) {
-            if (!this->uiPackageGotten) {
+            if (!this->initPackageGotten) {
                 continue;
             }
 			if (event.type == sf::Event::MouseButtonPressed) {
@@ -108,13 +117,13 @@ void MainScreen::run(sf::RenderWindow& window) {
 				this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
 			}
 		}
-		this->sendOK();
+		this->send();
 		this->receive(window);
         if (this->noOKReceivedTimer.ready()) {
             Playlist::get()->stop();
             throw NoServerConnection();
         }
-		if (!this->uiPackageGotten) {
+		if (!this->initPackageGotten) {
 			continue;
 		}
 		Playlist::get()->update();
@@ -131,15 +140,72 @@ void MainScreen::run(sf::RenderWindow& window) {
 
 
 
-void MainScreen::sendOK() {
-	if (this->sendOKTimer.ready()) {
-		this->sendOKTimer.reset();
-		sf::Packet packet;
-		packet << CLIENT_NET_SPECS::ROOM;
-		packet << (sf::Uint64)this->roomID.value();
-		packet << CLIENT_NET_SPECS::ROOM_CODES::OK;
-		this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
+void MainScreen::send() {
+	if (this->initPackageGotten) {
+		if (this->sendOKTimer.ready()) {
+			this->sendOKTimer.reset();
+			this->sendOK();
+		}
 	}
+	else {
+		if (this->sendInitTimer.ready()) {
+			this->sendInitTimer.reset();
+			this->sendInit();
+		}
+	}
+}
+std::string GENERATE_SAVE_CONTENT(const std::string& name) {
+	Map tmpMap;
+	Maps::get()->load(name, &tmpMap);
+
+	std::string serialStr;
+
+	boost::iostreams::back_insert_device<std::string> inserter(serialStr);
+	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+
+	oarchive ar(s);
+	ar << tmpMap << std::vector<bool>(tmpMap.getStatePtr()->getPlayersPtr()->total(), true) << (uint32_t)1 << (uint32_t)1;
+
+	s.flush();
+
+	return serialStr;
+}
+std::string GET_SAVE_CONTENT(const std::string& name) {
+	std::ifstream f(USERDATA_ROOT + "/saves/" + name, std::ios::binary);
+	std::stringstream buffer;
+	buffer << f.rdbuf();
+	f.close();
+	return buffer.str();
+}
+void MainScreen::sendInit() {
+	sf::Packet packet;
+	packet << CLIENT_NET_SPECS::ROOM;
+	packet << (sf::Uint64)this->roomID.value(); // linux sfml implementation does not support uint64_t here for some reason
+	if (this->type == MainScreen::Type::CreateFromMap) {
+		packet << CLIENT_NET_SPECS::ROOM_CODES::CREATE;
+		packet << GENERATE_SAVE_CONTENT(this->data);
+		packet << this->playersAtThisHost;
+	}
+	else if (this->type == MainScreen::Type::CreateFromSave) {
+		packet << CLIENT_NET_SPECS::ROOM_CODES::CREATE;
+		packet << GET_SAVE_CONTENT(this->data);
+		packet << this->playersAtThisHost;
+	}
+	else if (this->type == MainScreen::Type::Connect) {
+		packet << CLIENT_NET_SPECS::ROOM_CODES::CONNECT;
+		packet << this->playersAtThisHost;
+	}
+	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
+		throw PackageLimit();
+	}
+	this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
+}
+void MainScreen::sendOK() {
+	sf::Packet packet;
+	packet << CLIENT_NET_SPECS::ROOM;
+	packet << (sf::Uint64)this->roomID.value();
+	packet << CLIENT_NET_SPECS::ROOM_CODES::OK;
+	this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
 }
 
 
@@ -188,7 +254,7 @@ void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
 	std::stringstream stream(data);
 	iarchive ar(stream);
 	ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
-	this->uiPackageGotten = true;
+	this->initPackageGotten = true;
 }
 void MainScreen::receiveSound(sf::Packet& remPacket) {
 	std::string soundName;

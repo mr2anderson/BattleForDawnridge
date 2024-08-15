@@ -30,6 +30,7 @@
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
 #include "PackageLimit.hpp"
+#include "LocalServerAlreadyLaunched.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -42,6 +43,8 @@ Program::Program() {
     this->window.create(sf::VideoMode::getDesktopMode(), "Battle for Dawnridge", sf::Style::Fullscreen, settings);
     this->window.setVerticalSyncEnabled(true);
     this->window.setFramerateLimit(60);
+
+    this->localServer = new LocalServer();
 }
 void Program::run() {
     LoadingScreen loadingScreen(this->window);
@@ -80,6 +83,7 @@ void Program::run() {
     }
     else {
         boost::optional<StringLcl> error;
+        
         for (; ;) {
             Menu menu(this->window, error);
             MenuResponse menuResponse = menu.run(this->window);
@@ -87,35 +91,41 @@ void Program::run() {
                 return;
             }
 
-            // TODO: Network game
-
             error = boost::none;
 
             if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME or menuResponse.getType() == MenuResponse::TYPE::LOAD_LOCAL_GAME) {
+                this->localServer->launch();
+
                 try {
-                    std::shared_ptr<Room> room;
+                    MainScreen::Type mainScreenType;
                     if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME) {
-                        room = std::make_shared<Room>(Room::Type::CreateFromMap, menuResponse.getData());
+                        mainScreenType = MainScreen::Type::CreateFromMap;
                     }
                     else {
-                        room = std::make_shared<Room>(Room::Type::CreateFromSave, menuResponse.getData());
+                        mainScreenType = MainScreen::Type::CreateFromSave;
                     }
-                    LocalServer localServer;
-                    localServer.launch(room);
-                    MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), Ports::get()->getLocalServerSendPort(), Ports::get()->getLocalServerReceivePort(), room->getID());
+
                     try {
+                        MainScreen mainScreen(
+                            this->window,
+                            sf::IpAddress::getLocalAddress(),
+                            Ports::get()->getLocalServerSendPort(),
+                            Ports::get()->getLocalServerReceivePort(),
+                            mainScreenType, menuResponse.getData(), MainScreen::EVERYONE, RoomID());
                         mainScreen.run(this->window);
                     }
-                    catch (std::exception&) {
+                    catch (NoServerConnection&) {
                         try {
-                            localServer.fine();
+                            this->localServer->fine();
                             std::rethrow_exception(std::current_exception());
                         }
                         catch (std::exception&) {
                             std::rethrow_exception(std::current_exception());
                         }
                     }
+
                 }
+
                 catch (PortIsBusy& e) {
                     error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
                 }
@@ -129,11 +139,13 @@ void Program::run() {
                     error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
                 }
                 catch (NoServerConnection&) {
-                    error = StringLcl("{disconnect_error_client}");
+                    error = StringLcl("{disconnect_client}");
                 }
                 catch (std::exception&) {
                     error = StringLcl("{unknown_error_client}");
                 }
+
+                this->localServer->finish();
             }
         }
     }

@@ -36,9 +36,17 @@
 
 class MainScreen {
 public:
-	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverSendPort, uint16_t serverReceivePort, RoomID roomID);
+	enum Type {
+		CreateFromMap,
+		CreateFromSave,
+		Connect
+	} typedef;
+
+	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverSendPort, uint16_t serverReceivePort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
 	void run(sf::RenderWindow& window);
+
+	static constexpr uint32_t EVERYONE = (1 << 30);
 private:
 	bool alreadyFinished;
 
@@ -47,11 +55,15 @@ private:
 	uint16_t serverReceivePort;
 	sf::UdpSocket sendSocket;
 	sf::UdpSocket receiveSocket;
+	Type type;
+	std::string data;
+	uint32_t playersAtThisHost;
 	RoomID roomID;
+	Timer sendInitTimer;
 	Timer sendOKTimer;
 	Timer noOKReceivedTimer;
 
-	bool uiPackageGotten;
+	bool initPackageGotten;
 	Map map;
 	std::shared_ptr<PopUpElement> element;
 	ISelectable* selected;
@@ -65,6 +77,8 @@ private:
 	IlluminanceTable illiminanceTable;
 
 
+	void send();
+	void sendInit();
 	void sendOK();
 
 

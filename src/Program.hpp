@@ -24,6 +24,9 @@
 #pragma once
 
 
+class LocalServer;
+
+
 class Program {
 public:
 	static Program* get() {
@@ -40,4 +43,5 @@ private:
 	static Program* singletone;
 
 	sf::RenderWindow window;
+	LocalServer* localServer;
 };

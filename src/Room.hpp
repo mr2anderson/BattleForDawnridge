@@ -85,12 +85,7 @@
 
 class Room {
 public:
-	typedef enum Type {
-		CreateFromMap,
-		CreateFromSave
-	} Type;
-
-	Room(Type type, const std::string& data);
+	Room(RoomID id, const std::string &saveData);
 	Room(const Room& copy) = delete;
 
 	RoomID getID() const;

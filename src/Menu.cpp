@@ -19,8 +19,6 @@
 
 #include <filesystem>
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include "Menu.hpp"
 #include "Maps.hpp"
 #include "SoundQueue.hpp"
@@ -204,11 +202,7 @@ void Menu::handleStartGameEvent(std::shared_ptr<StartGameEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::START_LOCAL_GAME, e->getMapName());
 }
 void Menu::handleLoadGameEvent(std::shared_ptr<LoadGameEvent> e) {
-    std::ifstream t(USERDATA_ROOT + "/saves/" + e->getSaveName(), std::ios::binary);
-    std::stringstream buffer;
-    buffer << t.rdbuf();
-    t.close();
-    this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, buffer.str());
+    this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
     std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());

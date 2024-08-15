@@ -30,6 +30,7 @@ public:
 
 	void add(RemotePlayer player);
 	RemotePlayer get(uint32_t id) const;
+	uint32_t size() const;
 private:
 	std::vector<RemotePlayer> data;
 };

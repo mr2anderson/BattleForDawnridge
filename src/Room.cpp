@@ -23,7 +23,6 @@
 #include <iostream>
 #include <sstream>
 #include "Room.hpp"
-#include "Maps.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
 #include "SaveGameButtonSpec.hpp"
 #include "EndTurnButtonSpec.hpp"
@@ -50,22 +49,14 @@
 
 
 
-Room::Room(Type type, const std::string& data) {
+Room::Room(RoomID id, const std::string &saveData) {
+	this->id = id;
+
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(10000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
-	switch (type) {
-	case Type::CreateFromMap:
-		Maps::get()->load(data, &this->map);
-		this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
-		this->currentPlayerId = 1;
-		this->move = 1;
-		break;
-	case Type::CreateFromSave:
-		this->loadSaveData(data);
-		break;
-	}
+	this->loadSaveData(saveData);
 
 	this->curcorVisibility = true;
 	this->element = nullptr;

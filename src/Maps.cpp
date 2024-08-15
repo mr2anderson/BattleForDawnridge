@@ -17,7 +17,6 @@
  */
 
 
-#include <iostream>
 #include "Maps.hpp"
 #include "Textures.hpp"
 #include "GO.hpp"
@@ -35,9 +34,6 @@ void Maps::add(const std::string &name, const std::string &path) {
 }
 void Maps::load(const std::string& name, Map *dst) {
     auto it = this->paths.find(name);
-    if (it == this->paths.end()) {
-        std::cerr << "Invalid map uid: " << name << std::endl;
-    }
     dst->load(it->second);
 }
 void Maps::generateThumbnail(const std::string& name) {

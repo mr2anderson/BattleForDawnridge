@@ -26,7 +26,9 @@
 namespace CLIENT_NET_SPECS { // enum is not used cuz it is implementation-defined
 	static constexpr uint8_t ROOM = 0;
 	namespace ROOM_CODES {
-		static constexpr uint8_t OK = 0;
-		static constexpr uint8_t CLICK = 1;
+		static constexpr uint8_t CREATE = 0;
+		static constexpr uint8_t CONNECT = 1;
+		static constexpr uint8_t OK = 2;
+		static constexpr uint8_t CLICK = 3;
 	}
 };

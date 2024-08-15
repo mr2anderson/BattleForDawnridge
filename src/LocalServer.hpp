@@ -31,11 +31,12 @@ public:
 	LocalServer(const LocalServer& copy) = delete;
 	~LocalServer();
 
-	void launch(std::shared_ptr<Room> room);
+	void finish();
+	void launch();
 	void fine() const;
 private:
-	sf::UdpSocket sendSocket, receiveSocket;
-	std::exception_ptr threadError;
-	std::atomic<bool> stopThread;
+	std::exception_ptr unexpectedError;
+	std::atomic<bool> stop;
+	std::atomic<bool> running;
 	std::unique_ptr<sf::Thread> thread;
 };

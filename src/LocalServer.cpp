@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "LocalServer.hpp"
 #include "Ports.hpp"
 #include "ClientNetSpecs.hpp"
@@ -26,20 +27,94 @@
 #include "LocalServerAlreadyLaunched.hpp"
 
 
-static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSocket *receiveSocket, std::exception_ptr *error, std::atomic_bool* p) {
-	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
-	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
 
-	RemotePlayers players;
-	for (uint32_t i = 1; i <= room->playersNumber(); i = i + 1) {
-		players.add(RemotePlayer(i, sf::IpAddress::getLocalAddress()));
+
+
+
+
+
+static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) {
+	sf::UdpSocket sendSocket, receiveSocket;
+	sendSocket.setBlocking(false);
+	if (sendSocket.bind(Ports::get()->getLocalServerSendPort()) != sf::Socket::Done) {
+		throw PortIsBusy(Ports::get()->getLocalServerSendPort());
+	}
+	receiveSocket.setBlocking(false);
+	if (receiveSocket.bind(Ports::get()->getLocalServerReceivePort()) != sf::Socket::Done) {
+		throw PortIsBusy(Ports::get()->getLocalServerReceivePort());
 	}
 
+
+
+	std::unique_ptr<Room> room = nullptr;
+	RemotePlayers players;
+
+
+
+	while (room == nullptr or room->playersNumber() != players.size()) {
+		if (*stop) {
+			return;
+		}
+		sf::Packet receivedPacket;
+		sf::IpAddress senderIP;
+		uint16_t senderPort;
+		while (receiveSocket.receive(receivedPacket, senderIP, senderPort) != sf::Socket::Status::Done) {
+			sf::sleep(sf::milliseconds(50));
+		}
+		if (senderIP != sf::IpAddress::getLocalAddress() or senderPort != Ports::get()->getClientSendPort()) {
+			continue;
+		}
+		uint8_t code;
+		receivedPacket >> code;
+		if (code == CLIENT_NET_SPECS::ROOM) {
+			sf::Uint64 roomIdVal;
+			receivedPacket >> roomIdVal;
+			receivedPacket >> code;
+			if (code == CLIENT_NET_SPECS::ROOM_CODES::CREATE) {
+				if (room == nullptr) {
+					std::string data;
+					receivedPacket >> data;
+					room = std::make_unique<Room>(RoomID(roomIdVal), data);
+					std::cout << "Room was created" << std::endl;
+
+					uint32_t playersAtHost;
+					receivedPacket >> playersAtHost;
+					while (playersAtHost and players.size() != room->playersNumber()) {
+						players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+						playersAtHost = playersAtHost - 1;
+						std::cout << "Added player to room. Total players: " << players.size() << std::endl;
+					}
+				}
+			}
+			else if (code == CLIENT_NET_SPECS::ROOM_CODES::CONNECT) {
+				if (room != nullptr) {
+					if (room->getID().value() == roomIdVal) {
+						uint32_t playersAtHost;
+						receivedPacket >> playersAtHost;
+						while (playersAtHost and players.size() != room->playersNumber()) {
+							players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+							playersAtHost = playersAtHost - 1;
+							std::cout << "Added player to room. Total players: " << players.size() << std::endl;
+						}
+					}
+					else {
+						std::cout << "Player used incorrect room id." << std::endl;
+					}
+				}
+			}
+		}
+	}
+
+
+
+	std::cout << "Room launched!" << std::endl;
+	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
+	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
 	for (; ;) {
 		Clock clock;
 
 		while (!toSend.empty()) {
-			sendSocket->send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), Ports::get()->getClientReceivePort());
+			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), Ports::get()->getClientReceivePort());
 			toSend.pop_back();
 		}
 
@@ -47,7 +122,7 @@ static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSock
 		sf::Packet receivedPacket;
 		sf::IpAddress senderIP;
 		uint16_t senderPort;
-		if (receiveSocket->receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == Ports::get()->getClientSendPort()) {
+		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == Ports::get()->getClientSendPort()) {
 			received = std::make_tuple(receivedPacket, senderIP);
 		}
 
@@ -57,13 +132,9 @@ static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSock
 		catch (RoomWasClosed&) {
 			break;
 		}
-		catch (std::exception&) {
-			*error = std::current_exception();
-			break;
-		}
 
-		if (*p) {
-			break;
+		if (*stop) {
+			return;
 		}
 
 		sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));
@@ -71,34 +142,55 @@ static void F(std::shared_ptr<Room> room, sf::UdpSocket *sendSocket, sf::UdpSock
 }
 
 
-LocalServer::LocalServer() {
-	this->stopThread = false;
-	this->thread = nullptr;
 
-	this->sendSocket.setBlocking(false);
-	if (this->sendSocket.bind(Ports::get()->getLocalServerSendPort()) != sf::Socket::Done) {
-		throw PortIsBusy(Ports::get()->getLocalServerSendPort());
+
+
+
+static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running) {
+	std::cout << "Started new local server" << std::endl;
+	*running = true;
+
+	try {
+		THREAD(unexpectedError, stop);
 	}
-	this->receiveSocket.setBlocking(false);
-	if (this->receiveSocket.bind(Ports::get()->getLocalServerReceivePort()) != sf::Socket::Done) {
-		throw PortIsBusy(Ports::get()->getLocalServerReceivePort());
+	catch (std::exception&) {
+		*unexpectedError = std::current_exception();
+		std::cout << "Local server got an unexpected error. Thread was stopped. Exception ptr was saved" << std::endl; // It is ok cuz server runned locally. No safety problems.
 	}
+
+	*running = false;
+}
+
+
+
+
+
+
+LocalServer::LocalServer() {
+	this->stop = false;
+	this->running = false;
+	this->thread = nullptr;
 }
 LocalServer::~LocalServer() {
-	if (this->thread != nullptr) {
-		this->stopThread = true;
+	this->finish();
+	std::cout << "Destroyed local server" << std::endl;
+}
+void LocalServer::finish() {
+	if (this->running) {
+		this->stop = true;
 		this->thread->wait();
+		this->stop = false;
 	}
 }
-void LocalServer::launch(std::shared_ptr<Room> room) {
-	if (this->thread != nullptr) {
+void LocalServer::launch() {
+	if (this->running) {
 		throw LocalServerAlreadyLaunched();
 	}
-	this->thread = std::make_unique<sf::Thread>(std::bind(&F, room, &this->sendSocket, &this->receiveSocket, &this->threadError, &this->stopThread));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running));
 	this->thread->launch();
 }
 void LocalServer::fine() const {
-	if (this->threadError != nullptr) {
-		std::rethrow_exception(this->threadError);
+	if (this->unexpectedError != nullptr) {
+		std::rethrow_exception(this->unexpectedError);
 	}
 }

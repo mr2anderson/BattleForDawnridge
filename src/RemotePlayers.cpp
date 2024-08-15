@@ -30,3 +30,6 @@ void RemotePlayers::add(RemotePlayer player) {
 RemotePlayer RemotePlayers::get(uint32_t id) const {
 	return this->data.at(id - 1);
 }
+uint32_t RemotePlayers::size() const {
+	return this->data.size();
+}
