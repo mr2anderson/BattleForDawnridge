@@ -153,7 +153,7 @@ static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atom
 	try {
 		THREAD(unexpectedError, stop);
 	}
-	catch (std::exception&) {
+	catch (std::exception& e) {
 		*unexpectedError = std::current_exception();
 		std::cout << "Local server got an unexpected error. Thread was stopped. Exception ptr was saved" << std::endl; // It is ok cuz server runned locally. No safety problems.
 	}

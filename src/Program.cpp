@@ -84,6 +84,8 @@ void Program::run() {
     else {
         boost::optional<StringLcl> error;
         
+        LocalServer localServer;
+        
         for (; ;) {
             Menu menu(this->window, error);
             MenuResponse menuResponse = menu.run(this->window);
@@ -94,7 +96,7 @@ void Program::run() {
             error = boost::none;
 
             if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME or menuResponse.getType() == MenuResponse::TYPE::LOAD_LOCAL_GAME) {
-                this->localServer->launch();
+                localServer.launch();
 
                 try {
                     MainScreen::Type mainScreenType;
@@ -116,7 +118,7 @@ void Program::run() {
                     }
                     catch (NoServerConnection&) {
                         try {
-                            this->localServer->fine();
+                            localServer.fine();
                             std::rethrow_exception(std::current_exception());
                         }
                         catch (std::exception&) {
@@ -141,11 +143,11 @@ void Program::run() {
                 catch (NoServerConnection&) {
                     error = StringLcl("{disconnect_client}");
                 }
-                catch (std::exception&) {
-                    error = StringLcl("{unknown_error_client}");
+                catch (std::exception& e) {
+                    error = StringLcl("{unknown_error_client}\n" + std::string(e.what()));
                 }
 
-                this->localServer->finish();
+                localServer.finish();
             }
         }
     }
