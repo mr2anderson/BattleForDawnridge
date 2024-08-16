@@ -173,7 +173,7 @@ Events LocalGameButtonSpec::getChooseMapEvent(const std::string &mapName) const 
     Events startGameOnRidgeEvent = clickEvent;
     startGameOnRidgeEvent.add(std::make_shared<StartLocalGameEvent>(mapName));
 
-    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{local_" + mapName + "_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
+    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl(mapName + "_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
 
     Events createStartGameOnRidgeVerifyWindow = clickEvent;
     createStartGameOnRidgeVerifyWindow.add(std::make_shared<CreateEEvent>(startGameOnRidgeVerifyWindow));
