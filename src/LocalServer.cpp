@@ -52,13 +52,13 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 
 
 	while (room == nullptr or room->playersNumber() != players.size()) {
-		if (*stop) {
-			return;
-		}
 		sf::Packet receivedPacket;
 		sf::IpAddress senderIP;
 		uint16_t senderPort;
 		while (receiveSocket.receive(receivedPacket, senderIP, senderPort) != sf::Socket::Status::Done) {
+			if (*stop) {
+				return;
+			}
 			sf::sleep(sf::milliseconds(50));
 		}
 		if (senderIP != sf::IpAddress::getLocalAddress() or senderPort != CLIENT_NET_SPECS::PORTS::SEND) {
@@ -150,7 +150,7 @@ static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atom
 	try {
 		THREAD(unexpectedError, stop);
 	}
-	catch (std::exception& e) {
+	catch (std::exception&) {
 		*unexpectedError = std::current_exception();
 		std::cout << "Local server got an unexpected error. Thread was stopped. Exception ptr was saved" << std::endl; // It is ok cuz server runned locally. No safety problems.
 	}
