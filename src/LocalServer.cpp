@@ -107,14 +107,18 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 
 
 	std::cout << "Room launched!" << std::endl;
+
 	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
 	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
+    uint32_t sum = 0;
+
 	for (; ;) {
 		Clock clock;
 
 		while (!toSend.empty()) {
 			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
-            std::cout << "Packet was sent. Size: " << std::get<0>(toSend.back()).getDataSize() << std::endl;
+            sum = sum + std::get<0>(toSend.back()).getDataSize();
+            std::cout << "Packet was sent. Size: " << std::get<0>(toSend.back()).getDataSize() << " bytes. Total: " << (float)sum / 1024 / 1024 << " mb" << std::endl;
 			toSend.pop_back();
 		}
 
@@ -124,7 +128,8 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 		uint16_t senderPort;
 		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
 			received = std::make_tuple(receivedPacket, senderIP);
-            std::cout << "Packet was received. Size: " << receivedPacket.getDataSize() << std::endl;
+            sum = sum + receivedPacket.getDataSize();
+            std::cout << "Packet was received. Size: " << receivedPacket.getDataSize() << " bytes. Total: " << (float)sum / 1024 / 1024 << " mb" << std::endl;
 		}
 
 		try {
