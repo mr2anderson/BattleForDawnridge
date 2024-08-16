@@ -42,6 +42,13 @@ public:
 	GO(uint32_t x, uint32_t y);
     virtual UUID getTypeUUID() const = 0;
 
+    virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
+        // Avoid checking uuid cuz server does not receive uuids from clients
+        return
+                (this->x + this->getSX() > mapSize.getWidth() or
+                this->y + this->getSY() > mapSize.getHeight());
+    }
+
     bool inView(const sf::View& view) const;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

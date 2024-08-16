@@ -29,6 +29,16 @@ public:
 	SpellProducerSpec();
 	~SpellProducerSpec() override;
 
+	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
+		if (this->IBuildingSpec::hasError(mapSize, totalPlayers)) {
+			return true;
+		}
+		if (this->spell != nullptr) { // Spell ptr can be null here
+			return this->spell->hasError(mapSize, totalPlayers);
+		}
+		return false;
+	}
+
 	Events getActiveNewMoveEvent(const Building* building, MapState* state) override;
 	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
 	boost::optional<BuildingShortInfo> getShortInfo(const Building* building) const override;

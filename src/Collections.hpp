@@ -34,6 +34,10 @@ class Collections : public ICollections {
 public:
 	Collections();
 
+	bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
+		return this->gos.hasError(mapSize, totalPlayers); // Skipping cheking sub class collections cuz they are built based on main collection
+	}
+
 	void add(GO *object) override;
 
 	uint32_t totalGOs() const override;

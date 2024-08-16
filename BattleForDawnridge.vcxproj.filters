@@ -1692,6 +1692,9 @@
     <ClInclude Include="src\CouldntOpenServerIP.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\MapDeepError.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2658,6 +2661,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CouldntOpenServerIP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MapDeepError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

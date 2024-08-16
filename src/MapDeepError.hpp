@@ -17,37 +17,15 @@
  */
 
 
-
-#include <vector>
-#include <boost/serialization/vector.hpp>
-#include "Player.hpp"
-#include "ArchiveType.hpp"
+#include <stdexcept>
 
 
 #pragma once
 
 
-class Players {
+class MapDeepError : public std::exception {
 public:
-	Players();
+	MapDeepError();
 
-	bool hasError() const {
-		for (uint32_t i = 0; i < this->v.size(); i = i + 1) {
-			if (i + 1 != this->v.at(i).getId()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	void addPlayer(const Player& player);
-	Player* getPlayerPtr(uint32_t id);
-	uint32_t total() const;
-private:
-	std::vector<Player> v;
-
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & this->v;
-    }
+	const char* what() const noexcept override;
 };

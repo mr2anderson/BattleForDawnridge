@@ -28,6 +28,13 @@ class WarriorProducerSpec : public IAreaControllerSpec {
 public:
 	WarriorProducerSpec();
 
+	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
+		if (this->IAreaControllerSpec::hasError(mapSize, totalPlayers)) {
+			return true;
+		}
+		return !this->currentProducingOK(mapSize, totalPlayers);
+	}
+
 	Events startProducing(std::shared_ptr<Warrior> w);
 	void decreaseCurrentProducingMovesLeft();
 	void stopProducing();
@@ -46,6 +53,8 @@ private:
 	bool producing;
 
 	std::tuple<uint32_t, uint32_t> getNewWarriorPosition(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state);
+
+	bool currentProducingOK(MapSize mapSize, uint32_t totalPlayers) const;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

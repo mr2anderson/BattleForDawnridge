@@ -38,6 +38,10 @@ public:
     virtual ~IBuildingSpec();
 	virtual IBuildingSpec* clone() const = 0;
 
+	virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
+		return false;
+	}
+
 	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);
 	virtual Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) const;
 	virtual Events getEventOnDestroy(const Building *building, MapState* state) const;

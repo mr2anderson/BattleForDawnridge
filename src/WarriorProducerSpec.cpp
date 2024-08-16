@@ -243,6 +243,9 @@ sf::Color WarriorProducerSpec::getHighlightColor(uint32_t playerId) const {
 uint8_t WarriorProducerSpec::getHighlightType() const {
     return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;
 }
+bool WarriorProducerSpec::currentProducingOK(MapSize mapSize, uint32_t totalPlayers) const {
+	return !this->producing or (this->currentProducing != nullptr and !this->currentProducing->hasError(mapSize, totalPlayers));
+}
 std::tuple<uint32_t, uint32_t> WarriorProducerSpec::getNewWarriorPosition(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) {
 	HashTableMapPosition<uint32_t> available = this->getAvailable(x, y, sx, sy, playerId, state);
 	for (const auto& a : available) {

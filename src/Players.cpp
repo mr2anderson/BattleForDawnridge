@@ -26,11 +26,11 @@ void Players::addPlayer(const Player& player) {
 	if (this->v.size() <= index) {
 		this->v.resize(index + 1);
 	}
-	this->v[index] = player;
+	this->v.at(index) = player;
 }
 Player* Players::getPlayerPtr(uint32_t id) {
-	return &this->v[id - 1];
+	return &this->v.at(id - 1);
 }
-uint32_t Players::total() {
+uint32_t Players::total() const {
 	return this->v.size();
 }

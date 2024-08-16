@@ -27,6 +27,10 @@ class Map {
 public:
     Map();
 
+    bool hasError() const {
+        return this->state.hasError();
+    }
+
     void load(const std::string& path);
     MapState* getStatePtr();
 private:

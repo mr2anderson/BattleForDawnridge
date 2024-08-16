@@ -34,6 +34,18 @@ public:
 	~Building() override;
 	virtual Building* createSameTypeBuilding() const = 0;
 
+	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
+		if (this->Unit::hasError(mapSize, totalPlayers)) {
+			return true;
+		}
+		for (auto spec : this->specs) {
+			if (spec == nullptr or spec->hasError(mapSize, totalPlayers)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	Events getHighlightEvent(MapState *state, uint8_t type) const;
 	Resources getLimit() const;
 	uint32_t getPopulationLimit() const;

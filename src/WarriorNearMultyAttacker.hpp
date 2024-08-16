@@ -30,6 +30,18 @@ public:
     WarriorNearMultyAttacker();
     WarriorNearMultyAttacker(uint32_t x, uint32_t y, uint32_t playerId);
 
+    bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
+        if (this->WarriorNearAttacker::hasError(mapSize, totalPlayers)) {
+            return true;
+        }
+        for (auto p : this->attackedTable) {
+            if (p.first == nullptr or p.first->hasError(mapSize, totalPlayers)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void refreshAttackedTable();
     void markAsAttacked(Unit *u);
 private:

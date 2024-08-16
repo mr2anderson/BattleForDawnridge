@@ -48,6 +48,7 @@
 #include "MapTooBig.hpp"
 #include "TooMuchGameObjects.hpp"
 #include "TooMuchPlayers.hpp"
+#include "MapDeepError.hpp"
 
 
 
@@ -155,12 +156,18 @@ void Room::loadSaveData(const std::string &data, Restrictions restrictions) {
 
 
 void Room::verifyLoadedData(Restrictions restrictions) {
+	this->verifyMap();
 	this->verifyIncorrectMoveRepresentation();
 	this->verifyIncorrectPlayersRepresentation();
 	if (restrictions == Restrictions::Enable) {
 		this->verifyTooMuchGameObjects();
 		this->verifyTooMuchPlayers();
 		this->verifyMapTooBig();
+	}
+}
+void Room::verifyMap() {
+	if (this->map.hasError()) {
+		throw MapDeepError();
 	}
 }
 void Room::verifyIncorrectMoveRepresentation() {

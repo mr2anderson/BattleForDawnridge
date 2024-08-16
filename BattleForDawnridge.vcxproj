@@ -774,6 +774,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\MainScreen.hpp" />
     <ClInclude Include="src\MainScreenButtonSpec.hpp" />
     <ClInclude Include="src\Map.hpp" />
+    <ClInclude Include="src\MapDeepError.hpp" />
     <ClInclude Include="src\MapPositionHash.hpp" />
     <ClInclude Include="src\Maps.hpp" />
     <ClInclude Include="src\MapSize.hpp" />
@@ -1104,6 +1105,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\MainScreen.cpp" />
     <ClCompile Include="src\MainScreenButtonSpec.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\MapDeepError.cpp" />
     <ClCompile Include="src\MapPositionHash.cpp" />
     <ClCompile Include="src\Maps.cpp" />
     <ClCompile Include="src\MapSize.cpp" />

@@ -33,6 +33,10 @@ public:
 	Unit();
 	Unit(uint32_t x, uint32_t y, boost::optional<uint32_t> currentHp, uint32_t playerId);
 
+	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
+		return this->HPGO::hasError(mapSize, totalPlayers) or this->playerId == 0 or this->playerId > totalPlayers;
+	}
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	Events hit(Damage d);

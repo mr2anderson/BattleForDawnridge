@@ -30,6 +30,10 @@ class MapSize {
 public:
 	MapSize();
 
+	bool hasError() const {
+		return false;
+	}
+
 	void setWidth(uint32_t newWidth);
 	void setHeight(uint32_t newHeight);
 	

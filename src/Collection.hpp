@@ -73,6 +73,16 @@ public:
     }
     Collection(const Collection& collection) = delete;
 
+    bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
+        // Skipping checking drawPriority & clickPriority cuz they are built based on newMovePriority
+        for (uint32_t i = 0; i < this->newMovePriority.size(); i = i + 1) {
+            if (this->newMovePriority.at(i) == nullptr or this->newMovePriority.at(i)->hasError(mapSize, totalPlayers)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void push(GO* t) {
         this->newMovePriority.insert(t);
         this->drawPriority.insert(t);

@@ -35,6 +35,10 @@ public:
 	Spell(uint32_t playerId);
 	virtual Spell* clone() const = 0;
 
+	virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
+		return (this->playerId == 0 or this->playerId > totalPlayers);
+	}
+
 	bool isReady() const;
 	uint32_t getCreationMovesLeft() const;
 	Events newMove(const Building* father);

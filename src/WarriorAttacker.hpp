@@ -28,6 +28,12 @@ public:
     WarriorAttacker();
     WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId);
 
+    bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
+        return 
+            (this->Warrior::hasError(mapSize, totalPlayers) or 
+            (this->getCurrentAnimation() == "attack" and (this->target == nullptr or this->target->hasError(mapSize, totalPlayers))));
+    }
+
     Damage getDamage() const;
     uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const override;
     bool blockBuildingAbility() const override;

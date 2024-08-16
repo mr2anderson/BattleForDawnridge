@@ -124,6 +124,7 @@ private:
 	void loadSaveData(const std::string& data, Restrictions restrictions);
 
 	void verifyLoadedData(Restrictions restrictions);
+	void verifyMap();
 	void verifyIncorrectMoveRepresentation();
 	void verifyIncorrectPlayersRepresentation();
 	void verifyTooMuchGameObjects();

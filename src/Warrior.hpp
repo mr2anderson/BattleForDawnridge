@@ -38,7 +38,7 @@ class Warrior : public Unit, public ISelectable, public IWithSuspendingAnimation
 public:
 	Warrior();
 	Warrior(uint32_t x, uint32_t y, uint32_t playerId);
-	virtual Warrior* cloneWarrior() const = 0;
+    virtual Warrior* cloneWarrior() const = 0;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

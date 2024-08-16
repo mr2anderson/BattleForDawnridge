@@ -31,6 +31,10 @@ class MapState {
 public:
 	MapState();
 
+	bool hasError() const {
+		return (this->icollections == nullptr or this->mapSize.hasError() or this->players.hasError() or this->icollections->hasError(this->mapSize, this->players.total()));
+	}
+
 	std::shared_ptr<ICollections> getCollectionsPtr();
 	MapSize* getMapSizePtr();
 	Players* getPlayersPtr();

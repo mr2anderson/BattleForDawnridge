@@ -21,6 +21,7 @@
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/export.hpp>
+#include "MapSize.hpp"
 #include "ArchiveType.hpp"
 
 
@@ -39,6 +40,8 @@ class ICollections {
 public:
 	ICollections(); // For boost serialization
 	virtual ~ICollections();
+
+	virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const = 0;
 
 	virtual void add(GO* object) = 0;
 
