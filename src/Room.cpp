@@ -50,6 +50,7 @@
 #include "TooMuchPlayers.hpp"
 #include "MapDeepError.hpp"
 #include "CurrentRoomIDButtonSpec.hpp"
+#include "GlobalRandomGenerator64.hpp"
 
 
 
@@ -60,8 +61,8 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->id = id;
 
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
-	this->sendWorldUIStateTimer = Timer(10000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
+    this->initPackagesWereSent = false;
 
 	this->loadSaveData(saveData, restrictions);
 
@@ -105,6 +106,11 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	if (this->noOKReceivedTimer.ready()) {
 		throw RoomWasClosed();
 	}
+
+    if (!this->initPackagesWereSent) {
+        this->sendWorldUIStateToClients(toSend, remotePlayers, SERVER_NET_SPECS::Importance::ExtremelyImportant);
+        this->initPackagesWereSent = true;
+    }
 
 	this->sendTimeCommandsToClients(toSend, remotePlayers);
 	this->receive(received, toSend, remotePlayers);
@@ -193,8 +199,8 @@ void Room::verifyIncorrectPlayersRepresentation() {
 	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
 		if (this->playerIsActive.at(i)) {
 			bool ok = false;
-			for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-				const Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+			for (uint32_t j = 0; j < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); j = j + 1) {
+				const Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(j);
 				if (b->exist() and b->getPlayerId() == i + 1 and b->isVictoryCondition()) {
 					ok = true;
 					break;
@@ -240,7 +246,7 @@ void Room::processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress
 		somethingProcessed = true;
 	}
 	if (somethingProcessed) {
-		this->sendWorldUIStateToClients(toSend, remotePlayers);
+		this->sendWorldUIStateToClients(toSend, remotePlayers, SERVER_NET_SPECS::Importance::Important);
 	}
 }
 bool Room::allNewMoveEventsAdded() const {
@@ -290,7 +296,7 @@ void Room::processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>*
 		somethingProcessed = true;
 	}
 	if (sendToClients and somethingProcessed) {
-		this->sendWorldUIStateToClients(toSend, remotePlayers);
+		this->sendWorldUIStateToClients(toSend, remotePlayers, SERVER_NET_SPECS::Importance::Important);
 	}
 }
 void Room::addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
@@ -308,7 +314,7 @@ void Room::addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress
 	}
 
     if (urgentHandled) {
-        this->sendWorldUIStateToClients(toSend, remotePlayers);
+        this->sendWorldUIStateToClients(toSend, remotePlayers, SERVER_NET_SPECS::Importance::Important);
     }
 }
 
@@ -324,17 +330,12 @@ void Room::sendTimeCommandsToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 		this->sendOKTimer.reset();
 		this->sendOKToClients(toSend, remotePlayers);
 	}
-	if (this->sendWorldUIStateTimer.ready()) {
-		this->sendWorldUIStateTimer.reset();
-		this->sendWorldUIStateToClients(toSend, remotePlayers);
-	}
 }
 void Room::sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	sf::Packet packet;
-    packet << (sf::Uint64)this->getID().value();
+	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::OK;
 
-	this->sendToClients(packet, toSend, remotePlayers);
+	this->sendToClients(packet, toSend, remotePlayers, SERVER_NET_SPECS::Importance::NotImportant);
 }
 std::vector<std::shared_ptr<const RectangularUiElement>> Room::makeButtonBases() {
 	std::vector<std::shared_ptr<const RectangularUiElement>> bases(this->buttons.size());
@@ -379,7 +380,7 @@ ResourceBar Room::makeResourceBar() {
 	
 	return bar;
 }
-void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers) {
+void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers, SERVER_NET_SPECS::Importance importance) {
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 	}
@@ -394,27 +395,43 @@ void Room::sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAd
 	ar << this->map << this->element << this->selected << this->highlightTable << this->curcorVisibility << buttonBases << resourceBar;
 	s.flush();
 
-	sf::Packet packet;
-    packet << (sf::Uint64)this->getID().value();
+	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
 	packet << serialStr;
 
-	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
-		throw PackageLimit(); // TODO
-	}
-
-	this->sendToClients(packet, toSend, remotePlayers);
+	this->sendToClients(packet, toSend, remotePlayers, importance);
 }
-void Room::sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
+
+
+
+
+
+
+sf::Packet Room::makeBasePacket() const {
+    sf::Packet packet;
+    packet << (sf::Uint64)GlobalRandomGenerator64::get()->gen();
+    packet << (sf::Uint64)this->getID().value();
+    return packet;
+}
+void Room::sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, SERVER_NET_SPECS::Importance importance) {
 	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
 		sf::IpAddress clientIp = remotePlayers.get(i).getIp();
 		uint32_t clientIpInt = clientIp.toInteger();
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
 			clientTable[clientIpInt] = true;
-			toSend->emplace_back(what, clientIp);
+            this->sendToClient(what, toSend, clientIp, importance);
 		}
 	}
+}
+void Room::sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host, SERVER_NET_SPECS::Importance importance) {
+    if (what.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
+        throw PackageLimit();
+    }
+
+    for (uint32_t i = 0; i < importance; i = i + 1) {
+        toSend->emplace_back(what, host);
+    }
 }
 
 
@@ -429,16 +446,21 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 	sf::Packet packet = std::get<0>(received.value());
 	sf::IpAddress ip = std::get<1>(received.value());
 
-    sf::Uint64 roomId;
-    packet >> roomId;
-    if (this->id.value() == roomId) {
-        uint8_t code;
-        packet >> code;
-        if (code == CLIENT_NET_SPECS::CODES::OK) {
-            this->receiveOK();
-        }
-        else if (code == CLIENT_NET_SPECS::CODES::CLICK) {
-            this->receiveClick(packet, ip, toSend, remotePlayers);
+    sf::Uint64 packageUID;
+    packet >> packageUID;
+    if (this->receivedPackages.find(packageUID) == this->receivedPackages.end()) {
+        this->receivedPackages[packageUID] = true;
+        sf::Uint64 roomId;
+        packet >> roomId;
+        if (this->id.value() == roomId) {
+            uint8_t code;
+            packet >> code;
+            if (code == CLIENT_NET_SPECS::CODES::OK) {
+                this->receiveOK();
+            }
+            else if (code == CLIENT_NET_SPECS::CODES::CLICK) {
+                this->receiveClick(packet, ip, toSend, remotePlayers);
+            }
         }
     }
 }
@@ -662,11 +684,10 @@ void Room::handleBuild(std::shared_ptr<BuildEvent> e, std::vector<std::tuple<sf:
 	this->map.getStatePtr()->getCollectionsPtr()->add(b);
 }
 void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	sf::Packet packet;
-    packet << (sf::Uint64)this->id.value();
+	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::SOUND;
 	packet << e->getSoundName();
-	this->sendToClients(packet, toSend, remotePlayers);
+	this->sendToClients(packet, toSend, remotePlayers, SERVER_NET_SPECS::Importance::ExtremelyImportant);
 }
 void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->element = e->getElement();
@@ -676,15 +697,14 @@ void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector
 	this->changeMove();
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	sf::Packet packet;
-    packet << (sf::Uint64 )this->id.value();
+	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
 	switch (e->getType()) {
 	case ReturnToMenuEvent::Type::CURRENT_PLAYER:
-		toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
+		this->sendToClient(packet, toSend, remotePlayers.get(this->currentPlayerId).getIp(), SERVER_NET_SPECS::Importance::ExtremelyImportant);
 		break;
 	case ReturnToMenuEvent::Type::EVERY_PLAYER:
-		this->sendToClients(packet, toSend, remotePlayers);
+		this->sendToClients(packet, toSend, remotePlayers, SERVER_NET_SPECS::Importance::ExtremelyImportant);
 		break;
 	}
 }
@@ -733,14 +753,13 @@ void Room::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirect
 	e->getWarrior()->changeDirection(e->getDirection());
 }
 void Room::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	sf::Packet packet;
-    packet << (sf::Uint64)this->id.value();
+	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::FOCUS;
 	packet << e->getX();
 	packet << e->getY();
 	packet << e->getSX();
 	packet << e->getSY();
-	this->sendToClients(packet, toSend, remotePlayers);
+	this->sendToClients(packet, toSend, remotePlayers, SERVER_NET_SPECS::Importance::ExtremelyImportant);
 }
 void Room::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->highlightTable.clear();
@@ -846,14 +865,10 @@ void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent
 	e->getSpec()->increaseMoveCtr();
 }
 void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
-	sf::Packet packet;
-    packet << (sf::Uint64)this->getID().value();
+	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
-	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
-		throw PackageLimit();
-	}
-	toSend->emplace_back(packet, remotePlayers.get(this->currentPlayerId).getIp());
+	this->sendToClient(packet, toSend, remotePlayers.get(this->currentPlayerId).getIp(), SERVER_NET_SPECS::Importance::ExtremelyImportant);
 }
 void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers) {
 	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());

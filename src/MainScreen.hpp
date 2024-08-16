@@ -20,6 +20,7 @@
 #include <SFML/Graphics.hpp>
 #include <queue>
 #include <SFML/Network.hpp>
+#include <unordered_map>
 #include "IlluminanceTable.hpp"
 #include "RoomID.hpp"
 #include "Map.hpp"
@@ -29,6 +30,7 @@
 #include "ISelectable.hpp"
 #include "HighlightTable.hpp"
 #include "ResourceBar.hpp"
+#include "ClientNetSpecs.hpp"
 
 
 #pragma once
@@ -49,6 +51,8 @@ public:
 	static constexpr uint32_t EVERYONE = (1 << 30);
 private:
 	bool alreadyFinished;
+
+    std::unordered_map<uint64_t, bool> receivedPackages;
 
 	sf::IpAddress serverIP;
 	sf::UdpSocket sendSocket;
@@ -75,6 +79,8 @@ private:
 	sf::View view;
 	IlluminanceTable illiminanceTable;
 
+    sf::Packet makeBasePacket() const;
+    void send(sf::Packet &what, CLIENT_NET_SPECS::Importance importance);
 
 	void sendInit();
 	void sendOK();

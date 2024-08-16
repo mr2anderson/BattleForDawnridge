@@ -19,6 +19,7 @@
 
 #include <queue>
 #include <boost/optional.hpp>
+#include <unordered_map>
 #include "RemotePlayers.hpp"
 #include "Timer.hpp"
 #include "RoomID.hpp"
@@ -78,6 +79,7 @@
 #include "IncreaseVCSMoveCtrEvent.hpp"
 #include "SaveGameEvent.hpp"
 #include "LimitResourcesEvent.hpp"
+#include "ServerNetSpecs.hpp"
 
 
 #pragma once
@@ -101,9 +103,11 @@ public:
 private:
 	RoomID id;
 
+    std::unordered_map<uint64_t, bool> receivedPackages;
+
 	Timer sendOKTimer;
-	Timer sendWorldUIStateTimer;
 	Timer noOKReceivedTimer;
+    bool initPackagesWereSent;
 
 	Map map;
 	std::vector<bool> playerIsActive;
@@ -144,8 +148,11 @@ private:
 	void sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
-    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers);
-	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers, SERVER_NET_SPECS::Importance importance);
+
+    sf::Packet makeBasePacket() const;
+	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, SERVER_NET_SPECS::Importance importance);
+    void sendToClient(const sf::Packet &what,  std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host, SERVER_NET_SPECS::Importance importance);
 
 	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 	void receiveOK();

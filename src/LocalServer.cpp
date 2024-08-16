@@ -51,7 +51,7 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 
 
 
-	while (room == nullptr or room->playersNumber() != players.size()) {
+	while (room == nullptr or room->playersNumber() != players.size()) { // Block list is not used cuz server run locally
 		sf::Packet receivedPacket;
 		sf::IpAddress senderIP;
 		uint16_t senderPort;
@@ -64,6 +64,8 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 		if (senderIP != sf::IpAddress::getLocalAddress() or senderPort != CLIENT_NET_SPECS::PORTS::SEND) {
 			continue;
 		}
+        sf::Uint64 packageId;
+        receivedPacket >> packageId;
         sf::Uint64 roomIdVal;
         receivedPacket >> roomIdVal;
         uint8_t code;
@@ -112,6 +114,7 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 
 		while (!toSend.empty()) {
 			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
+            std::cout << "Packet was sent. Size: " << std::get<0>(toSend.back()).getDataSize() << std::endl;
 			toSend.pop_back();
 		}
 
@@ -121,6 +124,7 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 		uint16_t senderPort;
 		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
 			received = std::make_tuple(receivedPacket, senderIP);
+            std::cout << "Packet was received. Size: " << receivedPacket.getDataSize() << std::endl;
 		}
 
 		try {

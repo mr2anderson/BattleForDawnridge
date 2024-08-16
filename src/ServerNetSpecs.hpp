@@ -25,6 +25,7 @@
 
 // Package format:
 /*
+ * package_unique_id (sf::Uint64)
  * room_id (sf::Uint64)
  * code (uint8_t)
  * additional_code_info
@@ -42,4 +43,9 @@ namespace SERVER_NET_SPECS {
         static constexpr uint16_t SEND = 2089;
         static constexpr uint16_t RECEIVE = 2090;
     }
+    typedef enum Importance {
+        NotImportant = 1,
+        Important = 2,
+        ExtremelyImportant = 5
+    } Importance;
 };

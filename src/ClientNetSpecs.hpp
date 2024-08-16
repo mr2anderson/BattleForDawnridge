@@ -25,6 +25,7 @@
 
 // Package format:
 /*
+ * package unique id (sf::Uint64)
  * room_id (sf::Uint64)
  * code (uint8_t)
  * additional_code_info
@@ -40,4 +41,9 @@ namespace CLIENT_NET_SPECS {
         static constexpr uint16_t SEND = 2017;
         static constexpr uint16_t RECEIVE = 2018;
     }
+    typedef enum Importance {
+        NotImportant = 1,
+        Important = 2,
+        ExtremelyImportant = 5
+    } Importance;
 };
