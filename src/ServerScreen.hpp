@@ -35,6 +35,8 @@ private:
 	bool alreadyFinished;
 	MenuBg bg;
 	Logs logs;
+    sf::UdpSocket sendSocket;
+    sf::UdpSocket receiveSocket;
 
 	void drawEverything(sf::RenderWindow& window);
 };

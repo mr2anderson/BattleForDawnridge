@@ -17,14 +17,18 @@
  */
 
 
+#include <iostream>
 #include "ServerScreen.hpp"
-#include "IsServerTable.hpp"
 #include "Textures.hpp"
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
 #include "Label.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "PublicIP.hpp"
+#include "ServerNetSpecs.hpp"
+#include "ClientNetSpecs.hpp"
+#include "Room.hpp"
+#include "RoomWasClosed.hpp"
 
 
 ServerScreen::ServerScreen(sf::RenderWindow& window) {
@@ -39,13 +43,26 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 		this->logs.add(StringLcl("{public_ip}") + StringLcl(PublicIP::get()->getIp().toString()));
 	}
 	this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
+
+    if (this->sendSocket.bind(SERVER_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
+        this->logs.add(StringLcl("{couldnt_bind_send_socket}"));
+    }
+    if (this->receiveSocket.bind(SERVER_NET_SPECS::PORTS::RECEIVE) != sf::Socket::Done) {
+        this->logs.add(StringLcl("{couldnt_bind_receive_port}"));
+    }
 }
 ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 	if (this->alreadyFinished) {
 		throw ScreenAlreadyFinished();
 	}
 	this->alreadyFinished = true;
+
 	window.setMouseCursorVisible(false);
+
+    boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
+    std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
+
+    std::vector<boost::optional<std::tuple<Room, RemotePlayers>>> rooms;
 
 	sf::Event event;
 	for (; ;) {
@@ -56,8 +73,37 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 				}
 			}
 		}
+
 		Playlist::get()->update();
+
 		this->drawEverything(window);
+
+        received = boost::none;
+        sf::Packet receivedPacket;
+        sf::IpAddress senderIP;
+        uint16_t senderPort;
+        if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
+            received = std::make_tuple(receivedPacket, senderIP);
+        }
+
+        for (uint32_t i = 0; i < rooms.size(); i = i + 1) {
+            if (rooms.at(i).has_value()) {
+                try {
+                    std::get<0>(rooms.at(i).value()).update(received, &toSend, std::get<1>(rooms.at(i).value()));
+                }
+                catch (RoomWasClosed &) {
+
+                }
+                catch (std::exception&) {
+
+                }
+
+                while (!toSend.empty()) {
+                    sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
+                    toSend.pop_back();
+                }
+            }
+        }
 	}
 }
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
