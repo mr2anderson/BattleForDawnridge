@@ -49,6 +49,7 @@
 #include "TooMuchGameObjects.hpp"
 #include "TooMuchPlayers.hpp"
 #include "MapDeepError.hpp"
+#include "CurrentRoomIDButtonSpec.hpp"
 
 
 
@@ -74,6 +75,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->buttons.emplace_back(SaveGameButtonSpec(1));
 	this->buttons.emplace_back(EndTurnButtonSpec(2));
 	this->buttons.emplace_back(BuildButtonSpec(3));
+	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id.readableValue()));
 }
 
 

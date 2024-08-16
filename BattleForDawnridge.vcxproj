@@ -666,6 +666,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CreateAnimationEvent.hpp" />
     <ClInclude Include="src\CreateEEvent.hpp" />
     <ClInclude Include="src\CreditsButtonSpec.hpp" />
+    <ClInclude Include="src\CurrentRoomIDButtonSpec.hpp" />
     <ClInclude Include="src\Damage.hpp" />
     <ClInclude Include="src\DecreaseBurningMovesLeftEvent.hpp" />
     <ClInclude Include="src\DecreaseCurrentProducingMovesLeftEvent.hpp" />
@@ -1012,6 +1013,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CreateAnimationEvent.cpp" />
     <ClCompile Include="src\CreateEEvent.cpp" />
     <ClCompile Include="src\CreditsButtonSpec.cpp" />
+    <ClCompile Include="src\CurrentRoomIDButtonSpec.cpp" />
     <ClCompile Include="src\Damage.cpp" />
     <ClCompile Include="src\DecreaseBurningMovesLeftEvent.cpp" />
     <ClCompile Include="src\DecreaseCurrentProducingMovesLeftEvent.cpp" />
