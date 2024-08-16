@@ -22,9 +22,9 @@
 #include "Menu.hpp"
 #include "Maps.hpp"
 #include "SoundQueue.hpp"
-#include "Playlist.hpp"
 #include "ColorTheme.hpp"
 #include "WindowButton.hpp"
+#include "MenuBg.hpp"
 #include "Sounds.hpp"
 #include "Locales.hpp"
 #include "Textures.hpp"
@@ -48,6 +48,7 @@ Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additiona
     this->alreadyFinished = false;
     this->closeMenu = false;
     this->element = nullptr;
+    this->generateButtons();
 
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -88,7 +89,11 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
                 }
 			}
 		}
+
+        this->regenerateButtons();
+
 		this->drawEverything(window);
+
         if (this->element != nullptr) {
             this->element->update();
             if (this->element->finished()) {
@@ -96,6 +101,7 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
             }
         }
         this->processEvents();
+
         if (this->closeMenu) {
             return MenuResponse(MenuResponse::TYPE::EXIT, "");
         }
@@ -104,9 +110,9 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
         }
 	}
 }
-std::vector<Button> Menu::generateButtons() {
-    return {
-        Button(LocalGameButtonSpec()),
+void Menu::generateButtons() {
+    this->buttons = {
+        Button(LocalGameButtonSpec(0)),
         Button(NetworkGameButtonSpec(1)),
         Button(GuideButtonSpec(2)),
         Button(LanguageButtonSpec(3)),
@@ -116,9 +122,25 @@ std::vector<Button> Menu::generateButtons() {
         Button(ExitButtonSpec(7))
     };
 }
+void Menu::regenerateButtons() {
+    std::set<std::string> saveNames;
+    for (const auto& entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
+        if (entry.is_regular_file() and entry.path().extension() == ".save") {
+            saveNames.insert(entry.path().filename().string());
+        }
+    }
+
+    if (!this->prevSavesNumber.has_value() or this->prevSavesNumber.value() != saveNames.size()) {
+
+        std::vector<std::string> mapNames;
+        mapNames.push_back("ridge");
+
+        this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);
+    }
+}
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear();
-    window.draw(this->bg);
+    window.draw(MenuBg());
     this->drawButtons(window);
     if (this->element != nullptr) {
         window.draw(*this->element);
@@ -126,8 +148,7 @@ void Menu::drawEverything(sf::RenderWindow &window) {
 	window.display();
 }
 void Menu::drawButtons(sf::RenderWindow& window) {
-    std::vector<Button> buttons = this->generateButtons();
-    for (const auto& b : buttons) {
+    for (const auto& b : this->buttons) {
         window.draw(b);
     }
 }
@@ -141,8 +162,7 @@ void Menu::processEvents() {
     }
 }
 void Menu::addButtonClickEventToQueue() {
-    std::vector<Button> buttons = this->generateButtons();
-    for (const auto& b : buttons) {
+    for (const auto& b : this->buttons) {
         Events event = b.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
         if (!event.empty()) {
             this->addEvents(event);

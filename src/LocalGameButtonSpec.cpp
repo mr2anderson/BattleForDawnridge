@@ -17,8 +17,6 @@
  */
 
 
-#include <set>
-#include <filesystem>
 #include "LocalGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "WindowTwoButtons.hpp"
@@ -36,6 +34,10 @@
 LocalGameButtonSpec::LocalGameButtonSpec() = default;
 LocalGameButtonSpec::LocalGameButtonSpec(uint32_t index) : MenuButtonSpec(index) {
 
+}
+LocalGameButtonSpec::LocalGameButtonSpec(uint32_t index, const std::vector<std::string>& mapNames, const std::set<std::string>& saveNames) : MenuButtonSpec(index) {
+    this->mapNames = mapNames;
+    this->saveNames = saveNames;
 }
 StringLcl LocalGameButtonSpec::getString() const {
     return { "{local_game}" };
@@ -90,12 +92,15 @@ Events LocalGameButtonSpec::getChooseMapEvent() const {
         true,
         clickEvent
     );
-    chooseLevelWindowComponents.emplace_back(
-          "ridge",
-        StringLcl("{ridge_description}"),
-        true,
-        this->getChooseRidgeEvent()
-    );
+    for (const auto& mapName : this->mapNames) {
+        chooseLevelWindowComponents.emplace_back(
+            mapName,
+            StringLcl("{" + mapName + "_description}"),
+            true,
+            this->getChooseMapEvent(mapName)
+        );
+    }
+    
 
     std::shared_ptr<HorizontalSelectionWindow> chooseLevelWindow = std::make_shared<HorizontalSelectionWindow>(chooseLevelWindowComponents);
 
@@ -112,15 +117,8 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::set<std::string> saves;
-    if (std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
-        for (const auto& entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
-            saves.insert(entry.path().filename().string());
-        }
-    }
-
     std::shared_ptr<PopUpElement> window;
-    if (saves.empty()) {
+    if (this->saveNames.empty()) {
         window = std::make_shared<WindowButton>(StringLcl("{you_do_not_have_any_saves_yet}"), StringLcl("{OK}"), clickEvent);
     }
     else {
@@ -131,7 +129,7 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
             true,
             clickEvent
         );
-        for (const auto& save : saves) {
+        for (const auto& save : this->saveNames) {
 
             Events loadSaveEvent = clickEvent;
             loadSaveEvent.add(std::make_shared<LoadLocalGameEvent>(save));
@@ -168,14 +166,14 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
 
 
 
-Events LocalGameButtonSpec::getChooseRidgeEvent() const {
+Events LocalGameButtonSpec::getChooseMapEvent(const std::string &mapName) const {
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
     Events startGameOnRidgeEvent = clickEvent;
-    startGameOnRidgeEvent.add(std::make_shared<StartLocalGameEvent>("ridge"));
+    startGameOnRidgeEvent.add(std::make_shared<StartLocalGameEvent>(mapName));
 
-    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{local_ridge_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
+    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{local_" + mapName + "_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
 
     Events createStartGameOnRidgeVerifyWindow = clickEvent;
     createStartGameOnRidgeVerifyWindow.add(std::make_shared<CreateEEvent>(startGameOnRidgeVerifyWindow));

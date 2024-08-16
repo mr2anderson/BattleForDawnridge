@@ -27,7 +27,6 @@
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "MenuResponse.hpp"
-#include "MenuBg.hpp"
 
 
 #pragma once
@@ -44,9 +43,11 @@ private:
 	boost::optional<MenuResponse> response;
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
-	MenuBg bg;
+    std::vector<Button> buttons;
+    boost::optional<uint32_t> prevSavesNumber;
 
-    std::vector<Button> generateButtons();
+    void generateButtons();
+    void regenerateButtons();
 
 	void drawEverything(sf::RenderWindow& window);
     void drawButtons(sf::RenderWindow& window);
