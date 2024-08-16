@@ -27,7 +27,6 @@
 #include "CreateEEvent.hpp"
 #include "Textures.hpp"
 #include "SelectEvent.hpp"
-#include "FirstTimeTipsTable.hpp"
 #include "EnableCursorEvent.hpp"
 #include "DisableCursorEvent.hpp"
 #include "Building.hpp"
@@ -50,17 +49,7 @@ Events BuildingMode::start(MapState *state) {
 	startEvent.add(std::make_shared<SelectEvent>(this));
 	startEvent.add(std::make_shared<DisableCursorEvent>());
 
-	if (FirstTimeTipsTable::get()->wasDisplayed("building_mode_guide")) {
-		events = events + startEvent;
-	}
-	else {
-		FirstTimeTipsTable::get()->markAsDisplayed("building_mode_guide");
-
-		startEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-		std::shared_ptr<WindowButton> buildingModeGuide = std::make_shared<WindowButton>(StringLcl("{building_mode_guide}"), StringLcl("{OK}"), startEvent);
-		events.add(std::make_shared<CreateEEvent>(buildingModeGuide));
-	}
+	events = events + startEvent;
 
 	return events;
 }

@@ -26,7 +26,6 @@
 #include "SubResourcesEvent.hpp"
 #include "SetSpellEvent.hpp"
 #include "UseSpellEvent.hpp"
-#include "FirstTimeTipsTable.hpp"
 #include "PlaySoundEvent.hpp"
 
 
@@ -88,19 +87,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 					Events useSpellEvent;
 					useSpellEvent.add(std::make_shared<UseSpellEvent>(this->spell));
 
-                    Events event;
-                    if (FirstTimeTipsTable::get()->wasDisplayed("spell_mode_guide")) {
-                        event = useSpellEvent;
-                    }
-                    else {
-                        Events clickSoundEvent;
-                        clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-                        FirstTimeTipsTable::get()->markAsDisplayed("spell_mode_guide");
-                        std::shared_ptr<WindowButton> guide = std::make_shared<WindowButton>(StringLcl("{spell_mode_guide}"), StringLcl("{OK}"), useSpellEvent);
-                        event = event + clickSoundEvent;
-                        event.add(std::make_shared<CreateEEvent>(guide));
-                    }
+                    Events event = useSpellEvent;
 
 					components.emplace_back(
 						HorizontalSelectionWindowComponent(spell->getTextureName(),

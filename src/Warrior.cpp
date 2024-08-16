@@ -34,7 +34,6 @@
 #include "HPFlyingE.hpp"
 #include "SubHpEvent.hpp"
 #include "Textures.hpp"
-#include "FirstTimeTipsTable.hpp"
 #include "StartWarriorAnimationEvent.hpp"
 #include "WarriorHPPointer.hpp"
 #include "UnselectEvent.hpp"
@@ -646,17 +645,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
         selectThisEvent.add(std::make_shared<SelectEvent>(this));
         selectThisEvent.add(std::make_shared<DisableCursorEvent>());
 
-        if (FirstTimeTipsTable::get()->wasDisplayed("warrior_selection_guide")) {
-            response = response + selectThisEvent;
-        }
-        else {
-            FirstTimeTipsTable::get()->markAsDisplayed("warrior_selection_guide");
-
-            selectThisEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-            std::shared_ptr<WindowButton> warriorSelectionGuide = std::make_shared<WindowButton>(StringLcl("{warrior_selection_guide}"), StringLcl("{OK}"), selectThisEvent);
-            response.add(std::make_shared<CreateEEvent>(warriorSelectionGuide));
-        }
+        response = response + selectThisEvent;
     }
     else {
         Events clickSoundEvent;
