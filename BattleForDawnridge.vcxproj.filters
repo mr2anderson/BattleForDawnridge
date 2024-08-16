@@ -1686,6 +1686,12 @@
     <ClInclude Include="src\StartNetworkGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ServerIP.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CouldntOpenServerIP.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2646,6 +2652,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StartNetworkGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerIP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CouldntOpenServerIP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

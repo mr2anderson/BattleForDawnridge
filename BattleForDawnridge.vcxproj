@@ -660,6 +660,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CouldntOpenMap.hpp" />
     <ClInclude Include="src\CouldntOpenMusic.hpp" />
     <ClInclude Include="src\CouldntOpenParameters.hpp" />
+    <ClInclude Include="src\CouldntOpenServerIP.hpp" />
     <ClInclude Include="src\CouldntOpenSound.hpp" />
     <ClInclude Include="src\CouldntOpenTexture.hpp" />
     <ClInclude Include="src\CreateAnimationEvent.hpp" />
@@ -855,6 +856,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SelectEvent.hpp" />
     <ClInclude Include="src\SerializableColor.hpp" />
     <ClInclude Include="src\serialize-tuple\serialize_tuple.h" />
+    <ClInclude Include="src\ServerIP.hpp" />
     <ClInclude Include="src\ServerNetSpecs.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
@@ -1003,6 +1005,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CouldntOpenMap.cpp" />
     <ClCompile Include="src\CouldntOpenMusic.cpp" />
     <ClCompile Include="src\CouldntOpenParameters.cpp" />
+    <ClCompile Include="src\CouldntOpenServerIP.cpp" />
     <ClCompile Include="src\CouldntOpenSound.cpp" />
     <ClCompile Include="src\CouldntOpenTexture.cpp" />
     <ClCompile Include="src\CreateAnimationEvent.cpp" />
@@ -1179,6 +1182,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ScreenAlreadyFinished.cpp" />
     <ClCompile Include="src\SelectEvent.cpp" />
     <ClCompile Include="src\SerializableColor.cpp" />
+    <ClCompile Include="src\ServerIP.cpp" />
     <ClCompile Include="src\ServerScreen.cpp" />
     <ClCompile Include="src\ServerScreenResponse.cpp" />
     <ClCompile Include="src\SetFireEvent.cpp" />

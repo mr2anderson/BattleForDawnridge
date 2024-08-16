@@ -22,8 +22,6 @@
 #include "Locales.hpp"
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
-
-
 #include "PlaySoundEvent.hpp"
 
 
