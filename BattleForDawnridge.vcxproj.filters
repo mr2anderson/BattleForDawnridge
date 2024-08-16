@@ -1680,6 +1680,12 @@
     <ClInclude Include="src\PointerIsNull.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LoadNetworkGameEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StartNetworkGameEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2634,6 +2640,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PointerIsNull.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadNetworkGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StartNetworkGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

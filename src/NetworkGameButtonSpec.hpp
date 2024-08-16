@@ -17,6 +17,8 @@
  */
 
 
+#include <vector>
+#include <set>
 #include "MenuButtonSpec.hpp"
 
 
@@ -27,7 +29,16 @@ class NetworkGameButtonSpec : public MenuButtonSpec {
 public:
 	NetworkGameButtonSpec();
 	NetworkGameButtonSpec(uint32_t index);
+	NetworkGameButtonSpec(uint32_t index, const std::vector<std::string>& mapNames, const std::set<std::string>& saveNames);
 private:
+	std::vector<std::string> mapNames;
+	std::set<std::string> saveNames;
+
 	StringLcl getString() const override;
 	Events getEvents() const override;
+
+	Events getChooseMapEvent() const;
+	Events getChooseSaveEvent() const;
+
+	Events getChooseMapEvent(const std::string& mapName) const;
 };

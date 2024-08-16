@@ -31,8 +31,13 @@ public:
 
 	enum TYPE {
 		EXIT,
+
 		START_LOCAL_GAME,
-		LOAD_LOCAL_GAME
+		LOAD_LOCAL_GAME,
+
+		START_NETWORK_GAME,
+		LOAD_NETWORK_GAME,
+		CONNECT_TO_NETWORK_GAME
 	};
 private:
 	uint8_t type;

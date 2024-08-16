@@ -136,6 +136,7 @@ void Menu::regenerateButtons() {
         mapNames.push_back("ridge");
 
         this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);
+        this->buttons.at(1) = NetworkGameButtonSpec(1, mapNames, saveNames);
     }
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
@@ -196,6 +197,12 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<LoadLocalGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadLocalGameEvent>(e)) {
         this->handleLoadLocalGameEvent(loadGameEvent);
     }
+    else if (std::shared_ptr<StartNetworkGameEvent> startGameEvent = std::dynamic_pointer_cast<StartNetworkGameEvent>(e)) {
+        this->handleStartNetworkGameEvent(startGameEvent);
+    }
+    else if (std::shared_ptr<LoadNetworkGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadNetworkGameEvent>(e)) {
+        this->handleLoadNetworkGameEvent(loadGameEvent);
+    }
     else if (std::shared_ptr<DeleteSaveEvent> deleteSaveEvent = std::dynamic_pointer_cast<DeleteSaveEvent>(e)) {
         this->handleDeleteSaveEvent(deleteSaveEvent);
     }
@@ -221,6 +228,12 @@ void Menu::handleStartLocalGameEvent(std::shared_ptr<StartLocalGameEvent> e) {
 }
 void Menu::handleLoadLocalGameEvent(std::shared_ptr<LoadLocalGameEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::LOAD_LOCAL_GAME, e->getSaveName());
+}
+void Menu::handleStartNetworkGameEvent(std::shared_ptr<StartNetworkGameEvent> e) {
+    this->response = MenuResponse(MenuResponse::TYPE::START_NETWORK_GAME, e->getMapName());
+}
+void Menu::handleLoadNetworkGameEvent(std::shared_ptr<LoadNetworkGameEvent> e) {
+    this->response = MenuResponse(MenuResponse::TYPE::LOAD_NETWORK_GAME, e->getSaveName());
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
     std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());

@@ -45,6 +45,7 @@ private:
 	sf::RenderWindow window;
 
     void localGame(const MenuResponse &response, boost::optional<StringLcl> &error);
+	void networkGame(const MenuResponse& response, boost::optional<StringLcl>& error);
 
     void handleException(std::exception_ptr exception, boost::optional<StringLcl> &error);
 };

@@ -27,6 +27,8 @@
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "MenuResponse.hpp"
+#include "StartNetworkGameEvent.hpp"
+#include "LoadNetworkGameEvent.hpp"
 
 
 #pragma once
@@ -62,6 +64,8 @@ private:
     void handleCloseMenuEvent(std::shared_ptr<CloseMenuEvent> e);
     void handleStartLocalGameEvent(std::shared_ptr<StartLocalGameEvent> e);
     void handleLoadLocalGameEvent(std::shared_ptr<LoadLocalGameEvent> e);
+    void handleStartNetworkGameEvent(std::shared_ptr<StartNetworkGameEvent> e);
+    void handleLoadNetworkGameEvent(std::shared_ptr<LoadNetworkGameEvent> e);
     void handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

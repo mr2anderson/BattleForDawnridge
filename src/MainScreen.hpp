@@ -42,7 +42,7 @@ public:
 		Connect
 	} Type;
 
-	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverSendPort, uint16_t serverReceivePort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
+	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
 	void run(sf::RenderWindow& window);
 
@@ -51,8 +51,6 @@ private:
 	bool alreadyFinished;
 
 	sf::IpAddress serverIP;
-	uint16_t serverSendPort;
-	uint16_t serverReceivePort;
 	sf::UdpSocket sendSocket;
 	sf::UdpSocket receiveSocket;
 	Type type;

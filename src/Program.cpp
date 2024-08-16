@@ -93,6 +93,9 @@ void Program::run() {
             if (menuResponse.getType() == MenuResponse::TYPE::START_LOCAL_GAME or menuResponse.getType() == MenuResponse::TYPE::LOAD_LOCAL_GAME) {
                 this->localGame(menuResponse, error);
             }
+            else if (menuResponse.getType() == MenuResponse::TYPE::START_NETWORK_GAME or menuResponse.getType() == MenuResponse::TYPE::LOAD_NETWORK_GAME or menuResponse.getType() == MenuResponse::TYPE::CONNECT_TO_NETWORK_GAME) {
+                this->networkGame(menuResponse, error);
+            }
         }
     }
 }
@@ -110,12 +113,7 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
 
     try {
         try {
-            MainScreen mainScreen(
-                    this->window,
-                    sf::IpAddress::getLocalAddress(),
-                    SERVER_NET_SPECS::PORTS::SEND,
-                    SERVER_NET_SPECS::PORTS::RECEIVE,
-                    mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
+            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
             mainScreen.run(this->window);
         }
         catch (NoServerConnection&) {
@@ -133,6 +131,25 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
     }
 
     localServer.finish();
+}
+void Program::networkGame(const MenuResponse& response, boost::optional<StringLcl>& error) {
+    try {
+        if (response.getType() == MenuResponse::TYPE::START_NETWORK_GAME) {
+            MainScreen mainScreen(this->window, sf::IpAddress(), MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
+            mainScreen.run(this->window);
+        }
+        else if (response.getType() == MenuResponse::TYPE::LOAD_NETWORK_GAME) {
+            MainScreen mainScreen(this->window, sf::IpAddress(), MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
+            mainScreen.run(this->window);
+        }
+        else {
+            MainScreen mainScreen(this->window, sf::IpAddress(), MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
+            mainScreen.run(this->window);
+        }
+    }
+    catch (std::exception&) {
+        this->handleException(std::current_exception(), error);
+    }
 }
 void Program::handleException(std::exception_ptr exception, boost::optional<StringLcl> &error) {
     try {

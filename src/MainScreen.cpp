@@ -48,12 +48,10 @@
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverSendPort, uint16_t serverReceivePort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
 	this->alreadyFinished = false;
 
 	this->serverIP = serverIP;
-	this->serverSendPort = serverSendPort;
-	this->serverReceivePort = serverReceivePort;
 	this->sendSocket.setBlocking(false);
 	if (this->sendSocket.bind(CLIENT_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
 		throw PortIsBusy(CLIENT_NET_SPECS::PORTS::SEND);
@@ -182,13 +180,13 @@ void MainScreen::sendInit() {
 	if (packet.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
 		throw PackageLimit();
 	}
-	this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
+	this->sendSocket.send(packet, this->serverIP, SERVER_NET_SPECS::PORTS::RECEIVE);
 }
 void MainScreen::sendOK() {
 	sf::Packet packet;
 	packet << (sf::Uint64)this->roomID.value();
 	packet << CLIENT_NET_SPECS::CODES::OK;
-	this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
+	this->sendSocket.send(packet, this->serverIP, SERVER_NET_SPECS::PORTS::RECEIVE);
 }
 void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
     sf::Packet packet;
@@ -201,7 +199,7 @@ void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
     packet << (uint32_t)std::get<1>(this->getMousePositionBasedOnView(window));
     packet << (uint32_t)window.getSize().x;
     packet << (uint32_t)window.getSize().y;
-    this->sendSocket.send(packet, this->serverIP, this->serverReceivePort);
+    this->sendSocket.send(packet, this->serverIP, SERVER_NET_SPECS::PORTS::RECEIVE);
 }
 
 
@@ -214,7 +212,7 @@ void MainScreen::receive(sf::RenderWindow &window) {
 	sf::Packet receivedPacket;
 	sf::IpAddress senderIP;
 	uint16_t senderPort;
-	if (this->receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == this->serverIP and senderPort == this->serverSendPort) {
+	if (this->receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == this->serverIP and senderPort == SERVER_NET_SPECS::PORTS::SEND) {
         sf::Uint64 id;
         receivedPacket >> id;
         if (this->roomID.value() == id) {

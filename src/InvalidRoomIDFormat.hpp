@@ -26,4 +26,6 @@
 class InvalidRoomIDFormat : public std::exception {
 public:
 	InvalidRoomIDFormat();
+
+	const char* what() const noexcept override;
 };

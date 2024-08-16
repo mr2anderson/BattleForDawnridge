@@ -764,6 +764,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LoadingScreenBg.hpp" />
     <ClInclude Include="src\LoadingScreenResponse.hpp" />
     <ClInclude Include="src\LoadLocalGameEvent.hpp" />
+    <ClInclude Include="src\LoadNetworkGameEvent.hpp" />
     <ClInclude Include="src\Locales.hpp" />
     <ClInclude Include="src\LocalGameButtonSpec.hpp" />
     <ClInclude Include="src\LocalServer.hpp" />
@@ -873,6 +874,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SpellPreview.hpp" />
     <ClInclude Include="src\SpellProducerSpec.hpp" />
     <ClInclude Include="src\StartLocalGameEvent.hpp" />
+    <ClInclude Include="src\StartNetworkGameEvent.hpp" />
     <ClInclude Include="src\StartWarriorAnimationEvent.hpp" />
     <ClInclude Include="src\StartWarriorProducingEvent.hpp" />
     <ClInclude Include="src\Stone.hpp" />
@@ -1089,6 +1091,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\LoadingScreenBg.cpp" />
     <ClCompile Include="src\LoadingScreenResponse.cpp" />
     <ClCompile Include="src\LoadLocalGameEvent.cpp" />
+    <ClCompile Include="src\LoadNetworkGameEvent.cpp" />
     <ClCompile Include="src\Locales.cpp" />
     <ClCompile Include="src\LocalGameButtonSpec.cpp" />
     <ClCompile Include="src\LocalServer.cpp" />
@@ -1193,6 +1196,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SpellPreview.cpp" />
     <ClCompile Include="src\SpellProducerSpec.cpp" />
     <ClCompile Include="src\StartLocalGameEvent.cpp" />
+    <ClCompile Include="src\StartNetworkGameEvent.cpp" />
     <ClCompile Include="src\StartWarriorAnimationEvent.cpp" />
     <ClCompile Include="src\StartWarriorProducingEvent.cpp" />
     <ClCompile Include="src\Stone.cpp" />

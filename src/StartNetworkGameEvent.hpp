@@ -17,10 +17,18 @@
  */
 
 
-#include "InvalidRoomIDFormat.hpp"
+#include <string>
+#include "Event.hpp"
 
 
-InvalidRoomIDFormat::InvalidRoomIDFormat() = default;
-const char* InvalidRoomIDFormat::what() const noexcept {
-	return "invalid room id format";
-}
+#pragma once
+
+
+class StartNetworkGameEvent : public Event {
+public:
+	StartNetworkGameEvent(const std::string &mapName);
+
+	std::string getMapName() const;
+private:
+	std::string mapName;
+};

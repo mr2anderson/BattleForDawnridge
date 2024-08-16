@@ -17,10 +17,12 @@
  */
 
 
-#include "InvalidRoomIDFormat.hpp"
+#include "LoadNetworkGameEvent.hpp"
 
 
-InvalidRoomIDFormat::InvalidRoomIDFormat() = default;
-const char* InvalidRoomIDFormat::what() const noexcept {
-	return "invalid room id format";
+LoadNetworkGameEvent::LoadNetworkGameEvent(const std::string& saveName) {
+	this->saveName = saveName;
+}
+std::string LoadNetworkGameEvent::getSaveName() const {
+	return this->saveName;
 }
