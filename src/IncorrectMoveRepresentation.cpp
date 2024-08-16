@@ -17,15 +17,10 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include "IncorrectMoveRepresentation.hpp"
 
 
-CouldntOpen::CouldntOpen(const std::string &path) {
-    this->path = path;
-}
-std::string CouldntOpen::getPath() const {
-    return this->path;
-}
-const char* CouldntOpen::what() const noexcept {
-    return "couldn't open";
+IncorrectMoveRepresentation::IncorrectMoveRepresentation() = default;
+const char* IncorrectMoveRepresentation::what() const noexcept {
+	return "incorrect move representation";
 }

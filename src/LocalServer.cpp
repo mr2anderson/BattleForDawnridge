@@ -72,7 +72,7 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
             if (room == nullptr) {
                 std::string data;
                 receivedPacket >> data;
-                room = std::make_unique<Room>(RoomID(roomIdVal), data);
+                room = std::make_unique<Room>(RoomID(roomIdVal), data, Room::Restrictions::Disable);
                 std::cout << "Room was created" << std::endl;
 
                 uint32_t playersAtHost;

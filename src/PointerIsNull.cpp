@@ -17,15 +17,10 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include "PointerIsNull.hpp"
 
 
-CouldntOpen::CouldntOpen(const std::string &path) {
-    this->path = path;
-}
-std::string CouldntOpen::getPath() const {
-    return this->path;
-}
-const char* CouldntOpen::what() const noexcept {
-    return "couldn't open";
+PointerIsNull::PointerIsNull() = default;
+const char* PointerIsNull::what() const noexcept {
+	return "pointer is null";
 }

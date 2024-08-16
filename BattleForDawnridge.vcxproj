@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug Dynamic|Win32">
@@ -728,6 +728,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IlluminanceTable.hpp" />
     <ClInclude Include="src\Image.hpp" />
     <ClInclude Include="src\ImageFlyingE.hpp" />
+    <ClInclude Include="src\IncorrectMoveRepresentation.hpp" />
+    <ClInclude Include="src\IncorrectPlayersRepresentation.hpp" />
     <ClInclude Include="src\IncreaseVCSMoveCtrEvent.hpp" />
     <ClInclude Include="src\Infantryman.hpp" />
     <ClInclude Include="src\Infirmary.hpp" />
@@ -774,6 +776,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Maps.hpp" />
     <ClInclude Include="src\MapSize.hpp" />
     <ClInclude Include="src\MapState.hpp" />
+    <ClInclude Include="src\MapTooBig.hpp" />
     <ClInclude Include="src\MarkAsAttackedEvent.hpp" />
     <ClInclude Include="src\Market.hpp" />
     <ClInclude Include="src\MarketSpec.hpp" />
@@ -809,6 +812,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Players.hpp" />
     <ClInclude Include="src\Playlist.hpp" />
     <ClInclude Include="src\PlaySoundEvent.hpp" />
+    <ClInclude Include="src\PointerIsNull.hpp" />
     <ClInclude Include="src\PopUpElement.hpp" />
     <ClInclude Include="src\PortIsBusy.hpp" />
     <ClInclude Include="src\Priority.hpp" />
@@ -881,6 +885,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
     <ClInclude Include="src\Timer.hpp" />
+    <ClInclude Include="src\TooMuchGameObjects.hpp" />
+    <ClInclude Include="src\TooMuchPlayers.hpp" />
     <ClInclude Include="src\Tower1.hpp" />
     <ClInclude Include="src\Tower1Spec.hpp" />
     <ClInclude Include="src\Tower2.hpp" />
@@ -1049,6 +1055,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\IlluminanceTable.cpp" />
     <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\ImageFlyingE.cpp" />
+    <ClCompile Include="src\IncorrectMoveRepresentation.cpp" />
+    <ClCompile Include="src\IncorrectPlayersRepresentation.cpp" />
     <ClCompile Include="src\IncreaseVCSMoveCtrEvent.cpp" />
     <ClCompile Include="src\Infantryman.cpp" />
     <ClCompile Include="src\Infirmary.cpp" />
@@ -1094,6 +1102,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Maps.cpp" />
     <ClCompile Include="src\MapSize.cpp" />
     <ClCompile Include="src\MapState.cpp" />
+    <ClCompile Include="src\MapTooBig.cpp" />
     <ClCompile Include="src\MarkAsAttackedEvent.cpp" />
     <ClCompile Include="src\Market.cpp" />
     <ClCompile Include="src\MarketSpec.cpp" />
@@ -1127,6 +1136,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Players.cpp" />
     <ClCompile Include="src\Playlist.cpp" />
     <ClCompile Include="src\PlaySoundEvent.cpp" />
+    <ClCompile Include="src\PointerIsNull.cpp" />
     <ClCompile Include="src\PopUpElement.cpp" />
     <ClCompile Include="src\PortIsBusy.cpp" />
     <ClCompile Include="src\Program.cpp" />
@@ -1195,6 +1205,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\TilesetHandler.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\TooMuchGameObjects.cpp" />
+    <ClCompile Include="src\TooMuchPlayers.cpp" />
     <ClCompile Include="src\Tower1.cpp" />
     <ClCompile Include="src\Tower1Spec.cpp" />
     <ClCompile Include="src\Tower2.cpp" />

@@ -21,3 +21,6 @@
 
 
 NoServerConnection::NoServerConnection() = default;
+const char* NoServerConnection::what() const noexcept {
+	return "no server connection";
+}

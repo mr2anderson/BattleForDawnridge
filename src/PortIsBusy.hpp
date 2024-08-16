@@ -29,6 +29,8 @@ public:
 	PortIsBusy(uint16_t port);
 
 	uint16_t getPort() const;
+	
+	const char* what() const noexcept override;
 private:
 	uint16_t port;
 };

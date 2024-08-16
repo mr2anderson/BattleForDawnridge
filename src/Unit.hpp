@@ -20,7 +20,6 @@
 
 #include "HPGO.hpp"
 #include "Resources.hpp"
-
 #include "PlayerPointer.hpp"
 #include "Defence.hpp"
 #include "Damage.hpp"

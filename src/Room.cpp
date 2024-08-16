@@ -43,20 +43,25 @@
 #include "ClientNetSpecs.hpp"
 #include "RoomWasClosed.hpp"
 #include "PackageLimit.hpp"
+#include "IncorrectMoveRepresentation.hpp"
+#include "IncorrectPlayersRepresentation.hpp"
+#include "MapTooBig.hpp"
+#include "TooMuchGameObjects.hpp"
+#include "TooMuchPlayers.hpp"
 
 
 
 
 
 
-Room::Room(RoomID id, const std::string &saveData) {
+Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->id = id;
 
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->sendWorldUIStateTimer = Timer(10000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
-	this->loadSaveData(saveData);
+	this->loadSaveData(saveData, restrictions);
 
 	this->curcorVisibility = true;
 	this->element = nullptr;
@@ -135,10 +140,78 @@ std::string Room::getSaveData() const {
 
 	return serialStr;
 }
-void Room::loadSaveData(const std::string &data) {
+void Room::loadSaveData(const std::string &data, Restrictions restrictions) {
 	std::stringstream stream(data);
 	iarchive ar(stream);
 	ar >> this->map >> this->playerIsActive >> this->currentPlayerId >> this->move;
+	this->verifyLoadedData(restrictions);
+}
+
+
+
+
+
+
+
+
+void Room::verifyLoadedData(Restrictions restrictions) {
+	this->verifyIncorrectMoveRepresentation();
+	this->verifyIncorrectPlayersRepresentation();
+	if (restrictions == Restrictions::Enable) {
+		this->verifyTooMuchGameObjects();
+		this->verifyTooMuchPlayers();
+		this->verifyMapTooBig();
+	}
+}
+void Room::verifyIncorrectMoveRepresentation() {
+	if (this->move == 0 or this->move > std::numeric_limits<uint32_t>::max() - 1000000) {
+		throw IncorrectMoveRepresentation();
+	}
+}
+void Room::verifyIncorrectPlayersRepresentation() {
+	if (this->currentPlayerId == 0 or this->currentPlayerId > this->playerIsActive.size()) {
+		throw IncorrectPlayersRepresentation();
+	}
+	
+	uint32_t activePlayers = 0;
+	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
+		activePlayers = activePlayers + this->playerIsActive.at(i);
+	}
+	if (activePlayers < 2) {
+		throw IncorrectPlayersRepresentation();
+	}
+
+	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
+		if (this->playerIsActive.at(i)) {
+			bool ok = false;
+			for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+				const Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+				if (b->exist() and b->getPlayerId() == i + 1 and b->isVictoryCondition()) {
+					ok = true;
+					break;
+				}
+			}
+			if (!ok) {
+				throw IncorrectPlayersRepresentation();
+			}
+		}
+	}
+}
+void Room::verifyTooMuchGameObjects() {
+	if (this->map.getStatePtr()->getCollectionsPtr()->totalGOs() > 5000) {
+		throw TooMuchGameObjects();
+	}
+}
+void Room::verifyTooMuchPlayers() {
+	if (this->map.getStatePtr()->getPlayersPtr()->total() > 16) {
+		throw TooMuchPlayers();
+	}
+}
+void Room::verifyMapTooBig() {
+	if (this->map.getStatePtr()->getMapSizePtr()->getWidth() > 1000 or
+		this->map.getStatePtr()->getMapSizePtr()->getHeight() > 1000) {
+		throw MapTooBig();
+	}
 }
 
 

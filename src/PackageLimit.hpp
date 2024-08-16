@@ -26,4 +26,6 @@
 class PackageLimit : public std::exception {
 public:
 	PackageLimit();
+
+	const char* what() const noexcept override;
 };

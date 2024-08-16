@@ -26,3 +26,6 @@ PortIsBusy::PortIsBusy(uint16_t port) {
 uint16_t PortIsBusy::getPort() const {
 	return this->port;
 }
+const char* PortIsBusy::what() const noexcept {
+	return "port is busy";
+}

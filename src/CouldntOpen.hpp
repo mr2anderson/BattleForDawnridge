@@ -29,6 +29,8 @@ public:
 
     std::string getPath() const;
     virtual std::string getResourceName() const = 0;
+
+    const char* what() const noexcept override;
 private:
     std::string path;
 };

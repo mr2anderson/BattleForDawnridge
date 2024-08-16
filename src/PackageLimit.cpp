@@ -21,3 +21,6 @@
 
 
 PackageLimit::PackageLimit() = default;
+const char* PackageLimit::what() const noexcept {
+	return "udp package limit";
+}

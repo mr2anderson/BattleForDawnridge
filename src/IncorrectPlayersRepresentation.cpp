@@ -17,15 +17,10 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include "IncorrectPlayersRepresentation.hpp"
 
 
-CouldntOpen::CouldntOpen(const std::string &path) {
-    this->path = path;
-}
-std::string CouldntOpen::getPath() const {
-    return this->path;
-}
-const char* CouldntOpen::what() const noexcept {
-    return "couldn't open";
+IncorrectPlayersRepresentation::IncorrectPlayersRepresentation() = default;
+const char* IncorrectPlayersRepresentation::what() const noexcept {
+	return "incorrect players representation";
 }

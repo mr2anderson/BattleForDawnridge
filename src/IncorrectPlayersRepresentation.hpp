@@ -17,15 +17,15 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include <stdexcept>
 
 
-CouldntOpen::CouldntOpen(const std::string &path) {
-    this->path = path;
-}
-std::string CouldntOpen::getPath() const {
-    return this->path;
-}
-const char* CouldntOpen::what() const noexcept {
-    return "couldn't open";
-}
+#pragma once
+
+
+class IncorrectPlayersRepresentation : public std::exception {
+public:
+	IncorrectPlayersRepresentation();
+
+	const char* what() const noexcept override;
+};

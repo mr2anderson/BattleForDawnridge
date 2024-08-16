@@ -178,6 +178,7 @@
       <Filter>Libraries</Filter>
     </None>
     <None Include="README.md" />
+    <None Include="src\serialize-tuple\License" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib">
@@ -1607,12 +1608,6 @@
     <ClInclude Include="src\Timer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ports.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CouldntOpenPorts.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\IntRectSerializable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1662,6 +1657,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ICollections.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IncorrectMoveRepresentation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IncorrectPlayersRepresentation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MapTooBig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serialize-tuple\serialize_tuple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TooMuchGameObjects.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TooMuchPlayers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PointerIsNull.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2575,12 +2591,6 @@
     <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ports.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CouldntOpenPorts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\IntRectSerializable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2596,9 +2606,6 @@
     <ClCompile Include="src\RoomWasClosed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CouldnOpenPorts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\LocalServerAlreadyLaunched.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2609,6 +2616,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ICollections.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IncorrectMoveRepresentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IncorrectPlayersRepresentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MapTooBig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TooMuchGameObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TooMuchPlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PointerIsNull.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

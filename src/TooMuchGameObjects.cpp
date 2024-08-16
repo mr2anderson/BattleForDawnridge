@@ -17,15 +17,10 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include "TooMuchGameObjects.hpp"
 
 
-CouldntOpen::CouldntOpen(const std::string &path) {
-    this->path = path;
-}
-std::string CouldntOpen::getPath() const {
-    return this->path;
-}
-const char* CouldntOpen::what() const noexcept {
-    return "couldn't open";
+TooMuchGameObjects::TooMuchGameObjects() = default;
+const char* TooMuchGameObjects::what() const noexcept {
+	return "too much game objects";
 }

@@ -35,8 +35,6 @@
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
 #include "IAreaControllerSpec.hpp"
-
-
 #include "CircleLightSourceStatic.hpp"
 
 

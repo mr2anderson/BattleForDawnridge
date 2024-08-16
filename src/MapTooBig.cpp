@@ -17,15 +17,10 @@
  */
 
 
-#include "CouldntOpen.hpp"
+#include "MapTooBig.hpp"
 
 
-CouldntOpen::CouldntOpen(const std::string &path) {
-    this->path = path;
-}
-std::string CouldntOpen::getPath() const {
-    return this->path;
-}
-const char* CouldntOpen::what() const noexcept {
-    return "couldn't open";
+MapTooBig::MapTooBig() = default;
+const char* MapTooBig::what() const noexcept {
+	return "map too big";
 }

@@ -85,7 +85,12 @@
 
 class Room {
 public:
-	Room(RoomID id, const std::string &saveData);
+	typedef enum Restrictions {
+		Enable,
+		Disable
+	} Restrictions;
+
+	Room(RoomID id, const std::string &saveData, Restrictions restrictions);
 	Room(const Room& copy) = delete;
 
 	RoomID getID() const;
@@ -116,7 +121,14 @@ private:
 	std::vector<Button> buttons;
 
 	std::string getSaveData() const;
-	void loadSaveData(const std::string& data);
+	void loadSaveData(const std::string& data, Restrictions restrictions);
+
+	void verifyLoadedData(Restrictions restrictions);
+	void verifyIncorrectMoveRepresentation();
+	void verifyIncorrectPlayersRepresentation();
+	void verifyTooMuchGameObjects();
+	void verifyTooMuchPlayers();
+	void verifyMapTooBig();
 
 	void processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 	bool allNewMoveEventsAdded() const;

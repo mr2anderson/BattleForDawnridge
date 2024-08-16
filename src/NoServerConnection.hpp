@@ -26,4 +26,6 @@
 class NoServerConnection : public std::exception {
 public:
 	NoServerConnection();
+
+	const char* what() const noexcept override;
 };
