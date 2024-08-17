@@ -17,8 +17,10 @@
  */
 
 
-#include "Root.hpp"
+#include "PlayerLimitReached.hpp"
 
 
-const std::string DATA_ROOT = "resources";
-const std::string USERDATA_ROOT = "userdata";
+PlayerLimitReached::PlayerLimitReached() = default;
+const char* PlayerLimitReached::what() const noexcept {
+	return "player limit reached";
+}

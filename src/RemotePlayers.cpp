@@ -27,6 +27,9 @@ void RemotePlayers::add(RemotePlayer player) {
 	}
 	this->data.at(player.getId() - 1) = player;
 }
+void RemotePlayers::add(sf::IpAddress ip) {
+	this->add(RemotePlayer(this->size() + 1, ip));
+}
 RemotePlayer RemotePlayers::get(uint32_t id) const {
 	return this->data.at(id - 1);
 }

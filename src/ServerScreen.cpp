@@ -27,8 +27,6 @@
 #include "PublicIP.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
-#include "Room.hpp"
-#include "RoomWasClosed.hpp"
 
 
 ServerScreen::ServerScreen(sf::RenderWindow& window) {
@@ -47,9 +45,11 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
     if (this->sendSocket.bind(SERVER_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
         this->logs.add(StringLcl("{couldnt_bind_send_socket}"));
     }
+	this->sendSocket.setBlocking(false);
     if (this->receiveSocket.bind(SERVER_NET_SPECS::PORTS::RECEIVE) != sf::Socket::Done) {
         this->logs.add(StringLcl("{couldnt_bind_receive_port}"));
     }
+	this->receiveSocket.setBlocking(false);
 }
 ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 	if (this->alreadyFinished) {
@@ -61,8 +61,6 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 
     boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
     std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
-
-    std::vector<boost::optional<std::tuple<Room, RemotePlayers>>> rooms;
 
 	sf::Event event;
 	for (; ;) {
@@ -78,33 +76,64 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 
 		this->drawEverything(window);
 
+        while (!toSend.empty()) {
+            sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
+            toSend.pop_back();
+        }
+
         received = boost::none;
         sf::Packet receivedPacket;
         sf::IpAddress senderIP;
         uint16_t senderPort;
-        if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
+        if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
             received = std::make_tuple(receivedPacket, senderIP);
+            this->checkRoomInitSignal(receivedPacket, senderIP);
         }
 
-        for (uint32_t i = 0; i < rooms.size(); i = i + 1) {
-            if (rooms.at(i).has_value()) {
-                try {
-                    std::get<0>(rooms.at(i).value()).update(received, &toSend, std::get<1>(rooms.at(i).value()));
-                }
-                catch (RoomWasClosed &) {
+        this->rooms.updateAll(received, &toSend);
+	}
+}
+void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
+    sf::Uint64 packageId;
+    packet >> packageId;
 
-                }
-                catch (std::exception&) {
+    sf::Uint64 roomIdVal;
+    packet >> roomIdVal;
+    RoomID roomId(roomIdVal);
 
-                }
+    uint8_t code;
+    packet >> code;
 
-                while (!toSend.empty()) {
-                    sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
-                    toSend.pop_back();
-                }
+    if (code == CLIENT_NET_SPECS::CODES::CREATE) {
+        if (this->rooms.exist(roomId)) {
+            this->logs.add(StringLcl("{attempt_to_create_room_with_existing_id}" + roomId.readableValue() + " " + ip.toString()));
+        }
+        if (!this->rooms.exist(roomId)) {
+            std::string data;
+            packet >> data;
+            this->rooms.createIfValid(roomId, data);
+            if (this->rooms.exist(roomId)) {
+                uint32_t playersAtHost;
+                packet >> playersAtHost;
+                uint32_t added = this->rooms.addPlayersSafe(roomId, ip, playersAtHost);
+                this->logs.add(StringLcl("{room_was_created}" + roomId.readableValue() + " " + ip.toString() + " " + std::to_string(added)));
+            }
+            else {
+                this->logs.add(StringLcl("{couldnt_create_room}"));
             }
         }
-	}
+    }
+    else if (code == CLIENT_NET_SPECS::CODES::CONNECT) {
+        if (this->rooms.exist(roomId)) {
+            uint32_t playersAtHost;
+            packet >> playersAtHost;
+            uint32_t added = this->rooms.addPlayersSafe(roomId, ip, playersAtHost);
+            this->logs.add(StringLcl("{attempt_to_connect_to_room}" + roomId.readableValue() + " " + ip.toString() + " " + std::to_string(added)));
+        }
+        else {
+            this->logs.add(StringLcl("{attempt_to_connect_to_room_with_unknown_id}" + roomId.readableValue() + " " + ip.toString()));
+        }
+    }
 }
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();

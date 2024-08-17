@@ -29,6 +29,7 @@ public:
 	RemotePlayers();
 
 	void add(RemotePlayer player);
+	void add(sf::IpAddress ip);
 	RemotePlayer get(uint32_t id) const;
 	uint32_t size() const;
 private:

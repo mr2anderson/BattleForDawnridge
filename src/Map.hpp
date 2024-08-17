@@ -32,7 +32,9 @@ public:
     }
 
     void load(const std::string& path);
+
     MapState* getStatePtr();
+    const MapState* getStatePtr() const;
 private:
     MapState state;
 

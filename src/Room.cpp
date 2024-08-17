@@ -92,7 +92,7 @@ RoomID Room::getID() const {
 
 
 
-uint32_t Room::playersNumber() {
+uint32_t Room::playersNumber() const {
 	return this->map.getStatePtr()->getPlayersPtr()->total();
 }
 

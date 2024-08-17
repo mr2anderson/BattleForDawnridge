@@ -812,6 +812,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Parameters.hpp" />
     <ClInclude Include="src\Plant.hpp" />
     <ClInclude Include="src\Player.hpp" />
+    <ClInclude Include="src\PlayerLimitReached.hpp" />
     <ClInclude Include="src\PlayerPointer.hpp" />
     <ClInclude Include="src\Players.hpp" />
     <ClInclude Include="src\Playlist.hpp" />
@@ -847,6 +848,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Road.hpp" />
     <ClInclude Include="src\RoadSpec.hpp" />
     <ClInclude Include="src\Room.hpp" />
+    <ClInclude Include="src\RoomDoesNotExist.hpp" />
     <ClInclude Include="src\RoomID.hpp" />
     <ClInclude Include="src\RoomWasClosed.hpp" />
     <ClInclude Include="src\Root.hpp" />
@@ -860,6 +862,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\serialize-tuple\serialize_tuple.h" />
     <ClInclude Include="src\ServerIP.hpp" />
     <ClInclude Include="src\ServerNetSpecs.hpp" />
+    <ClInclude Include="src\ServerRooms.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\ServerScreenResponse.hpp" />
     <ClInclude Include="src\SetFireEvent.hpp" />
@@ -1142,6 +1145,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Parameters.cpp" />
     <ClCompile Include="src\Plant.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerLimitReached.cpp" />
     <ClCompile Include="src\PlayerPointer.cpp" />
     <ClCompile Include="src\Players.cpp" />
     <ClCompile Include="src\Playlist.cpp" />
@@ -1176,6 +1180,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Road.cpp" />
     <ClCompile Include="src\RoadSpec.cpp" />
     <ClCompile Include="src\Room.cpp" />
+    <ClCompile Include="src\RoomDoesNotExist.cpp" />
     <ClCompile Include="src\RoomID.cpp" />
     <ClCompile Include="src\RoomWasClosed.cpp" />
     <ClCompile Include="src\Root.cpp" />
@@ -1187,6 +1192,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SelectEvent.cpp" />
     <ClCompile Include="src\SerializableColor.cpp" />
     <ClCompile Include="src\ServerIP.cpp" />
+    <ClCompile Include="src\ServerRooms.cpp" />
     <ClCompile Include="src\ServerScreen.cpp" />
     <ClCompile Include="src\ServerScreenResponse.cpp" />
     <ClCompile Include="src\SetFireEvent.cpp" />

@@ -38,6 +38,9 @@ public:
 	std::shared_ptr<ICollections> getCollectionsPtr();
 	MapSize* getMapSizePtr();
 	Players* getPlayersPtr();
+
+	const MapSize* getMapSizePtr() const;
+	const Players* getPlayersPtr() const;
 private:
 	std::shared_ptr<ICollections> icollections;
 	MapSize mapSize;

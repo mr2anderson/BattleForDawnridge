@@ -112,6 +112,9 @@ void Map::load(const std::string &path) {
 MapState* Map::getStatePtr() {
     return &this->state;
 }
+const MapState* Map::getStatePtr() const {
+    return &this->state;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(Map)

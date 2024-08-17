@@ -21,6 +21,7 @@
 #include "Logs.hpp"
 #include "ServerScreenResponse.hpp"
 #include "MenuBg.hpp"
+#include "ServerRooms.hpp"
 
 
 #pragma once
@@ -37,6 +38,9 @@ private:
 	Logs logs;
     sf::UdpSocket sendSocket;
     sf::UdpSocket receiveSocket;
+	ServerRooms rooms;
+
+	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
 
 	void drawEverything(sf::RenderWindow& window);
 };

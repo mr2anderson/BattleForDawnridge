@@ -17,8 +17,10 @@
  */
 
 
-#include "Root.hpp"
+#include "RoomDoesNotExist.hpp"
 
 
-const std::string DATA_ROOT = "resources";
-const std::string USERDATA_ROOT = "userdata";
+RoomDoesNotExist::RoomDoesNotExist() = default;
+const char* RoomDoesNotExist::what() const noexcept {
+	return "room does not exist";
+}

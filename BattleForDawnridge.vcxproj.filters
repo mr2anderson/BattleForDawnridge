@@ -1698,6 +1698,15 @@
     <ClInclude Include="src\CurrentRoomIDButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ServerRooms.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoomDoesNotExist.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerLimitReached.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2670,6 +2679,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CurrentRoomIDButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerRooms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoomDoesNotExist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerLimitReached.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

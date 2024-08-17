@@ -17,8 +17,15 @@
  */
 
 
-#include "Root.hpp"
+#include <stdexcept>
 
 
-const std::string DATA_ROOT = "resources";
-const std::string USERDATA_ROOT = "userdata";
+#pragma once
+
+
+class PlayerLimitReached : public std::exception {
+public:
+	PlayerLimitReached();
+
+	const char* what() const noexcept override;
+};

@@ -35,3 +35,11 @@ MapSize* MapState::getMapSizePtr() {
 Players* MapState::getPlayersPtr() {
 	return &this->players;
 }
+
+
+const MapSize* MapState::getMapSizePtr() const {
+	return &this->mapSize;
+}
+const Players* MapState::getPlayersPtr() const {
+	return &this->players;
+}
