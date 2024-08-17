@@ -26,20 +26,28 @@
 #pragma once
 
 
+
+
 namespace bfdlib {
 
 
-    namespace tcp_help {
 
 
-        template<typename T> class safe_queue {
+    class tcp_help {
+    public:
+
+
+        template<typename T> class safe_writing_queue {
         public:
-            safe_queue() = default;
+            safe_writing_queue() = default;
 
             void push(const T& value) {
                 std::lock_guard<std::mutex> lock(this->mutex);
                 this->data.push(value);
             }
+        private:
+            std::queue<T> data;
+            mutable std::mutex mutex;
 
             T pop() {
                 std::lock_guard<std::mutex> lock(this->mutex);
@@ -48,7 +56,28 @@ namespace bfdlib {
                 return value;
             }
 
-            // You can rely on this method ONLY if the pop method is not called by other threads
+            bool empty() const {
+                std::lock_guard<std::mutex> lock(this->mutex);
+                return this->data.empty();
+            }
+
+            friend class tcp_help;
+        };
+
+
+
+
+        template<typename T> class safe_reading_queue {
+        public:
+            safe_reading_queue() = default;
+
+            T pop() {
+                std::lock_guard<std::mutex> lock(this->mutex);
+                T value = this->data.front();
+                this->data.pop();
+                return value;
+            }
+
             bool empty() const {
                 std::lock_guard<std::mutex> lock(this->mutex);
                 return this->data.empty();
@@ -56,21 +85,25 @@ namespace bfdlib {
         private:
             std::queue<T> data;
             mutable std::mutex mutex;
+
+            void push(const T& value) {
+                std::lock_guard<std::mutex> lock(this->mutex);
+                this->data.push(value);
+            }
+
+            friend class tcp_help;
         };
 
 
-        // You MUSTN'T remove elements from sending queue by yourself, only add
-        // You MUSTN'T add elements to received queue by yourself, only extract
-        typedef safe_queue<sf::Packet> packet_queue;
+
+        typedef safe_writing_queue<sf::Packet> queue_w;
+        typedef safe_reading_queue<sf::Packet> queue_r;
 
 
 
-        // Those sockets MUSTN'T BE blocking.
-        void process_sending(sf::TcpSocket *socket, packet_queue *q, const std::atomic<bool> *flag);
-        void process_receiving(sf::TcpSocket *socket, packet_queue *q, const std::atomic<bool> *flag);
-
-
-    }
+        static void process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag);
+        static void process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag);
+    };
 
 
 }

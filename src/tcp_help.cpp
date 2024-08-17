@@ -23,7 +23,7 @@
 static const sf::Time DELTA = sf::milliseconds(5);
 
 
-void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, packet_queue *q, const std::atomic<bool> *flag) {
+void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag) {
     for (; ; sf::sleep(DELTA)) {
         if (*flag) {
             break;
@@ -40,7 +40,7 @@ void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, packet_queue *q, c
         }
     }
 }
-void bfdlib::tcp_help::process_receiving(sf::TcpSocket *socket, packet_queue *q, const std::atomic<bool> *flag) {
+void bfdlib::tcp_help::process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag) {
     for (; ; sf::sleep(DELTA)) {
         if (*flag) {
             break;

@@ -61,8 +61,8 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready) {
 
 
 
-    bfdlib::tcp_help::packet_queue toSend;
-    bfdlib::tcp_help::packet_queue received;
+    bfdlib::tcp_help::queue_w toSend;
+    bfdlib::tcp_help::queue_r received;
     socket.setBlocking(false);
     std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &socket, &toSend, stop));
     std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &received, stop));

@@ -59,8 +59,8 @@ private:
 
     bool socketInited;
 	sf::TcpSocket socket;
-    bfdlib::tcp_help::packet_queue toSend;
-    bfdlib::tcp_help::packet_queue received;
+    bfdlib::tcp_help::queue_w toSend;
+    bfdlib::tcp_help::queue_r received;
     std::unique_ptr<sf::Thread> sendingThread;
     std::unique_ptr<sf::Thread> receivingThread;
     std::atomic<bool> stop;
