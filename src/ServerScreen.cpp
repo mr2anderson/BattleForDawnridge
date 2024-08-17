@@ -42,14 +42,14 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
 	}
 	this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
 
+    this->sendSocket.setBlocking(false);
     if (this->sendSocket.bind(SERVER_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
         this->logs.add(StringLcl("{couldnt_bind_send_socket}"));
     }
-	this->sendSocket.setBlocking(false);
+    this->receiveSocket.setBlocking(false);
     if (this->receiveSocket.bind(SERVER_NET_SPECS::PORTS::RECEIVE) != sf::Socket::Done) {
         this->logs.add(StringLcl("{couldnt_bind_receive_port}"));
     }
-	this->receiveSocket.setBlocking(false);
 }
 ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 	if (this->alreadyFinished) {
