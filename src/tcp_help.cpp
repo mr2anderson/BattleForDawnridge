@@ -32,8 +32,11 @@ void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, packet_queue *q, c
             continue;
         }
         sf::Packet packet = q->pop();
-        if (socket->send(packet) != sf::Socket::Status::Done) {
-            break;
+        while (socket->send(packet) != sf::Socket::Status::Done) {
+            sf::sleep(DELTA);
+            if (*flag) {
+                break;
+            }
         }
     }
 }
@@ -43,8 +46,11 @@ void bfdlib::tcp_help::process_receiving(sf::TcpSocket *socket, packet_queue *q,
             break;
         }
         sf::Packet packet;
-        if (socket->receive(packet) != sf::Socket::Status::Done) {
-            break;
+        while (socket->receive(packet) != sf::Socket::Status::Done) {
+            sf::sleep(DELTA);
+            if (*flag) {
+                break;
+            }
         }
         q->push(packet);
     }

@@ -88,18 +88,17 @@ void MainScreen::run(sf::RenderWindow& window) {
 
     sf::Event event{};
 
-    this->socket.setBlocking(false);
     Timer timer(5000, Timer::TYPE::FIRST_DEFAULT);
     while (!this->socketInited) {
         while (window.pollEvent(event)) {}
         if (timer.ready()) {
             throw NoServerConnection();
         }
-        if (this->socket.connect(this->serverIP, SERVER_NET_SPECS::PORTS::TCP) == sf::Socket::Status::Done) {
-            this->socket.setBlocking(true);
+        if (this->socket.connect(this->serverIP, SERVER_NET_SPECS::PORTS::TCP, sf::milliseconds(1000)) == sf::Socket::Status::Done) {
             this->stop = false;
+            this->socket.setBlocking(false);
             this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &this->socket, &this->toSend, &this->stop));
-            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &this->socket, &this->toSend, &this->stop));
+            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &this->socket, &this->received, &this->stop));
             this->sendingThread->launch();
             this->receivingThread->launch();
             this->socketInited = true;
@@ -215,8 +214,6 @@ void MainScreen::receive(sf::RenderWindow &window) {
         return;
     }
 	sf::Packet receivedPacket = this->received.pop();
-    sf::Uint64 packetID;
-    receivedPacket >> packetID;
     sf::Uint64 id;
     receivedPacket >> id;
     if (this->roomID.value() == id) {

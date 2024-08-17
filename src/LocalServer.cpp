@@ -33,17 +33,20 @@
 
 
 
-static void THREAD(std::exception_ptr* unexpectedError, const std::atomic<bool>* stop, std::atomic<bool>* ready) {
+static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready) {
 	sf::TcpListener listener;
+    std::cout << "Listening port..." << std::endl;
     if (listener.listen(SERVER_NET_SPECS::PORTS::TCP) != sf::Socket::Status::Done) {
         throw PortIsBusy(SERVER_NET_SPECS::PORTS::TCP);
     }
+    std::cout << "OK" << std::endl;
 
 
 
 
     sf::TcpSocket socket;
-    socket.setBlocking(false);
+    listener.setBlocking(false);
+    std::cout << "Waiting for client..." << std::endl;
     for (; ; sf::sleep(sf::milliseconds(5))) {
         if (*stop) {
             return;
@@ -53,16 +56,16 @@ static void THREAD(std::exception_ptr* unexpectedError, const std::atomic<bool>*
         }
         *ready = true;
     }
-    socket.setBlocking(true);
-    std::cout << "Got connection" << std::endl;
+    std::cout << "OK" << std::endl;
 
 
 
 
     bfdlib::tcp_help::packet_queue toSend;
     bfdlib::tcp_help::packet_queue received;
+    socket.setBlocking(false);
     std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &socket, &toSend, stop));
-    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &toSend, stop));
+    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &received, stop));
     sendThread->launch();
     receiveThread->launch();
 
@@ -71,7 +74,8 @@ static void THREAD(std::exception_ptr* unexpectedError, const std::atomic<bool>*
 
 	std::unique_ptr<Room> room = nullptr;
 	RemotePlayers players;
-	while (room == nullptr or room->playersNumber() != players.size()) { // Block list is not used cuz server run locally
+    std::cout << "Creating room..." << std::endl;
+	while (room == nullptr or room->playersNumber() != players.size()) {
 		for (; ; sf::sleep(sf::milliseconds(5))) {
             if (*stop) {
                 return;
@@ -80,9 +84,8 @@ static void THREAD(std::exception_ptr* unexpectedError, const std::atomic<bool>*
                 break;
             }
         }
+        std::cout << "Got pkg!" << std::endl;
         sf::Packet receivedPacket = received.pop();
-        sf::Uint64 packageId;
-        receivedPacket >> packageId;
         sf::Uint64 roomIdVal;
         receivedPacket >> roomIdVal;
         uint8_t code;
@@ -92,22 +95,21 @@ static void THREAD(std::exception_ptr* unexpectedError, const std::atomic<bool>*
                 std::string data;
                 receivedPacket >> data;
                 room = std::make_unique<Room>(RoomID(roomIdVal), data, Room::Restrictions::Disable);
-                std::cout << "Room was created" << std::endl;
                 uint32_t playersAtHost;
                 receivedPacket >> playersAtHost;
                 while (playersAtHost and players.size() != room->playersNumber()) {
                     players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
                     playersAtHost = playersAtHost - 1;
-                    std::cout << "Added player to room. Total players: " << players.size() << std::endl;
                 }
             }
         }
 	}
-	std::cout << "Room launched!" << std::endl;
+	std::cout << "OK" << std::endl;
 
 
 
 
+    std::cout << "Processing..." << std::endl;
 	for (; ;) {
         if (*stop) {
             return;
@@ -142,7 +144,7 @@ static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atom
     std::cout << "Local server was started" << std::endl;
 
 	try {
-		THREAD(unexpectedError, stop, ready);
+		THREAD(stop, ready);
 	}
 	catch (std::exception& e) {
 		*unexpectedError = std::current_exception();
@@ -179,11 +181,13 @@ void LocalServer::launch() {
 		throw LocalServerAlreadyLaunched();
 	}
     std::atomic<bool> ready = false;
+    std::cout << "Starting local sever thread..." << std::endl;
 	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready));
 	this->thread->launch();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));
     }
+    std::cout << "Local server thread reported that it is ready to detach" << std::endl;
 }
 void LocalServer::fine() const {
 	if (this->unexpectedError != nullptr) {

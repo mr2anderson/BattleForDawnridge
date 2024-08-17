@@ -48,7 +48,6 @@ namespace bfdlib {
                 return value;
             }
 
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // You can rely on this method ONLY if the pop method is not called by other threads
             bool empty() const {
                 std::lock_guard<std::mutex> lock(this->mutex);
@@ -60,9 +59,13 @@ namespace bfdlib {
         };
 
 
+        // You MUSTN'T remove elements from sending queue by yourself, only add
+        // You MUSTN'T add elements to received queue by yourself, only extract
         typedef safe_queue<sf::Packet> packet_queue;
 
 
+
+        // Those sockets MUSTN'T BE blocking.
         void process_sending(sf::TcpSocket *socket, packet_queue *q, const std::atomic<bool> *flag);
         void process_receiving(sf::TcpSocket *socket, packet_queue *q, const std::atomic<bool> *flag);
 

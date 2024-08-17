@@ -31,15 +31,13 @@ class ServerScreen {
 public:
 	ServerScreen(sf::RenderWindow& window);
 	ServerScreen(const ServerScreen& copy) = delete;
+
 	ServerScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
 	MenuBg bg;
 	Logs logs;
-    sf::UdpSocket sendSocket;
-    sf::UdpSocket receiveSocket;
 	ServerRooms rooms;
-	std::unordered_map<uint64_t, bool> initSignalBlocklist;
 
 	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
 

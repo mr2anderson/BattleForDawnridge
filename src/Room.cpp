@@ -421,8 +421,6 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 	sf::Packet packet = std::get<0>(received.value());
 	sf::IpAddress ip = std::get<1>(received.value());
 
-    sf::Uint64 packageUID;
-    packet >> packageUID;
     sf::Uint64 roomId;
     packet >> roomId;
     if (this->id.value() == roomId) {
