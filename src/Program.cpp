@@ -28,7 +28,6 @@
 #include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
-#include "PackageLimit.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ServerIP.hpp"
 
@@ -161,9 +160,6 @@ void Program::handleException(std::exception_ptr exception, boost::optional<Stri
     }
     catch (CouldntOpenMap&) {
         error = StringLcl("{map_is_apcent_client}");
-    }
-    catch (PackageLimit&) {
-        error = StringLcl("{package_limit_client}");
     }
     catch (boost::archive::archive_exception& e) {
         error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));

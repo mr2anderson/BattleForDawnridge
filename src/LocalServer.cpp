@@ -21,10 +21,10 @@
 #include "LocalServer.hpp"
 #include "ClientNetSpecs.hpp"
 #include "math.hpp"
-#include "RoomWasClosed.hpp"
 #include "PortIsBusy.hpp"
 #include "LocalServerAlreadyLaunched.hpp"
 #include "ServerNetSpecs.hpp"
+#include "tcp_help.hpp"
 
 
 
@@ -33,37 +33,54 @@
 
 
 
-static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) {
-	sf::UdpSocket sendSocket, receiveSocket;
-	sendSocket.setBlocking(false);
-	if (sendSocket.bind(SERVER_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
-		throw PortIsBusy(SERVER_NET_SPECS::PORTS::SEND);
-	}
-	receiveSocket.setBlocking(false);
-	if (receiveSocket.bind(SERVER_NET_SPECS::PORTS::RECEIVE) != sf::Socket::Done) {
-		throw PortIsBusy(SERVER_NET_SPECS::PORTS::RECEIVE);
-	}
+static void THREAD(std::exception_ptr* unexpectedError, const std::atomic<bool>* stop, std::atomic<bool>* ready) {
+	sf::TcpListener listener;
+    if (listener.listen(SERVER_NET_SPECS::PORTS::TCP) != sf::Socket::Status::Done) {
+        throw PortIsBusy(SERVER_NET_SPECS::PORTS::TCP);
+    }
+
+
+
+
+    sf::TcpSocket socket;
+    socket.setBlocking(false);
+    for (; ; sf::sleep(sf::milliseconds(5))) {
+        if (*stop) {
+            return;
+        }
+        if (listener.accept(socket) == sf::Socket::Status::Done) {
+            break;
+        }
+        *ready = true;
+    }
+    socket.setBlocking(true);
+    std::cout << "Got connection" << std::endl;
+
+
+
+
+    bfdlib::tcp_help::packet_queue toSend;
+    bfdlib::tcp_help::packet_queue received;
+    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &socket, &toSend, stop));
+    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &toSend, stop));
+    sendThread->launch();
+    receiveThread->launch();
+
 
 
 
 	std::unique_ptr<Room> room = nullptr;
 	RemotePlayers players;
-
-
-
 	while (room == nullptr or room->playersNumber() != players.size()) { // Block list is not used cuz server run locally
-		sf::Packet receivedPacket;
-		sf::IpAddress senderIP;
-		uint16_t senderPort;
-		while (receiveSocket.receive(receivedPacket, senderIP, senderPort) != sf::Socket::Status::Done) {
-			if (*stop) {
-				return;
-			}
-			sf::sleep(sf::milliseconds(50));
-		}
-		if (senderIP != sf::IpAddress::getLocalAddress() or senderPort != CLIENT_NET_SPECS::PORTS::SEND) {
-			continue;
-		}
+		for (; ; sf::sleep(sf::milliseconds(5))) {
+            if (*stop) {
+                return;
+            }
+            if (!received.empty()) {
+                break;
+            }
+        }
+        sf::Packet receivedPacket = received.pop();
         sf::Uint64 packageId;
         receivedPacket >> packageId;
         sf::Uint64 roomIdVal;
@@ -76,7 +93,6 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
                 receivedPacket >> data;
                 room = std::make_unique<Room>(RoomID(roomIdVal), data, Room::Restrictions::Disable);
                 std::cout << "Room was created" << std::endl;
-
                 uint32_t playersAtHost;
                 receivedPacket >> playersAtHost;
                 while (playersAtHost and players.size() != room->playersNumber()) {
@@ -86,64 +102,33 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
                 }
             }
         }
-        else if (code == CLIENT_NET_SPECS::CODES::CONNECT) {
-            if (room != nullptr) {
-                if (room->getID().value() == roomIdVal) {
-                    uint32_t playersAtHost;
-                    receivedPacket >> playersAtHost;
-                    while (playersAtHost and players.size() != room->playersNumber()) {
-                        players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
-                        playersAtHost = playersAtHost - 1;
-                        std::cout << "Added player to room. Total players: " << players.size() << std::endl;
-                    }
-                }
-                else {
-                    std::cout << "Player used incorrect room id." << std::endl;
-                }
-            }
-        }
 	}
-
-
-
 	std::cout << "Room launched!" << std::endl;
 
-	boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received;
-	std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
-    uint32_t sum = 0;
+
+
 
 	for (; ;) {
-		Clock clock;
+        if (*stop) {
+            return;
+        }
 
-		while (!toSend.empty()) {
-			sendSocket.send(std::get<0>(toSend.back()), std::get<1>(toSend.back()), CLIENT_NET_SPECS::PORTS::RECEIVE);
-            sum = sum + std::get<0>(toSend.back()).getDataSize();
-            std::cout << "Packet was sent. Size: " << std::get<0>(toSend.back()).getDataSize() << " bytes. Total: " << (float)sum / 1024 / 1024 << " mb" << std::endl;
-			toSend.pop_back();
-		}
+        Clock clock;
 
-		received = boost::none;
-		sf::Packet receivedPacket;
-		sf::IpAddress senderIP;
-		uint16_t senderPort;
-		if (receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == sf::IpAddress::getLocalAddress() and senderPort == CLIENT_NET_SPECS::PORTS::SEND) {
-			received = std::make_tuple(receivedPacket, senderIP);
-            sum = sum + receivedPacket.getDataSize();
-            std::cout << "Packet was received. Size: " << receivedPacket.getDataSize() << " bytes. Total: " << (float)sum / 1024 / 1024 << " mb" << std::endl;
-		}
+		boost::optional<std::tuple<sf::Packet, sf::IpAddress>> tuple = boost::none;
+		if (!received.empty()) {
+            tuple = std::make_tuple(received.pop(), sf::IpAddress::getLocalAddress());
+        }
 
-		try {
-			room->update(received, &toSend, players);
-		}
-		catch (RoomWasClosed&) {
-			break;
-		}
+        std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSendGlobal;
 
-		if (*stop) {
-			return;
-		}
+        room->update(tuple, &toSendGlobal, players);
 
-		sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));
+        for (const auto &val : toSendGlobal) {
+            toSend.push(std::get<sf::Packet>(val));
+        }
+
+        sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));
 	}
 }
 
@@ -152,19 +137,20 @@ static void THREAD(std::exception_ptr* unexpectedError, std::atomic_bool* stop) 
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running) {
-	std::cout << "Started new local server" << std::endl;
+static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running, std::atomic_bool *ready) {
 	*running = true;
+    std::cout << "Local server was started" << std::endl;
 
 	try {
-		THREAD(unexpectedError, stop);
+		THREAD(unexpectedError, stop, ready);
 	}
 	catch (std::exception& e) {
 		*unexpectedError = std::current_exception();
-		std::cout << "Local server got an unexpected error. Thread was stopped. Exception ptr was saved" << std::endl; // It is ok cuz server runned locally. No safety problems.
-		std::cout << e.what() << std::endl;
+		std::cout << "Local server got an unexpected error: " << e.what() << std::endl;
 	}
 
+    std::cout << "Local server was closed" << std::endl;
+    *ready = true;
 	*running = false;
 }
 
@@ -180,7 +166,6 @@ LocalServer::LocalServer() {
 }
 LocalServer::~LocalServer() {
 	this->finish();
-	std::cout << "Destroyed local server" << std::endl;
 }
 void LocalServer::finish() {
 	if (this->running) {
@@ -193,8 +178,12 @@ void LocalServer::launch() {
 	if (this->running) {
 		throw LocalServerAlreadyLaunched();
 	}
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running));
+    std::atomic<bool> ready = false;
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready));
 	this->thread->launch();
+    while (!ready) {
+        sf::sleep(sf::milliseconds(5));
+    }
 }
 void LocalServer::fine() const {
 	if (this->unexpectedError != nullptr) {

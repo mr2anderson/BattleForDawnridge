@@ -20,7 +20,6 @@
 #include <SFML/Graphics.hpp>
 #include <queue>
 #include <SFML/Network.hpp>
-#include <unordered_map>
 #include "IlluminanceTable.hpp"
 #include "RoomID.hpp"
 #include "Map.hpp"
@@ -31,6 +30,7 @@
 #include "HighlightTable.hpp"
 #include "ResourceBar.hpp"
 #include "ClientNetSpecs.hpp"
+#include "tcp_help.hpp"
 
 
 #pragma once
@@ -46,25 +46,29 @@ public:
 
 	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
+
+    ~MainScreen();
+
 	void run(sf::RenderWindow& window);
 
 	static constexpr uint32_t EVERYONE = (1 << 30);
 private:
 	bool alreadyFinished;
 
-    std::unordered_map<uint64_t, bool> receivedPackages;
-
 	sf::IpAddress serverIP;
-	sf::UdpSocket sendSocket;
-	sf::UdpSocket receiveSocket;
+
+    bool socketInited;
+	sf::TcpSocket socket;
+    bfdlib::tcp_help::packet_queue toSend;
+    bfdlib::tcp_help::packet_queue received;
+    std::unique_ptr<sf::Thread> sendingThread;
+    std::unique_ptr<sf::Thread> receivingThread;
+    std::atomic<bool> stop;
+
 	Type type;
 	std::string data;
 	uint32_t playersAtThisHost;
 	RoomID roomID;
-	Timer sendInitTimer;
-	Timer sendOKTimer;
-    Timer noInitReceivedTimer;
-	Timer noOKReceivedTimer;
 
 	bool initPackageGotten;
 	Map map;
@@ -80,15 +84,13 @@ private:
 	IlluminanceTable illiminanceTable;
 
     sf::Packet makeBasePacket() const;
-    void send(sf::Packet &what, CLIENT_NET_SPECS::Importance importance);
+    void send(sf::Packet &what);
 
 	void sendInit();
-	void sendOK();
     void sendClick(sf::RenderWindow &window, uint8_t button);
 
 
 	void receive(sf::RenderWindow &window);
-	void receiveOK();
 	void receiveWorldUIState(sf::Packet& remPacket);
 	void receiveSound(sf::Packet& remPacket);
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
@@ -102,6 +104,9 @@ private:
 	void drawCells(sf::RenderWindow& window);
 	void drawHighlightion(sf::RenderWindow& window);
     void drawDarkness(sf::RenderWindow& window);
+
+
+    void drawWaitingScreen(sf::RenderWindow &window);
 
 
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView(sf::RenderWindow &window) const;

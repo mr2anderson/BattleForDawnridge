@@ -25,27 +25,19 @@
 
 // Package format:
 /*
- * package_unique_id (sf::Uint64)
  * room_id (sf::Uint64)
  * code (uint8_t)
  * additional_code_info
  */
 namespace SERVER_NET_SPECS {
     namespace CODES { // enum is not used cuz it is implementation-defined
-        static constexpr uint8_t OK = 0;
-        static constexpr uint8_t WORLD_UI_STATE = 1;
-        static constexpr uint8_t SOUND = 2;
-        static constexpr uint8_t FOCUS = 3;
-        static constexpr uint8_t RETURN_TO_MENU = 4;
-        static constexpr uint8_t SAVE = 5;
+        static constexpr uint8_t WORLD_UI_STATE = 0;
+        static constexpr uint8_t SOUND = 1;
+        static constexpr uint8_t FOCUS = 2;
+        static constexpr uint8_t RETURN_TO_MENU = 3;
+        static constexpr uint8_t SAVE = 4;
     }
 	namespace PORTS {
-        static constexpr uint16_t SEND = 2089;
-        static constexpr uint16_t RECEIVE = 2090;
+        static constexpr uint16_t TCP = 2089;
     }
-    typedef enum Importance {
-        NotImportant = 1,
-        Important = 2,
-        ExtremelyImportant = 5
-    } Importance;
 };

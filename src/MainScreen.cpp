@@ -39,7 +39,6 @@
 #include "NoServerConnection.hpp"
 #include "MenuBg.hpp"
 #include "Root.hpp"
-#include "PackageLimit.hpp"
 #include "Maps.hpp"
 #include "GlobalRandomGenerator64.hpp"
 
@@ -53,28 +52,25 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, Type ty
 	this->alreadyFinished = false;
 
 	this->serverIP = serverIP;
-	this->sendSocket.setBlocking(false);
-	if (this->sendSocket.bind(CLIENT_NET_SPECS::PORTS::SEND) != sf::Socket::Done) {
-		throw PortIsBusy(CLIENT_NET_SPECS::PORTS::SEND);
-	}
-	this->receiveSocket.setBlocking(false);
-	if (this->receiveSocket.bind(CLIENT_NET_SPECS::PORTS::RECEIVE) != sf::Socket::Done) {
-		throw PortIsBusy(CLIENT_NET_SPECS::PORTS::RECEIVE);
-	}
+	this->socketInited = false;
 	this->type = type;
 	this->data = data;
 	this->playersAtThisHost = playersAtThisHost;
 	this->roomID = roomID;
-	this->sendInitTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
-	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
-    this->noInitReceivedTimer = Timer(5 * 1000, Timer::TYPE::FIRST_DEFAULT);
-	this->noOKReceivedTimer = Timer(10 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
 	this->initPackageGotten = false;
 
 	this->returnToMenu = false;
 	this->view = sf::View(window.getDefaultView());
 	this->illiminanceTable.createRender(window.getSize().x, window.getSize().y, window.getSettings());
+}
+
+
+
+
+
+MainScreen::~MainScreen() {
+    this->stop = true;
 }
 
 
@@ -92,23 +88,34 @@ void MainScreen::run(sf::RenderWindow& window) {
 
     sf::Event event{};
 
-    while (!this->initPackageGotten) {
-        while (window.pollEvent(event)) {
-
-        }
-
-        if (this->sendInitTimer.ready()) {
-            this->sendInitTimer.reset();
-            this->sendInit();
-        }
-        this->receive(window);
-        if (this->noInitReceivedTimer.ready()) {
+    this->socket.setBlocking(false);
+    Timer timer(5000, Timer::TYPE::FIRST_DEFAULT);
+    while (!this->socketInited) {
+        while (window.pollEvent(event)) {}
+        if (timer.ready()) {
             throw NoServerConnection();
         }
+        if (this->socket.connect(this->serverIP, SERVER_NET_SPECS::PORTS::TCP) == sf::Socket::Status::Done) {
+            this->socket.setBlocking(true);
+            this->stop = false;
+            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &this->socket, &this->toSend, &this->stop));
+            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &this->socket, &this->toSend, &this->stop));
+            this->sendingThread->launch();
+            this->receivingThread->launch();
+            this->socketInited = true;
+        }
+        this->drawWaitingScreen(window);
+    }
 
-        window.clear();
-        window.draw(MenuBg());
-        window.display();
+    this->sendInit();
+    timer.reset();
+    while (!this->initPackageGotten) {
+        while (window.pollEvent(event)) {}
+        if (timer.ready()) {
+            throw NoServerConnection();
+        }
+        this->receive(window);
+        this->drawWaitingScreen(window);
     }
 
 	for (; ;) {
@@ -117,14 +124,7 @@ void MainScreen::run(sf::RenderWindow& window) {
                 this->sendClick(window, event.mouseButton.button);
 			}
 		}
-        if (this->sendOKTimer.ready()) {
-            this->sendOKTimer.reset();
-            this->sendOK();
-        }
 		this->receive(window);
-        if (this->noOKReceivedTimer.ready()) {
-            throw NoServerConnection();
-        }
 		Playlist::get()->update();
 		window.setMouseCursorVisible(this->cursorVisibility);
 		this->drawEverything(window);
@@ -140,17 +140,11 @@ void MainScreen::run(sf::RenderWindow& window) {
 
 sf::Packet MainScreen::makeBasePacket() const {
     sf::Packet packet;
-    packet << (sf::Uint64)GlobalRandomGenerator64::get()->gen();
     packet << (sf::Uint64)this->roomID.value();
     return packet;
 }
-void MainScreen::send(sf::Packet &what, CLIENT_NET_SPECS::Importance importance) {
-    if (what.getDataSize() > sf::UdpSocket::MaxDatagramSize) {
-        throw PackageLimit();
-    }
-    for (uint32_t i = 0; i < importance; i = i + 1) {
-        this->sendSocket.send(what, this->serverIP, SERVER_NET_SPECS::PORTS::RECEIVE);
-    }
+void MainScreen::send(sf::Packet &what) {
+    this->toSend.push(what);
 }
 
 
@@ -195,12 +189,7 @@ void MainScreen::sendInit() {
 		packet << CLIENT_NET_SPECS::CODES::CONNECT;
 		packet << this->playersAtThisHost;
 	}
-	this->send(packet, CLIENT_NET_SPECS::Importance::NotImportant);
-}
-void MainScreen::sendOK() {
-	sf::Packet packet = this->makeBasePacket();
-	packet << CLIENT_NET_SPECS::CODES::OK;
-    this->send(packet, CLIENT_NET_SPECS::Importance::NotImportant);
+	this->send(packet);
 }
 void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
     sf::Packet packet = this->makeBasePacket();
@@ -212,7 +201,7 @@ void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
     packet << (uint32_t)std::get<1>(this->getMousePositionBasedOnView(window));
     packet << (uint32_t)window.getSize().x;
     packet << (uint32_t)window.getSize().y;
-    this->send(packet, CLIENT_NET_SPECS::Importance::ExtremelyImportant);
+    this->send(packet);
 }
 
 
@@ -222,47 +211,37 @@ void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
 
 
 void MainScreen::receive(sf::RenderWindow &window) {
-	sf::Packet receivedPacket;
-	sf::IpAddress senderIP;
-	uint16_t senderPort;
-	if (this->receiveSocket.receive(receivedPacket, senderIP, senderPort) == sf::Socket::Status::Done and senderIP == this->serverIP and senderPort == SERVER_NET_SPECS::PORTS::SEND) {
-        sf::Uint64 packetID;
-        receivedPacket >> packetID;
-        if (this->receivedPackages.find(packetID) == this->receivedPackages.end()) {
-            this->receivedPackages[packetID] = true;
-            sf::Uint64 id;
-            receivedPacket >> id;
-            if (this->roomID.value() == id) {
-                uint8_t code;
-                receivedPacket >> code;
+    if (this->received.empty()) {
+        return;
+    }
+	sf::Packet receivedPacket = this->received.pop();
+    sf::Uint64 packetID;
+    receivedPacket >> packetID;
+    sf::Uint64 id;
+    receivedPacket >> id;
+    if (this->roomID.value() == id) {
+        uint8_t code;
+        receivedPacket >> code;
 
-                if (code == SERVER_NET_SPECS::CODES::OK) {
-                    this->receiveOK();
-                }
-                else if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
-                    this->receiveWorldUIState(receivedPacket);
-                }
-                else if (code == SERVER_NET_SPECS::CODES::SOUND) {
-                    this->receiveSound(receivedPacket);
-                }
-                else if (code == SERVER_NET_SPECS::CODES::FOCUS) {
-                    this->receiveFocus(receivedPacket, window);
-                }
-                else if (code == SERVER_NET_SPECS::CODES::RETURN_TO_MENU) {
-                    this->receiveReturnToMenu();
-                }
-                else if (code == SERVER_NET_SPECS::CODES::SAVE) {
-                    this->receiveSave(receivedPacket);
-                }
-                else {
-                    std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
-                }
-            }
+        if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
+            this->receiveWorldUIState(receivedPacket);
         }
-	}
-}
-void MainScreen::receiveOK() {
-	this->noOKReceivedTimer.reset();
+        else if (code == SERVER_NET_SPECS::CODES::SOUND) {
+            this->receiveSound(receivedPacket);
+        }
+        else if (code == SERVER_NET_SPECS::CODES::FOCUS) {
+            this->receiveFocus(receivedPacket, window);
+        }
+        else if (code == SERVER_NET_SPECS::CODES::RETURN_TO_MENU) {
+            this->receiveReturnToMenu();
+        }
+        else if (code == SERVER_NET_SPECS::CODES::SAVE) {
+            this->receiveSave(receivedPacket);
+        }
+        else {
+            std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
+        }
+    }
 }
 void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
 	std::string data;
@@ -387,6 +366,20 @@ void MainScreen::drawDarkness(sf::RenderWindow &window) {
 	}
 
 	window.draw(this->illiminanceTable);
+}
+
+
+
+
+
+
+
+
+
+
+void MainScreen::drawWaitingScreen(sf::RenderWindow &window) {
+    window.draw(MenuBg());
+    window.display();
 }
 
 

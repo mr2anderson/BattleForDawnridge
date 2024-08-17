@@ -25,7 +25,6 @@
 
 // Package format:
 /*
- * package unique id (sf::Uint64)
  * room_id (sf::Uint64)
  * code (uint8_t)
  * additional_code_info
@@ -34,16 +33,6 @@ namespace CLIENT_NET_SPECS {
     namespace CODES { // enum is not used cuz it is implementation-defined
         static constexpr uint8_t CREATE = 0;
         static constexpr uint8_t CONNECT = 1;
-        static constexpr uint8_t OK = 2;
-        static constexpr uint8_t CLICK = 3;
+        static constexpr uint8_t CLICK = 2;
     }
-    namespace PORTS {
-        static constexpr uint16_t SEND = 2017;
-        static constexpr uint16_t RECEIVE = 2018;
-    }
-    typedef enum Importance {
-        NotImportant = 1,
-        Important = 2,
-        ExtremelyImportant = 5
-    } Importance;
 };

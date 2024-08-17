@@ -19,7 +19,6 @@
 
 #include <queue>
 #include <boost/optional.hpp>
-#include <unordered_map>
 #include "RemotePlayers.hpp"
 #include "Timer.hpp"
 #include "RoomID.hpp"
@@ -104,10 +103,6 @@ public:
 private:
 	RoomID id;
 
-    std::unordered_map<uint64_t, bool> receivedPackages;
-
-	Timer sendOKTimer;
-	Timer noOKReceivedTimer;
     bool requireInit;
 
 	Map map;
@@ -145,18 +140,15 @@ private:
 	void processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, bool sendToClients = true);
 	void addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 
-	void sendTimeCommandsToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void sendOKToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
-    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers, SERVER_NET_SPECS::Importance importance);
+    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers);
 
     sf::Packet makeBasePacket() const;
-	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, SERVER_NET_SPECS::Importance importance);
-    void sendToClient(const sf::Packet &what,  std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host, SERVER_NET_SPECS::Importance importance);
+	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+    void sendToClient(const sf::Packet &what,  std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host);
 
 	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void receiveOK();
 	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
 
 	void handleEvent(std::shared_ptr<Event> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
