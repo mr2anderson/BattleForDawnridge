@@ -97,8 +97,8 @@ void MainScreen::run(sf::RenderWindow& window) {
         if (this->socket.connect(this->serverIP, SERVER_NET_SPECS::PORTS::TCP, sf::milliseconds(1000)) == sf::Socket::Status::Done) {
             this->stop = false;
             this->socket.setBlocking(false);
-            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &this->socket, &this->toSend, &this->stop));
-            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &this->socket, &this->received, &this->stop));
+            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &this->socket, &this->toSend, &this->stop, &this->sentBytes));
+            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &this->socket, &this->received, &this->stop, &this->receivedBytes));
             this->sendingThread->launch();
             this->receivingThread->launch();
             this->socketInited = true;

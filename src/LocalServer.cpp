@@ -33,7 +33,7 @@
 
 
 
-static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready) {
+static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
 	sf::TcpListener listener;
     std::cout << "Listening port..." << std::endl;
     if (listener.listen(SERVER_NET_SPECS::PORTS::TCP) != sf::Socket::Status::Done) {
@@ -64,8 +64,8 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready) {
     bfdlib::tcp_help::queue_w toSend;
     bfdlib::tcp_help::queue_r received;
     socket.setBlocking(false);
-    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &socket, &toSend, stop));
-    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &received, stop));
+    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &socket, &toSend, stop, sendTraffic));
+    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &received, stop, receiveTraffic));
     sendThread->launch();
     receiveThread->launch();
 
@@ -91,16 +91,14 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready) {
         uint8_t code;
         receivedPacket >> code;
         if (code == CLIENT_NET_SPECS::CODES::CREATE) {
-            if (room == nullptr) {
-                std::string data;
-                receivedPacket >> data;
-                room = std::make_unique<Room>(RoomID(roomIdVal), data, Room::Restrictions::Disable);
-                uint32_t playersAtHost;
-                receivedPacket >> playersAtHost;
-                while (playersAtHost and players.size() != room->playersNumber()) {
-                    players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
-                    playersAtHost = playersAtHost - 1;
-                }
+            std::string data;
+            receivedPacket >> data;
+            room = std::make_unique<Room>(RoomID(roomIdVal), data, Room::Restrictions::Disable);
+            uint32_t playersAtHost;
+            receivedPacket >> playersAtHost;
+            while (playersAtHost and players.size() != room->playersNumber()) {
+                players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+                playersAtHost = playersAtHost - 1;
             }
         }
 	}
@@ -139,12 +137,12 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready) {
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running, std::atomic_bool *ready) {
+static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running, std::atomic_bool *ready, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
 	*running = true;
     std::cout << "Local server was started" << std::endl;
 
 	try {
-		THREAD(stop, ready);
+		THREAD(stop, ready, sendTraffic, receiveTraffic);
 	}
 	catch (std::exception& e) {
 		*unexpectedError = std::current_exception();
@@ -168,6 +166,7 @@ LocalServer::LocalServer() {
 }
 LocalServer::~LocalServer() {
 	this->finish();
+    std::cout << "Destroying local server. Send: " << (float)this->sendTraffic / 1024 / 1024 << " MB. Received: " << (float)this->receiveTraffic / 1024 / 1024 << " MB" << std::endl;
 }
 void LocalServer::finish() {
 	if (this->running) {
@@ -182,7 +181,7 @@ void LocalServer::launch() {
 	}
     std::atomic<bool> ready = false;
     std::cout << "Starting local sever thread..." << std::endl;
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready, &this->sendTraffic, &this->receiveTraffic));
 	this->thread->launch();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));

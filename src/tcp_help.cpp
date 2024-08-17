@@ -23,7 +23,8 @@
 static const sf::Time DELTA = sf::milliseconds(5);
 
 
-void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag) {
+void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
+    *bytes = 0;
     for (; ; sf::sleep(DELTA)) {
         if (*flag) {
             break;
@@ -32,6 +33,7 @@ void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, queue_w *q, const 
             continue;
         }
         sf::Packet packet = q->pop();
+        *bytes = *bytes + packet.getDataSize();
         while (socket->send(packet) != sf::Socket::Status::Done) {
             sf::sleep(DELTA);
             if (*flag) {
@@ -40,7 +42,8 @@ void bfdlib::tcp_help::process_sending(sf::TcpSocket *socket, queue_w *q, const 
         }
     }
 }
-void bfdlib::tcp_help::process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag) {
+void bfdlib::tcp_help::process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
+    *bytes = 0;
     for (; ; sf::sleep(DELTA)) {
         if (*flag) {
             break;
@@ -52,6 +55,7 @@ void bfdlib::tcp_help::process_receiving(sf::TcpSocket *socket, queue_r *q, cons
                 break;
             }
         }
+        *bytes = *bytes + packet.getDataSize();
         q->push(packet);
     }
 }
