@@ -99,6 +99,13 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
 
     sf::Uint64 roomIdVal;
     packet >> roomIdVal;
+
+    uint64_t key = roomIdVal + ip.toInteger();
+    if (this->initSignalBlocklist.find(key) != this->initSignalBlocklist.end()) {
+        return;
+    }
+    this->initSignalBlocklist[key] = true;
+
     RoomID roomId(roomIdVal);
 
     uint8_t code;
@@ -116,7 +123,7 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
                 uint32_t playersAtHost;
                 packet >> playersAtHost;
                 uint32_t added = this->rooms.addPlayersSafe(roomId, ip, playersAtHost);
-                this->logs.add(StringLcl("{room_was_created}" + roomId.readableValue() + " " + ip.toString() + " " + std::to_string(added)));
+                this->logs.add(StringLcl("{new_room}" + roomId.readableValue() + " " + ip.toString() + " " + std::to_string(added)));
             }
             else {
                 this->logs.add(StringLcl("{couldnt_create_room}"));

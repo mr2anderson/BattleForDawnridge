@@ -131,6 +131,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         IsServerTable::get()->load();
+        Parameters::get()->load();
         Music::get()->setDefaultVolume(40);
         Music::get()->add("intro", "music/intro.ogg");
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
@@ -230,7 +231,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
             Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
-        Parameters::get()->load();
         for (const std::string& a : { "ridge" }) {
             Maps::get()->add(a, "levels/" + a + ".tmx");
         }

@@ -39,6 +39,7 @@ private:
     sf::UdpSocket sendSocket;
     sf::UdpSocket receiveSocket;
 	ServerRooms rooms;
+	std::unordered_map<uint64_t, bool> initSignalBlocklist;
 
 	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
 

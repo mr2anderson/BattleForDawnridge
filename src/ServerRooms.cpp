@@ -118,14 +118,12 @@ uint32_t ServerRooms::addPlayersSafe(RoomID id, sf::IpAddress playerIP, uint32_t
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();
 	}
-	if (std::get<RemotePlayers>(it->second).size() + number > std::get<std::unique_ptr<Room>>(it->second)->playersNumber()) {
-		throw PlayerLimitReached();
-	}
 
 	uint32_t ctr = 0;
 
 	while (number and std::get<std::unique_ptr<Room>>(it->second)->playersNumber() > std::get<RemotePlayers>(it->second).size()) {
 		std::get<RemotePlayers>(it->second).add(playerIP);
+		number = number - 1;
 		ctr = ctr + 1;
 	}
 
