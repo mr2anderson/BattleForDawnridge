@@ -31,6 +31,9 @@ void RemotePlayers::add(sf::IpAddress ip) {
 	this->add(RemotePlayer(this->size() + 1, ip));
 }
 RemotePlayer RemotePlayers::get(uint32_t id) const {
+    if (id - 1 >= this->data.size()) {
+        return {id, sf::IpAddress::None};
+    }
 	return this->data.at(id - 1);
 }
 uint32_t RemotePlayers::size() const {

@@ -100,6 +100,7 @@ public:
 	uint32_t playersNumber() const;
 
 	void update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, std::vector<std::tuple<sf::Packet, sf::IpAddress>> *toSend, const RemotePlayers& remotePlayers);
+    void needInit();
 private:
 	RoomID id;
 
@@ -107,7 +108,7 @@ private:
 
 	Timer sendOKTimer;
 	Timer noOKReceivedTimer;
-    bool initPackagesWereSent;
+    bool requireInit;
 
 	Map map;
 	std::vector<bool> playerIsActive;

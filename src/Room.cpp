@@ -62,7 +62,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 
 	this->sendOKTimer = Timer(1000, Timer::TYPE::FIRST_INSTANTLY);
 	this->noOKReceivedTimer = Timer(60 * 1000, Timer::TYPE::FIRST_DEFAULT);
-    this->initPackagesWereSent = false;
+    this->requireInit = true;
 
 	this->loadSaveData(saveData, restrictions);
 
@@ -107,9 +107,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw RoomWasClosed();
 	}
 
-    if (!this->initPackagesWereSent) {
+    if (this->requireInit) {
         this->sendWorldUIStateToClients(toSend, remotePlayers, SERVER_NET_SPECS::Importance::ExtremelyImportant);
-        this->initPackagesWereSent = true;
+        this->requireInit = false;
     }
 
 	this->sendTimeCommandsToClients(toSend, remotePlayers);
@@ -128,6 +128,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	}
 	this->processNewMoveEvents(toSend, remotePlayers);
 	this->processBaseEvents(toSend, remotePlayers);
+}
+void Room::needInit() {
+    this->requireInit = true;
 }
 
 

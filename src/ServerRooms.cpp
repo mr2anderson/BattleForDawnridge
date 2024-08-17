@@ -108,6 +108,9 @@ void ServerRooms::addPlayers(RoomID id, sf::IpAddress playerIP, uint32_t number)
 	for (uint32_t i = 0; i < number; i = i + 1) {
 		std::get<RemotePlayers>(it->second).add(playerIP);
 	}
+    if (number) {
+        std::get<std::unique_ptr<Room>>(it->second)->needInit();
+    }
 }
 
 bool ServerRooms::addPlayerSafe(RoomID id, sf::IpAddress playerIP) {
@@ -126,6 +129,10 @@ uint32_t ServerRooms::addPlayersSafe(RoomID id, sf::IpAddress playerIP, uint32_t
 		number = number - 1;
 		ctr = ctr + 1;
 	}
+
+    if (ctr) {
+        std::get<std::unique_ptr<Room>>(it->second)->needInit();
+    }
 
 	return ctr;
 }
