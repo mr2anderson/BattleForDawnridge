@@ -141,11 +141,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         #if defined(USE_CUSTOM_CURSOR)
             Textures::get()->add("cursor", "images/cursor.png");
         #endif
-        if (IsServerTable::get()->isServer()) {
-            PublicIP::get()->load();
-            return true;
-        }
         MainServerPosition::get()->load();
+        PublicIP::get()->load();
         Music::get()->add("menu", "music/menu.ogg");
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",

@@ -18,10 +18,12 @@
 
 
 #include <SFML/Network.hpp>
+#include <atomic>
 #include "Logs.hpp"
 #include "ServerScreenResponse.hpp"
 #include "MenuBg.hpp"
 #include "ServerRooms.hpp"
+#include "tcp_helper.hpp"
 
 
 #pragma once
@@ -31,13 +33,25 @@ class ServerScreen {
 public:
 	ServerScreen(sf::RenderWindow& window);
 	ServerScreen(const ServerScreen& copy) = delete;
+    ~ServerScreen();
 
 	ServerScreenResponse run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
+
 	MenuBg bg;
 	Logs logs;
+
 	ServerRooms rooms;
+
+    sf::TcpListener listener;
+    std::vector<sf::TcpSocket*> sockets;
+    std::atomic<bool> stop;
+    std::atomic<uint64_t> traffic;
+    std::vector<bfdlib::tcp_helper::queue_r*> received;
+    std::vector<bfdlib::tcp_helper::queue_w*> toSend;
+    std::vector<std::unique_ptr<sf::Thread>> sendThreads;
+    std::vector<std::unique_ptr<sf::Thread>> receiveThreads;
 
 	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
 

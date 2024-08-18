@@ -99,7 +99,6 @@ namespace bfdlib {
 
 
         static void process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
-            *bytes = 0;
             for (; ; sf::sleep(sf::milliseconds(5))) {
                 if (*flag) {
                     break;
@@ -118,7 +117,6 @@ namespace bfdlib {
             }
         }
         static void process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
-            *bytes = 0;
             for (; ; sf::sleep(sf::milliseconds(5))) {
                 if (*flag) {
                     break;

@@ -224,6 +224,8 @@ uint16_t LocalServer::launch() {
 	if (this->running) {
 		throw LocalServerAlreadyLaunched();
 	}
+    this->sendTraffic = 0;
+    this->receiveTraffic = 0;
     std::atomic<bool> ready = false;
     std::atomic<uint16_t> port;
     LOGS("Launching local sever thread...");
