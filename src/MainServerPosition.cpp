@@ -19,12 +19,13 @@
 
 #include <fstream>
 #include <sstream>
-#include "ServerIP.hpp"
+#include <limits>
+#include "MainServerPosition.hpp"
 #include "Root.hpp"
-#include "CouldntOpenServerIP.hpp"
+#include "CouldntOpenMainServerPosition.hpp"
 
 
-ServerIP* ServerIP::singletone = nullptr;
+MainServerPosition* MainServerPosition::singletone = nullptr;
 
 
 static std::vector<std::string> split(const std::string& s, char delim) {
@@ -38,17 +39,16 @@ static std::vector<std::string> split(const std::string& s, char delim) {
 
 	return result;
 }
-void ServerIP::load() {
-	std::string path(DATA_ROOT + "/configs/server_ip.cfg");
+void MainServerPosition::load() {
+	std::string path(DATA_ROOT + "/configs/main_server_position.cfg");
 
 	std::ifstream file(path);
 
 	std::string buff;
 	std::getline(file, buff);
-
 	std::vector<std::string> splitted = split(buff, '.');
 	if (splitted.size() != 4) {
-		throw CouldntOpenServerIP(path);
+		throw CouldntOpenMainServerPosition(path);
 	}
 	for (const auto& word : splitted) {
 		int32_t number;
@@ -56,15 +56,30 @@ void ServerIP::load() {
 			number = std::stoi(word);
 		}
 		catch (std::exception&) {
-			throw CouldntOpenServerIP(path);
+			throw CouldntOpenMainServerPosition(path);
 		}
 		if (number < 0 or number > 255) {
-			throw CouldntOpenServerIP(path);
+			throw CouldntOpenMainServerPosition(path);
 		}
 	}
-
 	this->ip = sf::IpAddress(buff);
+
+    std::getline(file, buff);
+    int32_t number;
+    try {
+        number = std::stoi(buff);
+    }
+    catch (std::exception&) {
+        throw CouldntOpenMainServerPosition(path);
+    }
+    if (number < 0 or number > std::numeric_limits<uint16_t>::max()) {
+        throw CouldntOpenMainServerPosition(path);
+    }
+    this->port = number;
 }
-sf::IpAddress ServerIP::getIP() const {
+sf::IpAddress MainServerPosition::getIP() const {
 	return this->ip.value();
+}
+uint16_t MainServerPosition::getPort() const {
+    return this->port.value();
 }

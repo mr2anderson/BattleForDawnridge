@@ -17,12 +17,15 @@
  */
 
 
-#include "CouldntOpenServerIP.hpp"
+#include "CouldntOpen.hpp"
 
 
-CouldntOpenServerIP::CouldntOpenServerIP(const std::string& path) : CouldntOpen(path) {
+#pragma once
 
-}
-std::string CouldntOpenServerIP::getResourceName() const {
-	return "server ip";
-}
+
+class CouldntOpenMainServerPosition : public CouldntOpen {
+public:
+	CouldntOpenMainServerPosition(const std::string& path);
+private:
+	std::string getResourceName() const override;
+};

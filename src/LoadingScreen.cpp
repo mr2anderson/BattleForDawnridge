@@ -47,7 +47,7 @@
 #include "PublicIP.hpp"
 #include "LoadingScreenBg.hpp"
 #include "IsServerTable.hpp"
-#include "ServerIP.hpp"
+#include "MainServerPosition.hpp"
 
 
 #if defined(_WIN32) // Unix does not support coloured cursors
@@ -145,7 +145,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
             PublicIP::get()->load();
             return true;
         }
-        ServerIP::get()->load();
+        MainServerPosition::get()->load();
         Music::get()->add("menu", "music/menu.ogg");
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",

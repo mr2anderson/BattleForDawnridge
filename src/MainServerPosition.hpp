@@ -19,26 +19,29 @@
 
 #include <SFML/Network.hpp>
 #include <boost/optional.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
-class ServerIP {
+class MainServerPosition {
 public:
-    static ServerIP* get() {
-        if (ServerIP::singletone == nullptr) {
-            ServerIP::singletone = new ServerIP();
+    static MainServerPosition* get() {
+        if (MainServerPosition::singletone == nullptr) {
+            MainServerPosition::singletone = new MainServerPosition();
         }
-        return ServerIP::singletone;
+        return MainServerPosition::singletone;
     }
 
     void load();
     sf::IpAddress getIP() const;
+    uint16_t getPort() const;
 private:
-    ServerIP() = default;
-    ServerIP(const ServerIP& copy);
-    static ServerIP* singletone;
+    MainServerPosition() = default;
+    MainServerPosition(const MainServerPosition& copy);
+    static MainServerPosition* singletone;
 
     boost::optional<sf::IpAddress> ip;
+    boost::optional<uint16_t> port;
 };

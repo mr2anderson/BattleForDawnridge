@@ -27,7 +27,7 @@
 #include "LocalServer.hpp"
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
-#include "ServerIP.hpp"
+#include "MainServerPosition.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -132,17 +132,16 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
 }
 void Program::networkGame(const MenuResponse& response, boost::optional<StringLcl>& error) {
     try {
-        // TODO
         if (response.getType() == MenuResponse::TYPE::START_NETWORK_GAME) {
-            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), 0, MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
+            MainScreen mainScreen(this->window, MainServerPosition::get()->getIP(), MainServerPosition::get()->getPort(), MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
             mainScreen.run(this->window);
         }
         else if (response.getType() == MenuResponse::TYPE::LOAD_NETWORK_GAME) {
-            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), 0, MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
+            MainScreen mainScreen(this->window, MainServerPosition::get()->getIP(), MainServerPosition::get()->getPort(), MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
             mainScreen.run(this->window);
         }
         else {
-            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), 0, MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
+            MainScreen mainScreen(this->window, MainServerPosition::get()->getIP(), MainServerPosition::get()->getPort(), MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
             mainScreen.run(this->window);
         }
     }
