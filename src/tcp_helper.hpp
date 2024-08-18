@@ -21,6 +21,7 @@
 #include <functional>
 #include <queue>
 #include <atomic>
+#include <optional>
 
 
 #pragma once
@@ -33,7 +34,7 @@ namespace bfdlib {
 
 
 
-    class tcp_help {
+    class tcp_helper {
     public:
 
 
@@ -49,19 +50,17 @@ namespace bfdlib {
             std::queue<T> data;
             mutable std::mutex mutex;
 
-            T pop() {
+            std::optional<T> pop() {
                 std::lock_guard<std::mutex> lock(this->mutex);
+                if (this->data.empty()) {
+                    return std::nullopt;
+                }
                 T value = this->data.front();
                 this->data.pop();
                 return value;
             }
 
-            bool empty() const {
-                std::lock_guard<std::mutex> lock(this->mutex);
-                return this->data.empty();
-            }
-
-            friend class tcp_help;
+            friend class tcp_helper;
         };
 
 
@@ -71,16 +70,14 @@ namespace bfdlib {
         public:
             safe_reading_queue() = default;
 
-            T pop() {
+            std::optional<T> pop() {
                 std::lock_guard<std::mutex> lock(this->mutex);
+                if (this->data.empty()) {
+                    return std::nullopt;
+                }
                 T value = this->data.front();
                 this->data.pop();
                 return value;
-            }
-
-            bool empty() const {
-                std::lock_guard<std::mutex> lock(this->mutex);
-                return this->data.empty();
             }
         private:
             std::queue<T> data;
@@ -91,7 +88,7 @@ namespace bfdlib {
                 this->data.push(value);
             }
 
-            friend class tcp_help;
+            friend class tcp_helper;
         };
 
 
@@ -101,8 +98,42 @@ namespace bfdlib {
 
 
 
-        static void process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes);
-        static void process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes);
+        static void process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
+            *bytes = 0;
+            for (; ; sf::sleep(sf::milliseconds(5))) {
+                if (*flag) {
+                    break;
+                }
+                std::optional<sf::Packet> packet = q->pop();
+                if (packet == std::nullopt) {
+                    continue;
+                }
+                *bytes = *bytes + packet->getDataSize();
+                while (socket->send(packet.value()) != sf::Socket::Status::Done) {
+                    sf::sleep(sf::milliseconds(5));
+                    if (*flag) {
+                        break;
+                    }
+                }
+            }
+        }
+        static void process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
+            *bytes = 0;
+            for (; ; sf::sleep(sf::milliseconds(5))) {
+                if (*flag) {
+                    break;
+                }
+                sf::Packet packet;
+                while (socket->receive(packet) != sf::Socket::Status::Done) {
+                    sf::sleep(sf::milliseconds(5));
+                    if (*flag) {
+                        break;
+                    }
+                }
+                *bytes = *bytes + packet.getDataSize();
+                q->push(packet);
+            }
+        }
     };
 
 

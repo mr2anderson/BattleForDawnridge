@@ -24,7 +24,7 @@
 #include "PortIsBusy.hpp"
 #include "LocalServerAlreadyLaunched.hpp"
 #include "ServerNetSpecs.hpp"
-#include "tcp_help.hpp"
+#include "tcp_helper.hpp"
 
 
 
@@ -88,12 +88,12 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
 
 
 
-    bfdlib::tcp_help::queue_w toSend;
-    bfdlib::tcp_help::queue_r received;
+    bfdlib::tcp_helper::queue_w toSend;
+    bfdlib::tcp_helper::queue_r received;
     socket.setBlocking(false);
     std::atomic<bool> stopTcpThread = false;
-    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_sending, &socket, &toSend, &stopTcpThread, sendTraffic));
-    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_help::process_receiving, &socket, &received, &stopTcpThread, receiveTraffic));
+    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, &socket, &toSend, &stopTcpThread, sendTraffic));
+    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, &socket, &received, &stopTcpThread, receiveTraffic));
     sendThread->launch();
     receiveThread->launch();
 
@@ -104,17 +104,19 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
 	RemotePlayers players;
     LOGS("Creating room...");
 	while (room == nullptr or room->playersNumber() != players.size()) {
+        std::optional<sf::Packet> receivedPacketOpt;
 		for (; ; sf::sleep(sf::milliseconds(5))) {
             if (*stop) {
                 CLOSE_THREADS(sendThread, receiveThread, &stopTcpThread);
                 return;
             }
-            if (!received.empty()) {
+            receivedPacketOpt = received.pop();
+            if (receivedPacketOpt != std::nullopt) {
                 break;
             }
         }
+        sf::Packet receivedPacket = receivedPacketOpt.value();
         LOGS("Got pkg!");
-        sf::Packet receivedPacket = received.pop();
         sf::Uint64 roomIdVal;
         receivedPacket >> roomIdVal;
         uint8_t code;
@@ -144,8 +146,9 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
         Clock clock;
 
 		boost::optional<std::tuple<sf::Packet, sf::IpAddress>> tuple = boost::none;
-		if (!received.empty()) {
-            tuple = std::make_tuple(received.pop(), sf::IpAddress::getLocalAddress());
+        std::optional<sf::Packet> packet = received.pop();
+		if (packet != std::nullopt) {
+            tuple = std::make_tuple(packet.value(), sf::IpAddress::getLocalAddress());
         }
 
         std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSendGlobal;

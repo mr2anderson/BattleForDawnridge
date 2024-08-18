@@ -30,7 +30,7 @@
 #include "HighlightTable.hpp"
 #include "ResourceBar.hpp"
 #include "ClientNetSpecs.hpp"
-#include "tcp_help.hpp"
+#include "tcp_helper.hpp"
 
 
 #pragma once
@@ -59,8 +59,8 @@ private:
 
     bool socketInited;
 	sf::TcpSocket socket;
-    bfdlib::tcp_help::queue_w toSend;
-    bfdlib::tcp_help::queue_r received;
+    bfdlib::tcp_helper::queue_w toSend;
+    bfdlib::tcp_helper::queue_r received;
     std::atomic<uint64_t> sentBytes;
     std::atomic<uint64_t> receivedBytes;
     std::atomic<bool> stop;
