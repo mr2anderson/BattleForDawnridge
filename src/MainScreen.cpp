@@ -48,6 +48,24 @@
 
 
 
+//#define PRINT_LOGS
+
+
+
+
+
+static void LOGS(const std::string &val) {
+    #ifdef PRINT_LOGS
+    std::cout << val << std::endl;
+    #endif
+}
+
+
+
+
+
+
+
 MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
 	this->alreadyFinished = false;
 
@@ -70,7 +88,16 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, Type ty
 
 
 MainScreen::~MainScreen() {
+    LOGS("Destroying...");
+
     this->stop = true;
+    if (this->socketInited) {
+        this->sendingThread->wait();
+        this->receivingThread->wait();
+    }
+    this->socket.disconnect();
+
+    LOGS("OK");
 }
 
 
@@ -88,6 +115,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 
     sf::Event event{};
 
+    LOGS("Connecting to server...");
     Timer timer(5000, Timer::TYPE::FIRST_DEFAULT);
     while (!this->socketInited) {
         while (window.pollEvent(event)) {}
@@ -105,7 +133,9 @@ void MainScreen::run(sf::RenderWindow& window) {
         }
         this->drawWaitingScreen(window);
     }
+    LOGS("OK");
 
+    LOGS("Waiting for init pkg...");
     this->sendInit();
     timer.reset();
     while (!this->initPackageGotten) {
@@ -116,7 +146,9 @@ void MainScreen::run(sf::RenderWindow& window) {
         this->receive(window);
         this->drawWaitingScreen(window);
     }
+    LOGS("OK");
 
+    LOGS("Processing...");
 	for (; ;) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed) {
@@ -236,7 +268,7 @@ void MainScreen::receive(sf::RenderWindow &window) {
             this->receiveSave(receivedPacket);
         }
         else {
-            std::cerr << "MainScreen: warning: unknown code received from server: " << (uint32_t)code << std::endl;
+            LOGS("Warning: unknown code received from server: " + std::to_string((uint32_t) code));
         }
     }
 }
