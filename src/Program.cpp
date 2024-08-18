@@ -25,10 +25,8 @@
 #include "MainScreen.hpp"
 #include "ServerScreen.hpp"
 #include "LocalServer.hpp"
-#include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
-#include "ServerNetSpecs.hpp"
 #include "ServerIP.hpp"
 
 
@@ -101,7 +99,7 @@ void Program::run() {
 }
 void Program::localGame(const MenuResponse &response, boost::optional<StringLcl> &error) {
     LocalServer localServer;
-    localServer.launch();
+    uint16_t port = localServer.launch();
 
     MainScreen::Type mainScreenType;
     if (response.getType() == MenuResponse::TYPE::START_LOCAL_GAME) {
@@ -113,7 +111,7 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
 
     try {
         try {
-            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
+            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), port, mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
             mainScreen.run(this->window);
         }
         catch (NoServerConnection&) {
@@ -134,16 +132,17 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
 }
 void Program::networkGame(const MenuResponse& response, boost::optional<StringLcl>& error) {
     try {
+        // TODO
         if (response.getType() == MenuResponse::TYPE::START_NETWORK_GAME) {
-            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
+            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), 0, MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
             mainScreen.run(this->window);
         }
         else if (response.getType() == MenuResponse::TYPE::LOAD_NETWORK_GAME) {
-            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
+            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), 0, MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
             mainScreen.run(this->window);
         }
         else {
-            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
+            MainScreen mainScreen(this->window, ServerIP::get()->getIP(), 0, MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
             mainScreen.run(this->window);
         }
     }
@@ -154,9 +153,6 @@ void Program::networkGame(const MenuResponse& response, boost::optional<StringLc
 void Program::handleException(std::exception_ptr exception, boost::optional<StringLcl> &error) {
     try {
         std::rethrow_exception(exception);
-    }
-    catch (PortIsBusy& e) {
-        error = StringLcl("{port_is_busy_client}" + std::to_string(e.getPort()));
     }
     catch (CouldntOpenMap&) {
         error = StringLcl("{map_is_apcent_client}");

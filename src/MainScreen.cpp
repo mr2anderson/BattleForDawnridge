@@ -35,7 +35,6 @@
 #include "Sounds.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
-#include "PortIsBusy.hpp"
 #include "NoServerConnection.hpp"
 #include "MenuBg.hpp"
 #include "Root.hpp"
@@ -66,11 +65,14 @@ static void LOGS(const std::string &val) {
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverPort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
 	this->alreadyFinished = false;
 
 	this->serverIP = serverIP;
+    this->serverPort = serverPort;
+
 	this->socketInited = false;
+
 	this->type = type;
 	this->data = data;
 	this->playersAtThisHost = playersAtThisHost;
@@ -122,7 +124,7 @@ void MainScreen::run(sf::RenderWindow& window) {
         if (timer.ready()) {
             throw NoServerConnection();
         }
-        if (this->socket.connect(this->serverIP, SERVER_NET_SPECS::PORTS::TCP, sf::milliseconds(1000)) == sf::Socket::Status::Done) {
+        if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000)) == sf::Socket::Status::Done) {
             this->stop = false;
             this->socket.setBlocking(false);
             this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, &this->socket, &this->toSend, &this->stop, &this->sentBytes));

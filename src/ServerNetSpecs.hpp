@@ -37,7 +37,4 @@ namespace SERVER_NET_SPECS {
         static constexpr uint8_t RETURN_TO_MENU = 3;
         static constexpr uint8_t SAVE = 4;
     }
-	namespace PORTS {
-        static constexpr uint16_t TCP = 2089;
-    }
 };

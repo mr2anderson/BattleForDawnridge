@@ -21,7 +21,6 @@
 #include "LocalServer.hpp"
 #include "ClientNetSpecs.hpp"
 #include "math.hpp"
-#include "PortIsBusy.hpp"
 #include "LocalServerAlreadyLaunched.hpp"
 #include "ServerNetSpecs.hpp"
 #include "tcp_helper.hpp"
@@ -60,13 +59,19 @@ static void CLOSE_THREADS(std::unique_ptr<sf::Thread> &sendThread, std::unique_p
     sendThread->wait();
     receiveThread->wait();
 }
-static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
+static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std::atomic<uint16_t> *port, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
 	sf::TcpListener listener;
-    LOGS("Listening port...");
-    if (listener.listen(SERVER_NET_SPECS::PORTS::TCP) != sf::Socket::Status::Done) {
-        throw PortIsBusy(SERVER_NET_SPECS::PORTS::TCP);
+    LOGS("Looking for port...");
+    for (uint32_t p = 2017; p < 49151; p = p + 1) {
+        if (listener.listen(p) == sf::Socket::Status::Done) {
+            *port = p;
+            LOGS("Port " + std::to_string(p) + " is available!");
+            break;
+        }
+        else {
+            LOGS("Unable to listen port " + std::to_string(p));
+        }
     }
-    LOGS("OK");
 
 
 
@@ -168,19 +173,19 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running, std::atomic_bool *ready, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
+static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running, std::atomic_bool *ready, std::atomic<uint16_t> *port, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
 	*running = true;
-    LOGS("Local server was started");
+    LOGS("Local server was started in new thread");
 
 	try {
-		THREAD(stop, ready, sendTraffic, receiveTraffic);
+		THREAD(stop, ready, port, sendTraffic, receiveTraffic);
 	}
 	catch (std::exception& e) {
 		*unexpectedError = std::current_exception();
-        LOGS("Local server got an unexpected error: ");
+        LOGS("Local server thread got an unexpected error: ");
 	}
 
-    LOGS("Local server was closed");
+    LOGS("Local server thread was closed");
     *ready = true;
 	*running = false;
 }
@@ -215,18 +220,20 @@ void LocalServer::finish() {
         LOGS("Already finished.");
     }
 }
-void LocalServer::launch() {
+uint16_t LocalServer::launch() {
 	if (this->running) {
 		throw LocalServerAlreadyLaunched();
 	}
     std::atomic<bool> ready = false;
+    std::atomic<uint16_t> port;
     LOGS("Launching local sever thread...");
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready, &this->sendTraffic, &this->receiveTraffic));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready, &port, &this->sendTraffic, &this->receiveTraffic));
 	this->thread->launch();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));
     }
     LOGS("Local server thread reported that it is ready to detach");
+    return port;
 }
 void LocalServer::fine() const {
 	if (this->unexpectedError != nullptr) {

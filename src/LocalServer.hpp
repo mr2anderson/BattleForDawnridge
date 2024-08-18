@@ -32,7 +32,7 @@ public:
 	~LocalServer();
 
 	void finish();
-	void launch();
+	uint16_t launch();
 	void fine() const;
 private:
 	std::exception_ptr unexpectedError;
