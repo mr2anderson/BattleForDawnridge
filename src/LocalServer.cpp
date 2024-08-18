@@ -62,7 +62,7 @@ static void CLOSE_THREADS(std::unique_ptr<sf::Thread> &sendThread, std::unique_p
 static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std::atomic<uint16_t> *port, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
 	sf::TcpListener listener;
     LOGS("Looking for port...");
-    for (uint32_t p = 2017; p < 49151; p = p + 1) {
+    for (uint32_t p = 1024; p < 49151; p = p + 1) {
         if (listener.listen(p) == sf::Socket::Status::Done) {
             *port = p;
             LOGS("Port " + std::to_string(p) + " is available!");
