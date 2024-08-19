@@ -1623,19 +1623,10 @@
     <ClInclude Include="src\NoServerConnection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PortIsBusy.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RoomWasClosed.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ServerNetSpecs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LocalServerAlreadyLaunched.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PackageLimit.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CouldntOpenIsServerTable.hpp">
@@ -1677,19 +1668,10 @@
     <ClInclude Include="src\TooMuchPlayers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PointerIsNull.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\LoadNetworkGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\StartNetworkGameEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ServerIP.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CouldntOpenServerIP.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MapDeepError.hpp">
@@ -1705,6 +1687,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerLimitReached.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainServerPosition.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CouldntOpenMainServerPosition.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tcp_helper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2627,16 +2618,7 @@
     <ClCompile Include="src\NoServerConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PortIsBusy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RoomWasClosed.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\LocalServerAlreadyLaunched.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PackageLimit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CouldntOpenIsServerTable.cpp">
@@ -2660,19 +2642,10 @@
     <ClCompile Include="src\TooMuchPlayers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PointerIsNull.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\LoadNetworkGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StartNetworkGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ServerIP.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CouldntOpenServerIP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MapDeepError.cpp">
@@ -2688,6 +2661,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PlayerLimitReached.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainServerPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CouldntOpenMainServerPosition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

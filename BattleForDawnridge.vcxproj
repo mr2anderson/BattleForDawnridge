@@ -657,10 +657,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CouldntOpenFont.hpp" />
     <ClInclude Include="src\CouldntOpenIsServerTable.hpp" />
     <ClInclude Include="src\CouldntOpenLocales.hpp" />
+    <ClInclude Include="src\CouldntOpenMainServerPosition.hpp" />
     <ClInclude Include="src\CouldntOpenMap.hpp" />
     <ClInclude Include="src\CouldntOpenMusic.hpp" />
     <ClInclude Include="src\CouldntOpenParameters.hpp" />
-    <ClInclude Include="src\CouldntOpenServerIP.hpp" />
     <ClInclude Include="src\CouldntOpenSound.hpp" />
     <ClInclude Include="src\CouldntOpenTexture.hpp" />
     <ClInclude Include="src\CreateAnimationEvent.hpp" />
@@ -774,6 +774,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Logs.hpp" />
     <ClInclude Include="src\MainScreen.hpp" />
     <ClInclude Include="src\MainScreenButtonSpec.hpp" />
+    <ClInclude Include="src\MainServerPosition.hpp" />
     <ClInclude Include="src\Map.hpp" />
     <ClInclude Include="src\MapDeepError.hpp" />
     <ClInclude Include="src\MapPositionHash.hpp" />
@@ -806,7 +807,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\NewMovePriority.hpp" />
     <ClInclude Include="src\NextClueEvent.hpp" />
     <ClInclude Include="src\NoServerConnection.hpp" />
-    <ClInclude Include="src\PackageLimit.hpp" />
     <ClInclude Include="src\PAKScreen.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
     <ClInclude Include="src\Parameters.hpp" />
@@ -817,9 +817,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Players.hpp" />
     <ClInclude Include="src\Playlist.hpp" />
     <ClInclude Include="src\PlaySoundEvent.hpp" />
-    <ClInclude Include="src\PointerIsNull.hpp" />
     <ClInclude Include="src\PopUpElement.hpp" />
-    <ClInclude Include="src\PortIsBusy.hpp" />
     <ClInclude Include="src\Priority.hpp" />
     <ClInclude Include="src\Program.hpp" />
     <ClInclude Include="src\Projectile.hpp" />
@@ -850,7 +848,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Room.hpp" />
     <ClInclude Include="src\RoomDoesNotExist.hpp" />
     <ClInclude Include="src\RoomID.hpp" />
-    <ClInclude Include="src\RoomWasClosed.hpp" />
     <ClInclude Include="src\Root.hpp" />
     <ClInclude Include="src\SaveGameButtonSpec.hpp" />
     <ClInclude Include="src\SaveGameEvent.hpp" />
@@ -860,7 +857,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SelectEvent.hpp" />
     <ClInclude Include="src\SerializableColor.hpp" />
     <ClInclude Include="src\serialize-tuple\serialize_tuple.h" />
-    <ClInclude Include="src\ServerIP.hpp" />
     <ClInclude Include="src\ServerNetSpecs.hpp" />
     <ClInclude Include="src\ServerRooms.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
@@ -891,6 +887,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SubResourcesEvent.hpp" />
     <ClInclude Include="src\SupportButtonSpec.hpp" />
     <ClInclude Include="src\SuspendingAnimation.hpp" />
+    <ClInclude Include="src\tcp_helper.hpp" />
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
     <ClInclude Include="src\Timer.hpp" />
@@ -1007,10 +1004,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CouldntOpenFont.cpp" />
     <ClCompile Include="src\CouldntOpenIsServerTable.cpp" />
     <ClCompile Include="src\CouldntOpenLocales.cpp" />
+    <ClCompile Include="src\CouldntOpenMainServerPosition.cpp" />
     <ClCompile Include="src\CouldntOpenMap.cpp" />
     <ClCompile Include="src\CouldntOpenMusic.cpp" />
     <ClCompile Include="src\CouldntOpenParameters.cpp" />
-    <ClCompile Include="src\CouldntOpenServerIP.cpp" />
     <ClCompile Include="src\CouldntOpenSound.cpp" />
     <ClCompile Include="src\CouldntOpenTexture.cpp" />
     <ClCompile Include="src\CreateAnimationEvent.cpp" />
@@ -1109,6 +1106,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainScreen.cpp" />
     <ClCompile Include="src\MainScreenButtonSpec.cpp" />
+    <ClCompile Include="src\MainServerPosition.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\MapDeepError.cpp" />
     <ClCompile Include="src\MapPositionHash.cpp" />
@@ -1139,7 +1137,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\NewMovePriority.cpp" />
     <ClCompile Include="src\NextClueEvent.cpp" />
     <ClCompile Include="src\NoServerConnection.cpp" />
-    <ClCompile Include="src\PackageLimit.cpp" />
     <ClCompile Include="src\PAKScreen.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
     <ClCompile Include="src\Parameters.cpp" />
@@ -1150,9 +1147,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Players.cpp" />
     <ClCompile Include="src\Playlist.cpp" />
     <ClCompile Include="src\PlaySoundEvent.cpp" />
-    <ClCompile Include="src\PointerIsNull.cpp" />
     <ClCompile Include="src\PopUpElement.cpp" />
-    <ClCompile Include="src\PortIsBusy.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\PublicIP.cpp" />
@@ -1182,7 +1177,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\RoomDoesNotExist.cpp" />
     <ClCompile Include="src\RoomID.cpp" />
-    <ClCompile Include="src\RoomWasClosed.cpp" />
     <ClCompile Include="src\Root.cpp" />
     <ClCompile Include="src\SaveGameButtonSpec.cpp" />
     <ClCompile Include="src\SaveGameEvent.cpp" />
@@ -1191,7 +1185,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ScreenAlreadyFinished.cpp" />
     <ClCompile Include="src\SelectEvent.cpp" />
     <ClCompile Include="src\SerializableColor.cpp" />
-    <ClCompile Include="src\ServerIP.cpp" />
     <ClCompile Include="src\ServerRooms.cpp" />
     <ClCompile Include="src\ServerScreen.cpp" />
     <ClCompile Include="src\ServerScreenResponse.cpp" />

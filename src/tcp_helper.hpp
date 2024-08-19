@@ -22,6 +22,7 @@
 #include <queue>
 #include <atomic>
 #include <optional>
+#include <mutex>
 
 
 #pragma once

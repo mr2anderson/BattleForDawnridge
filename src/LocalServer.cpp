@@ -182,7 +182,7 @@ static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atom
 	}
 	catch (std::exception& e) {
 		*unexpectedError = std::current_exception();
-        LOGS("Local server thread got an unexpected error: ");
+        LOGS("Local server thread got an unexpected error: " + std::string(e.what()));
 	}
 
     LOGS("Local server thread was closed");

@@ -72,6 +72,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
     this->serverPort = serverPort;
 
 	this->socketInited = false;
+	this->socket.setBlocking(false);
 
 	this->type = type;
 	this->data = data;
@@ -92,12 +93,11 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 MainScreen::~MainScreen() {
     LOGS("Destroying...");
 
-    this->stop = true;
     if (this->socketInited) {
+		this->stop = true;
         this->sendingThread->wait();
         this->receivingThread->wait();
     }
-    this->socket.disconnect();
 
     LOGS("OK");
 }
@@ -124,9 +124,8 @@ void MainScreen::run(sf::RenderWindow& window) {
         if (timer.ready()) {
             throw NoServerConnection();
         }
-        if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000)) == sf::Socket::Status::Done) {
+        if (this->socket.connect(this->serverIP, this->serverPort) == sf::Socket::Status::Done) {
             this->stop = false;
-            this->socket.setBlocking(false);
             this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, &this->socket, &this->toSend, &this->stop, &this->sentBytes));
             this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, &this->socket, &this->received, &this->stop, &this->receivedBytes));
             this->sendingThread->launch();
