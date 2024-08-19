@@ -47,7 +47,7 @@
 
 
 
-//#define PRINT_LOGS
+#define PRINT_LOGS
 
 
 
@@ -55,7 +55,7 @@
 
 static void LOGS(const std::string &val) {
     #ifdef PRINT_LOGS
-    std::cout << val << std::endl;
+    std::cout << "MainScreen: " << val << std::endl;
     #endif
 }
 
@@ -72,7 +72,6 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
     this->serverPort = serverPort;
 
 	this->socketInited = false;
-	this->socket.setBlocking(false);
 
 	this->type = type;
 	this->data = data;
@@ -99,7 +98,7 @@ MainScreen::~MainScreen() {
         this->receivingThread->wait();
     }
 
-    LOGS("OK");
+    LOGS("Destroyed.");
 }
 
 
@@ -124,17 +123,18 @@ void MainScreen::run(sf::RenderWindow& window) {
         if (timer.ready()) {
             throw NoServerConnection();
         }
-        if (this->socket.connect(this->serverIP, this->serverPort) == sf::Socket::Status::Done) {
+		this->drawWaitingScreen(window);
+        if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000 / 60)) == sf::Socket::Status::Done) {
             this->stop = false;
+			this->socket.setBlocking(false);
             this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, &this->socket, &this->toSend, &this->stop, &this->sentBytes));
             this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, &this->socket, &this->received, &this->stop, &this->receivedBytes));
             this->sendingThread->launch();
             this->receivingThread->launch();
             this->socketInited = true;
         }
-        this->drawWaitingScreen(window);
     }
-    LOGS("OK");
+    LOGS("Connected to server.");
 
     LOGS("Waiting for init pkg...");
     this->sendInit();
@@ -147,7 +147,7 @@ void MainScreen::run(sf::RenderWindow& window) {
         this->receive(window);
         this->drawWaitingScreen(window);
     }
-    LOGS("OK");
+    LOGS("Got init pkg.");
 
     LOGS("Processing...");
 	for (; ;) {

@@ -40,7 +40,7 @@
 
 static void LOGS(const std::string &val) {
     #ifdef PRINT_LOGS
-    std::cout << val << std::endl;
+    std::cout << "Local server: " << val << std::endl;
     #endif
 }
 
@@ -88,7 +88,7 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
         }
         *ready = true;
     }
-    LOGS("OK");
+    LOGS("Client accepted.");
 
 
 
@@ -138,7 +138,7 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
             }
         }
 	}
-    LOGS("OK");
+    LOGS("Created.");
 
 
     LOGS("Processing...");
@@ -205,7 +205,7 @@ LocalServer::~LocalServer() {
 
 	this->finish();
 
-    LOGS("Local server was destroyed. Send: " + std::to_string((float)this->sendTraffic / 1024 / 1024) +
+    LOGS("Local server was destroyed. Sent: " + std::to_string((float)this->sendTraffic / 1024 / 1024) +
          " MB. Received: " + std::to_string((float)this->receiveTraffic / 1024 / 1024) + " MB");
 }
 void LocalServer::finish() {
@@ -214,7 +214,7 @@ void LocalServer::finish() {
 		this->stop = true;
 		this->thread->wait();
 		this->stop = false;
-        LOGS("OK");
+        LOGS("Finished.");
 	}
     else {
         LOGS("Already finished.");

@@ -300,7 +300,7 @@ AnimationState Warrior::getCurrentAnimationState() const {
     uint32_t currentFrame = ms / msForFrame;
 
     if (currentFrame < animationNumber) {
-        return {currentFrame, false};
+        return { currentFrame, false };
     }
 
     if (this->currentAnimation == "talking") { // Talking animation never finishes, but is not suspending
@@ -310,7 +310,7 @@ AnimationState Warrior::getCurrentAnimationState() const {
         return {currentFrame % animationNumber, false};
     }
 
-    return {animationNumber - 1, true};
+    return {currentFrame % animationNumber, true};
 }
 Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->inRage())) * this->getBaseDefence();
