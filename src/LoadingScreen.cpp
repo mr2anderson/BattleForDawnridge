@@ -228,7 +228,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
             Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
-        for (const std::string& a : { "ridge" }) {
+        for (const std::string& a : { "test", "ridge" }) {
             Maps::get()->add(a, "levels/" + a + ".tmx");
         }
         return true;

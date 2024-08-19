@@ -44,6 +44,9 @@
 #include "ExitButtonSpec.hpp"
 
 
+#define USE_TEST_MAP
+
+
 Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additionalWelcomeMsg) {
     this->alreadyFinished = false;
     this->closeMenu = false;
@@ -133,6 +136,9 @@ void Menu::regenerateButtons() {
     if (!this->prevSavesNumber.has_value() or this->prevSavesNumber.value() != saveNames.size()) {
 
         std::vector<std::string> mapNames;
+#if defined(USE_TEST_MAP)
+        mapNames.push_back("test");
+#endif
         mapNames.push_back("ridge");
 
         this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);

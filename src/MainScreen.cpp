@@ -376,6 +376,7 @@ void MainScreen::drawCells(sf::RenderWindow& window) {
 			sf::Sprite s;
 			s.setTexture(*Textures::get()->get("plain"));
 			s.setPosition(64 * i, 64 * j);
+			s.setTextureRect(sf::IntRect(0, 0, 64 * std::min(sx, this->map.getStatePtr()->getMapSizePtr()->getWidth() - i), 64 * std::min(sy, this->map.getStatePtr()->getMapSizePtr()->getHeight() - j)));
 			window.draw(s);
 		}
 	}
