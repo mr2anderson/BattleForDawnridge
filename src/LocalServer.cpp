@@ -43,10 +43,8 @@
 static void LOGS(const std::string &val) {
     std::cout << "Local server: " << val << std::endl;
 }
-static void LOGS(const std::wstring& val) {
-    std::cout << "Local server: ";
-    std::wcout << val;
-    std::cout << std::endl;
+static void LOGS(const StringLcl& val) {
+    std::cout << "Local server: " << val.toRawString() << std::endl; // val.get() requires utf 16 support in console
 }
 
 #else
@@ -179,7 +177,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
             toSend.push(std::get<sf::Packet>(val));
         }
         for (const auto& var : logs) {
-            LOGS(var.get());
+            LOGS(var);
         }
 
         sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));
