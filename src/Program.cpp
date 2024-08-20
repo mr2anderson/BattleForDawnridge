@@ -68,13 +68,8 @@ void Program::run() {
 
 
     if (IsServerTable::get()->isServer()) {
-        /*ServerScreen serverScreen(this->window);
-        ServerScreenResponse serverScreenResponse = serverScreen.run(this->window);
-        switch (serverScreenResponse.getType()) {
-        case ServerScreenResponse::TYPE::EXIT: {
-            return;
-        }
-        }*/
+        ServerScreen serverScreen(this->window);
+        serverScreen.run(this->window);
     }
     else {
         boost::optional<StringLcl> error;

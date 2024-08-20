@@ -26,6 +26,7 @@
 #include "PublicIP.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
+#include "MenuBg.hpp"
 #include "MainServerPosition.hpp"
 
 
@@ -49,18 +50,7 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->stop.store(false);
     this->traffic.store(false);
 }
-ServerScreen::~ServerScreen() {
-    this->stop = true;
-    auto sendThreadsIterator = this->sendThreads.begin();
-    auto receiveThreadsIterator = this->receiveThreads.begin();
-    while (sendThreadsIterator != this->sendThreads.end()) {
-        sendThreadsIterator->wait();
-        receiveThreadsIterator->wait();
-        sendThreadsIterator++;
-        receiveThreadsIterator++;
-    }
-}
-ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
+void ServerScreen::run(sf::RenderWindow& window) {
     if (this->alreadyFinished) {
         throw ScreenAlreadyFinished();
     }
@@ -69,11 +59,12 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
     window.setMouseCursorVisible(false);
 
     sf::Event event;
-    for (; ;) {
+    bool r = true;
+    while (r) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
-                    return ServerScreenResponse(ServerScreenResponse::TYPE::EXIT);
+                    r = false;
                 }
                 if (event.key.code == sf::Keyboard::A) {
                     this->logs.add(StringLcl("{traffic}" + std::to_string((float)this->traffic / 1024 / 1024)) + " MB");
@@ -137,6 +128,16 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
             }
         }
     }
+
+    this->stop = true;
+    auto sendThreadsIterator = this->sendThreads.begin();
+    auto receiveThreadsIterator = this->receiveThreads.begin();
+    while (sendThreadsIterator != this->sendThreads.end()) {
+        sendThreadsIterator->wait();
+        receiveThreadsIterator->wait();
+        sendThreadsIterator++;
+        receiveThreadsIterator++;
+    }
 }
 void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
     sf::Uint64 roomIdVal;
@@ -180,7 +181,7 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
 }
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
     window.clear();
-    window.draw(this->bg);
+    window.draw(MenuBg());
     window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
     window.display();
 }

@@ -860,7 +860,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ServerNetSpecs.hpp" />
     <ClInclude Include="src\ServerRooms.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
-    <ClInclude Include="src\ServerScreenResponse.hpp" />
     <ClInclude Include="src\SetFireEvent.hpp" />
     <ClInclude Include="src\SetHighlightEvent.hpp" />
     <ClInclude Include="src\SetSpellEvent.hpp" />
@@ -1187,7 +1186,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SerializableColor.cpp" />
     <ClCompile Include="src\ServerRooms.cpp" />
     <ClCompile Include="src\ServerScreen.cpp" />
-    <ClCompile Include="src\ServerScreenResponse.cpp" />
     <ClCompile Include="src\SetFireEvent.cpp" />
     <ClCompile Include="src\SetHighlightEvent.cpp" />
     <ClCompile Include="src\SetSpellEvent.cpp" />

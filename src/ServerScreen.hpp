@@ -21,8 +21,6 @@
 #include <atomic>
 #include <forward_list>
 #include "Logs.hpp"
-#include "ServerScreenResponse.hpp"
-#include "MenuBg.hpp"
 #include "ServerRooms.hpp"
 #include "tcp_helper.hpp"
 
@@ -34,13 +32,11 @@ class ServerScreen {
 public:
 	ServerScreen(sf::RenderWindow& window);
 	ServerScreen(const ServerScreen& copy) = delete;
-    ~ServerScreen();
 
-	ServerScreenResponse run(sf::RenderWindow& window);
+	void run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
 
-	MenuBg bg;
 	Logs logs;
 
 	ServerRooms rooms;
