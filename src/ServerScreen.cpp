@@ -29,7 +29,7 @@
 #include "MainServerPosition.hpp"
 
 
-/*ServerScreen::ServerScreen(sf::RenderWindow& window) {
+ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->alreadyFinished = false;
 
     this->logs.setEntryLimit(10);
@@ -46,17 +46,18 @@
         this->logs.add(StringLcl("{couldnt_listen_port}"));
     }
     this->listener.setBlocking(false);
-    this->stop = false;
-    this->traffic = 0;
+    this->stop.store(false);
+    this->traffic.store(false);
 }
 ServerScreen::~ServerScreen() {
     this->stop = true;
-    for (uint32_t i = 0; i < this->sendThreads.size(); i = i + 1) {
-        this->sendThreads.at(i)->wait();
-        this->receiveThreads.at(i)->wait();
-        delete this->received.at(i);
-        delete this->toSend.at(i);
-        delete this->sockets.at(i);
+    auto sendThreadsIterator = this->sendThreads.begin();
+    auto receiveThreadsIterator = this->receiveThreads.begin();
+    while (sendThreadsIterator != this->sendThreads.end()) {
+        sendThreadsIterator->wait();
+        receiveThreadsIterator->wait();
+        sendThreadsIterator++;
+        receiveThreadsIterator++;
     }
 }
 ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
@@ -68,12 +69,10 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
     window.setMouseCursorVisible(false);
 
     sf::Event event;
-    sf::TcpSocket *tempSocket = new sf::TcpSocket();
     for (; ;) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
-                    delete tempSocket;
                     return ServerScreenResponse(ServerScreenResponse::TYPE::EXIT);
                 }
                 if (event.key.code == sf::Keyboard::A) {
@@ -86,26 +85,32 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
 
         this->drawEverything(window);
 
-        if (this->listener.accept(*tempSocket) == sf::Socket::Status::Done) {
-            this->sockets.push_back(tempSocket);
-            tempSocket = new sf::TcpSocket();
-            this->logs.add(StringLcl("{new_connection}" + this->sockets.back()->getRemoteAddress().toString()));
-            this->toSend.push_back(new bfdlib::tcp_helper::queue_w());
-            this->received.push_back(new bfdlib::tcp_helper::queue_r());
-            this->sendThreads.push_back(std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, this->sockets.back(), toSend.back(), &this->stop, &this->traffic)));
-            this->receiveThreads.push_back(std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, this->sockets.back(), received.back(), &this->stop, &this->traffic)));
-            this->sendThreads.back()->launch();
-            this->receiveThreads.back()->launch();
+        this->sockets.emplace_front();
+        if (this->listener.accept(this->sockets.front()) == sf::Socket::Status::Done) {
+            this->logs.add(StringLcl("{new_connection}" + this->sockets.front().getRemoteAddress().toString()));
+            this->toSend.emplace_front();
+            this->received.emplace_front();
+            this->sendThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->sockets.front()), std::ref(this->toSend.front()), std::ref(this->stop), std::ref(this->traffic)));
+            this->receiveThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->sockets.front()), std::ref(this->received.front()), std::ref(this->stop), std::ref(this->traffic)));
+            this->sendThreads.front().launch();
+            this->receiveThreads.front().launch();
+        }
+        else {
+            this->sockets.pop_front();
         }
 
         for (; ;) {
             boost::optional<std::tuple<sf::Packet, sf::IpAddress>> receivedPacket = boost::none;
-            for (uint32_t i = 0; i < this->received.size(); i = i + 1) {
-                std::optional<sf::Packet> opt = this->received.at(i)->pop();
+            auto receivedIterator = this->received.begin();
+            auto socketIterator = this->sockets.begin();
+            while (receivedIterator != this->received.end()) {
+                std::optional<sf::Packet> opt = receivedIterator->pop();
                 if (opt.has_value()) {
-                    receivedPacket = std::make_tuple(opt.value(), this->sockets.at(i)->getRemoteAddress());
+                    receivedPacket = std::make_tuple(opt.value(), socketIterator->getRemoteAddress());
                     break;
                 }
+                receivedIterator++;
+                socketIterator++;
             }
 
             if (receivedPacket.has_value()) {
@@ -116,10 +121,14 @@ ServerScreenResponse ServerScreen::run(sf::RenderWindow& window) {
             std::vector<std::tuple<sf::Packet, sf::IpAddress>> toRoomClients; // TODO: optimize
             this->rooms.updateAll(receivedPacket, &toRoomClients);
             for (uint32_t i = 0; i < toRoomClients.size(); i = i + 1) {
-                for (uint32_t j = 0; j < this->sockets.size(); j = j + 1) {
-                    if (this->sockets.at(j)->getRemoteAddress() == std::get<sf::IpAddress>(toRoomClients.at(i))) {
-                        this->toSend.at(j)->push(std::get<sf::Packet>(toRoomClients.at(i)));
+                auto socketIterator = this->sockets.begin();
+                auto toSendIterator = this->toSend.begin();
+                while (socketIterator != this->sockets.end()) {
+                    if (socketIterator->getRemoteAddress() == std::get<sf::IpAddress>(toRoomClients.at(i))) {
+                        toSendIterator->push(std::get<sf::Packet>(toRoomClients.at(i)));
                     }
+                    socketIterator++;
+                    toSendIterator++;
                 }
             }
 
@@ -174,4 +183,4 @@ void ServerScreen::drawEverything(sf::RenderWindow& window) {
     window.draw(this->bg);
     window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
     window.display();
-}*/
+}

@@ -47,8 +47,6 @@ public:
 	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverPort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
 
-    ~MainScreen();
-
 	void run(sf::RenderWindow& window);
 
 	static constexpr uint32_t EVERYONE = (1 << 30);
@@ -58,7 +56,6 @@ private:
 	sf::IpAddress serverIP;
     uint16_t serverPort;
 
-    bool socketInited;
 	sf::TcpSocket socket;
     bfdlib::tcp_helper::queue_w toSend;
     bfdlib::tcp_helper::queue_r received;

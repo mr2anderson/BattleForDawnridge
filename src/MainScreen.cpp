@@ -71,7 +71,6 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	this->serverIP = serverIP;
     this->serverPort = serverPort;
 
-	this->socketInited = false;
 	this->traffic.store(0);
 	this->stop.store(false);
 
@@ -91,19 +90,6 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 
 
 
-MainScreen::~MainScreen() {
-    LOGS("Destroying...");
-
-    if (this->socketInited) {
-		this->stop = true;
-        this->sendingThread->wait();
-        this->receivingThread->wait();
-    }
-
-    LOGS("Destroyed.");
-}
-
-
 
 
 
@@ -116,11 +102,11 @@ void MainScreen::run(sf::RenderWindow& window) {
 	}
 	this->alreadyFinished = true;
 
-    sf::Event event{};
+    sf::Event event;
 
     LOGS("Connecting to server...");
     Timer timer(5000, Timer::TYPE::FIRST_DEFAULT);
-    while (!this->socketInited) {
+	for (; ;) {
         while (window.pollEvent(event)) {}
         if (timer.ready()) {
             throw NoServerConnection();
@@ -132,7 +118,7 @@ void MainScreen::run(sf::RenderWindow& window) {
             this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
             this->sendingThread->launch();
             this->receivingThread->launch();
-            this->socketInited = true;
+			break;
         }
     }
     LOGS("Connected to server.");
@@ -151,7 +137,7 @@ void MainScreen::run(sf::RenderWindow& window) {
     LOGS("Got init pkg.");
 
     LOGS("Processing...");
-	for (; ;) {
+	while (!this->returnToMenu) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed) {
                 this->sendClick(window, event.mouseButton.button);
@@ -162,10 +148,12 @@ void MainScreen::run(sf::RenderWindow& window) {
 		window.setMouseCursorVisible(this->cursorVisibility);
 		this->drawEverything(window);
 		this->moveView(window);
-		if (this->returnToMenu) {
-			return;
-		}
 	}
+	LOGS("Processing was finished");
+
+	this->stop = true;
+	this->sendingThread->wait();
+	this->receivingThread->wait();
 }
 
 
@@ -479,8 +467,9 @@ void MainScreen::moveViewToEast(sf::RenderWindow& window) {
 void MainScreen::verifyView(sf::RenderWindow& window) {
 	this->verifyViewNorth(window);
 	this->verifyViewSouth(window);
+
+	this->verifyViewEast(window); // Order is important here
 	this->verifyViewWest(window);
-	this->verifyViewEast(window);
 }
 void MainScreen::verifyViewNorth(sf::RenderWindow& window) {
 	uint32_t border = window.getSize().y / 2;
