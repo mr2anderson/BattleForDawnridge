@@ -42,6 +42,7 @@
 #include "CreditsButtonSpec.hpp"
 #include "LicenceButtonSpec.hpp"
 #include "ExitButtonSpec.hpp"
+#include "VersionsButtonSpec.hpp"
 
 
 #define USE_TEST_MAP
@@ -122,7 +123,8 @@ void Menu::generateButtons() {
         Button(SupportButtonSpec(4)),
         Button(CreditsButtonSpec(5)),
         Button(LanguageButtonSpec(6)),
-        Button(ExitButtonSpec(7))
+        Button(VersionsButtonSpec(7)),
+        Button(ExitButtonSpec(8))
     };
 }
 void Menu::regenerateButtons() {

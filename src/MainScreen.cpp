@@ -91,6 +91,15 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 
 
 
+MainScreen::~MainScreen() {
+    this->stop = true;
+}
+
+
+
+
+
+
 
 
 
@@ -123,7 +132,6 @@ void MainScreen::run(sf::RenderWindow& window) {
     }
     LOGS("Connected to server.");
 
-    LOGS("Waiting for init pkg...");
     this->sendInit();
     timer.reset();
     while (!this->initPackageGotten) {
@@ -150,10 +158,6 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->moveView(window);
 	}
 	LOGS("Processing was finished");
-
-	this->stop = true;
-	this->sendingThread->wait();
-	this->receivingThread->wait();
 }
 
 

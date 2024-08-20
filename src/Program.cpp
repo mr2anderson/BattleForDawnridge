@@ -152,7 +152,7 @@ void Program::handleException(std::exception_ptr exception, boost::optional<Stri
         error = StringLcl("{map_is_apcent_client}");
     }
     catch (boost::archive::archive_exception& e) {
-        error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code));
+        error = StringLcl("{boost_archive_exception_client} " + std::to_string(e.code) + "\n" + std::string(e.what()));
     }
     catch (NoServerConnection&) {
         error = StringLcl("{disconnect_client}");

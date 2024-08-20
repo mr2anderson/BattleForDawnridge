@@ -46,6 +46,7 @@ public:
 
 	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverPort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
+    ~MainScreen();
 
 	void run(sf::RenderWindow& window);
 
