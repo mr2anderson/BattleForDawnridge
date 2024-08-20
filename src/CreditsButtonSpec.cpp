@@ -34,7 +34,7 @@ Events CreditsButtonSpec::getEvents() const {
 	Events clickEvent;
 	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>(StringLcl("{credits}"), StringLcl("{close}"), clickEvent, 600, 600);
+	std::shared_ptr<WindowButton> creditsWindow = std::make_shared<WindowButton>(StringLcl("{credits}"), StringLcl("{close}"), clickEvent, 625, 625);
 	Events creditsEvent = clickEvent;
 	creditsEvent.add(std::make_shared<CreateEEvent>(creditsWindow));
 
