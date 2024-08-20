@@ -821,7 +821,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Priority.hpp" />
     <ClInclude Include="src\Program.hpp" />
     <ClInclude Include="src\Projectile.hpp" />
-    <ClInclude Include="src\PublicIP.hpp" />
     <ClInclude Include="src\Quarry.hpp" />
     <ClInclude Include="src\QuarrySpec.hpp" />
     <ClInclude Include="src\RageSpell.hpp" />
@@ -1151,7 +1150,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\PopUpElement.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
-    <ClCompile Include="src\PublicIP.cpp" />
     <ClCompile Include="src\Quarry.cpp" />
     <ClCompile Include="src\QuarrySpec.cpp" />
     <ClCompile Include="src\RageSpell.cpp" />

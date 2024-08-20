@@ -44,7 +44,6 @@
 #include "Ram.hpp"
 #include "BuildingStatePointer.hpp"
 #include "ScreenAlreadyFinished.hpp"
-#include "PublicIP.hpp"
 #include "LoadingScreenBg.hpp"
 #include "IsServerTable.hpp"
 #include "MainServerPosition.hpp"
@@ -142,7 +141,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
             Textures::get()->add("cursor", "images/cursor.png");
         #endif
         MainServerPosition::get()->load();
-        PublicIP::get()->load();
         Music::get()->add("menu", "music/menu.ogg");
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",

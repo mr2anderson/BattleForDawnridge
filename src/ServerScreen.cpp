@@ -23,7 +23,6 @@
 #include "SoundQueue.hpp"
 #include "Label.hpp"
 #include "ScreenAlreadyFinished.hpp"
-#include "PublicIP.hpp"
 #include "ServerNetSpecs.hpp"
 #include "ClientNetSpecs.hpp"
 #include "MenuBg.hpp"
@@ -33,15 +32,10 @@
 ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->alreadyFinished = false;
 
-    this->logs.setEntryLimit(10);
+    this->logs.setEntryLimit(50);
     this->logs.add(StringLcl("{server_mode_welcome}"));
-    if (PublicIP::get()->getIp().toString() == "0.0.0.0") {
-        this->logs.add(StringLcl("{couldnt_get_public_ip}"));
-    }
-    else {
-        this->logs.add(StringLcl("{public_ip}") + StringLcl(PublicIP::get()->getIp().toString()));
-    }
     this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
+    this->logs.add(StringLcl());
 
     if (this->listener.listen(MainServerPosition::get()->getPort()) != sf::Socket::Status::Done) {
         this->logs.add(StringLcl("{couldnt_listen_port}"));
@@ -49,6 +43,9 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->listener.setBlocking(false);
     this->stop.store(false);
     this->traffic.store(false);
+}
+ServerScreen::~ServerScreen() {
+    this->stop = true;
 }
 void ServerScreen::run(sf::RenderWindow& window) {
     if (this->alreadyFinished) {
@@ -77,6 +74,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
         this->drawEverything(window);
 
         this->sockets.emplace_front();
+        this->sockets.front().setBlocking(false);
         if (this->listener.accept(this->sockets.front()) == sf::Socket::Status::Done) {
             this->logs.add(StringLcl("{new_connection}" + this->sockets.front().getRemoteAddress().toString())); // TODO: Remove inactive connections
             this->toSend.emplace_front();
@@ -132,16 +130,6 @@ void ServerScreen::run(sf::RenderWindow& window) {
                 break;
             }
         }
-    }
-
-    this->stop = true;
-    auto sendThreadsIterator = this->sendThreads.begin();
-    auto receiveThreadsIterator = this->receiveThreads.begin();
-    while (sendThreadsIterator != this->sendThreads.end()) {
-        sendThreadsIterator->wait();
-        receiveThreadsIterator->wait();
-        sendThreadsIterator++;
-        receiveThreadsIterator++;
     }
 }
 void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {

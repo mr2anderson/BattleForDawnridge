@@ -1524,9 +1524,6 @@
     <ClInclude Include="src\AreaResourcePoint.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PublicIP.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\MenuBg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2532,9 +2529,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AreaResourcePoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PublicIP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MenuBg.cpp">

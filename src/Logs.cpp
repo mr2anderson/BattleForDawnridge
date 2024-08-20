@@ -37,7 +37,7 @@ void Logs::add(const StringLcl& str) {
 
 	this->contentCached.clear();
 	for (const auto& a : this->content) {
-		this->contentCached = this->contentCached + a + "\n\n";
+		this->contentCached = this->contentCached + a + "\n";
 	}
 }
 StringLcl Logs::get() const {

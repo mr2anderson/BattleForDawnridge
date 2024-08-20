@@ -100,6 +100,7 @@ uint32_t Room::playersNumber() const {
 
 void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p) {
     if (this->requireInit) {
+		p.logs->emplace_back("{sending_init_world_ui_state}");
         this->sendWorldUIStateToClients(p);
         this->requireInit = false;
     }
@@ -363,6 +364,8 @@ ResourceBar Room::makeResourceBar() {
 	return bar;
 }
 void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
+	p.logs->emplace_back("{sending_world_ui_state}");
+
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 	}
@@ -435,6 +438,7 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 	uint8_t mouseButton;
 	uint32_t x, y, viewX, viewY, w, h;
 	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
+	p.logs->emplace_back("{received_click} " + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + ip.toString());
 	if (this->selected == nullptr) {
 		if (this->element == nullptr) {
 			if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {

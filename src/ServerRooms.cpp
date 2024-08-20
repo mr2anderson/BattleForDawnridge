@@ -22,7 +22,6 @@
 #include "RoomDoesNotExist.hpp"
 
 
-
 ServerRooms::ServerRooms() = default;
 
 
@@ -63,14 +62,16 @@ void ServerRooms::update(RoomID id, const boost::optional<std::tuple<sf::Packet,
 	}
 	catch (std::exception&) {
 		this->data.erase(it);
+		logs.emplace_back("{closed_on_error}");
 	}
 	for (const auto& a : logs) {
-		toLogs->push_back("{room} " + std::get<std::unique_ptr<Room>>(it->second)->getID().readableValue() + ": " + a.toRawString());
+		toLogs->push_back("{room} " + id.readableValue() + ": " + a.toRawString());
 	}
 }
 void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
 	for (auto it = this->data.begin(); it != this->data.end();) {
 		std::vector<StringLcl> logs;
+		RoomID id = std::get<std::unique_ptr<Room>>(it->second)->getID();
 		try {
 			RoomOutputProtocol p;
 			p.logs = &logs;
@@ -81,9 +82,10 @@ void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpA
 		}
 		catch (std::exception&) {
 			this->data.erase(it);
+			logs.emplace_back("{closed_on_error}");
 		}
 		for (const auto& a : logs) {
-			toLogs->emplace_back("{room} " + std::get<std::unique_ptr<Room>>(it->second)->getID().readableValue() + ": " + a.toRawString());
+			toLogs->emplace_back("{room} " + id.readableValue() + ": " + a.toRawString());
 		}
 	}
 }

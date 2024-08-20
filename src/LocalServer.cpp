@@ -39,15 +39,21 @@
 
 
 #if defined(PRINT_LOGS)
+
 static void LOGS(const std::string &val) {
     std::cout << "Local server: " << val << std::endl;
 }
 static void LOGS(const std::wstring& val) {
-
+    std::cout << "Local server: ";
+    std::wcout << val;
+    std::cout << std::endl;
 }
+
 #else
+
 static void LOGS(const std::string &val) {}
 static void LOGS(const std::wstring &val) {}
+
 #endif
 
 

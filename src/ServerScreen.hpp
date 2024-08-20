@@ -33,6 +33,8 @@ public:
 	ServerScreen(sf::RenderWindow& window);
 	ServerScreen(const ServerScreen& copy) = delete;
 
+	~ServerScreen();
+
 	void run(sf::RenderWindow& window);
 private:
 	bool alreadyFinished;
