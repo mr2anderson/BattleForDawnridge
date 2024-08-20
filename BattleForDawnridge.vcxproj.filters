@@ -1695,6 +1695,12 @@
     <ClInclude Include="src\tcp_helper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\VersionsButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoomOutputProtocol.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2661,6 +2667,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CouldntOpenMainServerPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VersionsButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

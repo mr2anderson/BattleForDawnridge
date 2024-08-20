@@ -27,15 +27,15 @@
 
 
 class ServerRooms {
-public:
+public: 
 	ServerRooms();
 
 	void createIfValid(RoomID id, const std::string& saveData);
 	void close(RoomID id);
 	bool exist(RoomID id) const;
 
-	void update(RoomID id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>> *toSend);
-	void updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
+	void update(RoomID id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
+	void updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
 
 	uint32_t playersToAdd(RoomID id) const;
 	uint32_t getCurrentPlayerNumber(RoomID id);

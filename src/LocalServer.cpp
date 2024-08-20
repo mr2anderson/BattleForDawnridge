@@ -38,11 +38,17 @@
 
 
 
+#if defined(PRINT_LOGS)
 static void LOGS(const std::string &val) {
-    #ifdef PRINT_LOGS
     std::cout << "Local server: " << val << std::endl;
-    #endif
 }
+static void LOGS(const std::wstring& val) {
+
+}
+#else
+static void LOGS(const std::string &val) {}
+static void LOGS(const std::wstring &val) {}
+#endif
 
 
 
@@ -157,11 +163,17 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
         }
 
         std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSendGlobal;
-
-        room->update(tuple, &toSendGlobal, players);
-
+        std::vector<StringLcl> logs;
+        RoomOutputProtocol protocol;
+        protocol.logs = &logs;
+        protocol.toSend = &toSendGlobal;
+        protocol.remotePlayers = &players;
+        room->update(tuple, protocol);
         for (const auto &val : toSendGlobal) {
             toSend.push(std::get<sf::Packet>(val));
+        }
+        for (const auto& var : logs) {
+            LOGS(var.get());
         }
 
         sf::sleep(sf::milliseconds(bfdlib::math::subu<uint32_t>(1000 / 60, clock.getMS())));

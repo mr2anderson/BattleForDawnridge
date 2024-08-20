@@ -848,6 +848,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Room.hpp" />
     <ClInclude Include="src\RoomDoesNotExist.hpp" />
     <ClInclude Include="src\RoomID.hpp" />
+    <ClInclude Include="src\RoomOutputProtocol.hpp" />
     <ClInclude Include="src\Root.hpp" />
     <ClInclude Include="src\SaveGameButtonSpec.hpp" />
     <ClInclude Include="src\SaveGameEvent.hpp" />
@@ -907,6 +908,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\UUID.hpp" />
     <ClInclude Include="src\UUIDs.hpp" />
     <ClInclude Include="src\Valkyr.hpp" />
+    <ClInclude Include="src\VersionsButtonSpec.hpp" />
     <ClInclude Include="src\VictoryConditionSpec.hpp" />
     <ClInclude Include="src\Wall1.hpp" />
     <ClInclude Include="src\Wall2.hpp" />
@@ -1231,6 +1233,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\UUID.cpp" />
     <ClCompile Include="src\UUIDs.cpp" />
     <ClCompile Include="src\Valkyr.cpp" />
+    <ClCompile Include="src\VersionsButtonSpec.cpp" />
     <ClCompile Include="src\VictoryConditionSpec.cpp" />
     <ClCompile Include="src\Wall1.cpp" />
     <ClCompile Include="src\Wall2.cpp" />

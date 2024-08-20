@@ -78,7 +78,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
 
         this->sockets.emplace_front();
         if (this->listener.accept(this->sockets.front()) == sf::Socket::Status::Done) {
-            this->logs.add(StringLcl("{new_connection}" + this->sockets.front().getRemoteAddress().toString()));
+            this->logs.add(StringLcl("{new_connection}" + this->sockets.front().getRemoteAddress().toString())); // TODO: Remove inactive connections
             this->toSend.emplace_front();
             this->received.emplace_front();
             this->sendThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->sockets.front()), std::ref(this->toSend.front()), std::ref(this->stop), std::ref(this->traffic)));
@@ -109,8 +109,13 @@ void ServerScreen::run(sf::RenderWindow& window) {
                 this->checkRoomInitSignal(std::get<0>(receivedPacketCopy), std::get<1>(receivedPacketCopy));
             }
 
-            std::vector<std::tuple<sf::Packet, sf::IpAddress>> toRoomClients; // TODO: optimize
-            this->rooms.updateAll(receivedPacket, &toRoomClients);
+            // TODO: optimize
+            std::vector<std::tuple<sf::Packet, sf::IpAddress>> toRoomClients;
+            std::vector<StringLcl> toLogs;
+            this->rooms.updateAll(receivedPacket, &toLogs, &toRoomClients);
+            for (uint32_t i = 0; i < toLogs.size(); i = i + 1) {
+                this->logs.add(toLogs.at(i));
+            }
             for (uint32_t i = 0; i < toRoomClients.size(); i = i + 1) {
                 auto socketIterator = this->sockets.begin();
                 auto toSendIterator = this->toSend.begin();

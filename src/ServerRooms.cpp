@@ -48,26 +48,42 @@ bool ServerRooms::exist(RoomID id) const {
 }
 
 
-void ServerRooms::update(RoomID id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
+void ServerRooms::update(RoomID id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
+	std::vector<StringLcl> logs;
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();
 	}
 	try {
-		std::get<std::unique_ptr<Room>>(it->second)->update(received, toSend, std::get<RemotePlayers>(it->second));
+		RoomOutputProtocol p;
+		p.logs = &logs;
+		p.toSend = toSend;
+		p.remotePlayers = &std::get<RemotePlayers>(it->second);
+		std::get<std::unique_ptr<Room>>(it->second)->update(received, p);
 	}
 	catch (std::exception&) {
 		this->data.erase(it);
 	}
+	for (const auto& a : logs) {
+		toLogs->push_back("{room} " + std::get<std::unique_ptr<Room>>(it->second)->getID().readableValue() + ": " + a.toRawString());
+	}
 }
-void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
+void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
 	for (auto it = this->data.begin(); it != this->data.end();) {
+		std::vector<StringLcl> logs;
 		try {
-			std::get<std::unique_ptr<Room>>(it->second)->update(received, toSend, std::get<RemotePlayers>(it->second));
+			RoomOutputProtocol p;
+			p.logs = &logs;
+			p.toSend = toSend;
+			p.remotePlayers = &std::get<RemotePlayers>(it->second);
+			std::get<std::unique_ptr<Room>>(it->second)->update(received, p);
 			it++;
 		}
 		catch (std::exception&) {
 			this->data.erase(it);
+		}
+		for (const auto& a : logs) {
+			toLogs->emplace_back("{room} " + std::get<std::unique_ptr<Room>>(it->second)->getID().readableValue() + ": " + a.toRawString());
 		}
 	}
 }

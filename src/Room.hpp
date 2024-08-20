@@ -79,6 +79,7 @@
 #include "SaveGameEvent.hpp"
 #include "LimitResourcesEvent.hpp"
 #include "ServerNetSpecs.hpp"
+#include "RoomOutputProtocol.hpp"
 
 
 #pragma once
@@ -98,7 +99,7 @@ public:
 
 	uint32_t playersNumber() const;
 
-	void update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, std::vector<std::tuple<sf::Packet, sf::IpAddress>> *toSend, const RemotePlayers& remotePlayers);
+	void update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p);
     void needInit();
 private:
 	RoomID id;
@@ -131,75 +132,75 @@ private:
 	void verifyTooMuchPlayers();
 	void verifyMapTooBig();
 
-	void processNewMoveEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+	void processNewMoveEvents(RoomOutputProtocol p);
 	bool allNewMoveEventsAdded() const;
 	void changeMove();
 	Player* getCurrentPlayer();
-	void addButtonClickEventToQueue(uint32_t x, uint32_t y, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void processBaseEvents(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers, bool sendToClients = true);
-	void addEvents(Events& e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+	void addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p);
+	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);
+	void processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
+	void addEvents(Events& e, RoomOutputProtocol p);
 
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
-    void sendWorldUIStateToClients(std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers &remotePlayers);
+    void sendWorldUIStateToClients(RoomOutputProtocol p);
 
     sf::Packet makeBasePacket() const;
-	void sendToClients(const sf::Packet& what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-    void sendToClient(const sf::Packet &what,  std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host);
+	void sendToClients(const sf::Packet& what, RoomOutputProtocol p);
+    void sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host);
 
-	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p);
+	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p);
 
-	void handleEvent(std::shared_ptr<Event> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleAddHpEvent(std::shared_ptr<AddHpEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleBuild(std::shared_ptr<BuildEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSelectEvent(std::shared_ptr<SelectEvent> w, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleUnselectEvent(std::shared_ptr<UnselectEvent> w, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSubHpEvent(std::shared_ptr<SubHpEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSetFireEvent(std::shared_ptr<SetFireEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
-	void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const RemotePlayers& remotePlayers);
+	void handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
+	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p);
+	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e, RoomOutputProtocol p);
+	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e, RoomOutputProtocol p);
+	void handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e, RoomOutputProtocol p);
+	void handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e, RoomOutputProtocol p);
+	void handleAddHpEvent(std::shared_ptr<AddHpEvent> e, RoomOutputProtocol p);
+	void handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> e, RoomOutputProtocol p);
+	void handleBuild(std::shared_ptr<BuildEvent> e, RoomOutputProtocol p);
+	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, RoomOutputProtocol p);
+	void handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, RoomOutputProtocol p);
+	void handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, RoomOutputProtocol p);
+	void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, RoomOutputProtocol p);
+	void handleDestroyEvent(std::shared_ptr<DestroyEvent> e, RoomOutputProtocol p);
+	void handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e, RoomOutputProtocol p);
+	void handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e, RoomOutputProtocol p);
+	void handleSelectEvent(std::shared_ptr<SelectEvent> w, RoomOutputProtocol p);
+	void handleUnselectEvent(std::shared_ptr<UnselectEvent> w, RoomOutputProtocol p);
+	void handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e, RoomOutputProtocol p);
+	void handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPointsEvent> e, RoomOutputProtocol p);
+	void handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e, RoomOutputProtocol p);
+	void handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e, RoomOutputProtocol p);
+	void handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e, RoomOutputProtocol p);
+	void handleDecreaseBurningMovesLeftEvent(std::shared_ptr<DecreaseBurningMovesLeftEvent> e, RoomOutputProtocol p);
+	void handleSubHpEvent(std::shared_ptr<SubHpEvent> e, RoomOutputProtocol p);
+	void handleSetFireEvent(std::shared_ptr<SetFireEvent> e, RoomOutputProtocol p);
+	void handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirectionEvent> e, RoomOutputProtocol p);
+	void handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, RoomOutputProtocol p);
+	void handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, RoomOutputProtocol p);
+	void handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, RoomOutputProtocol p);
+	void handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducingEvent> e, RoomOutputProtocol p);
+	void handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, RoomOutputProtocol p);
+	void handleKillNextTurnEvent(std::shared_ptr<KillNextTurnEvent> e, RoomOutputProtocol p);
+	void handleRevertKillNextTurnEvent(std::shared_ptr<RevertKillNextTurnEvent> e, RoomOutputProtocol p);
+	void handleCloseAnimationEvent(std::shared_ptr<CloseAnimationEvent> e, RoomOutputProtocol p);
+	void handleDecreaseSpellCreationMovesLeftEvent(std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> e, RoomOutputProtocol p);
+	void handleSetSpellEvent(std::shared_ptr<SetSpellEvent> e, RoomOutputProtocol p);
+	void handleUseSpellEvent(std::shared_ptr<UseSpellEvent> e, RoomOutputProtocol p);
+	void handleMarkSpellAsUsedEvent(std::shared_ptr<MarkSpellAsUsedEvent> e, RoomOutputProtocol p);
+	void handleEnableWarriorRageModeEvent(std::shared_ptr<EnableWarriorRageModeEvent> e, RoomOutputProtocol p);
+	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e, RoomOutputProtocol p);
+	void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e, RoomOutputProtocol p);
+	void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, RoomOutputProtocol p);
+	void handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e, RoomOutputProtocol p);
+	void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e, RoomOutputProtocol p);
+	void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, RoomOutputProtocol p);
+	void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, RoomOutputProtocol p);
+	void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p);
+	void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, RoomOutputProtocol p);
+	void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, RoomOutputProtocol p);
+	void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p);
 };
