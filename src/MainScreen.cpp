@@ -448,19 +448,19 @@ void MainScreen::moveView(sf::RenderWindow &window) {
 static float VIEW_MOVING_DELTA = 10;
 void MainScreen::moveViewToNorth(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() - sf::Vector2f(0, VIEW_MOVING_DELTA));
-	this->verifyViewNorth(window);
+	this->verifyView(window);
 }
 void MainScreen::moveViewToSouth(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() + sf::Vector2f(0, VIEW_MOVING_DELTA));
-	this->verifyViewSouth(window);
+	this->verifyView(window);
 }
 void MainScreen::moveViewToWest(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() - sf::Vector2f(VIEW_MOVING_DELTA, 0));
-	this->verifyViewWest(window);
+	this->verifyView(window);
 }
 void MainScreen::moveViewToEast(sf::RenderWindow& window) {
 	this->view.setCenter(this->view.getCenter() + sf::Vector2f(VIEW_MOVING_DELTA, 0));
-	this->verifyViewEast(window);
+	this->verifyView(window);
 }
 
 
