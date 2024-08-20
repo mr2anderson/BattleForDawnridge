@@ -122,9 +122,8 @@ void Menu::generateButtons() {
         Button(LanguageButtonSpec(3)),
         Button(SupportButtonSpec(4)),
         Button(CreditsButtonSpec(5)),
-        Button(LanguageButtonSpec(6)),
-        Button(VersionsButtonSpec(7)),
-        Button(ExitButtonSpec(8))
+        Button(VersionsButtonSpec(6)),
+        Button(ExitButtonSpec(7))
     };
 }
 void Menu::regenerateButtons() {
