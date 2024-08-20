@@ -62,8 +62,7 @@ private:
 	sf::TcpSocket socket;
     bfdlib::tcp_helper::queue_w toSend;
     bfdlib::tcp_helper::queue_r received;
-    std::atomic<uint64_t> sentBytes;
-    std::atomic<uint64_t> receivedBytes;
+	std::atomic<uint64_t> traffic;
     std::atomic<bool> stop;
     std::unique_ptr<sf::Thread> sendingThread;
     std::unique_ptr<sf::Thread> receivingThread;

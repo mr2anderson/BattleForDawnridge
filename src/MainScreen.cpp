@@ -72,6 +72,8 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
     this->serverPort = serverPort;
 
 	this->socketInited = false;
+	this->traffic.store(0);
+	this->stop.store(false);
 
 	this->type = type;
 	this->data = data;
@@ -125,10 +127,9 @@ void MainScreen::run(sf::RenderWindow& window) {
         }
 		this->drawWaitingScreen(window);
         if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000 / 60)) == sf::Socket::Status::Done) {
-            this->stop = false;
 			this->socket.setBlocking(false);
-            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, &this->socket, &this->toSend, &this->stop, &this->sentBytes));
-            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, &this->socket, &this->received, &this->stop, &this->receivedBytes));
+            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic)));
+            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
             this->sendingThread->launch();
             this->receivingThread->launch();
             this->socketInited = true;

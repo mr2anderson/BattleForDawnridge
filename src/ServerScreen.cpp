@@ -29,7 +29,7 @@
 #include "MainServerPosition.hpp"
 
 
-ServerScreen::ServerScreen(sf::RenderWindow& window) {
+/*ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->alreadyFinished = false;
 
     this->logs.setEntryLimit(10);
@@ -174,4 +174,4 @@ void ServerScreen::drawEverything(sf::RenderWindow& window) {
     window.draw(this->bg);
     window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
     window.display();
-}
+}*/

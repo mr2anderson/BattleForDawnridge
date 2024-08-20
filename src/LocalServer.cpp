@@ -54,17 +54,17 @@ static void LOGS(const std::string &val) {
 
 
 
-static void CLOSE_THREADS(std::unique_ptr<sf::Thread> &sendThread, std::unique_ptr<sf::Thread> &receiveThread, std::atomic<bool> *stop) {
-    *stop = true;
+static void CLOSE_THREADS(std::unique_ptr<sf::Thread> &sendThread, std::unique_ptr<sf::Thread> &receiveThread, std::atomic<bool> &stop) {
+    stop = true;
     sendThread->wait();
     receiveThread->wait();
 }
-static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std::atomic<uint16_t> *port, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
+static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomic<uint16_t> &port, std::atomic<uint64_t> &sendTraffic, std::atomic<uint64_t> &receiveTraffic) {
 	sf::TcpListener listener;
     LOGS("Looking for port...");
     for (uint32_t p = 1024; p < 49151; p = p + 1) {
         if (listener.listen(p) == sf::Socket::Status::Done) {
-            *port = p;
+            port = p;
             LOGS("Port " + std::to_string(p) + " is available!");
             break;
         }
@@ -80,13 +80,13 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
     listener.setBlocking(false);
     LOGS("Waiting for client...");
     for (; ; sf::sleep(sf::milliseconds(5))) {
-        if (*stop) {
+        if (stop) {
             return;
         }
         if (listener.accept(socket) == sf::Socket::Status::Done) {
             break;
         }
-        *ready = true;
+        ready = true;
     }
     LOGS("Client accepted.");
 
@@ -97,8 +97,8 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
     bfdlib::tcp_helper::queue_r received;
     socket.setBlocking(false);
     std::atomic<bool> stopTcpThread = false;
-    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, &socket, &toSend, &stopTcpThread, sendTraffic));
-    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, &socket, &received, &stopTcpThread, receiveTraffic));
+    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(socket), std::ref(toSend), std::ref(stopTcpThread), std::ref(sendTraffic)));
+    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(socket), std::ref(received), std::ref(stopTcpThread), std::ref(receiveTraffic)));
     sendThread->launch();
     receiveThread->launch();
 
@@ -111,8 +111,8 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
 	while (room == nullptr or room->playersNumber() != players.size()) {
         std::optional<sf::Packet> receivedPacketOpt;
 		for (; ; sf::sleep(sf::milliseconds(5))) {
-            if (*stop) {
-                CLOSE_THREADS(sendThread, receiveThread, &stopTcpThread);
+            if (stop) {
+                CLOSE_THREADS(std::ref(sendThread), std::ref(receiveThread), std::ref(stopTcpThread));
                 return;
             }
             receivedPacketOpt = received.pop();
@@ -143,8 +143,8 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
 
     LOGS("Processing...");
 	for (; ;) {
-        if (*stop) {
-            CLOSE_THREADS(sendThread, receiveThread, &stopTcpThread);
+        if (stop) {
+            CLOSE_THREADS(std::ref(sendThread), std::ref(receiveThread), std::ref(stopTcpThread));
             return;
         }
 
@@ -173,21 +173,21 @@ static void THREAD(const std::atomic<bool>* stop, std::atomic<bool>* ready, std:
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atomic_bool* stop, std::atomic_bool* running, std::atomic_bool *ready, std::atomic<uint16_t> *port, std::atomic<uint64_t> *sendTraffic, std::atomic<uint64_t> *receiveTraffic) {
-	*running = true;
+static void THREAD_EXCEPTION_SAFE(std::exception_ptr &unexpectedError, std::atomic_bool& stop, std::atomic_bool& running, std::atomic_bool &ready, std::atomic<uint16_t> &port, std::atomic<uint64_t> &sendTraffic, std::atomic<uint64_t> &receiveTraffic) {
+	running = true;
     LOGS("Local server was started in new thread");
 
 	try {
-		THREAD(stop, ready, port, sendTraffic, receiveTraffic);
+		THREAD(std::ref(stop), std::ref(ready), std::ref(port), std::ref(sendTraffic), std::ref(receiveTraffic));
 	}
 	catch (std::exception& e) {
-		*unexpectedError = std::current_exception();
+		unexpectedError = std::current_exception();
         LOGS("Local server thread got an unexpected error: " + std::string(e.what()));
 	}
 
     LOGS("Local server thread was closed");
-    *ready = true;
-	*running = false;
+    ready = true;
+	running = false;
 }
 
 
@@ -196,8 +196,8 @@ static void THREAD_EXCEPTION_SAFE(std::exception_ptr *unexpectedError, std::atom
 
 
 LocalServer::LocalServer() {
-	this->stop = false;
-	this->running = false;
+	this->stop.store(false);
+	this->running.store(false);
 	this->thread = nullptr;
 }
 LocalServer::~LocalServer() {
@@ -226,10 +226,12 @@ uint16_t LocalServer::launch() {
 	}
     this->sendTraffic = 0;
     this->receiveTraffic = 0;
-    std::atomic<bool> ready = false;
+    std::atomic<bool> ready;
+    ready.store(false);
     std::atomic<uint16_t> port;
+    port.store(0);
     LOGS("Launching local sever thread...");
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, &this->unexpectedError, &this->stop, &this->running, &ready, &port, &this->sendTraffic, &this->receiveTraffic));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->unexpectedError), std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port), std::ref(this->sendTraffic), std::ref(this->receiveTraffic)));
 	this->thread->launch();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));

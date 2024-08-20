@@ -28,7 +28,7 @@ class ShootingPriorityComp {
 public:
     ShootingPriorityComp(const GO* shootingBuilding);
 
-    bool operator()(const GO *go1, const GO *go2);
+    bool operator()(const GO *go1, const GO *go2) const;
 private:
     const GO* shootingBuilding;
 };

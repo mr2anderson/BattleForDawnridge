@@ -310,7 +310,7 @@ AnimationState Warrior::getCurrentAnimationState() const {
         return {currentFrame % animationNumber, false};
     }
 
-    return {currentFrame % animationNumber, true};
+    return {animationNumber - 1, true};
 }
 Defence Warrior::getDefence() const {
     return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->inRage())) * this->getBaseDefence();

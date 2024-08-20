@@ -29,7 +29,7 @@
 #pragma once
 
 
-class ServerScreen {
+/*class ServerScreen {
 public:
 	ServerScreen(sf::RenderWindow& window);
 	ServerScreen(const ServerScreen& copy) = delete;
@@ -56,4 +56,4 @@ private:
 	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
 
 	void drawEverything(sf::RenderWindow& window);
-};
+};*/

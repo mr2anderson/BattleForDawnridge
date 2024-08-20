@@ -99,38 +99,38 @@ namespace bfdlib {
 
 
 
-        static void process_sending(sf::TcpSocket *socket, queue_w *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
+        static void process_sending(sf::TcpSocket &socket, queue_w &q, std::atomic<bool> &flag, std::atomic<uint64_t> &bytes) {
             for (; ; sf::sleep(sf::milliseconds(5))) {
-                if (*flag) {
+                if (flag) {
                     break;
                 }
-                std::optional<sf::Packet> packet = q->pop();
+                std::optional<sf::Packet> packet = q.pop();
                 if (packet == std::nullopt) {
                     continue;
                 }
-                *bytes = *bytes + packet->getDataSize();
-                while (socket->send(packet.value()) != sf::Socket::Status::Done) {
+                bytes = bytes + packet->getDataSize();
+                while (socket.send(packet.value()) != sf::Socket::Status::Done) {
                     sf::sleep(sf::milliseconds(5));
-                    if (*flag) {
+                    if (flag) {
                         break;
                     }
                 }
             }
         }
-        static void process_receiving(sf::TcpSocket *socket, queue_r *q, const std::atomic<bool> *flag, std::atomic<uint64_t> *bytes) {
+        static void process_receiving(sf::TcpSocket &socket, queue_r &q, std::atomic<bool> &flag, std::atomic<uint64_t> &bytes) {
             for (; ; sf::sleep(sf::milliseconds(5))) {
-                if (*flag) {
+                if (flag) {
                     break;
                 }
                 sf::Packet packet;
-                while (socket->receive(packet) != sf::Socket::Status::Done) {
+                while (socket.receive(packet) != sf::Socket::Status::Done) {
                     sf::sleep(sf::milliseconds(5));
-                    if (*flag) {
+                    if (flag) {
                         break;
                     }
                 }
-                *bytes = *bytes + packet.getDataSize();
-                q->push(packet);
+                bytes = bytes + packet.getDataSize();
+                q.push(packet);
             }
         }
     };
