@@ -60,6 +60,12 @@ Events NetworkGameButtonSpec::getEvents() const {
         clickEvent
     );
     networkGameWindowComponents.emplace_back(
+            "room_id_icon",
+            StringLcl("{connect}"),
+            true,
+            this->getConnectEvent()
+    );
+    networkGameWindowComponents.emplace_back(
         "save_icon",
         StringLcl("{choose_save}"),
         true,
@@ -70,12 +76,6 @@ Events NetworkGameButtonSpec::getEvents() const {
         StringLcl("{choose_map}"),
         true,
         this->getChooseMapEvent()
-    );
-    networkGameWindowComponents.emplace_back(
-            "room_id_icon",
-            StringLcl("{connect}"),
-            true,
-            this->getConnectEvent()
     );
 
     std::shared_ptr<HorizontalSelectionWindow> networkGameWindow = std::make_shared<HorizontalSelectionWindow>(networkGameWindowComponents);
