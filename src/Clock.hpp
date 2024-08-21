@@ -19,6 +19,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <boost/serialization/binary_object.hpp>
 #include "ArchiveType.hpp"
 
 
@@ -30,18 +31,13 @@ public:
     Clock();
 
     uint32_t getMS() const;
-    uint64_t getNS() const;
     float getSecondsAsFloat() const;
     void restart();
 private:
     std::chrono::time_point<std::chrono::high_resolution_clock> start;
-    uint64_t nsBonus;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        if (Archive::is_saving::value) {
-            this->nsBonus = this->getNS();
-        }
-        ar & this->nsBonus;
+        ar & boost::serialization::make_binary_object(&start, sizeof(start));
     }
 };
