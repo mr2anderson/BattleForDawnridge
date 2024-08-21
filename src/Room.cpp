@@ -405,9 +405,19 @@ void Room::sendSaveToClient(RoomOutputProtocol p) {
 }
 void Room::sendReturnToMenuToClient(RoomOutputProtocol p) {
 	p.logs->emplace_back("{sending_return_to_menu_to_current_player}");
+
+	sf::Packet packet = this->makeBasePacket();
+	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
+
+	this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
 }
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
 	p.logs->emplace_back("{sending_return_to_menu_to_players}");
+
+	sf::Packet packet = this->makeBasePacket();
+	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
+
+	this->sendToClients(packet, p);
 }
 void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	sf::Packet packet = this->makeBasePacket();
