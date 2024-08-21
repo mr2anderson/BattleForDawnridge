@@ -17,36 +17,32 @@
  */
 
 
-#include <SFML/Network.hpp>
 #include <atomic>
-#include <forward_list>
-#include "Logs.hpp"
-#include "ServerRooms.hpp"
+#include <cstdint>
+#include <SFML/Network.hpp>
+#include <memory>
 #include "tcp_helper.hpp"
-#include "Connection.hpp"
 
 
 #pragma once
 
 
-class ServerScreen {
+class Connection {
 public:
-	ServerScreen(sf::RenderWindow& window);
-	ServerScreen(const ServerScreen& copy) = delete;
+    Connection();
+    ~Connection();
 
-	void run(sf::RenderWindow& window);
+    uint64_t getCurrentTraffic() const;
+    sf::TcpSocket& getSocketRef();
+    std::optional<sf::Packet> getReceivedPacket();
+    void send(const sf::Packet &packet);
+    void run();
 private:
-	bool alreadyFinished;
-
-	Logs logs;
-
-	ServerRooms rooms;
-
-    sf::TcpListener listener;
-    std::forward_list<Connection> connections;
-
-	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
-
-	void drawEverything(sf::RenderWindow& window);
-    void addTrafficInfo();
+    std::atomic<uint64_t> traffic;
+    std::atomic<bool> stop;
+    sf::TcpSocket socket;
+    bfdlib::tcp_helper::queue_r received;
+    bfdlib::tcp_helper::queue_w toSend;
+    std::unique_ptr<sf::Thread> sendThread;
+    std::unique_ptr<sf::Thread> receiveThread;
 };

@@ -41,12 +41,6 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
         this->logs.add(StringLcl("{couldnt_listen_port}"));
     }
     this->listener.setBlocking(false);
-    this->traffic.store(false);
-}
-ServerScreen::~ServerScreen() {
-    for (auto &a : this->stop) {
-        a = true;
-    }
 }
 void ServerScreen::run(sf::RenderWindow& window) {
     if (this->alreadyFinished) {
@@ -65,7 +59,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
                     r = false;
                 }
                 if (event.key.code == sf::Keyboard::A) {
-                    this->logs.add(StringLcl("{traffic}" + std::to_string((float)this->traffic / 1024 / 1024)) + " MB");
+                    this->addTrafficInfo();
                 }
             }
         }
@@ -74,35 +68,37 @@ void ServerScreen::run(sf::RenderWindow& window) {
 
         this->drawEverything(window);
 
-        this->sockets.emplace_front();
-        this->sockets.front().setBlocking(false);
-        if (this->listener.accept(this->sockets.front()) == sf::Socket::Status::Done) {
-            this->logs.add(StringLcl("{new_connection}" + this->sockets.front().getRemoteAddress().toString())); // TODO: Remove inactive connections
-            this->stop.emplace_front();
-            this->stop.front().store(false);
-            this->toSend.emplace_front();
-            this->received.emplace_front();
-            this->sendThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->sockets.front()), std::ref(this->toSend.front()), std::ref(this->stop.front()), std::ref(this->traffic)));
-            this->receiveThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->sockets.front()), std::ref(this->received.front()), std::ref(this->stop.front()), std::ref(this->traffic)));
-            this->sendThreads.front().launch();
-            this->receiveThreads.front().launch();
+        this->connections.emplace_front();
+        if (this->listener.accept(this->connections.front().getSocketRef()) == sf::Socket::Status::Done) {
+            this->logs.add(StringLcl("{new_connection}" + this->connections.front().getSocketRef().getRemoteAddress().toString()));
+            this->connections.front().run();
+            auto iterator = this->connections.begin();
+            auto prevIterator = iterator;
+            iterator++;
+            while (iterator != this->connections.end()) {
+                if (iterator->getSocketRef().getRemoteAddress() == this->connections.front().getSocketRef().getRemoteAddress()) {
+                    this->logs.add(StringLcl("{removed_old_connection}"));
+                    this->connections.erase_after(prevIterator);
+                    break;
+                }
+                prevIterator++;
+                iterator++;
+            }
         }
         else {
-            this->sockets.pop_front();
+            this->connections.pop_front();
         }
 
         for (; ;) {
             boost::optional<std::tuple<sf::Packet, sf::IpAddress>> receivedPacket = boost::none;
-            auto receivedIterator = this->received.begin();
-            auto socketIterator = this->sockets.begin();
-            while (receivedIterator != this->received.end()) {
-                std::optional<sf::Packet> opt = receivedIterator->pop();
+            auto iterator = this->connections.begin();
+            while (iterator != this->connections.end()) {
+                std::optional<sf::Packet> opt = iterator->getReceivedPacket();
                 if (opt.has_value()) {
-                    receivedPacket = std::make_tuple(opt.value(), socketIterator->getRemoteAddress());
+                    receivedPacket = std::make_tuple(opt.value(), iterator->getSocketRef().getRemoteAddress());
                     break;
                 }
-                receivedIterator++;
-                socketIterator++;
+                iterator++;
             }
 
             if (receivedPacket.has_value()) {
@@ -118,14 +114,12 @@ void ServerScreen::run(sf::RenderWindow& window) {
                 this->logs.add(toLogs.at(i));
             }
             for (uint32_t i = 0; i < toRoomClients.size(); i = i + 1) {
-                auto socketIterator = this->sockets.begin();
-                auto toSendIterator = this->toSend.begin();
-                while (socketIterator != this->sockets.end()) {
-                    if (socketIterator->getRemoteAddress() == std::get<sf::IpAddress>(toRoomClients.at(i))) {
-                        toSendIterator->push(std::get<sf::Packet>(toRoomClients.at(i)));
+                iterator = this->connections.begin();
+                while (iterator != this->connections.end()) {
+                    if (iterator->getSocketRef().getRemoteAddress() == std::get<sf::IpAddress>(toRoomClients.at(i))) {
+                        iterator->send(std::get<sf::Packet>(toRoomClients.at(i)));
                     }
-                    socketIterator++;
-                    toSendIterator++;
+                    iterator++;
                 }
             }
 
@@ -180,4 +174,11 @@ void ServerScreen::drawEverything(sf::RenderWindow& window) {
     window.draw(MenuBg());
     window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
     window.display();
+}
+void ServerScreen::addTrafficInfo() {
+    uint64_t sum = 0;
+    for (const auto & connection : this->connections) {
+        sum = sum + connection.getCurrentTraffic();
+    }
+    this->logs.add(StringLcl("{traffic}" + std::to_string((float)sum / 1024 / 1024)) + " MB");
 }
