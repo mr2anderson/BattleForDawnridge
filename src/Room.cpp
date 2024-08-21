@@ -20,7 +20,6 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/serialization/shared_ptr.hpp>
-#include <iostream>
 #include <sstream>
 #include "Room.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
@@ -364,8 +363,6 @@ ResourceBar Room::makeResourceBar() {
 	return bar;
 }
 void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
-	p.logs->emplace_back("{sending_world_ui_state}");
-
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 	}
@@ -383,6 +380,43 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
 	packet << serialStr;
+
+	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet.getDataSize()) + " kb");
+
+	this->sendToClients(packet, p);
+}
+void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName) {
+	p.logs->emplace_back("{sending_sound_to_players}");
+	
+	sf::Packet packet = this->makeBasePacket();
+	packet << SERVER_NET_SPECS::CODES::SOUND;
+	packet << soundName;
+
+	this->sendToClients(packet, p);
+}
+void Room::sendSaveToClient(RoomOutputProtocol p) {
+	p.logs->emplace_back("{sending_save_to_current_player}");
+
+	sf::Packet packet = this->makeBasePacket();
+	packet << SERVER_NET_SPECS::CODES::SAVE;
+	packet << this->getSaveData();
+
+	this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
+}
+void Room::sendReturnToMenuToClient(RoomOutputProtocol p) {
+	p.logs->emplace_back("{sending_return_to_menu_to_current_player}");
+}
+void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
+	p.logs->emplace_back("{sending_return_to_menu_to_players}");
+}
+void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
+	sf::Packet packet = this->makeBasePacket();
+
+	packet << SERVER_NET_SPECS::CODES::FOCUS;
+	packet << x;
+	packet << y;
+	packet << sx;
+	packet << sy;
 
 	this->sendToClients(packet, p);
 }
@@ -621,7 +655,7 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 		this->handleLimitResourcesEvent(limitResourcesEvent, p);
 	}
 	else {
-		std::cerr << "Room: warning: unknown event handled" << std::endl;
+		p.logs->emplace_back("{unknown_event_handled}");
 	}
 }
 void Room::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p) {
@@ -652,10 +686,7 @@ void Room::handleBuild(std::shared_ptr<BuildEvent> e, RoomOutputProtocol p) {
 	this->map.getStatePtr()->getCollectionsPtr()->add(b);
 }
 void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, RoomOutputProtocol p) {
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::SOUND;
-	packet << e->getSoundName();
-	this->sendToClients(packet, p);
+	this->sendPlaySoundEventToClients(p, e->getSoundName());
 }
 void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, RoomOutputProtocol p) {
 	this->element = e->getElement();
@@ -665,14 +696,12 @@ void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, RoomOutputP
 	this->changeMove();
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, RoomOutputProtocol p) {
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
 	switch (e->getType()) {
 	case ReturnToMenuEvent::Type::CURRENT_PLAYER:
-		this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
+		this->sendReturnToMenuToClient(p);
 		break;
 	case ReturnToMenuEvent::Type::EVERY_PLAYER:
-		this->sendToClients(packet, p);
+		this->sendReturnToMenuToClients(p);
 		break;
 	}
 }
@@ -721,13 +750,7 @@ void Room::handleChangeWarriorDirectionEvent(std::shared_ptr<ChangeWarriorDirect
 	e->getWarrior()->changeDirection(e->getDirection());
 }
 void Room::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, RoomOutputProtocol p) {
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::FOCUS;
-	packet << e->getX();
-	packet << e->getY();
-	packet << e->getSX();
-	packet << e->getSY();
-	this->sendToClients(packet, p);
+	this->sendFocusOnToClients(p, e->getX(), e->getY(), e->getSX(), e->getSY());
 }
 void Room::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, RoomOutputProtocol p) {
 	this->highlightTable.clear();
@@ -833,10 +856,7 @@ void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent
 	e->getSpec()->increaseMoveCtr();
 }
 void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, RoomOutputProtocol p) {
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::SAVE;
-	packet << this->getSaveData();
-	this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
+	this->sendSaveToClient(p);
 }
 void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p) {
 	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());

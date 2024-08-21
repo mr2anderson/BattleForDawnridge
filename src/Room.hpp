@@ -144,6 +144,11 @@ private:
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
     void sendWorldUIStateToClients(RoomOutputProtocol p);
+	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
+	void sendSaveToClient(RoomOutputProtocol p);
+	void sendReturnToMenuToClient(RoomOutputProtocol p);
+	void sendReturnToMenuToClients(RoomOutputProtocol p);
+	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 
     sf::Packet makeBasePacket() const;
 	void sendToClients(const sf::Packet& what, RoomOutputProtocol p);
