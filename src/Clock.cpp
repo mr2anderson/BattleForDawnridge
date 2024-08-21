@@ -22,18 +22,22 @@
 
 
 static const double NS_IN_SECOND = std::pow(10, 9);
+static const double NS_IN_MILLISECOND = std::pow(10, 6);
 
 
 Clock::Clock() {
     this->restart();
+    this->nsBonus = 0;
 }
 uint32_t Clock::getMS() const {
+    return this->getNS() / NS_IN_MILLISECOND;
+}
+uint64_t Clock::getNS() const {
     auto current = std::chrono::high_resolution_clock::now();
-    return std::chrono::duration_cast<std::chrono::milliseconds>(current - this->start).count();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(current - this->start).count() + this->nsBonus;
 }
 float Clock::getSecondsAsFloat() const {
-    auto current = std::chrono::high_resolution_clock::now();
-    return (double)std::chrono::duration_cast<std::chrono::nanoseconds>(current - this->start).count() / NS_IN_SECOND;
+    return this->getNS() / NS_IN_SECOND;
 }
 void Clock::restart() {
     this->start = std::chrono::high_resolution_clock::now();
