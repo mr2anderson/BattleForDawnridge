@@ -42,6 +42,9 @@ private:
         if (Archive::is_saving::value) {
             this->nsBonus = this->getNS();
         }
+        if (Archive::is_loading::value) {
+            this->restart();
+        }
         ar & this->nsBonus;
     }
 };

@@ -17,12 +17,12 @@
  */
 
 
-#include <cmath>
 #include "Clock.hpp"
+#include "math.hpp"
 
 
-static const double NS_IN_SECOND = std::pow(10, 9);
-static const double NS_IN_MILLISECOND = std::pow(10, 6);
+static constexpr uint32_t NS_IN_SECOND = bfdlib::math::pow(10, 9);
+static constexpr uint32_t NS_IN_MILLISECOND = bfdlib::math::pow(10, 6);
 
 
 Clock::Clock() {
@@ -37,7 +37,7 @@ uint64_t Clock::getNS() const {
     return std::chrono::duration_cast<std::chrono::nanoseconds>(current - this->start).count() + this->nsBonus;
 }
 float Clock::getSecondsAsFloat() const {
-    return this->getNS() / NS_IN_SECOND;
+    return (double)this->getNS() / (double)NS_IN_SECOND;
 }
 void Clock::restart() {
     this->start = std::chrono::high_resolution_clock::now();
