@@ -23,6 +23,7 @@
 Connection::Connection() {
     this->traffic.store(0);
     this->stop.store(false);
+    this->error.store(false);
     this->socket.setBlocking(false);
     this->sendThread = nullptr;
     this->receiveThread = nullptr;
@@ -39,11 +40,14 @@ sf::TcpSocket& Connection::getSocketRef() {
 std::optional<sf::Packet> Connection::getReceivedPacket() {
     return this->received.pop();
 }
+bool Connection::hasError() const {
+    return this->error;
+}
 void Connection::send(const sf::Packet &packet) {
     this->toSend.push(packet);
 }
 void Connection::run() {
-    this->sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic)));
+    this->sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic), std::ref(this->error)));
     this->receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
     this->sendThread->launch();
     this->receiveThread->launch();

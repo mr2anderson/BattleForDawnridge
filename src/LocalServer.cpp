@@ -106,8 +106,11 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
     bfdlib::tcp_helper::queue_w toSend;
     bfdlib::tcp_helper::queue_r received;
     socket.setBlocking(false);
-    std::atomic<bool> stopTcpThread = false;
-    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(socket), std::ref(toSend), std::ref(stopTcpThread), std::ref(sendTraffic)));
+    std::atomic<bool> stopTcpThread;
+    stopTcpThread.store(false);
+    std::atomic<bool> error;
+    error.store(false);
+    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(socket), std::ref(toSend), std::ref(stopTcpThread), std::ref(sendTraffic), std::ref(error)));
     std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(socket), std::ref(received), std::ref(stopTcpThread), std::ref(receiveTraffic)));
     sendThread->launch();
     receiveThread->launch();

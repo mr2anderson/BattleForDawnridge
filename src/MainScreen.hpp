@@ -63,6 +63,7 @@ private:
     bfdlib::tcp_helper::queue_r received;
 	std::atomic<uint64_t> traffic;
     std::atomic<bool> stop;
+    std::atomic<bool> error;
     std::unique_ptr<sf::Thread> sendingThread;
     std::unique_ptr<sf::Thread> receivingThread;
 

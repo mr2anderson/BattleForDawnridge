@@ -35,11 +35,13 @@ public:
     uint64_t getCurrentTraffic() const;
     sf::TcpSocket& getSocketRef();
     std::optional<sf::Packet> getReceivedPacket();
+    bool hasError() const;
     void send(const sf::Packet &packet);
     void run();
 private:
     std::atomic<uint64_t> traffic;
     std::atomic<bool> stop;
+    std::atomic<bool> error;
     sf::TcpSocket socket;
     bfdlib::tcp_helper::queue_r received;
     bfdlib::tcp_helper::queue_w toSend;

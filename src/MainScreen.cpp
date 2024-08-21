@@ -74,6 +74,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 
 	this->traffic.store(0);
 	this->stop.store(false);
+    this->error.store(false);
 
 	this->type = type;
 	this->data = data;
@@ -126,7 +127,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->drawWaitingScreen(window);
         if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000 / 60)) == sf::Socket::Status::Done) {
 			this->socket.setBlocking(false);
-            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic)));
+            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic), std::ref(this->error)));
             this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
             this->sendingThread->launch();
             this->receivingThread->launch();
@@ -160,6 +161,9 @@ void MainScreen::run(sf::RenderWindow& window) {
 				}
 			}
 		}
+        if (this->error) {
+            throw NoServerConnection();
+        }
 		if (this->localElement != nullptr) {
             this->localElement->update();
             if (this->localElement->finished()) {

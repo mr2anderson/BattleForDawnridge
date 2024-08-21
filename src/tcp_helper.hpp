@@ -99,7 +99,7 @@ namespace bfdlib {
 
 
 
-        static void process_sending(sf::TcpSocket &socket, queue_w &q, std::atomic<bool> &flag, std::atomic<uint64_t> &bytes) {
+        static void process_sending(sf::TcpSocket &socket, queue_w &q, std::atomic<bool> &flag, std::atomic<uint64_t> &bytes, std::atomic<bool> &error) {
             for (; ; sf::sleep(sf::milliseconds(5))) {
                 if (flag) {
                     break;
@@ -109,12 +109,15 @@ namespace bfdlib {
                     continue;
                 }
                 bytes = bytes + packet->getDataSize();
-                while (socket.send(packet.value()) != sf::Socket::Status::Done) {
+                sf::Socket::Status status;
+                do {
+                    status = socket.send(packet.value());
                     sf::sleep(sf::milliseconds(5));
-                    if (flag) {
-                        break;
+                    if (status == sf::Socket::Status::Error or status == sf::Socket::Status::Disconnected) {
+                        error = true;
                     }
                 }
+                while (status != sf::Socket::Status::Done and flag);
             }
         }
         static void process_receiving(sf::TcpSocket &socket, queue_r &q, std::atomic<bool> &flag, std::atomic<uint64_t> &bytes) {
