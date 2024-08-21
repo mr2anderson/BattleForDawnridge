@@ -17,35 +17,12 @@
  */
 
 
-#include "PopUpElement.hpp"
-#include "PlaySoundEvent.hpp"
+#include "ConnectToRoomEvent.hpp"
 
 
-PopUpElement::PopUpElement() {
-	this->_finished = false;
+ConnectToRoomEvent::ConnectToRoomEvent(std::shared_ptr<std::string> str) {
+    this->str = str;
 }
-bool PopUpElement::finished() const {
-	return this->_finished;
+std::string ConnectToRoomEvent::getString() const {
+    return *this->str;
 }
-void PopUpElement::restart() {
-	this->_finished = false;
-	this->onRestart();
-}
-void PopUpElement::update() {
-
-}
-Events PopUpElement::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
-	return Events();
-}
-void PopUpElement::keyPressed(sf::Keyboard::Key key) {
-
-}
-void PopUpElement::onRestart() {
-
-}
-void PopUpElement::finish() {
-	this->_finished = true;
-}
-
-
-BOOST_CLASS_EXPORT_IMPLEMENT(PopUpElement)

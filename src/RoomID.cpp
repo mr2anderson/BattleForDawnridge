@@ -24,10 +24,10 @@
 #include "InvalidRoomIDFormat.hpp"
 
 
-static constexpr uint32_t CHAR_NUMBER = 26 + 10;
-static constexpr uint32_t READABLE_LEN = 12;
-static constexpr uint64_t COMBINATIONS = bfdlib::math::pow<uint64_t>(CHAR_NUMBER, READABLE_LEN);
-static constexpr std::array<uint64_t, READABLE_LEN> EXPONENTS = {
+static const uint32_t CHAR_NUMBER = 26 + 10;
+const uint32_t RoomID::READABLE_LEN = 12;
+static const uint64_t COMBINATIONS = bfdlib::math::pow<uint64_t>(CHAR_NUMBER, RoomID::READABLE_LEN);
+static const std::array<uint64_t, RoomID::READABLE_LEN> EXPONENTS = {
 	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 0),
 	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 1),
 	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 2),

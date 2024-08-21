@@ -92,6 +92,11 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
                     this->addEvents(elementEvents);
                 }
 			}
+            else if (event.type == sf::Event::KeyPressed) {
+                if (this->element != nullptr) {
+                    this->element->keyPressed(event.key.code);
+                }
+            }
 		}
 
         this->regenerateButtons();
@@ -99,7 +104,6 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
 		this->drawEverything(window);
 
         if (this->element != nullptr) {
-            this->element->update();
             if (this->element->finished()) {
                 this->element = nullptr;
             }
@@ -210,6 +214,9 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<LoadNetworkGameEvent> loadGameEvent = std::dynamic_pointer_cast<LoadNetworkGameEvent>(e)) {
         this->handleLoadNetworkGameEvent(loadGameEvent);
     }
+    else if (std::shared_ptr<ConnectToRoomEvent> connectEvent = std::dynamic_pointer_cast<ConnectToRoomEvent>(e)) {
+        this->handleConnectGameEvent(connectEvent);
+    }
     else if (std::shared_ptr<DeleteSaveEvent> deleteSaveEvent = std::dynamic_pointer_cast<DeleteSaveEvent>(e)) {
         this->handleDeleteSaveEvent(deleteSaveEvent);
     }
@@ -241,6 +248,9 @@ void Menu::handleStartNetworkGameEvent(std::shared_ptr<StartNetworkGameEvent> e)
 }
 void Menu::handleLoadNetworkGameEvent(std::shared_ptr<LoadNetworkGameEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::LOAD_NETWORK_GAME, e->getSaveName());
+}
+void Menu::handleConnectGameEvent(std::shared_ptr<ConnectToRoomEvent> e) {
+    this->response = MenuResponse(MenuResponse::TYPE::CONNECT_TO_NETWORK_GAME, e->getString());
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
     std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());

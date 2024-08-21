@@ -29,6 +29,7 @@
 #include "MenuResponse.hpp"
 #include "StartNetworkGameEvent.hpp"
 #include "LoadNetworkGameEvent.hpp"
+#include "ConnectToRoomEvent.hpp"
 
 
 #pragma once
@@ -66,6 +67,7 @@ private:
     void handleLoadLocalGameEvent(std::shared_ptr<LoadLocalGameEvent> e);
     void handleStartNetworkGameEvent(std::shared_ptr<StartNetworkGameEvent> e);
     void handleLoadNetworkGameEvent(std::shared_ptr<LoadNetworkGameEvent> e);
+    void handleConnectGameEvent(std::shared_ptr<ConnectToRoomEvent> e);
     void handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
 };

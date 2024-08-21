@@ -28,6 +28,7 @@
 #include "NoServerConnection.hpp"
 #include "CouldntOpenMap.hpp"
 #include "MainServerPosition.hpp"
+#include "InvalidRoomIDFormat.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -156,6 +157,9 @@ void Program::handleException(std::exception_ptr exception, boost::optional<Stri
     }
     catch (NoServerConnection&) {
         error = StringLcl("{disconnect_client}");
+    }
+    catch (InvalidRoomIDFormat&) {
+        error = StringLcl("{invalid_room_id_client}");
     }
     catch (std::exception& e) {
         error = StringLcl("{unknown_error_client}\n" + std::string(e.what()));

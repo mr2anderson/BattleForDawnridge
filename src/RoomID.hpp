@@ -36,6 +36,8 @@ public:
 
 	uint64_t value() const;
 	std::string readableValue() const;
+
+    static const uint32_t READABLE_LEN;
 private:
 	uint64_t _value;
 

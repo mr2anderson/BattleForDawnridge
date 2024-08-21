@@ -25,8 +25,10 @@
 #include "WindowButton.hpp"
 #include "LoadNetworkGameEvent.hpp"
 #include "DeleteSaveEvent.hpp"
-#include "Root.hpp"
 #include "PlaySoundEvent.hpp"
+#include "WindowEntry.hpp"
+#include "RoomID.hpp"
+#include "ConnectToRoomEvent.hpp"
 
 
 
@@ -50,32 +52,38 @@ Events NetworkGameButtonSpec::getEvents() const {
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::vector<HorizontalSelectionWindowComponent> localGameWindowComponent;
-    localGameWindowComponent.emplace_back(
+    std::vector<HorizontalSelectionWindowComponent> networkGameWindowComponents;
+    networkGameWindowComponents.emplace_back(
         "exit_icon",
         StringLcl("{exit}"),
         true,
         clickEvent
     );
-    localGameWindowComponent.emplace_back(
+    networkGameWindowComponents.emplace_back(
         "save_icon",
         StringLcl("{choose_save}"),
         true,
         this->getChooseSaveEvent()
     );
-    localGameWindowComponent.emplace_back(
+    networkGameWindowComponents.emplace_back(
         "battle_icon",
         StringLcl("{choose_map}"),
         true,
         this->getChooseMapEvent()
     );
+    networkGameWindowComponents.emplace_back(
+            "room_id_icon",
+            StringLcl("{connect}"),
+            true,
+            this->getConnectEvent()
+    );
 
-    std::shared_ptr<HorizontalSelectionWindow> localGameWindow = std::make_shared<HorizontalSelectionWindow>(localGameWindowComponent);
+    std::shared_ptr<HorizontalSelectionWindow> networkGameWindow = std::make_shared<HorizontalSelectionWindow>(networkGameWindowComponents);
 
-    Events createLocalGameWindowEvent = clickEvent;
-    createLocalGameWindowEvent.add(std::make_shared<CreateEEvent>(localGameWindow));
+    Events createNetworkGameWindowEvent = clickEvent;
+    createNetworkGameWindowEvent.add(std::make_shared<CreateEEvent>(networkGameWindow));
 
-    return createLocalGameWindowEvent;
+    return createNetworkGameWindowEvent;
 }
 
 
@@ -161,6 +169,33 @@ Events NetworkGameButtonSpec::getChooseSaveEvent() const {
     result.add(std::make_shared<CreateEEvent>(window));
 
     return result;
+}
+
+
+
+
+
+
+Events NetworkGameButtonSpec::getConnectEvent() const {
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+
+    std::shared_ptr<EntrySettings> settings = std::make_shared<EntrySettings>();
+    settings->setMaxLen(RoomID::READABLE_LEN);
+    settings->setRequireMaxLen(true);
+    settings->regDigits();
+    settings->regLetters(EntrySettings::LETTER_REGISTRATION_TYPE::AS_UPPER_CASE);
+
+    std::shared_ptr<std::string> result = std::make_shared<std::string>();
+
+    Events connectToRoomEvent = clickEvent;
+    connectToRoomEvent.add(std::make_shared<ConnectToRoomEvent>(result));
+
+    std::shared_ptr<PopUpElement> window = std::make_shared<WindowEntry>(StringLcl("{enter_room_id}"), StringLcl("{connect2}"), StringLcl("{cancel}"), result, settings, connectToRoomEvent, clickEvent);
+
+    Events createWindowEvent = clickEvent;
+    createWindowEvent.add(std::make_shared<CreateEEvent>(window));
+    return createWindowEvent;
 }
 
 

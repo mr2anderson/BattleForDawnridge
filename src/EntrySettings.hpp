@@ -17,35 +17,38 @@
  */
 
 
-#include "PopUpElement.hpp"
-#include "PlaySoundEvent.hpp"
+#include <SFML/Window.hpp>
+#include <string>
+#include <cstdint>
+#include <unordered_map>
+#include <memory>
 
 
-PopUpElement::PopUpElement() {
-	this->_finished = false;
-}
-bool PopUpElement::finished() const {
-	return this->_finished;
-}
-void PopUpElement::restart() {
-	this->_finished = false;
-	this->onRestart();
-}
-void PopUpElement::update() {
-
-}
-Events PopUpElement::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
-	return Events();
-}
-void PopUpElement::keyPressed(sf::Keyboard::Key key) {
-
-}
-void PopUpElement::onRestart() {
-
-}
-void PopUpElement::finish() {
-	this->_finished = true;
-}
+#pragma once
 
 
-BOOST_CLASS_EXPORT_IMPLEMENT(PopUpElement)
+class EntrySettings {
+public:
+    EntrySettings();
+
+    void setMaxLen(uint32_t newMaxLen);
+    void setRequireMaxLen(bool newReguireMaxLen);
+
+    bool ok(std::shared_ptr<std::string> dstPtr) const;
+
+    void reg(sf::Keyboard::Key key, char c);
+
+    void regDigits();
+
+    typedef enum {
+        AS_UPPER_CASE,
+        AS_LOWER_CASE
+    } LETTER_REGISTRATION_TYPE;
+    void regLetters(LETTER_REGISTRATION_TYPE type);
+
+    void mod(std::shared_ptr<std::string> dstPtr, sf::Keyboard::Key key);
+private:
+    uint32_t maxLen;
+    bool requireMaxLen;
+    std::unordered_map<uint32_t, char> table;
+};

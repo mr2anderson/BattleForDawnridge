@@ -39,6 +39,7 @@ private:
 
 	Events getChooseMapEvent() const;
 	Events getChooseSaveEvent() const;
+    Events getConnectEvent() const;
 
 	Events getChooseMapEvent(const std::string& mapName) const;
 };

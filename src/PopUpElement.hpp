@@ -36,6 +36,7 @@ public:
 	void restart();
 	virtual void update();
 	virtual Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
+    virtual void keyPressed(sf::Keyboard::Key key);
 	virtual bool isCameraDependent() const = 0;
 protected:
 	virtual void onRestart();
