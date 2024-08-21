@@ -262,7 +262,7 @@ Player* Room::getCurrentPlayer() {
 }
 void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p) {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		Events buttonClickEvent = this->buttons.at(i).click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+		Events buttonClickEvent = this->buttons.at(i).click(x, y);
 		if (!buttonClickEvent.empty()) {
 			this->addEvents(buttonClickEvent, p);
 			break;
