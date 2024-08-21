@@ -31,6 +31,7 @@
 #include "ResourceBar.hpp"
 #include "ClientNetSpecs.hpp"
 #include "tcp_helper.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 #pragma once
@@ -79,6 +80,8 @@ private:
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
 	ResourceBar resourceBar;
 
+	std::shared_ptr<PopUpElement> localElement;
+
 	bool returnToMenu;
 	sf::View view;
 	IlluminanceTable illiminanceTable;
@@ -96,6 +99,7 @@ private:
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
 	void receiveReturnToMenu();
 	void receiveSave(sf::Packet& remPacket);
+	void receiveNotYourMove();
 
 
 	void drawEverything(sf::RenderWindow& window);
@@ -124,4 +128,10 @@ private:
 	void verifyViewSouth(sf::RenderWindow& window);
 	void verifyViewWest(sf::RenderWindow& window);
 	void verifyViewEast(sf::RenderWindow& window);
+
+
+	void handleEvents(Events& events);
+	void handleEvent(std::shared_ptr<Event> e);
+
+	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
 };

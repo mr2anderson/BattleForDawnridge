@@ -652,6 +652,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CompByNewMovePriority.hpp" />
     <ClInclude Include="src\ConductionGraph.hpp" />
     <ClInclude Include="src\ConductionResourcePoint.hpp" />
+    <ClInclude Include="src\Connection.hpp" />
     <ClInclude Include="src\CouldntFindNewWarriorPosition.hpp" />
     <ClInclude Include="src\CouldntOpen.hpp" />
     <ClInclude Include="src\CouldntOpenFont.hpp" />
@@ -999,6 +1000,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CompByNewMovePriority.cpp" />
     <ClCompile Include="src\ConductionGraph.cpp" />
     <ClCompile Include="src\ConductionResourcePoint.cpp" />
+    <ClCompile Include="src\Connection.cpp" />
     <ClCompile Include="src\CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="src\CouldntOpen.cpp" />
     <ClCompile Include="src\CouldntOpenFont.cpp" />

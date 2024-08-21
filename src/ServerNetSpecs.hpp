@@ -36,5 +36,6 @@ namespace SERVER_NET_SPECS {
         static constexpr uint8_t FOCUS = 2;
         static constexpr uint8_t RETURN_TO_MENU = 3;
         static constexpr uint8_t SAVE = 4;
+        static constexpr uint8_t NOT_YOUR_MOVE = 5;
     }
 };

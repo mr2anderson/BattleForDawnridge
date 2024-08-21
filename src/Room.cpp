@@ -430,6 +430,15 @@ void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, ui
 
 	this->sendToClients(packet, p);
 }
+void Room::sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip) {
+	p.logs->emplace_back("{sending_not_your_move_to}" + ip.toString());
+
+	sf::Packet packet = this->makeBasePacket();
+
+	packet << SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE;
+
+	this->sendToClient(packet, p.toSend, ip);
+}
 
 
 
@@ -483,6 +492,10 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 	uint32_t x, y, viewX, viewY, w, h;
 	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
 	p.logs->emplace_back("{received_click} " + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + ip.toString());
+	if (p.remotePlayers->get(this->currentPlayerId).getIp() != ip) {
+		this->sendNotYourMove(p, ip);
+		return;
+	}
 	if (this->selected == nullptr) {
 		if (this->element == nullptr) {
 			if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {

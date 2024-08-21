@@ -39,6 +39,7 @@
 #include "MenuBg.hpp"
 #include "Root.hpp"
 #include "Maps.hpp"
+#include "WindowButton.hpp"
 #include "GlobalRandomGenerator64.hpp"
 
 
@@ -148,8 +149,18 @@ void MainScreen::run(sf::RenderWindow& window) {
 	while (!this->returnToMenu) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::MouseButtonPressed) {
-                this->sendClick(window, event.mouseButton.button);
+				if (this->localElement == nullptr) {
+					this->sendClick(window, event.mouseButton.button);
+				}
+				else {
+					Events events = this->localElement->click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
+					this->handleEvents(events);
+				}
 			}
+		}
+		this->localElement->update();
+		if (this->localElement != nullptr and this->localElement->finished()) {
+			this->localElement = nullptr;
 		}
 		this->receive(window);
 		Playlist::get()->update();
@@ -262,6 +273,9 @@ void MainScreen::receive(sf::RenderWindow &window) {
         else if (code == SERVER_NET_SPECS::CODES::SAVE) {
             this->receiveSave(receivedPacket);
         }
+		else if (code == SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE) {
+			this->receiveNotYourMove();
+		}
         else {
             LOGS("Warning: unknown code received from server: " + std::to_string((uint32_t) code));
         }
@@ -313,6 +327,13 @@ void MainScreen::receiveSave(sf::Packet& remPacket) {
 	ofs.write(data.c_str(), data.size());
 	ofs.close();
 }
+void MainScreen::receiveNotYourMove() {
+	SoundQueue::get()->push(Sounds::get()->get("wind"));
+
+	Events clickEvent;
+	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+	this->localElement = std::make_shared<WindowButton>(StringLcl("{you_are_in_spot_mode}"), StringLcl("{OK}"), clickEvent);
+}
 
 
 
@@ -337,13 +358,25 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
     if (this->selected != nullptr) {
         window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView(window)), std::get<1>(this->getMousePositionBasedOnView(window))));
     }
-    if (this->element != nullptr and this->element->isCameraDependent()) {
+    if (this->element != nullptr) {
+		if (this->element->isCameraDependent()) {
+			window.setView(this->view);
+		}
+		else {
+			window.setView(window.getDefaultView());
+		}
         window.draw(*this->element);
     }
+	if (this->localElement != nullptr) {
+		if (this->localElement->isCameraDependent()) {
+			window.setView(this->view);
+		}
+		else {
+			window.setView(window.getDefaultView());
+		}
+		window.draw(*this->localElement);
+	}
 	window.setView(window.getDefaultView());
-    if (this->element != nullptr and !this->element->isCameraDependent()) {
-        window.draw(*this->element);
-    }
 	this->drawResourceBar(window);
 	for (const auto& b : this->buttonBases) {
 		window.draw(*b);
@@ -498,4 +531,31 @@ void MainScreen::verifyViewEast(sf::RenderWindow& window) {
 	if (this->view.getCenter().x > border) {
 		this->view.setCenter(sf::Vector2f(border, this->view.getCenter().y));
 	}
+}
+
+
+
+
+
+
+void MainScreen::handleEvents(Events& events) {
+	for (uint32_t i = 0; i < events.size(); i = i + 1) {
+		this->handleEvent(events.at(i));
+	}
+}
+void MainScreen::handleEvent(std::shared_ptr<Event> e) {
+	if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
+		this->handlePlaySoundEvent(playSoundEvent);
+	}
+	else {
+		LOGS("Warning: unknown event");
+	}
+}
+
+
+
+
+
+void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
+	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
 }

@@ -149,6 +149,7 @@ private:
 	void sendReturnToMenuToClient(RoomOutputProtocol p);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
+	void sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip);
 
     sf::Packet makeBasePacket() const;
 	void sendToClients(const sf::Packet& what, RoomOutputProtocol p);
