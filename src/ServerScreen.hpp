@@ -44,8 +44,8 @@ private:
 	ServerRooms rooms;
 
     sf::TcpListener listener;
-    std::atomic<bool> stop;
     std::atomic<uint64_t> traffic;
+    std::forward_list<std::atomic<bool>> stop;
 	std::forward_list<sf::TcpSocket> sockets;
     std::forward_list<bfdlib::tcp_helper::queue_r> received;
     std::forward_list<bfdlib::tcp_helper::queue_w> toSend;

@@ -41,11 +41,12 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
         this->logs.add(StringLcl("{couldnt_listen_port}"));
     }
     this->listener.setBlocking(false);
-    this->stop.store(false);
     this->traffic.store(false);
 }
 ServerScreen::~ServerScreen() {
-    this->stop = true;
+    for (auto &a : this->stop) {
+        a = true;
+    }
 }
 void ServerScreen::run(sf::RenderWindow& window) {
     if (this->alreadyFinished) {
@@ -77,10 +78,12 @@ void ServerScreen::run(sf::RenderWindow& window) {
         this->sockets.front().setBlocking(false);
         if (this->listener.accept(this->sockets.front()) == sf::Socket::Status::Done) {
             this->logs.add(StringLcl("{new_connection}" + this->sockets.front().getRemoteAddress().toString())); // TODO: Remove inactive connections
+            this->stop.emplace_front();
+            this->stop.front().store(false);
             this->toSend.emplace_front();
             this->received.emplace_front();
-            this->sendThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->sockets.front()), std::ref(this->toSend.front()), std::ref(this->stop), std::ref(this->traffic)));
-            this->receiveThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->sockets.front()), std::ref(this->received.front()), std::ref(this->stop), std::ref(this->traffic)));
+            this->sendThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->sockets.front()), std::ref(this->toSend.front()), std::ref(this->stop.front()), std::ref(this->traffic)));
+            this->receiveThreads.emplace_front(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->sockets.front()), std::ref(this->received.front()), std::ref(this->stop.front()), std::ref(this->traffic)));
             this->sendThreads.front().launch();
             this->receiveThreads.front().launch();
         }
