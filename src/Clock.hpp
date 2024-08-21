@@ -19,7 +19,6 @@
 
 #include <chrono>
 #include <cstdint>
-#include <boost/serialization/binary_object.hpp>
 #include "ArchiveType.hpp"
 
 
@@ -38,6 +37,14 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::make_binary_object(&start, sizeof(start));
+        if (Archive::is_saving::value) {
+            uint32_t ms = this->getMS();
+            ar & ms;
+        }
+        if (Archive::is_loading::value) {
+            uint32_t ms;
+            ar & ms;
+            this->start = std::chrono::high_resolution_clock::now() - std::chrono::milliseconds(ms);
+        }
     }
 };
