@@ -82,6 +82,8 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 
 	this->initPackageGotten = false;
 
+    this->localElement = nullptr;
+
 	this->returnToMenu = false;
 	this->view = sf::View(window.getDefaultView());
 	this->illiminanceTable.createRender(window.getSize().x, window.getSize().y, window.getSettings());
@@ -158,9 +160,11 @@ void MainScreen::run(sf::RenderWindow& window) {
 				}
 			}
 		}
-		this->localElement->update();
-		if (this->localElement != nullptr and this->localElement->finished()) {
-			this->localElement = nullptr;
+		if (this->localElement != nullptr) {
+            this->localElement->update();
+            if (this->localElement->finished()) {
+                this->localElement = nullptr;
+            }
 		}
 		this->receive(window);
 		Playlist::get()->update();
