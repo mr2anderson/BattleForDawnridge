@@ -25,7 +25,7 @@
 ServerRooms::ServerRooms() = default;
 
 
-void ServerRooms::createIfValid(RoomID id, const std::string& saveData) {
+void ServerRooms::createIfValid(const RoomID & id, const std::string& saveData) {
 	try {
 		std::unique_ptr<Room> roomPtr = std::make_unique<Room>(id, saveData, Room::Restrictions::Enable);
 		std::tuple<std::unique_ptr<Room>, RemotePlayers> val = std::make_tuple(std::move(roomPtr), RemotePlayers());
@@ -35,19 +35,19 @@ void ServerRooms::createIfValid(RoomID id, const std::string& saveData) {
 
 	}
 }
-void ServerRooms::close(RoomID id) {
+void ServerRooms::close(const RoomID& id) {
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();
 	}
 	this->data.erase(it);
 }
-bool ServerRooms::exist(RoomID id) const {
+bool ServerRooms::exist(const RoomID& id) const {
 	return (this->data.find(id.value()) != this->data.end());
 }
 
 
-void ServerRooms::update(RoomID id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
+void ServerRooms::update(const RoomID& id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
 	std::vector<StringLcl> logs;
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
@@ -65,7 +65,7 @@ void ServerRooms::update(RoomID id, const boost::optional<std::tuple<sf::Packet,
 		logs.emplace_back("{closed_on_error}");
 	}
 	for (const auto& a : logs) {
-		toLogs->push_back("{room} " + id.readableValue() + ": " + a.toRawString());
+		toLogs->push_back("{room} " + id.value() + ": " + a.toRawString());
 	}
 }
 void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
@@ -85,26 +85,26 @@ void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpA
 			logs.emplace_back("{closed_on_error}");
 		}
 		for (const auto& a : logs) {
-			toLogs->emplace_back("{room} " + id.readableValue() + ": " + a.toRawString());
+			toLogs->emplace_back("{room} " + id.value() + ": " + a.toRawString());
 		}
 	}
 }
 
-uint32_t ServerRooms::playersToAdd(RoomID id) const {
+uint32_t ServerRooms::playersToAdd(const RoomID& id) const {
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();
 	}
 	return std::get<std::unique_ptr<Room>>(it->second)->playersNumber() - std::get<RemotePlayers>(it->second).size();
 }
-uint32_t ServerRooms::getCurrentPlayerNumber(RoomID id) {
+uint32_t ServerRooms::getCurrentPlayerNumber(const RoomID& id) {
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();
 	}
 	return std::get<RemotePlayers>(it->second).size();
 }
-uint32_t ServerRooms::getPlayerLimit(RoomID id) {
+uint32_t ServerRooms::getPlayerLimit(const RoomID& id) {
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();
@@ -112,29 +112,10 @@ uint32_t ServerRooms::getPlayerLimit(RoomID id) {
 	return std::get<std::unique_ptr<Room>>(it->second)->playersNumber();
 }
 
-void ServerRooms::addPlayer(RoomID id, sf::IpAddress playerIP) {
-	this->addPlayers(id, playerIP, 1);
-}
-void ServerRooms::addPlayers(RoomID id, sf::IpAddress playerIP, uint32_t number) {
-	auto it = this->data.find(id.value());
-	if (it == this->data.end()) {
-		throw RoomDoesNotExist();
-	}
-	if (std::get<RemotePlayers>(it->second).size() + number > std::get<std::unique_ptr<Room>>(it->second)->playersNumber()) {
-		throw PlayerLimitReached();
-	}
-	for (uint32_t i = 0; i < number; i = i + 1) {
-		std::get<RemotePlayers>(it->second).add(playerIP);
-	}
-    if (number) {
-        std::get<std::unique_ptr<Room>>(it->second)->needInit();
-    }
-}
-
-bool ServerRooms::addPlayerSafe(RoomID id, sf::IpAddress playerIP) {
+bool ServerRooms::addPlayerSafe(const RoomID& id, sf::IpAddress playerIP) {
 	return this->addPlayersSafe(id, playerIP, 1);
 }
-uint32_t ServerRooms::addPlayersSafe(RoomID id, sf::IpAddress playerIP, uint32_t number) {
+uint32_t ServerRooms::addPlayersSafe(const RoomID& id, sf::IpAddress playerIP, uint32_t number) {
 	auto it = this->data.find(id.value());
 	if (it == this->data.end()) {
 		throw RoomDoesNotExist();

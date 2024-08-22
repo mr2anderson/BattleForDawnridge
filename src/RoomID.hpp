@@ -28,18 +28,16 @@
 class RoomID {
 public:
 	RoomID();
-	RoomID(uint64_t value);
-	RoomID(const std::string& readableValue);
+	RoomID(const std::string& value);
 
 	bool operator==(const RoomID& b) const;
 	bool operator!=(const RoomID& b) const;
 
-	uint64_t value() const;
-	std::string readableValue() const;
+	std::string value() const;
 
     static const uint32_t READABLE_LEN;
 private:
-	uint64_t _value;
+	std::string _value;
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {

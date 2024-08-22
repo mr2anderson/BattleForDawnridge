@@ -19,60 +19,37 @@
 
 #include <array>
 #include "RoomID.hpp"
-#include "GlobalRandomGenerator64.hpp"
-#include "math.hpp"
+#include "GlobalRandomGenerator32.hpp"
 #include "InvalidRoomIDFormat.hpp"
 
 
-static const uint32_t CHAR_NUMBER = 26 + 10;
 const uint32_t RoomID::READABLE_LEN = 12;
-static const uint64_t COMBINATIONS = bfdlib::math::pow<uint64_t>(CHAR_NUMBER, RoomID::READABLE_LEN);
-static const std::array<uint64_t, RoomID::READABLE_LEN> EXPONENTS = {
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 0),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 1),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 2),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 3),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 4),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 5),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 6),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 7),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 8),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 9),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 10),
-	 bfdlib::math::pow<uint64_t>(CHAR_NUMBER, 11)
-};
-
-
-static char indexToChar(uint32_t index) {
-	if (index < 10) {
-		return '0' + index;
-	}
-	return 'A' + (index - 10);
-}
-static uint32_t charToIndex(char c) {
-	if (c >= '0' and c <= '9') {
-		return c - '0';
-	}
-	return c - 'A' - 10;
-}
 
 
 RoomID::RoomID() {
-	this->_value = GlobalRandomGenerator64::get()->gen() % COMBINATIONS;
-}
-RoomID::RoomID(uint64_t value) {
-	this->_value = value;
+	for (uint32_t i = 0; i < READABLE_LEN; i = i + 1) {
+		uint8_t r = GlobalRandomGenerator32::get()->gen() % 36;
+		if (r < 10) {
+			this->_value.push_back('0' + r);
+		}
+		else {
+			this->_value.push_back('A' + (r - 10));
+		}
+	}
 }
 RoomID::RoomID(const std::string& readableValue) {
 	if (readableValue.size() != READABLE_LEN) {
 		throw InvalidRoomIDFormat();
 	}
 
-	this->_value = 0;
-
 	for (uint32_t i = 0; i < READABLE_LEN; i = i + 1) {
-		uint64_t m = EXPONENTS.at(READABLE_LEN - i - 1);
-		this->_value = this->_value + m * charToIndex(readableValue.at(i));
+		if (readableValue.at(i) >= '0' and readableValue.at(i) <= '9') {
+			continue;
+		}
+		if (readableValue.at(i) >= 'A' and readableValue.at(i) <= 'Z') {
+			continue;
+		}
+		throw InvalidRoomIDFormat();
 	}
 }
 
@@ -85,21 +62,6 @@ bool RoomID::operator!=(const RoomID& b) const {
 }
 
 
-uint64_t RoomID::value() const {
+std::string RoomID::value() const {
 	return this->_value;
-}
-std::string RoomID::readableValue() const {
-	uint64_t n = this->_value;
-
-	std::string result;
-	result.resize(READABLE_LEN);
-
-	for (uint32_t i = 0; i < READABLE_LEN; i = i + 1) {
-		uint64_t div = EXPONENTS.at(READABLE_LEN - i - 1);
-		uint32_t divResult = n / div;
-		result.at(i) = indexToChar(divResult);
-		n = n % div;
-	}
-
-	return result;
 }

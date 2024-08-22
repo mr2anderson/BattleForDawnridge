@@ -66,7 +66,7 @@ static void LOGS(const std::string &val) {
 
 
 
-MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverPort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID) {
+MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_t serverPort, Type type, const std::string &data, uint32_t playersAtThisHost, const RoomID& roomID) {
 	this->alreadyFinished = false;
 
 	this->serverIP = serverIP;
@@ -204,7 +204,7 @@ void MainScreen::processReceiving() {
 
 sf::Packet MainScreen::makeBasePacket() const {
     sf::Packet packet;
-    packet << (sf::Uint64)this->roomID.value();
+    packet << this->roomID.value();
     return packet;
 }
 void MainScreen::send(sf::Packet &what) {
@@ -280,7 +280,7 @@ void MainScreen::receive(sf::RenderWindow &window) {
 	}
 	std::get<bool>(this->received) = false;
 	sf::Packet receivedPacket = std::get<sf::Packet>(this->received);
-    sf::Uint64 id;
+    std::string id;
     receivedPacket >> id;
     if (this->roomID.value() == id) {
         uint8_t code;

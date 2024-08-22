@@ -38,11 +38,12 @@ public:
     void setDefaultPath(const std::string& path);
     std::wstring* get(const std::string& name);
 private:
-    Locales() = default;
+    Locales();
     Locales(const Locales& copy);
     static Locales* singletone;
 
     std::unordered_map<std::string, std::wstring> texts;
+    std::wstring error;
 
     std::string getPath() const;
 };

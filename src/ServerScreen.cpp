@@ -27,6 +27,7 @@
 #include "ClientNetSpecs.hpp"
 #include "MenuBg.hpp"
 #include "MainServerPosition.hpp"
+#include "InvalidRoomIDFormat.hpp"
 
 
 ServerScreen::ServerScreen(sf::RenderWindow& window) {
@@ -133,17 +134,23 @@ void ServerScreen::run(sf::RenderWindow& window) {
     }
 }
 void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
-    sf::Uint64 roomIdVal;
+    std::string roomIdVal;
     packet >> roomIdVal;
 
-    RoomID roomId(roomIdVal);
+    RoomID roomId;
+    try {
+        roomId = RoomID(roomIdVal);
+    }
+    catch (InvalidRoomIDFormat&) {
+        this->logs.add(StringLcl("{invalid_room_id}" + ip.toString()));
+    }
 
     uint8_t code;
     packet >> code;
 
     if (code == CLIENT_NET_SPECS::CODES::CREATE) {
         if (this->rooms.exist(roomId)) {
-            this->logs.add(StringLcl("{attempt_to_create_room_with_existing_id}" + roomId.readableValue() + " " + ip.toString()));
+            this->logs.add(StringLcl("{attempt_to_create_room_with_existing_id}" + roomId.value() + " " + ip.toString()));
         }
         if (!this->rooms.exist(roomId)) {
             std::string data;
@@ -153,7 +160,7 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
                 uint32_t playersAtHost;
                 packet >> playersAtHost;
                 uint32_t added = this->rooms.addPlayersSafe(roomId, ip, playersAtHost);
-                this->logs.add(StringLcl("{new_room}" + roomId.readableValue() + " " + ip.toString() + " " + std::to_string(added)));
+                this->logs.add(StringLcl("{new_room}" + roomId.value() + " " + ip.toString() + " " + std::to_string(added)));
             }
             else {
                 this->logs.add(StringLcl("{couldnt_create_room}"));
@@ -165,10 +172,10 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
             uint32_t playersAtHost;
             packet >> playersAtHost;
             uint32_t added = this->rooms.addPlayersSafe(roomId, ip, playersAtHost);
-            this->logs.add(StringLcl("{attempt_to_connect_to_room}" + roomId.readableValue() + " " + ip.toString() + " " + std::to_string(added)));
+            this->logs.add(StringLcl("{attempt_to_connect_to_room}" + roomId.value() + " " + ip.toString() + " " + std::to_string(added)));
         }
         else {
-            this->logs.add(StringLcl("{attempt_to_connect_to_room_with_unknown_id}" + roomId.readableValue() + " " + ip.toString()));
+            this->logs.add(StringLcl("{attempt_to_connect_to_room_with_unknown_id}" + roomId.value() + " " + ip.toString()));
         }
     }
 }

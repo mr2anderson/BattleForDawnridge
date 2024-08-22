@@ -25,7 +25,7 @@
 
 // Package format:
 /*
- * room_id (sf::Uint64)
+ * room_id (std::string)
  * code (uint8_t)
  * additional_code_info
  */

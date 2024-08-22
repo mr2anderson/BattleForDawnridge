@@ -140,7 +140,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
         std::get<bool>(received) = false;
         sf::Packet receivedPacket = std::get<sf::Packet>(received);
         LOGS("Got pkg!");
-        sf::Uint64 roomIdVal;
+        std::string roomIdVal;
         receivedPacket >> roomIdVal;
         uint8_t code;
         receivedPacket >> code;

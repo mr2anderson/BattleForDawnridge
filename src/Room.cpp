@@ -71,7 +71,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->buttons.emplace_back(SaveGameButtonSpec(1));
 	this->buttons.emplace_back(EndTurnButtonSpec(2));
 	this->buttons.emplace_back(BuildButtonSpec(3));
-	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id.readableValue()));
+	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id.value()));
 }
 
 
@@ -447,7 +447,7 @@ void Room::sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip) {
 
 sf::Packet Room::makeBasePacket() const {
     sf::Packet packet;
-    packet << (sf::Uint64)this->getID().value();
+    packet << this->getID().value();
     return packet;
 }
 void Room::sendToClients(const sf::Packet& what, RoomOutputProtocol p) {
@@ -477,7 +477,7 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
 	sf::Packet packet = std::get<0>(received.value());
 	sf::IpAddress ip = std::get<1>(received.value());
 
-    sf::Uint64 roomId;
+    std::string roomId;
     packet >> roomId;
     if (this->id.value() == roomId) {
         uint8_t code;

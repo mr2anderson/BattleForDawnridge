@@ -33,6 +33,9 @@
 Locales* Locales::singletone = nullptr;
 
 
+Locales::Locales() {
+    this->error = UTFEncoder::get()->utf8ToUtf16("UNKNOWN_LOCALES_KEY_REPORT_DEVELOPER");
+}
 void Locales::load() {
     std::string path = DATA_ROOT + "/locales/" + this->getPath();
     std::ifstream file(path);
@@ -102,6 +105,7 @@ std::wstring* Locales::get(const std::string& name) {
     auto it = this->texts.find(name);
     if (it == this->texts.end()) {
         std::cerr << "Invalid text uid: " << name << std::endl;
+        return &this->error;
     }
     return &it->second;
 }

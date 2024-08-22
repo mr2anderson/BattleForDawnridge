@@ -30,22 +30,19 @@ class ServerRooms {
 public: 
 	ServerRooms();
 
-	void createIfValid(RoomID id, const std::string& saveData);
-	void close(RoomID id);
-	bool exist(RoomID id) const;
+	void createIfValid(const RoomID & id, const std::string& saveData);
+	void close(const RoomID& id);
+	bool exist(const RoomID& id) const;
 
-	void update(RoomID id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
+	void update(const RoomID& id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
 	void updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
 
-	uint32_t playersToAdd(RoomID id) const;
-	uint32_t getCurrentPlayerNumber(RoomID id);
-	uint32_t getPlayerLimit(RoomID id);
+	uint32_t playersToAdd(const RoomID& id) const;
+	uint32_t getCurrentPlayerNumber(const RoomID& id);
+	uint32_t getPlayerLimit(const RoomID& id);
 
-	void addPlayer(RoomID id, sf::IpAddress playerIP);
-	void addPlayers(RoomID id, sf::IpAddress playerIP, uint32_t number);
-
-	bool addPlayerSafe(RoomID id, sf::IpAddress playerIP);
-	uint32_t addPlayersSafe(RoomID id, sf::IpAddress playerIP, uint32_t number);
+	bool addPlayerSafe(const RoomID& id, sf::IpAddress playerIP);
+	uint32_t addPlayersSafe(const RoomID& id, sf::IpAddress playerIP, uint32_t number);
 private:
-	std::unordered_map<uint64_t, std::tuple<std::unique_ptr<Room>, RemotePlayers>> data;
+	std::unordered_map<std::string, std::tuple<std::unique_ptr<Room>, RemotePlayers>> data;
 };
