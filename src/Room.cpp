@@ -48,6 +48,7 @@
 #include "MapDeepError.hpp"
 #include "CurrentRoomIDButtonSpec.hpp"
 #include "GlobalRandomGenerator64.hpp"
+#include "NoActivePlayers.hpp"
 
 
 
@@ -56,6 +57,8 @@
 
 Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->id = id;
+	this->restrictions = restrictions;
+	this->timeoutTimer = Timer(60 * 60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
     this->requireInit = true;
 
@@ -98,6 +101,10 @@ uint32_t Room::playersNumber() const {
 
 
 void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p) {
+	if (this->restrictions == Restrictions::Enable and this->timeoutTimer.ready()) {
+		throw NoActivePlayers();
+	}
+
     if (this->requireInit) {
 		p.logs->emplace_back("{sending_init_world_ui_state}");
         this->sendWorldUIStateToClients(p);
@@ -480,6 +487,7 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
     std::string roomId;
     packet >> roomId;
     if (this->id.value() == roomId) {
+		this->timeoutTimer.reset();
         uint8_t code;
         packet >> code;
         if (code == CLIENT_NET_SPECS::CODES::CLICK) {

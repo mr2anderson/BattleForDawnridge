@@ -19,6 +19,7 @@
 
 #include <unordered_map>
 #include <cstdint>
+#include <set>
 #include "Room.hpp"
 #include "RemotePlayers.hpp"
 
@@ -33,9 +34,7 @@ public:
 	void createIfValid(const RoomID & id, const std::string& saveData);
 	void close(const RoomID& id);
 	bool exist(const RoomID& id) const;
-
-	void update(const RoomID& id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
-	void updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
+	std::set<sf::IpAddress> updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
 
 	uint32_t playersToAdd(const RoomID& id) const;
 	uint32_t getCurrentPlayerNumber(const RoomID& id);

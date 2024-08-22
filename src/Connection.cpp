@@ -21,15 +21,12 @@
 
 
 Connection::Connection() {
-    this->traffic = 0;
     this->error = false;
-    this->socket.setBlocking(false);
+    this->socket = std::make_shared<sf::TcpSocket>();
+    this->socket->setBlocking(false);
     this->received = std::make_tuple(false, sf::Packet());
 }
-uint64_t Connection::getCurrentTraffic() const {
-    return this->traffic;
-}
-sf::TcpSocket& Connection::getSocketRef() {
+std::shared_ptr<sf::TcpSocket> Connection::getSocketRef() {
     return this->socket;
 }
 std::optional<sf::Packet> Connection::getReceivedPacket() {
@@ -53,12 +50,11 @@ void Connection::processSending() {
     if (this->toSend.empty()) {
         return;
     }
-    sf::Socket::Status status = this->socket.send(this->toSend.front());
+    sf::Socket::Status status = this->socket->send(this->toSend.front());
     if (status == sf::Socket::Status::Error or status == sf::Socket::Status::Disconnected) {
         this->error = true;
     }
     else if (status == sf::Socket::Status::Done) {
-        this->traffic = this->traffic + this->toSend.back().getDataSize();
         this->toSend.pop();
     }
 }
@@ -66,8 +62,7 @@ void Connection::processReceiving() {
     if (std::get<bool>(this->received)) {
         return;
     }
-    if (this->socket.receive(std::get<sf::Packet>(received)) == sf::Socket::Status::Done) {
+    if (this->socket->receive(std::get<sf::Packet>(received)) == sf::Socket::Status::Done) {
         std::get<bool>(received) = true;
-        this->traffic = this->traffic + std::get<sf::Packet>(received).getDataSize();
     }
 }

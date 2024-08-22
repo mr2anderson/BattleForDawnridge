@@ -46,30 +46,11 @@ bool ServerRooms::exist(const RoomID& id) const {
 	return (this->data.find(id.value()) != this->data.end());
 }
 
-
-void ServerRooms::update(const RoomID& id, const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
-	std::vector<StringLcl> logs;
-	auto it = this->data.find(id.value());
-	if (it == this->data.end()) {
-		throw RoomDoesNotExist();
-	}
-	try {
-		RoomOutputProtocol p;
-		p.logs = &logs;
-		p.toSend = toSend;
-		p.remotePlayers = &std::get<RemotePlayers>(it->second);
-		std::get<std::unique_ptr<Room>>(it->second)->update(received, p);
-	}
-	catch (std::exception&) {
-		this->data.erase(it);
-		logs.emplace_back("{closed_on_error}");
-	}
-	for (const auto& a : logs) {
-		toLogs->push_back("{room} " + id.value() + ": " + a.toRawString());
-	}
-}
-void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
-	for (auto it = this->data.begin(); it != this->data.end();) {
+std::set<sf::IpAddress> ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {
+	std::set<sf::IpAddress> toClose;
+	
+	auto it = this->data.begin();
+	while (it != this->data.end()) {
 		std::vector<StringLcl> logs;
 		RoomID id = std::get<std::unique_ptr<Room>>(it->second)->getID();
 		try {
@@ -80,14 +61,20 @@ void ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpA
 			std::get<std::unique_ptr<Room>>(it->second)->update(received, p);
 			it++;
 		}
-		catch (std::exception&) {
-			this->data.erase(it);
-			logs.emplace_back("{closed_on_error}");
+		catch (std::exception& e) {
+			RemotePlayers players = std::get<RemotePlayers>(it->second);
+			for (uint32_t i = 1; i <= players.size(); i = i + 1) {
+				toClose.insert(players.get(i).getIp());
+			}
+			it = this->data.erase(it);
+			logs.emplace_back("{closed_on_exception}" + std::string(e.what()));
 		}
 		for (const auto& a : logs) {
 			toLogs->emplace_back("{room} " + id.value() + ": " + a.toRawString());
 		}
 	}
+
+	return toClose;
 }
 
 uint32_t ServerRooms::playersToAdd(const RoomID& id) const {

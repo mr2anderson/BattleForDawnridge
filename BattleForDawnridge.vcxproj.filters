@@ -1707,6 +1707,9 @@
     <ClInclude Include="src\ConnectToRoomEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\NoActivePlayers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2685,6 +2688,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ConnectToRoomEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NoActivePlayers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

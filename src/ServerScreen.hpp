@@ -18,8 +18,7 @@
 
 
 #include <SFML/Network.hpp>
-#include <atomic>
-#include <forward_list>
+#include <unordered_map>
 #include "Logs.hpp"
 #include "ServerRooms.hpp"
 #include "Connection.hpp"
@@ -42,10 +41,10 @@ private:
 	ServerRooms rooms;
 
     sf::TcpListener listener;
-    std::forward_list<Connection> connections;
+	std::unordered_map<uint32_t, Connection> connections;
 
 	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
 
 	void drawEverything(sf::RenderWindow& window);
-    void addTrafficInfo();
+
 };

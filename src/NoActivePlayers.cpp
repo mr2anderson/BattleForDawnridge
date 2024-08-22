@@ -17,32 +17,10 @@
  */
 
 
-#include <atomic>
-#include <cstdint>
-#include <SFML/Network.hpp>
-#include <optional>
-#include <queue>
-#include <memory>
+#include "NoActivePlayers.hpp"
 
 
-#pragma once
-
-
-class Connection {
-public:
-    Connection();
-
-    std::shared_ptr<sf::TcpSocket> getSocketRef();
-    std::optional<sf::Packet> getReceivedPacket();
-    bool hasError() const;
-    void send(const sf::Packet &packet);
-    void update();
-private:
-    bool error;
-    std::shared_ptr<sf::TcpSocket> socket;
-    std::queue<sf::Packet> toSend;
-    std::tuple<bool, sf::Packet> received;
-
-    void processSending();
-    void processReceiving();
-};
+NoActivePlayers::NoActivePlayers() = default;
+const char* NoActivePlayers::what() const noexcept {
+	return "no active players";
+}

@@ -103,6 +103,8 @@ public:
     void needInit();
 private:
 	RoomID id;
+	Restrictions restrictions;
+	Timer timeoutTimer;
 
     bool requireInit;
 

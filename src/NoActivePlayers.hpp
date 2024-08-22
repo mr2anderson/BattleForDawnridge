@@ -17,32 +17,15 @@
  */
 
 
-#include <atomic>
-#include <cstdint>
-#include <SFML/Network.hpp>
-#include <optional>
-#include <queue>
-#include <memory>
+#include <stdexcept>
 
 
 #pragma once
 
 
-class Connection {
+class NoActivePlayers : public std::exception {
 public:
-    Connection();
+	NoActivePlayers();
 
-    std::shared_ptr<sf::TcpSocket> getSocketRef();
-    std::optional<sf::Packet> getReceivedPacket();
-    bool hasError() const;
-    void send(const sf::Packet &packet);
-    void update();
-private:
-    bool error;
-    std::shared_ptr<sf::TcpSocket> socket;
-    std::queue<sf::Packet> toSend;
-    std::tuple<bool, sf::Packet> received;
-
-    void processSending();
-    void processReceiving();
+	const char* what() const noexcept override;
 };

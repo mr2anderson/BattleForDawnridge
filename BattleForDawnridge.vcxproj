@@ -809,6 +809,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\NewMoveMainPriority.hpp" />
     <ClInclude Include="src\NewMovePriority.hpp" />
     <ClInclude Include="src\NextClueEvent.hpp" />
+    <ClInclude Include="src\NoActivePlayers.hpp" />
     <ClInclude Include="src\NoServerConnection.hpp" />
     <ClInclude Include="src\PAKScreen.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
@@ -1142,6 +1143,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\NetworkGameButtonSpec.cpp" />
     <ClCompile Include="src\NewMovePriority.cpp" />
     <ClCompile Include="src\NextClueEvent.cpp" />
+    <ClCompile Include="src\NoActivePlayers.cpp" />
     <ClCompile Include="src\NoServerConnection.cpp" />
     <ClCompile Include="src\PAKScreen.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
