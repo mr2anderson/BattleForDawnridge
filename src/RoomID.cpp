@@ -51,6 +51,8 @@ RoomID::RoomID(const std::string& readableValue) {
 		}
 		throw InvalidRoomIDFormat();
 	}
+
+    this->_value = readableValue;
 }
 
 
