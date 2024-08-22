@@ -30,7 +30,6 @@
 #include "HighlightTable.hpp"
 #include "ResourceBar.hpp"
 #include "ClientNetSpecs.hpp"
-#include "tcp_helper.hpp"
 #include "PlaySoundEvent.hpp"
 
 
@@ -47,7 +46,6 @@ public:
 
 	MainScreen(sf::RenderWindow& window, sf::IpAddress serverIp, uint16_t serverPort, Type type, const std::string &data, uint32_t playersAtThisHost, RoomID roomID);
 	MainScreen(const MainScreen& copy) = delete;
-    ~MainScreen();
 
 	void run(sf::RenderWindow& window);
 
@@ -59,13 +57,9 @@ private:
     uint16_t serverPort;
 
 	sf::TcpSocket socket;
-    bfdlib::tcp_helper::queue_w toSend;
-    bfdlib::tcp_helper::queue_r received;
-	std::atomic<uint64_t> traffic;
-    std::atomic<bool> stop;
-    std::atomic<bool> error;
-    std::unique_ptr<sf::Thread> sendingThread;
-    std::unique_ptr<sf::Thread> receivingThread;
+	std::queue<sf::Packet> toSend;
+	std::tuple<bool, sf::Packet> received;
+    bool error;
 
 	Type type;
 	std::string data;
@@ -86,6 +80,9 @@ private:
 	bool returnToMenu;
 	sf::View view;
 	IlluminanceTable illiminanceTable;
+
+	void processSending();
+	void processReceiving();
 
     sf::Packet makeBasePacket() const;
     void send(sf::Packet &what);

@@ -35,10 +35,8 @@ public:
 	uint16_t launch();
 	void fine() const;
 private:
-	std::exception_ptr unexpectedError;
+	std::shared_ptr<std::exception_ptr> unexpectedError;
 	std::atomic<bool> stop;
 	std::atomic<bool> running;
-    std::atomic<uint64_t> sendTraffic;
-    std::atomic<uint64_t> receiveTraffic;
 	std::unique_ptr<sf::Thread> thread;
 };

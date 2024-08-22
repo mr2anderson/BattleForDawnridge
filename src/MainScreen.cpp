@@ -72,9 +72,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	this->serverIP = serverIP;
     this->serverPort = serverPort;
 
-	this->traffic.store(0);
-	this->stop.store(false);
-    this->error.store(false);
+	this->error = false;
 
 	this->type = type;
 	this->data = data;
@@ -92,12 +90,6 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 
 
 
-
-
-
-MainScreen::~MainScreen() {
-    this->stop = true;
-}
 
 
 
@@ -127,10 +119,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->drawWaitingScreen(window);
         if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000 / 60)) == sf::Socket::Status::Done) {
 			this->socket.setBlocking(false);
-            this->sendingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic), std::ref(this->error)));
-            this->receivingThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
-            this->sendingThread->launch();
-            this->receivingThread->launch();
+			this->received = std::make_tuple(false, sf::Packet());
 			break;
         }
     }
@@ -143,6 +132,8 @@ void MainScreen::run(sf::RenderWindow& window) {
         if (timer.ready()) {
             throw NoServerConnection();
         }
+		this->processSending();
+		this->processReceiving();
         this->receive(window);
         this->drawWaitingScreen(window);
     }
@@ -170,6 +161,8 @@ void MainScreen::run(sf::RenderWindow& window) {
                 this->localElement = nullptr;
             }
 		}
+		this->processSending();
+		this->processReceiving();
 		this->receive(window);
 		Playlist::get()->update();
 		window.setMouseCursorVisible(this->cursorVisibility);
@@ -178,6 +171,33 @@ void MainScreen::run(sf::RenderWindow& window) {
 	}
 	LOGS("Processing was finished");
 }
+
+
+
+
+
+
+void MainScreen::processSending() {
+	if (this->toSend.empty()) {
+		return;
+	}
+	sf::Socket::Status status = this->socket.send(this->toSend.front());
+	if (status == sf::Socket::Error or status == sf::Socket::Disconnected) {
+		this->error = true;
+	}
+	else if (status == sf::Socket::Done) {
+		this->toSend.pop();
+	}
+}
+void MainScreen::processReceiving() {
+	if (std::get<0>(this->received)) {
+		return;
+	}
+	if (this->socket.receive(std::get<sf::Packet>(this->received)) == sf::Socket::Status::Done) {
+		std::get<0>(this->received) = true;
+	}
+}
+
 
 
 
@@ -255,11 +275,11 @@ void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
 
 
 void MainScreen::receive(sf::RenderWindow &window) {
-	std::optional<sf::Packet> receivedPacketOpt = this->received.pop();
-    if (receivedPacketOpt == std::nullopt) {
-        return;
-    }
-    sf::Packet receivedPacket = receivedPacketOpt.value();
+	if (!std::get<bool>(this->received)) {
+		return;
+	}
+	std::get<bool>(this->received) = false;
+	sf::Packet receivedPacket = std::get<sf::Packet>(this->received);
     sf::Uint64 id;
     receivedPacket >> id;
     if (this->roomID.value() == id) {

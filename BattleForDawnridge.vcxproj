@@ -889,7 +889,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SubResourcesEvent.hpp" />
     <ClInclude Include="src\SupportButtonSpec.hpp" />
     <ClInclude Include="src\SuspendingAnimation.hpp" />
-    <ClInclude Include="src\tcp_helper.hpp" />
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
     <ClInclude Include="src\Timer.hpp" />

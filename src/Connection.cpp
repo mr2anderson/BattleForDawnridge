@@ -20,11 +20,12 @@
 #include "Connection.hpp"
 
 
-Connection::Connection() {
+/*Connection::Connection() {
     this->traffic.store(0);
     this->stop.store(false);
     this->error.store(false);
-    this->socket.setBlocking(false);
+    this->socket = std::make_shared<sf::TcpSocket>();
+    this->socket->setBlocking(false);
     this->sendThread = nullptr;
     this->receiveThread = nullptr;
 }
@@ -34,7 +35,7 @@ Connection::~Connection() {
 uint64_t Connection::getCurrentTraffic() const {
     return this->traffic;
 }
-sf::TcpSocket& Connection::getSocketRef() {
+std::shared_ptr<sf::TcpSocket>& Connection::getSocketRef() {
     return this->socket;
 }
 std::optional<sf::Packet> Connection::getReceivedPacket() {
@@ -51,4 +52,4 @@ void Connection::run() {
     this->receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
     this->sendThread->launch();
     this->receiveThread->launch();
-}
+}*/

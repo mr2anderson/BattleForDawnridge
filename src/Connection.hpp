@@ -17,7 +17,7 @@
  */
 
 
-#include <atomic>
+/*#include <atomic>
 #include <cstdint>
 #include <SFML/Network.hpp>
 #include <memory>
@@ -33,7 +33,7 @@ public:
     ~Connection();
 
     uint64_t getCurrentTraffic() const;
-    sf::TcpSocket& getSocketRef();
+    std::shared_ptr<sf::TcpSocket>& getSocketRef();
     std::optional<sf::Packet> getReceivedPacket();
     bool hasError() const;
     void send(const sf::Packet &packet);
@@ -42,9 +42,9 @@ private:
     std::atomic<uint64_t> traffic;
     std::atomic<bool> stop;
     std::atomic<bool> error;
-    sf::TcpSocket socket;
+    std::shared_ptr<sf::TcpSocket> socket;
     bfdlib::tcp_helper::queue_r received;
     bfdlib::tcp_helper::queue_w toSend;
     std::unique_ptr<sf::Thread> sendThread;
     std::unique_ptr<sf::Thread> receiveThread;
-};
+};*/

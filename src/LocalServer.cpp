@@ -23,7 +23,6 @@
 #include "math.hpp"
 #include "LocalServerAlreadyLaunched.hpp"
 #include "ServerNetSpecs.hpp"
-#include "tcp_helper.hpp"
 
 
 
@@ -64,12 +63,23 @@ static void LOGS(const std::wstring &val) {}
 
 
 
-static void CLOSE_THREADS(std::unique_ptr<sf::Thread> &sendThread, std::unique_ptr<sf::Thread> &receiveThread, std::atomic<bool> &stop) {
-    stop = true;
-    sendThread->wait();
-    receiveThread->wait();
+static void PROCESS_SENDING(sf::TcpSocket &socket, std::queue<sf::Packet>& toSend) {
+    if (toSend.empty()) {
+        return;
+    }
+    if (socket.send(toSend.front()) == sf::Socket::Status::Done) {
+        toSend.pop();
+    }
 }
-static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomic<uint16_t> &port, std::atomic<uint64_t> &sendTraffic, std::atomic<uint64_t> &receiveTraffic) {
+static void PROCESS_RECEIVING(sf::TcpSocket& socket, std::tuple<bool, sf::Packet>& received) {
+    if (std::get<bool>(received)) {
+        return;
+    }
+    if (socket.receive(std::get<sf::Packet>(received)) == sf::Socket::Status::Done) {
+        std::get<bool>(received) = true;
+    }
+}
+static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomic<uint16_t> &port) {
 	sf::TcpListener listener;
     LOGS("Looking for port...");
     for (uint32_t p = 1024; p < 49151; p = p + 1) {
@@ -103,17 +113,13 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
 
 
 
-    bfdlib::tcp_helper::queue_w toSend;
-    bfdlib::tcp_helper::queue_r received;
+    std::queue<sf::Packet> toSend;
+    std::tuple<bool, sf::Packet> received = std::make_tuple(false, sf::Packet());
     socket.setBlocking(false);
     std::atomic<bool> stopTcpThread;
     stopTcpThread.store(false);
     std::atomic<bool> error;
     error.store(false);
-    std::unique_ptr<sf::Thread> sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(socket), std::ref(toSend), std::ref(stopTcpThread), std::ref(sendTraffic), std::ref(error)));
-    std::unique_ptr<sf::Thread> receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(socket), std::ref(received), std::ref(stopTcpThread), std::ref(receiveTraffic)));
-    sendThread->launch();
-    receiveThread->launch();
 
 
 
@@ -122,18 +128,17 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
 	RemotePlayers players;
     LOGS("Creating room...");
 	while (room == nullptr or room->playersNumber() != players.size()) {
-        std::optional<sf::Packet> receivedPacketOpt;
 		for (; ; sf::sleep(sf::milliseconds(5))) {
             if (stop) {
-                CLOSE_THREADS(std::ref(sendThread), std::ref(receiveThread), std::ref(stopTcpThread));
                 return;
             }
-            receivedPacketOpt = received.pop();
-            if (receivedPacketOpt != std::nullopt) {
+            PROCESS_RECEIVING(socket, received);
+            if (std::get<bool>(received)) {
                 break;
             }
         }
-        sf::Packet receivedPacket = receivedPacketOpt.value();
+        std::get<bool>(received) = false;
+        sf::Packet receivedPacket = std::get<sf::Packet>(received);
         LOGS("Got pkg!");
         sf::Uint64 roomIdVal;
         receivedPacket >> roomIdVal;
@@ -157,16 +162,18 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
     LOGS("Processing...");
 	for (; ;) {
         if (stop) {
-            CLOSE_THREADS(std::ref(sendThread), std::ref(receiveThread), std::ref(stopTcpThread));
             return;
         }
 
         Clock clock;
 
+        PROCESS_SENDING(socket, toSend);
+        PROCESS_RECEIVING(socket, received);
+
 		boost::optional<std::tuple<sf::Packet, sf::IpAddress>> tuple = boost::none;
-        std::optional<sf::Packet> packet = received.pop();
-		if (packet != std::nullopt) {
-            tuple = std::make_tuple(packet.value(), sf::IpAddress::getLocalAddress());
+		if (std::get<bool>(received)) {
+            tuple = std::make_tuple(std::get<sf::Packet>(received), sf::IpAddress::getLocalAddress());
+            std::get<bool>(received) = false;
         }
 
         std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSendGlobal;
@@ -192,15 +199,15 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::exception_ptr &unexpectedError, std::atomic_bool& stop, std::atomic_bool& running, std::atomic_bool &ready, std::atomic<uint16_t> &port, std::atomic<uint64_t> &sendTraffic, std::atomic<uint64_t> &receiveTraffic) {
+static void THREAD_EXCEPTION_SAFE(std::shared_ptr<std::exception_ptr> unexpectedError, std::atomic_bool& stop, std::atomic_bool& running, std::atomic_bool &ready, std::atomic<uint16_t> &port) {
 	running = true;
     LOGS("Local server was started in new thread");
 
 	try {
-		THREAD(std::ref(stop), std::ref(ready), std::ref(port), std::ref(sendTraffic), std::ref(receiveTraffic));
+		THREAD(std::ref(stop), std::ref(ready), std::ref(port));
 	}
 	catch (std::exception& e) {
-		unexpectedError = std::current_exception();
+		unexpectedError = std::make_shared<std::exception_ptr>(std::current_exception());
         LOGS("Local server thread got an unexpected error: " + std::string(e.what()));
 	}
 
@@ -224,8 +231,7 @@ LocalServer::~LocalServer() {
 
 	this->finish();
 
-    LOGS("Local server was destroyed. Sent: " + std::to_string((float)this->sendTraffic / 1024 / 1024) +
-         " MB. Received: " + std::to_string((float)this->receiveTraffic / 1024 / 1024) + " MB");
+    LOGS("Local server was destroyed.");
 }
 void LocalServer::finish() {
     LOGS("Finishing local server...");
@@ -243,14 +249,13 @@ uint16_t LocalServer::launch() {
 	if (this->running) {
 		throw LocalServerAlreadyLaunched();
 	}
-    this->sendTraffic = 0;
-    this->receiveTraffic = 0;
+    this->unexpectedError = nullptr;
     std::atomic<bool> ready;
     ready.store(false);
     std::atomic<uint16_t> port;
     port.store(0);
     LOGS("Launching local sever thread...");
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->unexpectedError), std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port), std::ref(this->sendTraffic), std::ref(this->receiveTraffic)));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, this->unexpectedError, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
 	this->thread->launch();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));
@@ -260,6 +265,6 @@ uint16_t LocalServer::launch() {
 }
 void LocalServer::fine() const {
 	if (this->unexpectedError != nullptr) {
-		std::rethrow_exception(this->unexpectedError);
+		std::rethrow_exception(*this->unexpectedError);
 	}
 }

@@ -1689,9 +1689,6 @@
     <ClInclude Include="src\CouldntOpenMainServerPosition.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\tcp_helper.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\VersionsButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
