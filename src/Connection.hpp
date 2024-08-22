@@ -17,11 +17,11 @@
  */
 
 
-/*#include <atomic>
+#include <atomic>
 #include <cstdint>
 #include <SFML/Network.hpp>
-#include <memory>
-#include "tcp_helper.hpp"
+#include <optional>
+#include <queue>
 
 
 #pragma once
@@ -30,21 +30,20 @@
 class Connection {
 public:
     Connection();
-    ~Connection();
 
     uint64_t getCurrentTraffic() const;
-    std::shared_ptr<sf::TcpSocket>& getSocketRef();
+    sf::TcpSocket& getSocketRef();
     std::optional<sf::Packet> getReceivedPacket();
     bool hasError() const;
     void send(const sf::Packet &packet);
-    void run();
+    void update();
 private:
-    std::atomic<uint64_t> traffic;
-    std::atomic<bool> stop;
-    std::atomic<bool> error;
-    std::shared_ptr<sf::TcpSocket> socket;
-    bfdlib::tcp_helper::queue_r received;
-    bfdlib::tcp_helper::queue_w toSend;
-    std::unique_ptr<sf::Thread> sendThread;
-    std::unique_ptr<sf::Thread> receiveThread;
-};*/
+    uint64_t traffic;
+    bool error;
+    sf::TcpSocket socket;
+    std::queue<sf::Packet> toSend;
+    std::tuple<bool, sf::Packet> received;
+
+    void processSending();
+    void processReceiving();
+};

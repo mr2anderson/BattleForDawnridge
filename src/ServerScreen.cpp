@@ -17,7 +17,7 @@
  */
 
 
-/*#include "ServerScreen.hpp"
+#include "ServerScreen.hpp"
 #include "Textures.hpp"
 #include "Playlist.hpp"
 #include "SoundQueue.hpp"
@@ -69,14 +69,13 @@ void ServerScreen::run(sf::RenderWindow& window) {
         this->drawEverything(window);
 
         this->connections.emplace_front();
-        if (this->listener.accept(*this->connections.front().getSocketRef()) == sf::Socket::Status::Done) {
-            this->logs.add(StringLcl("{new_connection}" + this->connections.front().getSocketRef()->getRemoteAddress().toString()));
-            this->connections.front().run();
+        if (this->listener.accept(this->connections.front().getSocketRef()) == sf::Socket::Status::Done) {
+            this->logs.add(StringLcl("{new_connection}" + this->connections.front().getSocketRef().getRemoteAddress().toString()));
             auto iterator = this->connections.begin();
-            auto prevIterator = iterator;
+            auto prevIterator = this->connections.begin();
             iterator++;
             while (iterator != this->connections.end()) {
-                if (iterator->getSocketRef()->getRemoteAddress() == this->connections.front().getSocketRef()->getRemoteAddress()) {
+                if (iterator->getSocketRef().getRemoteAddress() == this->connections.front().getSocketRef().getRemoteAddress()) {
                     this->logs.add(StringLcl("{removed_old_connection}"));
                     this->connections.erase_after(prevIterator);
                     break;
@@ -90,12 +89,16 @@ void ServerScreen::run(sf::RenderWindow& window) {
         }
 
         for (; ;) {
+            for (auto& connection : this->connections) {
+                connection.update();
+            }
+
             boost::optional<std::tuple<sf::Packet, sf::IpAddress>> receivedPacket = boost::none;
             auto iterator = this->connections.begin();
             while (iterator != this->connections.end()) {
                 std::optional<sf::Packet> opt = iterator->getReceivedPacket();
                 if (opt.has_value()) {
-                    receivedPacket = std::make_tuple(opt.value(), iterator->getSocketRef()->getRemoteAddress());
+                    receivedPacket = std::make_tuple(opt.value(), iterator->getSocketRef().getRemoteAddress());
                     break;
                 }
                 iterator++;
@@ -116,7 +119,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
             for (uint32_t i = 0; i < toRoomClients.size(); i = i + 1) {
                 iterator = this->connections.begin();
                 while (iterator != this->connections.end()) {
-                    if (iterator->getSocketRef()->getRemoteAddress() == std::get<sf::IpAddress>(toRoomClients.at(i))) {
+                    if (iterator->getSocketRef().getRemoteAddress() == std::get<sf::IpAddress>(toRoomClients.at(i))) {
                         iterator->send(std::get<sf::Packet>(toRoomClients.at(i)));
                     }
                     iterator++;
@@ -181,4 +184,4 @@ void ServerScreen::addTrafficInfo() {
         sum = sum + connection.getCurrentTraffic();
     }
     this->logs.add(StringLcl("{traffic}" + std::to_string((float)sum / 1024 / 1024)) + " MB");
-}*/
+}

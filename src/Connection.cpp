@@ -20,26 +20,24 @@
 #include "Connection.hpp"
 
 
-/*Connection::Connection() {
-    this->traffic.store(0);
-    this->stop.store(false);
-    this->error.store(false);
-    this->socket = std::make_shared<sf::TcpSocket>();
-    this->socket->setBlocking(false);
-    this->sendThread = nullptr;
-    this->receiveThread = nullptr;
-}
-Connection::~Connection() {
-    this->stop = true;
+Connection::Connection() {
+    this->traffic = 0;
+    this->error = false;
+    this->socket.setBlocking(false);
+    this->received = std::make_tuple(false, sf::Packet());
 }
 uint64_t Connection::getCurrentTraffic() const {
     return this->traffic;
 }
-std::shared_ptr<sf::TcpSocket>& Connection::getSocketRef() {
+sf::TcpSocket& Connection::getSocketRef() {
     return this->socket;
 }
 std::optional<sf::Packet> Connection::getReceivedPacket() {
-    return this->received.pop();
+    if (std::get<bool>(this->received)) {
+        std::get<bool>(this->received) = false;
+        return std::get<sf::Packet>(this->received);
+    }
+    return std::nullopt;
 }
 bool Connection::hasError() const {
     return this->error;
@@ -47,9 +45,27 @@ bool Connection::hasError() const {
 void Connection::send(const sf::Packet &packet) {
     this->toSend.push(packet);
 }
-void Connection::run() {
-    this->sendThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_sending, std::ref(this->socket), std::ref(this->toSend), std::ref(this->stop), std::ref(this->traffic), std::ref(this->error)));
-    this->receiveThread = std::make_unique<sf::Thread>(std::bind(&bfdlib::tcp_helper::process_receiving, std::ref(this->socket), std::ref(this->received), std::ref(this->stop), std::ref(this->traffic)));
-    this->sendThread->launch();
-    this->receiveThread->launch();
-}*/
+void Connection::update() {
+    this->processSending();
+    this->processReceiving();
+}
+void Connection::processSending() {
+    if (this->toSend.empty()) {
+        return;
+    }
+    sf::Socket::Status status = this->socket.send(this->toSend.front());
+    if (status == sf::Socket::Status::Error or status == sf::Socket::Status::Disconnected) {
+        this->error = true;
+    }
+    else if (status == sf::Socket::Status::Done) {
+        this->toSend.pop();
+    }
+}
+void Connection::processReceiving() {
+    if (std::get<bool>(this->received)) {
+        return;
+    }
+    if (this->socket.receive(std::get<sf::Packet>(received)) == sf::Socket::Status::Done) {
+        std::get<bool>(received) = true;
+    }
+}

@@ -69,8 +69,8 @@ void Program::run() {
 
 
     if (IsServerTable::get()->isServer()) {
-        //ServerScreen serverScreen(this->window);
-        //serverScreen.run(this->window);
+        ServerScreen serverScreen(this->window);
+        serverScreen.run(this->window);
     }
     else {
         boost::optional<StringLcl> error;

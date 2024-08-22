@@ -17,12 +17,11 @@
  */
 
 
-/*#include <SFML/Network.hpp>
+#include <SFML/Network.hpp>
 #include <atomic>
 #include <forward_list>
 #include "Logs.hpp"
 #include "ServerRooms.hpp"
-#include "tcp_helper.hpp"
 #include "Connection.hpp"
 
 
@@ -49,4 +48,4 @@ private:
 
 	void drawEverything(sf::RenderWindow& window);
     void addTrafficInfo();
-};*/
+};
