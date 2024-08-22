@@ -93,13 +93,14 @@ void ServerScreen::run(sf::RenderWindow& window) {
                 iterator++;
             }
 
+            std::vector<StringLcl> toLogs;
+
             if (receivedPacket.has_value()) {
                 std::tuple<sf::Packet, sf::IpAddress> receivedPacketCopy = receivedPacket.value();
-                this->checkRoomInitSignal(std::get<0>(receivedPacketCopy), std::get<1>(receivedPacketCopy));
+                this->checkRoomInitSignal(std::get<0>(receivedPacketCopy), std::get<1>(receivedPacketCopy), &toLogs);
             }
 
             std::vector<std::tuple<sf::Packet, sf::IpAddress>> toRoomClients;
-            std::vector<StringLcl> toLogs;
             std::set<sf::IpAddress> toDisconnect = this->rooms.updateAll(receivedPacket, &toLogs, &toRoomClients);
             for (uint32_t i = 0; i < toLogs.size(); i = i + 1) {
                 this->logs.add(toLogs.at(i));
@@ -124,7 +125,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
         }
     }
 }
-void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
+void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip, std::vector<StringLcl> *toLogs) {
     std::string roomIdVal;
     packet >> roomIdVal;
 
@@ -140,6 +141,7 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
     packet >> code;
 
     if (code == CLIENT_NET_SPECS::CODES::CREATE) {
+        this->rooms.removePlayer(ip, toLogs);
         if (this->rooms.exist(roomId)) {
             this->logs.add(StringLcl("{attempt_to_create_room_with_existing_id}" + roomId.value() + " " + ip.toString()));
         }
@@ -159,6 +161,7 @@ void ServerScreen::checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip) {
         }
     }
     else if (code == CLIENT_NET_SPECS::CODES::CONNECT) {
+        this->rooms.removePlayer(ip, toLogs);
         if (this->rooms.exist(roomId)) {
             uint32_t playersAtHost;
             packet >> playersAtHost;

@@ -32,8 +32,10 @@ public:
 	ServerRooms();
 
 	void createIfValid(const RoomID & id, const std::string& saveData);
-	void close(const RoomID& id);
 	bool exist(const RoomID& id) const;
+
+    void removePlayer(sf::IpAddress ip, std::vector<StringLcl>* toLogs);
+
 	std::set<sf::IpAddress> updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
 
 	uint32_t playersToAdd(const RoomID& id) const;

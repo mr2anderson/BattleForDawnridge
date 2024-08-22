@@ -35,15 +35,31 @@ void ServerRooms::createIfValid(const RoomID & id, const std::string& saveData) 
 
 	}
 }
-void ServerRooms::close(const RoomID& id) {
-	auto it = this->data.find(id.value());
-	if (it == this->data.end()) {
-		throw RoomDoesNotExist();
-	}
-	this->data.erase(it);
-}
 bool ServerRooms::exist(const RoomID& id) const {
 	return (this->data.find(id.value()) != this->data.end());
+}
+
+void ServerRooms::removePlayer(sf::IpAddress ip, std::vector<StringLcl>* toLogs) {
+    std::vector<std::string> toRemove;
+
+    for (auto &p : this->data) {
+        bool hasValid = false;
+        for (uint32_t i = 1; i <= std::get<RemotePlayers>(p.second).size(); i = i + 1) {
+            if (std::get<RemotePlayers>(p.second).get(i).getIp() == ip) {
+                std::get<RemotePlayers>(p.second).disconnect(i);
+                toLogs->emplace_back("{removing_player_from_room} " + ip.toString() + " " + std::get<std::unique_ptr<Room>>(p.second)->getID().value());
+            }
+            hasValid = hasValid or std::get<RemotePlayers>(p.second).connected(i);
+        }
+        if (!hasValid) {
+            toLogs->emplace_back("{removing_room_cuz_all_players_were_removed} " + std::get<std::unique_ptr<Room>>(p.second)->getID().value());
+            toRemove.push_back(p.first);
+        }
+    }
+
+    for (const auto &k : toRemove) {
+        this->data.erase(k);
+    }
 }
 
 std::set<sf::IpAddress> ServerRooms::updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl>* toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend) {

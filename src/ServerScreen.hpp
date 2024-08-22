@@ -43,8 +43,7 @@ private:
     sf::TcpListener listener;
 	std::unordered_map<uint32_t, Connection> connections;
 
-	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip);
+	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip, std::vector<StringLcl> *logs);
 
 	void drawEverything(sf::RenderWindow& window);
-
 };

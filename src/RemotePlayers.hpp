@@ -30,6 +30,8 @@ public:
 
 	void add(RemotePlayer player);
 	void add(sf::IpAddress ip);
+    void disconnect(uint32_t id);
+    bool connected(uint32_t id) const;
 	RemotePlayer get(uint32_t id) const;
 	uint32_t size() const;
 private:

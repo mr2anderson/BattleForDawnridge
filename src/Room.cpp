@@ -49,6 +49,7 @@
 #include "CurrentRoomIDButtonSpec.hpp"
 #include "GlobalRandomGenerator64.hpp"
 #include "NoActivePlayers.hpp"
+#include "InvalidRoomIDFormat.hpp"
 
 
 
