@@ -58,6 +58,7 @@ void Connection::processSending() {
         this->error = true;
     }
     else if (status == sf::Socket::Status::Done) {
+        this->traffic = this->traffic + this->toSend.back().getDataSize();
         this->toSend.pop();
     }
 }
@@ -67,5 +68,6 @@ void Connection::processReceiving() {
     }
     if (this->socket.receive(std::get<sf::Packet>(received)) == sf::Socket::Status::Done) {
         std::get<bool>(received) = true;
+        this->traffic = this->traffic + std::get<sf::Packet>(received).getDataSize();
     }
 }

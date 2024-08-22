@@ -190,5 +190,17 @@ void ServerScreen::addTrafficInfo() {
     for (const auto & connection : this->connections) {
         sum = sum + connection.getCurrentTraffic();
     }
-    this->logs.add(StringLcl("{traffic}" + std::to_string((float)sum / 1024 / 1024)) + " MB");
+
+    uint32_t gb = sum / 1024 / 1024 / 1024;
+    sum = sum % (1024ull * 1024ull * 1024ull);
+
+    uint32_t mb = sum / 1024 / 1024;
+    sum = sum % (1024ull * 1024ull);
+
+    uint32_t kb = sum / 1024;
+    sum = sum % 1024;
+
+    uint32_t b = sum;
+
+    this->logs.add(StringLcl("{traffic}" + std::to_string(gb) + "GB, " + std::to_string(mb) + "MB, "  + std::to_string(kb) + "KB, " + std::to_string(b) + "b"));
 }
