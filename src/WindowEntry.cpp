@@ -84,7 +84,11 @@ Label WindowEntry::getLabel(uint32_t windowW, uint32_t windowH) const {
             currentMessage = currentMessage + *this->dst;
         }
     }
-    return Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, currentMessage);
+    Label label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, currentMessage);
+    if (dst != nullptr and !this->dst->empty()) {
+        label.makeLineBold(-1);
+    }
+    return label;
 }
 
 

@@ -653,6 +653,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ConductionGraph.hpp" />
     <ClInclude Include="src\ConductionResourcePoint.hpp" />
     <ClInclude Include="src\Connection.hpp" />
+    <ClInclude Include="src\ConnectToRoomEvent.hpp" />
     <ClInclude Include="src\CouldntFindNewWarriorPosition.hpp" />
     <ClInclude Include="src\CouldntOpen.hpp" />
     <ClInclude Include="src\CouldntOpenFont.hpp" />
@@ -685,6 +686,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\EnableCursorEvent.hpp" />
     <ClInclude Include="src\EnableWarriorRageModeEvent.hpp" />
     <ClInclude Include="src\EndTurnButtonSpec.hpp" />
+    <ClInclude Include="src\EntrySettings.hpp" />
     <ClInclude Include="src\eos\polymorphic_portable_archive.hpp" />
     <ClInclude Include="src\eos\portable_archive.hpp" />
     <ClInclude Include="src\eos\portable_archive_exception.hpp" />
@@ -942,6 +944,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\WellSpec.hpp" />
     <ClInclude Include="src\WindowButton.hpp" />
     <ClInclude Include="src\WindowButtonImage.hpp" />
+    <ClInclude Include="src\WindowEntry.hpp" />
     <ClInclude Include="src\WindowTwoButtons.hpp" />
     <ClInclude Include="src\WipeAttackAbilityEvent.hpp" />
     <ClInclude Include="src\WipeHealingAbilityEvent.hpp" />
@@ -1001,6 +1004,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ConductionGraph.cpp" />
     <ClCompile Include="src\ConductionResourcePoint.cpp" />
     <ClCompile Include="src\Connection.cpp" />
+    <ClCompile Include="src\ConnectToRoomEvent.cpp" />
     <ClCompile Include="src\CouldntFindNewWarriorPosition.cpp" />
     <ClCompile Include="src\CouldntOpen.cpp" />
     <ClCompile Include="src\CouldntOpenFont.cpp" />
@@ -1032,6 +1036,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\EnableCursorEvent.cpp" />
     <ClCompile Include="src\EnableWarriorRageModeEvent.cpp" />
     <ClCompile Include="src\EndTurnButtonSpec.cpp" />
+    <ClCompile Include="src\EntrySettings.cpp" />
     <ClCompile Include="src\Event.cpp" />
     <ClCompile Include="src\Events.cpp" />
     <ClCompile Include="src\ExitButtonSpec.cpp" />
@@ -1267,6 +1272,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\WellSpec.cpp" />
     <ClCompile Include="src\WindowButton.cpp" />
     <ClCompile Include="src\WindowButtonImage.cpp" />
+    <ClCompile Include="src\WindowEntry.cpp" />
     <ClCompile Include="src\WindowTwoButtons.cpp" />
     <ClCompile Include="src\WipeAttackAbilityEvent.cpp" />
     <ClCompile Include="src\WipeHealingAbilityEvent.cpp" />

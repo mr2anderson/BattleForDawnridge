@@ -24,15 +24,20 @@
 #pragma once
 
 
-class Label : public RectangularUiElement {
+class Label : public RectangularUiElement { // This class does not let to use different char sizes, colors in order to have same ui style
 public:
 	Label();
 	Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center = true);
+
+	void makeLineBold(int32_t smartIndex);
+	void makeLineItalic(int32_t smartIndex);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
 	StringLcl message;
 	bool center;
+	std::vector<int32_t> bold;
+	std::vector<int32_t> italic;
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
