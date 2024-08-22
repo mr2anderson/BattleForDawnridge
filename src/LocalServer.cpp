@@ -234,16 +234,7 @@ LocalServer::~LocalServer() {
     LOGS("Local server was destroyed.");
 }
 void LocalServer::finish() {
-    LOGS("Finishing local server...");
-	if (this->running) {
-		this->stop = true;
-		this->thread->wait();
-		this->stop = false;
-        LOGS("Finished.");
-	}
-    else {
-        LOGS("Already finished.");
-    }
+    this->stop = true;
 }
 uint16_t LocalServer::launch() {
 	if (this->running) {
@@ -255,6 +246,7 @@ uint16_t LocalServer::launch() {
     std::atomic<uint16_t> port;
     port.store(0);
     LOGS("Launching local sever thread...");
+    this->stop = false;
 	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, this->unexpectedError, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
 	this->thread->launch();
     while (!ready) {
