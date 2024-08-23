@@ -207,7 +207,7 @@ static void THREAD_EXCEPTION_SAFE(std::shared_ptr<std::exception_ptr> unexpected
 		THREAD(std::ref(stop), std::ref(ready), std::ref(port));
 	}
 	catch (std::exception& e) {
-		unexpectedError = std::make_shared<std::exception_ptr>(std::current_exception());
+        unexpectedError = std::make_shared<std::exception_ptr>();
         LOGS("Local server thread got an unexpected error: " + std::string(e.what()));
 	}
 

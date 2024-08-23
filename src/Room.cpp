@@ -20,6 +20,7 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/algorithm/searching/boyer_moore.hpp>
 #include <sstream>
 #include "Room.hpp"
 #include "EndTurnButtonSpec.hpp"
@@ -59,9 +60,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->restrictions = restrictions;
 	this->timeoutTimer = Timer(60 * 60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
-    this->requireInit = true;
-
-	this->loadSaveData(saveData, restrictions);
+	this->loadSaveData(saveData);
 
 	this->curcorVisibility = true;
 	this->element = nullptr;
@@ -102,10 +101,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw NoActivePlayers();
 	}
 
-    if (this->requireInit) {
+    if (this->prevWorldUiState == boost::none) {
 		p.logs->emplace_back("{sending_init_world_ui_state}");
         this->sendWorldUIStateToClients(p);
-        this->requireInit = false;
     }
 
 	this->receive(received, p);
@@ -125,7 +123,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	this->processBaseEvents(p);
 }
 void Room::needInit() {
-    this->requireInit = true;
+    this->prevWorldUiState = boost::none;
 }
 
 
@@ -147,11 +145,11 @@ std::string Room::getSaveData() const {
 
 	return serialStr;
 }
-void Room::loadSaveData(const std::string &data, Restrictions restrictions) {
+void Room::loadSaveData(const std::string &data) {
 	std::stringstream stream(data);
 	iarchive ar(stream);
 	ar >> this->map >> this->playerIsActive >> this->currentPlayerId >> this->move;
-	this->verifyLoadedData(restrictions);
+	this->verifyLoadedData();
 }
 
 
@@ -161,11 +159,11 @@ void Room::loadSaveData(const std::string &data, Restrictions restrictions) {
 
 
 
-void Room::verifyLoadedData(Restrictions restrictions) {
+void Room::verifyLoadedData() {
 	this->verifyMap();
 	this->verifyIncorrectMoveRepresentation();
 	this->verifyIncorrectPlayersRepresentation();
-	if (restrictions == Restrictions::Enable) {
+	if (this->restrictions == Restrictions::Enable) {
 		this->verifyTooMuchGameObjects();
 		this->verifyTooMuchPlayers();
 		this->verifyMapTooBig();
@@ -177,7 +175,7 @@ void Room::verifyMap() {
 	}
 }
 void Room::verifyIncorrectMoveRepresentation() {
-	if (this->move == 0 or this->move > std::numeric_limits<uint32_t>::max() - 1000000) {
+	if (this->move == 0 or this->move > std::numeric_limits<uint32_t>::max() - 20000) {
 		throw IncorrectMoveRepresentation();
 	}
 }
@@ -375,30 +373,58 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
 	ResourceBar resourceBar = this->makeResourceBar();
 
 	std::string str;
-	boost::iostreams::back_insert_device<std::string> i(str);
-	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(i);
+	boost::iostreams::back_insert_device<std::string> inserter(str);
+	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
 	oarchive a(s);
-	a << this->map << this->element << this->highlightTable << buttonBases << resourceBar;
+	a << this->map << this->element << this->highlightTable << buttonBases << resourceBar << this->selected << this->curcorVisibility;
 	s.flush();
 
+	sf::Packet packet = this->makeBasePacket();
+	packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    if (this->prevWorldUiState.has_value()) {
+        uint32_t index = 0;
+        std::string buff;
+        while (index < str.size()) {
+            uint32_t maxBlockSize = 0;
+            uint32_t asIndex;
+            for (uint32_t blockSize = 128; true; blockSize = blockSize * 2) {
+                if (index + blockSize > str.size()) {
+                    break;
+                }
+                std::string substr = str.substr(index, blockSize);
+                boost::algorithm::boyer_moore<std::string::const_iterator> search(substr.begin(), substr.end());
+                auto it = search(this->prevWorldUiState->begin(), this->prevWorldUiState->end()).first;
+                if (it == this->prevWorldUiState->end()) {
+                    break;
+                }
+                maxBlockSize = blockSize;
+                asIndex = (uint32_t)std::distance(this->prevWorldUiState->begin(), it);
+            }
+            if (maxBlockSize == 0) {
+                buff.append(str.substr(index, std::min(64ul, str.size() - index)));
+                index = index + 64;
+            }
+            else {
+                if (!buff.empty()) {
+                    packet << (uint8_t)0 << buff;
+                    buff.clear();
+                }
+                index = index + maxBlockSize;
+                packet << (uint8_t)1 << asIndex << maxBlockSize;
+            }
+        }
+        if (!buff.empty()) {
+            packet << (uint8_t)0 << buff;
+        }
+    }
+    else {
+        packet << (uint8_t)0 << str;
+    }
+    packet << (uint8_t)2;
 
-	sf::Packet packet1 = this->makeBasePacket();
-    std::string prevStr = str;
-    a << this->selected << this->curcorVisibility;
-    s.flush();
-	packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-	packet1 << str;
-    str = prevStr;
+    this->prevWorldUiState = str;
 
-    sf::Packet packet2 = this->makeBasePacket();
-    ISelectable* defaultSelectable = nullptr;
-    bool defaultCursorVisibility = true;
-    a << defaultSelectable << defaultCursorVisibility;
-    s.flush();
-    packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-    packet2 << str;
-
-	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet1.getDataSize()) + " kb");
+	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet.getDataSize()) + " b");
 
     std::unordered_map<uint32_t, bool> sendingType;
     for (uint32_t i = 1; i <= p.remotePlayers->size(); i = i + 1) {
@@ -414,10 +440,10 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
     }
     for (auto &t : sendingType) {
         if (t.second) {
-            this->sendToClient(packet1, p.toSend, sf::IpAddress(t.first));
+            this->sendToClient(packet, p.toSend, sf::IpAddress(t.first));
         }
         else {
-            this->sendToClient(packet2, p.toSend, sf::IpAddress(t.first));
+            this->sendToClient(packet, p.toSend, sf::IpAddress(t.first));
         }
     }
 }

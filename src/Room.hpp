@@ -105,8 +105,7 @@ private:
 	Restrictions restrictions;
 	Timer timeoutTimer;
 
-    bool requireInit;
-
+    boost::optional<std::string> prevWorldUiState;
 	Map map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
@@ -123,9 +122,9 @@ private:
 	std::vector<Button> buttons;
 
 	std::string getSaveData() const;
-	void loadSaveData(const std::string& data, Restrictions restrictions);
+	void loadSaveData(const std::string& data);
 
-	void verifyLoadedData(Restrictions restrictions);
+	void verifyLoadedData();
 	void verifyMap();
 	void verifyIncorrectMoveRepresentation();
 	void verifyIncorrectPlayersRepresentation();

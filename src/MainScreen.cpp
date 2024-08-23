@@ -334,9 +334,28 @@ void MainScreen::receiveError(sf::Packet& remPacket) {
 	throw ServerInitError(errorCode);
 }
 void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
-	std::string s1;
-	remPacket >> s1;
-	std::stringstream stream1(s1);
+    std::string result;
+    uint8_t mode;
+    for (; ;) {
+        remPacket >> mode;
+        if (mode == 2) {
+            break;
+        }
+        else if (mode == 1) {
+            uint32_t pos, size;
+            remPacket >> pos >> size;
+            for (uint32_t i = pos; i < pos + size; i = i + 1) {
+                result.push_back(this->string.at(i));
+            }
+        }
+        else if (mode == 0) {
+            std::string val;
+            remPacket >> val;
+            result.append(val);
+        }
+    }
+    this->string = result;
+	std::stringstream stream1(this->string);
 	iarchive a1(stream1);
 	a1 >> this->map >> this->element >> this->highlightTable >> this->buttonBases >> this->resourceBar >> this->selected >> this->cursorVisibility;
 	this->initPackageGotten = true;

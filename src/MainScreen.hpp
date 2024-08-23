@@ -71,6 +71,7 @@ private:
 	RoomID roomID;
 
 	bool initPackageGotten;
+    std::string string;
 	Map map;
 	std::shared_ptr<PopUpElement> element;
 	ISelectable* selected;
