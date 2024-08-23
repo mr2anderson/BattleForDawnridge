@@ -36,9 +36,7 @@
 #include "Textures.hpp"
 #include "StartWarriorAnimationEvent.hpp"
 #include "WarriorHPPointer.hpp"
-#include "UnselectEvent.hpp"
 #include "ResetHighlightEvent.hpp"
-#include "EnableCursorEvent.hpp"
 #include "KillNextTurnEvent.hpp"
 #include "RevertKillNextTurnEvent.hpp"
 #include "WindowTwoButtons.hpp"
@@ -362,11 +360,9 @@ void Warrior::update(MapState *state, uint32_t currentPlayerId) {
         this->enemyMove = true;
     }
 }
-Events Warrior::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
+Events Warrior::onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
     Events events;
-    events.add(std::make_shared<UnselectEvent>());
     events.add(std::make_shared<ResetHighlightEvent>());
-    events.add(std::make_shared<EnableCursorEvent>());
 
     Events specialMoveEvents;
     if (button == sf::Mouse::Button::Left) {

@@ -86,10 +86,8 @@ void Spell::markAsUsed() {
 uint32_t Spell::getPlayerId() const {
 	return this->playerId;
 }
-Events Spell::unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) {
+Events Spell::onUnselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) {
 	Events events;
-	events.add(std::make_shared<UnselectEvent>());
-	events.add(std::make_shared<EnableCursorEvent>());
 
 	if (button == sf::Mouse::Button::Right) {
 		return events;

@@ -62,7 +62,7 @@ private:
 	bool used;
 	uint32_t playerId;
 
-	Events unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) override;
+	Events onUnselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) override;
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
 
     friend class boost::serialization::access;

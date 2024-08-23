@@ -35,7 +35,8 @@ public:
     ISelectable(); // For boost serialization
 	virtual ~ISelectable();
 
-	virtual Events unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) = 0;
+	Events unselect(MapState* state, uint32_t x, uint32_t y, uint8_t button);
+    virtual Events onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) = 0;
 	virtual std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const = 0;
 private:
     friend class boost::serialization::access;

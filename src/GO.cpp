@@ -23,6 +23,7 @@
 #include "CreateEEvent.hpp"
 #include "ResetHighlightEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "FocusOnEvent.hpp"
 
 
 const DrawingPriority GO::DRAWING_PRIORITY_WARRIOR_FLYING = {3};
@@ -118,7 +119,10 @@ Events GO::click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint
 		mouseY >= 64 * this->getY() and
 		mouseX < 64 * (this->getX() + this->getSX()) and
 		mouseY < 64 * (this->getY() + this->getSY())) {
-		return this->getResponse(state, currentPlayerId, button);
+        Events events;
+		events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+        events = events + this->getResponse(state, currentPlayerId, button);
+        return events;
 	}
 	return Events();
 }

@@ -108,7 +108,7 @@ private:
 
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
     void update(MapState *state, uint32_t playerId) override;
-	Events unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
+	Events onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) override;
     Move getMove(MapState *state, uint32_t x2, uint32_t y2);
     MovementGraph buildMovementGraph(MapState *state);
     Events processRunningAnimation(MapState *state);

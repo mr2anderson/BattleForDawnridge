@@ -18,10 +18,21 @@
 
 
 #include "ISelectable.hpp"
+#include "FocusOnEvent.hpp"
+#include "UnselectEvent.hpp"
+#include "EnableCursorEvent.hpp"
 
 
 ISelectable::ISelectable() = default;
 ISelectable::~ISelectable() = default;
+Events ISelectable::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
+    Events events;
+    events.add(std::make_shared<FocusOnEvent>(x, y, 1, 1));
+    events.add(std::make_shared<UnselectEvent>());
+    events.add(std::make_shared<EnableCursorEvent>());
+    events = events + this->onUnselect(state, x, y, button);
+    return events;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(ISelectable)

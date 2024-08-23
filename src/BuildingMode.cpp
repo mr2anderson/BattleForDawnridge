@@ -60,13 +60,11 @@ std::shared_ptr<sf::Drawable> BuildingMode::getSelectablePointer(uint32_t mouseX
 	sprite.setPosition(mouseX / 64 * 64, mouseY / 64 * 64);
 	return std::make_shared<sf::Sprite>(sprite);
 }
-Events BuildingMode::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
+Events BuildingMode::onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t button) {
 	Events clickSoundEvent;
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
 	Events exitEvent;
-	exitEvent.add(std::make_shared<UnselectEvent>());
-	exitEvent.add(std::make_shared<EnableCursorEvent>());
 	exitEvent.add(std::make_shared<ResetHighlightEvent>());
 
 	if (button == sf::Mouse::Button::Right) {
