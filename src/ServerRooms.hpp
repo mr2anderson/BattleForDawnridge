@@ -17,11 +17,7 @@
  */
 
 
-#include <unordered_map>
-#include <cstdint>
-#include <set>
-#include "Room.hpp"
-#include "RemotePlayers.hpp"
+#include "ServerRoom.hpp"
 
 
 #pragma once
@@ -31,19 +27,15 @@ class ServerRooms {
 public: 
 	ServerRooms();
 
-	void createIfValid(const RoomID & id, const std::string& saveData);
-	bool exist(const RoomID& id) const;
+    bool exist(const RoomID &id) const;
+    void createIfValid(const RoomID& id, const std::string &rd);
+    uint32_t addPlayers(const RoomID &id, const Connection &connection, uint32_t n);
 
-    void removePlayer(sf::IpAddress ip, std::vector<StringLcl>* toLogs);
+    void removeConnection(const Connection &connection, std::vector<StringLcl> *toLogs);
 
-	std::set<sf::IpAddress> updateAll(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, std::vector<StringLcl> *toLogs, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend);
-
-	uint32_t playersToAdd(const RoomID& id) const;
-	uint32_t getCurrentPlayerNumber(const RoomID& id);
-	uint32_t getPlayerLimit(const RoomID& id);
-
-	bool addPlayerSafe(const RoomID& id, sf::IpAddress playerIP);
-	uint32_t addPlayersSafe(const RoomID& id, sf::IpAddress playerIP, uint32_t number);
+	void update(std::vector<StringLcl> *toLogs);
 private:
-	std::unordered_map<std::string, std::tuple<std::unique_ptr<Room>, RemotePlayers>> data;
+    std::unordered_map<std::string, ServerRoom> data;
+
+    void updateRooms(std::vector<StringLcl> *toLogs);
 };

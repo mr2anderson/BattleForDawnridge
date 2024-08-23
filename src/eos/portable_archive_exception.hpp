@@ -5,7 +5,7 @@
  * \author christian.pfligersdorffer@gmx.at
  *
  * Portable archive exceptions derive from the boost archive exceptions
- * and add failure causes specific to the portable binary usecase.
+ * and set failure causes specific to the portable binary usecase.
  *
  * Additionally this header serves as common include for important
  * constants or typedefs.

@@ -37,12 +37,15 @@ public:
     bool hasError() const;
     void send(const sf::Packet &packet);
     void update();
+    sf::IpAddress getIP() const;
 private:
     bool error;
     std::shared_ptr<sf::TcpSocket> socket;
     std::queue<sf::Packet> toSend;
     std::tuple<bool, sf::Packet> received;
+    sf::IpAddress ip;
 
+    void updateIP();
     void processSending();
     void processReceiving();
 };

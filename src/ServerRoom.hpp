@@ -17,25 +17,34 @@
  */
 
 
-#include "RemotePlayers.hpp"
+#include <memory>
+#include <unordered_map>
+#include "Room.hpp"
+#include "Connection.hpp"
 
 
-RemotePlayers::RemotePlayers() = default;
-void RemotePlayers::set(RemotePlayer player) {
-	if (this->data.size() < player.getId()) {
-		this->data.resize(player.getId());
-	}
-	this->data.at(player.getId() - 1) = player;
-}
-void RemotePlayers::add(sf::IpAddress ip) {
-    this->set(RemotePlayer(this->size() + 1, ip));
-}
-RemotePlayer RemotePlayers::get(uint32_t id) const {
-    if (id - 1 >= this->data.size()) {
-        return {id, sf::IpAddress::None};
-    }
-	return this->data.at(id - 1);
-}
-uint32_t RemotePlayers::size() const {
-	return this->data.size();
-}
+#pragma once
+
+
+class ServerRoom {
+public:
+    ServerRoom();
+
+    bool tryToCreate(const RoomID &id, const std::string &data);
+    uint32_t addPlayers(const Connection &connection, uint32_t n);
+
+    typedef enum Status {
+        OK,
+        DeleteMe
+    } Status;
+
+    Status removeConnection(const Connection &connection, std::vector<StringLcl> *toLogs);
+
+    Status update(std::vector<StringLcl> *toLogs);
+private:
+    std::unique_ptr<Room> room;
+    RemotePlayers players;
+    std::unordered_map<uint32_t, Connection> connections;
+
+    Status update(boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p);
+};

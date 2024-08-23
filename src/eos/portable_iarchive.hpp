@@ -14,7 +14,7 @@
  *
  * Based on the portable archive example by Robert Ramey this implementation
  * uses Beman Dawes endian library and fp_utilities from Johan Rade, both being
- * in boost since 1.36. Prior to that you need to add them both (header only)
+ * in boost since 1.36. Prior to that you need to set them both (header only)
  * to your boost directory before you're able to use the archives provided. 
  * Our archives have been tested successfully for boost versions 1.33 to 1.49!
  *

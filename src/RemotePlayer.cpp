@@ -31,9 +31,3 @@ uint32_t RemotePlayer::getId() const {
 sf::IpAddress RemotePlayer::getIp() const {
 	return this->ip;
 }
-void RemotePlayer::disconnect() {
-    this->ip = sf::IpAddress::None;
-}
-bool RemotePlayer::connected() const {
-    return (this->ip != sf::IpAddress::None);
-}

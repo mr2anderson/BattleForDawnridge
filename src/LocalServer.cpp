@@ -151,7 +151,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
             uint32_t playersAtHost;
             receivedPacket >> playersAtHost;
             while (playersAtHost and players.size() != room->playersNumber()) {
-                players.add(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+                players.set(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
                 playersAtHost = playersAtHost - 1;
             }
         }

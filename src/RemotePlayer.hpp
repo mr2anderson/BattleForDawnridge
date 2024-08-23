@@ -31,8 +31,6 @@ public:
 
 	uint32_t getId() const;
 	sf::IpAddress getIp() const;
-    void disconnect();
-    bool connected() const;
 private:
 	sf::IpAddress ip;
 	uint32_t id;

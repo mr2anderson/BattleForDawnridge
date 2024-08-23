@@ -37,13 +37,16 @@ private:
 	bool alreadyFinished;
 
 	Logs logs;
+    std::vector<StringLcl> toLogs;
 
 	ServerRooms rooms;
 
     sf::TcpListener listener;
-	std::unordered_map<uint32_t, Connection> connections;
+    std::unordered_map<uint32_t, Connection> simpleConnections;
 
-	void checkRoomInitSignal(sf::Packet& packet, sf::IpAddress ip, std::vector<StringLcl> *logs);
-
-	void drawEverything(sf::RenderWindow& window);
+    void checkNewConnection();
+    void updateSimpleConnections();
+	void checkRoomInitSignals();
+    void handleLogs();
+    void drawEverything(sf::RenderWindow& window);
 };

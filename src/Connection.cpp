@@ -43,8 +43,17 @@ void Connection::send(const sf::Packet &packet) {
     this->toSend.push(packet);
 }
 void Connection::update() {
+    this->updateIP();
     this->processSending();
     this->processReceiving();
+}
+sf::IpAddress Connection::getIP() const {
+    return this->ip;
+}
+void Connection::updateIP() {
+    if (this->socket->getRemoteAddress() != sf::IpAddress::None) {
+        this->ip = this->socket->getRemoteAddress();
+    }
 }
 void Connection::processSending() {
     if (this->toSend.empty()) {
@@ -62,7 +71,11 @@ void Connection::processReceiving() {
     if (std::get<bool>(this->received)) {
         return;
     }
-    if (this->socket->receive(std::get<sf::Packet>(received)) == sf::Socket::Status::Done) {
+    sf::Socket::Status status = this->socket->receive(std::get<sf::Packet>(received));
+    if (status == sf::Socket::Status::Error or status == sf::Socket::Status::Disconnected) {
+        this->error = true;
+    }
+    else if (status == sf::Socket::Status::Done) {
         std::get<bool>(received) = true;
     }
 }
