@@ -109,14 +109,11 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	this->receive(received, p);
 
 	if (this->element != nullptr) {
-		this->element->update();
-		if (this->element->finished()) {
-			this->element = nullptr;
-		}
+		Events elementEvent = this->element->update();
+        this->addEvents(elementEvent, p);
 	}
 	if (this->animation.has_value()) {
-		Events animationEvent;
-		animationEvent = this->animation.value().process(this->map.getStatePtr());
+		Events animationEvent = this->animation.value().process(this->map.getStatePtr());
 		this->addEvents(animationEvent, p);
 	}
 	this->processNewMoveEvents(p);
@@ -238,8 +235,9 @@ void Room::processNewMoveEvents(RoomOutputProtocol p) {
 		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent, p);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-		this->processBaseEvents(p, false);
-		somethingProcessed = true;
+		if (this->processBaseEvents(p, false)) {
+            somethingProcessed = true;
+        }
 	}
 	if (somethingProcessed) {
 		this->sendWorldUIStateToClients(p);
@@ -281,35 +279,38 @@ void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32
 		}
 	}
 }
-void Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
+bool Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
 	bool somethingProcessed = false;
 	while (!this->events.empty()) {
 		if (this->element != nullptr or this->animation.has_value()) {
 			break;
 		}
-		this->handleEvent(this->events.front(), p);
+		if (this->handleEvent(this->events.front(), p)) {
+            somethingProcessed = true;
+        }
 		this->events.pop();
-		somethingProcessed = true;
 	}
 	if (sendToClients and somethingProcessed) {
 		this->sendWorldUIStateToClients(p);
 	}
+    return somethingProcessed;
 }
 void Room::addEvents(Events& e, RoomOutputProtocol p) {
-    bool urgentHandled = false;
+    bool somethingProcessed = false;
 
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
 		std::shared_ptr<Event> event = e.at(i);
 		if (event->isUrgent()) {
-			this->handleEvent(event, p);
-            urgentHandled = true;
+            if (this->handleEvent(event, p)) {
+                somethingProcessed = true;
+            }
 		}
 		else {
 			this->events.push(event);
 		}
 	}
 
-    if (urgentHandled) {
+    if (somethingProcessed) {
         this->sendWorldUIStateToClients(p);
     }
 }
@@ -588,7 +589,8 @@ void Room::receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p) {
 
 
 
-void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
+bool Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
+    bool needUpdate = true;
 	if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
 		this->handleAddResourceEvent(addResourceEvent, p);
 	}
@@ -615,6 +617,7 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
 		this->handlePlaySoundEvent(playSoundEvent, p);
+        needUpdate = false;
 	}
 	else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
 		this->handleCreatePopUpElementEvent(createEEvent, p);
@@ -624,6 +627,7 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e)) {
 		this->handleReturnToMenuEvent(returnToMenuEvent, p);
+        needUpdate = false;
 	}
 	else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
 		this->handleDestroyEvent(destroyEvent, p);
@@ -654,6 +658,7 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
 		this->handleCreateAnimationEvent(createAnimationEvent, p);
+        needUpdate = false;
 	}
 	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
 		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent, p);
@@ -669,6 +674,7 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<FocusOnEvent> focusOnEvent = std::dynamic_pointer_cast<FocusOnEvent>(e)) {
 		this->handleFocusOnEvent(focusOnEvent, p);
+        needUpdate = false;
 	}
 	else if (std::shared_ptr<ResetHighlightEvent> resetHighlightEvent = std::dynamic_pointer_cast<ResetHighlightEvent>(e)) {
 		this->handleResetHighlightEvent(resetHighlightEvent, p);
@@ -736,9 +742,20 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
 		this->handleLimitResourcesEvent(limitResourcesEvent, p);
 	}
+    else if (std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> moveUpEvent = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowUpEvent>(e)) {
+        this->handleMoveHorizontalSelectionWindowUpEvent(moveUpEvent, p);
+    }
+    else if (std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> moveDownEvent = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowDownEvent>(e)) {
+        this->handleMoveHorizontalSelectionWindowDownEvent(moveDownEvent, p);
+    }
+    else if (std::shared_ptr<ClosePopUpElementEvent> closePopUpElementEvent = std::dynamic_pointer_cast<ClosePopUpElementEvent>(e)) {
+        this->handleClosePopUpElementEvent(closePopUpElementEvent, p);
+    }
 	else {
-		p.logs->emplace_back("{unknown_event_handled}");
-	}
+        p.logs->emplace_back("{unknown_event_handled}");
+        needUpdate = false;
+    }
+    return needUpdate;
 }
 void Room::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));
@@ -911,7 +928,6 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 	std::shared_ptr<WindowButton> w;
 	if (count == 1) {
 		Events returnToMenuEvent;
-		returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
 		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
 		w = std::make_shared<WindowButton>(StringLcl("{game_finished}"), StringLcl("{OK}"), returnToMenuEvent);
 	}
@@ -932,4 +948,13 @@ void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent
 }
 void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p) {
 	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
+}
+void Room::handleMoveHorizontalSelectionWindowUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e, RoomOutputProtocol p) {
+    e->getWindow()->moveUp();
+}
+void Room::handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e, RoomOutputProtocol p) {
+    e->getWindow()->moveDown();
+}
+void Room::handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e, RoomOutputProtocol p) {
+    this->element = nullptr;
 }

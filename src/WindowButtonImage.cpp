@@ -18,7 +18,7 @@
 
 
 #include "WindowButtonImage.hpp"
-#include "CloseWindowEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 #include "Textures.hpp"
 
 
@@ -26,8 +26,8 @@ WindowButtonImage::WindowButtonImage() = default;
 WindowButtonImage::WindowButtonImage(const StringLcl& message, const StringLcl& buttonText, const std::string &pictureName, const Events& onFinish, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
-    this->onFinish = onFinish;
-    this->onFinish.add(std::make_shared<CloseWindowEvent>());
+    this->onFinish.add(std::make_shared<ClosePopUpElementEvent>());
+    this->onFinish = this->onFinish + onFinish;
     this->message = message;
     this->buttonText = buttonText;
     this->pictureName = pictureName;
@@ -39,13 +39,6 @@ void WindowButtonImage::draw(sf::RenderTarget& target, sf::RenderStates states) 
 }
 Events WindowButtonImage::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
     Events event = this->getButton(windowW, windowH).click(mouseX, mouseY);
-    for (uint32_t i = 0; i < event.size(); i = i + 1) {
-        if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
-            event.erase(i);
-            this->finish();
-            break;
-        }
-    }
     return event;
 }
 

@@ -166,10 +166,8 @@ void MainScreen::run(sf::RenderWindow& window) {
             throw NoServerConnection();
         }
 		if (this->localElement != nullptr) {
-            this->localElement->update();
-            if (this->localElement->finished()) {
-                this->localElement = nullptr;
-            }
+            Events localElementEvent = this->localElement->update();
+            this->addLocalEvents(localElementEvent);
 		}
         this->processLocalEvents();
 		this->processSending();
@@ -585,7 +583,6 @@ void MainScreen::moveViewToEast(sf::RenderWindow& window) {
 void MainScreen::verifyView(sf::RenderWindow& window) {
 	this->verifyViewNorth(window);
 	this->verifyViewSouth(window);
-
 	this->verifyViewEast(window); // Order is important here
 	this->verifyViewWest(window);
 }
@@ -634,7 +631,12 @@ Events MainScreen::handleLocalButtonsClick() {
 
 void MainScreen::addLocalEvents(Events& events) {
 	for (uint32_t i = 0; i < events.size(); i = i + 1) {
-		this->localEventQueue.push(events.at(i));
+        if (events.at(i)->isUrgent()) {
+            this->handleEvent(events.at(i));
+        }
+        else {
+            this->localEventQueue.push(events.at(i));
+        }
 	}
 }
 void MainScreen::processLocalEvents() {
@@ -659,6 +661,9 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
         this->handleCreateEEvent(createEEvent);
     }
+    else if (std::shared_ptr<ClosePopUpElementEvent> closePopUpElementEvent = std::dynamic_pointer_cast<ClosePopUpElementEvent>(e)) {
+        this->handleClosePopUpElementEvent(closePopUpElementEvent);
+    }
 	else {
 		LOGS("Warning: unknown event");
 	}
@@ -680,4 +685,7 @@ void MainScreen::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e) {
 void MainScreen::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
     this->localElement = e->getElement();
     this->localElement->restart();
+}
+void MainScreen::handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e) {
+    this->localElement = nullptr;
 }

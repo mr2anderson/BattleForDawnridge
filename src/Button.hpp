@@ -31,6 +31,8 @@ public:
 	Button(std::shared_ptr<RectangularUiElement> element, const Events &onClick);
 	Button(const IButtonSpec& spec);
 
+    void add(const Events &extraOnClick);
+
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	Events click(uint32_t mouseX, uint32_t mouseY) const;

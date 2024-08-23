@@ -100,11 +100,6 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
 
 		this->drawEverything(window);
 
-        if (this->element != nullptr) {
-            if (this->element->finished()) {
-                this->element = nullptr;
-            }
-        }
         this->processEvents();
 
         if (this->closeMenu) {
@@ -217,6 +212,15 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<ChooseLanguageEvent> chooseLanguageEvent = std::dynamic_pointer_cast<ChooseLanguageEvent>(e)) {
         this->handleChooseLanguageEvent(chooseLanguageEvent);
     }
+    else if (std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> moveDownEvent = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowDownEvent>(e)) {
+        this->handleMoveHorizontalSelectionWindowDownEvent(moveDownEvent);
+    }
+    else if (std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> moveUpEvent = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowUpEvent>(e)) {
+        this->handleMoveHorizontalSelectionWindowUpEvent(moveUpEvent);
+    }
+    else if (std::shared_ptr<ClosePopUpElementEvent> closePopUpElementEvent = std::dynamic_pointer_cast<ClosePopUpElementEvent>(e)) {
+        this->handleClosePopUpElementEvent(closePopUpElementEvent);
+    }
     else {
         std::cerr << "Menu: warning: unknown event handled" << std::endl;
     }
@@ -265,4 +269,13 @@ void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
     Events createWindowEvent = clickEvent;
     createWindowEvent.add(std::make_shared<CreateEEvent>(w));
     this->addEvents(createWindowEvent);
+}
+void Menu::handleMoveHorizontalSelectionWindowUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e) {
+    e->getWindow()->moveUp();
+}
+void Menu::handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e) {
+    e->getWindow()->moveDown();
+}
+void Menu::handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e) {
+    this->element = nullptr;
 }

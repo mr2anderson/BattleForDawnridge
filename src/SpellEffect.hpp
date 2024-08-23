@@ -30,7 +30,7 @@ public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    void update() override;
+    Events update() override;
 private:
     std::string textureName;
     float startX, startY;

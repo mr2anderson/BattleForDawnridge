@@ -18,6 +18,7 @@
 
 
 #include "FlyingE.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 static constexpr float DST = 128;
@@ -36,10 +37,12 @@ void FlyingE::onRestart() {
 void FlyingE::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(*this->getDrawable(this->getPosition(), this->getTransparencyLevel()), states);
 }
-void FlyingE::update() {
+Events FlyingE::update() {
+    Events events;
     if (this->clock.getSecondsAsFloat() >= TIME) {
-        this->finish();
+        events.add(std::make_shared<ClosePopUpElementEvent>());
     }
+    return events;
 }
 sf::Color FlyingE::getTransparencyLevel() const {
     sf::Color color = sf::Color::White;

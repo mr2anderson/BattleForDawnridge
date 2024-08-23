@@ -20,6 +20,7 @@
 #include <cmath>
 #include "SpellEffect.hpp"
 #include "Textures.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 static constexpr float DST = 384;
@@ -42,10 +43,12 @@ void SpellEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	target.draw(sprite, states);
 }
-void SpellEffect::update() {
+Events SpellEffect::update() {
+    Events events;
 	if (this->clock.getSecondsAsFloat() >= TIME) {
-		this->finish();
+		events.add(std::make_shared<ClosePopUpElementEvent>());
 	}
+    return events;
 }
 
 

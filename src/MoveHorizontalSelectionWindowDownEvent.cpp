@@ -17,7 +17,15 @@
  */
 
 
-#include "MoveHorizontalSelectionWindowUpEvent.hpp"
+#include "MoveHorizontalSelectionWindowDownEvent.hpp"
 
 
-MoveHorizontalSelectionWindowUpEvent::MoveHorizontalSelectionWindowUpEvent() = default;
+MoveHorizontalSelectionWindowDownEvent::MoveHorizontalSelectionWindowDownEvent(HorizontalSelectionWindow* window) {
+    this->window = window;
+}
+HorizontalSelectionWindow* MoveHorizontalSelectionWindowDownEvent::getWindow() {
+    return this->window;
+}
+bool MoveHorizontalSelectionWindowDownEvent::isUrgent() const {
+    return true;
+}

@@ -22,8 +22,6 @@
 #include "Button.hpp"
 #include "HorizontalSelectionWindowComponent.hpp"
 #include "LabelWithImage.hpp"
-#include "MoveHorizontalSelectionWindowUpEvent.hpp"
-#include "MoveHorizontalSelectionWindowDownEvent.hpp"
 #include "HorizontalSelectionWindowStructure.hpp"
 
 
@@ -38,6 +36,8 @@ public:
 	void onRestart() override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) override;
+    void moveUp();
+    void moveDown();
 private:
 	std::vector<HorizontalSelectionWindowComponent> components;
 	uint32_t componentSize, marginSize;
@@ -45,15 +45,10 @@ private:
 
 	bool possibleToMoveUp(uint32_t componentsInFrame) const;
 	bool possibleToMoveDown() const;
-	void moveUp();
-	void moveDown();
-	void handle(Events& events);
-
-	void handleMoveUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e);
-	void handleMoveDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e);
 
 	uint32_t getComponentsInFrame(uint32_t windowW, uint32_t windowH) const;
-	HorizontalSelectionWindowStructure getStructure(uint32_t windowW, uint32_t windowH) const;
+    HorizontalSelectionWindowStructure getUIStructure(uint32_t windowW, uint32_t windowH) const;
+	HorizontalSelectionWindowStructure getStructure(uint32_t windowW, uint32_t windowH);
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {

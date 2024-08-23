@@ -245,7 +245,7 @@ void LoadingScreen::loadingError(CouldntOpen *e, sf::RenderWindow &window) {
 
     WindowButton element = WindowButton(StringLcl("Couldn't open " + e->getResourceName() + "\nPath: " + e->getPath()), StringLcl("OK")); // Avoid using locales cuz they can be not loaded yet
     sf::Event event;
-    while (!element.finished()) {
+    for (; ;) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
@@ -253,7 +253,10 @@ void LoadingScreen::loadingError(CouldntOpen *e, sf::RenderWindow &window) {
                 }
             }
             if (event.type == sf::Event::MouseButtonPressed) {
-                element.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
+                Events events = element.click(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y, window.getSize().x, window.getSize().y);
+                if (!events.empty()) {
+                    return;
+                }
             }
         }
         window.clear(sf::Color::Black);

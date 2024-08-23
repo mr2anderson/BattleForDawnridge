@@ -18,7 +18,7 @@
 
 
 #include "WindowEntry.hpp"
-#include "CloseWindowEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 WindowEntry::WindowEntry() {
@@ -30,10 +30,10 @@ WindowEntry::WindowEntry(const StringLcl& message, const StringLcl &buttonText1,
     this->h = h;
     this->dst = dst;
     this->settings = settings;
-    this->events1 = events1;
-    this->events2 = events2;
-    this->events1.add(std::make_shared<CloseWindowEvent>());
-    this->events2.add(std::make_shared<CloseWindowEvent>());
+    this->events1.add(std::make_shared<ClosePopUpElementEvent>());
+    this->events2.add(std::make_shared<ClosePopUpElementEvent>());
+    this->events1 = this->events1 + events1;
+    this->events2 = this->events2 + events2;
     this->message = message;
     this->buttonText1 = buttonText1;
     this->buttonText2 = buttonText2;
@@ -46,25 +46,15 @@ void WindowEntry::draw(sf::RenderTarget& target, sf::RenderStates states) const 
     target.draw(this->getButton2(target.getSize().x, target.getSize().y), states);
 }
 Events WindowEntry::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
-    Events event = this->getButton1(windowW, windowH).click(mouseX, mouseY);
-    for (uint32_t i = 0; i < event.size(); i = i + 1) {
-        if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
-            event.erase(i);
-            this->finish();
+    if (this->settings == nullptr or this->dst == nullptr or this->settings->ok(this->dst)) {
+        Events event = this->getButton1(windowW, windowH).click(mouseX, mouseY);
+        if (!event.empty()) {
             return event;
         }
     }
 
-    event = this->getButton2(windowW, windowH).click(mouseX, mouseY);
-    for (uint32_t i = 0; i < event.size(); i = i + 1) {
-        if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
-            event.erase(i);
-            this->finish();
-            return event;
-        }
-    }
-
-    return Events();
+    Events event = this->getButton2(windowW, windowH).click(mouseX, mouseY);
+    return event;
 }
 void WindowEntry::keyPressed(sf::Keyboard::Key key) {
     if (this->dst != nullptr and this->settings != nullptr) {

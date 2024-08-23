@@ -23,6 +23,7 @@
 #include <cmath>
 #include "Projectile.hpp"
 #include "Textures.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 Projectile::Projectile() {
@@ -73,11 +74,13 @@ void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sprite.setRotation(this->rotation);
     target.draw(sprite, states);
 }
-void Projectile::update() {
+Events Projectile::update() {
     float dt = this->clock.getSecondsAsFloat();
+    Events events;
     if (dt >= this->getTime()) {
-        this->finish();
+        events.add(std::make_shared<ClosePopUpElementEvent>());
     }
+    return events;
 }
 
 

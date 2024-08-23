@@ -35,6 +35,7 @@
 #include "SaveGameEvent.hpp"
 #include "ReturnToMenuEvent.hpp"
 #include "CreateEEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 #pragma once
@@ -147,4 +148,5 @@ private:
     void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
     void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e);
     void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
+    void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e);
 };

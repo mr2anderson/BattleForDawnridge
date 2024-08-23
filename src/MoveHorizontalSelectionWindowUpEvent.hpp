@@ -23,7 +23,15 @@
 #pragma once
 
 
+class HorizontalSelectionWindow;
+
+
 class MoveHorizontalSelectionWindowUpEvent : public Event {
 public:
-	MoveHorizontalSelectionWindowUpEvent();
+	MoveHorizontalSelectionWindowUpEvent(HorizontalSelectionWindow* w);
+
+    HorizontalSelectionWindow* getWindow();
+    bool isUrgent() const override;
+private:
+    HorizontalSelectionWindow* w;
 };

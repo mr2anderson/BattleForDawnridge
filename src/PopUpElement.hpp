@@ -32,21 +32,17 @@ class PopUpElement : public sf::Drawable {
 public:
 	PopUpElement();
 
-	bool finished() const;
 	void restart();
-	virtual void update();
+	virtual Events update();
 	virtual Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH);
     virtual void keyPressed(sf::Keyboard::Key key);
 	virtual bool isCameraDependent() const = 0;
 protected:
 	virtual void onRestart();
-	void finish();
-private:
-	bool _finished;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-        ar & this->_finished;
+
     }
 };
 

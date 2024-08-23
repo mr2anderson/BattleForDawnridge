@@ -17,7 +17,15 @@
  */
 
 
-#include "MoveHorizontalSelectionWindowDownEvent.hpp"
+#include "Event.hpp"
 
 
-MoveHorizontalSelectionWindowDownEvent::MoveHorizontalSelectionWindowDownEvent() = default;
+#pragma once
+
+
+class ClosePopUpElementEvent : public Event {
+public:
+    ClosePopUpElementEvent();
+
+    bool isUrgent() const override;
+};

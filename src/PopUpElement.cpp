@@ -21,18 +21,12 @@
 #include "PlaySoundEvent.hpp"
 
 
-PopUpElement::PopUpElement() {
-	this->_finished = false;
-}
-bool PopUpElement::finished() const {
-	return this->_finished;
-}
+PopUpElement::PopUpElement() = default;
 void PopUpElement::restart() {
-	this->_finished = false;
-	this->onRestart();
+    this->onRestart();
 }
-void PopUpElement::update() {
-
+Events PopUpElement::update() {
+    return Events();
 }
 Events PopUpElement::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
 	return Events();
@@ -42,9 +36,6 @@ void PopUpElement::keyPressed(sf::Keyboard::Key key) {
 }
 void PopUpElement::onRestart() {
 
-}
-void PopUpElement::finish() {
-	this->_finished = true;
 }
 
 

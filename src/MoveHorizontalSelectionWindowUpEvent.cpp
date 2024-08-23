@@ -17,13 +17,15 @@
  */
 
 
-#include "Event.hpp"
+#include "MoveHorizontalSelectionWindowUpEvent.hpp"
 
 
-#pragma once
-
-
-class CloseWindowEvent : public Event {
-public:
-	CloseWindowEvent();
-};
+MoveHorizontalSelectionWindowUpEvent::MoveHorizontalSelectionWindowUpEvent(HorizontalSelectionWindow* w) {
+    this->w = w;
+}
+HorizontalSelectionWindow* MoveHorizontalSelectionWindowUpEvent::getWindow() {
+    return this->w;
+}
+bool MoveHorizontalSelectionWindowUpEvent::isUrgent() const {
+    return true;
+}

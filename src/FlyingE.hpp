@@ -31,7 +31,7 @@ public:
 
     void onRestart() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    void update() override;
+    Events update() override;
 protected:
     virtual std::unique_ptr<sf::Drawable> getDrawable(sf::Vector2f position, sf::Color color) const = 0;
 private:

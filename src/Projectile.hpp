@@ -32,7 +32,7 @@ public:
     void setSrc(float xInPixels, float yInPixels);
     void setDst(float xInPixels, float yInPixels);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    void update() override;
+    Events update() override;
     virtual std::string getTextureName() const = 0;
     virtual std::string getSoundName() const = 0;
     virtual float getTime() const = 0;

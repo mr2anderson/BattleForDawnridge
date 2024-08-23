@@ -79,6 +79,9 @@
 #include "LimitResourcesEvent.hpp"
 #include "ServerNetSpecs.hpp"
 #include "RoomOutputProtocol.hpp"
+#include "MoveHorizontalSelectionWindowUpEvent.hpp"
+#include "MoveHorizontalSelectionWindowDownEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 #pragma once
@@ -138,7 +141,7 @@ private:
 	Player* getCurrentPlayer();
 	void addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p);
 	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);
-	void processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
+	bool processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
 	void addEvents(Events& e, RoomOutputProtocol p);
 
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
@@ -158,7 +161,7 @@ private:
 	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p);
     void receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p);
 
-	void handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
+	bool handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e, RoomOutputProtocol p);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e, RoomOutputProtocol p);
@@ -208,4 +211,7 @@ private:
 	void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p);
 	void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, RoomOutputProtocol p);
 	void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p);
+    void handleMoveHorizontalSelectionWindowUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e, RoomOutputProtocol p);
+    void handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e, RoomOutputProtocol p);
+    void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e, RoomOutputProtocol p);
 };

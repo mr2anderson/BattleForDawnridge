@@ -17,7 +17,10 @@
  */
 
 
-#include "CloseWindowEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
-CloseWindowEvent::CloseWindowEvent() = default;
+ClosePopUpElementEvent::ClosePopUpElementEvent() = default;
+bool ClosePopUpElementEvent::isUrgent() const {
+    return true;
+}

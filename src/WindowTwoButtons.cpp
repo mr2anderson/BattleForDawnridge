@@ -18,7 +18,7 @@
 
 
 #include "WindowTwoButtons.hpp"
-#include "CloseWindowEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 WindowTwoButtons::WindowTwoButtons() = default;
@@ -28,10 +28,10 @@ WindowTwoButtons::WindowTwoButtons(const StringLcl& message, const StringLcl& bu
     this->message = message;
     this->buttonText1 = buttonText1;
     this->buttonText2 = buttonText2;
-    this->events1 = events1;
-    this->events2 = events2;
-    this->events1.add(std::make_shared<CloseWindowEvent>());
-    this->events2.add(std::make_shared<CloseWindowEvent>());
+    this->events1.add(std::make_shared<ClosePopUpElementEvent>());
+    this->events2.add(std::make_shared<ClosePopUpElementEvent>());
+    this->events1 = this->events1 + events1;
+    this->events2 = this->events2 + events2;
 }
 void WindowTwoButtons::addEvent1(const Events& events) {
     this->events1 = this->events1 + events;
@@ -46,24 +46,12 @@ void WindowTwoButtons::draw(sf::RenderTarget& target, sf::RenderStates states) c
 }
 Events WindowTwoButtons::click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) {
     Events event = this->getButton1(windowW, windowH).click(mouseX, mouseY);
-    for (uint32_t i = 0; i < event.size(); i = i + 1) {
-        if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
-            event.erase(i);
-            this->finish();
-            return event;
-        }
+    if (!event.empty()) {
+        return event;
     }
 
     event = this->getButton2(windowW, windowH).click(mouseX, mouseY);
-    for (uint32_t i = 0; i < event.size(); i = i + 1) {
-        if (std::shared_ptr<CloseWindowEvent> closeWindowEvent = std::dynamic_pointer_cast<CloseWindowEvent>(event.at(i))) {
-            event.erase(i);
-            this->finish();
-            return event;
-        }
-    }
-   
-    return Events();
+    return event;
 }
 
 

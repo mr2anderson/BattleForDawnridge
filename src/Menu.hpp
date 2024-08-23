@@ -30,6 +30,9 @@
 #include "StartNetworkGameEvent.hpp"
 #include "LoadNetworkGameEvent.hpp"
 #include "ConnectToRoomEvent.hpp"
+#include "MoveHorizontalSelectionWindowDownEvent.hpp"
+#include "MoveHorizontalSelectionWindowUpEvent.hpp"
+#include "ClosePopUpElementEvent.hpp"
 
 
 #pragma once
@@ -70,4 +73,7 @@ private:
     void handleConnectGameEvent(std::shared_ptr<ConnectToRoomEvent> e);
     void handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e);
 	void handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e);
+    void handleMoveHorizontalSelectionWindowUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e);
+    void handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e);
+    void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e);
 };

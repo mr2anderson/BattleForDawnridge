@@ -20,6 +20,13 @@
 #pragma once
 
 
+/*
+ *
+If you want to use this in your project, then please stop
+This class is terrible
+It exists only because it has managed to become an integral part of the project
+ *
+ */
 class Event {
 public:
 	Event();
