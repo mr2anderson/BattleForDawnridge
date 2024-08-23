@@ -437,7 +437,7 @@ void Room::sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
 
-	this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
+	this->sendToClient(packet, p.toSend, ip);
 }
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
 	p.logs->emplace_back("{sending_return_to_menu_to_players}");
