@@ -31,17 +31,14 @@ public:
     SerializableColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
     SerializableColor(sf::Color c);
 
-    bool operator<(const SerializableColor &c) const;
+    bool operator<(const SerializableColor &a) const;
 
     sf::Color getSfColor() const;
 private:
-    uint8_t r, g, b, a;
+    uint32_t c;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-        ar & this->r;
-        ar & this->g;
-        ar & this->b;
-        ar & this->a;
+        ar & this->c;
     }
 };
