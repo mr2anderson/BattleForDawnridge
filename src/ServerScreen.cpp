@@ -135,7 +135,7 @@ void ServerScreen::checkRoomInitSignals() {
                     this->logs.add(StringLcl("{new_room}" + roomId.value() + " " + connection.second.getIP().toString() + " " + std::to_string(added)));
                 }
                 else {
-                    this->logs.add(StringLcl("{couldnt_create_room}"));
+                    this->logs.add(StringLcl("{couldnt_create_room}" + roomId.value() + " " + connection.second.getIP().toString()));
                 }
             }
         }
