@@ -387,7 +387,7 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
         while (index < str.size()) {
             uint32_t maxBlockSize = 0;
             uint32_t asIndex;
-            for (uint32_t blockSize = 128; true; blockSize = blockSize * 2) {
+            for (uint32_t blockSize = 256; true; blockSize = blockSize * 2) {
                 if (index + blockSize > str.size()) {
                     break;
                 }
@@ -402,7 +402,7 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
             }
             if (maxBlockSize == 0) {
                 buff.append(str.substr(index, std::min(64ul, str.size() - index)));
-                index = index + 64;
+                index = index + 256;
             }
             else {
                 if (!buff.empty()) {
