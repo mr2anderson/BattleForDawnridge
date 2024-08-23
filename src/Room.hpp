@@ -108,7 +108,6 @@ private:
 
     bool mustSendInit;
 
-	boost::optional<WorldState> onPrevSync;
 	WorldState state;
 
 	std::vector<Button> buttons;
@@ -138,7 +137,6 @@ private:
 	void generateButtonBases();
 
     void sendWorldStateToClients(RoomOutputProtocol p);
-	void syncWorldStateWithClients(RoomOutputProtocol p);
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);

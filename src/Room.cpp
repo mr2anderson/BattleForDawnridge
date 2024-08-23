@@ -108,7 +108,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 
     if (this->mustSendInit) {
 		p.logs->emplace_back("{sending_init_world_ui_state}");
-        this->syncWorldStateWithClients(p);
+        this->sendWorldStateToClients(p);
         this->mustSendInit = false;
     }
 
@@ -223,7 +223,7 @@ void Room::processNewMoveEvents(RoomOutputProtocol p) {
 		somethingProcessed = true;
 	}
 	if (somethingProcessed) {
-		this->syncWorldStateWithClients(p);
+		this->sendWorldStateToClients(p);
 	}
 }
 bool Room::allNewMoveEventsAdded() const {
@@ -273,7 +273,7 @@ void Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
 		somethingProcessed = true;
 	}
 	if (sendToClients and somethingProcessed) {
-		this->syncWorldStateWithClients(p);
+		this->sendWorldStateToClients(p);
 	}
 }
 void Room::addEvents(Events& e, RoomOutputProtocol p) {
@@ -291,7 +291,7 @@ void Room::addEvents(Events& e, RoomOutputProtocol p) {
 	}
 
     if (urgentHandled) {
-        this->syncWorldStateWithClients(p);
+        this->sendWorldStateToClients(p);
     }
 }
 void Room::updateResourceBar() {
@@ -350,11 +350,6 @@ void Room::sendWorldStateToClients(RoomOutputProtocol p) {
 	a << this->state;
 	s.flush();
 
-	std::stringstream stream(str);
-	iarchive ar(stream);
-	this->onPrevSync.emplace();
-	ar >> this->onPrevSync.value();
-
 	sf::Packet packet1 = this->makeBasePacket();
 	packet1 << SERVER_NET_SPECS::CODES::WORLD_STATE;
 	packet1 << str;
@@ -381,12 +376,6 @@ void Room::sendWorldStateToClients(RoomOutputProtocol p) {
             this->sendToClient(packet1, p.toSend, sf::IpAddress(t.first));
         }
     }
-}
-void Room::syncWorldStateWithClients(RoomOutputProtocol p) {
-	p.logs->emplace_back("{syncing_world_state}");
-	if (this->onPrevSync == boost::none or true) {
-		this->sendWorldStateToClients(p);
-	}
 }
 void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName) {
 	p.logs->emplace_back("{sending_sound_to_players}");
