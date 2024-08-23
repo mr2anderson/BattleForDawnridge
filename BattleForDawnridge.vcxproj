@@ -862,6 +862,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SerializableColor.hpp" />
     <ClInclude Include="src\serialize-tuple\serialize_tuple.h" />
     <ClInclude Include="src\ServerNetSpecs.hpp" />
+    <ClInclude Include="src\ServerRoom.hpp" />
     <ClInclude Include="src\ServerRooms.hpp" />
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\SetFireEvent.hpp" />
@@ -1192,6 +1193,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ScreenAlreadyFinished.cpp" />
     <ClCompile Include="src\SelectEvent.cpp" />
     <ClCompile Include="src\SerializableColor.cpp" />
+    <ClCompile Include="src\ServerRoom.cpp" />
     <ClCompile Include="src\ServerRooms.cpp" />
     <ClCompile Include="src\ServerScreen.cpp" />
     <ClCompile Include="src\SetFireEvent.cpp" />
