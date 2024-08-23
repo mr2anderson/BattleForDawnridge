@@ -139,7 +139,7 @@ Events NetworkGameButtonSpec::getChooseSaveEvent() const {
         );
         for (const auto& save : this->saveNames) {
 
-            Events loadSaveEvent = clickEvent;
+            Events loadSaveEvent;
             loadSaveEvent.add(std::make_shared<LoadNetworkGameEvent>(save));
             std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{load}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), loadSaveEvent, clickEvent);
             Events createLoadSaveVerifyWindowEvent = clickEvent;
@@ -188,7 +188,7 @@ Events NetworkGameButtonSpec::getConnectEvent() const {
 
     std::shared_ptr<std::string> result = std::make_shared<std::string>();
 
-    Events connectToRoomEvent = clickEvent;
+    Events connectToRoomEvent;
     connectToRoomEvent.add(std::make_shared<ConnectToRoomEvent>(result));
 
     std::shared_ptr<PopUpElement> window = std::make_shared<WindowEntry>(StringLcl("{enter_room_id}"), StringLcl("{connect2}"), StringLcl("{cancel}"), result, settings, connectToRoomEvent, clickEvent);
@@ -205,10 +205,10 @@ Events NetworkGameButtonSpec::getChooseMapEvent(const std::string& mapName) cons
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    Events startGameOnRidgeEvent = clickEvent;
-    startGameOnRidgeEvent.add(std::make_shared<StartNetworkGameEvent>(mapName));
+    Events startGameEvent;
+    startGameEvent.add(std::make_shared<StartNetworkGameEvent>(mapName));
 
-    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl(mapName + "_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);
+    std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl(mapName + "_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameEvent, clickEvent);
 
     Events createStartGameOnRidgeVerifyWindow = clickEvent;
     createStartGameOnRidgeVerifyWindow.add(std::make_shared<CreateEEvent>(startGameOnRidgeVerifyWindow));

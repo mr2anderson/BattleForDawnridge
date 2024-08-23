@@ -29,6 +29,7 @@
 #include "CouldntOpenMap.hpp"
 #include "MainServerPosition.hpp"
 #include "InvalidRoomIDFormat.hpp"
+#include "ServerInitError.hpp"
 
 
 Program* Program::singletone = nullptr;
@@ -160,6 +161,26 @@ void Program::handleException(std::exception_ptr exception, boost::optional<Stri
     }
     catch (InvalidRoomIDFormat&) {
         error = StringLcl("{invalid_room_id_client}");
+    }
+    catch (ServerInitError& e) {
+        uint8_t code = e.getCode();
+        switch (code) {
+        case SERVER_NET_SPECS::CODES::ERROR_CODES::FULL_ROOM:
+            error = StringLcl("{full_room}");
+            break;
+        case SERVER_NET_SPECS::CODES::ERROR_CODES::ROOM_ALREADY_EXIST:
+            error = StringLcl("{this_room_already_exist}");
+            break;
+        case SERVER_NET_SPECS::CODES::ERROR_CODES::UNKNOWN_ROOM_ID:
+            error = StringLcl("{unknown_room_id}");
+            break;
+        case SERVER_NET_SPECS::CODES::ERROR_CODES::INVALID_DATA:
+            error = StringLcl("{invalid_data}");
+            break;
+        default:
+            error = StringLcl("{unknown_server_error}");
+            break;
+        }
     }
     catch (std::exception& e) {
         error = StringLcl("{unknown_error_client}\n" + std::string(e.what()));

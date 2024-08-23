@@ -31,11 +31,19 @@
  */
 namespace SERVER_NET_SPECS {
     namespace CODES { // enum is not used cuz it is implementation-defined
-        static constexpr uint8_t WORLD_UI_STATE = 0;
-        static constexpr uint8_t SOUND = 1;
-        static constexpr uint8_t FOCUS = 2;
-        static constexpr uint8_t RETURN_TO_MENU = 3;
-        static constexpr uint8_t SAVE = 4;
-        static constexpr uint8_t NOT_YOUR_MOVE = 5;
+        static constexpr uint8_t ERROR = 0;
+        namespace ERROR_CODES {
+            static constexpr uint8_t ROOM_ALREADY_EXIST = 0;
+            static constexpr uint8_t INVALID_DATA = 1;
+            static constexpr uint8_t FULL_ROOM = 2;
+            static constexpr uint8_t UNKNOWN_ROOM_ID = 3;
+            static constexpr uint8_t OTHER = 4;
+        }
+        static constexpr uint8_t WORLD_UI_STATE = 1;
+        static constexpr uint8_t SOUND = 2;
+        static constexpr uint8_t FOCUS = 3;
+        static constexpr uint8_t RETURN_TO_MENU = 4;
+        static constexpr uint8_t SAVE = 5;
+        static constexpr uint8_t NOT_YOUR_MOVE = 6;
     }
 };

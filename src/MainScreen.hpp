@@ -99,6 +99,7 @@ private:
 
 
 	void receive(sf::RenderWindow &window);
+	void receiveError(sf::Packet& remPacket);
 	void receiveWorldUIState(sf::Packet& remPacket);
 	void receiveSound(sf::Packet& remPacket);
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);

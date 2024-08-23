@@ -43,7 +43,7 @@
 #include "GlobalRandomGenerator64.hpp"
 #include "SaveGameButtonSpec.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
-
+#include "ServerInitError.hpp"
 
 
 
@@ -302,7 +302,10 @@ void MainScreen::receive(sf::RenderWindow &window) {
         uint8_t code;
         receivedPacket >> code;
 
-        if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
+		if (code == SERVER_NET_SPECS::CODES::ERROR) {
+			this->receiveError(receivedPacket);
+		}
+        else if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
             this->receiveWorldUIState(receivedPacket);
         }
         else if (code == SERVER_NET_SPECS::CODES::SOUND) {
@@ -324,6 +327,11 @@ void MainScreen::receive(sf::RenderWindow &window) {
             LOGS("Warning: unknown code received from server: " + std::to_string((uint32_t) code));
         }
     }
+}
+void MainScreen::receiveError(sf::Packet& remPacket) {
+	uint8_t errorCode;
+	remPacket >> errorCode;
+	throw ServerInitError(errorCode);
 }
 void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
 	std::string s1;

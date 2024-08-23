@@ -94,6 +94,13 @@ void ServerScreen::updateSimpleConnections() {
         this->simpleConnections.erase(a);
     }
 }
+static void SEND_ERROR_PACKAGE(Connection& connection, const RoomID &roomID, uint8_t errorCode) {
+    sf::Packet packet;
+    packet << roomID.value();
+    packet << SERVER_NET_SPECS::CODES::ERROR;
+    packet << errorCode;
+    connection.send(packet);
+}
 void ServerScreen::checkRoomInitSignals() {
     std::vector<uint32_t> toDelete;
     for (auto &connection : this->simpleConnections) {
@@ -104,7 +111,6 @@ void ServerScreen::checkRoomInitSignals() {
         sf::Packet packet = packetOpt.value();
 
         this->logs.add(StringLcl("{got_init_signal_from}" + connection.second.getIP().toString()));
-        toDelete.push_back(connection.first);
 
         std::string roomIdVal;
         packet >> roomIdVal;
@@ -123,6 +129,7 @@ void ServerScreen::checkRoomInitSignals() {
         if (code == CLIENT_NET_SPECS::CODES::CREATE) {
             if (this->rooms.exist(roomId)) {
                 this->logs.add(StringLcl("{attempt_to_create_room_with_existing_id}" + roomId.value() + " " + connection.second.getIP().toString()));
+                SEND_ERROR_PACKAGE(connection.second, roomId, SERVER_NET_SPECS::CODES::ERROR_CODES::ROOM_ALREADY_EXIST);
             }
             if (!this->rooms.exist(roomId)) {
                 std::string data;
@@ -133,9 +140,11 @@ void ServerScreen::checkRoomInitSignals() {
                     packet >> playersAtHost;
                     uint32_t added = this->rooms.addPlayers(roomId, connection.second, playersAtHost);
                     this->logs.add(StringLcl("{new_room}" + roomId.value() + " " + connection.second.getIP().toString() + " " + std::to_string(added)));
+                    toDelete.push_back(connection.first);
                 }
                 else {
                     this->logs.add(StringLcl("{couldnt_create_room}" + roomId.value() + " " + connection.second.getIP().toString()));
+                    SEND_ERROR_PACKAGE(connection.second, roomId, SERVER_NET_SPECS::CODES::ERROR_CODES::INVALID_DATA);
                 }
             }
         }
@@ -146,13 +155,16 @@ void ServerScreen::checkRoomInitSignals() {
                 uint32_t added = this->rooms.addPlayers(roomId, connection.second, playersAtHost);
                 if (added == 0) {
                     this->logs.add(StringLcl("{attempt_to_connect_to_full_room}" + roomId.value() + " " + connection.second.getIP().toString()));
+                    SEND_ERROR_PACKAGE(connection.second, roomId, SERVER_NET_SPECS::CODES::ERROR_CODES::FULL_ROOM);
                 }
                 else {
                     this->logs.add(StringLcl("{attempt_to_connect_to_room}" + roomId.value() + " " + connection.second.getIP().toString() + " " + std::to_string(added)));
+                    toDelete.push_back(connection.first);
                 }
             }
             else {
                 this->logs.add(StringLcl("{attempt_to_connect_to_room_with_unknown_id}" + roomId.value() + " " + connection.second.getIP().toString()));
+                SEND_ERROR_PACKAGE(connection.second, roomId, SERVER_NET_SPECS::CODES::ERROR_CODES::UNKNOWN_ROOM_ID);
             }
         }
     }

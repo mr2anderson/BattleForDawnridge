@@ -131,7 +131,7 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
         );
         for (const auto& save : this->saveNames) {
 
-            Events loadSaveEvent = clickEvent;
+            Events loadSaveEvent;
             loadSaveEvent.add(std::make_shared<LoadLocalGameEvent>(save));
             std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{load}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), loadSaveEvent, clickEvent);
             Events createLoadSaveVerifyWindowEvent = clickEvent;
@@ -170,7 +170,7 @@ Events LocalGameButtonSpec::getChooseMapEvent(const std::string &mapName) const 
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    Events startGameOnRidgeEvent = clickEvent;
+    Events startGameOnRidgeEvent;
     startGameOnRidgeEvent.add(std::make_shared<StartLocalGameEvent>(mapName));
 
     std::shared_ptr<WindowTwoButtons> startGameOnRidgeVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl(mapName + "_verify}"), StringLcl("{yes}"), StringLcl("{no}"), startGameOnRidgeEvent, clickEvent);

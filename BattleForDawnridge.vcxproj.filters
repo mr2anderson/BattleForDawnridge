@@ -1713,6 +1713,9 @@
     <ClInclude Include="src\ServerRoom.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ServerInitError.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2697,6 +2700,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ServerRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerInitError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
