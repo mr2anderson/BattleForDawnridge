@@ -401,7 +401,7 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
                 asIndex = (uint32_t)std::distance(this->prevWorldUiState->begin(), it);
             }
             if (maxBlockSize == 0) {
-                buff.append(str.substr(index, std::min(64ul, str.size() - index)));
+                buff.append(str.substr(index, std::min(256ul, str.size() - index)));
                 index = index + 256;
             }
             else {
