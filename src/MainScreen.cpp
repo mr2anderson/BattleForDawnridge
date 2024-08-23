@@ -176,7 +176,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->processReceiving();
 		this->receive(window);
 		Playlist::get()->update();
-		window.setMouseCursorVisible(this->state.curcorVisibility);
+		window.setMouseCursorVisible(this->cursorVisibility);
 		this->drawEverything(window);
 		this->moveView(window);
 	}
@@ -234,10 +234,8 @@ std::string GENERATE_SAVE_FROM_MAP(const std::string& name) {
 	boost::iostreams::back_insert_device<std::string> inserter(serialStr);
 	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
 
-	WorldState state = WorldState(name);
-
 	oarchive ar(s);
-	ar & state;
+	ar << tmpMap << std::vector<bool>(tmpMap.getStatePtr()->getPlayersPtr()->total(), true) << (uint32_t)1 << (uint32_t)1;
 
 	s.flush();
 
@@ -280,6 +278,11 @@ void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
     packet << (uint32_t)window.getSize().y;
     this->send(packet);
 }
+void MainScreen::sendNeedSave() {
+    sf::Packet packet = this->makeBasePacket();
+    packet << CLIENT_NET_SPECS::CODES::NEED_SAVE;
+    this->send(packet);
+}
 
 
 
@@ -302,8 +305,8 @@ void MainScreen::receive(sf::RenderWindow &window) {
 		if (code == SERVER_NET_SPECS::CODES::ERROR) {
 			this->receiveError(receivedPacket);
 		}
-        else if (code == SERVER_NET_SPECS::CODES::WORLD_STATE) {
-            this->receiveState(receivedPacket);
+        else if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
+            this->receiveWorldUIState(receivedPacket);
         }
         else if (code == SERVER_NET_SPECS::CODES::SOUND) {
             this->receiveSound(receivedPacket);
@@ -313,6 +316,9 @@ void MainScreen::receive(sf::RenderWindow &window) {
         }
         else if (code == SERVER_NET_SPECS::CODES::RETURN_TO_MENU) {
             this->receiveReturnToMenu();
+        }
+        else if (code == SERVER_NET_SPECS::CODES::SAVE) {
+            this->receiveSave(receivedPacket);
         }
 		else if (code == SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE) {
 			this->receiveNotYourMove();
@@ -327,12 +333,12 @@ void MainScreen::receiveError(sf::Packet& remPacket) {
 	remPacket >> errorCode;
 	throw ServerInitError(errorCode);
 }
-void MainScreen::receiveState(sf::Packet& remPacket) {
+void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
 	std::string s1;
 	remPacket >> s1;
 	std::stringstream stream1(s1);
 	iarchive a1(stream1);
-	a1 >> this->state;
+	a1 >> this->map >> this->element >> this->highlightTable >> this->buttonBases >> this->resourceBar >> this->selected >> this->cursorVisibility;
 	this->initPackageGotten = true;
 }
 void MainScreen::receiveSound(sf::Packet& remPacket) {
@@ -358,6 +364,26 @@ void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
 }
 void MainScreen::receiveReturnToMenu() {
 	this->returnToMenu = true;
+}
+void MainScreen::receiveSave(sf::Packet& remPacket) {
+	std::string data;
+	remPacket >> data;
+	if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
+		std::filesystem::create_directories(USERDATA_ROOT + "/saves");
+	}
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	std::stringstream ss;
+	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
+	std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
+	ofs.write(data.c_str(), data.size());
+	ofs.close();
+
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+    Events createWindowEvent;
+    createWindowEvent.add(std::make_shared<CreateEEvent>(std::make_shared<WindowButton>(StringLcl("{game_saved}"), StringLcl("{OK}"), clickEvent)));
+    this->addLocalEvents(createWindowEvent);
 }
 void MainScreen::receiveNotYourMove() {
 	Events clickEvent;
@@ -388,17 +414,17 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	this->drawMap(window);
 	this->drawHighlightion(window);
     this->drawDarkness(window);
-    if (this->state.selected != nullptr) {
-        window.draw(*this->state.selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView(window)), std::get<1>(this->getMousePositionBasedOnView(window))));
+    if (this->selected != nullptr) {
+        window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView(window)), std::get<1>(this->getMousePositionBasedOnView(window))));
     }
-    if (this->state.element != nullptr) {
-		if (this->state.element->isCameraDependent()) {
+    if (this->element != nullptr) {
+		if (this->element->isCameraDependent()) {
 			window.setView(this->view);
 		}
 		else {
 			window.setView(window.getDefaultView());
 		}
-        window.draw(*this->state.element);
+        window.draw(*this->element);
     }
 	if (this->localElement != nullptr) {
 		if (this->localElement->isCameraDependent()) {
@@ -411,7 +437,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	}
 	window.setView(window.getDefaultView());
 	this->drawResourceBar(window);
-	for (const auto& b : this->state.buttonBases) {
+	for (const auto& b : this->buttonBases) {
 		window.draw(*b);
 	}
     for (const auto& b : this->localButtons) {
@@ -420,31 +446,31 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	window.display();
 }
 void MainScreen::drawMap(sf::RenderWindow& window) {
-	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = this->state.map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
 		if (go->exist() and go->inView(this->view)) {
 			window.draw(*go);
 		}
 	}
 }
 void MainScreen::drawResourceBar(sf::RenderWindow& window) {
-	window.draw(this->state.resourceBar);
+	window.draw(resourceBar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
     uint32_t sx = Textures::get()->get("plain")->getSize().x / 64;
     uint32_t sy = Textures::get()->get("plain")->getSize().y / 64;
-	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getMapSizePtr()->getWidth(); i = i + sx) {
-		for (uint32_t j = 0; j < this->state.map.getStatePtr()->getMapSizePtr()->getHeight(); j = j + sy) {
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getMapSizePtr()->getWidth(); i = i + sx) {
+		for (uint32_t j = 0; j < this->map.getStatePtr()->getMapSizePtr()->getHeight(); j = j + sy) {
 			sf::Sprite s;
 			s.setTexture(*Textures::get()->get("plain"));
 			s.setPosition(64 * i, 64 * j);
-			s.setTextureRect(sf::IntRect(0, 0, 64 * std::min(sx, this->state.map.getStatePtr()->getMapSizePtr()->getWidth() - i), 64 * std::min(sy, this->state.map.getStatePtr()->getMapSizePtr()->getHeight() - j)));
+			s.setTextureRect(sf::IntRect(0, 0, 64 * std::min(sx, this->map.getStatePtr()->getMapSizePtr()->getWidth() - i), 64 * std::min(sy, this->map.getStatePtr()->getMapSizePtr()->getHeight() - j)));
 			window.draw(s);
 		}
 	}
 }
 void MainScreen::drawHighlightion(sf::RenderWindow& window) {
-	std::vector<sf::RectangleShape> rects = this->state.highlightTable.getRects();
+	std::vector<sf::RectangleShape> rects = this->highlightTable.getRects();
 	for (const auto& rect : rects) {
 		window.draw(rect);
 	}
@@ -452,8 +478,8 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
 	this->illiminanceTable.newFrame(this->view);
 
-	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		const GO* go = this->state.map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		const GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (go->exist()) {
 			this->illiminanceTable.add(go);
 		}
@@ -551,7 +577,7 @@ void MainScreen::verifyViewNorth(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::verifyViewSouth(sf::RenderWindow& window) {
-	uint32_t border = 64 * this->state.map.getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2;
+	uint32_t border = 64 * this->map.getStatePtr()->getMapSizePtr()->getHeight() - window.getSize().y / 2;
 	if (this->view.getCenter().y > border) {
 		this->view.setCenter(sf::Vector2f(this->view.getCenter().x, border));
 	}
@@ -563,7 +589,7 @@ void MainScreen::verifyViewWest(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::verifyViewEast(sf::RenderWindow& window) {
-	uint32_t border = 64 * this->state.map.getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2;
+	uint32_t border = 64 * this->map.getStatePtr()->getMapSizePtr()->getWidth() - window.getSize().x / 2;
 	if (this->view.getCenter().x > border) {
 		this->view.setCenter(sf::Vector2f(border, this->view.getCenter().y));
 	}
@@ -630,29 +656,7 @@ void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
     this->returnToMenu = true;
 }
 void MainScreen::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e) {
-	std::string str;
-	boost::iostreams::back_insert_device<std::string> i(str);
-	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(i);
-	oarchive a(s);
-	a << this->state;
-	s.flush();
-
-	if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
-		std::filesystem::create_directories(USERDATA_ROOT + "/saves");
-	}
-	auto t = std::time(nullptr);
-	auto tm = *std::localtime(&t);
-	std::stringstream ss;
-	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
-	std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
-	ofs.write(str.c_str(), str.size());
-	ofs.close();
-
-	Events clickEvent;
-	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-	Events createWindowEvent;
-	createWindowEvent.add(std::make_shared<CreateEEvent>(std::make_shared<WindowButton>(StringLcl("{game_saved}"), StringLcl("{OK}"), clickEvent)));
-	this->addLocalEvents(createWindowEvent);
+    this->sendNeedSave();
 }
 void MainScreen::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
     this->localElement = e->getElement();

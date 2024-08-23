@@ -79,7 +79,6 @@
 #include "LimitResourcesEvent.hpp"
 #include "ServerNetSpecs.hpp"
 #include "RoomOutputProtocol.hpp"
-#include "WorldState.hpp"
 
 
 #pragma once
@@ -100,24 +99,33 @@ public:
 	uint32_t playersNumber() const;
 
 	void update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p);
-    void sendInit();
+    void needInit();
 private:
 	RoomID id;
 	Restrictions restrictions;
 	Timer timeoutTimer;
 
-    bool mustSendInit;
+    bool requireInit;
 
-	WorldState state;
-
-	std::vector<Button> buttons;
+	Map map;
+	std::vector<bool> playerIsActive;
+	uint32_t currentPlayerId;
+	std::shared_ptr<PopUpElement> element;
 	boost::optional<SuspendingAnimation> animation;
 	std::queue<std::shared_ptr<Event>> events;
+	uint32_t move;
+	HighlightTable highlightTable;
 	BuildingMode bm;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
+	ISelectable* selected;
+	bool curcorVisibility;
+	std::vector<Button> buttons;
 
-	void verifyLoadedData();
+	std::string getSaveData() const;
+	void loadSaveData(const std::string& data, Restrictions restrictions);
+
+	void verifyLoadedData(Restrictions restrictions);
 	void verifyMap();
 	void verifyIncorrectMoveRepresentation();
 	void verifyIncorrectPlayersRepresentation();
@@ -133,11 +141,12 @@ private:
 	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);
 	void processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
 	void addEvents(Events& e, RoomOutputProtocol p);
-	void updateResourceBar();
-	void generateButtonBases();
 
-    void sendWorldStateToClients(RoomOutputProtocol p);
+	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
+	ResourceBar makeResourceBar();
+    void sendWorldUIStateToClients(RoomOutputProtocol p);
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
+	void sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	void sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip);
@@ -148,6 +157,7 @@ private:
 
 	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p);
 	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p);
+    void receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p);
 
 	void handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p);
