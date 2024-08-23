@@ -47,6 +47,9 @@ uint32_t ServerRoom::addPlayers(const Connection &connection, uint32_t n) {
             added = added + 1;
         }
     }
+    if (added) {
+        this->room->needInit();
+    }
     return added;
 }
 
