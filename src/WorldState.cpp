@@ -17,22 +17,18 @@
  */
 
 
-#include <cstdint>
+#include "WorldState.hpp"
+#include "Maps.hpp"
 
 
-#pragma once
-
-
-// Package format:
-/*
- * room_id (std::string)
- * code (uint8_t)
- * additional_code_info
- */
-namespace CLIENT_NET_SPECS {
-    namespace CODES { // enum is not used cuz it is implementation-defined
-        static constexpr uint8_t CREATE = 0;
-        static constexpr uint8_t CONNECT = 1;
-        static constexpr uint8_t CLICK = 2;
-    }
-};
+WorldState::WorldState() {
+	this->currentPlayerId = 1;
+	this->element = nullptr;
+	this->move = 1;
+	this->selected = nullptr;
+	this->curcorVisibility = true;
+}
+WorldState::WorldState(const std::string& mapName) : WorldState() {
+	Maps::get()->load(mapName, &this->map);
+	this->playerIsActive.resize(this->map.getStatePtr()->getPlayersPtr()->total(), true);
+}

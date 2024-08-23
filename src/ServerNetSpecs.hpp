@@ -39,11 +39,10 @@ namespace SERVER_NET_SPECS {
             static constexpr uint8_t UNKNOWN_ROOM_ID = 3;
             static constexpr uint8_t OTHER = 4;
         }
-        static constexpr uint8_t WORLD_UI_STATE = 1;
+        static constexpr uint8_t WORLD_STATE = 1;
         static constexpr uint8_t SOUND = 2;
         static constexpr uint8_t FOCUS = 3;
         static constexpr uint8_t RETURN_TO_MENU = 4;
-        static constexpr uint8_t SAVE = 5;
-        static constexpr uint8_t NOT_YOUR_MOVE = 6;
+        static constexpr uint8_t NOT_YOUR_MOVE = 5;
     }
 };

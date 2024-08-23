@@ -19,6 +19,7 @@
 
 #include <memory>
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/export.hpp>
 #include "ICollections.hpp"
 #include "MapSize.hpp"
 #include "Players.hpp"
@@ -53,3 +54,6 @@ private:
         ar & this->players;
     }
 };
+
+
+BOOST_CLASS_EXPORT_KEY(MapState)

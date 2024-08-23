@@ -59,19 +59,23 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->restrictions = restrictions;
 	this->timeoutTimer = Timer(60 * 60 * 1000, Timer::TYPE::FIRST_DEFAULT);
 
-    this->requireInit = true;
+    this->mustSendInit = true;
 
-	this->loadSaveData(saveData, restrictions);
+	std::stringstream stream(saveData);
+	iarchive ar(stream);
+	ar >> this->state;
+	this->verifyLoadedData();
 
-	this->curcorVisibility = true;
-	this->element = nullptr;
-	this->selected = nullptr;
+	this->state.curcorVisibility = true;
+	this->state.element = nullptr;
+	this->state.selected = nullptr;
 	this->animation = boost::none;
-	this->currentGOIndexNewMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
-	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+	this->currentGOIndexNewMoveEvent = this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs();
+	this->totalGONewMoveEvents = this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->buttons.emplace_back(EndTurnButtonSpec(2));
 	this->buttons.emplace_back(BuildButtonSpec(3));
 	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id.value()));
+	this->generateButtonBases();
 }
 
 
@@ -88,7 +92,7 @@ RoomID Room::getID() const {
 
 
 uint32_t Room::playersNumber() const {
-	return this->map.getStatePtr()->getPlayersPtr()->total();
+	return this->state.map.getStatePtr()->getPlayersPtr()->total();
 }
 
 
@@ -102,56 +106,30 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw NoActivePlayers();
 	}
 
-    if (this->requireInit) {
+    if (this->mustSendInit) {
 		p.logs->emplace_back("{sending_init_world_ui_state}");
-        this->sendWorldUIStateToClients(p);
-        this->requireInit = false;
+        this->sendWorldStateToClients(p);
+        this->mustSendInit = false;
     }
 
 	this->receive(received, p);
 
-	if (this->element != nullptr) {
-		this->element->update();
-		if (this->element->finished()) {
-			this->element = nullptr;
+	if (this->state.element != nullptr) {
+		this->state.element->update();
+		if (this->state.element->finished()) {
+			this->state.element = nullptr;
 		}
 	}
 	if (this->animation.has_value()) {
 		Events animationEvent;
-		animationEvent = this->animation.value().process(this->map.getStatePtr());
+		animationEvent = this->animation.value().process(this->state.map.getStatePtr());
 		this->addEvents(animationEvent, p);
 	}
 	this->processNewMoveEvents(p);
 	this->processBaseEvents(p);
 }
-void Room::needInit() {
-    this->requireInit = true;
-}
-
-
-
-
-
-
-
-std::string Room::getSaveData() const {
-	std::string serialStr;
-
-	boost::iostreams::back_insert_device<std::string> inserter(serialStr);
-	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
-
-	oarchive ar(s);
-	ar << this->map << this->playerIsActive << this->currentPlayerId << this->move;
-
-	s.flush();
-
-	return serialStr;
-}
-void Room::loadSaveData(const std::string &data, Restrictions restrictions) {
-	std::stringstream stream(data);
-	iarchive ar(stream);
-	ar >> this->map >> this->playerIsActive >> this->currentPlayerId >> this->move;
-	this->verifyLoadedData(restrictions);
+void Room::sendInit() {
+    this->mustSendInit = true;
 }
 
 
@@ -161,44 +139,45 @@ void Room::loadSaveData(const std::string &data, Restrictions restrictions) {
 
 
 
-void Room::verifyLoadedData(Restrictions restrictions) {
+
+void Room::verifyLoadedData() {
 	this->verifyMap();
 	this->verifyIncorrectMoveRepresentation();
 	this->verifyIncorrectPlayersRepresentation();
-	if (restrictions == Restrictions::Enable) {
+	if (this->restrictions == Restrictions::Enable) {
 		this->verifyTooMuchGameObjects();
 		this->verifyTooMuchPlayers();
 		this->verifyMapTooBig();
 	}
 }
 void Room::verifyMap() {
-	if (this->map.hasError()) {
+	if (this->state.map.hasError()) {
 		throw MapDeepError();
 	}
 }
 void Room::verifyIncorrectMoveRepresentation() {
-	if (this->move == 0 or this->move > std::numeric_limits<uint32_t>::max() - 1000000) {
+	if (this->state.move == 0 or this->state.move > std::numeric_limits<uint32_t>::max() - 1000000) {
 		throw IncorrectMoveRepresentation();
 	}
 }
 void Room::verifyIncorrectPlayersRepresentation() {
-	if (this->currentPlayerId == 0 or this->currentPlayerId > this->playerIsActive.size()) {
+	if (this->state.currentPlayerId == 0 or this->state.currentPlayerId > this->state.playerIsActive.size()) {
 		throw IncorrectPlayersRepresentation();
 	}
 	
 	uint32_t activePlayers = 0;
-	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
-		activePlayers = activePlayers + this->playerIsActive.at(i);
+	for (uint32_t i = 0; i < this->state.playerIsActive.size(); i = i + 1) {
+		activePlayers = activePlayers + this->state.playerIsActive.at(i);
 	}
 	if (activePlayers < 2) {
 		throw IncorrectPlayersRepresentation();
 	}
 
-	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
-		if (this->playerIsActive.at(i)) {
+	for (uint32_t i = 0; i < this->state.playerIsActive.size(); i = i + 1) {
+		if (this->state.playerIsActive.at(i)) {
 			bool ok = false;
-			for (uint32_t j = 0; j < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); j = j + 1) {
-				const Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(j);
+			for (uint32_t j = 0; j < this->state.map.getStatePtr()->getCollectionsPtr()->totalBuildings(); j = j + 1) {
+				const Building* b = this->state.map.getStatePtr()->getCollectionsPtr()->getBuilding(j);
 				if (b->exist() and b->getPlayerId() == i + 1 and b->isVictoryCondition()) {
 					ok = true;
 					break;
@@ -211,18 +190,18 @@ void Room::verifyIncorrectPlayersRepresentation() {
 	}
 }
 void Room::verifyTooMuchGameObjects() {
-	if (this->map.getStatePtr()->getCollectionsPtr()->totalGOs() > 5000) {
+	if (this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs() > 5000) {
 		throw TooMuchGameObjects();
 	}
 }
 void Room::verifyTooMuchPlayers() {
-	if (this->map.getStatePtr()->getPlayersPtr()->total() > 16) {
+	if (this->state.map.getStatePtr()->getPlayersPtr()->total() > 16) {
 		throw TooMuchPlayers();
 	}
 }
 void Room::verifyMapTooBig() {
-	if (this->map.getStatePtr()->getMapSizePtr()->getWidth() > 1000 or
-		this->map.getStatePtr()->getMapSizePtr()->getHeight() > 1000) {
+	if (this->state.map.getStatePtr()->getMapSizePtr()->getWidth() > 1000 or
+		this->state.map.getStatePtr()->getMapSizePtr()->getHeight() > 1000) {
 		throw MapTooBig();
 	}
 }
@@ -234,35 +213,35 @@ void Room::verifyMapTooBig() {
 void Room::processNewMoveEvents(RoomOutputProtocol p) {
 	bool somethingProcessed = false;
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
-		if (this->element != nullptr or !this->events.empty()) {
+		if (this->state.element != nullptr or !this->events.empty()) {
 			break;
 		}
-		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
+		Events newMoveEvent = this->state.map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->state.map.getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent, p);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
 		this->processBaseEvents(p, false);
 		somethingProcessed = true;
 	}
 	if (somethingProcessed) {
-		this->sendWorldUIStateToClients(p);
+		this->sendWorldStateToClients(p);
 	}
 }
 bool Room::allNewMoveEventsAdded() const {
 	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
 }
 void Room::changeMove() {
-	this->move = this->move + 1;
+	this->state.move = this->state.move + 1;
 	this->currentGOIndexNewMoveEvent = 0;
-	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+	this->totalGONewMoveEvents = this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	do {
-		this->currentPlayerId = this->currentPlayerId + 1;
-		if (this->currentPlayerId > this->map.getStatePtr()->getPlayersPtr()->total()) {
-			this->currentPlayerId = 1;
+		this->state.currentPlayerId = this->state.currentPlayerId + 1;
+		if (this->state.currentPlayerId > this->state.map.getStatePtr()->getPlayersPtr()->total()) {
+			this->state.currentPlayerId = 1;
 		}
-	} while (!this->playerIsActive.at(this->currentPlayerId - 1));
+	} while (!this->state.playerIsActive.at(this->state.currentPlayerId - 1));
 }
 Player* Room::getCurrentPlayer() {
-	return this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
+	return this->state.map.getStatePtr()->getPlayersPtr()->getPlayerPtr(this->state.currentPlayerId);
 }
 void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p) {
 	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
@@ -274,9 +253,9 @@ void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol
 	}
 }
 void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p) {
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
-		Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, viewX, viewY);
+	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		GO* go = this->state.map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
+		Events gor = go->click(this->state.map.getStatePtr(), this->getCurrentPlayer()->getId(), button, viewX, viewY);
 		if (!gor.empty()) {
 			this->addEvents(gor, p);
 			return;
@@ -286,7 +265,7 @@ void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32
 void Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
 	bool somethingProcessed = false;
 	while (!this->events.empty()) {
-		if (this->element != nullptr or this->animation.has_value()) {
+		if (this->state.element != nullptr or this->animation.has_value()) {
 			break;
 		}
 		this->handleEvent(this->events.front(), p);
@@ -294,7 +273,7 @@ void Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
 		somethingProcessed = true;
 	}
 	if (sendToClients and somethingProcessed) {
-		this->sendWorldUIStateToClients(p);
+		this->sendWorldStateToClients(p);
 	}
 }
 void Room::addEvents(Events& e, RoomOutputProtocol p) {
@@ -312,98 +291,75 @@ void Room::addEvents(Events& e, RoomOutputProtocol p) {
 	}
 
     if (urgentHandled) {
-        this->sendWorldUIStateToClients(p);
+        this->sendWorldStateToClients(p);
     }
 }
-
-
-
-
-
-
-
-
-std::vector<std::shared_ptr<const RectangularUiElement>> Room::makeButtonBases() {
-	std::vector<std::shared_ptr<const RectangularUiElement>> bases(this->buttons.size());
-
-	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
-		bases.at(i) = this->buttons.at(i).getBase();
-	}
-
-	return bases;
-}
-ResourceBar Room::makeResourceBar() {
-	ResourceBar bar;
-
-	bar.setResources(this->getCurrentPlayer()->getResources());
+void Room::updateResourceBar() {
+	this->state.resourceBar.setResources(this->getCurrentPlayer()->getResources());
 
 	Resources limit;
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->state.map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			limit.plus(b->getLimit());
 		}
 	}
-	bar.setLimit(limit);
+	this->state.resourceBar.setLimit(limit);
 
 	uint32_t population = 0;
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-		Warrior* w = this->map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
+	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+		Warrior* w = this->state.map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			population = population + w->getPopulation();
 		}
 	}
-	bar.setPopulation(population);
+	this->state.resourceBar.setPopulation(population);
 
 	uint32_t populationLimit = 0;
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
+		Building* b = this->state.map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			populationLimit = populationLimit + b->getPopulationLimit();
 		}
 	}
-	bar.setPopulationLimit(populationLimit);
-	
-	return bar;
+	this->state.resourceBar.setPopulationLimit(populationLimit);
 }
-void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
+void Room::generateButtonBases() {
+	this->state.buttonBases.resize(this->buttons.size());
+	for (uint32_t i = 0; i < this->buttons.size(); i = i + 1) {
+		this->state.buttonBases.at(i) = this->buttons.at(i).getBase();
 	}
+}
 
-	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
-	ResourceBar resourceBar = this->makeResourceBar();
+
+
+
+
+
+
+void Room::sendWorldStateToClients(RoomOutputProtocol p) {
+	for (uint32_t i = 0; i < this->state.map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+		this->state.map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->state.map.getStatePtr(), this->getCurrentPlayer()->getId());
+	}
+	this->updateResourceBar();
 
 	std::string str;
 	boost::iostreams::back_insert_device<std::string> i(str);
 	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(i);
 	oarchive a(s);
-	a << this->map << this->element << this->highlightTable << buttonBases << resourceBar;
+	a << this->state;
 	s.flush();
 
-
 	sf::Packet packet1 = this->makeBasePacket();
-    std::string prevStr = str;
-    a << this->selected << this->curcorVisibility;
-    s.flush();
-	packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+	packet1 << SERVER_NET_SPECS::CODES::WORLD_STATE;
 	packet1 << str;
-    str = prevStr;
-
-    sf::Packet packet2 = this->makeBasePacket();
-    ISelectable* defaultSelectable = nullptr;
-    bool defaultCursorVisibility = true;
-    a << defaultSelectable << defaultCursorVisibility;
-    s.flush();
-    packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-    packet2 << str;
 
 	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet1.getDataSize()) + " kb");
 
     std::unordered_map<uint32_t, bool> sendingType;
     for (uint32_t i = 1; i <= p.remotePlayers->size(); i = i + 1) {
         uint32_t intIp = p.remotePlayers->get(i).getIp().toInteger();
-        if (i == this->currentPlayerId) {
+        if (i == this->state.currentPlayerId) {
             sendingType[intIp] = true;
         }
         else {
@@ -417,7 +373,7 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
             this->sendToClient(packet1, p.toSend, sf::IpAddress(t.first));
         }
         else {
-            this->sendToClient(packet2, p.toSend, sf::IpAddress(t.first));
+            this->sendToClient(packet1, p.toSend, sf::IpAddress(t.first));
         }
     }
 }
@@ -429,15 +385,6 @@ void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& 
 	packet << soundName;
 
 	this->sendToClients(packet, p);
-}
-void Room::sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
-	p.logs->emplace_back("{sending_save_to}" + ip.toString());
-
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::SAVE;
-	packet << this->getSaveData();
-
-	this->sendToClient(packet, p.toSend, ip);
 }
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
 	p.logs->emplace_back("{sending_return_to_menu_to_players}");
@@ -480,7 +427,7 @@ sf::Packet Room::makeBasePacket() const {
 }
 void Room::sendToClients(const sf::Packet& what, RoomOutputProtocol p) {
 	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
-	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
+	for (uint32_t i = 1; i <= this->state.map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
 		sf::IpAddress clientIp = p.remotePlayers->get(i).getIp();
 		uint32_t clientIpInt = clientIp.toInteger();
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
@@ -514,9 +461,6 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
         if (code == CLIENT_NET_SPECS::CODES::CLICK) {
             this->receiveClick(packet, ip, p);
         }
-        else if (code == CLIENT_NET_SPECS::CODES::NEED_SAVE) {
-            this->receiveNeedSave(ip, p);
-        }
     }
 }
 void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p) {
@@ -524,12 +468,12 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 	uint32_t x, y, viewX, viewY, w, h;
 	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
 	p.logs->emplace_back("{received_click} " + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + ip.toString());
-	if (p.remotePlayers->get(this->currentPlayerId).getIp() != ip) {
+	if (p.remotePlayers->get(this->state.currentPlayerId).getIp() != ip) {
 		this->sendNotYourMove(p, ip);
 		return;
 	}
-	if (this->selected == nullptr) {
-		if (this->element == nullptr) {
+	if (this->state.selected == nullptr) {
+		if (this->state.element == nullptr) {
 			if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
 				if (mouseButton == sf::Mouse::Button::Left) {
 					this->addButtonClickEventToQueue(x, y, p);
@@ -541,19 +485,15 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 		}
 		else {
 			if (mouseButton == sf::Mouse::Button::Left) {
-				Events events = this->element->click(x, y, w, h);
+				Events events = this->state.element->click(x, y, w, h);
 				this->addEvents(events, p);
 			}	
 		}
 	}
 	else {
-		Events events = this->selected->unselect(this->map.getStatePtr(), viewX / 64, viewY / 64, mouseButton);
+		Events events = this->state.selected->unselect(this->state.map.getStatePtr(), viewX / 64, viewY / 64, mouseButton);
 		this->addEvents(events, p);
 	}
-}
-void Room::receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p) {
-    p.logs->emplace_back("{received_need_save}" + ip.toString());
-    this->sendSaveToClient(ip, p);
 }
 
 
@@ -727,7 +667,7 @@ void Room::handleSubResourcesEvent(std::shared_ptr<SubResourcesEvent> e, RoomOut
 	this->getCurrentPlayer()->subResources(e->getResources());
 }
 void Room::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e, RoomOutputProtocol p) {
-	this->highlightTable.mark(*e);
+	this->state.highlightTable.mark(*e);
 }
 void Room::handleAddHpEvent(std::shared_ptr<AddHpEvent> e, RoomOutputProtocol p) {
 	HPGO* go = e->getHPGO();
@@ -739,14 +679,14 @@ void Room::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTr
 }
 void Room::handleBuild(std::shared_ptr<BuildEvent> e, RoomOutputProtocol p) {
 	Building* b = e->getBuilding();
-	this->map.getStatePtr()->getCollectionsPtr()->add(b);
+	this->state.map.getStatePtr()->getCollectionsPtr()->add(b);
 }
 void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, RoomOutputProtocol p) {
 	this->sendPlaySoundEventToClients(p, e->getSoundName());
 }
 void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, RoomOutputProtocol p) {
-	this->element = e->getElement();
-	this->element->restart();
+	this->state.element = e->getElement();
+	this->state.element->restart();
 }
 void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, RoomOutputProtocol p) {
 	this->changeMove();
@@ -755,7 +695,7 @@ void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, RoomOut
     this->sendReturnToMenuToClients(p);
 }
 void Room::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, RoomOutputProtocol p) {
-	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());
+	Events destroyBuildingEvent = e->getBuilding()->destroy(this->state.map.getStatePtr());
 	this->addEvents(destroyBuildingEvent, p);
 }
 void Room::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> e, RoomOutputProtocol p) {
@@ -763,13 +703,13 @@ void Room::handleDecreaseCurrentProdusingMovesLeftEvent(std::shared_ptr<Decrease
 }
 void Room::handleWarriorProducingFinishedEvent(std::shared_ptr<WarriorProducingFinishedEvent> e, RoomOutputProtocol p) {
 	e->getSpec()->stopProducing();
-	this->map.getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
+	this->state.map.getStatePtr()->getCollectionsPtr()->add(e->getWarrior()->cloneWarrior());
 }
 void Room::handleSelectEvent(std::shared_ptr<SelectEvent> e, RoomOutputProtocol p) {
-	this->selected = e->getSelectable();
+	this->state.selected = e->getSelectable();
 }
 void Room::handleUnselectEvent(std::shared_ptr<UnselectEvent> e, RoomOutputProtocol p) {
-	this->selected = nullptr;
+	this->state.selected = nullptr;
 }
 void Room::handleStartWarriorAnimationEvent(std::shared_ptr<StartWarriorAnimationEvent> e, RoomOutputProtocol p) {
 	e->getWarrior()->startAnimation(e->getAnimation());
@@ -778,10 +718,10 @@ void Room::handleRefreshMovementPointsEvent(std::shared_ptr<RefreshMovementPoint
 	e->getWarrior()->refreshMovementPoints();
 }
 void Room::handleEnableCursorEvent(std::shared_ptr<EnableCursorEvent> e, RoomOutputProtocol p) {
-	this->curcorVisibility = true;
+	this->state.curcorVisibility = true;
 }
 void Room::handleDisableCursorEvent(std::shared_ptr<DisableCursorEvent> e, RoomOutputProtocol p) {
-	this->curcorVisibility = false;
+	this->state.curcorVisibility = false;
 }
 void Room::handleCreateAnimationEvent(std::shared_ptr<CreateAnimationEvent> e, RoomOutputProtocol p) {
 	this->animation = e->getAnimation();
@@ -802,7 +742,7 @@ void Room::handleFocusOnEvent(std::shared_ptr<FocusOnEvent> e, RoomOutputProtoco
 	this->sendFocusOnToClients(p, e->getX(), e->getY(), e->getSX(), e->getSY());
 }
 void Room::handleResetHighlightEvent(std::shared_ptr<ResetHighlightEvent> e, RoomOutputProtocol p) {
-	this->highlightTable.clear();
+	this->state.highlightTable.clear();
 }
 void Room::handleDoTradeEvent(std::shared_ptr<DoTradeEvent> e, RoomOutputProtocol p) {
 	Events events = e->getSpec()->doTrade(e->getBuilding(), e->getTrade());
@@ -815,7 +755,7 @@ void Room::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducin
 void Room::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, RoomOutputProtocol p) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
 		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
-		Events bmStartEvent = bm.start(this->map.getStatePtr());
+		Events bmStartEvent = bm.start(this->state.map.getStatePtr());
 		this->addEvents(bmStartEvent, p);
 	}
 	else {
@@ -877,10 +817,10 @@ void Room::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent
 	e->getWarrior()->wipeHealingAbility();
 }
 void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p) {
-	this->playerIsActive[e->getPlayerId() - 1] = false;
+	this->state.playerIsActive[e->getPlayerId() - 1] = false;
 	uint32_t count = 0;
-	for (uint32_t i = 0; i < this->playerIsActive.size(); i = i + 1) {
-		count = count + this->playerIsActive.at(i);
+	for (uint32_t i = 0; i < this->state.playerIsActive.size(); i = i + 1) {
+		count = count + this->state.playerIsActive.at(i);
 	}
 	std::shared_ptr<WindowButton> w;
 	if (count == 1) {
@@ -892,7 +832,7 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 	else {
 		Events event;
 		event.add(std::make_shared<PlaySoundEvent>("click"));
-		if (this->currentPlayerId == e->getPlayerId()) {
+		if (this->state.currentPlayerId == e->getPlayerId()) {
 			event.add(std::make_shared<ChangeMoveEvent>());
 		}
 		w = std::make_shared<WindowButton>(StringLcl("{player_is_out}"), StringLcl("{OK}"), event);
@@ -905,5 +845,5 @@ void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent
 	e->getSpec()->increaseMoveCtr();
 }
 void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p) {
-	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
+	this->state.map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());
 }

@@ -43,3 +43,6 @@ const MapSize* MapState::getMapSizePtr() const {
 const Players* MapState::getPlayersPtr() const {
 	return &this->players;
 }
+
+
+BOOST_CLASS_EXPORT_IMPLEMENT(MapState)

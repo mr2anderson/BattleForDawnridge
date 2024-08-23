@@ -35,7 +35,7 @@ public:
 	uint16_t launch();
 	void fine() const;
 private:
-	std::shared_ptr<std::exception_ptr> unexpectedError;
+	std::exception_ptr unexpectedError;
 	std::atomic<bool> stop;
 	std::atomic<bool> running;
 	std::unique_ptr<sf::Thread> thread;

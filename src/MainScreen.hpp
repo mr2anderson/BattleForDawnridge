@@ -35,6 +35,7 @@
 #include "SaveGameEvent.hpp"
 #include "ReturnToMenuEvent.hpp"
 #include "CreateEEvent.hpp"
+#include "WorldState.hpp"
 
 
 #pragma once
@@ -71,13 +72,7 @@ private:
 	RoomID roomID;
 
 	bool initPackageGotten;
-	Map map;
-	std::shared_ptr<PopUpElement> element;
-	ISelectable* selected;
-	HighlightTable highlightTable;
-	bool cursorVisibility;
-	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
-	ResourceBar resourceBar;
+	WorldState state;
 
 	std::shared_ptr<PopUpElement> localElement;
     std::vector<Button> localButtons;
@@ -95,16 +90,14 @@ private:
 
 	void sendInit();
     void sendClick(sf::RenderWindow &window, uint8_t button);
-    void sendNeedSave();
 
 
 	void receive(sf::RenderWindow &window);
 	void receiveError(sf::Packet& remPacket);
-	void receiveWorldUIState(sf::Packet& remPacket);
+	void receiveState(sf::Packet& remPacket);
 	void receiveSound(sf::Packet& remPacket);
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
 	void receiveReturnToMenu();
-	void receiveSave(sf::Packet& remPacket);
 	void receiveNotYourMove();
 
 

@@ -852,6 +852,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\RoomDoesNotExist.hpp" />
     <ClInclude Include="src\RoomID.hpp" />
     <ClInclude Include="src\RoomOutputProtocol.hpp" />
+    <ClInclude Include="src\WorldState.hpp" />
     <ClInclude Include="src\Root.hpp" />
     <ClInclude Include="src\SaveGameButtonSpec.hpp" />
     <ClInclude Include="src\SaveGameEvent.hpp" />
@@ -1186,6 +1187,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\RoomDoesNotExist.cpp" />
     <ClCompile Include="src\RoomID.cpp" />
+    <ClCompile Include="src\WorldState.cpp" />
     <ClCompile Include="src\Root.cpp" />
     <ClCompile Include="src\SaveGameButtonSpec.cpp" />
     <ClCompile Include="src\SaveGameEvent.cpp" />
