@@ -374,20 +374,52 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
 	ResourceBar resourceBar = this->makeResourceBar();
 
-	std::string serialStr;
-	boost::iostreams::back_insert_device<std::string> inserter(serialStr);
-	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
-	oarchive ar(s);
-	ar << this->map << this->element << this->selected << this->highlightTable << this->curcorVisibility << buttonBases << resourceBar;
+	std::string str;
+	boost::iostreams::back_insert_device<std::string> i(str);
+	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(i);
+	oarchive a(s);
+	a << this->map << this->element << this->highlightTable << buttonBases << resourceBar;
 	s.flush();
 
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-	packet << serialStr;
 
-	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet.getDataSize()) + " kb");
+	sf::Packet packet1 = this->makeBasePacket();
+    std::string prevStr = str;
+    a << this->selected << this->curcorVisibility;
+    s.flush();
+	packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+	packet1 << str;
+    str = prevStr;
 
-	this->sendToClients(packet, p);
+    sf::Packet packet2 = this->makeBasePacket();
+    ISelectable* defaultSelectable = nullptr;
+    bool defaultCursorVisibility = true;
+    a << defaultSelectable << defaultCursorVisibility;
+    s.flush();
+    packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet2 << str;
+
+	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet1.getDataSize()) + " kb");
+
+    std::unordered_map<uint32_t, bool> sendingType;
+    for (uint32_t i = 1; i <= p.remotePlayers->size(); i = i + 1) {
+        uint32_t intIp = p.remotePlayers->get(i).getIp().toInteger();
+        if (i == this->currentPlayerId) {
+            sendingType[intIp] = true;
+        }
+        else {
+            if (sendingType.find(intIp) == sendingType.end()) {
+                sendingType[intIp] = false;
+            }
+        }
+    }
+    for (auto &t : sendingType) {
+        if (t.second) {
+            this->sendToClient(packet1, p.toSend, sf::IpAddress(t.first));
+        }
+        else {
+            this->sendToClient(packet2, p.toSend, sf::IpAddress(t.first));
+        }
+    }
 }
 void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName) {
 	p.logs->emplace_back("{sending_sound_to_players}");

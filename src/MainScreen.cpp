@@ -326,11 +326,11 @@ void MainScreen::receive(sf::RenderWindow &window) {
     }
 }
 void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
-	std::string data;
-	remPacket >> data;
-	std::stringstream stream(data);
-	iarchive ar(stream);
-	ar >> this->map >> this->element >> this->selected >> this->highlightTable >> this->cursorVisibility >> this->buttonBases >> this->resourceBar;
+	std::string s1;
+	remPacket >> s1;
+	std::stringstream stream1(s1);
+	iarchive a1(stream1);
+	a1 >> this->map >> this->element >> this->highlightTable >> this->buttonBases >> this->resourceBar >> this->selected >> this->cursorVisibility;
 	this->initPackageGotten = true;
 }
 void MainScreen::receiveSound(sf::Packet& remPacket) {
