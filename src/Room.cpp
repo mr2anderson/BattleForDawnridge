@@ -398,7 +398,7 @@ void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
     packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet2 << str;
 
-	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet1.getDataSize()) + " kb");
+	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet1.getDataSize()) + " b");
 
     std::unordered_map<uint32_t, bool> sendingType;
     for (uint32_t i = 1; i <= p.remotePlayers->size(); i = i + 1) {
