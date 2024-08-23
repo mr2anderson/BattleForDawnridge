@@ -76,7 +76,6 @@
 #include "WipeHealingAbilityEvent.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
-#include "SaveGameEvent.hpp"
 #include "LimitResourcesEvent.hpp"
 #include "ServerNetSpecs.hpp"
 #include "RoomOutputProtocol.hpp"
@@ -147,8 +146,7 @@ private:
 	ResourceBar makeResourceBar();
     void sendWorldUIStateToClients(RoomOutputProtocol p);
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
-	void sendSaveToClient(RoomOutputProtocol p);
-	void sendReturnToMenuToClient(RoomOutputProtocol p);
+	void sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	void sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip);
@@ -159,6 +157,7 @@ private:
 
 	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p);
 	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p);
+    void receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p);
 
 	void handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p);
@@ -209,6 +208,5 @@ private:
 	void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, RoomOutputProtocol p);
 	void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p);
 	void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, RoomOutputProtocol p);
-	void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, RoomOutputProtocol p);
 	void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p);
 };

@@ -25,14 +25,5 @@
 
 class ReturnToMenuEvent : public Event {
 public:
-	typedef enum {
-		CURRENT_PLAYER,
-		EVERY_PLAYER
-	} Type;
-
-	ReturnToMenuEvent(Type type);
-
-	Type getType() const;
-private:
-	Type type;
+	ReturnToMenuEvent();
 };

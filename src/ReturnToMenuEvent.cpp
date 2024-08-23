@@ -20,9 +20,4 @@
 #include "ReturnToMenuEvent.hpp"
 
 
-ReturnToMenuEvent::ReturnToMenuEvent(Type type) {
-	this->type = type;
-}
-ReturnToMenuEvent::Type ReturnToMenuEvent::getType() const {
-	return this->type;
-}
+ReturnToMenuEvent::ReturnToMenuEvent() = default;

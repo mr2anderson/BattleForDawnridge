@@ -22,8 +22,6 @@
 #include <boost/serialization/shared_ptr.hpp>
 #include <sstream>
 #include "Room.hpp"
-#include "ReturnToMenuButtonSpec.hpp"
-#include "SaveGameButtonSpec.hpp"
 #include "EndTurnButtonSpec.hpp"
 #include "BuildButtonSpec.hpp"
 #include "Building.hpp"
@@ -71,8 +69,6 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->animation = boost::none;
 	this->currentGOIndexNewMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
-	this->buttons.emplace_back(ReturnToMenuButtonSpec());
-	this->buttons.emplace_back(SaveGameButtonSpec(1));
 	this->buttons.emplace_back(EndTurnButtonSpec(2));
 	this->buttons.emplace_back(BuildButtonSpec(3));
 	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id.value()));
@@ -402,20 +398,12 @@ void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& 
 
 	this->sendToClients(packet, p);
 }
-void Room::sendSaveToClient(RoomOutputProtocol p) {
-	p.logs->emplace_back("{sending_save_to_current_player}");
+void Room::sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
+	p.logs->emplace_back("{sending_save_to}" + ip.toString());
 
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
-
-	this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
-}
-void Room::sendReturnToMenuToClient(RoomOutputProtocol p) {
-	p.logs->emplace_back("{sending_return_to_menu_to_current_player}");
-
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
 
 	this->sendToClient(packet, p.toSend, p.remotePlayers->get(this->currentPlayerId).getIp());
 }
@@ -494,6 +482,9 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
         if (code == CLIENT_NET_SPECS::CODES::CLICK) {
             this->receiveClick(packet, ip, p);
         }
+        else if (code == CLIENT_NET_SPECS::CODES::NEED_SAVE) {
+            this->receiveNeedSave(ip, p);
+        }
     }
 }
 void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p) {
@@ -527,6 +518,10 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 		Events events = this->selected->unselect(this->map.getStatePtr(), viewX / 64, viewY / 64, mouseButton);
 		this->addEvents(events, p);
 	}
+}
+void Room::receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p) {
+    p.logs->emplace_back("{received_need_save}" + ip.toString());
+    this->sendSaveToClient(ip, p);
 }
 
 
@@ -680,9 +675,6 @@ void Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
 		this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent, p);
 	}
-	else if (std::shared_ptr<SaveGameEvent> saveGameEvent = std::dynamic_pointer_cast<SaveGameEvent>(e)) {
-		this->handleSaveGameEvent(saveGameEvent, p);
-	}
 	else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
 		this->handleLimitResourcesEvent(limitResourcesEvent, p);
 	}
@@ -728,14 +720,7 @@ void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, RoomOutputP
 	this->changeMove();
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, RoomOutputProtocol p) {
-	switch (e->getType()) {
-	case ReturnToMenuEvent::Type::CURRENT_PLAYER:
-		this->sendReturnToMenuToClient(p);
-		break;
-	case ReturnToMenuEvent::Type::EVERY_PLAYER:
-		this->sendReturnToMenuToClients(p);
-		break;
-	}
+    this->sendReturnToMenuToClients(p);
 }
 void Room::handleDestroyEvent(std::shared_ptr<DestroyEvent> e, RoomOutputProtocol p) {
 	Events destroyBuildingEvent = e->getBuilding()->destroy(this->map.getStatePtr());
@@ -869,7 +854,7 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 	if (count == 1) {
 		Events returnToMenuEvent;
 		returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("click"));
-		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>(ReturnToMenuEvent::Type::EVERY_PLAYER));
+		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
 		w = std::make_shared<WindowButton>(StringLcl("{game_finished}"), StringLcl("{OK}"), returnToMenuEvent);
 	}
 	else {
@@ -886,9 +871,6 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 }
 void Room::handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, RoomOutputProtocol p) {
 	e->getSpec()->increaseMoveCtr();
-}
-void Room::handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e, RoomOutputProtocol p) {
-	this->sendSaveToClient(p);
 }
 void Room::handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p) {
 	this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(e->getPlayerId())->limitResources(e->getLimit());

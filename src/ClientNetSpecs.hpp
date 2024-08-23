@@ -34,5 +34,6 @@ namespace CLIENT_NET_SPECS {
         static constexpr uint8_t CREATE = 0;
         static constexpr uint8_t CONNECT = 1;
         static constexpr uint8_t CLICK = 2;
+        static constexpr uint8_t NEED_SAVE = 3;
     }
 };

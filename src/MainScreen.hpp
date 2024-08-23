@@ -31,6 +31,10 @@
 #include "ResourceBar.hpp"
 #include "ClientNetSpecs.hpp"
 #include "PlaySoundEvent.hpp"
+#include "Button.hpp"
+#include "SaveGameEvent.hpp"
+#include "ReturnToMenuEvent.hpp"
+#include "CreateEEvent.hpp"
 
 
 #pragma once
@@ -76,6 +80,8 @@ private:
 	ResourceBar resourceBar;
 
 	std::shared_ptr<PopUpElement> localElement;
+    std::vector<Button> localButtons;
+    std::queue<std::shared_ptr<Event>> localEventQueue;
 
 	bool returnToMenu;
 	sf::View view;
@@ -89,6 +95,7 @@ private:
 
 	void sendInit();
     void sendClick(sf::RenderWindow &window, uint8_t button);
+    void sendNeedSave();
 
 
 	void receive(sf::RenderWindow &window);
@@ -127,9 +134,15 @@ private:
 	void verifyViewWest(sf::RenderWindow& window);
 	void verifyViewEast(sf::RenderWindow& window);
 
+    Events handleLocalButtonsClick();
 
-	void handleEvents(Events& events);
+	void addLocalEvents(Events& events);
+    void processLocalEvents();
+
 	void handleEvent(std::shared_ptr<Event> e);
 
 	void handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e);
+    void handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e);
+    void handleSaveGameEvent(std::shared_ptr<SaveGameEvent> e);
+    void handleCreateEEvent(std::shared_ptr<CreateEEvent> e);
 };
