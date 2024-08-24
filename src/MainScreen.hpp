@@ -71,13 +71,11 @@ private:
 	uint32_t playersAtThisHost;
 	RoomID roomID;
 
-	bool initPackageGotten;
-    std::string string;
+	bool readyPackageGotten;
 	Map map;
 	std::shared_ptr<PopUpElement> element;
 	ISelectable* selected;
 	HighlightTable highlightTable;
-	bool cursorVisibility;
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
 	ResourceBar resourceBar;
 
@@ -102,7 +100,13 @@ private:
 
 	void receive(sf::RenderWindow &window);
 	void receiveError(sf::Packet& remPacket);
-	void receiveWorldUIState(sf::Packet& remPacket);
+	void receiveMap(sf::Packet& remPacket);
+    void receiveElement(sf::Packet& remPacket);
+    void receiveSelected(sf::Packet& remPacket);
+    void receiveHighlightTable(sf::Packet& remPacket);
+    void receiveButtonBases(sf::Packet& remPacket);
+    void receiveResourceBar(sf::Packet& remPacket);
+    void receiveReady();
 	void receiveSound(sf::Packet& remPacket);
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
 	void receiveReturnToMenu();

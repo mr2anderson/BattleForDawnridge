@@ -62,6 +62,8 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 
 	this->loadSaveData(saveData);
 
+    this->mustSendInit();
+
 	this->curcorVisibility = true;
 	this->element = nullptr;
 	this->selected = nullptr;
@@ -101,9 +103,9 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw NoActivePlayers();
 	}
 
-    if (this->prevWorldUiState == boost::none) {
+    if (this->prevMap.empty()) {
 		p.logs->emplace_back("{sending_init_world_ui_state}");
-        this->sendWorldUIStateToClients(p);
+        this->initUI(p);
     }
 
 	this->receive(received, p);
@@ -119,8 +121,13 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	this->processNewMoveEvents(p);
 	this->processBaseEvents(p);
 }
-void Room::needInit() {
-    this->prevWorldUiState = boost::none;
+void Room::mustSendInit() {
+    this->prevMap.clear();
+    this->prevElement.clear();
+    this->prevHighlightTable.clear();
+    this->prevSelected.clear();
+    this->buttonBasesWereSent = false;
+    this->prevResourceBar.clear();
 }
 
 
@@ -227,7 +234,7 @@ void Room::verifyMapTooBig() {
 
 
 void Room::processNewMoveEvents(RoomOutputProtocol p) {
-	bool somethingProcessed = false;
+	uint8_t processed = 0;
 	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
 		if (this->element != nullptr or !this->events.empty()) {
 			break;
@@ -235,13 +242,9 @@ void Room::processNewMoveEvents(RoomOutputProtocol p) {
 		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
 		this->addEvents(newMoveEvent, p);
 		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-		if (this->processBaseEvents(p, false)) {
-            somethingProcessed = true;
-        }
+		processed = processed | this->processBaseEvents(p, false);
 	}
-	if (somethingProcessed) {
-		this->sendWorldUIStateToClients(p);
-	}
+	this->syncUI(processed, p);
 }
 bool Room::allNewMoveEventsAdded() const {
 	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
@@ -279,40 +282,35 @@ void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32
 		}
 	}
 }
-bool Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
-	bool somethingProcessed = false;
+uint8_t Room::processBaseEvents(RoomOutputProtocol p, bool sendToClients) {
+	uint8_t processed = 0;
 	while (!this->events.empty()) {
 		if (this->element != nullptr or this->animation.has_value()) {
 			break;
 		}
-		if (this->handleEvent(this->events.front(), p)) {
-            somethingProcessed = true;
-        }
+		processed = processed | this->handleEvent(this->events.front(), p);
 		this->events.pop();
 	}
-	if (sendToClients and somethingProcessed) {
-		this->sendWorldUIStateToClients(p);
+	if (sendToClients) {
+        this->syncUI(processed, p);
+		processed = 0;
 	}
-    return somethingProcessed;
+    return processed;
 }
 void Room::addEvents(Events& e, RoomOutputProtocol p) {
-    bool somethingProcessed = false;
+    uint8_t processed = 0;
 
 	for (uint32_t i = 0; i < e.size(); i = i + 1) {
 		std::shared_ptr<Event> event = e.at(i);
 		if (event->isUrgent()) {
-            if (this->handleEvent(event, p)) {
-                somethingProcessed = true;
-            }
+            processed = processed | this->handleEvent(event, p);
 		}
 		else {
 			this->events.push(event);
 		}
 	}
 
-    if (somethingProcessed) {
-        this->sendWorldUIStateToClients(p);
-    }
+    this->syncUI(processed, p);
 }
 
 
@@ -365,89 +363,176 @@ ResourceBar Room::makeResourceBar() {
 	
 	return bar;
 }
-void Room::sendWorldUIStateToClients(RoomOutputProtocol p) {
-	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
-	}
-
-	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
-	ResourceBar resourceBar = this->makeResourceBar();
-
-	std::string str;
-	boost::iostreams::back_insert_device<std::string> inserter(str);
-	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
-	oarchive a(s);
-	a << this->map << this->element << this->highlightTable << buttonBases << resourceBar << this->selected << this->curcorVisibility;
-	s.flush();
-
-	sf::Packet packet = this->makeBasePacket();
-	packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-    if (this->prevWorldUiState.has_value()) {
-        uint32_t index = 0;
-        std::string buff;
-        while (index < str.size()) {
-            uint32_t maxBlockSize = 0;
-            uint32_t asIndex;
-            for (uint32_t blockSize = 256; true; blockSize = blockSize * 2) {
-                if (index + blockSize > str.size()) {
-                    break;
-                }
-                std::string substr = str.substr(index, blockSize);
-                boost::algorithm::boyer_moore<std::string::const_iterator> search(substr.begin(), substr.end());
-                auto it = search(this->prevWorldUiState->begin(), this->prevWorldUiState->end()).first;
-                if (it == this->prevWorldUiState->end()) {
-                    break;
-                }
-                maxBlockSize = blockSize;
-                asIndex = (uint32_t)std::distance(this->prevWorldUiState->begin(), it);
-            }
-            if (maxBlockSize == 0) {
-                buff.append(str.substr(index, std::min(256ul, str.size() - index)));
-                index = index + 256;
-            }
-            else {
-                if (!buff.empty()) {
-                    packet << (uint8_t)0 << buff;
-                    buff.clear();
-                }
-                index = index + maxBlockSize;
-                packet << (uint8_t)1 << asIndex << maxBlockSize;
-            }
-        }
-        if (!buff.empty()) {
-            packet << (uint8_t)0 << buff;
-        }
+void Room::syncUI(uint8_t code, RoomOutputProtocol p) {
+    if (code & SYNC_UI::SYNC_MAP) {
+        this->syncMap(p);
     }
-    else {
-        packet << (uint8_t)0 << str;
+    if (code & SYNC_UI::SYNC_ELEMENT) {
+        this->syncElement(p);
     }
-    packet << (uint8_t)2;
-
-    this->prevWorldUiState = str;
-
-	p.logs->emplace_back("{sending_world_ui_state}" + std::to_string(packet.getDataSize()) + " b");
-
-    std::unordered_map<uint32_t, bool> sendingType;
-    for (uint32_t i = 1; i <= p.remotePlayers->size(); i = i + 1) {
-        uint32_t intIp = p.remotePlayers->get(i).getIp().toInteger();
-        if (i == this->currentPlayerId) {
-            sendingType[intIp] = true;
-        }
-        else {
-            if (sendingType.find(intIp) == sendingType.end()) {
-                sendingType[intIp] = false;
-            }
-        }
+    if (code & SYNC_UI::SYNC_HIGHLIGHT_TABLE) {
+        this->syncHighlightTable(p);
     }
-    for (auto &t : sendingType) {
-        if (t.second) {
-            this->sendToClient(packet, p.toSend, sf::IpAddress(t.first));
-        }
-        else {
-            this->sendToClient(packet, p.toSend, sf::IpAddress(t.first));
-        }
+    if (code & SYNC_UI::SYNC_RESOURCE_BAR) {
+        this->syncResourceBar(p);
+    }
+    if (code & SYNC_UI::SYNC_SELECTED) {
+        this->syncSelected(p);
     }
 }
+void Room::initUI(RoomOutputProtocol p) {
+    this->syncMap(p);
+    this->syncElement(p);
+    this->syncHighlightTable(p);
+    this->syncSelected(p);
+    this->syncButtonBases(p);
+    this->syncResourceBar(p);
+    this->sendReady(p);
+}
+void Room::syncMap(RoomOutputProtocol p) {
+    for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+        this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
+    }
+
+    std::string str;
+    boost::iostreams::back_insert_device<std::string> inserter(str);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+    oarchive a(s);
+    a << this->map;
+    s.flush();
+
+    if (this->prevMap != str) {
+        this->prevMap = str;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP;
+        packet << str;
+
+        p.logs->emplace_back("{sending_map_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::syncElement(RoomOutputProtocol p) {
+    std::string str;
+    boost::iostreams::back_insert_device<std::string> inserter(str);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+    oarchive a(s);
+    a << this->element;
+    s.flush();
+
+    if (this->prevElement != str) {
+        this->prevElement = str;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT;
+        packet << str;
+
+        p.logs->emplace_back("{sending_element_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::syncHighlightTable(RoomOutputProtocol p) {
+    std::string str;
+    boost::iostreams::back_insert_device<std::string> inserter(str);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+    oarchive a(s);
+    a << this->highlightTable;
+    s.flush();
+
+    if (this->prevHighlightTable != str) {
+        this->prevHighlightTable = str;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE;
+        packet << str;
+
+        p.logs->emplace_back("{sending_highlight_table_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::syncSelected(RoomOutputProtocol p) {
+    std::string str;
+    boost::iostreams::back_insert_device<std::string> inserter(str);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+    oarchive a(s);
+    a << this->selected;
+    s.flush();
+
+    if (this->prevSelected != str) {
+        this->prevSelected = str;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
+        packet << str;
+
+        p.logs->emplace_back("{sending_selected_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::syncButtonBases(RoomOutputProtocol p) {
+    std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
+
+    std::string str;
+    boost::iostreams::back_insert_device<std::string> inserter(str);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+    oarchive a(s);
+    a << buttonBases;
+    s.flush();
+
+    if (!this->buttonBasesWereSent) {
+        this->buttonBasesWereSent = true;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES;
+        packet << str;
+
+        p.logs->emplace_back("{sending_button_bases_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::syncResourceBar(RoomOutputProtocol p) {
+    ResourceBar resourceBar = this->makeResourceBar();
+
+    std::string str;
+    boost::iostreams::back_insert_device<std::string> inserter(str);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
+    oarchive a(s);
+    a << resourceBar;
+    s.flush();
+
+    if (str != this->prevResourceBar) {
+        this->prevResourceBar = str;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR;
+        packet << str;
+
+        p.logs->emplace_back("{sending_resource_bar_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::sendReady(RoomOutputProtocol p) {
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::READY;
+
+    p.logs->emplace_back("{sending_ready_to_clients} " + std::to_string(packet.getDataSize()) + " b");
+
+    this->sendToClients(packet, p);
+}
+
+
 void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName) {
 	p.logs->emplace_back("{sending_sound_to_players}");
 	
@@ -458,11 +543,11 @@ void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& 
 	this->sendToClients(packet, p);
 }
 void Room::sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
-	p.logs->emplace_back("{sending_save_to}" + ip.toString());
-
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
+
+    p.logs->emplace_back("{sending_save_to}" + ip.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClient(packet, p.toSend, ip);
 }
@@ -589,66 +674,80 @@ void Room::receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p) {
 
 
 
-bool Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
-    bool needUpdate = true;
+uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
+    uint8_t result = 0;
 	if (std::shared_ptr<AddResourceEvent> addResourceEvent = std::dynamic_pointer_cast<AddResourceEvent>(e)) {
 		this->handleAddResourceEvent(addResourceEvent, p);
+        result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<SubResourceEvent> subResourceEvent = std::dynamic_pointer_cast<SubResourceEvent>(e)) {
 		this->handleSubResourceEvent(subResourceEvent, p);
+        result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<AddResourcesEvent> addResourcesEvent = std::dynamic_pointer_cast<AddResourcesEvent>(e)) {
 		this->handleAddResourcesEvent(addResourcesEvent, p);
+        result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<SubResourcesEvent> subResourcesEvent = std::dynamic_pointer_cast<SubResourcesEvent>(e)) {
 		this->handleSubResourcesEvent(subResourcesEvent, p);
+        result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<SetHighlightEvent> changeHighlightEvent = std::dynamic_pointer_cast<SetHighlightEvent>(e)) {
 		this->handleSetHighlightEvent(changeHighlightEvent, p);
+        result = result | SYNC_UI::SYNC_HIGHLIGHT_TABLE;
 	}
 	else if (std::shared_ptr<AddHpEvent> addHpEvent = std::dynamic_pointer_cast<AddHpEvent>(e)) {
 		this->handleAddHpEvent(addHpEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> decreaseCurrentTradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentTradeMovesLeftEvent>(e)) {
 		this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<BuildEvent> buildEvent = std::dynamic_pointer_cast<BuildEvent>(e)) {
 		this->handleBuild(buildEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
 		this->handlePlaySoundEvent(playSoundEvent, p);
-        needUpdate = false;
 	}
 	else if (std::shared_ptr<CreateEEvent> createEEvent = std::dynamic_pointer_cast<CreateEEvent>(e)) {
 		this->handleCreatePopUpElementEvent(createEEvent, p);
+        result = result | SYNC_UI::SYNC_ELEMENT;
 	}
 	else if (std::shared_ptr<ChangeMoveEvent> changeMoveEvent = std::dynamic_pointer_cast<ChangeMoveEvent>(e)) {
 		this->handleChangeMoveEvent(changeMoveEvent, p);
 	}
 	else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e)) {
 		this->handleReturnToMenuEvent(returnToMenuEvent, p);
-        needUpdate = false;
 	}
 	else if (std::shared_ptr<DestroyEvent> destroyEvent = std::dynamic_pointer_cast<DestroyEvent>(e)) {
 		this->handleDestroyEvent(destroyEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<DecreaseCurrentProducingMovesLeftEvent> decreaseCurrentProducingMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentProducingMovesLeftEvent>(e)) {
 		this->handleDecreaseCurrentProdusingMovesLeftEvent(decreaseCurrentProducingMovesLeftEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e)) {
 		this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<SelectEvent> selectEvent = std::dynamic_pointer_cast<SelectEvent>(e)) {
 		this->handleSelectEvent(selectEvent, p);
+        result = result | SYNC_UI::SYNC_SELECTED;
 	}
 	else if (std::shared_ptr<UnselectEvent> unselectEvent = std::dynamic_pointer_cast<UnselectEvent>(e)) {
 		this->handleUnselectEvent(unselectEvent, p);
+        result = result | SYNC_UI::SYNC_SELECTED;
 	}
 	else if (std::shared_ptr<StartWarriorAnimationEvent> startWarriorAnimationEvent = std::dynamic_pointer_cast<StartWarriorAnimationEvent>(e)) {
 		this->handleStartWarriorAnimationEvent(startWarriorAnimationEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<RefreshMovementPointsEvent> refreshMovementPointsEvent = std::dynamic_pointer_cast<RefreshMovementPointsEvent>(e)) {
 		this->handleRefreshMovementPointsEvent(refreshMovementPointsEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<EnableCursorEvent> enableCursorEvent = std::dynamic_pointer_cast<EnableCursorEvent>(e)) {
 		this->handleEnableCursorEvent(enableCursorEvent, p);
@@ -658,104 +757,130 @@ bool Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
 		this->handleCreateAnimationEvent(createAnimationEvent, p);
-        needUpdate = false;
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<DecreaseBurningMovesLeftEvent> decreaseBurningMovesLeftEvent = std::dynamic_pointer_cast<DecreaseBurningMovesLeftEvent>(e)) {
 		this->handleDecreaseBurningMovesLeftEvent(decreaseBurningMovesLeftEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<SubHpEvent> subHpEvent = std::dynamic_pointer_cast<SubHpEvent>(e)) {
 		this->handleSubHpEvent(subHpEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<SetFireEvent> setFireEvent = std::dynamic_pointer_cast<SetFireEvent>(e)) {
 		this->handleSetFireEvent(setFireEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<ChangeWarriorDirectionEvent> changeWarriorDirectionEvent = std::dynamic_pointer_cast<ChangeWarriorDirectionEvent>(e)) {
 		this->handleChangeWarriorDirectionEvent(changeWarriorDirectionEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<FocusOnEvent> focusOnEvent = std::dynamic_pointer_cast<FocusOnEvent>(e)) {
 		this->handleFocusOnEvent(focusOnEvent, p);
-        needUpdate = false;
 	}
 	else if (std::shared_ptr<ResetHighlightEvent> resetHighlightEvent = std::dynamic_pointer_cast<ResetHighlightEvent>(e)) {
 		this->handleResetHighlightEvent(resetHighlightEvent, p);
+        result = result | SYNC_UI::SYNC_HIGHLIGHT_TABLE;
 	}
 	else if (std::shared_ptr<DoTradeEvent> doTradeEvent = std::dynamic_pointer_cast<DoTradeEvent>(e)) {
 		this->handleDoTradeEvent(doTradeEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<StartWarriorProducingEvent> startWarriorProducingEvent = std::dynamic_pointer_cast<StartWarriorProducingEvent>(e)) {
 		this->handleStartWarriorProducingEvent(startWarriorProducingEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<TryToBuildEvent> tryToBuildEvent = std::dynamic_pointer_cast<TryToBuildEvent>(e)) {
 		this->handleTryToBuildEvent(tryToBuildEvent, p);
 	}
 	else if (std::shared_ptr<KillNextTurnEvent> killNextTurnEvent = std::dynamic_pointer_cast<KillNextTurnEvent>(e)) {
 		this->handleKillNextTurnEvent(killNextTurnEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<RevertKillNextTurnEvent> revertKillNextTurnEvent = std::dynamic_pointer_cast<RevertKillNextTurnEvent>(e)) {
 		this->handleRevertKillNextTurnEvent(revertKillNextTurnEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<CloseAnimationEvent> closeAnimationEvent = std::dynamic_pointer_cast<CloseAnimationEvent>(e)) {
 		this->handleCloseAnimationEvent(closeAnimationEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<DecreaseSpellCreationMovesLeftEvent> decreaseSpellCreationMovesLeftEvent = std::dynamic_pointer_cast<DecreaseSpellCreationMovesLeftEvent>(e)) {
 		this->handleDecreaseSpellCreationMovesLeftEvent(decreaseSpellCreationMovesLeftEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<SetSpellEvent> setSpellEvent = std::dynamic_pointer_cast<SetSpellEvent>(e)) {
 		this->handleSetSpellEvent(setSpellEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<UseSpellEvent> useSpellEvent = std::dynamic_pointer_cast<UseSpellEvent>(e)) {
 		this->handleUseSpellEvent(useSpellEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<MarkSpellAsUsedEvent> markSpellAsUsedEvent = std::dynamic_pointer_cast<MarkSpellAsUsedEvent>(e)) {
 		this->handleMarkSpellAsUsedEvent(markSpellAsUsedEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<EnableWarriorRageModeEvent> enableWarriorRageModeEvent = std::dynamic_pointer_cast<EnableWarriorRageModeEvent>(e)) {
 		this->handleEnableWarriorRageModeEvent(enableWarriorRageModeEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<DecreaseRageModeMovesLeftEvent> decreaseRageModeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseRageModeMovesLeftEvent>(e)) {
 		this->handleDecreaseRageModeMovesLeftEvent(decreaseRageModeMovesLeftEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<RefreshAttackAbilityEvent> refreshAttackAbilityEvent = std::dynamic_pointer_cast<RefreshAttackAbilityEvent>(e)) {
 		this->handleRefreshAttackAbilityEvent(refreshAttackAbilityEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<WipeAttackAbilityEvent> wipeAttackAbilityEvent = std::dynamic_pointer_cast<WipeAttackAbilityEvent>(e)) {
 		this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<RefreshAttackedTableEvent> refreshAttackedTableEvent = std::dynamic_pointer_cast<RefreshAttackedTableEvent>(e)) {
 		this->handleRefreshAttackedTableEvent(refreshAttackedTableEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<MarkAsAttackedEvent> markAsAttackedEvent = std::dynamic_pointer_cast<MarkAsAttackedEvent>(e)) {
 		this->handleMarkAsAttackedEvent(markAsAttackedEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<RefreshHealingAbilityEvent> refreshHealingAbilityEvent = std::dynamic_pointer_cast<RefreshHealingAbilityEvent>(e)) {
 		this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<WipeHealingAbilityEvent> wipeHealingAbilityEvent = std::dynamic_pointer_cast<WipeHealingAbilityEvent>(e)) {
 		this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
 		this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<IncreaseVCSMoveCtrEvent> increaseVcsMoveCtrEvent = std::dynamic_pointer_cast<IncreaseVCSMoveCtrEvent>(e)) {
 		this->handleIncreaseVCSMoveCtrEvent(increaseVcsMoveCtrEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
 	}
 	else if (std::shared_ptr<LimitResourcesEvent> limitResourcesEvent = std::dynamic_pointer_cast<LimitResourcesEvent>(e)) {
 		this->handleLimitResourcesEvent(limitResourcesEvent, p);
+        result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
     else if (std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> moveUpEvent = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowUpEvent>(e)) {
         this->handleMoveHorizontalSelectionWindowUpEvent(moveUpEvent, p);
+        result = result | SYNC_UI::SYNC_ELEMENT;
     }
     else if (std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> moveDownEvent = std::dynamic_pointer_cast<MoveHorizontalSelectionWindowDownEvent>(e)) {
         this->handleMoveHorizontalSelectionWindowDownEvent(moveDownEvent, p);
+        result = result | SYNC_UI::SYNC_ELEMENT;
     }
     else if (std::shared_ptr<ClosePopUpElementEvent> closePopUpElementEvent = std::dynamic_pointer_cast<ClosePopUpElementEvent>(e)) {
         this->handleClosePopUpElementEvent(closePopUpElementEvent, p);
+        result = result | SYNC_UI::SYNC_ELEMENT;
     }
 	else {
         p.logs->emplace_back("{unknown_event_handled}");
-        needUpdate = false;
     }
-    return needUpdate;
+    return result;
 }
 void Room::handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p) {
 	this->getCurrentPlayer()->addResource(e->getResource(), e->getLimit().get(e->getResource().type));

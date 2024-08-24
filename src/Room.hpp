@@ -102,13 +102,19 @@ public:
 	uint32_t playersNumber() const;
 
 	void update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p);
-    void needInit();
+    void mustSendInit();
 private:
 	RoomID id;
 	Restrictions restrictions;
 	Timer timeoutTimer;
 
-    boost::optional<std::string> prevWorldUiState;
+    std::string prevMap;
+    std::string prevElement;
+    std::string prevHighlightTable;
+    std::string prevSelected;
+    bool buttonBasesWereSent;
+    std::string prevResourceBar;
+
 	Map map;
 	std::vector<bool> playerIsActive;
 	uint32_t currentPlayerId;
@@ -141,12 +147,21 @@ private:
 	Player* getCurrentPlayer();
 	void addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p);
 	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);
-	bool processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
+	uint8_t processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
 	void addEvents(Events& e, RoomOutputProtocol p);
 
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
-    void sendWorldUIStateToClients(RoomOutputProtocol p);
+    void syncUI(uint8_t code, RoomOutputProtocol p);
+    void initUI(RoomOutputProtocol p);
+    void syncMap(RoomOutputProtocol p);
+    void syncElement(RoomOutputProtocol p);
+    void syncHighlightTable(RoomOutputProtocol p);
+    void syncSelected(RoomOutputProtocol p);
+    void syncButtonBases(RoomOutputProtocol p);
+    void syncResourceBar(RoomOutputProtocol p);
+    void sendReady(RoomOutputProtocol p);
+
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
 	void sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
@@ -161,7 +176,14 @@ private:
 	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p);
     void receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p);
 
-	bool handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
+    struct SYNC_UI {
+        static constexpr uint8_t SYNC_MAP = 1;
+        static constexpr uint8_t SYNC_ELEMENT = 2;
+        static constexpr uint8_t SYNC_HIGHLIGHT_TABLE = 4;
+        static constexpr uint8_t SYNC_SELECTED = 8;
+        static constexpr uint8_t SYNC_RESOURCE_BAR = 16;
+    };
+	uint8_t handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p);
 	void handleSubResourceEvent(std::shared_ptr<SubResourceEvent> e, RoomOutputProtocol p);
 	void handleAddResourcesEvent(std::shared_ptr<AddResourcesEvent> e, RoomOutputProtocol p);

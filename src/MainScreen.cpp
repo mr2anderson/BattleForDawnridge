@@ -81,7 +81,7 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	this->playersAtThisHost = playersAtThisHost;
 	this->roomID = roomID;
 
-	this->initPackageGotten = false;
+	this->readyPackageGotten = false;
 
     this->localElement = nullptr;
     this->localButtons.emplace_back(ReturnToMenuButtonSpec());
@@ -131,7 +131,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 
     this->sendInit();
     timer.reset();
-    while (!this->initPackageGotten) {
+    while (!this->readyPackageGotten) {
         while (window.pollEvent(event)) {}
         if (timer.ready()) {
             throw NoServerConnection();
@@ -174,7 +174,6 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->processReceiving();
 		this->receive(window);
 		Playlist::get()->update();
-		window.setMouseCursorVisible(this->cursorVisibility);
 		this->drawEverything(window);
 		this->moveView(window);
 	}
@@ -304,7 +303,32 @@ void MainScreen::receive(sf::RenderWindow &window) {
 			this->receiveError(receivedPacket);
 		}
         else if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
-            this->receiveWorldUIState(receivedPacket);
+            uint8_t worldUiStateCode;
+            receivedPacket >> worldUiStateCode;
+            if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP) {
+                this->receiveMap(receivedPacket);
+            }
+            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT) {
+                this->receiveElement(receivedPacket);
+            }
+            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE) {
+                this->receiveHighlightTable(receivedPacket);
+            }
+            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED) {
+                this->receiveSelected(receivedPacket);
+            }
+            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES) {
+                this->receiveButtonBases(receivedPacket);
+            }
+            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR) {
+                this->receiveResourceBar(receivedPacket);
+            }
+            else {
+                LOGS("Warning: unknown world ui state code received from server: " + std::to_string((uint32_t)worldUiStateCode));
+            }
+        }
+        else if (code == SERVER_NET_SPECS::CODES::READY) {
+            this->receiveReady();
         }
         else if (code == SERVER_NET_SPECS::CODES::SOUND) {
             this->receiveSound(receivedPacket);
@@ -327,43 +351,71 @@ void MainScreen::receive(sf::RenderWindow &window) {
     }
 }
 void MainScreen::receiveError(sf::Packet& remPacket) {
+    LOGS("Receiving error code");
 	uint8_t errorCode;
 	remPacket >> errorCode;
 	throw ServerInitError(errorCode);
 }
-void MainScreen::receiveWorldUIState(sf::Packet& remPacket) {
-    std::string result;
-    uint8_t mode;
-    for (; ;) {
-        remPacket >> mode;
-        if (mode == 2) {
-            break;
-        }
-        else if (mode == 1) {
-            uint32_t pos, size;
-            remPacket >> pos >> size;
-            for (uint32_t i = pos; i < pos + size; i = i + 1) {
-                result.push_back(this->string.at(i));
-            }
-        }
-        else if (mode == 0) {
-            std::string val;
-            remPacket >> val;
-            result.append(val);
-        }
-    }
-    this->string = result;
-	std::stringstream stream1(this->string);
-	iarchive a1(stream1);
-	a1 >> this->map >> this->element >> this->highlightTable >> this->buttonBases >> this->resourceBar >> this->selected >> this->cursorVisibility;
-	this->initPackageGotten = true;
+void MainScreen::receiveMap(sf::Packet& remPacket) {
+    LOGS("Receiving map");
+    std::string string;
+    remPacket >> string;
+    std::stringstream stream(string);
+    iarchive a1(stream);
+    a1 >> this->map;
+}
+void MainScreen::receiveElement(sf::Packet& remPacket) {
+    LOGS("Receiving element");
+    std::string string;
+    remPacket >> string;
+    std::stringstream stream(string);
+    iarchive a1(stream);
+    a1 >> this->element;
+}
+void MainScreen::receiveSelected(sf::Packet& remPacket) {
+    LOGS("Receiving selected");
+    std::string string;
+    remPacket >> string;
+    std::stringstream stream(string);
+    iarchive a1(stream);
+    a1 >> this->selected;
+}
+void MainScreen::receiveHighlightTable(sf::Packet& remPacket) {
+    LOGS("Receiving highlight table");
+    std::string string;
+    remPacket >> string;
+    std::stringstream stream(string);
+    iarchive a1(stream);
+    a1 >> this->highlightTable;
+}
+void MainScreen::receiveButtonBases(sf::Packet& remPacket) {
+    LOGS("Receiving button bases");
+    std::string string;
+    remPacket >> string;
+    std::stringstream stream(string);
+    iarchive a1(stream);
+    a1 >> this->buttonBases;
+}
+void MainScreen::receiveResourceBar(sf::Packet& remPacket) {
+    LOGS("Receiving resource bar");
+    std::string string;
+    remPacket >> string;
+    std::stringstream stream(string);
+    iarchive a1(stream);
+    a1 >> this->resourceBar;
+}
+void MainScreen::receiveReady() {
+    LOGS("Receiving ready");
+    this->readyPackageGotten = true;
 }
 void MainScreen::receiveSound(sf::Packet& remPacket) {
+    LOGS("Receiving sound");
 	std::string soundName;
 	remPacket >> soundName;
 	SoundQueue::get()->push(Sounds::get()->get(soundName));
 }
 void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
+    LOGS("Receiving focus");
 	uint32_t x, y, sx, sy;
 	remPacket >> x >> y >> sx >> sy;
 	uint32_t centerX = 64 * x + 64 / 2 * sx;
@@ -380,9 +432,11 @@ void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
 	}
 }
 void MainScreen::receiveReturnToMenu() {
+    LOGS("Receiving return tu menu");
 	this->returnToMenu = true;
 }
 void MainScreen::receiveSave(sf::Packet& remPacket) {
+    LOGS("Receiving save");
 	std::string data;
 	remPacket >> data;
 	if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
@@ -403,6 +457,7 @@ void MainScreen::receiveSave(sf::Packet& remPacket) {
     this->addLocalEvents(createWindowEvent);
 }
 void MainScreen::receiveNotYourMove() {
+    LOGS("Receiving not your move");
 	Events clickEvent;
 	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
     Events createWindowEvent;
