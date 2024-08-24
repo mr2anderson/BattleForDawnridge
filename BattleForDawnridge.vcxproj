@@ -641,7 +641,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Clock.hpp" />
     <ClInclude Include="src\CloseAnimationEvent.hpp" />
     <ClInclude Include="src\CloseMenuEvent.hpp" />
-    <ClInclude Include="src\CloseWindowEvent.hpp" />
+    <ClInclude Include="src\ClosePopUpElementEvent.hpp" />
     <ClInclude Include="src\ClueManager.hpp" />
     <ClInclude Include="src\Collection.hpp" />
     <ClInclude Include="src\Collections.hpp" />
@@ -995,7 +995,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Clock.cpp" />
     <ClCompile Include="src\CloseAnimationEvent.cpp" />
     <ClCompile Include="src\CloseMenuEvent.cpp" />
-    <ClCompile Include="src\CloseWindowEvent.cpp" />
+    <ClCompile Include="src\ClosePopUpElementEvent.cpp" />
     <ClCompile Include="src\ClueManager.cpp" />
     <ClCompile Include="src\Collections.cpp" />
     <ClCompile Include="src\ColorBlender.cpp" />
@@ -1137,8 +1137,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Mountains.cpp" />
     <ClCompile Include="src\Move.cpp" />
     <ClCompile Include="src\MoveDoesNotExist.cpp" />
-    <ClCompile Include="src\MoveGameActionWindowDownEvent.cpp" />
-    <ClCompile Include="src\MoveGameActionWindowUpEvent.cpp" />
+    <ClCompile Include="src\MoveHorizontalSelectionWindowDownEvent.cpp" />
+    <ClCompile Include="src\MoveHorizontalSelectionWindowUpEvent.cpp" />
     <ClCompile Include="src\MovementGraph.cpp" />
     <ClCompile Include="src\MovementGraphElement.cpp" />
     <ClCompile Include="src\Music.cpp" />

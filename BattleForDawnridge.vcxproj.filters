@@ -651,6 +651,27 @@
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp">
       <Filter>Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\polymorphic_portable_archive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_archive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_archive_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_iarchive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\portable_oarchive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serialize-tuple\serialize_tuple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\AddHpEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -672,6 +693,9 @@
     <ClInclude Include="src\ArchiveType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\AreaResourcePoint.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Barracks.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -682,6 +706,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BlackKnight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BuildButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BuildEvent.hpp">
@@ -738,7 +765,31 @@
     <ClInclude Include="src\ChooseLanguageEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\CircleLightSource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleLightSourceDynamic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleLightSourceLinear.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleLightSourceParabolic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleLightSourceSin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleLightSourceSqrt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleLightSourceStatic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\ClickPriority.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ClientNetSpecs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Clock.hpp">
@@ -750,7 +801,7 @@
     <ClInclude Include="src\CloseMenuEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CloseWindowEvent.hpp">
+    <ClInclude Include="src\ClosePopUpElementEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ClueManager.hpp">
@@ -780,6 +831,15 @@
     <ClInclude Include="src\ConductionGraph.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConductionResourcePoint.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Connection.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConnectToRoomEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\CouldntFindNewWarriorPosition.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -789,7 +849,13 @@
     <ClInclude Include="src\CouldntOpenFont.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\CouldntOpenIsServerTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\CouldntOpenLocales.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CouldntOpenMainServerPosition.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CouldntOpenMap.hpp">
@@ -811,6 +877,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CreateEEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CreditsButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CurrentRoomIDButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Damage.hpp">
@@ -852,16 +924,31 @@
     <ClInclude Include="src\DrawingPriority.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\EmptyLightSource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\EnableCursorEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\EnableWarriorRageModeEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\EndTurnButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntrySettings.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Event.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Events.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExitButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Filter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Fire.hpp">
@@ -880,9 +967,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Forest.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Program.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Gates1.hpp">
@@ -909,6 +993,9 @@
     <ClInclude Include="src\GO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GuideButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\HashTableMapPosition.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -928,6 +1015,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\HorizontalSelectionWindowComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\House.hpp">
@@ -951,13 +1041,31 @@
     <ClInclude Include="src\IBuildingSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\IButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ICollections.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\IConductionResourcePointCollectorSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ILightSource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IlluminanceTable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Image.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageFlyingE.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IncorrectMoveRepresentation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IncorrectPlayersRepresentation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IncreaseVCSMoveCtrEvent.hpp">
@@ -973,6 +1081,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\InfirmaryWarriorProducerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IntRectSerializable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InvalidRoomIDFormat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IPopulationLimitIncreaserSpec.hpp">
@@ -993,6 +1107,9 @@
     <ClInclude Include="src\ISingleAttacker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\IsServerTable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\ITerritoryConductorSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1003,6 +1120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IWarriorHealerSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IWithLightSource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IWithSuspendingAnimation.hpp">
@@ -1026,25 +1146,61 @@
     <ClInclude Include="src\LanguageAlreadyInUse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LanguageButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Legioner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LicenceButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LimitResourcesEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LoadingScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoadingScreenBg.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoadingScreenResponse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\LoadLocalGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LoadingScreen.hpp">
+    <ClInclude Include="src\LoadNetworkGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Locales.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LocalGameButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LocalServer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LocalServerAlreadyLaunched.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Logs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\MainScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\MainScreenButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainServerPosition.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MapDeepError.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MapPositionHash.hpp">
@@ -1057,6 +1213,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MapState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MapTooBig.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MarkAsAttackedEvent.hpp">
@@ -1074,7 +1233,19 @@
     <ClInclude Include="src\MarkSpellAsUsedEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\math.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Menu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuBg.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Mine.hpp">
@@ -1107,6 +1278,9 @@
     <ClInclude Include="src\Music.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\NetworkGameButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\NewMoveMainPriority.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1116,7 +1290,16 @@
     <ClInclude Include="src\NextClueEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\NoActivePlayers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NoServerConnection.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\PAKScreen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAKScreenResponse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Parameters.hpp">
@@ -1126,6 +1309,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerLimitReached.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerPointer.hpp">
@@ -1144,6 +1330,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Priority.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Program.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Projectile.hpp">
@@ -1176,6 +1365,12 @@
     <ClInclude Include="src\RefreshMovementPointsEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RemotePlayer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RemotePlayers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\ResetHighlightEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1197,6 +1392,9 @@
     <ClInclude Include="src\Resources.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ReturnToMenuButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\ReturnToMenuEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1209,7 +1407,22 @@
     <ClInclude Include="src\RoadSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Room.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoomDoesNotExist.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoomID.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoomOutputProtocol.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Root.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SaveGameButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SaveGameEvent.hpp">
@@ -1221,7 +1434,28 @@
     <ClInclude Include="src\SawmillSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ScreenAlreadyFinished.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\SelectEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SerializableColor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerInitError.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerNetSpecs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerRoom.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerRooms.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SetFireEvent.hpp">
@@ -1269,6 +1503,9 @@
     <ClInclude Include="src\StartLocalGameEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\StartNetworkGameEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\StartWarriorAnimationEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1276,6 +1513,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Stone.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StringLcl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SubHpEvent.hpp">
@@ -1287,6 +1527,9 @@
     <ClInclude Include="src\SubResourcesEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\SupportButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\SuspendingAnimation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1294,6 +1537,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TilesetHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Timer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TooMuchGameObjects.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TooMuchPlayers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tower1.hpp">
@@ -1339,6 +1591,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Valkyr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VersionsButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\VictoryConditionSpec.hpp">
@@ -1440,6 +1695,9 @@
     <ClInclude Include="src\WindowButtonImage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\WindowEntry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\WindowTwoButtons.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1458,266 +1716,14 @@
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\IWithLightSource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ILightSource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IlluminanceTable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EmptyLightSource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSourceSin.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSourceStatic.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSourceParabolic.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSourceDynamic.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSourceSqrt.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleLightSourceLinear.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ServerScreen.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IsServerTable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MenuResponse.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PAKScreenResponse.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LoadingScreenResponse.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ScreenAlreadyFinished.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\StringLcl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Logs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ConductionResourcePoint.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AreaResourcePoint.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MenuBg.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LoadingScreenBg.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ExitButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LicenceButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CreditsButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SupportButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuideButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LanguageButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkGameButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LocalGameButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MenuButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BuildButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EndTurnButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ReturnToMenuButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MainScreenButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SaveGameButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Room.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RemotePlayers.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RemotePlayer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\InvalidRoomIDFormat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RoomID.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SerializableColor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filter.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Timer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IntRectSerializable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ClientNetSpecs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LocalServer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NoServerConnection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ServerNetSpecs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LocalServerAlreadyLaunched.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CouldntOpenIsServerTable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\polymorphic_portable_archive.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\portable_archive.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\portable_archive_exception.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\portable_iarchive.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\portable_oarchive.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ICollections.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IncorrectMoveRepresentation.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IncorrectPlayersRepresentation.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MapTooBig.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\serialize-tuple\serialize_tuple.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TooMuchGameObjects.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TooMuchPlayers.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LoadNetworkGameEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\StartNetworkGameEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MapDeepError.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CurrentRoomIDButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ServerRooms.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RoomDoesNotExist.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerLimitReached.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MainServerPosition.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CouldntOpenMainServerPosition.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VersionsButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RoomOutputProtocol.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Connection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WindowEntry.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EntrySettings.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ConnectToRoomEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NoActivePlayers.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ServerRoom.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ServerInitError.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CloseWindowEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\AddHpEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1736,6 +1742,9 @@
     <ClCompile Include="src\ArableSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\AreaResourcePoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Barracks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1746,6 +1755,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\BlackKnight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BuildButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\BuildEvent.cpp">
@@ -1802,6 +1814,27 @@
     <ClCompile Include="src\ChooseLanguageEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CircleLightSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleLightSourceDynamic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleLightSourceLinear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleLightSourceParabolic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleLightSourceSin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleLightSourceSqrt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleLightSourceStatic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1811,7 +1844,7 @@
     <ClCompile Include="src\CloseMenuEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CloseWindowEvent.cpp">
+    <ClCompile Include="src\ClosePopUpElementEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ClueManager.cpp">
@@ -1838,6 +1871,15 @@
     <ClCompile Include="src\ConductionGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ConductionResourcePoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConnectToRoomEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\CouldntFindNewWarriorPosition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1847,7 +1889,13 @@
     <ClCompile Include="src\CouldntOpenFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CouldntOpenIsServerTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\CouldntOpenLocales.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CouldntOpenMainServerPosition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CouldntOpenMap.cpp">
@@ -1869,6 +1917,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CreateEEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CreditsButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CurrentRoomIDButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Damage.cpp">
@@ -1907,10 +1961,19 @@
     <ClCompile Include="src\DoTradeEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\EmptyLightSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\EnableCursorEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\EnableWarriorRageModeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EndTurnButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EntrySettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Event.cpp">
@@ -1919,10 +1982,16 @@
     <ClCompile Include="src\Events.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ExitButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FirstTimeTipsTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FlyingE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FocusOnEvent.cpp">
@@ -1932,9 +2001,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Forest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Gates1.cpp">
@@ -1950,6 +2016,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuideButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Healer.cpp">
@@ -1991,13 +2060,25 @@
     <ClCompile Include="src\IBuildingSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ICollections.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\IConductionResourcePointCollectorSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IlluminanceTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageFlyingE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IncorrectMoveRepresentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IncorrectPlayersRepresentation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IncreaseVCSMoveCtrEvent.cpp">
@@ -2015,6 +2096,12 @@
     <ClCompile Include="src\InfirmaryWarriorProducerSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IntRectSerializable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InvalidRoomIDFormat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\IPopulationLimitIncreaserSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2030,6 +2117,9 @@
     <ClCompile Include="src\IShootingSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IsServerTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\ITerritoryConductorSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2040,6 +2130,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IWarriorHealerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IWithLightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\KillNextTurnEvent.cpp">
@@ -2060,19 +2153,46 @@
     <ClCompile Include="src\LanguageAlreadyInUse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LanguageButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Legioner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LicenceButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\LimitResourcesEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\LoadLocalGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\LoadingScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LoadingScreenBg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadingScreenResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadLocalGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadNetworkGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Locales.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LocalGameButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LocalServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LocalServerAlreadyLaunched.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Logs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
@@ -2081,7 +2201,16 @@
     <ClCompile Include="src\MainScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MainScreenButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainServerPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MapDeepError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MapPositionHash.cpp">
@@ -2094,6 +2223,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MapState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MapTooBig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MarkAsAttackedEvent.cpp">
@@ -2114,6 +2246,15 @@
     <ClCompile Include="src\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MenuBg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2129,10 +2270,10 @@
     <ClCompile Include="src\MoveDoesNotExist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MoveGameActionWindowDownEvent.cpp">
+    <ClCompile Include="src\MoveHorizontalSelectionWindowDownEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MoveGameActionWindowUpEvent.cpp">
+    <ClCompile Include="src\MoveHorizontalSelectionWindowUpEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MovementGraph.cpp">
@@ -2144,13 +2285,25 @@
     <ClCompile Include="src\Music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\NetworkGameButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\NewMovePriority.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\NextClueEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\NoActivePlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NoServerConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\PAKScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAKScreenResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Parameters.cpp">
@@ -2160,6 +2313,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerLimitReached.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PlayerPointer.cpp">
@@ -2175,6 +2331,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PopUpElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Projectile.cpp">
@@ -2207,6 +2366,12 @@
     <ClCompile Include="src\RefreshMovementPointsEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RemotePlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RemotePlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\ResetHighlightEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2228,6 +2393,9 @@
     <ClCompile Include="src\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ReturnToMenuButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\ReturnToMenuEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2240,7 +2408,19 @@
     <ClCompile Include="src\RoadSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoomDoesNotExist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoomID.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Root.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SaveGameButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SaveGameEvent.cpp">
@@ -2252,7 +2432,25 @@
     <ClCompile Include="src\SawmillSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ScreenAlreadyFinished.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\SelectEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SerializableColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerInitError.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerRooms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SetFireEvent.cpp">
@@ -2297,6 +2495,9 @@
     <ClCompile Include="src\StartLocalGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\StartNetworkGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\StartWarriorAnimationEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2304,6 +2505,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Stone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StringLcl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SubHpEvent.cpp">
@@ -2315,6 +2519,9 @@
     <ClCompile Include="src\SubResourcesEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SupportButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\SuspendingAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2322,6 +2529,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TilesetHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TooMuchGameObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TooMuchPlayers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Tower1.cpp">
@@ -2367,6 +2583,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Valkyr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VersionsButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\VictoryConditionSpec.cpp">
@@ -2468,6 +2687,9 @@
     <ClCompile Include="src\WindowButtonImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\WindowEntry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\WindowTwoButtons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2484,225 +2706,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IlluminanceTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EmptyLightSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IWithLightSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSourceSin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSourceStatic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSourceParabolic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSourceDynamic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSourceSqrt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CircleLightSourceLinear.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ServerScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IsServerTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MenuResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PAKScreenResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LoadingScreenResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ScreenAlreadyFinished.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StringLcl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Logs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ConductionResourcePoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AreaResourcePoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MenuBg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LoadingScreenBg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ExitButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LicenceButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CreditsButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SupportButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuideButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LanguageButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NetworkGameButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LocalGameButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MenuButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BuildButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EndTurnButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ReturnToMenuButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MainScreenButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SaveGameButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Room.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RemotePlayers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RemotePlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FlyingE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InvalidRoomIDFormat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RoomID.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SerializableColor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IntRectSerializable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LocalServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NoServerConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LocalServerAlreadyLaunched.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CouldntOpenIsServerTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ICollections.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IncorrectMoveRepresentation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IncorrectPlayersRepresentation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MapTooBig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TooMuchGameObjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TooMuchPlayers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LoadNetworkGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StartNetworkGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MapDeepError.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CurrentRoomIDButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ServerRooms.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RoomDoesNotExist.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerLimitReached.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MainServerPosition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CouldntOpenMainServerPosition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VersionsButtonSpec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Connection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WindowEntry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EntrySettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ConnectToRoomEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NoActivePlayers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ServerRoom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ServerInitError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
