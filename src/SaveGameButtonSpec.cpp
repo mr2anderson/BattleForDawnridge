@@ -42,7 +42,6 @@ Events SaveGameButtonSpec::getEvents() const {
 
 	Events saveGameEvent = clickEvent;
 	saveGameEvent.add(std::make_shared<SaveGameEvent>());
-	saveGameEvent.add(std::make_shared<CreateEEvent>(std::make_shared<WindowButton>(StringLcl("{game_saved}"), StringLcl("{OK}"), clickEvent)));
 
 	std::shared_ptr<WindowTwoButtons> saveGameVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl{ "{verify_save_game}" }, StringLcl{ "{yes}" }, StringLcl{ "{no}" }, saveGameEvent, clickEvent);
 

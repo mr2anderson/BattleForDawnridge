@@ -346,6 +346,9 @@ void MainScreen::receive(sf::RenderWindow &window) {
         else if (code == SERVER_NET_SPECS::CODES::SAVE) {
             this->receiveSave(receivedPacket);
         }
+        else if (code == SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE) {
+            this->receiveNotTimeToSave();
+        }
 		else if (code == SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE) {
 			this->receiveNotYourMove();
 		}
@@ -466,8 +469,18 @@ void MainScreen::receiveSave(sf::Packet& remPacket) {
     createWindowEvent.add(std::make_shared<CreateEEvent>(std::make_shared<WindowButton>(StringLcl("{game_saved}"), StringLcl("{OK}"), clickEvent)));
     this->addLocalEvents(createWindowEvent);
 }
+void MainScreen::receiveNotTimeToSave() {
+    LOGS("Receiving not time to save");
+
+    Events clickEvent;
+    clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
+    Events createWindowEvent;
+    createWindowEvent.add(std::make_shared<CreateEEvent>(std::make_shared<WindowButton>(StringLcl("{not_time_to_save}"), StringLcl("{OK}"), clickEvent)));
+    this->addLocalEvents(createWindowEvent);
+}
 void MainScreen::receiveNotYourMove() {
     LOGS("Receiving not your move");
+
 	Events clickEvent;
 	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
     Events createWindowEvent;

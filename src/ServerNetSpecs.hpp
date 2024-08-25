@@ -54,6 +54,7 @@ namespace SERVER_NET_SPECS {
         static constexpr uint8_t FOCUS = 4;
         static constexpr uint8_t RETURN_TO_MENU = 5;
         static constexpr uint8_t SAVE = 6;
-        static constexpr uint8_t NOT_YOUR_MOVE = 7;
+        static constexpr uint8_t NOT_TIME_TO_SAVE = 7;
+        static constexpr uint8_t NOT_YOUR_MOVE = 8;
     }
 };

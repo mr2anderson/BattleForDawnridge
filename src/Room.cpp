@@ -313,6 +313,9 @@ void Room::addEvents(Events& e, RoomOutputProtocol p) {
 
     this->syncUI(processed, p);
 }
+bool Room::possibleToSave() const {
+    return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents and !this->animation.has_value() and this->events.empty());
+}
 
 
 
@@ -570,6 +573,14 @@ void Room::sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
 
 	this->sendToClient(packet, p.toSend, ip);
 }
+void Room::sendNotTimeToSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE;
+
+    p.logs->emplace_back("{sending_not_time_to_save_to}" + ip.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+
+    this->sendToClient(packet, p.toSend, ip);
+}
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
 	p.logs->emplace_back("{sending_return_to_menu_to_players}");
 
@@ -684,7 +695,12 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 }
 void Room::receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p) {
     p.logs->emplace_back("{received_need_save}" + ip.toString());
-    this->sendSaveToClient(ip, p);
+    if (this->possibleToSave()) {
+        this->sendSaveToClient(ip, p);
+    }
+    else {
+        this->sendNotTimeToSaveToClient(ip, p);
+    }
 }
 
 

@@ -113,6 +113,7 @@ private:
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
 	void receiveReturnToMenu();
 	void receiveSave(sf::Packet& remPacket);
+    void receiveNotTimeToSave();
 	void receiveNotYourMove();
 
 

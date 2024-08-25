@@ -150,6 +150,7 @@ private:
 	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);
 	uint8_t processBaseEvents(RoomOutputProtocol p, bool sendToClients = true);
 	void addEvents(Events& e, RoomOutputProtocol p);
+    bool possibleToSave() const;
 
 	std::vector<std::shared_ptr<const RectangularUiElement>> makeButtonBases();
 	ResourceBar makeResourceBar();
@@ -166,6 +167,7 @@ private:
 
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
 	void sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
+    void sendNotTimeToSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	void sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip);
