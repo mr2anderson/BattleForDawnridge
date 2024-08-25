@@ -412,7 +412,8 @@ static void ADD_CHANGED_DATA_TO_PACKET(const std::string &v1, const std::string 
         block = block + 1;
     }
 
-    // O (n * sqrt(n))
+    // O (n * sqrt(n)) worst
+    // O (n) best
     std::string buff;
     uint32_t index = 0;
     while (index < v2.size()) {
