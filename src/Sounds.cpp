@@ -27,7 +27,7 @@ Sounds *Sounds::singletone = nullptr;
 
 
 void Sounds::add(const std::string& name, const std::string& path) {
-    if (!this->sounds[name].loadFromFile(std::string(DATA_ROOT) + "/" + path)) {
+    if (!this->sounds[name].loadFromFile(Root::get()->getDataRoot() + "/" + path)) {
         throw CouldntOpenSound(path);
     }
 }

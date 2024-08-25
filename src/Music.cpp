@@ -30,7 +30,7 @@ Music::Music() {
     this->volume = 100;
 }
 void Music::add(const std::string& name, const std::string& path) {
-    if (!this->music[name].openFromFile(std::string(DATA_ROOT) + "/" + path)) {
+    if (!this->music[name].openFromFile(Root::get()->getDataRoot() + "/" + path)) {
         throw CouldntOpenMusic(path);
     }
 }

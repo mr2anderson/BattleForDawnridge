@@ -20,5 +20,19 @@
 #include "Root.hpp"
 
 
-const std::string DATA_ROOT = "resources";
-const std::string USERDATA_ROOT = "userdata";
+Root* Root::singletone = nullptr;
+
+
+Root::Root() = default;
+void Root::setDataRoot(const std::string &newDataRoot) {
+    this->dataRoot = newDataRoot;
+}
+void Root::setUserdataRoot(const std::string &newUserdataRoot) {
+    this->userDataRoot = newUserdataRoot;
+}
+std::string Root::getDataRoot() const {
+    return this->dataRoot.value();
+}
+std::string Root::getUserdataRoot() const {
+    return this->userDataRoot.value();
+}

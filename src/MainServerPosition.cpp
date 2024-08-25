@@ -40,7 +40,7 @@ static std::vector<std::string> split(const std::string& s, char delim) {
 	return result;
 }
 void MainServerPosition::load() {
-	std::string path(DATA_ROOT + "/configs/main_server_position.cfg");
+	std::string path(Root::get()->getDataRoot() + "/configs/main_server_position.cfg");
 
 	std::ifstream file(path);
 

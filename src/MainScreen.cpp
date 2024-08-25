@@ -239,7 +239,7 @@ std::string GENERATE_SAVE_FROM_MAP(const std::string& name) {
 	return serialStr;
 }
 std::string READ_SAVE(const std::string& name) {
-	std::ifstream f(USERDATA_ROOT + "/saves/" + name, std::ios::binary);
+	std::ifstream f(Root::get()->getUserdataRoot() + "/saves/" + name, std::ios::binary);
 	std::stringstream buffer;
 	buffer << f.rdbuf();
 	f.close();
@@ -439,14 +439,14 @@ void MainScreen::receiveSave(sf::Packet& remPacket) {
     LOGS("Receiving save");
 	std::string data;
 	remPacket >> data;
-	if (!std::filesystem::is_directory(USERDATA_ROOT + "/saves")) {
-		std::filesystem::create_directories(USERDATA_ROOT + "/saves");
+	if (!std::filesystem::is_directory(Root::get()->getUserdataRoot() + "/saves")) {
+		std::filesystem::create_directories(Root::get()->getUserdataRoot() + "/saves");
 	}
 	auto t = std::time(nullptr);
 	auto tm = *std::localtime(&t);
 	std::stringstream ss;
 	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
-	std::ofstream ofs(USERDATA_ROOT + "/saves/" + ss.str() + ".save", std::ios::binary);
+	std::ofstream ofs(Root::get()->getUserdataRoot() + "/saves/" + ss.str() + ".save", std::ios::binary);
 	ofs.write(data.c_str(), data.size());
 	ofs.close();
 

@@ -31,7 +31,7 @@ bool IsServerTable::isServer() const {
 	return this->val.value();
 }
 void IsServerTable::load() {
-	std::string path = DATA_ROOT + "/configs/is_server.cfg";
+	std::string path = Root::get()->getDataRoot() + "/configs/is_server.cfg";
 
 	std::ifstream file;
 	file.open(path);

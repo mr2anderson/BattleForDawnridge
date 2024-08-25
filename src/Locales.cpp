@@ -37,7 +37,7 @@ Locales::Locales() {
     this->error = UTFEncoder::get()->utf8ToUtf16("UNKNOWN_LOCALES_KEY_REPORT_DEVELOPER");
 }
 void Locales::load() {
-    std::string path = DATA_ROOT + "/locales/" + this->getPath();
+    std::string path = Root::get()->getDataRoot() + "/locales/" + this->getPath();
     std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenLocales(path);
@@ -93,11 +93,11 @@ void Locales::setDefaultPath(const std::string& path) {
         throw LanguageAlreadyInUse();
     }
 
-    if (!std::filesystem::is_directory(USERDATA_ROOT)) {
-        std::filesystem::create_directories(USERDATA_ROOT);
+    if (!std::filesystem::is_directory(Root::get()->getUserdataRoot())) {
+        std::filesystem::create_directories(Root::get()->getUserdataRoot());
     }
 
-    std::ofstream file(USERDATA_ROOT + "/language.cfg");
+    std::ofstream file(Root::get()->getUserdataRoot() + "/language.cfg");
     file << path;
     file.close();
 }
@@ -110,7 +110,7 @@ std::wstring* Locales::get(const std::string& name) {
     return &it->second;
 }
 std::string Locales::getPath() const {
-    std::ifstream file(USERDATA_ROOT + "/language.cfg");
+    std::ifstream file(Root::get()->getUserdataRoot() + "/language.cfg");
     if (file.is_open()) {
         std::string path;
         std::getline(file, path);

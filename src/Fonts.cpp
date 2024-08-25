@@ -27,7 +27,7 @@ Fonts* Fonts::singletone = nullptr;
 
 
 void Fonts::add(const std::string& name, const std::string& path) {
-    if (!this->fonts[name].loadFromFile(std::string(DATA_ROOT) + "/" + path)) {
+    if (!this->fonts[name].loadFromFile(Root::get()->getDataRoot() + "/" + path)) {
         throw CouldntOpenFont(path);
     }
 }

@@ -124,7 +124,7 @@ void Menu::generateButtons() {
 }
 void Menu::regenerateButtons() {
     std::set<std::string> saveNames;
-    for (const auto& entry : std::filesystem::directory_iterator(USERDATA_ROOT + "/saves")) {
+    for (const auto& entry : std::filesystem::directory_iterator(Root::get()->getUserdataRoot() + "/saves")) {
         if (entry.is_regular_file() and entry.path().extension() == ".save") {
             saveNames.insert(entry.path().filename().string());
         }
@@ -251,7 +251,7 @@ void Menu::handleConnectGameEvent(std::shared_ptr<ConnectToRoomEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::CONNECT_TO_NETWORK_GAME, e->getString());
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
-    std::filesystem::remove(USERDATA_ROOT + "/saves/" + e->getSaveName());
+    std::filesystem::remove(Root::get()->getUserdataRoot() + "/saves/" + e->getSaveName());
 }
 void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
     Events clickEvent;

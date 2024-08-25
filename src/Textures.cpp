@@ -27,7 +27,7 @@ Textures *Textures::singletone = nullptr;
 
 
 void Textures::add(const std::string& name, const std::string& path) {
-    if (!this->textures[name].loadFromFile(std::string(DATA_ROOT) + "/" + path)) {
+    if (!this->textures[name].loadFromFile(Root::get()->getDataRoot() + "/" + path)) {
         throw CouldntOpenTexture(path);
     }
 }

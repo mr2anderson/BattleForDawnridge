@@ -47,6 +47,7 @@
 #include "LoadingScreenBg.hpp"
 #include "IsServerTable.hpp"
 #include "MainServerPosition.hpp"
+#include "Root.hpp"
 
 
 #if defined(_WIN32) // Unix does not support coloured cursors
@@ -93,6 +94,8 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.display();
 }
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
+    Root::get()->setDataRoot("../resources");
+    Root::get()->setUserdataRoot("../userdata");
     try {
         Fonts::get()->add("1", "fonts/1.ttf");
         Textures::get()->add("loading_screen", "images/loading_screen.jpg");

@@ -30,7 +30,7 @@ Parameters* Parameters::singletone = nullptr;
 
 
 static std::string GET_PATH() {
-	return DATA_ROOT + "/configs/parameters.cfg";
+	return Root::get()->getDataRoot() + "/configs/parameters.cfg";
 }
 void Parameters::load() {
 	std::ifstream file(GET_PATH());

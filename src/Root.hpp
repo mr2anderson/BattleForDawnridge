@@ -18,10 +18,30 @@
 
 
 #include <string>
+#include <optional>
 
 
 #pragma once
 
 
-extern const std::string DATA_ROOT;
-extern const std::string USERDATA_ROOT;
+class Root {
+public:
+    static Root *get() {
+        if (Root::singletone == nullptr) {
+            Root::singletone = new Root();
+        }
+        return Root::singletone;
+    }
+
+    void setDataRoot(const std::string &newDataRoot);
+    void setUserdataRoot(const std::string &newUserdataRoot);
+    std::string getDataRoot() const;
+    std::string getUserdataRoot() const;
+private:
+    Root();
+    Root(const Root& copy);
+    static Root *singletone;
+
+    std::optional<std::string> dataRoot;
+    std::optional<std::string> userDataRoot;
+};
