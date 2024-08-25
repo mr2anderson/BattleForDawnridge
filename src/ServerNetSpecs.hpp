@@ -47,6 +47,7 @@ namespace SERVER_NET_SPECS {
             static constexpr uint8_t HIGHLIGHT_TABLE = 3;
             static constexpr uint8_t BUTTON_BASES = 4;
             static constexpr uint8_t RESOURCE_BAR = 5;
+            static constexpr uint8_t CURSOR_VISIBILITY = 6;
         }
         static constexpr uint8_t READY = 2;
         static constexpr uint8_t SOUND = 3;

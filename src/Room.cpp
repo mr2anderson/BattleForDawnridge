@@ -128,6 +128,7 @@ void Room::mustSendInit() {
     this->prevSelected.clear();
     this->buttonBasesWereSent = false;
     this->prevResourceBar.clear();
+    this->prevCursorVisibility = boost::none;
 }
 
 
@@ -379,6 +380,9 @@ void Room::syncUI(uint8_t code, RoomOutputProtocol p) {
     if (code & SYNC_UI::SYNC_SELECTED) {
         this->syncSelected(p);
     }
+    if (code & SYNC_UI::SYNC_CURSOR_VISIBILITY) {
+        this->syncCursorVisibility(p);
+    }
 }
 void Room::initUI(RoomOutputProtocol p) {
     this->syncMap(p);
@@ -387,6 +391,7 @@ void Room::initUI(RoomOutputProtocol p) {
     this->syncSelected(p);
     this->syncButtonBases(p);
     this->syncResourceBar(p);
+    this->syncCursorVisibility(p);
     this->sendReady(p);
 }
 void Room::syncMap(RoomOutputProtocol p) {
@@ -519,6 +524,20 @@ void Room::syncResourceBar(RoomOutputProtocol p) {
         packet << str;
 
         p.logs->emplace_back("{sending_resource_bar_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
+        this->sendToClients(packet, p);
+    }
+}
+void Room::syncCursorVisibility(RoomOutputProtocol p) {
+    if (!this->prevCursorVisibility.has_value() or this->prevCursorVisibility.value() != this->curcorVisibility) {
+        this->prevCursorVisibility = this->curcorVisibility;
+
+        sf::Packet packet = this->makeBasePacket();
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
+        packet << this->curcorVisibility;
+
+        p.logs->emplace_back("{sending_cursor_visibility_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
         this->sendToClients(packet, p);
     }
@@ -751,9 +770,11 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<EnableCursorEvent> enableCursorEvent = std::dynamic_pointer_cast<EnableCursorEvent>(e)) {
 		this->handleEnableCursorEvent(enableCursorEvent, p);
+        result = result | SYNC_UI::SYNC_CURSOR_VISIBILITY;
 	}
 	else if (std::shared_ptr<DisableCursorEvent> disableCursorEvent = std::dynamic_pointer_cast<DisableCursorEvent>(e)) {
 		this->handleDisableCursorEvent(disableCursorEvent, p);
+        result = result | SYNC_UI::SYNC_CURSOR_VISIBILITY;
 	}
 	else if (std::shared_ptr<CreateAnimationEvent> createAnimationEvent = std::dynamic_pointer_cast<CreateAnimationEvent>(e)) {
 		this->handleCreateAnimationEvent(createAnimationEvent, p);

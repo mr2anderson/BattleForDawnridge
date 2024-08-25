@@ -114,6 +114,7 @@ private:
     std::string prevSelected;
     bool buttonBasesWereSent;
     std::string prevResourceBar;
+    boost::optional<bool> prevCursorVisibility;
 
 	Map map;
 	std::vector<bool> playerIsActive;
@@ -160,6 +161,7 @@ private:
     void syncSelected(RoomOutputProtocol p);
     void syncButtonBases(RoomOutputProtocol p);
     void syncResourceBar(RoomOutputProtocol p);
+    void syncCursorVisibility(RoomOutputProtocol p);
     void sendReady(RoomOutputProtocol p);
 
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
@@ -182,6 +184,7 @@ private:
         static constexpr uint8_t SYNC_HIGHLIGHT_TABLE = 4;
         static constexpr uint8_t SYNC_SELECTED = 8;
         static constexpr uint8_t SYNC_RESOURCE_BAR = 16;
+        static constexpr uint8_t SYNC_CURSOR_VISIBILITY = 32;
     };
 	uint8_t handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p);
 	void handleAddResourceEvent(std::shared_ptr<AddResourceEvent> e, RoomOutputProtocol p);

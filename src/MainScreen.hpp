@@ -78,6 +78,7 @@ private:
 	HighlightTable highlightTable;
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
 	ResourceBar resourceBar;
+    bool cursorVisibility;
 
 	std::shared_ptr<PopUpElement> localElement;
     std::vector<Button> localButtons;
@@ -106,6 +107,7 @@ private:
     void receiveHighlightTable(sf::Packet& remPacket);
     void receiveButtonBases(sf::Packet& remPacket);
     void receiveResourceBar(sf::Packet& remPacket);
+    void receiveCursorVisibility(sf::Packet& remPacket);
     void receiveReady();
 	void receiveSound(sf::Packet& remPacket);
 	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);

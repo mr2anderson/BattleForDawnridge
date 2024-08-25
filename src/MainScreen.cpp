@@ -176,6 +176,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 		Playlist::get()->update();
 		this->drawEverything(window);
 		this->moveView(window);
+        window.setMouseCursorVisible(this->cursorVisibility);
 	}
 	LOGS("Processing was finished");
 }
@@ -323,6 +324,9 @@ void MainScreen::receive(sf::RenderWindow &window) {
             else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR) {
                 this->receiveResourceBar(receivedPacket);
             }
+            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY) {
+                this->receiveCursorVisibility(receivedPacket);
+            }
             else {
                 LOGS("Warning: unknown world ui state code received from server: " + std::to_string((uint32_t)worldUiStateCode));
             }
@@ -403,6 +407,12 @@ void MainScreen::receiveResourceBar(sf::Packet& remPacket) {
     std::stringstream stream(string);
     iarchive a1(stream);
     a1 >> this->resourceBar;
+}
+void MainScreen::receiveCursorVisibility(sf::Packet &remPacket) {
+    LOGS("Receiving cursor visibility");
+    bool v;
+    remPacket >> v;
+    this->cursorVisibility = v;
 }
 void MainScreen::receiveReady() {
     LOGS("Receiving ready");
