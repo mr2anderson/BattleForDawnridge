@@ -397,6 +397,44 @@ void Room::initUI(RoomOutputProtocol p) {
     this->syncCursorVisibility(p);
     this->sendReady(p);
 }
+static void ADD_CHANGED_DATA_TO_PACKET(const std::string &v1, const std::string &v2, sf::Packet &dst) {
+    uint32_t blockSize = std::sqrt(v1.size());
+    if (blockSize < 4) {
+        dst << (bool)false << v2;
+        return;
+    }
+    // O (n)
+    std::unordered_map<std::string, uint16_t> blocks;
+    uint16_t block = 0;
+    for (uint32_t i = 0; i < v1.size(); i = i + blockSize) {
+        std::string substr = v1.substr(i, std::min<uint32_t>(blockSize, v1.size() - i));
+        blocks[substr] = block;
+        block = block + 1;
+    }
+
+    // O (n * sqrt(n))
+    std::string buff;
+    uint32_t index = 0;
+    while (index < v2.size()) {
+        std::string substr = v2.substr(index, std::min<uint32_t>(blockSize, v2.size() - index));
+        auto it = blocks.find(substr);
+        if (it == blocks.end()) {
+            buff.push_back(v2.at(index));
+            index = index + 1;
+        }
+        else {
+            if (!buff.empty()) {
+                dst << (bool)false << buff;
+                buff.clear();
+            }
+            dst << (bool)true << it->second;
+            index = index + substr.size();
+        }
+    }
+    if (!buff.empty()) {
+        dst << (bool)false << buff;
+    }
+}
 void Room::syncMap(RoomOutputProtocol p) {
     for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
         this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
@@ -410,12 +448,12 @@ void Room::syncMap(RoomOutputProtocol p) {
     s.flush();
 
     if (this->prevMap != str) {
-        this->prevMap = str;
-
         sf::Packet packet = this->makeBasePacket();
         packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
         packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP;
-        packet << str;
+        ADD_CHANGED_DATA_TO_PACKET(this->prevMap, str, packet);
+
+        this->prevMap = str;
 
         p.logs->emplace_back("{sending_map_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
@@ -431,12 +469,12 @@ void Room::syncElement(RoomOutputProtocol p) {
     s.flush();
 
     if (this->prevElement != str) {
-        this->prevElement = str;
-
         sf::Packet packet = this->makeBasePacket();
         packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
         packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT;
-        packet << str;
+        ADD_CHANGED_DATA_TO_PACKET(this->prevElement, str, packet);
+
+        this->prevElement = str;
 
         p.logs->emplace_back("{sending_element_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
@@ -452,12 +490,12 @@ void Room::syncHighlightTable(RoomOutputProtocol p) {
     s.flush();
 
     if (this->prevHighlightTable != str) {
-        this->prevHighlightTable = str;
-
         sf::Packet packet = this->makeBasePacket();
         packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
         packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE;
-        packet << str;
+        ADD_CHANGED_DATA_TO_PACKET(this->prevHighlightTable, str, packet);
+
+        this->prevHighlightTable = str;
 
         p.logs->emplace_back("{sending_highlight_table_to_players} " + std::to_string(packet.getDataSize()) + " b");
 

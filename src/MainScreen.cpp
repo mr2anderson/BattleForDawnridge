@@ -363,18 +363,46 @@ void MainScreen::receiveError(sf::Packet& remPacket) {
 	remPacket >> errorCode;
 	throw ServerInitError(errorCode);
 }
+static std::string UNPACK_CHANGED_DATA(const std::string &prev, sf::Packet &src) {
+    uint32_t blockSize = std::sqrt(prev.size());
+    std::unordered_map<uint16_t, std::string> blocks;
+    uint16_t block = 0;
+    for (uint32_t i = 0; i < prev.size(); i = i + blockSize) {
+        std::string substr = prev.substr(i, std::min<uint32_t>(blockSize, prev.size() - i));
+        blocks[block] = substr;
+        block = block + 1;
+    }
+
+    std::string result;
+
+    bool mode;
+    while (src >> mode) {
+        if (mode) {
+            uint16_t index;
+            src >> index;
+            result.append(blocks.at(index));
+        }
+        else {
+            std::string data;
+            src >> data;
+            result.append(data);
+        }
+    }
+
+    return result;
+}
 void MainScreen::receiveMap(sf::Packet& remPacket) {
     LOGS("Receiving map");
-    std::string string;
-    remPacket >> string;
+    std::string string = UNPACK_CHANGED_DATA(this->mapStr, remPacket);
+    this->mapStr = string;
     std::stringstream stream(string);
     iarchive a1(stream);
     a1 >> this->map;
 }
 void MainScreen::receiveElement(sf::Packet& remPacket) {
     LOGS("Receiving element");
-    std::string string;
-    remPacket >> string;
+    std::string string = UNPACK_CHANGED_DATA(this->elementStr, remPacket);
+    this->elementStr = string;
     std::stringstream stream(string);
     iarchive a1(stream);
     a1 >> this->element;
@@ -389,8 +417,8 @@ void MainScreen::receiveSelected(sf::Packet& remPacket) {
 }
 void MainScreen::receiveHighlightTable(sf::Packet& remPacket) {
     LOGS("Receiving highlight table");
-    std::string string;
-    remPacket >> string;
+    std::string string = UNPACK_CHANGED_DATA(this->highlightTableStr, remPacket);
+    this->highlightTableStr = string;
     std::stringstream stream(string);
     iarchive a1(stream);
     a1 >> this->highlightTable;
