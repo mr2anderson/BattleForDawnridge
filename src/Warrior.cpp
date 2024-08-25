@@ -348,7 +348,7 @@ void Warrior::setDirection(const std::string &newDirection) {
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get()->get("hand"));
-    sprite.setPosition(mouseX, mouseY);
+    sprite.setPosition(mouseX / 64 * 64, mouseY / 64 * 64);
     return std::make_shared<sf::Sprite>(sprite);
 }
 void Warrior::update(MapState *state, uint32_t currentPlayerId) {
