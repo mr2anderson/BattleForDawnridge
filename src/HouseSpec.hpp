@@ -26,7 +26,7 @@
 class HouseSpec : public IPopulationLimitIncreaserSpec {
 public:
 	HouseSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	uint32_t getActivePopulationLimit() const override;
 private:

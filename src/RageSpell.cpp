@@ -28,8 +28,8 @@ RageSpell::RageSpell() = default;
 RageSpell::RageSpell(uint32_t playerId) : Spell(playerId) {
 
 }
-Spell* RageSpell::clone() const {
-	return new RageSpell(*this);
+std::shared_ptr<Spell> RageSpell::clone() const {
+	return std::make_shared<RageSpell>(*this);
 }
 StringLcl RageSpell::getDescription() const {
 	return StringLcl("{rage_spell_description}");
@@ -38,16 +38,16 @@ std::string RageSpell::getTextureName() const {
 	return "rage_spell";
 }
 Resources RageSpell::getCost() const {
-	return Parameters::get()->getResources("rage_spell_cost");
+	return Parameters::get().getResources("rage_spell_cost");
 }
 uint32_t RageSpell::getCreationTime() const {
-	return Parameters::get()->getInt("rage_spell_creation_time");
+	return Parameters::get().getInt("rage_spell_creation_time");
 }
 sf::Color RageSpell::getPreviewColor() const {
 	return sf::Color(75, 0, 130, 30);
 }
 uint32_t RageSpell::getRadius() const {
-	return Parameters::get()->getInt("rage_spell_radius");
+	return Parameters::get().getInt("rage_spell_radius");
 }
 std::string RageSpell::getSoundName() const {
 	return "rage_spell";
@@ -56,7 +56,7 @@ Events RageSpell::changeMap(MapState* state, uint32_t centerX, uint32_t centerY)
 	Events events;
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
+		std::shared_ptr<Warrior>  w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == this->getPlayerId()) {
 			if (std::max(centerX, w->getX()) - std::min(centerX, w->getX()) > this->getRadius()) {
 				continue;

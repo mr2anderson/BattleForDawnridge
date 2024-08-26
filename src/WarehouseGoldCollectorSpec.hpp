@@ -26,7 +26,7 @@
 class WarehouseGoldCollectorSpec : public IConductionResourcePointCollectorSpec {
 public:
 	WarehouseGoldCollectorSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	uint32_t getCollectionSpeed() const override;
 	std::string getResourceType() const override;

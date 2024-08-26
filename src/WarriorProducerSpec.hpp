@@ -35,20 +35,20 @@ public:
 		return !this->currentProducingOK(mapSize, totalPlayers);
 	}
 
-	Events startProducing(std::shared_ptr<Warrior> w);
+	Events startProducing(std::shared_ptr<Warrior>  w);
 	void decreaseCurrentProducingMovesLeft();
 	void stopProducing();
-	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
-	boost::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
+	Events getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building> b, MapState* state) override;
+	boost::optional<BuildingShortInfo> getShortInfo(std::shared_ptr<const Building> b) const override;
 	uint32_t getRadius() const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
-	virtual std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) = 0;
+	virtual std::vector<std::shared_ptr<Warrior> > getWarriorsToProduce(uint32_t playerId) = 0;
     virtual std::string getProducingIconName() const = 0;
     virtual std::string getWaitingIconName() const = 0;
 private:
-	std::shared_ptr<Warrior> currentProducing;
+	std::shared_ptr<Warrior>  currentProducing;
 	uint32_t currentProducingMovesLeft;
 	bool producing;
 

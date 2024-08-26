@@ -29,10 +29,10 @@ Ram::Ram(uint32_t x, uint32_t y, uint32_t playerId) :
 
 }
 UUID Ram::getTypeUUID() const {
-    return UUIDs::get()->get("ram");
+    return UUIDs::get().get("ram");
 }
-Warrior* Ram::cloneWarrior() const {
-    return new Ram(*this);
+std::shared_ptr<Warrior>  Ram::cloneWarrior() const {
+    return std::make_shared<Ram>(*this);
 }
 std::string Ram::getBeenHitSoundName() const {
     return "vehicle_hit";
@@ -41,19 +41,19 @@ std::string Ram::getStartAttackSoundName() const {
     return "";
 }
 uint32_t Ram::getMaxHP() const {
-    return Parameters::get()->getInt("ram_max_hp");
+    return Parameters::get().getInt("ram_max_hp");
 }
 Defence Ram::getBaseDefence() const {
-    return Parameters::get()->getDefence("ram_defence");
+    return Parameters::get().getDefence("ram_defence");
 }
 Damage Ram::getBaseDamage() const {
-    return Parameters::get()->getDamage("ram_damage");
+    return Parameters::get().getDamage("ram_damage");
 }
 Resources Ram::getCost() const {
-    return Parameters::get()->getResources("ram_cost");
+    return Parameters::get().getResources("ram_cost");
 }
 uint32_t Ram::getTimeToProduce() const {
-    return Parameters::get()->getInt("ram_time_to_produce");
+    return Parameters::get().getInt("ram_time_to_produce");
 }
 std::string Ram::getSoundName() const {
     return "vehicle";
@@ -83,10 +83,10 @@ std::string Ram::getBaseTextureName() const {
     return "ram";
 }
 uint32_t Ram::getMovementPoints() const {
-    return Parameters::get()->getInt("ram_movement_points");
+    return Parameters::get().getInt("ram_movement_points");
 }
 uint32_t Ram::getPopulation() const {
-    return Parameters::get()->getInt("ram_population");
+    return Parameters::get().getInt("ram_population");
 }
 
 

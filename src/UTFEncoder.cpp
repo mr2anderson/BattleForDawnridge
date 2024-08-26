@@ -23,9 +23,6 @@
 
 
 
-UTFEncoder *UTFEncoder::singletone = nullptr;
-
-
 std::wstring UTFEncoder::utf8ToUtf16(const std::string &utf8) {
     std::vector<unsigned long> unicode;
     size_t i = 0;

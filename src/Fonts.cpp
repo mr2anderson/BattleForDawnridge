@@ -23,11 +23,8 @@
 #include "CouldntOpenFont.hpp"
 
 
-Fonts* Fonts::singletone = nullptr;
-
-
 void Fonts::add(const std::string& name, const std::string& path) {
-    if (!this->fonts[name].loadFromFile(Root::get()->getDataRoot() + "/" + path)) {
+    if (!this->fonts[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenFont(path);
     }
 }

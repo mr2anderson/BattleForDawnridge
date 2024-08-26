@@ -28,7 +28,7 @@ HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t
 }
 std::unique_ptr<sf::Drawable> HPFlyingE::getDrawable(sf::Vector2f position, sf::Color color) const {
     sf::Text text;
-    text.setFont(*Fonts::get()->get("1"));
+    text.setFont(*Fonts::get().get("1"));
     text.setString(std::to_string(delta));
     if (plus) {
         text.setFillColor(sf::Color(0, 255, 0, color.a));

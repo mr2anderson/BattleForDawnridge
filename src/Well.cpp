@@ -35,33 +35,33 @@ Well::Well() {
 Well::Well(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
 
-    this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
+    this->type = GlobalRandomGenerator32::get().gen() % TOTAL_TYPES + 1;
 
-    this->addSpec(new WellSpec());
+    this->addSpec(std::make_shared<WellSpec>());
 }
-Building* Well::createSameTypeBuilding() const {
-    return new Well(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Well::createSameTypeBuilding() const {
+    return std::make_shared<Well>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Well::getTypeUUID() const {
-    return UUIDs::get()->get("well");
+    return UUIDs::get().get("well");
 }
 Defence Well::getDefence() const {
-    return Parameters::get()->getDefence("well_defence");
+    return Parameters::get().getDefence("well_defence");
 }
 Resources Well::getCost() const {
-    return Parameters::get()->getResources("well_cost");
+    return Parameters::get().getResources("well_cost");
 }
 uint32_t Well::getSX() const {
-    return Parameters::get()->getInt("well_sx");
+    return Parameters::get().getInt("well_sx");
 }
 uint32_t Well::getSY() const {
-    return Parameters::get()->getInt("well_sy");
+    return Parameters::get().getInt("well_sy");
 }
 uint32_t Well::getMaxHP() const {
-    return Parameters::get()->getInt("well_max_hp");
+    return Parameters::get().getInt("well_max_hp");
 }
 uint32_t Well::getRegenerationSpeed() const {
-    return Parameters::get()->getInt("well_regeneration_speed");
+    return Parameters::get().getInt("well_regeneration_speed");
 }
 std::string Well::getTextureName() const {
     return "well" + std::to_string(this->type);

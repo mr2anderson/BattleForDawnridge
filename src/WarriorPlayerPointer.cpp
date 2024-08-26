@@ -29,13 +29,13 @@ void WarriorPlayerPointer::draw(sf::RenderTarget &target, sf::RenderStates state
     target.draw(this->sprite, states);
 }
 void WarriorPlayerPointer::setTypeBlue() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_blue" + this->getTextureNameSuffix()));
+    this->sprite.setTexture(*Textures::get().get("warrior_blue" + this->getTextureNameSuffix()));
 }
 void WarriorPlayerPointer::setTypeGreen() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_green" + this->getTextureNameSuffix()));
+    this->sprite.setTexture(*Textures::get().get("warrior_green" + this->getTextureNameSuffix()));
 }
 void WarriorPlayerPointer::setTypePurple() {
-    this->sprite.setTexture(*Textures::get()->get("warrior_purple" + this->getTextureNameSuffix()));
+    this->sprite.setTexture(*Textures::get().get("warrior_purple" + this->getTextureNameSuffix()));
 }
 std::string WarriorPlayerPointer::getTextureNameSuffix() const {
     switch (this->state) {

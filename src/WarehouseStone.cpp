@@ -27,31 +27,31 @@
 WarehouseStone::WarehouseStone() = default;
 WarehouseStone::WarehouseStone(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WarehouseStoneSpec());
+	this->addSpec(std::make_shared<WarehouseStoneSpec>());
 }
-Building* WarehouseStone::createSameTypeBuilding() const {
-	return new WarehouseStone(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  WarehouseStone::createSameTypeBuilding() const {
+	return std::make_shared<WarehouseStone>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID WarehouseStone::getTypeUUID() const {
-	return UUIDs::get()->get("warehouse_stone");
+	return UUIDs::get().get("warehouse_stone");
 }
 uint32_t WarehouseStone::getSX() const {
-	return Parameters::get()->getInt("warehouse_stone_sx");
+	return Parameters::get().getInt("warehouse_stone_sx");
 }
 uint32_t WarehouseStone::getSY() const {
-	return Parameters::get()->getInt("warehouse_stone_sy");
+	return Parameters::get().getInt("warehouse_stone_sy");
 }
 uint32_t WarehouseStone::getMaxHP() const {
-	return Parameters::get()->getInt("warehouse_stone_max_hp");
+	return Parameters::get().getInt("warehouse_stone_max_hp");
 }
 Defence WarehouseStone::getDefence() const {
-	return Parameters::get()->getDefence("warehouse_stone_defence");
+	return Parameters::get().getDefence("warehouse_stone_defence");
 }
 Resources WarehouseStone::getCost() const {
-	return Parameters::get()->getResources("warehouse_stone_cost");
+	return Parameters::get().getResources("warehouse_stone_cost");
 }
 uint32_t WarehouseStone::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("warehouse_stone_regeneration_speed");
+	return Parameters::get().getInt("warehouse_stone_regeneration_speed");
 }
 std::string WarehouseStone::getTextureName() const {
 	return "warehouse_stone";

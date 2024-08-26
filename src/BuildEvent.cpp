@@ -20,9 +20,9 @@
 #include "BuildEvent.hpp"
 
 
-BuildEvent::BuildEvent(Building* b) {
+BuildEvent::BuildEvent(std::shared_ptr<Building>  b) {
 	this->b = b;
 }
-Building* BuildEvent::getBuilding() {
+std::shared_ptr<Building>  BuildEvent::getBuilding() {
 	return this->b;
 }

@@ -28,32 +28,32 @@
 WarehouseGold::WarehouseGold() = default;
 WarehouseGold::WarehouseGold(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WarehouseGoldWarehouseSpec());
-	this->addSpec(new WarehouseGoldCollectorSpec());
+	this->addSpec(std::make_shared<WarehouseGoldWarehouseSpec>());
+	this->addSpec(std::make_shared<WarehouseGoldCollectorSpec>());
 }
-Building* WarehouseGold::createSameTypeBuilding() const {
-	return new WarehouseGold(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  WarehouseGold::createSameTypeBuilding() const {
+	return std::make_shared<WarehouseGold>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID WarehouseGold::getTypeUUID() const {
-	return UUIDs::get()->get("warehouse_gold");
+	return UUIDs::get().get("warehouse_gold");
 }
 uint32_t WarehouseGold::getSX() const {
-	return Parameters::get()->getInt("warehouse_gold_sx");
+	return Parameters::get().getInt("warehouse_gold_sx");
 }
 uint32_t WarehouseGold::getSY() const {
-	return Parameters::get()->getInt("warehouse_gold_sy");
+	return Parameters::get().getInt("warehouse_gold_sy");
 }
 uint32_t WarehouseGold::getMaxHP() const {
-	return Parameters::get()->getInt("warehouse_gold_max_hp");
+	return Parameters::get().getInt("warehouse_gold_max_hp");
 }
 Defence WarehouseGold::getDefence() const {
-	return Parameters::get()->getDefence("warehouse_gold_defence");
+	return Parameters::get().getDefence("warehouse_gold_defence");
 }
 Resources WarehouseGold::getCost() const {
-	return Parameters::get()->getResources("warehouse_gold_cost");
+	return Parameters::get().getResources("warehouse_gold_cost");
 }
 uint32_t WarehouseGold::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("warehouse_gold_regeneration_speed");
+	return Parameters::get().getInt("warehouse_gold_regeneration_speed");
 }
 std::string WarehouseGold::getTextureName() const {
 	return "warehouse_gold";

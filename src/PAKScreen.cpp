@@ -35,7 +35,7 @@
 PAKScreen::PAKScreen(sf::RenderWindow &window) {
 	this->alreadyFinished = false;
 
-	this->t.setFont(*Fonts::get()->get("1"));
+	this->t.setFont(*Fonts::get().get("1"));
 	this->t.setString(StringLcl("{press_any_key_to_continue}").get());
 	this->t.setCharacterSize(31);
 	this->t.setFillColor(sf::Color::White);
@@ -49,7 +49,7 @@ PAKScreenResponse PAKScreen::run(sf::RenderWindow &window) {
 	}
 	this->alreadyFinished = true;
 	window.setMouseCursorVisible(false);
-	Music::get()->play("intro");
+	Music::get().play("intro");
 
 	sf::Event event{};
 	for (; ;) {
@@ -68,7 +68,7 @@ PAKScreenResponse PAKScreen::run(sf::RenderWindow &window) {
 void PAKScreen::drawEverything(sf::RenderWindow& window) {
 	window.clear();
 	window.draw(this->bg);
-	window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
+	window.draw(ClueManager::get().getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(this->t);
 	window.display();
 }
@@ -83,8 +83,8 @@ void PAKScreen::handleEvent(Events& e) {
 	}
 }
 void PAKScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
-	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
+	SoundQueue::get().push(Sounds::get().get(e->getSoundName()));
 }
 void PAKScreen::handleNextClueEvent(std::shared_ptr<NextClueEvent> e) {
-	ClueManager::get()->nextClue();
+	ClueManager::get().nextClue();
 }

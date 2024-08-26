@@ -96,10 +96,10 @@ void GO::setX(uint32_t newX) {
 void GO::setY(uint32_t newY) {
 	this->y = newY;
 }
-bool GO::warriorCanStay(const Warrior *w) const {
+bool GO::warriorCanStay(std::shared_ptr<const Warrior> w) const {
 	return true;
 }
-uint32_t GO::getWarriorMovementCost(const Warrior *w) const {
+uint32_t GO::getWarriorMovementCost(std::shared_ptr<Warrior> w) const {
 	return 1;
 }
 bool GO::isUltraHighObstacle(uint32_t playerId) const {
@@ -129,7 +129,7 @@ Events GO::click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint
 void GO::update(MapState *state, uint32_t playerId) {
 
 }
-bool GO::intersects(GO* go) const {
+bool GO::intersects(std::shared_ptr<GO> go) const {
 	sf::IntRect rect1;
 	rect1.left = this->getX();
 	rect1.top = this->getY();
@@ -198,7 +198,7 @@ void GO::drawTexture(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
 	sprite.setPosition(sf::Vector2f(this->getXInPixels() , this->getYInPixels()));
 	sprite.setTextureRect(this->getTextureRect());
-	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
+	sprite.setTexture(*Textures::get().get(this->getTextureName()));
 	sprite.setColor(this->getTextureColor());
 	target.draw(sprite, states);
 }

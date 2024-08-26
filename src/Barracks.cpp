@@ -27,28 +27,28 @@
 Barracks::Barracks() = default;
 Barracks::Barracks(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new BarracksSpec());
+	this->addSpec(std::make_shared<BarracksSpec>());
 }
-Building* Barracks::createSameTypeBuilding() const {
-	return new Barracks(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Barracks::createSameTypeBuilding() const {
+	return std::make_shared<Barracks>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Barracks::getTypeUUID() const {
-	return UUIDs::get()->get("barracks");
+	return UUIDs::get().get("barracks");
 }
 uint32_t Barracks::getSX() const {
-	return Parameters::get()->getInt("barracks_sx");
+	return Parameters::get().getInt("barracks_sx");
 }
 uint32_t Barracks::getSY() const {
-	return Parameters::get()->getInt("barracks_sy");
+	return Parameters::get().getInt("barracks_sy");
 }
 uint32_t Barracks::getMaxHP() const {
-	return Parameters::get()->getInt("barracks_max_hp");
+	return Parameters::get().getInt("barracks_max_hp");
 }
 Defence Barracks::getDefence() const {
-	return Parameters::get()->getDefence("barracks_defence");
+	return Parameters::get().getDefence("barracks_defence");
 }
 Resources Barracks::getCost() const {
-	return Parameters::get()->getResources("barracks_cost");
+	return Parameters::get().getResources("barracks_cost");
 }
 std::string Barracks::getTextureName() const {
 	return "barracks";
@@ -60,7 +60,7 @@ StringLcl Barracks::getDescription() const {
 	return StringLcl("{barracks_description}");
 }
 uint32_t Barracks::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("barracks_regeneration_speed");
+	return Parameters::get().getInt("barracks_regeneration_speed");
 }
 
 

@@ -26,7 +26,7 @@
 class SpellFactorySpec : public SpellProducerSpec {
 public:
 	SpellFactorySpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const override;
 private:

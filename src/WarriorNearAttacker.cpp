@@ -24,7 +24,7 @@ WarriorNearAttacker::WarriorNearAttacker() = default;
 WarriorNearAttacker::WarriorNearAttacker(uint32_t x, uint32_t y, uint32_t playerId) : WarriorAttacker(x, y, playerId) {
 
 }
-std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearAttacker::canAttack(Unit *u) const {
+std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearAttacker::canAttack(std::shared_ptr<Unit>u) const {
     std::vector<std::tuple<uint32_t, uint32_t>> candidates = this->WarriorAttacker::canAttack(u);
 
     std::vector<std::tuple<uint32_t, uint32_t>> result;

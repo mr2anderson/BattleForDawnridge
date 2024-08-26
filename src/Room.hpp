@@ -121,7 +121,7 @@ private:
 	BuildingMode bm;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
-	ISelectable* selected;
+	std::shared_ptr<ISelectable> selected;
 	bool curcorVisibility;
 	std::vector<Button> buttons;
 

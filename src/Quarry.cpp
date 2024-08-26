@@ -28,31 +28,31 @@
 Quarry::Quarry() = default;
 Quarry::Quarry(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new QuarrySpec());
+	this->addSpec(std::make_shared<QuarrySpec>());
 }
-Building* Quarry::createSameTypeBuilding() const {
-	return new Quarry(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Quarry::createSameTypeBuilding() const {
+	return std::make_shared<Quarry>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Quarry::getTypeUUID() const {
-	return UUIDs::get()->get("quarry");
+	return UUIDs::get().get("quarry");
 }
 uint32_t Quarry::getSX() const {
-	return Parameters::get()->getInt("quarry_sx");
+	return Parameters::get().getInt("quarry_sx");
 }
 uint32_t Quarry::getSY() const {
-	return Parameters::get()->getInt("quarry_sy");
+	return Parameters::get().getInt("quarry_sy");
 }
 uint32_t Quarry::getMaxHP() const {
-	return Parameters::get()->getInt("quarry_max_hp");
+	return Parameters::get().getInt("quarry_max_hp");
 }
 Defence Quarry::getDefence() const {
-	return Parameters::get()->getDefence("quarry_defence");
+	return Parameters::get().getDefence("quarry_defence");
 }
 Resources Quarry::getCost() const {
-	return Parameters::get()->getResources("quarry_cost");
+	return Parameters::get().getResources("quarry_cost");
 }
 uint32_t Quarry::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("quarry_regeneration_speed");
+	return Parameters::get().getInt("quarry_regeneration_speed");
 }
 std::string Quarry::getTextureName() const {
 	return "quarry";

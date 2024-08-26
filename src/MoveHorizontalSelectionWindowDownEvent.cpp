@@ -20,10 +20,10 @@
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
 
 
-MoveHorizontalSelectionWindowDownEvent::MoveHorizontalSelectionWindowDownEvent(HorizontalSelectionWindow* window) {
+MoveHorizontalSelectionWindowDownEvent::MoveHorizontalSelectionWindowDownEvent(std::shared_ptr<HorizontalSelectionWindow> window) {
     this->window = window;
 }
-HorizontalSelectionWindow* MoveHorizontalSelectionWindowDownEvent::getWindow() {
+std::shared_ptr<HorizontalSelectionWindow> MoveHorizontalSelectionWindowDownEvent::getWindow() {
     return this->window;
 }
 bool MoveHorizontalSelectionWindowDownEvent::isUrgent() const {

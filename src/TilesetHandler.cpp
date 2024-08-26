@@ -20,9 +20,6 @@
 #include "TilesetHandler.hpp"
 
 
-TilesetHandler* TilesetHandler::singletone = nullptr;
-
-
 sf::IntRect TilesetHandler::getTextureRect(uint32_t tileW, uint32_t tileH, uint32_t textureW, uint32_t type) {
 	uint32_t typesInOneLine = textureW / tileW;
 

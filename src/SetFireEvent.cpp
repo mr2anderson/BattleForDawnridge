@@ -20,9 +20,9 @@
 #include "SetFireEvent.hpp"
 
 
-SetFireEvent::SetFireEvent(Building* b) {
+SetFireEvent::SetFireEvent(std::shared_ptr<Building>  b) {
 	this->b = b;
 }
-Building* SetFireEvent::getBuilding() {
+std::shared_ptr<Building>  SetFireEvent::getBuilding() {
 	return this->b;
 }

@@ -20,9 +20,9 @@
 #include "WipeHealingAbilityEvent.hpp"
 
 
-WipeHealingAbilityEvent::WipeHealingAbilityEvent(WarriorHealer *warrior) {
+WipeHealingAbilityEvent::WipeHealingAbilityEvent(std::shared_ptr<WarriorHealer> warrior) {
     this->w = warrior;
 }
-WarriorHealer *WipeHealingAbilityEvent::getWarrior() {
+std::shared_ptr<WarriorHealer> WipeHealingAbilityEvent::getWarrior() {
     return this->w;
 }

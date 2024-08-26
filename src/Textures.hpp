@@ -26,11 +26,9 @@
 
 class Textures {
 public:
-    static Textures *get() {
-        if (Textures::singletone == nullptr) {
-            Textures::singletone = new Textures();
-        }
-        return Textures::singletone;
+    static Textures& get() {
+        static Textures instance;
+        return instance;
     }
 
     void add(const std::string& name, const std::string& path);
@@ -39,7 +37,6 @@ public:
 private:
     Textures() = default;
     Textures(const Textures& copy);
-    static Textures *singletone;
 
     std::unordered_map<std::string, sf::Texture> textures;
 };

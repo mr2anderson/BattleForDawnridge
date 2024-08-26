@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class WarriorHealer;
 
 class WipeHealingAbilityEvent : public Event {
 public:
-    WipeHealingAbilityEvent(WarriorHealer *warrior);
+    WipeHealingAbilityEvent(std::shared_ptr<WarriorHealer> warrior);
 
-    WarriorHealer* getWarrior();
+    std::shared_ptr<WarriorHealer>  getWarrior();
 private:
-    WarriorHealer *w;
+    std::shared_ptr<WarriorHealer> w;
 };

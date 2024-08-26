@@ -28,16 +28,16 @@ Iron::Iron(uint32_t x, uint32_t y) : AreaResourcePoint(x, y) {
 
 }
 UUID Iron::getTypeUUID() const {
-	return UUIDs::get()->get("iron");
+	return UUIDs::get().get("iron");
 }
 uint32_t Iron::getSX() const {
-	return Parameters::get()->getInt("iron_sx");
+	return Parameters::get().getInt("iron_sx");
 }
 uint32_t Iron::getSY() const {
-	return Parameters::get()->getInt("iron_sy");
+	return Parameters::get().getInt("iron_sy");
 }
 uint32_t Iron::getMaxHP() const {
-	return Parameters::get()->getInt("iron_max_hp");
+	return Parameters::get().getInt("iron_max_hp");
 }
 std::string Iron::getResourceType() const {
 	return "iron";

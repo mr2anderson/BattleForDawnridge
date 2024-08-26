@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class ISelectable;
 
 class SelectEvent : public Event {
 public:
-	SelectEvent(ISelectable* s);
+	SelectEvent(std::shared_ptr<ISelectable> s);
 
-	ISelectable* getSelectable();
+	std::shared_ptr<ISelectable> getSelectable();
 private:
-	ISelectable* s;
+	std::shared_ptr<ISelectable> s;
 };

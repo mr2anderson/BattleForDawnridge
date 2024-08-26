@@ -54,8 +54,8 @@ Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additiona
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
     this->addEvents(clickEvent);
-    if (!FirstTimeTipsTable::get()->wasDisplayed("welcome")) {
-        FirstTimeTipsTable::get()->markAsDisplayed("welcome");
+    if (!FirstTimeTipsTable::get().wasDisplayed("welcome")) {
+        FirstTimeTipsTable::get().markAsDisplayed("welcome");
         std::shared_ptr<WindowButton> welcomeWindow = std::make_shared<WindowButton>(StringLcl("{welcome_first_time}"), StringLcl("{OK}"), clickEvent);
         Events createWelcomeWindowEvent;
         createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
@@ -75,7 +75,7 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
     this->alreadyFinished = true;
 
     window.setMouseCursorVisible(true);
-    Music::get()->play("menu");
+    Music::get().play("menu");
 
 	sf::Event event{};
 	for (; ;) {
@@ -124,7 +124,7 @@ void Menu::generateButtons() {
 }
 void Menu::regenerateButtons() {
     std::set<std::string> saveNames;
-    for (const auto& entry : std::filesystem::directory_iterator(Root::get()->getUserdataRoot() + "/saves")) {
+    for (const auto& entry : std::filesystem::directory_iterator(Root::get().getUserdataRoot() + "/saves")) {
         if (entry.is_regular_file() and entry.path().extension() == ".save") {
             saveNames.insert(entry.path().filename().string());
         }
@@ -226,7 +226,7 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     }
 }
 void Menu::handleSoundEvent(std::shared_ptr<PlaySoundEvent> e) {
-    SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
+    SoundQueue::get().push(Sounds::get().get(e->getSoundName()));
 }
 void Menu::handleCreateEEvent(std::shared_ptr<CreateEEvent> e) {
     this->element = e->getElement();
@@ -251,7 +251,7 @@ void Menu::handleConnectGameEvent(std::shared_ptr<ConnectToRoomEvent> e) {
     this->response = MenuResponse(MenuResponse::TYPE::CONNECT_TO_NETWORK_GAME, e->getString());
 }
 void Menu::handleDeleteSaveEvent(std::shared_ptr<DeleteSaveEvent> e) {
-    std::filesystem::remove(Root::get()->getUserdataRoot() + "/saves/" + e->getSaveName());
+    std::filesystem::remove(Root::get().getUserdataRoot() + "/saves/" + e->getSaveName());
 }
 void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
     Events clickEvent;
@@ -259,8 +259,8 @@ void Menu::handleChooseLanguageEvent(std::shared_ptr<ChooseLanguageEvent> e) {
 
     std::shared_ptr<WindowButton> w;
     try {
-        Locales::get()->setDefaultPath(e->getLocaleFile());
-        FirstTimeTipsTable::get()->clear();
+        Locales::get().setDefaultPath(e->getLocaleFile());
+        FirstTimeTipsTable::get().clear();
         w = std::make_shared<WindowButton>(StringLcl("{language_was_changed}"), StringLcl("{OK}"), clickEvent);
     }
     catch (LanguageAlreadyInUse&) {

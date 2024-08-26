@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class Spell;
 
 class UseSpellEvent : public Event {
 public:
-	UseSpellEvent(Spell* spell);
+	UseSpellEvent(std::shared_ptr<Spell> spell);
 
-	Spell* getSpell();
+	std::shared_ptr<Spell> getSpell();
 private:
-	Spell* spell;
+	std::shared_ptr<Spell> spell;
 };

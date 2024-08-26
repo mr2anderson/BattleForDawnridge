@@ -26,9 +26,9 @@
 class WorkshopWarriorProducerSpec : public WarriorProducerSpec {
 public:
     WorkshopWarriorProducerSpec();
-    IBuildingSpec* clone() const override;
+    std::shared_ptr<IBuildingSpec> clone() const override;
 
-    std::vector<std::shared_ptr<Warrior>> getWarriorsToProduce(uint32_t playerId) override;
+    std::vector<std::shared_ptr<Warrior> > getWarriorsToProduce(uint32_t playerId) override;
     std::string getProducingIconName() const override;
     std::string getWaitingIconName() const override;
 private:

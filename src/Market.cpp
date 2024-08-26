@@ -27,28 +27,28 @@
 Market::Market() = default;
 Market::Market(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new MarketSpec());
+	this->addSpec(std::make_shared<MarketSpec>());
 }
-Building* Market::createSameTypeBuilding() const {
-	return new Market(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Market::createSameTypeBuilding() const {
+	return std::make_shared<Market>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Market::getTypeUUID() const {
-	return UUIDs::get()->get("market");
+	return UUIDs::get().get("market");
 }
 uint32_t Market::getSX() const {
-	return Parameters::get()->getInt("market_sx");
+	return Parameters::get().getInt("market_sx");
 }
 uint32_t Market::getSY() const {
-	return Parameters::get()->getInt("market_sy");
+	return Parameters::get().getInt("market_sy");
 }
 uint32_t Market::getMaxHP() const {
-	return Parameters::get()->getInt("market_max_hp");
+	return Parameters::get().getInt("market_max_hp");
 }
 Defence Market::getDefence() const {
-	return Parameters::get()->getDefence("market_defence");
+	return Parameters::get().getDefence("market_defence");
 }
 Resources Market::getCost() const {
-	return Parameters::get()->getResources("market_cost");
+	return Parameters::get().getResources("market_cost");
 }
 std::string Market::getTextureName() const {
 	return "market";
@@ -60,7 +60,7 @@ StringLcl Market::getDescription() const {
 	return StringLcl("{market_description}");
 }
 uint32_t Market::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("market_regeneration_speed");
+	return Parameters::get().getInt("market_regeneration_speed");
 }
 
 

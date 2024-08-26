@@ -20,9 +20,9 @@
 #include "RefreshHealingAbilityEvent.hpp"
 
 
-RefreshHealingAbilityEvent::RefreshHealingAbilityEvent(WarriorHealer *w) {
+RefreshHealingAbilityEvent::RefreshHealingAbilityEvent(std::shared_ptr<WarriorHealer> w) {
     this->w = w;
 }
-WarriorHealer *RefreshHealingAbilityEvent::getWarrior() {
+std::shared_ptr<WarriorHealer> RefreshHealingAbilityEvent::getWarrior() {
     return this->w;
 }

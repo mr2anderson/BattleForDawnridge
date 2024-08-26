@@ -28,16 +28,16 @@ Stone::Stone(uint32_t x, uint32_t y) : AreaResourcePoint(x, y) {
 
 }
 UUID Stone::getTypeUUID() const {
-	return UUIDs::get()->get("stone");
+	return UUIDs::get().get("stone");
 }
 uint32_t Stone::getSX() const {
-	return Parameters::get()->getInt("stone_sx");
+	return Parameters::get().getInt("stone_sx");
 }
 uint32_t Stone::getSY() const {
-	return Parameters::get()->getInt("stone_sy");
+	return Parameters::get().getInt("stone_sy");
 }
 uint32_t Stone::getMaxHP() const {
-	return Parameters::get()->getInt("stone_max_hp");
+	return Parameters::get().getInt("stone_max_hp");
 }
 std::string Stone::getResourceType() const {
 	return "stone";

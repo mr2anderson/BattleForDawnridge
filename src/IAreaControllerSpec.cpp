@@ -27,7 +27,7 @@ HashTableMapPosition<uint32_t> IAreaControllerSpec::getAvailable(uint32_t x, uin
     HashTableMapPosition<bool> blocked;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+        std::shared_ptr<GO> go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         if (!go->exist()) {
             continue;
         }
@@ -45,7 +45,7 @@ HashTableMapPosition<uint32_t> IAreaControllerSpec::getAvailable(uint32_t x, uin
     LandscapeGraph g(state->getMapSizePtr()->getWidth(), state->getMapSizePtr()->getHeight(), blocked);
     return g.getAvailable(x, y, sx, sy, this->getRadius());
 }
-bool IAreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t type) {
+bool IAreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& available, std::shared_ptr<const GO> target, uint8_t type) {
     for (uint32_t x = target->getX(); x < target->getX() + target->getSX(); x = x + 1) {
         for (uint32_t y = target->getY(); y < target->getY() + target->getSY(); y = y + 1) {
             bool found = (available.find(std::make_tuple(x, y)) != available.end());
@@ -59,7 +59,7 @@ bool IAreaControllerSpec::IN_RADIUS(const HashTableMapPosition<uint32_t>& availa
     }
     return (type == IN_RADIUS_TYPE::FULLY);
 }
-Events IAreaControllerSpec::getHighlightEvent(const Building *building, MapState *state, uint8_t type) const {
+Events IAreaControllerSpec::getHighlightEvent(std::shared_ptr<const Building> building, MapState *state, uint8_t type) const {
     if (type != HIGHLIGHT_TYPE::UNIVERSAL and type != this->getHighlightType()) {
         return Events();
     }

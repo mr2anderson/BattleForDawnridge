@@ -197,7 +197,7 @@ void Room::verifyIncorrectPlayersRepresentation() {
 		if (this->playerIsActive.at(i)) {
 			bool ok = false;
 			for (uint32_t j = 0; j < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); j = j + 1) {
-				const Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(j);
+				std::shared_ptr<const Building>  b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(j);
 				if (b->exist() and b->getPlayerId() == i + 1 and b->isVictoryCondition()) {
 					ok = true;
 					break;
@@ -271,7 +271,7 @@ void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol
 }
 void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p) {
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
+		std::shared_ptr<GO> go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
 		Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, viewX, viewY);
 		if (!gor.empty()) {
 			this->addEvents(gor, p);
@@ -336,7 +336,7 @@ ResourceBar Room::makeResourceBar() {
 
 	Resources limit;
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			limit.plus(b->getLimit());
 		}
@@ -345,7 +345,7 @@ ResourceBar Room::makeResourceBar() {
 
 	uint32_t population = 0;
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-		Warrior* w = this->map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
+		std::shared_ptr<Warrior>  w = this->map.getStatePtr()->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			population = population + w->getPopulation();
 		}
@@ -354,7 +354,7 @@ ResourceBar Room::makeResourceBar() {
 
 	uint32_t populationLimit = 0;
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = this->map.getStatePtr()->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->getCurrentPlayer()->getId()) {
 			populationLimit = populationLimit + b->getPopulationLimit();
 		}
@@ -903,7 +903,7 @@ void Room::handleSetHighlightEvent(std::shared_ptr<SetHighlightEvent> e, RoomOut
 	this->highlightTable.mark(*e);
 }
 void Room::handleAddHpEvent(std::shared_ptr<AddHpEvent> e, RoomOutputProtocol p) {
-	HPGO* go = e->getHPGO();
+	std::shared_ptr<HPGO> go = e->getHPGO();
 	uint32_t n = e->getN();
 	go->addHp(n);
 }
@@ -911,7 +911,7 @@ void Room::handleDecreaseCurrentTradeMovesLeft(std::shared_ptr<DecreaseCurrentTr
 	e->getSpec()->decreaseCurrentTradeMovesLeft();
 }
 void Room::handleBuild(std::shared_ptr<BuildEvent> e, RoomOutputProtocol p) {
-	Building* b = e->getBuilding();
+	std::shared_ptr<Building>  b = e->getBuilding();
 	this->map.getStatePtr()->getCollectionsPtr()->add(b);
 }
 void Room::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e, RoomOutputProtocol p) {

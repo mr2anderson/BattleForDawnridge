@@ -40,23 +40,23 @@ void WarriorHealer::wipeHealingAbility() {
 uint32_t WarriorHealer::getHealingSpeed() const {
     uint32_t healingSpeed = this->getBaseHealingSpeed();
     if (this->inRage()) {
-        healingSpeed = healingSpeed * (1 + Parameters::get()->getDouble("rage_mode_healing_speed_bonus"));
+        healingSpeed = healingSpeed * (1 + Parameters::get().getDouble("rage_mode_healing_speed_bonus"));
     }
     return healingSpeed;
 }
 bool WarriorHealer::blockBuildingAbility() const {
     return false;
 }
-Events WarriorHealer::heal(Warrior *w) {
+Events WarriorHealer::heal(std::shared_ptr<Warrior> w) {
     this->wipeMovementPoints();
     this->setDirection(this->getDirection(w));
 
     Events events;
-    events.add(std::make_shared<WipeHealingAbilityEvent>(this));
+    events.add(std::make_shared<WipeHealingAbilityEvent>(this->getThis<WarriorHealer>()));
 
     return events;
 }
-std::string WarriorHealer::getDirection(Warrior *w) const {
+std::string WarriorHealer::getDirection(std::shared_ptr<Warrior> w) const {
     if (w->getY() > this->getY()) {
         return "s";
     }
@@ -73,13 +73,13 @@ Events WarriorHealer::newMove(MapState *state, uint32_t playerId) {
 
     if (this->exist()) {
         Events refreshHealingAbility;
-        refreshHealingAbility.add(std::make_shared<RefreshHealingAbilityEvent>(this));
+        refreshHealingAbility.add(std::make_shared<RefreshHealingAbilityEvent>(this->getThis<WarriorHealer>()));
         events = refreshHealingAbility + events;
     }
 
     return events;
 }
-bool WarriorHealer::canHeal(Warrior *w) const {
+bool WarriorHealer::canHeal(std::shared_ptr<Warrior> w) const {
     if (!this->healingAvailable or !w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP()) {
         return false;
     }
@@ -93,9 +93,9 @@ std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
     std::vector<SpecialMove> moves;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        Warrior *w = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
         if (this->canHeal(w)) {
-            moves.emplace_back(w->getX(), w->getY(), HighlightColors::get()->getWarriorHealColor(this->getPlayerId()));
+            moves.emplace_back(w->getX(), w->getY(), HighlightColors::get().getWarriorHealColor(this->getPlayerId()));
         }
     }
 
@@ -103,7 +103,7 @@ std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
 }
 Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        Warrior *w = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
         if (w->getX() == targetX and w->getY() == targetY and this->canHeal(w)) {
             return this->heal(w);
         }

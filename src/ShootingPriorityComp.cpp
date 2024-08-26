@@ -21,10 +21,10 @@
 #include "ShootingPriorityComp.hpp"
 
 
-ShootingPriorityComp::ShootingPriorityComp(const GO* shootingBuilding) {
+ShootingPriorityComp::ShootingPriorityComp(std::shared_ptr<const GO> shootingBuilding) {
     this->shootingBuilding = shootingBuilding;
 }
-bool ShootingPriorityComp::operator()(const GO* go1, const GO* go2) const {
+bool ShootingPriorityComp::operator()(std::shared_ptr<const GO> go1, std::shared_ptr<const GO> go2) const {
     uint32_t dst1 = std::numeric_limits<uint32_t>::max();
     uint32_t dst2 = std::numeric_limits<uint32_t>::max();
 

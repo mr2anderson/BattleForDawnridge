@@ -38,7 +38,7 @@
 
 
 BuildingMode::BuildingMode() = default;
-BuildingMode::BuildingMode(std::shared_ptr<const Building> b, uint32_t playerId) {
+BuildingMode::BuildingMode(std::shared_ptr<const Building>b, uint32_t playerId) {
 	this->b = b;
 	this->playerId = playerId;
 }
@@ -46,7 +46,7 @@ Events BuildingMode::start(MapState *state) {
 	Events events;
 
 	Events startEvent = this->getHighlightEvent(state);
-	startEvent.add(std::make_shared<SelectEvent>(this));
+	startEvent.add(std::make_shared<SelectEvent>(this->getThis<ISelectable>()));
 	startEvent.add(std::make_shared<DisableCursorEvent>());
 
 	events = events + startEvent;
@@ -55,7 +55,7 @@ Events BuildingMode::start(MapState *state) {
 }
 std::shared_ptr<sf::Drawable> BuildingMode::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
 	sf::Sprite sprite;
-	sprite.setTexture(*Textures::get()->get(this->b->getTextureName()));
+	sprite.setTexture(*Textures::get().get(this->b->getTextureName()));
 	sprite.setTextureRect(this->b->getTextureRect());
 	sprite.setPosition(mouseX / 64 * 64, mouseY / 64 * 64);
 	return std::make_shared<sf::Sprite>(sprite);
@@ -71,34 +71,30 @@ Events BuildingMode::onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t
 		return exitEvent;
 	}
 
-	Building* clonedB = this->b->createSameTypeBuilding();
+	std::shared_ptr<Building>  clonedB = this->b->createSameTypeBuilding();
 	clonedB->setX(x);
 	clonedB->setY(y);
 	clonedB->changePlayer(this->playerId);
 
 	if (!this->inMap(state, clonedB)) {
-		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{not_in_map}"), StringLcl("{OK}"), clickSoundEvent);
 		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
 	if (!this->empty(state, clonedB)) {
-		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{place_occupied}"), StringLcl("{OK}"), clickSoundEvent);
 		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
 	if (!this->controlled(state, clonedB)) {
-		delete clonedB;
 		std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{too_far_from_roads}"), StringLcl("{OK}"), clickSoundEvent);
 		exitEvent = exitEvent + clickSoundEvent;
 		exitEvent.add(std::make_shared<CreateEEvent>(w));
 		return exitEvent;
 	}
     if (!this->noEnemyWarriors(state, clonedB)) {
-        delete clonedB;
         std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{enemy_warriors}"), StringLcl("{OK}"), clickSoundEvent);
         exitEvent = exitEvent + clickSoundEvent;
         exitEvent.add(std::make_shared<CreateEEvent>(w));
@@ -114,7 +110,7 @@ Events BuildingMode::onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t
 Events BuildingMode::getHighlightEvent(MapState *state) const {
 	Events result;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* building = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  building = state->getCollectionsPtr()->getBuilding(i);
 		if (building->exist()) {
             if (building->getPlayerId() == this->playerId) {
                 result = result + building->getHighlightEvent(state, IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
@@ -122,21 +118,21 @@ Events BuildingMode::getHighlightEvent(MapState *state) const {
 		}
 	}
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        Warrior* w = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior>  w = state->getCollectionsPtr()->getWarrior(i);
         if (w->exist() and w->getPlayerId() != this->playerId and w->blockBuildingAbility()) {
             result = result + w->getMoveHighlightionEvent(state);
         }
     }
 	return result;
 }
-bool BuildingMode::inMap(MapState *state, const Building *clonedB) const {
+bool BuildingMode::inMap(MapState *state, std::shared_ptr<const Building> clonedB) const {
 	return
 			(clonedB->getX() + clonedB->getSX() - 1 < state->getMapSizePtr()->getWidth() and
 			clonedB->getY() + clonedB->getSY() - 1 < state->getMapSizePtr()->getHeight());
 }
-bool BuildingMode::empty(MapState* state, const Building *clonedB) const {
+bool BuildingMode::empty(MapState* state, std::shared_ptr<const Building> clonedB) const {
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+		std::shared_ptr<GO> go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (!go->exist()) {
 			continue;
 		}
@@ -146,7 +142,7 @@ bool BuildingMode::empty(MapState* state, const Building *clonedB) const {
 	}
 	return true;
 }
-bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
+bool BuildingMode::controlled(MapState* state, std::shared_ptr<const Building> clonedB) const {
 	uint32_t x = clonedB->getX();
 	uint32_t y = clonedB->getY();
 	uint32_t sx = clonedB->getSX();
@@ -160,7 +156,7 @@ bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
     }
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == this->playerId) {
 			Events highlightEvent = b->getHighlightEvent(state, IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY);
 			for (uint32_t i = 0; i < highlightEvent.size(); i = i + 1) {
@@ -179,9 +175,9 @@ bool BuildingMode::controlled(MapState* state, const Building *clonedB) const {
 
     return false;
 }
-bool BuildingMode::noEnemyWarriors(MapState *state, const Building *clonedB) const {
+bool BuildingMode::noEnemyWarriors(MapState *state, std::shared_ptr<const Building> clonedB) const {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        Warrior *w = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
         if (w->exist() and w->getPlayerId() != this->playerId and w->blockBuildingAbility()) {
             std::vector<std::tuple<uint32_t, uint32_t>> moves = w->getMoves(state);
             for (const auto move : moves) {

@@ -24,12 +24,12 @@
 
 
 
-Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *state) const {
+Events IWarehouseSpec::getEventOnDestroy(std::shared_ptr<const Building> building, MapState *state) const {
 	Events event;
 
 	Resources newLimit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-        Building *b = state->getCollectionsPtr()->getBuilding(i);
+        std::shared_ptr<Building> b = state->getCollectionsPtr()->getBuilding(i);
         if (b->exist() and b->getPlayerId() == building->getPlayerId() and b->getUUID() != building->getUUID()) {
             newLimit.plus(b->getLimit());
         }
@@ -39,7 +39,7 @@ Events IWarehouseSpec::getEventOnDestroy(const Building *building, MapState *sta
 
 	return event;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(const Building *building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getComponents(std::shared_ptr<const Building> building, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
     if (building->wasWithFullHP()) {
@@ -68,7 +68,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarehouseSpec::getCompo
 NewMoveMainPriority IWarehouseSpec::getNewMoveMainPriority() const {
     return GO::NEW_MOVE_MAIN_PRIORITY_WAREHOUSE;
 }
-Resources IWarehouseSpec::getLimit(const Building *building) const {
+Resources IWarehouseSpec::getLimit(std::shared_ptr<const Building> building) const {
     if (building->wasWithFullHP()) {
         return this->getActiveLimit();
     }

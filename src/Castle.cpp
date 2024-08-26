@@ -32,30 +32,30 @@
 Castle::Castle() = default;
 Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-    this->addSpec(new VictoryConditionSpec());
-    this->addSpec(new CastleWarehouseSpec());
-    this->addSpec(new CastlePopulationLimitIncreaserSpec());
-    this->addSpec(new CastleShootingSpec());
-    this->addSpec(new CastleWoodGeneratorSpec());
-	this->addSpec(new CastleTerritoryExpanderSpec());
+    this->addSpec(std::make_shared<VictoryConditionSpec>());
+    this->addSpec(std::make_shared<CastleWarehouseSpec>());
+    this->addSpec(std::make_shared<CastlePopulationLimitIncreaserSpec>());
+    this->addSpec(std::make_shared<CastleShootingSpec>());
+    this->addSpec(std::make_shared<CastleWoodGeneratorSpec>());
+	this->addSpec(std::make_shared<CastleTerritoryExpanderSpec>());
 }
-Building* Castle::createSameTypeBuilding() const {
-	return new Castle(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Castle::createSameTypeBuilding() const {
+	return std::make_shared<Castle>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Castle::getTypeUUID() const {
-	return UUIDs::get()->get("castle");
+	return UUIDs::get().get("castle");
 }
 uint32_t Castle::getSX() const {
-	return Parameters::get()->getInt("castle_sx");
+	return Parameters::get().getInt("castle_sx");
 }
 uint32_t Castle::getSY() const {
-	return Parameters::get()->getInt("castle_sy");
+	return Parameters::get().getInt("castle_sy");
 }
 uint32_t Castle::getMaxHP() const {
-	return Parameters::get()->getInt("castle_max_hp");
+	return Parameters::get().getInt("castle_max_hp");
 }
 Defence Castle::getDefence() const {
-	return Parameters::get()->getDefence("castle_defence");
+	return Parameters::get().getDefence("castle_defence");
 }
 Resources Castle::getCost() const {
 	return Resources();
@@ -70,7 +70,7 @@ StringLcl Castle::getDescription() const {
 	return StringLcl("{castle_description}");
 }
 uint32_t Castle::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("castle_regeneration_speed");
+	return Parameters::get().getInt("castle_regeneration_speed");
 }
 
 

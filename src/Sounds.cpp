@@ -23,11 +23,8 @@
 #include "CouldntOpenSound.hpp"
 
 
-Sounds *Sounds::singletone = nullptr;
-
-
 void Sounds::add(const std::string& name, const std::string& path) {
-    if (!this->sounds[name].loadFromFile(Root::get()->getDataRoot() + "/" + path)) {
+    if (!this->sounds[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenSound(path);
     }
 }

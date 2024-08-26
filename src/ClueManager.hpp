@@ -25,11 +25,9 @@
 
 class ClueManager {
 public:
-    static ClueManager* get() {
-        if (ClueManager::singletone == nullptr) {
-            ClueManager::singletone = new ClueManager();
-        }
-        return ClueManager::singletone;
+    static ClueManager& get() {
+        static ClueManager instance;
+        return instance;
     }
 
     Label getClueLabel(uint32_t windowW, uint32_t windowH);
@@ -37,7 +35,6 @@ public:
 private:
     ClueManager();
     ClueManager(const ClueManager& copy);
-    static ClueManager* singletone;
 
     uint32_t currentClue;
 

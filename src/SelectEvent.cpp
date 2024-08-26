@@ -20,9 +20,9 @@
 #include "SelectEvent.hpp"
 
 
-SelectEvent::SelectEvent(ISelectable* s) {
+SelectEvent::SelectEvent(std::shared_ptr<ISelectable> s) {
 	this->s = s;
 }
-ISelectable* SelectEvent::getSelectable() {
+std::shared_ptr<ISelectable> SelectEvent::getSelectable() {
 	return this->s;
 }

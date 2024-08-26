@@ -20,9 +20,9 @@
 #include "MarkSpellAsUsedEvent.hpp"
 
 
-MarkSpellAsUsedEvent::MarkSpellAsUsedEvent(Spell* spell) {
+MarkSpellAsUsedEvent::MarkSpellAsUsedEvent(std::shared_ptr<Spell> spell) {
 	this->spell = spell;
 }
-Spell* MarkSpellAsUsedEvent::getSpell() {
+std::shared_ptr<Spell> MarkSpellAsUsedEvent::getSpell() {
 	return this->spell;
 }

@@ -39,7 +39,7 @@ BuildingStatePointer::BuildingStatePointer(float xInPixels, float yInPixels, uin
 }
 void BuildingStatePointer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::Sprite sprite;
-    sprite.setTexture(*Textures::get()->get(this->type));
+    sprite.setTexture(*Textures::get().get(this->type));
     sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
     sprite.setScale(this->getCurrentScale(), this->getCurrentScale());
     sprite.setPosition(this->xInPixels + 8 * this->sx, this->yInPixels + 8 * this->sx);
@@ -47,7 +47,7 @@ void BuildingStatePointer::draw(sf::RenderTarget &target, sf::RenderStates state
 
     uint32_t id = (TOTAL_HP_POINTERS - 1) * this->current / this->max;
     sprite = sf::Sprite();
-    sprite.setTexture(*Textures::get()->get("building_hp_pointer" + std::to_string(id)));
+    sprite.setTexture(*Textures::get().get("building_hp_pointer" + std::to_string(id)));
     sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
     sprite.setScale(this->getCurrentScale(), this->getCurrentScale());
     sprite.setPosition(this->xInPixels + 8 * this->sx, this->yInPixels + 16 * this->sx);
@@ -69,7 +69,7 @@ float BuildingStatePointer::getCurrentScaleLightSource() const {
     return this->getCurrentScaleBuildingSizeIndependent() * (1 - 0.25f * (this->sx == 1));
 }
 float BuildingStatePointer::getCurrentScaleBuildingSizeIndependent() const {
-    return (0.5f + std::sin((long double)GlobalClock::get()->getMs() / (long double)(750 / 2)) / 4);
+    return (0.5f + std::sin((long double)GlobalClock::get().getMs() / (long double)(750 / 2)) / 4);
 }
 std::shared_ptr<ILightSource> BuildingStatePointer::getLightSource() const {
     return std::make_shared<CircleLightSourceStatic>(

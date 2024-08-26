@@ -22,17 +22,17 @@
 
 
 WellSpec::WellSpec() = default;
-IBuildingSpec *WellSpec::clone() const {
-    return new WellSpec(*this);
+std::shared_ptr<IBuildingSpec>WellSpec::clone() const {
+    return std::make_shared<WellSpec>(*this);
 }
 std::string WellSpec::getResourceType() const {
     return "crystal";
 }
 uint32_t WellSpec::getCollectionSpeed() const {
-    return Parameters::get()->getInt("well_collection_speed");
+    return Parameters::get().getInt("well_collection_speed");
 }
 uint32_t WellSpec::getCollectionRadius() const {
-    return Parameters::get()->getInt("well_collection_radius");
+    return Parameters::get().getInt("well_collection_radius");
 }
 
 

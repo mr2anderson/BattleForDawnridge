@@ -23,11 +23,8 @@
 #include "Root.hpp"
 
 
-FirstTimeTipsTable* FirstTimeTipsTable::singletone = nullptr;
-
-
 static std::string GET_LOCAL_ROOT() {
-	return Root::get()->getUserdataRoot() + "/first_time_tips";
+	return Root::get().getUserdataRoot() + "/first_time_tips";
 }
 static bool LOCAL_ROOT_EXIST() {
 	return std::filesystem::is_directory(GET_LOCAL_ROOT());

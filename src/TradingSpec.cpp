@@ -34,7 +34,7 @@
 
 
 TradingSpec::TradingSpec() = default;
-Events TradingSpec::doTrade(const Building *b, const Trade& trade) {
+Events TradingSpec::doTrade(std::shared_ptr<const Building> b, const Trade& trade) {
 	Events clickSoundEvent;
 	clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
@@ -56,7 +56,7 @@ Events TradingSpec::doTrade(const Building *b, const Trade& trade) {
 void TradingSpec::decreaseCurrentTradeMovesLeft() {
 	this->currentTrade.movesLeft = this->currentTrade.movesLeft - 1;
 }
-Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
+Events TradingSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState* state) {
 	if (!b->works() or !this->busy()) {
 		return Events();
 	}
@@ -70,7 +70,7 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 	std::shared_ptr<ImageFlyingE> element = std::make_shared<ImageFlyingE>("trade_icon", b->getX(), b->getY(), b->getSX(), b->getSY());
 	responce.add(std::make_shared<CreateEEvent>(element));
 
-	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this));
+	responce.add(std::make_shared<DecreaseCurrentTradeMovesLeftEvent>(this->getThis<TradingSpec>()));
 
 	if (this->currentTrade.movesLeft == 1) {
 		responce.add(std::make_shared<PlaySoundEvent>(this->currentTrade.buy.type));
@@ -80,7 +80,7 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 
 		Resources limit;
 		for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-			Building* warehouse = state->getCollectionsPtr()->getBuilding(i);
+			std::shared_ptr<Building>  warehouse = state->getCollectionsPtr()->getBuilding(i);
 			if (warehouse->exist() and warehouse->getPlayerId() == b->getPlayerId()) {
 				limit.plus(warehouse->getLimit());
 			}
@@ -91,7 +91,7 @@ Events TradingSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
 
 	return responce;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponents(const Building *b, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponents(std::shared_ptr<const Building> b, MapState* state) {
 	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (b->works()) {
@@ -123,7 +123,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> TradingSpec::getComponen
 
 	return components;
 }
-boost::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) const {
+boost::optional<BuildingShortInfo> TradingSpec::getShortInfo(std::shared_ptr<const Building> b) const {
     if (!b->works()) {
         return boost::none;
     }
@@ -145,10 +145,10 @@ boost::optional<BuildingShortInfo> TradingSpec::getShortInfo(const Building *b) 
 bool TradingSpec::busy() const {
 	return this->currentTrade.movesLeft > 0;
 }
-BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(const Building* b, const Trade& trade, MapState *state) {
+BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(std::shared_ptr<const Building>  b, const Trade& trade, MapState *state) {
     Resources freeSpace;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-        Building *warehouse = state->getCollectionsPtr()->getBuilding(i);
+        std::shared_ptr<Building> warehouse = state->getCollectionsPtr()->getBuilding(i);
         if (warehouse->exist() and warehouse->getPlayerId() == b->getPlayerId()) {
             freeSpace.plus(warehouse->getLimit());
         }

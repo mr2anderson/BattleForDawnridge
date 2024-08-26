@@ -28,11 +28,11 @@ Knight::Knight(uint32_t x, uint32_t y, uint32_t playerId) :
 	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
-Warrior* Knight::cloneWarrior() const {
-	return new Knight(*this);
+std::shared_ptr<Warrior>  Knight::cloneWarrior() const {
+	return std::make_shared<Knight>(*this);
 }
 UUID Knight::getTypeUUID() const {
-	return UUIDs::get()->get("knight");
+	return UUIDs::get().get("knight");
 }
 std::string Knight::getBeenHitSoundName() const {
     return "ouch";
@@ -41,19 +41,19 @@ std::string Knight::getStartAttackSoundName() const {
     return "swing";
 }
 uint32_t Knight::getMaxHP() const {
-	return Parameters::get()->getInt("knight_max_hp");
+	return Parameters::get().getInt("knight_max_hp");
 }
 Defence Knight::getBaseDefence() const {
-	return Parameters::get()->getDefence("knight_defence");
+	return Parameters::get().getDefence("knight_defence");
 }
 Damage Knight::getBaseDamage() const {
-    return Parameters::get()->getDamage("knight_damage");
+    return Parameters::get().getDamage("knight_damage");
 }
 Resources Knight::getCost() const {
-	return Parameters::get()->getResources("knight_cost");
+	return Parameters::get().getResources("knight_cost");
 }
 uint32_t Knight::getTimeToProduce() const {
-	return Parameters::get()->getInt("knight_time_to_produce");
+	return Parameters::get().getInt("knight_time_to_produce");
 }
 std::string Knight::getSoundName() const {
 	return "knight";
@@ -80,10 +80,10 @@ std::string Knight::getBaseTextureName() const {
 	return "knight";
 }
 uint32_t Knight::getMovementPoints() const {
-	return Parameters::get()->getInt("knight_movement_points");
+	return Parameters::get().getInt("knight_movement_points");
 }
 uint32_t Knight::getPopulation() const {
-	return Parameters::get()->getInt("knight_population");
+	return Parameters::get().getInt("knight_population");
 }
 
 

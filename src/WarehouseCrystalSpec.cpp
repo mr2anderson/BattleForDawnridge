@@ -22,11 +22,11 @@
 
 
 WarehouseCrystalSpec::WarehouseCrystalSpec() = default;
-IBuildingSpec* WarehouseCrystalSpec::clone() const {
-    return new WarehouseCrystalSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseCrystalSpec::clone() const {
+    return std::make_shared<WarehouseCrystalSpec>(*this);
 }
 Resources WarehouseCrystalSpec::getActiveLimit() const {
-    return Parameters::get()->getResources("warehouse_crystal_limit");
+    return Parameters::get().getResources("warehouse_crystal_limit");
 }
 
 

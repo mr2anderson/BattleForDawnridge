@@ -22,17 +22,17 @@
 
 
 SawmillSpec::SawmillSpec() = default;
-IBuildingSpec* SawmillSpec::clone() const {
-	return new SawmillSpec(*this);
+std::shared_ptr<IBuildingSpec> SawmillSpec::clone() const {
+	return std::make_shared<SawmillSpec>(*this);
 }
 std::string SawmillSpec::getResourceType() const {
 	return "wood";
 }
 uint32_t SawmillSpec::getCollectionSpeed() const {
-	return Parameters::get()->getInt("sawmill_collection_speed");
+	return Parameters::get().getInt("sawmill_collection_speed");
 }
 uint32_t SawmillSpec::getCollectionRadius() const {
-	return Parameters::get()->getInt("sawmill_collection_radius");
+	return Parameters::get().getInt("sawmill_collection_radius");
 }
 
 

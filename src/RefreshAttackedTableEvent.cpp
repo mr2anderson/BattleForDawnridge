@@ -20,9 +20,9 @@
 #include "RefreshAttackedTableEvent.hpp"
 
 
-RefreshAttackedTableEvent::RefreshAttackedTableEvent(WarriorNearMultyAttacker *w) {
+RefreshAttackedTableEvent::RefreshAttackedTableEvent(std::shared_ptr<WarriorNearMultyAttacker>w) {
     this->warrior = w;
 }
-WarriorNearMultyAttacker *RefreshAttackedTableEvent::getWarrior() {
+std::shared_ptr<WarriorNearMultyAttacker>RefreshAttackedTableEvent::getWarrior() {
     return this->warrior;
 }

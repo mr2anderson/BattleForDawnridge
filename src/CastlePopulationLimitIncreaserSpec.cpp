@@ -22,11 +22,11 @@
 
 
 CastlePopulationLimitIncreaserSpec::CastlePopulationLimitIncreaserSpec() = default;
-IBuildingSpec* CastlePopulationLimitIncreaserSpec::clone() const {
-	return new CastlePopulationLimitIncreaserSpec(*this);
+std::shared_ptr<IBuildingSpec> CastlePopulationLimitIncreaserSpec::clone() const {
+	return std::make_shared<CastlePopulationLimitIncreaserSpec>(*this);
 }
 uint32_t CastlePopulationLimitIncreaserSpec::getActivePopulationLimit() const {
-	return Parameters::get()->getInt("castle_population_limit");
+	return Parameters::get().getInt("castle_population_limit");
 }
 
 

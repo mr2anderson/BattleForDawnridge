@@ -36,29 +36,29 @@ std::wstring StringLcl::get() const {
 		bool isLocaleKey = false;
 		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
 			if (this->data.at(i) == '{') {
-				result = result + UTFEncoder::get()->utf8ToUtf16(buff);
+				result = result + UTFEncoder::get().utf8ToUtf16(buff);
 				buff.clear();
 				isLocaleKey = true;
 				continue;
 			}
 			if (this->data.at(i) == '}') {
 				isLocaleKey = false;
-				result = result + *Locales::get()->get(buff);
+				result = result + *Locales::get().get(buff);
 				buff.clear();
 				continue;
 			}
 			buff = buff + this->data.at(i);
 		}
-		result = result + UTFEncoder::get()->utf8ToUtf16(buff);
+		result = result + UTFEncoder::get().utf8ToUtf16(buff);
 		return result;
 	}
 	catch (std::exception&) {
 		std::cout << "Invalid string lcl format: " << this->data << std::endl;
 		try {
-			return UTFEncoder::get()->utf8ToUtf16(this->data);
+			return UTFEncoder::get().utf8ToUtf16(this->data);
 		}
 		catch (std::exception&) {
-			return UTFEncoder::get()->utf8ToUtf16("COULDNT_FORMAT_STRING_LCL_CONTENT_REPORT_DEVELOPER");
+			return UTFEncoder::get().utf8ToUtf16("COULDNT_FORMAT_STRING_LCL_CONTENT_REPORT_DEVELOPER");
 		}
 	}
 }

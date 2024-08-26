@@ -35,13 +35,13 @@ public:
     virtual std::string getStartHealingSoundName() const = 0;
 protected:
     virtual uint32_t getBaseHealingSpeed() const = 0;
-    virtual Events heal(Warrior *w);
+    virtual Events heal(std::shared_ptr<Warrior> w);
 private:
     bool healingAvailable;
 
-    std::string getDirection(Warrior *w) const;
+    std::string getDirection(std::shared_ptr<Warrior> w) const;
     Events newMove(MapState *state, uint32_t playerId) override;
-    bool canHeal(Warrior *w) const;
+    bool canHeal(std::shared_ptr<Warrior> w) const;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
     StringLcl getSpecialInfoString() const override;

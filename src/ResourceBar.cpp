@@ -52,17 +52,17 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	for (uint32_t i = 0; i <= res.size(); i = i + 1) {
 		sf::Sprite sprite;
 		if (i == res.size()) {
-			sprite.setTexture(*Textures::get()->get("helmet"));
+			sprite.setTexture(*Textures::get().get("helmet"));
 		}
 		else {
-			sprite.setTexture(*Textures::get()->get(res.at(i).type + "_icon"));
+			sprite.setTexture(*Textures::get().get(res.at(i).type + "_icon"));
 		}
 		sprite.setPosition(sf::Vector2f(rect.getPosition().x + rect.getSize().x * i / (res.size() + 1), rect.getPosition().y));
 		sprite.setScale(rect.getSize().y / sprite.getTexture()->getSize().x, rect.getSize().y / sprite.getTexture()->getSize().y);
 		target.draw(sprite, states);
 
 		sf::Text text;
-		text.setFont(*Fonts::get()->get("1"));
+		text.setFont(*Fonts::get().get("1"));
 		if (i == res.size()) {
 			text.setString(std::to_wstring(this->population) + L" / " + std::to_wstring(this->populationLimit));
 		}

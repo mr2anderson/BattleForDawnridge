@@ -32,9 +32,6 @@
 #include "ServerInitError.hpp"
 
 
-Program* Program::singletone = nullptr;
-
-
 Program::Program() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -69,7 +66,7 @@ void Program::run() {
 
 
 
-    if (IsServerTable::get()->isServer()) {
+    if (IsServerTable::get().isServer()) {
         ServerScreen serverScreen(this->window);
         serverScreen.run(this->window);
     }
@@ -130,15 +127,15 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
 void Program::networkGame(const MenuResponse& response, boost::optional<StringLcl>& error) {
     try {
         if (response.getType() == MenuResponse::TYPE::START_NETWORK_GAME) {
-            MainScreen mainScreen(this->window, MainServerPosition::get()->getIP(), MainServerPosition::get()->getPort(), MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
+            MainScreen mainScreen(this->window, MainServerPosition::get().getIP(), MainServerPosition::get().getPort(), MainScreen::Type::CreateFromMap, response.getData(), 1, RoomID());
             mainScreen.run(this->window);
         }
         else if (response.getType() == MenuResponse::TYPE::LOAD_NETWORK_GAME) {
-            MainScreen mainScreen(this->window, MainServerPosition::get()->getIP(), MainServerPosition::get()->getPort(), MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
+            MainScreen mainScreen(this->window, MainServerPosition::get().getIP(), MainServerPosition::get().getPort(), MainScreen::Type::CreateFromSave, response.getData(), 1, RoomID());
             mainScreen.run(this->window);
         }
         else {
-            MainScreen mainScreen(this->window, MainServerPosition::get()->getIP(), MainServerPosition::get()->getPort(), MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
+            MainScreen mainScreen(this->window, MainServerPosition::get().getIP(), MainServerPosition::get().getPort(), MainScreen::Type::Connect, "", 1, RoomID(response.getData()));
             mainScreen.run(this->window);
         }
     }

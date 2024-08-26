@@ -27,31 +27,31 @@
 WarehouseCrystal::WarehouseCrystal() = default;
 WarehouseCrystal::WarehouseCrystal(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
-    this->addSpec(new WarehouseCrystalSpec());
+    this->addSpec(std::make_shared<WarehouseCrystalSpec>());
 }
-Building* WarehouseCrystal::createSameTypeBuilding() const {
-    return new WarehouseCrystal(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  WarehouseCrystal::createSameTypeBuilding() const {
+    return std::make_shared<WarehouseCrystal>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID WarehouseCrystal::getTypeUUID() const {
-    return UUIDs::get()->get("warehouse_crystal");
+    return UUIDs::get().get("warehouse_crystal");
 }
 uint32_t WarehouseCrystal::getSX() const {
-    return Parameters::get()->getInt("warehouse_crystal_sx");
+    return Parameters::get().getInt("warehouse_crystal_sx");
 }
 uint32_t WarehouseCrystal::getSY() const {
-    return Parameters::get()->getInt("warehouse_crystal_sy");
+    return Parameters::get().getInt("warehouse_crystal_sy");
 }
 uint32_t WarehouseCrystal::getMaxHP() const {
-    return Parameters::get()->getInt("warehouse_crystal_max_hp");
+    return Parameters::get().getInt("warehouse_crystal_max_hp");
 }
 Defence WarehouseCrystal::getDefence() const {
-    return Parameters::get()->getDefence("warehouse_crystal_defence");
+    return Parameters::get().getDefence("warehouse_crystal_defence");
 }
 Resources WarehouseCrystal::getCost() const {
-    return Parameters::get()->getResources("warehouse_crystal_cost");
+    return Parameters::get().getResources("warehouse_crystal_cost");
 }
 uint32_t WarehouseCrystal::getRegenerationSpeed() const {
-    return Parameters::get()->getInt("warehouse_crystal_regeneration_speed");
+    return Parameters::get().getInt("warehouse_crystal_regeneration_speed");
 }
 std::string WarehouseCrystal::getTextureName() const {
     return "warehouse_crystal";

@@ -25,8 +25,8 @@
 
 class IPopulationLimitIncreaserSpec : public IBuildingSpec {
 public:
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	uint32_t getPopulationLimit(const Building* building) const override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building>  building, MapState* state) override;
+	uint32_t getPopulationLimit(std::shared_ptr<const Building>  building) const override;
     NewMoveMainPriority getNewMoveMainPriority() const override;
 	virtual uint32_t getActivePopulationLimit() const = 0;
 private:

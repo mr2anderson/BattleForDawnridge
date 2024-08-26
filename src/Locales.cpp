@@ -30,14 +30,11 @@
 #include "LanguageAlreadyInUse.hpp"
 
 
-Locales* Locales::singletone = nullptr;
-
-
 Locales::Locales() {
-    this->error = UTFEncoder::get()->utf8ToUtf16("UNKNOWN_LOCALES_KEY_REPORT_DEVELOPER");
+    this->error = UTFEncoder::get().utf8ToUtf16("UNKNOWN_LOCALES_KEY_REPORT_DEVELOPER");
 }
 void Locales::load() {
-    std::string path = Root::get()->getDataRoot() + "/locales/" + this->getPath();
+    std::string path = Root::get().getDataRoot() + "/locales/" + this->getPath();
     std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenLocales(path);
@@ -82,7 +79,7 @@ void Locales::load() {
             currentId = currentId + current + '\n';
         }
         else if (gettingData) {
-            currentData = currentData + UTFEncoder::get()->utf8ToUtf16(current + '\n');
+            currentData = currentData + UTFEncoder::get().utf8ToUtf16(current + '\n');
         }
     }
 
@@ -93,11 +90,11 @@ void Locales::setDefaultPath(const std::string& path) {
         throw LanguageAlreadyInUse();
     }
 
-    if (!std::filesystem::is_directory(Root::get()->getUserdataRoot())) {
-        std::filesystem::create_directories(Root::get()->getUserdataRoot());
+    if (!std::filesystem::is_directory(Root::get().getUserdataRoot())) {
+        std::filesystem::create_directories(Root::get().getUserdataRoot());
     }
 
-    std::ofstream file(Root::get()->getUserdataRoot() + "/language.cfg");
+    std::ofstream file(Root::get().getUserdataRoot() + "/language.cfg");
     file << path;
     file.close();
 }
@@ -110,7 +107,7 @@ std::wstring* Locales::get(const std::string& name) {
     return &it->second;
 }
 std::string Locales::getPath() const {
-    std::ifstream file(Root::get()->getUserdataRoot() + "/language.cfg");
+    std::ifstream file(Root::get().getUserdataRoot() + "/language.cfg");
     if (file.is_open()) {
         std::string path;
         std::getline(file, path);

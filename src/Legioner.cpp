@@ -28,11 +28,11 @@ Legioner::Legioner(uint32_t x, uint32_t y, uint32_t playerId) :
 	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
-Warrior* Legioner::cloneWarrior() const {
-	return new Legioner(*this);
+std::shared_ptr<Warrior>  Legioner::cloneWarrior() const {
+	return std::make_shared<Legioner>(*this);
 }
 UUID Legioner::getTypeUUID() const {
-	return UUIDs::get()->get("legioner");
+	return UUIDs::get().get("legioner");
 }
 std::string Legioner::getBeenHitSoundName() const {
     return "ouch";
@@ -41,19 +41,19 @@ std::string Legioner::getStartAttackSoundName() const {
     return "swing";
 }
 uint32_t Legioner::getMaxHP() const {
-	return Parameters::get()->getInt("legioner_max_hp");
+	return Parameters::get().getInt("legioner_max_hp");
 }
 Defence Legioner::getBaseDefence() const {
-	return Parameters::get()->getDefence("legioner_defence");
+	return Parameters::get().getDefence("legioner_defence");
 }
 Damage Legioner::getBaseDamage() const {
-    return Parameters::get()->getDamage("legioner_damage");
+    return Parameters::get().getDamage("legioner_damage");
 }
 Resources Legioner::getCost() const {
-	return Parameters::get()->getResources("legioner_cost");
+	return Parameters::get().getResources("legioner_cost");
 }
 uint32_t Legioner::getTimeToProduce() const {
-	return Parameters::get()->getInt("legioner_time_to_produce");
+	return Parameters::get().getInt("legioner_time_to_produce");
 }
 std::string Legioner::getSoundName() const {
 	return "sword";
@@ -80,10 +80,10 @@ std::string Legioner::getBaseTextureName() const {
 	return "legioner";
 }
 uint32_t Legioner::getMovementPoints() const {
-	return Parameters::get()->getInt("legioner_movement_points");
+	return Parameters::get().getInt("legioner_movement_points");
 }
 uint32_t Legioner::getPopulation() const {
-	return Parameters::get()->getInt("legioner_population");
+	return Parameters::get().getInt("legioner_population");
 }
 
 

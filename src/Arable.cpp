@@ -27,28 +27,28 @@
 Arable::Arable() = default;
 Arable::Arable(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new ArableSpec());
+	this->addSpec(std::make_shared<ArableSpec>());
 }
-Building* Arable::createSameTypeBuilding() const {
-	return new Arable(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building> Arable::createSameTypeBuilding() const {
+	return std::make_shared<Arable>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Arable::getTypeUUID() const {
-	return UUIDs::get()->get("arable");
+	return UUIDs::get().get("arable");
 }
 uint32_t Arable::getSX() const {
-	return Parameters::get()->getInt("arable_sx");
+	return Parameters::get().getInt("arable_sx");
 }
 uint32_t Arable::getSY() const {
-	return Parameters::get()->getInt("arable_sy");
+	return Parameters::get().getInt("arable_sy");
 }
 uint32_t Arable::getMaxHP() const {
-	return Parameters::get()->getInt("arable_max_hp");
+	return Parameters::get().getInt("arable_max_hp");
 }
 Defence Arable::getDefence() const {
-	return Parameters::get()->getDefence("arable_defence");
+	return Parameters::get().getDefence("arable_defence");
 }
 Resources Arable::getCost() const {
-	return Parameters::get()->getResources("arable_cost");
+	return Parameters::get().getResources("arable_cost");
 }
 std::string Arable::getTextureName() const {
 	return "arable";
@@ -60,7 +60,7 @@ StringLcl Arable::getDescription() const {
 	return StringLcl("{arable_description}");
 }
 uint32_t Arable::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("arable_regeneration_speed");
+	return Parameters::get().getInt("arable_regeneration_speed");
 }
 
 

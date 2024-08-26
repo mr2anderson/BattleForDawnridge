@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include <string>
 #include "Event.hpp"
 
@@ -29,11 +30,11 @@ class Warrior;
 
 class ChangeWarriorDirectionEvent : public Event {
 public:
-	ChangeWarriorDirectionEvent(Warrior* w, const std::string& direction);
+	ChangeWarriorDirectionEvent(std::shared_ptr<Warrior>  w, const std::string& direction);
 
-	Warrior* getWarrior();
+	std::shared_ptr<Warrior>  getWarrior();
 	std::string getDirection() const;
 private:
-	Warrior* w;
+	std::shared_ptr<Warrior>  w;
 	std::string direction;
 };

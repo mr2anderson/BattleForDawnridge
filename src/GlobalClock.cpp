@@ -20,9 +20,6 @@
 #include "GlobalClock.hpp"
 
 
-GlobalClock* GlobalClock::singletone = nullptr;
-
-
 GlobalClock::GlobalClock() = default;
 uint32_t GlobalClock::getMs() const {
     return this->clock.getMS();

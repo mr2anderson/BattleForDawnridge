@@ -29,7 +29,7 @@ void LoadingScreenBg::draw(sf::RenderTarget &target, sf::RenderStates states) co
     rect.setFillColor(sf::Color(4, 8, 11));
 
     sf::Sprite s;
-    s.setTexture(*Textures::get()->get("loading_screen"));
+    s.setTexture(*Textures::get().get("loading_screen"));
     s.setPosition(0, target.getSize().y - s.getLocalBounds().height);
 
     target.draw(rect, states);

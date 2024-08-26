@@ -30,7 +30,7 @@
 
 
 
-Events IWarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
+Events IWarriorHealerSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState *state) {
 	if (!b->works()) {
 		return Events();
 	}
@@ -40,7 +40,7 @@ Events IWarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *st
 	bool first = true;
 	HashTableMapPosition<uint32_t> available = this->getAvailable(b->getX(), b->getY(), b->getSX(), b->getSY(), b->getPlayerId(), state);
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-		Warrior* w = state->getCollectionsPtr()->getWarrior(i);
+		std::shared_ptr<Warrior>  w = state->getCollectionsPtr()->getWarrior(i);
 		if (w->exist() and w->getPlayerId() == b->getPlayerId() and
                 w->isVehicle() == this->healVehicles() and w->getHP() != w->getMaxHP() and IAreaControllerSpec::IN_RADIUS(available, w, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY)) {
 			if (first) {
@@ -59,7 +59,7 @@ Events IWarriorHealerSpec::getActiveNewMoveEvent(const Building *b, MapState *st
 
 	return events;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getComponents(const Building* b, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getComponents(std::shared_ptr<const Building>  b, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
 	if (b->works()) {
@@ -87,7 +87,7 @@ uint32_t IWarriorHealerSpec::getRadius() const {
 	return 0;
 }
 sf::Color IWarriorHealerSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getBuildingHealColor(playerId);
+    return HighlightColors::get().getBuildingHealColor(playerId);
 }
 uint8_t IWarriorHealerSpec::getHighlightType() const {
     return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;

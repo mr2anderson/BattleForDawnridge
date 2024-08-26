@@ -22,6 +22,6 @@
 #include "GO.hpp"
 
 
-bool CompByNewMovePriority::operator()(GO *a, GO *b) const {
+bool CompByNewMovePriority::operator()(std::shared_ptr<GO>a, std::shared_ptr<GO>b) const {
     return a->getNewMovePriority() > b->getNewMovePriority();
 }

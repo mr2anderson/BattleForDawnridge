@@ -22,8 +22,8 @@
 
 
 SpellFactorySpec::SpellFactorySpec() = default;
-IBuildingSpec* SpellFactorySpec::clone() const {
-	return new SpellFactorySpec(*this);
+std::shared_ptr<IBuildingSpec> SpellFactorySpec::clone() const {
+	return std::make_shared<SpellFactorySpec>(*this);
 }
 std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_t playerId) const {
 	std::vector<std::shared_ptr<Spell>> toProduce;

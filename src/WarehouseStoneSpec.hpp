@@ -23,7 +23,7 @@
 class WarehouseStoneSpec : public IWarehouseSpec {
 public:
 	WarehouseStoneSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	Resources getActiveLimit() const override;
 private:

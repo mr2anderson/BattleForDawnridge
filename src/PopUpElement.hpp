@@ -28,7 +28,7 @@
 #pragma once
 
 
-class PopUpElement : public sf::Drawable {
+class PopUpElement : public sf::Drawable, public std::enable_shared_from_this<PopUpElement> {
 public:
 	PopUpElement();
 
@@ -38,6 +38,13 @@ public:
     virtual void keyPressed(sf::Keyboard::Key key);
 	virtual bool isCameraDependent() const = 0;
 protected:
+    template<typename T> std::shared_ptr<T> getThis() {
+        return std::static_pointer_cast<T>(this->shared_from_this());
+    }
+    template<typename T> std::shared_ptr<const T> getThis() const {
+        return std::static_pointer_cast<T>(this->shared_from_this());
+    }
+
 	virtual void onRestart();
 
     friend class boost::serialization::access;

@@ -28,11 +28,11 @@ Healer::Healer() = default;
 Healer::Healer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorProjectileHealer(x, y, playerId) {
 
 }
-Healer *Healer::cloneWarrior() const {
-    return new Healer(*this);
+std::shared_ptr<Warrior> Healer::cloneWarrior() const {
+    return std::make_shared<Healer>(*this);
 }
 UUID Healer::getTypeUUID() const {
-    return UUIDs::get()->get("healer");
+    return UUIDs::get().get("healer");
 }
 std::string Healer::getBeenHitSoundName() const {
     return "ouch_woman_cute";
@@ -41,19 +41,19 @@ std::string Healer::getStartHealingSoundName() const {
     return "healer";
 }
 uint32_t Healer::getMaxHP() const {
-    return Parameters::get()->getInt("healer_max_hp");
+    return Parameters::get().getInt("healer_max_hp");
 }
 Defence Healer::getBaseDefence() const {
-    return Parameters::get()->getDefence("healer_defence");
+    return Parameters::get().getDefence("healer_defence");
 }
 uint32_t Healer::getBaseHealingSpeed() const {
-    return Parameters::get()->getInt("healer_healing_speed");
+    return Parameters::get().getInt("healer_healing_speed");
 }
 Resources Healer::getCost() const {
-    return Parameters::get()->getResources("healer_cost");
+    return Parameters::get().getResources("healer_cost");
 }
 uint32_t Healer::getTimeToProduce() const {
-    return Parameters::get()->getInt("healer_time_to_produce");
+    return Parameters::get().getInt("healer_time_to_produce");
 }
 std::string Healer::getSoundName() const {
     return "healer";
@@ -86,10 +86,10 @@ std::string Healer::getBaseTextureName() const {
     return "healer";
 }
 uint32_t Healer::getMovementPoints() const {
-    return Parameters::get()->getInt("healer_movement_points");
+    return Parameters::get().getInt("healer_movement_points");
 }
 uint32_t Healer::getPopulation() const {
-    return Parameters::get()->getInt("healer_population");
+    return Parameters::get().getInt("healer_population");
 }
 
 

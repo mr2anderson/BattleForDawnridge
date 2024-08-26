@@ -28,6 +28,7 @@
 #include "UUID.hpp"
 #include "ArchiveType.hpp"
 #include "Filter.hpp"
+#include "ISelectable.hpp"
 
 
 #pragma once
@@ -36,7 +37,7 @@
 class Warrior;
 
 
-class GO : public sf::Drawable, public IWithLightSource {
+class GO : public sf::Drawable, public IWithLightSource, public ISelectable {
 public:
 	GO();
 	GO(uint32_t x, uint32_t y);
@@ -63,15 +64,15 @@ public:
     UUID getUUID() const;
 	void setX(uint32_t newX);
 	void setY(uint32_t newY);
-	virtual bool warriorCanStay(const Warrior *w) const;
-	virtual uint32_t getWarriorMovementCost(const Warrior *w) const;
+	virtual bool warriorCanStay(std::shared_ptr<const Warrior> w) const;
+	virtual uint32_t getWarriorMovementCost(std::shared_ptr<Warrior> w) const;
     virtual bool isUltraHighObstacle(uint32_t playerId) const;
     virtual bool isHighObstacle(uint32_t playerId) const;
     virtual bool isLowObstacle(uint32_t playerId) const;
 	virtual bool exist() const;
 	Events click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint32_t mouseX, uint32_t mouseY);
     virtual void update(MapState *state, uint32_t playerId);
-	bool intersects(GO* go) const;
+	bool intersects(std::shared_ptr<GO> go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
 	virtual DrawingPriority getDrawingPriority() const;
@@ -114,6 +115,7 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
+        ar& boost::serialization::base_object<ISelectable>(*this); // ISelectable is an interface, so it does not contain any data. However, program must register type relationship for boost
         ar & this->x;
         ar & this->y;
     }

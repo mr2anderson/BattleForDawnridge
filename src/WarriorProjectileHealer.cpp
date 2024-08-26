@@ -28,7 +28,7 @@ WarriorProjectileHealer::WarriorProjectileHealer() = default;
 WarriorProjectileHealer::WarriorProjectileHealer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorHealer(x, y, playerId) {
 
 }
-Events WarriorProjectileHealer::heal(Warrior *w) {
+Events WarriorProjectileHealer::heal(std::shared_ptr<Warrior> w) {
     Events events = this->WarriorHealer::heal(w);
 
     events.add(std::make_shared<PlaySoundEvent>(this->getStartHealingSoundName()));

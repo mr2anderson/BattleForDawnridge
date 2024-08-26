@@ -26,28 +26,28 @@
 
 SpellFactory::SpellFactory() = default;
 SpellFactory::SpellFactory(uint32_t x, uint32_t y, uint32_t playerId) : Building(x, y, playerId) {
-	this->addSpec(new SpellFactorySpec());
+	this->addSpec(std::make_shared<SpellFactorySpec>());
 }
-SpellFactory::Building* SpellFactory::createSameTypeBuilding() const {
-	return new SpellFactory(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building> SpellFactory::createSameTypeBuilding() const {
+	return std::make_shared<SpellFactory>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID SpellFactory::getTypeUUID() const {
-	return UUIDs::get()->get("spell_factory");
+	return UUIDs::get().get("spell_factory");
 }
 Defence SpellFactory::getDefence() const {
-	return Parameters::get()->getDefence("spell_factory_defence");
+	return Parameters::get().getDefence("spell_factory_defence");
 }
 Resources SpellFactory::getCost() const {
-	return Parameters::get()->getResources("spell_factory_cost");
+	return Parameters::get().getResources("spell_factory_cost");
 }
 uint32_t SpellFactory::getSX() const {
-	return Parameters::get()->getInt("spell_factory_sx");
+	return Parameters::get().getInt("spell_factory_sx");
 }
 uint32_t SpellFactory::getSY() const {
-	return Parameters::get()->getInt("spell_factory_sy");
+	return Parameters::get().getInt("spell_factory_sy");
 }
 uint32_t SpellFactory::getMaxHP() const {
-	return Parameters::get()->getInt("spell_factory_max_hp");
+	return Parameters::get().getInt("spell_factory_max_hp");
 }
 std::string SpellFactory::getTextureName() const {
 	return "spell_factory";
@@ -59,7 +59,7 @@ StringLcl SpellFactory::getDescription() const {
 	return StringLcl("{spell_factory_description}");
 }
 uint32_t SpellFactory::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("spell_factory_regeneration_speed");
+	return Parameters::get().getInt("spell_factory_regeneration_speed");
 }
 
 

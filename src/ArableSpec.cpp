@@ -22,11 +22,11 @@
 
 
 ArableSpec::ArableSpec() = default;
-IBuildingSpec* ArableSpec::clone() const {
-	return new ArableSpec(*this);
+std::shared_ptr<IBuildingSpec> ArableSpec::clone() const {
+	return std::make_shared<ArableSpec>(*this);
 }
 Resource ArableSpec::getProduct() const {
-	return Parameters::get()->getResource("arable_product");
+	return Parameters::get().getResource("arable_product");
 }
 
 

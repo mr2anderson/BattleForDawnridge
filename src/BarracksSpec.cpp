@@ -26,11 +26,11 @@
 
 
 BarracksSpec::BarracksSpec() = default;
-IBuildingSpec* BarracksSpec::clone() const {
-	return new BarracksSpec(*this);
+std::shared_ptr<IBuildingSpec> BarracksSpec::clone() const {
+	return std::make_shared<BarracksSpec>(*this);
 }
-std::vector<std::shared_ptr<Warrior>> BarracksSpec::getWarriorsToProduce(uint32_t playerId) {
-	std::vector<std::shared_ptr<Warrior>> warriors;
+std::vector<std::shared_ptr<Warrior> > BarracksSpec::getWarriorsToProduce(uint32_t playerId) {
+	std::vector<std::shared_ptr<Warrior> > warriors;
 
 	warriors.push_back(std::make_shared<Infantryman>(0, 0, playerId));
 	warriors.push_back(std::make_shared<Legioner>(0, 0, playerId));

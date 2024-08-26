@@ -31,7 +31,7 @@ public:
 protected:
     virtual std::shared_ptr<Projectile> getProjectile() const = 0;
 private:
-    Events heal(Warrior *w) override;
+    Events heal(std::shared_ptr<Warrior> w) override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

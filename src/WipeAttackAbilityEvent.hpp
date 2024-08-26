@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -25,9 +26,9 @@ class ISingleAttacker;
 
 class WipeAttackAbilityEvent : public Event {
 public:
-    WipeAttackAbilityEvent(ISingleAttacker *i);
+    WipeAttackAbilityEvent(std::shared_ptr<ISingleAttacker>i);
 
-    ISingleAttacker *getI();
+    std::shared_ptr<ISingleAttacker>getI();
 private:
-    ISingleAttacker *i;
+    std::shared_ptr<ISingleAttacker>i;
 };

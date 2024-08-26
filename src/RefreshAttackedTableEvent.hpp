@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class WarriorNearMultyAttacker;
 
 class RefreshAttackedTableEvent : public Event {
 public:
-    RefreshAttackedTableEvent(WarriorNearMultyAttacker *w);
+    RefreshAttackedTableEvent(std::shared_ptr<WarriorNearMultyAttacker>w);
 
-    WarriorNearMultyAttacker* getWarrior();
+    std::shared_ptr<WarriorNearMultyAttacker> getWarrior();
 private:
-    WarriorNearMultyAttacker *warrior;
+    std::shared_ptr<WarriorNearMultyAttacker>warrior;
 };

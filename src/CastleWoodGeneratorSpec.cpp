@@ -22,11 +22,11 @@
 
 
 CastleWoodGeneratorSpec::CastleWoodGeneratorSpec() = default;
-IBuildingSpec* CastleWoodGeneratorSpec::clone() const {
-	return new CastleWoodGeneratorSpec(*this);
+std::shared_ptr<IBuildingSpec> CastleWoodGeneratorSpec::clone() const {
+	return std::make_shared<CastleWoodGeneratorSpec>(*this);
 }
 Resource CastleWoodGeneratorSpec::getProduct() const {
-	return Parameters::get()->getResource("castle_product");
+	return Parameters::get().getResource("castle_product");
 }
 
 

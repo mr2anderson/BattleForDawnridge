@@ -22,11 +22,11 @@
 
 
 WarehouseGoldCollectorSpec::WarehouseGoldCollectorSpec() = default;
-IBuildingSpec* WarehouseGoldCollectorSpec::clone() const {
-	return new WarehouseGoldCollectorSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseGoldCollectorSpec::clone() const {
+	return std::make_shared<WarehouseGoldCollectorSpec>(*this);
 }
 uint32_t WarehouseGoldCollectorSpec::getCollectionSpeed() const {
-	return Parameters::get()->getInt("warehouse_gold_collection_speed");
+	return Parameters::get().getInt("warehouse_gold_collection_speed");
 }
 std::string WarehouseGoldCollectorSpec::getResourceType() const {
 	return "gold";

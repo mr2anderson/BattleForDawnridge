@@ -53,7 +53,7 @@ static const uint32_t BUTTON_H = 30;
 
 
 Image WindowButtonImage::getImage(uint32_t windowW, uint32_t windowH) const {
-    sf::Texture* t = Textures::get()->get(this->pictureName);
+    sf::Texture* t = Textures::get().get(this->pictureName);
     return Image((windowW - this->w) / 2 + (this->w - t->getSize().x) / 2, (windowH - this->h) / 2 + this->h - BUTTON_H - 30 - t->getSize().y, this->pictureName);
 }
 

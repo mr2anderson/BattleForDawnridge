@@ -20,13 +20,13 @@
 #include "MarkAsAttackedEvent.hpp"
 
 
-MarkAsAttackedEvent::MarkAsAttackedEvent(WarriorNearMultyAttacker *attacker, Unit *target) {
+MarkAsAttackedEvent::MarkAsAttackedEvent(std::shared_ptr<WarriorNearMultyAttacker>attacker, std::shared_ptr<Unit>target) {
     this->attacker = attacker;
     this->target = target;
 }
-WarriorNearMultyAttacker *MarkAsAttackedEvent::getAttacker() {
+std::shared_ptr<WarriorNearMultyAttacker>MarkAsAttackedEvent::getAttacker() {
     return this->attacker;
 }
-Unit *MarkAsAttackedEvent::getTarget() {
+std::shared_ptr<Unit>MarkAsAttackedEvent::getTarget() {
     return this->target;
 }

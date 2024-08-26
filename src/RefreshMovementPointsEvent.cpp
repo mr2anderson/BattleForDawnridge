@@ -20,9 +20,9 @@
 #include "RefreshMovementPointsEvent.hpp"
 
 
-RefreshMovementPointsEvent::RefreshMovementPointsEvent(Warrior* w) {
+RefreshMovementPointsEvent::RefreshMovementPointsEvent(std::shared_ptr<Warrior>  w) {
 	this->w = w;
 }
-Warrior* RefreshMovementPointsEvent::getWarrior() {
+std::shared_ptr<Warrior>  RefreshMovementPointsEvent::getWarrior() {
 	return this->w;
 }

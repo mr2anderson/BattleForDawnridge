@@ -33,19 +33,19 @@ Mountains::Mountains(uint32_t x, uint32_t y, uint32_t type) :
 	this->type = type;
 }
 UUID Mountains::getTypeUUID() const {
-	return UUIDs::get()->get("mountains");
+	return UUIDs::get().get("mountains");
 }
 uint32_t Mountains::getSX() const {
-	return Parameters::get()->getInt("mountains_sx");
+	return Parameters::get().getInt("mountains_sx");
 }
 uint32_t Mountains::getSY() const {
-	return Parameters::get()->getInt("mountains_sy");
+	return Parameters::get().getInt("mountains_sy");
 }
 std::string Mountains::getTextureName() const {
 	return "mountains";
 }
 sf::IntRect Mountains::getTextureRect() const {
-	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
+	return TilesetHandler::get().getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get().get(this->getTextureName())->getSize().x, this->type);
 }
 std::string Mountains::getSoundName() const {
 	return "wind";
@@ -56,10 +56,10 @@ StringLcl Mountains::getDescription() const {
 bool Mountains::isUltraHighObstacle(uint32_t playerId) const {
     return true;
 }
-bool Mountains::warriorCanStay(const Warrior *w) const {
+bool Mountains::warriorCanStay(std::shared_ptr<const Warrior> w) const {
 	return false;
 }
-uint32_t Mountains::getWarriorMovementCost(const Warrior *w) const {
+uint32_t Mountains::getWarriorMovementCost(std::shared_ptr<Warrior> w) const {
 	return 10000;
 }
 Events Mountains::getResponse(MapState *state, uint32_t playerId, uint32_t button) {

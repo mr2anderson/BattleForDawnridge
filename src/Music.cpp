@@ -23,14 +23,11 @@
 #include "CouldntOpenMusic.hpp"
 
 
-Music *Music::singletone = nullptr;
-
-
 Music::Music() {
     this->volume = 100;
 }
 void Music::add(const std::string& name, const std::string& path) {
-    if (!this->music[name].openFromFile(Root::get()->getDataRoot() + "/" + path)) {
+    if (!this->music[name].openFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenMusic(path);
     }
 }

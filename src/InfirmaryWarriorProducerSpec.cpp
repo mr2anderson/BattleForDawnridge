@@ -22,11 +22,11 @@
 
 
 InfirmaryWarriorProducerSpec::InfirmaryWarriorProducerSpec() = default;
-IBuildingSpec *InfirmaryWarriorProducerSpec::clone() const {
-    return new InfirmaryWarriorProducerSpec(*this);
+std::shared_ptr<IBuildingSpec>InfirmaryWarriorProducerSpec::clone() const {
+    return std::make_shared<InfirmaryWarriorProducerSpec>(*this);
 }
-std::vector<std::shared_ptr<Warrior>> InfirmaryWarriorProducerSpec::getWarriorsToProduce(uint32_t playerId) {
-    std::vector<std::shared_ptr<Warrior>> toProduce;
+std::vector<std::shared_ptr<Warrior> > InfirmaryWarriorProducerSpec::getWarriorsToProduce(uint32_t playerId) {
+    std::vector<std::shared_ptr<Warrior> > toProduce;
 
     toProduce.push_back(std::make_shared<Healer>(0, 0, playerId));
 

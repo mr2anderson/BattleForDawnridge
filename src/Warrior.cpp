@@ -99,7 +99,7 @@ Events Warrior::hit(uint32_t d) {
 
     response.add(std::make_shared<SubHpEvent>(this, this->getHP() - hpPointsAfterOperation - 1 * (hpPointsAfterOperation == 0)));
 
-    response.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
+    response.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<Warrior>())));
 
     return response;
 }
@@ -131,7 +131,7 @@ Events Warrior::revertKillNextTurn() {
     return event;
 }
 void Warrior::enableRageMode() {
-    this->rageModeMovesLeft = Parameters::get()->getInt("rage_mode_lifetime");
+    this->rageModeMovesLeft = Parameters::get().getInt("rage_mode_lifetime");
 }
 void Warrior::decreaseRageModeMovesLeft() {
     this->rageModeMovesLeft = this->rageModeMovesLeft - 1;
@@ -146,11 +146,11 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
 	if (this->exist()) {
         Events events;
 
-		events.add(std::make_shared<RefreshMovementPointsEvent>(this));
+		events.add(std::make_shared<RefreshMovementPointsEvent>(this->getThis<Warrior>()));
 
         if (this->belongTo(currentPlayerId)) {
             if (this->inRage()) {
-                events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this));
+                events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this->getThis<Warrior>()));
             }
 
             if (this->toKill) {
@@ -238,8 +238,8 @@ bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 	thisRect.height = this->getSY();
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
-		if (go->exist() and !go->warriorCanStay(this)) {
+        std::shared_ptr<GO> go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+		if (go->exist() and !go->warriorCanStay(this->getThis<Warrior>())) {
 			sf::IntRect goRect;
 			goRect.left = go->getX();
 			goRect.top = go->getY();
@@ -253,10 +253,10 @@ bool Warrior::canStay(MapState *state, uint32_t newX, uint32_t newY) const {
 
 	return true;
 }
-bool Warrior::warriorCanStay(const Warrior *w) const {
+bool Warrior::warriorCanStay(std::shared_ptr<const Warrior> w) const {
 	return false;
 }
-uint32_t Warrior::getWarriorMovementCost(const Warrior *w) const {
+uint32_t Warrior::getWarriorMovementCost(std::shared_ptr<Warrior> w) const {
 	if (this->getPlayerId() == w->getPlayerId()) {
 		return 1;
 	}
@@ -321,7 +321,7 @@ AnimationState Warrior::getCurrentAnimationState() const {
     return {animationNumber - 1, true};
 }
 Defence Warrior::getDefence() const {
-    return (1 + Parameters::get()->getDouble("rage_mode_defence_bonus") * (this->inRage())) * this->getBaseDefence();
+    return (1 + Parameters::get().getDouble("rage_mode_defence_bonus") * (this->inRage())) * this->getBaseDefence();
 }
 std::vector<std::tuple<uint32_t, uint32_t>> Warrior::getMoves(MapState *state) {
     return this->buildMovementGraph(state).getMoves(this->getX(), this->getY(), this->movementPoints.value());
@@ -332,7 +332,7 @@ Events Warrior::getMoveHighlightionEvent(MapState *state) {
     std::vector<std::tuple<uint32_t, uint32_t>> moves = this->getMoves(state);
     for (uint32_t i = 0; i < moves.size(); i = i + 1) {
         std::tuple<uint32_t, uint32_t> move = moves.at(i);
-        event.add(std::make_shared<SetHighlightEvent>(HighlightColors::get()->getWarriorMovementColor(this->getPlayerId()), std::get<0>(move), std::get<1>(move)));
+        event.add(std::make_shared<SetHighlightEvent>(HighlightColors::get().getWarriorMovementColor(this->getPlayerId()), std::get<0>(move), std::get<1>(move)));
     }
 
     std::vector<SpecialMove> specialMoves = this->getSpecialMoves(state);
@@ -357,7 +357,7 @@ void Warrior::setDirection(const std::string &newDirection) {
 }
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;
-    sprite.setTexture(*Textures::get()->get("hand"));
+    sprite.setTexture(*Textures::get().get("hand"));
     sprite.setPosition(mouseX, mouseY);
     return std::make_shared<sf::Sprite>(sprite);
 }
@@ -387,7 +387,7 @@ Events Warrior::onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t butt
             this->startAnimation("running");
             this->defaultDirection = move.route.front();
             this->movementPoints = this->movementPoints.value() - move.dst;
-            events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
+            events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<Warrior>())));
         }
         catch (MoveDoesNotExist&) {
 
@@ -407,15 +407,15 @@ MovementGraph Warrior::buildMovementGraph(MapState *state) {
     }
     
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+        std::shared_ptr<GO> go = state->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         if (go->exist()) {
             for (uint32_t x = go->getX(); x < go->getX() + go->getSX(); x = x + 1) {
                 for (uint32_t y = go->getY(); y < go->getY() + go->getSY(); y = y + 1) {
-                    if (!go->warriorCanStay(this)) {
+                    if (!go->warriorCanStay(this->getThis<Warrior>())) {
                         g.setCantStay(x, y);
                     }
-                    if (go->getWarriorMovementCost(this) != 1) {
-                        g.updateMovementCost(x, y, go->getWarriorMovementCost(this));
+                    if (go->getWarriorMovementCost(this->getThis<Warrior>()) != 1) {
+                        g.updateMovementCost(x, y, go->getWarriorMovementCost(this->getThis<Warrior>()));
                     }
                 }
             }
@@ -433,13 +433,13 @@ Events Warrior::processRunningAnimation(MapState *state) {
     else {
         if (this->isFlying()) {
             if (this->footstepsClock.getMS() >= 500) {
-                events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_WINGS + 1), true));
+                events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator32::get().gen() % TOTAL_WINGS + 1), true));
                 this->footstepsClock.restart();
             }
         }
         else {
             if (this->footstepsClock.getMS() >= 250) {
-                events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator32::get()->gen() % TOTAL_FOOTSTEPS + 1), true));
+                events.add(std::make_shared<PlaySoundEvent>("footsteps" + std::to_string(GlobalRandomGenerator32::get().gen() % TOTAL_FOOTSTEPS + 1), true));
                 this->footstepsClock.restart();
             }
         }
@@ -543,7 +543,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
     Events killNextTurnEvent = clickSoundEvent;
-    killNextTurnEvent.add(std::make_shared<KillNextTurnEvent>(this));
+    killNextTurnEvent.add(std::make_shared<KillNextTurnEvent>(this->getThis<Warrior>()));
 
     std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{verify_kill}"), StringLcl("{yes}"), StringLcl("{no}"), killNextTurnEvent, clickSoundEvent);
 
@@ -563,7 +563,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
     Events revertKillNextTurnEvent = clickSoundEvent;
-    revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this));
+    revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this->getThis<Warrior>()));
 
     return {
           "skull",
@@ -651,7 +651,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
     if (this->movementPoints.value_or(this->getMovementPoints()) > 0 or this->hasSpecialMoves) {
         Events selectThisEvent = this->getMoveHighlightionEvent(state);
-        selectThisEvent.add(std::make_shared<SelectEvent>(this));
+        selectThisEvent.add(std::make_shared<SelectEvent>(this->getThis<Warrior>()));
         selectThisEvent.add(std::make_shared<DisableCursorEvent>());
 
         response = response + selectThisEvent;

@@ -22,9 +22,6 @@
 #include "GlobalRandomGenerator32.hpp"
 
 
-ClueManager* ClueManager::singletone = nullptr;
-
-
 const uint32_t ClueManager::TOTAL_CLUES = 36;
 
 
@@ -33,7 +30,7 @@ const uint32_t ClueManager::H = 80;
 
 
 ClueManager::ClueManager() {
-	this->currentClue = GlobalRandomGenerator32::get()->gen() % TOTAL_CLUES;
+	this->currentClue = GlobalRandomGenerator32::get().gen() % TOTAL_CLUES;
 }
 Label ClueManager::getClueLabel(uint32_t windowW, uint32_t windowH) {
 	return Label(windowW - W - 20, windowH - H - 20, W, H, StringLcl("{clue" + std::to_string(this->currentClue) + "}"));

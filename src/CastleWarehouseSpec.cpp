@@ -22,11 +22,11 @@
 
 
 CastleWarehouseSpec::CastleWarehouseSpec() = default;
-IBuildingSpec* CastleWarehouseSpec::clone() const {
-	return new CastleWarehouseSpec(*this);
+std::shared_ptr<IBuildingSpec> CastleWarehouseSpec::clone() const {
+	return std::make_shared<CastleWarehouseSpec>(*this);
 }
 Resources CastleWarehouseSpec::getActiveLimit() const {
-	return Parameters::get()->getResources("castle_resources");
+	return Parameters::get().getResources("castle_resources");
 }
 
 

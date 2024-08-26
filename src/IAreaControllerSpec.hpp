@@ -28,8 +28,8 @@
 class IAreaControllerSpec: public IBuildingSpec{
 public:
 	HashTableMapPosition<uint32_t> getAvailable(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy, uint32_t playerId, MapState* state) const;
-    static bool IN_RADIUS(const HashTableMapPosition<uint32_t>& available, const GO* target, uint8_t inRadiusType);
-	Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) const override;
+    static bool IN_RADIUS(const HashTableMapPosition<uint32_t>& available, std::shared_ptr<const GO> target, uint8_t inRadiusType);
+	Events getHighlightEvent(std::shared_ptr<const Building> building, MapState* state, uint8_t type) const override;
 	virtual bool ignoreUltraHighObstacles() const;
 	virtual bool ignoreHighObstacles() const;
 	virtual bool ignoreLowObstacles() const;

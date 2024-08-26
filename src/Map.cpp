@@ -38,7 +38,7 @@
 
 Map::Map() = default;
 void Map::load(const std::string &path) {
-    std::ifstream file(Root::get()->getDataRoot() + "/" + path);
+    std::ifstream file(Root::get().getDataRoot() + "/" + path);
     if (!file.is_open()) {
         throw CouldntOpenMap(path);
     }
@@ -66,39 +66,39 @@ void Map::load(const std::string &path) {
         while (std::getline(ss, word, ',')) {
             uint32_t id = std::stoi(word);
             if (id >= 257 and id < 281) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Forest(x, y, id - 257));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Forest>(x, y, id - 257));
             }
             else if (id >= 281 and id < 296) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Mountains(x, y, id - 281));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Mountains>(x, y, id - 281));
             }
             else if (id >= 296) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Water(x, y, id - 296));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Water>(x, y, id - 296));
             }
             else if (id == 1) {
                 this->state.getPlayersPtr()->addPlayer(Player(currentPlayerId));
 
-                Castle* c = new Castle(x, y, currentPlayerId);
+                std::shared_ptr<Castle> c = std::make_shared<Castle>(x, y, currentPlayerId);
                 c->setMaxHp();
                 this->getStatePtr()->getCollectionsPtr()->add(c);
 
-                this->getStatePtr()->getCollectionsPtr()->add(new Healer(x + c->getSX(), y, currentPlayerId));
-                this->getStatePtr()->getCollectionsPtr()->add(new Infantryman(x + c->getSX() + 1, y, currentPlayerId));
-                this->getStatePtr()->getCollectionsPtr()->add(new Infantryman(x + c->getSX(), y + 1, currentPlayerId));
-                this->getStatePtr()->getCollectionsPtr()->add(new Infantryman(x + c->getSX() + 1, y + 1, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Healer>(x + c->getSX(), y, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(x + c->getSX() + 1, y, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(x + c->getSX(), y + 1, currentPlayerId));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(x + c->getSX() + 1, y + 1, currentPlayerId));
 
                 currentPlayerId = currentPlayerId + 1;
             }
             else if (id == 4) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Iron(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Iron>(x, y));
             }
             else if (id == 6) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Stone(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Stone>(x, y));
             }
             else if (id == 8) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Treasure(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Treasure>(x, y));
             }
             else if (id == 3) {
-                this->getStatePtr()->getCollectionsPtr()->add(new Plant(x, y));
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Plant>(x, y));
             }
             x = x + 1;
         }

@@ -22,11 +22,11 @@
 
 
 WorkshopWarriorHealerSpec::WorkshopWarriorHealerSpec() = default;
-IBuildingSpec *WorkshopWarriorHealerSpec::clone() const {
-    return new WorkshopWarriorHealerSpec(*this);
+std::shared_ptr<IBuildingSpec>WorkshopWarriorHealerSpec::clone() const {
+    return std::make_shared<WorkshopWarriorHealerSpec>(*this);
 }
 uint32_t WorkshopWarriorHealerSpec::getHealingSpeed() const {
-    return Parameters::get()->getInt("workshop_healing_speed");
+    return Parameters::get().getInt("workshop_healing_speed");
 }
 std::string WorkshopWarriorHealerSpec::getHealTextureName() const {
     return "gear_icon";

@@ -29,7 +29,7 @@ CircleLightSourceDynamic::CircleLightSourceDynamic(float centerX, float centerY,
 float CircleLightSourceDynamic::getRadius() const {
 	uint32_t roundMs = 1000 * this->seconds;
 	uint32_t roundMsHalf = roundMs / 2;
-	uint32_t currentRoundMs = GlobalClock::get()->getMs() % roundMs;
+	uint32_t currentRoundMs = GlobalClock::get().getMs() % roundMs;
 	uint32_t currentRoundMsDst = std::max(currentRoundMs, roundMsHalf) - std::min(currentRoundMs, roundMsHalf);
 
 	float currentRoundMsDstFrac = (float)currentRoundMsDst / (float)roundMsHalf;

@@ -22,11 +22,11 @@
 
 
 WarehouseStoneSpec::WarehouseStoneSpec() = default;
-IBuildingSpec* WarehouseStoneSpec::clone() const {
-	return new WarehouseStoneSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseStoneSpec::clone() const {
+	return std::make_shared<WarehouseStoneSpec>(*this);
 }
 Resources WarehouseStoneSpec::getActiveLimit() const {
-	return Parameters::get()->getResources("warehouse_stone_limit");
+	return Parameters::get().getResources("warehouse_stone_limit");
 }
 
 

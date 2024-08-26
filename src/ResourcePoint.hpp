@@ -31,8 +31,8 @@ public:
 	Events newMove(MapState *state, uint32_t playerId) override;
 	virtual uint32_t tryToCollect(uint32_t playerId, uint32_t value);
 	virtual std::string getResourceType() const = 0;
-	bool warriorCanStay(const Warrior *w) const override;
-	uint32_t getWarriorMovementCost(const Warrior *w) const override;
+	bool warriorCanStay(std::shared_ptr<const Warrior> w) const override;
+	uint32_t getWarriorMovementCost(std::shared_ptr<Warrior> w) const override;
 protected:
     virtual bool isArea() const = 0;
     virtual bool isConduction() const = 0;

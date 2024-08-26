@@ -20,9 +20,6 @@
 #include "SoundQueue.hpp"
 
 
-SoundQueue *SoundQueue::singletone = nullptr;
-
-
 SoundQueue::SoundQueue() = default;
 void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
     this->removeOldSounds();

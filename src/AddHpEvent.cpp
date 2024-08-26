@@ -20,11 +20,11 @@
 #include "AddHpEvent.hpp"
 
 
-AddHpEvent::AddHpEvent(HPGO* hpgo, uint32_t value) {
+AddHpEvent::AddHpEvent(std::shared_ptr<HPGO> hpgo, uint32_t value) {
 	this->hpgo = hpgo;
 	this->n = value;
 }
-HPGO* AddHpEvent::getHPGO() {
+std::shared_ptr<HPGO> AddHpEvent::getHPGO() {
 	return this->hpgo;
 }
 uint32_t AddHpEvent::getN() const {

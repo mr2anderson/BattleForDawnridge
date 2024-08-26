@@ -25,8 +25,8 @@
 
 class IWarriorHealerSpec : public IAreaControllerSpec {
 public:
-	Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* b, MapState* state) override;
+	Events getActiveNewMoveEvent(std::shared_ptr<const Building>  b, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building>  b, MapState* state) override;
 	uint32_t getRadius() const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;

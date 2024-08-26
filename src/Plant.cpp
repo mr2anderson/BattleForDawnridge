@@ -34,19 +34,19 @@ Plant::Plant() {
     this->type = 1;
 }
 Plant::Plant(uint32_t x, uint32_t y) : AreaResourcePoint(x, y) {
-    this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
+    this->type = GlobalRandomGenerator32::get().gen() % TOTAL_TYPES + 1;
 }
 UUID Plant::getTypeUUID() const {
-    return UUIDs::get()->get("plant");
+    return UUIDs::get().get("plant");
 }
 uint32_t Plant::getSX() const {
-    return Parameters::get()->getInt("plant_sx");
+    return Parameters::get().getInt("plant_sx");
 }
 uint32_t Plant::getSY() const {
-    return Parameters::get()->getInt("plant_sy");
+    return Parameters::get().getInt("plant_sy");
 }
 uint32_t Plant::getMaxHP() const {
-    return Parameters::get()->getInt("plant_max_hp");
+    return Parameters::get().getInt("plant_max_hp");
 }
 std::string Plant::getResourceType() const {
     return "crystal";
@@ -55,7 +55,7 @@ std::string Plant::getSoundName() const {
     return "crystal";
 }
 std::string Plant::getTextureName() const {
-    return "plant" + std::to_string(this->type) + "_" + std::to_string((GlobalClock::get()->getMs() / (1000 / ANIMATION_NUMBER[this->type - 1])) % ANIMATION_NUMBER[this->type - 1] + 1);
+    return "plant" + std::to_string(this->type) + "_" + std::to_string((GlobalClock::get().getMs() / (1000 / ANIMATION_NUMBER[this->type - 1])) % ANIMATION_NUMBER[this->type - 1] + 1);
 }
 StringLcl Plant::getDescription() const {
     return StringLcl("{plant_description}");

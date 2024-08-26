@@ -28,11 +28,11 @@
 class BuildingMode : public ISelectable {
 public:
     BuildingMode();
-	BuildingMode(std::shared_ptr<const Building> b, uint32_t playerId);
+	BuildingMode(std::shared_ptr<const Building>b, uint32_t playerId);
 
 	Events start(MapState *state);
 private:
-	std::shared_ptr<const Building> b;
+	std::shared_ptr<const Building>b;
 	uint32_t playerId;
 
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
@@ -40,10 +40,10 @@ private:
 
 	Events getHighlightEvent(MapState *state) const;
 
-	bool inMap(MapState* state, const Building *clonedB) const;
-	bool empty(MapState* state, const Building *clonedB) const;
-	bool controlled(MapState* state, const Building *clonedB) const;
-    bool noEnemyWarriors(MapState* state, const Building *clonedB) const;
+	bool inMap(MapState* state, std::shared_ptr<const Building> clonedB) const;
+	bool empty(MapState* state, std::shared_ptr<const Building> clonedB) const;
+	bool controlled(MapState* state, std::shared_ptr<const Building> clonedB) const;
+    bool noEnemyWarriors(MapState* state, std::shared_ptr<const Building> clonedB) const;
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {

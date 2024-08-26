@@ -25,11 +25,9 @@
 
 class Playlist {
 public:
-    static Playlist *get() {
-        if (Playlist::singletone == nullptr) {
-            Playlist::singletone = new Playlist();
-        }
-        return Playlist::singletone;
+    static Playlist& get() {
+        static Playlist instance;
+        return instance;
     }
 
     void update();
@@ -38,7 +36,6 @@ public:
 private:
     Playlist();
     Playlist(const Playlist& copy);
-    static Playlist *singletone;
 
     uint32_t index;
 };

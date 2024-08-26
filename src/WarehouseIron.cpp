@@ -27,31 +27,31 @@
 WarehouseIron::WarehouseIron() = default;
 WarehouseIron::WarehouseIron(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y,playerId) {
-	this->addSpec(new WarehouseIronSpec());
+	this->addSpec(std::make_shared<WarehouseIronSpec>());
 }
-Building* WarehouseIron::createSameTypeBuilding() const {
-	return new WarehouseIron(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  WarehouseIron::createSameTypeBuilding() const {
+	return std::make_shared<WarehouseIron>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID WarehouseIron::getTypeUUID() const {
-	return UUIDs::get()->get("warehouse_iron");
+	return UUIDs::get().get("warehouse_iron");
 }
 uint32_t WarehouseIron::getSX() const {
-	return Parameters::get()->getInt("warehouse_iron_sx");
+	return Parameters::get().getInt("warehouse_iron_sx");
 }
 uint32_t WarehouseIron::getSY() const {
-	return Parameters::get()->getInt("warehouse_iron_sy");
+	return Parameters::get().getInt("warehouse_iron_sy");
 }
 uint32_t WarehouseIron::getMaxHP() const {
-	return Parameters::get()->getInt("warehouse_iron_max_hp");
+	return Parameters::get().getInt("warehouse_iron_max_hp");
 }
 Defence WarehouseIron::getDefence() const {
-	return Parameters::get()->getDefence("warehouse_iron_defence");
+	return Parameters::get().getDefence("warehouse_iron_defence");
 }
 Resources WarehouseIron::getCost() const {
-	return Parameters::get()->getResources("warehouse_iron_cost");
+	return Parameters::get().getResources("warehouse_iron_cost");
 }
 uint32_t WarehouseIron::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("warehouse_iron_regeneration_speed");
+	return Parameters::get().getInt("warehouse_iron_regeneration_speed");
 }
 std::string WarehouseIron::getTextureName() const {
 	return "warehouse_iron";

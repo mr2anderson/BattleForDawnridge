@@ -23,11 +23,11 @@
 
 
 WarehouseWoodSpec::WarehouseWoodSpec() = default;
-IBuildingSpec* WarehouseWoodSpec::clone() const {
-	return new WarehouseWoodSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseWoodSpec::clone() const {
+	return std::make_shared<WarehouseWoodSpec>(*this);
 }
 Resources WarehouseWoodSpec::getActiveLimit() const {
-	return Parameters::get()->getResources("warehouse_wood_limit");
+	return Parameters::get().getResources("warehouse_wood_limit");
 }
 
 

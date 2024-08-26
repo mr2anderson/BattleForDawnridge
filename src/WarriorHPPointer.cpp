@@ -39,7 +39,7 @@ void WarriorHPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) c
 	uint32_t blue = 0;
 
     sf::Sprite sprite;
-    sprite.setTexture(*Textures::get()->get("heart_icon"));
+    sprite.setTexture(*Textures::get().get("heart_icon"));
     sprite.setPosition(this->xInPixels + 64 * this->sx - sprite.getGlobalBounds().width * 2, this->yInPixels + sprite.getGlobalBounds().height);
     sprite.setColor(sf::Color(red, green, blue));
     target.draw(sprite, states);

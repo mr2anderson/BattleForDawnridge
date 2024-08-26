@@ -21,6 +21,6 @@
 #include "GO.hpp"
 
 
-bool CompByClickPriority::operator()(GO *a, GO *b) const {
+bool CompByClickPriority::operator()(std::shared_ptr<GO>a, std::shared_ptr<GO>b) const {
     return a->getClickPriority() > b->getClickPriority();
 }

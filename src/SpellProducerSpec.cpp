@@ -32,18 +32,13 @@
 SpellProducerSpec::SpellProducerSpec() {
 	this->spell = nullptr;
 }
-SpellProducerSpec::~SpellProducerSpec() {
-	if (this->spell != nullptr) {
-		delete this->spell;
-	}
-}
-Events SpellProducerSpec::getActiveNewMoveEvent(const Building* building, MapState* state) {
+Events SpellProducerSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>  building, MapState* state) {
 	if (this->spell == nullptr or !building->works()) {
 		return Events();
 	}
 	return this->spell->newMove(building);
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getComponents(const Building *building, MapState *state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getComponents(std::shared_ptr<const Building> building, MapState *state) {
 	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (building->works()) {
@@ -123,7 +118,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 
 	return components;
 }
-boost::optional<BuildingShortInfo> SpellProducerSpec::getShortInfo(const Building* building) const {
+boost::optional<BuildingShortInfo> SpellProducerSpec::getShortInfo(std::shared_ptr<const Building>  building) const {
 	if (!building->works()) {
 		return boost::none;
 	}
@@ -148,9 +143,6 @@ boost::optional<BuildingShortInfo> SpellProducerSpec::getShortInfo(const Buildin
 	return BuildingShortInfo(building->getXInPixels(), building->getYInPixels(), building->getSX(), building->getSY(), pictureName, text);
 }
 void SpellProducerSpec::setSpell(std::shared_ptr<Spell> newSpell) {
-	if (this->spell != nullptr) {
-		delete this->spell;
-	}
 	this->spell = newSpell->clone();
 }
 

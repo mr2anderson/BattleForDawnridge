@@ -27,18 +27,15 @@
 
 class ResourceOrderPriorityTable {
 public:
-    static ResourceOrderPriorityTable* get() {
-        if (ResourceOrderPriorityTable::singletone == nullptr) {
-            ResourceOrderPriorityTable::singletone = new ResourceOrderPriorityTable();
-        }
-        return ResourceOrderPriorityTable::singletone;
+    static ResourceOrderPriorityTable& get() {
+        static ResourceOrderPriorityTable instance;
+        return instance;
     }
 
     uint32_t getPriority(const std::string &id) const;
 private:
     ResourceOrderPriorityTable();
     ResourceOrderPriorityTable(const ResourceOrderPriorityTable& copy);
-    static ResourceOrderPriorityTable* singletone;
 
     std::unordered_map<std::string, uint32_t> data;
 };

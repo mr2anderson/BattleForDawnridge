@@ -26,11 +26,9 @@
 
 class HighlightColors {
 public:
-    static HighlightColors* get() {
-        if (HighlightColors::singletone == nullptr) {
-            HighlightColors::singletone = new HighlightColors();
-        }
-        return HighlightColors::singletone;
+    static HighlightColors& get() {
+        static HighlightColors instance;
+        return instance;
     }
 
     sf::Color getWarriorMovementColor(uint32_t playerId) const;
@@ -44,5 +42,4 @@ public:
 private:
     HighlightColors();
     HighlightColors(const HighlightColors& copy);
-    static HighlightColors* singletone;
 };

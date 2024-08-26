@@ -74,7 +74,7 @@ private:
 	bool readyPackageGotten;
 	Map map;
 	std::shared_ptr<PopUpElement> element;
-	ISelectable* selected;
+	std::shared_ptr<ISelectable> selected;
 	HighlightTable highlightTable;
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
 	ResourceBar resourceBar;

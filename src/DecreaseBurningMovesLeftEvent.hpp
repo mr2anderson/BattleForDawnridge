@@ -29,9 +29,9 @@ class Building;
 
 class DecreaseBurningMovesLeftEvent : public Event {
 public:
-	DecreaseBurningMovesLeftEvent(Building* b);
+	DecreaseBurningMovesLeftEvent(std::shared_ptr<Building>  b);
 
-	Building* getBuilding();
+	std::shared_ptr<Building>  getBuilding();
 private:
-	Building* b;
+	std::shared_ptr<Building>  b;
 };

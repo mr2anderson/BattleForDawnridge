@@ -26,11 +26,9 @@
 
 class Maps {
 public:
-    static Maps* get() {
-        if (Maps::singletone == nullptr) {
-            Maps::singletone = new Maps();
-        }
-        return Maps::singletone;
+    static Maps& get() {
+        static Maps instance;
+        return instance;
     }
 
     void add(const std::string &name, const std::string& path);
@@ -40,7 +38,6 @@ public:
 private:
     Maps() = default;
     Maps(const Maps& copy);
-    static Maps* singletone;
 
     std::unordered_map<std::string, std::string> paths;
 

@@ -27,18 +27,15 @@
 
 class UUIDs {
 public:
-    static UUIDs* get() {
-        if (UUIDs::singletone == nullptr) {
-            UUIDs::singletone = new UUIDs();
-        }
-        return UUIDs::singletone;
+    static UUIDs& get() {
+        static UUIDs instance;
+        return instance;
     }
 
     UUID get(const std::string& id);
 private:
     UUIDs() = default;
     UUIDs(const UUIDs& copy);
-    static UUIDs* singletone;
 
     std::unordered_map<std::string, UUID> data;
 };

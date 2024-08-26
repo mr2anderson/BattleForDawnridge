@@ -31,13 +31,13 @@ class Warrior;
 
 class StartWarriorProducingEvent : public Event {
 public:
-	StartWarriorProducingEvent(const Building* b, WarriorProducerSpec* spec, std::shared_ptr<Warrior> w);
+	StartWarriorProducingEvent(std::shared_ptr<const Building>  b, std::shared_ptr<WarriorProducerSpec> spec, std::shared_ptr<Warrior>  w);
 
-	const Building* getBuilding() const;
-	WarriorProducerSpec* getSpec();
-	std::shared_ptr<Warrior> getWarrior();
+	std::shared_ptr<const Building>  getBuilding() const;
+	std::shared_ptr<WarriorProducerSpec> getSpec();
+	std::shared_ptr<Warrior>  getWarrior();
 private:
-	const Building* b;
-	WarriorProducerSpec* spec;
-	std::shared_ptr<Warrior> w;
+	std::shared_ptr<const Building>  b;
+	std::shared_ptr<WarriorProducerSpec> spec;
+	std::shared_ptr<Warrior>  w;
 };

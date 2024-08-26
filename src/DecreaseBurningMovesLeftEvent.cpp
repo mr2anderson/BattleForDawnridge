@@ -21,9 +21,9 @@
 #include "DecreaseBurningMovesLeftEvent.hpp"
 
 
-DecreaseBurningMovesLeftEvent::DecreaseBurningMovesLeftEvent(Building* b) {
+DecreaseBurningMovesLeftEvent::DecreaseBurningMovesLeftEvent(std::shared_ptr<Building>  b) {
 	this->b = b;
 }
-Building* DecreaseBurningMovesLeftEvent::getBuilding() {
+std::shared_ptr<Building>  DecreaseBurningMovesLeftEvent::getBuilding() {
 	return this->b;
 }

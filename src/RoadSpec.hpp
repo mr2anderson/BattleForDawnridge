@@ -26,7 +26,7 @@
 class RoadSpec : public ITerritoryConductorSpec {
 public:
 	RoadSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	bool conductsIfNotWork() const override;
 	uint32_t getRadius() const override;

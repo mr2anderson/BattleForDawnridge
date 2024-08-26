@@ -17,6 +17,9 @@
  */
 
 
+#include <memory>
+
+
 #pragma once
 
 
@@ -24,5 +27,5 @@ class GO;
 
 
 struct CompByDrawPriority {
-    bool operator()(GO *a, GO* b) const;
+    bool operator()(std::shared_ptr<GO>a, std::shared_ptr<GO> b) const;
 };

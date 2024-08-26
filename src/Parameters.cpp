@@ -26,11 +26,8 @@
 #include "Root.hpp"
 
 
-Parameters* Parameters::singletone = nullptr;
-
-
 static std::string GET_PATH() {
-	return Root::get()->getDataRoot() + "/configs/parameters.cfg";
+	return Root::get().getDataRoot() + "/configs/parameters.cfg";
 }
 void Parameters::load() {
 	std::ifstream file(GET_PATH());

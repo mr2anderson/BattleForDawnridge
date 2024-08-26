@@ -25,16 +25,13 @@
 
 class UTFEncoder {
 public:
-    static UTFEncoder *get() {
-        if (UTFEncoder::singletone == nullptr) {
-            UTFEncoder::singletone = new UTFEncoder();
-        }
-        return UTFEncoder::singletone;
+    static UTFEncoder& get() {
+        static UTFEncoder instance;
+        return instance;
     }
 
     std::wstring utf8ToUtf16(const std::string& utf8);
 private:
     UTFEncoder() = default;
     UTFEncoder(const UTFEncoder& copy);
-    static UTFEncoder *singletone;
 };

@@ -22,11 +22,11 @@
 
 
 HouseSpec::HouseSpec() = default;
-IBuildingSpec* HouseSpec::clone() const {
-	return new HouseSpec(*this);
+std::shared_ptr<IBuildingSpec> HouseSpec::clone() const {
+	return std::make_shared<HouseSpec>(*this);
 }
 uint32_t HouseSpec::getActivePopulationLimit() const {
-	return Parameters::get()->getInt("house_population_limit");
+	return Parameters::get().getInt("house_population_limit");
 }
 
 

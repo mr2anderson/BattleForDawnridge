@@ -28,11 +28,11 @@ Infantryman::Infantryman(uint32_t x, uint32_t y, uint32_t playerId) :
 	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
-Warrior* Infantryman::cloneWarrior() const {
-	return new Infantryman(*this);
+std::shared_ptr<Warrior>  Infantryman::cloneWarrior() const {
+	return std::make_shared<Infantryman>(*this);
 }
 UUID Infantryman::getTypeUUID() const {
-	return UUIDs::get()->get("infantryman");
+	return UUIDs::get().get("infantryman");
 }
 std::string Infantryman::getBeenHitSoundName() const {
     return "ouch";
@@ -41,19 +41,19 @@ std::string Infantryman::getStartAttackSoundName() const {
     return "swing";
 }
 uint32_t Infantryman::getMaxHP() const {
-	return Parameters::get()->getInt("infantryman_max_hp");
+	return Parameters::get().getInt("infantryman_max_hp");
 }
 Defence Infantryman::getBaseDefence() const {
-	return Parameters::get()->getDefence("infantryman_defence");
+	return Parameters::get().getDefence("infantryman_defence");
 }
 Damage Infantryman::getBaseDamage() const {
-    return Parameters::get()->getDamage("infantryman_damage");
+    return Parameters::get().getDamage("infantryman_damage");
 }
 Resources Infantryman::getCost() const {
-	return Parameters::get()->getResources("infantryman_cost");
+	return Parameters::get().getResources("infantryman_cost");
 }
 uint32_t Infantryman::getTimeToProduce() const {
-	return Parameters::get()->getInt("infantryman_time_to_produce");
+	return Parameters::get().getInt("infantryman_time_to_produce");
 }
 std::string Infantryman::getSoundName() const {
 	return "infantryman";
@@ -80,10 +80,10 @@ std::string Infantryman::getBaseTextureName() const {
 	return "infantryman";
 }
 uint32_t Infantryman::getMovementPoints() const {
-	return Parameters::get()->getInt("infantryman_movement_points");
+	return Parameters::get().getInt("infantryman_movement_points");
 }
 uint32_t Infantryman::getPopulation() const {
-	return Parameters::get()->getInt("infantryman_population");
+	return Parameters::get().getInt("infantryman_population");
 }
 
 

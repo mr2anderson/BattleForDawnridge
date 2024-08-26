@@ -28,11 +28,11 @@ Valkyr::Valkyr(uint32_t x, uint32_t y, uint32_t playerId) :
         WarriorNearMultyAttacker(x, y, playerId) {
 
 }
-Warrior* Valkyr::cloneWarrior() const {
-    return new Valkyr(*this);
+std::shared_ptr<Warrior>  Valkyr::cloneWarrior() const {
+    return std::make_shared<Valkyr>(*this);
 }
 UUID Valkyr::getTypeUUID() const {
-    return UUIDs::get()->get("valkyr");
+    return UUIDs::get().get("valkyr");
 }
 std::string Valkyr::getBeenHitSoundName() const {
     return "ouch_woman";
@@ -41,19 +41,19 @@ std::string Valkyr::getStartAttackSoundName() const {
     return "swing";
 }
 uint32_t Valkyr::getMaxHP() const {
-    return Parameters::get()->getInt("valkyr_max_hp");
+    return Parameters::get().getInt("valkyr_max_hp");
 }
 Defence Valkyr::getBaseDefence() const {
-    return Parameters::get()->getDefence("valkyr_defence");
+    return Parameters::get().getDefence("valkyr_defence");
 }
 Damage Valkyr::getBaseDamage() const {
-    return Parameters::get()->getDamage("valkyr_damage");
+    return Parameters::get().getDamage("valkyr_damage");
 }
 Resources Valkyr::getCost() const {
-    return Parameters::get()->getResources("valkyr_cost");
+    return Parameters::get().getResources("valkyr_cost");
 }
 uint32_t Valkyr::getTimeToProduce() const {
-    return Parameters::get()->getInt("valkyr_time_to_produce");
+    return Parameters::get().getInt("valkyr_time_to_produce");
 }
 std::string Valkyr::getSoundName() const {
     return "valkyr";
@@ -80,10 +80,10 @@ std::string Valkyr::getBaseTextureName() const {
     return "valkyr";
 }
 uint32_t Valkyr::getMovementPoints() const {
-    return Parameters::get()->getInt("valkyr_movement_points");
+    return Parameters::get().getInt("valkyr_movement_points");
 }
 uint32_t Valkyr::getPopulation() const {
-    return Parameters::get()->getInt("valkyr_population");
+    return Parameters::get().getInt("valkyr_population");
 }
 
 

@@ -27,7 +27,7 @@ class Legioner : public WarriorNearSingleAttacker {
 public:
 	Legioner();
 	Legioner(uint32_t x, uint32_t y, uint32_t playerId);
-	Warrior* cloneWarrior() const override;
+	std::shared_ptr<Warrior>  cloneWarrior() const override;
 	UUID getTypeUUID() const override;
 
     std::string getBeenHitSoundName() const override;

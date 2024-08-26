@@ -27,11 +27,9 @@
 
 class Locales {
 public:
-    static Locales* get() {
-        if (Locales::singletone == nullptr) {
-            Locales::singletone = new Locales();
-        }
-        return Locales::singletone;
+    static Locales& get() {
+        static Locales instance;
+        return instance;
     }
 
     void load();
@@ -40,7 +38,6 @@ public:
 private:
     Locales();
     Locales(const Locales& copy);
-    static Locales* singletone;
 
     std::unordered_map<std::string, std::wstring> texts;
     std::wstring error;

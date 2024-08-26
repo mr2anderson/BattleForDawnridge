@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "IWithSuspendingAnimation.hpp"
 
 
@@ -26,9 +27,9 @@
 class SuspendingAnimation {
 public:
     SuspendingAnimation();
-    SuspendingAnimation(IWithSuspendingAnimation *animated);
+    SuspendingAnimation(std::shared_ptr<IWithSuspendingAnimation> animated);
 
     Events process(MapState *state);
 private:
-    IWithSuspendingAnimation *animated;
+    std::shared_ptr<IWithSuspendingAnimation> animated;
 };

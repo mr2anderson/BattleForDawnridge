@@ -26,7 +26,7 @@
 class ArableSpec : public IResourceGeneratorSpec {
 public:
 	ArableSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 	
 	Resource getProduct() const override;
 private:

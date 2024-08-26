@@ -29,9 +29,9 @@ class WarriorProducerSpec;
 
 class DecreaseCurrentProducingMovesLeftEvent : public Event {
 public:
-	DecreaseCurrentProducingMovesLeftEvent(WarriorProducerSpec* spec);
+	DecreaseCurrentProducingMovesLeftEvent(std::shared_ptr<WarriorProducerSpec> spec);
 
-	WarriorProducerSpec* getSpec();
+	std::shared_ptr<WarriorProducerSpec> getSpec();
 private:
-	WarriorProducerSpec* spec;
+	std::shared_ptr<WarriorProducerSpec> spec;
 };

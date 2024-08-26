@@ -25,11 +25,9 @@
 
 class FirstTimeTipsTable {
 public:
-    static FirstTimeTipsTable* get() {
-        if (FirstTimeTipsTable::singletone == nullptr) {
-            FirstTimeTipsTable::singletone = new FirstTimeTipsTable();
-        }
-        return FirstTimeTipsTable::singletone;
+    static FirstTimeTipsTable& get() {
+        static FirstTimeTipsTable instance;
+        return instance;
     }
 
     bool wasDisplayed(const std::string& id) const;
@@ -38,5 +36,4 @@ public:
 private:
     FirstTimeTipsTable() = default;
     FirstTimeTipsTable(const FirstTimeTipsTable& copy);
-    static FirstTimeTipsTable* singletone;
 };

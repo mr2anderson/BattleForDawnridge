@@ -25,18 +25,15 @@
 
 class GlobalClock {
 public:
-    static GlobalClock* get() {
-        if (GlobalClock::singletone == nullptr) {
-            GlobalClock::singletone = new GlobalClock();
-        }
-        return GlobalClock::singletone;
+    static GlobalClock& get() {
+        static GlobalClock instance;
+        return instance;
     }
 
     uint32_t getMs() const;
 private:
     GlobalClock();
     GlobalClock(const GlobalClock& copy);
-    static GlobalClock* singletone;
 
     Clock clock;
 };

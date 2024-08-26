@@ -23,17 +23,17 @@
 
 
 Tower2Spec::Tower2Spec() = default;
-IBuildingSpec* Tower2Spec::clone() const {
-    return new Tower2Spec(*this);
+std::shared_ptr<IBuildingSpec> Tower2Spec::clone() const {
+    return std::make_shared<Tower2Spec>(*this);
 }
 Damage Tower2Spec::getDamage() const {
-    return Parameters::get()->getDamage("tower2_damage");
+    return Parameters::get().getDamage("tower2_damage");
 }
 uint32_t Tower2Spec::getShotsNumber() const {
-    return Parameters::get()->getInt("tower2_shots_number");
+    return Parameters::get().getInt("tower2_shots_number");
 }
 uint32_t Tower2Spec::getShootingRadius() const {
-    return Parameters::get()->getInt("tower2_shooting_radius");
+    return Parameters::get().getInt("tower2_shooting_radius");
 }
 std::shared_ptr<Projectile> Tower2Spec::getProjectile() const {
     return std::make_shared<BigArrow>();

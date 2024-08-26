@@ -34,30 +34,30 @@ House::House() {
 House::House(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
 
-	this->type = GlobalRandomGenerator32::get()->gen() % TOTAL_TYPES + 1;
+	this->type = GlobalRandomGenerator32::get().gen() % TOTAL_TYPES + 1;
 
-	this->addSpec(new HouseSpec());
+	this->addSpec(std::make_shared<HouseSpec>());
 }
-Building* House::createSameTypeBuilding() const {
-	return new House(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  House::createSameTypeBuilding() const {
+	return std::make_shared<House>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID House::getTypeUUID() const {
-	return UUIDs::get()->get("house");
+	return UUIDs::get().get("house");
 }
 uint32_t House::getSX() const {
-	return Parameters::get()->getInt("house_sx");
+	return Parameters::get().getInt("house_sx");
 }
 uint32_t House::getSY() const {
-	return Parameters::get()->getInt("house_sy");
+	return Parameters::get().getInt("house_sy");
 }
 uint32_t House::getMaxHP() const {
-	return Parameters::get()->getInt("house_max_hp");
+	return Parameters::get().getInt("house_max_hp");
 }
 Defence House::getDefence() const {
-	return Parameters::get()->getDefence("house_defence");
+	return Parameters::get().getDefence("house_defence");
 }
 Resources House::getCost() const {
-	return Parameters::get()->getResources("house_cost");
+	return Parameters::get().getResources("house_cost");
 }
 std::string House::getTextureName() const {
 	return "house" + std::to_string(this->type);
@@ -69,7 +69,7 @@ StringLcl House::getDescription() const {
 	return StringLcl("{house_description}");
 }
 uint32_t House::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("house_regeneration_speed");
+	return Parameters::get().getInt("house_regeneration_speed");
 }
 
 

@@ -27,7 +27,6 @@
 class SpellProducerSpec : public IBuildingSpec {
 public:
 	SpellProducerSpec();
-	~SpellProducerSpec() override;
 
 	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
 		if (this->IBuildingSpec::hasError(mapSize, totalPlayers)) {
@@ -39,13 +38,13 @@ public:
 		return false;
 	}
 
-	Events getActiveNewMoveEvent(const Building* building, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	boost::optional<BuildingShortInfo> getShortInfo(const Building* building) const override;
+	Events getActiveNewMoveEvent(std::shared_ptr<const Building>  building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building>  building, MapState* state) override;
+	boost::optional<BuildingShortInfo> getShortInfo(std::shared_ptr<const Building>  building) const override;
 	void setSpell(std::shared_ptr<Spell> newSpell);
 	virtual std::vector<std::shared_ptr<Spell>> getSpellsToProduce(uint32_t playerId) const = 0;
 private:
-	Spell* spell;
+	std::shared_ptr<Spell> spell;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

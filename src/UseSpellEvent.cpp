@@ -20,9 +20,9 @@
 #include "UseSpellEvent.hpp"
 
 
-UseSpellEvent::UseSpellEvent(Spell* spell) {
+UseSpellEvent::UseSpellEvent(std::shared_ptr<Spell> spell) {
 	this->spell = spell;
 }
-Spell* UseSpellEvent::getSpell() {
+std::shared_ptr<Spell> UseSpellEvent::getSpell() {
 	return this->spell;
 }

@@ -18,6 +18,7 @@
 
 
 #include <memory>
+#include <memory>
 #include "Event.hpp"
 
 
@@ -29,9 +30,9 @@ class Building;
 
 class TryToBuildEvent : public Event {
 public:
-	TryToBuildEvent(std::shared_ptr<Building> b);
+	TryToBuildEvent(std::shared_ptr<Building>  b);
 
-	std::shared_ptr<Building> getBuilding();
+	std::shared_ptr<Building>  getBuilding();
 private:
-	std::shared_ptr<Building> b;
+	std::shared_ptr<Building>  b;
 };

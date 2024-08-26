@@ -26,7 +26,7 @@
 class CastleWarehouseSpec : public IWarehouseSpec {
 public:
 	CastleWarehouseSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	Resources getActiveLimit() const override;
 private:

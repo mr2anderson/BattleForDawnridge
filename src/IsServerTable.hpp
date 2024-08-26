@@ -25,11 +25,9 @@
 
 class IsServerTable {
 public:
-	static IsServerTable* get() {
-		if (IsServerTable::singletone == nullptr) {
-			IsServerTable::singletone = new IsServerTable();
-		}
-		return IsServerTable::singletone;
+	static IsServerTable& get() {
+		static IsServerTable instance;
+		return instance;
 	}
 
 	bool isServer() const;
@@ -38,7 +36,6 @@ public:
 private:
 	IsServerTable() = default;
 	IsServerTable(const IsServerTable& copy) = delete;
-	static IsServerTable* singletone;
 
 	boost::optional<bool> val;
 };

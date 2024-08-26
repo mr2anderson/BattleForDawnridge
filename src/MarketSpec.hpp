@@ -26,7 +26,7 @@
 class MarketSpec : public TradingSpec {
 public:
 	MarketSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	std::vector<Trade> getTrades() const override;
 private:

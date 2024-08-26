@@ -34,19 +34,19 @@ Water::Water(uint32_t x, uint32_t y, uint32_t type) :
 	this->type = type;
 }
 UUID Water::getTypeUUID() const {
-	return UUIDs::get()->get("water");
+	return UUIDs::get().get("water");
 }
 uint32_t Water::getSY() const {
-	return Parameters::get()->getInt("water_sx");
+	return Parameters::get().getInt("water_sx");
 }
 uint32_t Water::getSX() const {
-	return Parameters::get()->getInt("water_sy");
+	return Parameters::get().getInt("water_sy");
 }
 std::string Water::getTextureName() const {
 	return "water";
 }
 sf::IntRect Water::getTextureRect() const {
-	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
+	return TilesetHandler::get().getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get().get(this->getTextureName())->getSize().x, this->type);
 }
 std::string Water::getSoundName() const {
 	return "water";
@@ -57,10 +57,10 @@ StringLcl Water::getDescription() const {
 bool Water::isLowObstacle(uint32_t playerId) const {
     return true;
 }
-bool Water::warriorCanStay(const Warrior *w) const {
+bool Water::warriorCanStay(std::shared_ptr<const Warrior> w) const {
 	return w->isFlying();
 }
-uint32_t Water::getWarriorMovementCost(const Warrior *w) const {
+uint32_t Water::getWarriorMovementCost(std::shared_ptr<Warrior> w) const {
     if (w->isFlying()) {
         return 1;
     }

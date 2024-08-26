@@ -43,13 +43,13 @@ public:
     }
 
     void refreshAttackedTable();
-    void markAsAttacked(Unit *u);
+    void markAsAttacked(std::shared_ptr<Unit>u);
 private:
-    std::unordered_map<Unit*, bool> attackedTable;
+    std::unordered_map<std::shared_ptr<Unit>, bool> attackedTable;
 
     Events newMove(MapState *state, uint32_t currentPlayerId) override;
-    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const override;
-    Events startAttack(Unit *u, uint32_t targetX, uint32_t targetY) override;
+    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const override;
+    Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) override;
     StringLcl getSpecialInfoString() const override;
 
     friend class boost::serialization::access;

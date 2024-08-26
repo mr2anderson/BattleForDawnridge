@@ -25,7 +25,7 @@ bool ITerritoryOriginSpec::isOrigin() const {
 	return true;
 }
 sf::Color ITerritoryOriginSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getTerritoryExpandingColor(playerId);
+    return HighlightColors::get().getTerritoryExpandingColor(playerId);
 }
 uint8_t ITerritoryOriginSpec::getHighlightType() const {
     return IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;

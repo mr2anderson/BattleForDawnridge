@@ -31,14 +31,14 @@
 #include "PlaySoundEvent.hpp"
 
 
-Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
+Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state) {
 	if (!building->works()) {
 		return Events();
 	}
 
 	Resources limit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == building->getPlayerId()) {
 			limit.plus(b->getLimit());
 		}
@@ -48,11 +48,11 @@ Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bu
 
 	uint32_t left = std::min(this->getCollectionSpeed(), leftSpace);
 
-	std::vector<std::tuple<ResourcePoint*, uint32_t>> src;
+	std::vector<std::tuple<std::shared_ptr<ResourcePoint>, uint32_t>> src;
 
 	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalAreaRPs(); i = i + 1) {
-		AreaResourcePoint* rp = state->getCollectionsPtr()->getAreaRP(i);
+		std::shared_ptr<AreaResourcePoint> rp = state->getCollectionsPtr()->getAreaRP(i);
 		if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
 			uint32_t got = rp->tryToCollect(building->getPlayerId(), left);
 			if (got != 0) {
@@ -73,13 +73,13 @@ Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(const Building *bu
 	response.add(std::make_shared<PlaySoundEvent>(this->getResourceType()));
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	for (uint32_t i = 0; i < src.size(); i = i + 1) {
-		response.add(std::make_shared<SubHpEvent>(std::get<ResourcePoint*>(src.at(i)), std::get<uint32_t>(src.at(i))));
+		response.add(std::make_shared<SubHpEvent>(std::get<std::shared_ptr<ResourcePoint>>(src.at(i)), std::get<uint32_t>(src.at(i))));
 		response.add(std::make_shared<AddResourceEvent>(Resource(this->getResourceType(), std::get<uint32_t>(src.at(i))), limit));
 	}
 
 	return response;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollectorSpec::getComponents(const Building *building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollectorSpec::getComponents(std::shared_ptr<const Building> building, MapState* state) {
 	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (building->works()) {
@@ -108,17 +108,17 @@ uint32_t IAreaResourcePointCollectorSpec::getRadius() const {
 	return this->getCollectionRadius();
 }
 sf::Color IAreaResourcePointCollectorSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getResourceCollectingColor(playerId);
+    return HighlightColors::get().getResourceCollectingColor(playerId);
 }
 uint8_t IAreaResourcePointCollectorSpec::getHighlightType() const {
     return IAreaControllerSpec::OTHER;
 }
-uint32_t IAreaResourcePointCollectorSpec::countResourceInRadius(const Building *building, MapState *state) {
+uint32_t IAreaResourcePointCollectorSpec::countResourceInRadius(std::shared_ptr<const Building> building, MapState *state) {
     uint32_t ctr = 0;
 
 	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalAreaRPs(); i = i + 1) {
-        AreaResourcePoint* rp = state->getCollectionsPtr()->getAreaRP(i);
+        std::shared_ptr<AreaResourcePoint> rp = state->getCollectionsPtr()->getAreaRP(i);
         if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
             ctr = ctr + rp->getHP();
         }

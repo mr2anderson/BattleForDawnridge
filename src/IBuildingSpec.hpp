@@ -33,31 +33,37 @@ class Building;
 class Warrior;
 
 
-class IBuildingSpec {
+class IBuildingSpec : public std::enable_shared_from_this<IBuildingSpec> {
 public:
-    virtual ~IBuildingSpec();
-	virtual IBuildingSpec* clone() const = 0;
+	virtual std::shared_ptr<IBuildingSpec> clone() const = 0;
 
 	virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
 		return false;
 	}
 
-	virtual Events getActiveNewMoveEvent(const Building *building, MapState* state);
-	virtual Events getHighlightEvent(const Building *building, MapState* state, uint8_t type) const;
-	virtual Events getEventOnDestroy(const Building *building, MapState* state) const;
-	virtual std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state);
-	virtual boost::optional<BuildingShortInfo> getShortInfo(const Building *building) const;
-	virtual Resources getLimit(const Building *building) const;
-	virtual uint32_t getPopulationLimit(const Building *building) const;
+	virtual Events getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state);
+	virtual Events getHighlightEvent(std::shared_ptr<const Building> building, MapState* state, uint8_t type) const;
+	virtual Events getEventOnDestroy(std::shared_ptr<const Building> building, MapState* state) const;
+	virtual std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building> building, MapState* state);
+	virtual boost::optional<BuildingShortInfo> getShortInfo(std::shared_ptr<const Building> building) const;
+	virtual Resources getLimit(std::shared_ptr<const Building> building) const;
+	virtual uint32_t getPopulationLimit(std::shared_ptr<const Building> building) const;
 	virtual bool isVictoryCondition() const;
 	virtual bool isOrigin() const;
-	virtual bool isActiveConductor(const Building *building) const;
-	virtual uint32_t getWarriorMovementCost(const Building *building, const Warrior *w) const;
-	virtual bool warriorCanStay(const Building *building, const Warrior *w) const;
-	virtual bool isUltraHighObstacle(const Building *building, uint32_t playerId) const;
-	virtual bool isHighObstacle(const Building *building, uint32_t playerId) const;
-	virtual bool isLowObstacle(const Building *building, uint32_t playerId) const;
+	virtual bool isActiveConductor(std::shared_ptr<const Building> building) const;
+	virtual uint32_t getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const;
+	virtual bool warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const;
+	virtual bool isUltraHighObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const;
+	virtual bool isHighObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const;
+	virtual bool isLowObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const;
     virtual NewMoveMainPriority getNewMoveMainPriority() const;
+protected:
+	template<typename T> std::shared_ptr<T> getThis() {
+		return std::static_pointer_cast<T>(this->shared_from_this());
+	}
+	template<typename T> std::shared_ptr<const T> getThis() const {
+		return std::static_pointer_cast<T>(this->shared_from_this());
+	}
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

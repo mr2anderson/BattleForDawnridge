@@ -26,7 +26,7 @@
 class WarehouseFoodSpec : public IWarehouseSpec {
 public:
 	WarehouseFoodSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	Resources getActiveLimit() const override;
 private:

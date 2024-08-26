@@ -80,7 +80,7 @@ void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	}
 	text.setMinWidth(this->getW() - 10);
 	text.setColor(sf::Color::White);
-	text.setFont(*Fonts::get()->get("1"));
+	text.setFont(*Fonts::get().get("1"));
 	text.setString(WRAP_TEXT(this->message.get(), this->getW() - 10, text.getFont(), text.getCharacterSize()));
 
 	uint32_t n = text.getNumberOfLines();

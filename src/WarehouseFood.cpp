@@ -27,31 +27,31 @@
 WarehouseFood::WarehouseFood() = default;
 WarehouseFood::WarehouseFood(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WarehouseFoodSpec());
+	this->addSpec(std::make_shared<WarehouseFoodSpec>());
 }
-Building* WarehouseFood::createSameTypeBuilding() const {
-	return new WarehouseFood(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  WarehouseFood::createSameTypeBuilding() const {
+	return std::make_shared<WarehouseFood>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID WarehouseFood::getTypeUUID() const {
-	return UUIDs::get()->get("warehouse_food");
+	return UUIDs::get().get("warehouse_food");
 }
 uint32_t WarehouseFood::getSX() const {
-	return Parameters::get()->getInt("warehouse_food_sx");
+	return Parameters::get().getInt("warehouse_food_sx");
 }
 uint32_t WarehouseFood::getSY() const {
-	return Parameters::get()->getInt("warehouse_food_sy");
+	return Parameters::get().getInt("warehouse_food_sy");
 }
 uint32_t WarehouseFood::getMaxHP() const {
-	return Parameters::get()->getInt("warehouse_food_max_hp");
+	return Parameters::get().getInt("warehouse_food_max_hp");
 }
 Defence WarehouseFood::getDefence() const {
-	return Parameters::get()->getDefence("warehouse_food_defence");
+	return Parameters::get().getDefence("warehouse_food_defence");
 }
 Resources WarehouseFood::getCost() const {
-	return Parameters::get()->getResources("warehouse_food_cost");
+	return Parameters::get().getResources("warehouse_food_cost");
 }
 uint32_t WarehouseFood::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("warehouse_food_regeneration_speed");
+	return Parameters::get().getInt("warehouse_food_regeneration_speed");
 }
 std::string WarehouseFood::getTextureName() const {
 	return "warehouse_food";

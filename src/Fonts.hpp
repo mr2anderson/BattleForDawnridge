@@ -26,11 +26,9 @@
 
 class Fonts {
 public:
-    static Fonts* get() {
-        if (Fonts::singletone == nullptr) {
-            Fonts::singletone = new Fonts();
-        }
-        return Fonts::singletone;
+    static Fonts& get() {
+        static Fonts instance;
+        return instance;
     }
 
     void add(const std::string& name, const std::string& path);
@@ -38,7 +36,6 @@ public:
 private:
     Fonts() = default;
     Fonts(const Fonts& copy);
-    static Fonts* singletone;
 
     std::unordered_map<std::string, sf::Font> fonts;
 };

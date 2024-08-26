@@ -26,7 +26,7 @@
 class CastleTerritoryExpanderSpec : public ITerritoryOriginSpec {
 public:
 	CastleTerritoryExpanderSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	uint32_t getRadius() const override;
 private:

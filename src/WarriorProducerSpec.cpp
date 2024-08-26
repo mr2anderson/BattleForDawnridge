@@ -38,7 +38,7 @@
 WarriorProducerSpec::WarriorProducerSpec() {
 	this->producing = false;
 }
-Events WarriorProducerSpec::startProducing(std::shared_ptr<Warrior> w) {
+Events WarriorProducerSpec::startProducing(std::shared_ptr<Warrior>  w) {
 	this->currentProducing = w;
 	this->currentProducingMovesLeft = w->getTimeToProduce();
 	this->producing = true;
@@ -58,7 +58,7 @@ void WarriorProducerSpec::decreaseCurrentProducingMovesLeft() {
 void WarriorProducerSpec::stopProducing() {
 	this->producing = false;
 }
-Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* state) {
+Events WarriorProducerSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState* state) {
 	if (!b->works() or !this->producing) {
 		return Events();
 	}
@@ -70,7 +70,7 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 		response.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
-		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this));
+		response.add(std::make_shared<DecreaseCurrentProducingMovesLeftEvent>(this->getThis<WarriorProducerSpec>()));
 	}
 	if (this->currentProducingMovesLeft > 1) {
 		return response;
@@ -78,13 +78,13 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 
     uint32_t freeSpace = 0;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-        Building *building = state->getCollectionsPtr()->getBuilding(i);
+        std::shared_ptr<Building> building = state->getCollectionsPtr()->getBuilding(i);
         if (building->exist() and building->getPlayerId() == b->getPlayerId()) {
             freeSpace = freeSpace + building->getPopulationLimit();
         }
     }
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        Warrior *warrior = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior> warrior = state->getCollectionsPtr()->getWarrior(i);
         if (warrior->exist() and warrior->getPlayerId() == b->getPlayerId()) {
             if (freeSpace >= warrior->getPopulation()) {
                 freeSpace = freeSpace - warrior->getPopulation();
@@ -119,7 +119,7 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(const Building *b, MapState* s
 		return response;
 	}
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::getComponents(const Building *b, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::getComponents(std::shared_ptr<const Building> b, MapState* state) {
 	std::vector<BuildingHorizontalSelectionWindowComponent> components;
 
 	if (b->works()) {
@@ -140,11 +140,11 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 			);
 		}
 		else {
-			std::vector<std::shared_ptr<Warrior>> toProduce = this->getWarriorsToProduce(b->getPlayerId());
+			std::vector<std::shared_ptr<Warrior> > toProduce = this->getWarriorsToProduce(b->getPlayerId());
 
 			uint32_t population = 0;
 			for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-				Warrior* w = state->getCollectionsPtr()->getWarrior(i);
+				std::shared_ptr<Warrior>  w = state->getCollectionsPtr()->getWarrior(i);
 				if (w->exist() and w->getPlayerId() == b->getPlayerId()) {
 					population = population + w->getPopulation();
 				}
@@ -152,14 +152,14 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 
 			uint32_t populationLimit = 0;
 			for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-				Building* populationLimitIncreaser = state->getCollectionsPtr()->getBuilding(i);
+				std::shared_ptr<Building>  populationLimitIncreaser = state->getCollectionsPtr()->getBuilding(i);
 				if (populationLimitIncreaser->exist() and populationLimitIncreaser->getPlayerId() == b->getPlayerId()) {
 					populationLimit = populationLimit + populationLimitIncreaser->getPopulationLimit();
 				}
 			}
 
 			for (uint32_t i = 0; i < toProduce.size(); i = i + 1) {
-				std::shared_ptr<Warrior> w = toProduce.at(i);
+				std::shared_ptr<Warrior>  w = toProduce.at(i);
 
 				Events produceEvent;
 				produceEvent.add(std::make_shared<ResetHighlightEvent>());
@@ -210,7 +210,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 
 	return components;
 }
-boost::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(const Building *b) const {
+boost::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(std::shared_ptr<const Building> b) const {
 	if (!b->works()) {
 		return boost::none;
 	}
@@ -238,7 +238,7 @@ uint32_t WarriorProducerSpec::getRadius() const {
 	return 1;
 }
 sf::Color WarriorProducerSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getWarriorProducingColor(playerId);
+    return HighlightColors::get().getWarriorProducingColor(playerId);
 }
 uint8_t WarriorProducerSpec::getHighlightType() const {
     return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;

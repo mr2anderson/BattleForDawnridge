@@ -18,7 +18,6 @@
 
 
 #include "Unit.hpp"
-#include "ISelectable.hpp"
 #include "IWithSuspendingAnimation.hpp"
 #include "MovementGraph.hpp"
 #include "AnimationState.hpp"
@@ -31,11 +30,11 @@
 #pragma once
 
 
-class Warrior : public Unit, public ISelectable, public IWithSuspendingAnimation {
+class Warrior : public Unit, public IWithSuspendingAnimation {
 public:
 	Warrior();
 	Warrior(uint32_t x, uint32_t y, uint32_t playerId);
-    virtual Warrior* cloneWarrior() const = 0;
+    virtual std::shared_ptr<Warrior>  cloneWarrior() const = 0;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
@@ -55,8 +54,8 @@ public:
 	virtual uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
     virtual uint32_t getCurrentAnimationMs() const;
 	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
-	bool warriorCanStay(const Warrior *w) const override;
-	uint32_t getWarriorMovementCost(const Warrior *w) const override;
+	bool warriorCanStay(std::shared_ptr<const Warrior> w) const override;
+	uint32_t getWarriorMovementCost(std::shared_ptr<Warrior> w) const override;
     DrawingPriority getDrawingPriority() const override;
     ClickPriority getClickPriority() const override;
     NewMoveMainPriority getNewMoveMainPriority() const override;
@@ -130,7 +129,6 @@ private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<Unit>(*this);
-        ar & boost::serialization::base_object<ISelectable>(*this); // ISelectable is an interface, so it does not contain any data. However, program must register type relationship for boost
         ar & this->movementPoints;
         ar & this->hasSpecialMoves;
         ar & this->enemyMove;

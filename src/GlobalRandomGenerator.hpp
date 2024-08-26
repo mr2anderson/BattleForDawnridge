@@ -26,11 +26,9 @@
 
 template<typename Generator, typename Value> class GlobalRandomGenerator {
 public:
-    static GlobalRandomGenerator* get() {
-        if (GlobalRandomGenerator::singletone == nullptr) {
-            GlobalRandomGenerator::singletone = new GlobalRandomGenerator();
-        }
-        return GlobalRandomGenerator::singletone;
+    static GlobalRandomGenerator& get() {
+        static GlobalRandomGenerator instance;
+        return instance;
     }
 
     Value gen() {
@@ -45,10 +43,6 @@ private:
         this->generator = Generator(rd());
     }
     GlobalRandomGenerator(const GlobalRandomGenerator& copy);
-    static GlobalRandomGenerator* singletone;
 
     Generator generator;
 };
-
-
-template<typename Generator, typename Value> GlobalRandomGenerator<Generator, Value>* GlobalRandomGenerator<Generator, Value>::singletone = nullptr;

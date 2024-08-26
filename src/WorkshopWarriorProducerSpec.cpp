@@ -22,11 +22,11 @@
 
 
 WorkshopWarriorProducerSpec::WorkshopWarriorProducerSpec() = default;
-IBuildingSpec *WorkshopWarriorProducerSpec::clone() const {
-    return new WorkshopWarriorProducerSpec(*this);
+std::shared_ptr<IBuildingSpec>WorkshopWarriorProducerSpec::clone() const {
+    return std::make_shared<WorkshopWarriorProducerSpec>(*this);
 }
-std::vector<std::shared_ptr<Warrior>> WorkshopWarriorProducerSpec::getWarriorsToProduce(uint32_t playerId) {
-    std::vector<std::shared_ptr<Warrior>> toProduce;
+std::vector<std::shared_ptr<Warrior> > WorkshopWarriorProducerSpec::getWarriorsToProduce(uint32_t playerId) {
+    std::vector<std::shared_ptr<Warrior> > toProduce;
 
     toProduce.push_back(std::make_shared<Ram>(0, 0, playerId));
 

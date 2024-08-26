@@ -21,6 +21,6 @@
 
 
 int main() {
-	Program::get()->run();
+	Program::get().run();
 	return 0;
 }

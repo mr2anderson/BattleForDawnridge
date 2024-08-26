@@ -22,11 +22,11 @@
 
 
 WarehouseGoldWarehouseSpec::WarehouseGoldWarehouseSpec() = default;
-IBuildingSpec* WarehouseGoldWarehouseSpec::clone() const {
-	return new WarehouseGoldWarehouseSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseGoldWarehouseSpec::clone() const {
+	return std::make_shared<WarehouseGoldWarehouseSpec>(*this);
 }
 Resources WarehouseGoldWarehouseSpec::getActiveLimit() const {
-	return Parameters::get()->getResources("warehouse_gold_limit");
+	return Parameters::get().getResources("warehouse_gold_limit");
 }
 
 

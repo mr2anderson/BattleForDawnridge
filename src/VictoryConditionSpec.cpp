@@ -32,26 +32,26 @@
 VictoryConditionSpec::VictoryConditionSpec() {
     this->moveCtr = 0;
 }
-IBuildingSpec* VictoryConditionSpec::clone() const {
-	return new VictoryConditionSpec(*this);
+std::shared_ptr<IBuildingSpec> VictoryConditionSpec::clone() const {
+	return std::make_shared<VictoryConditionSpec>(*this);
 }
-Events VictoryConditionSpec::getActiveNewMoveEvent(const Building* b, MapState* state) {
+Events VictoryConditionSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>  b, MapState* state) {
     Events events;
 
     events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
     events.add(std::make_shared<PlaySoundEvent>("bell"));
-    events.add(std::make_shared<IncreaseVCSMoveCtrEvent>(this));
+    events.add(std::make_shared<IncreaseVCSMoveCtrEvent>(this->getThis<VictoryConditionSpec>()));
 
     std::shared_ptr<ImageFlyingE> flyingE = std::make_shared<ImageFlyingE>("bell", b->getX(), b->getY(), b->getSX(), b->getSY());
     events.add(std::make_shared<CreateEEvent>(flyingE));
 
     return events;
 }
-Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* state) const {
+Events VictoryConditionSpec::getEventOnDestroy(std::shared_ptr<const Building> b, MapState* state) const {
 	Events event;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-        Building* building = state->getCollectionsPtr()->getBuilding(i);
+        std::shared_ptr<Building>  building = state->getCollectionsPtr()->getBuilding(i);
         if (building->getUUID() != b->getUUID() and building->getPlayerId() == b->getPlayerId() and building->exist() and building->isVictoryCondition()) {
             return event;
         }
@@ -61,7 +61,7 @@ Events VictoryConditionSpec::getEventOnDestroy(const Building *b, MapState* stat
 
 	return event;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(const Building *b, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> VictoryConditionSpec::getComponents(std::shared_ptr<const Building> b, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component = {
 		HorizontalSelectionWindowComponent(  "bell",
 		StringLcl("{victory_condition_building_description}") + std::to_string(this->moveCtr),

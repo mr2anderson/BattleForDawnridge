@@ -30,7 +30,7 @@ WarriorNearMultyAttacker::WarriorNearMultyAttacker(uint32_t x, uint32_t y, uint3
 void WarriorNearMultyAttacker::refreshAttackedTable() {
     this->attackedTable.clear();
 }
-void WarriorNearMultyAttacker::markAsAttacked(Unit *u) {
+void WarriorNearMultyAttacker::markAsAttacked(std::shared_ptr<Unit>u) {
     this->attackedTable[u] = true;
 }
 Events WarriorNearMultyAttacker::newMove(MapState *state, uint32_t currentPlayerId) {
@@ -38,19 +38,19 @@ Events WarriorNearMultyAttacker::newMove(MapState *state, uint32_t currentPlayer
 
     if (this->exist()) {
         Events refreshAttackedTable;
-        refreshAttackedTable.add(std::make_shared<RefreshAttackedTableEvent>(this));
+        refreshAttackedTable.add(std::make_shared<RefreshAttackedTableEvent>(this->getThis<WarriorNearMultyAttacker>()));
         events = refreshAttackedTable + events;
     }
 
     return events;
 }
-std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearMultyAttacker::canAttack(Unit *u) const {
+std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearMultyAttacker::canAttack(std::shared_ptr<Unit>u) const {
     if (this->attackedTable.find(u) == this->attackedTable.end()) {
         return this->WarriorNearAttacker::canAttack(u);
     }
     return {};
 }
-Events WarriorNearMultyAttacker::startAttack(Unit *u, uint32_t targetX, uint32_t targetY) {
+Events WarriorNearMultyAttacker::startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) {
     Events events = this->WarriorAttacker::startAttack(u, targetX, targetY);
 
     Events markAsAttacked;

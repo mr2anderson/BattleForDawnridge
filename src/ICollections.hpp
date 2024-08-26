@@ -43,7 +43,7 @@ public:
 
 	virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const = 0;
 
-	virtual void add(GO* object) = 0;
+	virtual void add(std::shared_ptr<GO> object) = 0;
 
 	virtual uint32_t totalGOs() const = 0;
 	virtual uint32_t totalAreaRPs() const = 0;
@@ -52,12 +52,12 @@ public:
 	virtual uint32_t totalBuildings() const = 0;
 	virtual uint32_t totalWarriors() const = 0;
 
-	virtual GO* getGO(uint32_t i, uint8_t filter) = 0;
-	virtual AreaResourcePoint* getAreaRP(uint32_t i) = 0;
-	virtual ConductionResourcePoint* getConductionRP(uint32_t i) = 0;
-	virtual Unit* getUnit(uint32_t i) = 0;
-	virtual Building* getBuilding(uint32_t i) = 0;
-	virtual Warrior* getWarrior(uint32_t i) = 0;
+	virtual std::shared_ptr<GO> getGO(uint32_t i, uint8_t filter) = 0;
+	virtual std::shared_ptr<AreaResourcePoint> getAreaRP(uint32_t i) = 0;
+	virtual std::shared_ptr<ConductionResourcePoint> getConductionRP(uint32_t i) = 0;
+	virtual std::shared_ptr<Unit> getUnit(uint32_t i) = 0;
+	virtual std::shared_ptr<Building>  getBuilding(uint32_t i) = 0;
+	virtual std::shared_ptr<Warrior>  getWarrior(uint32_t i) = 0;
 private:
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {

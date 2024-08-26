@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class Building;
 
 class DestroyEvent : public Event {
 public:
-	DestroyEvent(Building *b);
+	DestroyEvent(std::shared_ptr<Building> b);
 
-	Building* getBuilding();
+	std::shared_ptr<Building>  getBuilding();
 private:
-	Building* b;
+	std::shared_ptr<Building>  b;
 };

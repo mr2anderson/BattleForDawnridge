@@ -28,7 +28,7 @@ const uint32_t RoomID::READABLE_LEN = 12;
 
 RoomID::RoomID() {
 	for (uint32_t i = 0; i < READABLE_LEN; i = i + 1) {
-		uint8_t r = GlobalRandomGenerator32::get()->gen() % 36;
+		uint8_t r = GlobalRandomGenerator32::get().gen() % 36;
 		if (r < 10) {
 			this->_value.push_back('0' + r);
 		}

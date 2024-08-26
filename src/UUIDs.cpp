@@ -20,9 +20,6 @@
 #include "UUIDs.hpp"
 
 
-UUIDs* UUIDs::singletone = nullptr;
-
-
 UUID UUIDs::get(const std::string &id) {
 	return this->data[id];
 }

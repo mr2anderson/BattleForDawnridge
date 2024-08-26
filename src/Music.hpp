@@ -26,11 +26,9 @@
 
 class Music {
 public:
-    static Music *get() {
-        if (Music::singletone == nullptr) {
-            Music::singletone = new Music();
-        }
-        return Music::singletone;
+    static Music& get() {
+        static Music instance;
+        return instance;
     }
 
     void add(const std::string& name, const std::string& path);
@@ -40,7 +38,6 @@ public:
 private:
     Music();
     Music(const Music& copy);
-    static Music *singletone;
 
     uint32_t volume;
     std::unordered_map<std::string, sf::Music> music;

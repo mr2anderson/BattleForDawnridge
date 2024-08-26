@@ -20,9 +20,9 @@
 #include "KillNextTurnEvent.hpp"
 
 
-KillNextTurnEvent::KillNextTurnEvent(Warrior* w) {
+KillNextTurnEvent::KillNextTurnEvent(std::shared_ptr<Warrior>  w) {
 	this->w = w;
 }
-Warrior* KillNextTurnEvent::getWarrior() {
+std::shared_ptr<Warrior>  KillNextTurnEvent::getWarrior() {
 	return this->w;
 }

@@ -20,9 +20,9 @@
 #include "RevertKillNextTurnEvent.hpp"
 
 
-RevertKillNextTurnEvent::RevertKillNextTurnEvent(Warrior* w) {
+RevertKillNextTurnEvent::RevertKillNextTurnEvent(std::shared_ptr<Warrior>  w) {
 	this->w = w;
 }
-Warrior* RevertKillNextTurnEvent::getWarrior() {
+std::shared_ptr<Warrior>  RevertKillNextTurnEvent::getWarrior() {
 	return this->w;
 }

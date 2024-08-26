@@ -28,29 +28,29 @@
 Infirmary::Infirmary() = default;
 Infirmary::Infirmary(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new InfirmaryWarriorHealerSpec());
-    this->addSpec(new InfirmaryWarriorProducerSpec());
+	this->addSpec(std::make_shared<InfirmaryWarriorHealerSpec>());
+    this->addSpec(std::make_shared<InfirmaryWarriorProducerSpec>());
 }
-Building* Infirmary::createSameTypeBuilding() const {
-	return new Infirmary(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Infirmary::createSameTypeBuilding() const {
+	return std::make_shared<Infirmary>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Infirmary::getTypeUUID() const {
-	return UUIDs::get()->get("infirmary");
+	return UUIDs::get().get("infirmary");
 }
 uint32_t Infirmary::getSX() const {
-	return Parameters::get()->getInt("infirmary_sx");
+	return Parameters::get().getInt("infirmary_sx");
 }
 uint32_t Infirmary::getSY() const {
-	return Parameters::get()->getInt("infirmary_sy");
+	return Parameters::get().getInt("infirmary_sy");
 }
 uint32_t Infirmary::getMaxHP() const {
-	return Parameters::get()->getInt("infirmary_max_hp");
+	return Parameters::get().getInt("infirmary_max_hp");
 }
 Defence Infirmary::getDefence() const {
-	return Parameters::get()->getDefence("infirmary_defence");
+	return Parameters::get().getDefence("infirmary_defence");
 }
 Resources Infirmary::getCost() const {
-	return Parameters::get()->getResources("infirmary_cost");
+	return Parameters::get().getResources("infirmary_cost");
 }
 std::string Infirmary::getTextureName() const {
 	return "infirmary";
@@ -62,7 +62,7 @@ StringLcl Infirmary::getDescription() const {
 	return StringLcl("{infirmary_description}");
 }
 uint32_t Infirmary::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("infirmary_regeneration_speed");
+	return Parameters::get().getInt("infirmary_regeneration_speed");
 }
 
 

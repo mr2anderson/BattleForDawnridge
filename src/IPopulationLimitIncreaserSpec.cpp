@@ -23,7 +23,7 @@
 
 
 
-std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(const Building* building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(std::shared_ptr<const Building>  building, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
 	if (building->works()) {
@@ -47,7 +47,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 
 	return { component };
 }
-uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(const Building* building) const {
+uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(std::shared_ptr<const Building>  building) const {
 	if (!building->works()) {
 		return 0;
 	}

@@ -28,11 +28,11 @@ BlackKnight::BlackKnight(uint32_t x, uint32_t y, uint32_t playerId) :
 	WarriorNearSingleAttacker(x, y, playerId) {
 
 }
-Warrior* BlackKnight::cloneWarrior() const {
-	return new BlackKnight(*this);
+std::shared_ptr<Warrior>  BlackKnight::cloneWarrior() const {
+	return std::make_shared<BlackKnight>(*this);
 }
 UUID BlackKnight::getTypeUUID() const {
-	return UUIDs::get()->get("black_knight");
+	return UUIDs::get().get("black_knight");
 }
 std::string BlackKnight::getBeenHitSoundName() const {
     return "ouch";
@@ -41,19 +41,19 @@ std::string BlackKnight::getStartAttackSoundName() const {
     return "swing";
 }
 uint32_t BlackKnight::getMaxHP() const {
-	return Parameters::get()->getInt("black_knight_max_hp");
+	return Parameters::get().getInt("black_knight_max_hp");
 }
 Defence BlackKnight::getBaseDefence() const {
-	return Parameters::get()->getDefence("black_knight_defence");
+	return Parameters::get().getDefence("black_knight_defence");
 }
 Damage BlackKnight::getBaseDamage() const {
-    return Parameters::get()->getDamage("black_knight_damage");
+    return Parameters::get().getDamage("black_knight_damage");
 }
 Resources BlackKnight::getCost() const {
-	return Parameters::get()->getResources("black_knight_cost");
+	return Parameters::get().getResources("black_knight_cost");
 }
 uint32_t BlackKnight::getTimeToProduce() const {
-	return Parameters::get()->getInt("black_knight_time_to_produce");
+	return Parameters::get().getInt("black_knight_time_to_produce");
 }
 std::string BlackKnight::getSoundName() const {
 	return "breath";
@@ -80,10 +80,10 @@ std::string BlackKnight::getBaseTextureName() const {
 	return "black_knight";
 }
 uint32_t BlackKnight::getMovementPoints() const {
-	return Parameters::get()->getInt("black_knight_movement_points");
+	return Parameters::get().getInt("black_knight_movement_points");
 }
 uint32_t BlackKnight::getPopulation() const {
-	return Parameters::get()->getInt("black_knight_population");
+	return Parameters::get().getInt("black_knight_population");
 }
 
 

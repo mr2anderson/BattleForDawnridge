@@ -32,13 +32,13 @@ Road::Road(uint32_t x, uint32_t y, uint32_t playerId) :
 
     this->type = "none";
 
-	this->addSpec(new RoadSpec());
+	this->addSpec(std::make_shared<RoadSpec>());
 }
-Building* Road::createSameTypeBuilding() const {
-	return new Road(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Road::createSameTypeBuilding() const {
+	return std::make_shared<Road>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Road::getTypeUUID() const {
-    return UUIDs::get()->get("road");
+    return UUIDs::get().get("road");
 }
 uint32_t Road::getSX() const { // Config file is not used cuz engine does not support other sizes
 	return 1;
@@ -47,16 +47,16 @@ uint32_t Road::getSY() const {
 	return 1;
 }
 uint32_t Road::getMaxHP() const {
-	return Parameters::get()->getInt("road_max_hp");
+	return Parameters::get().getInt("road_max_hp");
 }
 Defence Road::getDefence() const {
-	return Parameters::get()->getDefence("road_defence");
+	return Parameters::get().getDefence("road_defence");
 }
 Resources Road::getCost() const {
-	return Parameters::get()->getResources("road_cost");
+	return Parameters::get().getResources("road_cost");
 }
 uint32_t Road::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("road_regeneration_speed");
+	return Parameters::get().getInt("road_regeneration_speed");
 }
 std::string Road::getTextureName() const {
 	return "road_" + this->type;
@@ -76,7 +76,7 @@ std::string Road::getProperType(MapState *state) const {
     bool vertical = false;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-        Building *b = state->getCollectionsPtr()->getBuilding(i);
+        std::shared_ptr<Building> b = state->getCollectionsPtr()->getBuilding(i);
         if (b->exist() and b->getPlayerId() == this->getPlayerId() and (b->isActiveConductor() or b->isOrigin())) {
             if (this->getY() >= b->getY() and this->getY() < b->getY() + b->getSY() and (b->getX() + b->getSX() == this->getX() or this->getX() + this->getSX() == b->getX())) {
                 horizontal = true;

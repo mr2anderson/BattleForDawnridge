@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class WarriorHealer;
 
 class RefreshHealingAbilityEvent : public Event {
 public:
-    RefreshHealingAbilityEvent(WarriorHealer *w);
+    RefreshHealingAbilityEvent(std::shared_ptr<WarriorHealer> w);
 
-    WarriorHealer* getWarrior();
+    std::shared_ptr<WarriorHealer> getWarrior();
 private:
-    WarriorHealer *w;
+    std::shared_ptr<WarriorHealer> w;
 };

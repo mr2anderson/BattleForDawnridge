@@ -26,13 +26,13 @@ static uint32_t GET_TEXTURE_W(const std::string& imageName, boost::optional<IntR
     if (rect.has_value()) {
         return rect.value().width;
     }
-    return Textures::get()->get(imageName)->getSize().x;
+    return Textures::get().get(imageName)->getSize().x;
 }
 static uint32_t GET_TEXTURE_H(const std::string& imageName, boost::optional<IntRectSerializable> rect) {
     if (rect.has_value()) {
         return rect.value().height;
     }
-    return Textures::get()->get(imageName)->getSize().y;
+    return Textures::get().get(imageName)->getSize().y;
 }
 
 
@@ -83,7 +83,7 @@ void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     }
     
     sf::Sprite sprite;
-    sprite.setTexture(*Textures::get()->get(this->textureName));
+    sprite.setTexture(*Textures::get().get(this->textureName));
     sprite.setPosition(this->getX() + dPosX, this->getY() + dPosY);
     if (this->textureRect.has_value()) {
         sprite.setTextureRect(this->textureRect.value().getSfRect());

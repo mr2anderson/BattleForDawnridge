@@ -28,7 +28,7 @@ public:
     RageSpell();
 	RageSpell(uint32_t playerId);
 private:
-	Spell* clone() const override;
+	std::shared_ptr<Spell> clone() const override;
 
 	StringLcl getDescription() const override;
 	std::string getTextureName() const override;

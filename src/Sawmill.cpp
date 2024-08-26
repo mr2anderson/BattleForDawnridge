@@ -28,31 +28,31 @@
 Sawmill::Sawmill() = default;
 Sawmill::Sawmill(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new SawmillSpec());
+	this->addSpec(std::make_shared<SawmillSpec>());
 }
-Building* Sawmill::createSameTypeBuilding() const {
-	return new Sawmill(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Sawmill::createSameTypeBuilding() const {
+	return std::make_shared<Sawmill>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Sawmill::getTypeUUID() const {
-	return UUIDs::get()->get("sawmill");
+	return UUIDs::get().get("sawmill");
 }
 Defence Sawmill::getDefence() const {
-	return Parameters::get()->getDefence("sawmill_defence");
+	return Parameters::get().getDefence("sawmill_defence");
 }
 Resources Sawmill::getCost() const {
-	return Parameters::get()->getResources("sawmill_cost");
+	return Parameters::get().getResources("sawmill_cost");
 }
 uint32_t Sawmill::getSX() const {
-	return Parameters::get()->getInt("sawmill_sx");
+	return Parameters::get().getInt("sawmill_sx");
 }
 uint32_t Sawmill::getSY() const {
-	return Parameters::get()->getInt("sawmill_sy");
+	return Parameters::get().getInt("sawmill_sy");
 }
 uint32_t Sawmill::getMaxHP() const {
-	return Parameters::get()->getInt("sawmill_max_hp");
+	return Parameters::get().getInt("sawmill_max_hp");
 }
 uint32_t Sawmill::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("sawmill_regeneration_speed");
+	return Parameters::get().getInt("sawmill_regeneration_speed");
 }
 std::string Sawmill::getTextureName() const {
 	return "sawmill";

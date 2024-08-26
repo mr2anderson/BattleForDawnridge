@@ -27,28 +27,28 @@
 Tower1::Tower1() = default;
 Tower1::Tower1(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
-    this->addSpec(new Tower1Spec());
+    this->addSpec(std::make_shared<Tower1Spec>());
 }
-Building* Tower1::createSameTypeBuilding() const {
-    return new Tower1(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Tower1::createSameTypeBuilding() const {
+    return std::make_shared<Tower1>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Tower1::getTypeUUID() const {
-    return UUIDs::get()->get("tower1");
+    return UUIDs::get().get("tower1");
 }
 uint32_t Tower1::getSX() const {
-    return Parameters::get()->getInt("tower1_sx");
+    return Parameters::get().getInt("tower1_sx");
 }
 uint32_t Tower1::getSY() const {
-    return Parameters::get()->getInt("tower1_sy");
+    return Parameters::get().getInt("tower1_sy");
 }
 uint32_t Tower1::getMaxHP() const {
-    return Parameters::get()->getInt("tower1_max_hp");
+    return Parameters::get().getInt("tower1_max_hp");
 }
 Defence Tower1::getDefence() const {
-    return Parameters::get()->getDefence("tower1_defence");
+    return Parameters::get().getDefence("tower1_defence");
 }
 Resources Tower1::getCost() const {
-    return Parameters::get()->getResources("tower1_cost");
+    return Parameters::get().getResources("tower1_cost");
 }
 std::string Tower1::getTextureName() const {
     return "tower1";
@@ -60,7 +60,7 @@ StringLcl Tower1::getDescription() const {
     return StringLcl("{tower1_description}");
 }
 uint32_t Tower1::getRegenerationSpeed() const {
-    return Parameters::get()->getInt("tower1_regeneration_speed");
+    return Parameters::get().getInt("tower1_regeneration_speed");
 }
 
 

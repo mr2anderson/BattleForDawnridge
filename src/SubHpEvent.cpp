@@ -20,11 +20,11 @@
 #include "SubHpEvent.hpp"
 
 
-SubHpEvent::SubHpEvent(HPGO* hpgo, uint32_t value) {
+SubHpEvent::SubHpEvent(std::shared_ptr<HPGO> hpgo, uint32_t value) {
 	this->hpgo = hpgo;
 	this->value = value;
 }
-HPGO* SubHpEvent::getHPGO() {
+std::shared_ptr<HPGO> SubHpEvent::getHPGO() {
 	return this->hpgo;
 }
 uint32_t SubHpEvent::getValue() const {

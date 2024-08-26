@@ -38,7 +38,7 @@ public:
 		return this->gos.hasError(mapSize, totalPlayers); // Skipping cheking sub class collections cuz they are built based on main collection
 	}
 
-	void add(GO *object) override;
+	void add(std::shared_ptr<GO>object) override;
 
 	uint32_t totalGOs() const override;
 	uint32_t totalAreaRPs() const override;
@@ -47,12 +47,12 @@ public:
 	uint32_t totalBuildings() const override;
 	uint32_t totalWarriors() const override;
 
-	GO* getGO(uint32_t i, uint8_t filter) override;
-    AreaResourcePoint* getAreaRP(uint32_t i) override;
-    ConductionResourcePoint* getConductionRP(uint32_t i) override;
-    Unit* getUnit(uint32_t i) override;
-	Building* getBuilding(uint32_t i) override;
-	Warrior* getWarrior(uint32_t i) override;
+	std::shared_ptr<GO> getGO(uint32_t i, uint8_t filter) override;
+    std::shared_ptr<AreaResourcePoint> getAreaRP(uint32_t i) override;
+    std::shared_ptr<ConductionResourcePoint> getConductionRP(uint32_t i) override;
+    std::shared_ptr<Unit> getUnit(uint32_t i) override;
+	std::shared_ptr<Building>  getBuilding(uint32_t i) override;
+	std::shared_ptr<Warrior>  getWarrior(uint32_t i) override;
 private:
 	Collection<GO> gos;
 	Collection<AreaResourcePoint> areaRps;
@@ -62,7 +62,7 @@ private:
 	Collection<Warrior> warriors;
 
 	void clearSubClassCollections();
-	void addToSubClassCollections(GO* object);
+	void addToSubClassCollections(std::shared_ptr<GO> object);
 
     friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {

@@ -28,14 +28,14 @@
 
 
 
-Events IResourceGeneratorSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
+Events IResourceGeneratorSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state) {
 	if (!building->works()) {
 		return Events();
 	}
 
 	Resources limit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == building->getPlayerId()) {
 			limit.plus(b->getLimit());
 		}
@@ -55,7 +55,7 @@ Events IResourceGeneratorSpec::getActiveNewMoveEvent(const Building *building, M
 
 	return event;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IResourceGeneratorSpec::getComponents(const Building *building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IResourceGeneratorSpec::getComponents(std::shared_ptr<const Building> building, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
 	if (building->works()) {

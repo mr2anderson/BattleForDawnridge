@@ -34,7 +34,7 @@ WarriorAttacker::WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId) : Wa
 Damage WarriorAttacker::getDamage() const {
     Damage baseDamage = this->getBaseDamage();
     if (this->inRage()) {
-        baseDamage = (1 + Parameters::get()->getDouble("rage_mode_damage_bonus")) * baseDamage;
+        baseDamage = (1 + Parameters::get().getDouble("rage_mode_damage_bonus")) * baseDamage;
     }
     return baseDamage;
 }
@@ -70,16 +70,16 @@ std::vector<SpecialMove> WarriorAttacker::getSpecialMoves(MapState *state) const
     std::vector<SpecialMove> specialMoves;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
-        Unit *u = state->getCollectionsPtr()->getUnit(i);
+        std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i);
         std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
         for (uint32_t j = 0; j < targets.size(); j = j + 1) {
-            specialMoves.emplace_back(std::get<0>(targets.at(j)), std::get<1>(targets.at(j)), HighlightColors::get()->getWarriorAttackColor(this->getPlayerId()));
+            specialMoves.emplace_back(std::get<0>(targets.at(j)), std::get<1>(targets.at(j)), HighlightColors::get().getWarriorAttackColor(this->getPlayerId()));
         }
     }
 
     return specialMoves;
 }
-std::vector<std::tuple<uint32_t, uint32_t>> WarriorAttacker::canAttack(Unit *u) const {
+std::vector<std::tuple<uint32_t, uint32_t>> WarriorAttacker::canAttack(std::shared_ptr<Unit>u) const {
     std::vector<std::tuple<uint32_t, uint32_t>> result;
     if (!u->exist() or u->getPlayerId() == this->getPlayerId()) {
         return result;
@@ -124,7 +124,7 @@ std::string WarriorAttacker::getDirection(uint32_t targetX, uint32_t targetY) co
 }
 Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
-        Unit *u = state->getCollectionsPtr()->getUnit(i);
+        std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i);
         std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
         for (uint32_t j = 0; j < targets.size(); j = j + 1) {
             if (std::make_tuple(targetX, targetY) == targets.at(j)) {
@@ -135,7 +135,7 @@ Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uin
 
     return Events();
 }
-Events WarriorAttacker::startAttack(Unit *u, uint32_t targetX, uint32_t targetY) {
+Events WarriorAttacker::startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) {
     this->target = u;
     this->wipeMovementPoints();
     this->startAnimation("attack");
@@ -143,7 +143,7 @@ Events WarriorAttacker::startAttack(Unit *u, uint32_t targetX, uint32_t targetY)
 
     Events events;
     events.add(std::make_shared<PlaySoundEvent>(this->getStartAttackSoundName()));
-    events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
+    events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<WarriorAttacker>())));
     return events;
 }
 Events WarriorAttacker::processCurrentAnimation(MapState *state) {

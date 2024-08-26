@@ -20,11 +20,11 @@
 #include "StartWarriorAnimationEvent.hpp"
 
 
-StartWarriorAnimationEvent::StartWarriorAnimationEvent(Warrior* w, const std::string& animation) {
+StartWarriorAnimationEvent::StartWarriorAnimationEvent(std::shared_ptr<Warrior>  w, const std::string& animation) {
 	this->w = w;
 	this->animation = animation;
 }
-Warrior* StartWarriorAnimationEvent::getWarrior() {
+std::shared_ptr<Warrior>  StartWarriorAnimationEvent::getWarrior() {
 	return this->w;
 }
 std::string StartWarriorAnimationEvent::getAnimation() const {

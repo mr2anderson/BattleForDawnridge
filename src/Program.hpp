@@ -29,18 +29,15 @@
 
 class Program {
 public:
-	static Program* get() {
-		if (Program::singletone == nullptr) {
-			Program::singletone = new Program();
-		}
-		return Program::singletone;
+	static Program& get() {
+		static Program instance;
+		return instance;
 	}
 
 	void run();
 private:
 	Program();
 	Program(const Program& copy) = delete;
-	static Program* singletone;
 
 	sf::RenderWindow window;
 

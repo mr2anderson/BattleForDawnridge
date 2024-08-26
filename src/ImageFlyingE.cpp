@@ -29,7 +29,7 @@ std::unique_ptr<sf::Drawable> ImageFlyingE::getDrawable(sf::Vector2f position, s
     sf::Sprite sprite;
     sprite.setPosition(position);
     sprite.setColor(color);
-    sprite.setTexture(*Textures::get()->get(this->textureName));
+    sprite.setTexture(*Textures::get().get(this->textureName));
     sprite.setScale(32 / sprite.getLocalBounds().width, 32 / sprite.getLocalBounds().height);
     sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 

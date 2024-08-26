@@ -28,31 +28,31 @@
 Mine::Mine() = default;
 Mine::Mine(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new MineSpec());
+	this->addSpec(std::make_shared<MineSpec>());
 }
-Building* Mine::createSameTypeBuilding() const {
-	return new Mine(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Mine::createSameTypeBuilding() const {
+	return std::make_shared<Mine>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Mine::getTypeUUID() const {
-	return UUIDs::get()->get("mine");
+	return UUIDs::get().get("mine");
 }
 uint32_t Mine::getSX() const {
-	return Parameters::get()->getInt("mine_sx");
+	return Parameters::get().getInt("mine_sx");
 }
 uint32_t Mine::getSY() const {
-	return Parameters::get()->getInt("mine_sy");
+	return Parameters::get().getInt("mine_sy");
 }
 uint32_t Mine::getMaxHP() const {
-	return Parameters::get()->getInt("mine_max_hp");
+	return Parameters::get().getInt("mine_max_hp");
 }
 Defence Mine::getDefence() const {
-	return Parameters::get()->getDefence("mine_defence");
+	return Parameters::get().getDefence("mine_defence");
 }
 Resources Mine::getCost() const {
-	return Parameters::get()->getResources("mine_cost");
+	return Parameters::get().getResources("mine_cost");
 }
 uint32_t Mine::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("mine_regeneration_speed");
+	return Parameters::get().getInt("mine_regeneration_speed");
 }
 std::string Mine::getTextureName() const {
 	return "mine";

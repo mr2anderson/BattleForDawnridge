@@ -26,11 +26,11 @@
 class VictoryConditionSpec : public IBuildingSpec {
 public:
 	VictoryConditionSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
-    Events getActiveNewMoveEvent(const Building* b, MapState* state) override;
-	Events getEventOnDestroy(const Building *b, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
+    Events getActiveNewMoveEvent(std::shared_ptr<const Building>  b, MapState* state) override;
+	Events getEventOnDestroy(std::shared_ptr<const Building> b, MapState* state) const override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building> b, MapState* state) override;
 	bool isVictoryCondition() const override;
     NewMoveMainPriority getNewMoveMainPriority() const override;
     void increaseMoveCtr();

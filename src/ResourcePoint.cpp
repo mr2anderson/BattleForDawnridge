@@ -34,10 +34,10 @@ Events ResourcePoint::newMove(MapState *state, uint32_t playerId) {
 uint32_t ResourcePoint::tryToCollect(uint32_t playerId, uint32_t value) {
 	return std::min(this->getHP(), value);
 }
-bool ResourcePoint::warriorCanStay(const Warrior *w) const {
+bool ResourcePoint::warriorCanStay(std::shared_ptr<const Warrior> w) const {
 	return true;
 }
-uint32_t ResourcePoint::getWarriorMovementCost(const Warrior *w) const {
+uint32_t ResourcePoint::getWarriorMovementCost(std::shared_ptr<Warrior> w) const {
     if (w->isFlying()) {
         return 1;
     }
@@ -83,7 +83,7 @@ HorizontalSelectionWindowComponent ResourcePoint::getSlowMovementComponent() con
 	return component;
 }
 uint32_t ResourcePoint::getWalkingWarriorMovementCost() const {
-	return Parameters::get()->getInt("resource_point_warrior_movement_cost");
+	return Parameters::get().getInt("resource_point_warrior_movement_cost");
 }
 
 

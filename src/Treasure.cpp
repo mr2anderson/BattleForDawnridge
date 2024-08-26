@@ -29,16 +29,16 @@ Treasure::Treasure() = default;
 Treasure::Treasure(uint32_t x, uint32_t y) : ConductionResourcePoint(x, y) {
 }
 UUID Treasure::getTypeUUID() const {
-	return UUIDs::get()->get("treasure");
+	return UUIDs::get().get("treasure");
 }
 uint32_t Treasure::getSX() const {
-	return Parameters::get()->getInt("treasure_sx");
+	return Parameters::get().getInt("treasure_sx");
 }
 uint32_t Treasure::getSY() const {
-	return Parameters::get()->getInt("treasure_sy");
+	return Parameters::get().getInt("treasure_sy");
 }
 uint32_t Treasure::getMaxHP() const {
-	return Parameters::get()->getInt("treasure_max_hp");
+	return Parameters::get().getInt("treasure_max_hp");
 }
 std::string Treasure::getResourceType() const {
 	return "gold";

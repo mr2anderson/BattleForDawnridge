@@ -174,7 +174,7 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->processSending();
 		this->processReceiving();
 		this->receive(window);
-		Playlist::get()->update();
+		Playlist::get().update();
 		this->drawEverything(window);
 		this->moveView(window);
         window.setMouseCursorVisible(this->cursorVisibility);
@@ -226,7 +226,7 @@ void MainScreen::send(sf::Packet &what) {
 
 std::string GENERATE_SAVE_FROM_MAP(const std::string& name) {
 	Map tmpMap;
-	Maps::get()->load(name, &tmpMap);
+	Maps::get().load(name, &tmpMap);
 
 	std::string serialStr;
 
@@ -241,7 +241,7 @@ std::string GENERATE_SAVE_FROM_MAP(const std::string& name) {
 	return bfdlib::string_compression::get_compressed(serialStr);
 }
 std::string READ_SAVE(const std::string& name) {
-	std::ifstream f(Root::get()->getUserdataRoot() + "/saves/" + name, std::ios::binary);
+	std::ifstream f(Root::get().getUserdataRoot() + "/saves/" + name, std::ios::binary);
 	std::stringstream buffer;
 	buffer << f.rdbuf();
 	f.close();
@@ -432,7 +432,7 @@ void MainScreen::receiveSound(sf::Packet& remPacket) {
     LOGS("Receiving sound");
 	std::string soundName;
 	remPacket >> soundName;
-	SoundQueue::get()->push(Sounds::get()->get(soundName));
+	SoundQueue::get().push(Sounds::get().get(soundName));
 }
 void MainScreen::receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window) {
     LOGS("Receiving focus");
@@ -459,14 +459,14 @@ void MainScreen::receiveSave(sf::Packet& remPacket) {
     LOGS("Receiving save");
 	std::string data;
 	remPacket >> data;
-	if (!std::filesystem::is_directory(Root::get()->getUserdataRoot() + "/saves")) {
-		std::filesystem::create_directories(Root::get()->getUserdataRoot() + "/saves");
+	if (!std::filesystem::is_directory(Root::get().getUserdataRoot() + "/saves")) {
+		std::filesystem::create_directories(Root::get().getUserdataRoot() + "/saves");
 	}
 	auto t = std::time(nullptr);
 	auto tm = *std::localtime(&t);
 	std::stringstream ss;
 	ss << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
-	std::ofstream ofs(Root::get()->getUserdataRoot() + "/saves/" + ss.str() + ".save", std::ios::binary);
+	std::ofstream ofs(Root::get().getUserdataRoot() + "/saves/" + ss.str() + ".save", std::ios::binary);
 	ofs.write(data.c_str(), data.size());
 	ofs.close();
 
@@ -549,7 +549,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 }
 void MainScreen::drawMap(sf::RenderWindow& window) {
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
+		std::shared_ptr<GO> go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DRAW_PRIORITY);
 		if (go->exist() and go->inView(this->view)) {
 			window.draw(*go);
 		}
@@ -559,12 +559,12 @@ void MainScreen::drawResourceBar(sf::RenderWindow& window) {
 	window.draw(resourceBar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
-    uint32_t sx = Textures::get()->get("plain")->getSize().x / 64;
-    uint32_t sy = Textures::get()->get("plain")->getSize().y / 64;
+    uint32_t sx = Textures::get().get("plain")->getSize().x / 64;
+    uint32_t sy = Textures::get().get("plain")->getSize().y / 64;
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getMapSizePtr()->getWidth(); i = i + sx) {
 		for (uint32_t j = 0; j < this->map.getStatePtr()->getMapSizePtr()->getHeight(); j = j + sy) {
 			sf::Sprite s;
-			s.setTexture(*Textures::get()->get("plain"));
+			s.setTexture(*Textures::get().get("plain"));
 			s.setPosition(64 * i, 64 * j);
 			s.setTextureRect(sf::IntRect(0, 0, 64 * std::min(sx, this->map.getStatePtr()->getMapSizePtr()->getWidth() - i), 64 * std::min(sy, this->map.getStatePtr()->getMapSizePtr()->getHeight() - j)));
 			window.draw(s);
@@ -581,7 +581,7 @@ void MainScreen::drawDarkness(sf::RenderWindow &window) {
 	this->illiminanceTable.newFrame(this->view);
 
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-		const GO* go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+		std::shared_ptr<const GO> go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
 		if (go->exist()) {
 			this->illiminanceTable.add(go);
 		}
@@ -759,7 +759,7 @@ void MainScreen::handleEvent(std::shared_ptr<Event> e) {
 
 
 void MainScreen::handlePlaySoundEvent(std::shared_ptr<PlaySoundEvent> e) {
-	SoundQueue::get()->push(Sounds::get()->get(e->getSoundName()));
+	SoundQueue::get().push(Sounds::get().get(e->getSoundName()));
 }
 void MainScreen::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e) {
     this->returnToMenu = true;

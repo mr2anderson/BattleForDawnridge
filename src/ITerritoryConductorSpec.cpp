@@ -25,7 +25,7 @@
 
 
 
-std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec::getComponents(const Building* building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec::getComponents(std::shared_ptr<const Building>  building, MapState* state) {
 	if (!building->works() and !this->conductsIfNotWork()) {
 		BuildingHorizontalSelectionWindowComponent component = {
 			HorizontalSelectionWindowComponent(  "hammer_icon",
@@ -49,17 +49,17 @@ std::vector<BuildingHorizontalSelectionWindowComponent> ITerritoryConductorSpec:
 	}
 	return {};
 }
-Events ITerritoryConductorSpec::getHighlightEvent(const Building* building, MapState* state, uint8_t type) const {
+Events ITerritoryConductorSpec::getHighlightEvent(std::shared_ptr<const Building>  building, MapState* state, uint8_t type) const {
 	if (!building->connectedToOrigin(state) or (!building->works() and !this->conductsIfNotWork())) {
 		return Events();
 	}
 	return this->IAreaControllerSpec::getHighlightEvent(building, state, type);
 }
-bool ITerritoryConductorSpec::isActiveConductor(const Building *building) const {
+bool ITerritoryConductorSpec::isActiveConductor(std::shared_ptr<const Building> building) const {
 	return this->conductsIfNotWork() or building->works();
 }
 sf::Color ITerritoryConductorSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getTerritoryExpandingColor(playerId);
+    return HighlightColors::get().getTerritoryExpandingColor(playerId);
 }
 uint8_t ITerritoryConductorSpec::getHighlightType() const {
     return IAreaControllerSpec::HIGHLIGHT_TYPE::TERRITORY;

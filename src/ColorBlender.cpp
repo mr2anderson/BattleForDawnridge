@@ -21,9 +21,6 @@
 #include "ColorBlender.hpp"
 
 
-ColorBlender* ColorBlender::singletone = nullptr;
-
-
 ColorBlender::ColorBlender() = default;
 sf::Color ColorBlender::blend(sf::Color c1, sf::Color c2) const {
     return this->blend({c1, c2});

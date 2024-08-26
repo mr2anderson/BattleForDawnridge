@@ -34,23 +34,23 @@ Events WarriorNearSingleAttacker::newMove(MapState *state, uint32_t currentPlaye
 
     if (this->exist()) {
         Events refreshAttackAbilityEvent;
-        refreshAttackAbilityEvent.add(std::make_shared<RefreshAttackAbilityEvent>(this));
+        refreshAttackAbilityEvent.add(std::make_shared<RefreshAttackAbilityEvent>(this->getThis<WarriorNearSingleAttacker>()));
         events = refreshAttackAbilityEvent + events;
     }
 
     return events;
 }
-std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearSingleAttacker::canAttack(Unit *u) const {
+std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearSingleAttacker::canAttack(std::shared_ptr<Unit>u) const {
     if (this->attackAbility) {
         return this->WarriorNearAttacker::canAttack(u);
     }
     return {};
 }
-Events WarriorNearSingleAttacker::startAttack(Unit *u, uint32_t targetX, uint32_t targetY) {
+Events WarriorNearSingleAttacker::startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) {
     Events events = WarriorNearAttacker::startAttack(u, targetX, targetY);
 
     Events wipeAttackAbilityEvent;
-    wipeAttackAbilityEvent.add(std::make_shared<WipeAttackAbilityEvent>(this));
+    wipeAttackAbilityEvent.add(std::make_shared<WipeAttackAbilityEvent>(this->getThis<WarriorNearSingleAttacker>()));
 
     return wipeAttackAbilityEvent + events;
 }

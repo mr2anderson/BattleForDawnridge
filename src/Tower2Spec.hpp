@@ -26,7 +26,7 @@
 class Tower2Spec : public IShootingSpec {
 public:
     Tower2Spec();
-    IBuildingSpec* clone() const override;
+    std::shared_ptr<IBuildingSpec> clone() const override;
 
     Damage getDamage() const override;
     uint32_t getShotsNumber() const override;

@@ -23,5 +23,5 @@
 
 ResourceOrderComp::ResourceOrderComp() = default;
 bool ResourceOrderComp::operator()(const std::string &a, const std::string &b) const {
-    return ResourceOrderPriorityTable::get()->getPriority(a) < ResourceOrderPriorityTable::get()->getPriority(b);
+    return ResourceOrderPriorityTable::get().getPriority(a) < ResourceOrderPriorityTable::get().getPriority(b);
 }

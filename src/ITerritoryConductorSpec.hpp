@@ -25,9 +25,9 @@
 
 class ITerritoryConductorSpec : public IAreaControllerSpec {
 public:
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building* building, MapState* state) override;
-	Events getHighlightEvent(const Building* building, MapState* state, uint8_t) const override;
-	bool isActiveConductor(const Building* building) const override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building>  building, MapState* state) override;
+	Events getHighlightEvent(std::shared_ptr<const Building>  building, MapState* state, uint8_t) const override;
+	bool isActiveConductor(std::shared_ptr<const Building>  building) const override;
     sf::Color getHighlightColor(uint32_t playerId) const override;
     uint8_t getHighlightType() const override;
     NewMoveMainPriority getNewMoveMainPriority() const override;

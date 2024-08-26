@@ -25,8 +25,8 @@
 
 class IResourceGeneratorSpec : public IBuildingSpec {
 public:
-	Events getActiveNewMoveEvent(const Building *building, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
+	Events getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building> building, MapState* state) override;
 	virtual Resource getProduct() const = 0;
 private:
     friend class boost::serialization::access;

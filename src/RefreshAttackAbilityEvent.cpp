@@ -20,9 +20,9 @@
 #include "RefreshAttackAbilityEvent.hpp"
 
 
-RefreshAttackAbilityEvent::RefreshAttackAbilityEvent(ISingleAttacker *i) {
+RefreshAttackAbilityEvent::RefreshAttackAbilityEvent(std::shared_ptr<ISingleAttacker>i) {
     this->i = i;
 }
-ISingleAttacker* RefreshAttackAbilityEvent::getI() {
+std::shared_ptr<ISingleAttacker> RefreshAttackAbilityEvent::getI() {
     return this->i;
 }

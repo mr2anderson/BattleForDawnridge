@@ -22,17 +22,17 @@
 
 
 QuarrySpec::QuarrySpec() = default;
-IBuildingSpec* QuarrySpec::clone() const {
-	return new QuarrySpec(*this);
+std::shared_ptr<IBuildingSpec> QuarrySpec::clone() const {
+	return std::make_shared<QuarrySpec>(*this);
 }
 std::string QuarrySpec::getResourceType() const {
 	return "stone";
 }
 uint32_t QuarrySpec::getCollectionSpeed() const {
-	return Parameters::get()->getInt("quarry_collection_speed");
+	return Parameters::get().getInt("quarry_collection_speed");
 }
 uint32_t QuarrySpec::getCollectionRadius() const {
-	return Parameters::get()->getInt("quarry_collection_radius");
+	return Parameters::get().getInt("quarry_collection_radius");
 }
 
 

@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 #include "Trade.hpp"
 
@@ -30,13 +31,13 @@ class TradingSpec;
 
 class DoTradeEvent : public Event {
 public:
-	DoTradeEvent(const Building* b, TradingSpec* spec, const Trade& trade);
+	DoTradeEvent(std::shared_ptr<const Building>  b, TradingSpec* spec, const Trade& trade);
 
-	const Building* getBuilding() const;
+	std::shared_ptr<const Building>  getBuilding() const;
 	TradingSpec* getSpec();
 	Trade getTrade() const;
 private:
-	const Building* building;
+	std::shared_ptr<const Building>  building;
 	TradingSpec* spec;
 	Trade trade;
 };

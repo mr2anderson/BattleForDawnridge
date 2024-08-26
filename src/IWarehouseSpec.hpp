@@ -25,12 +25,12 @@
 
 class IWarehouseSpec : public IBuildingSpec {
 public:
-	Events getEventOnDestroy(const Building* building, MapState* state) const override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *building, MapState* state) override;
+	Events getEventOnDestroy(std::shared_ptr<const Building>  building, MapState* state) const override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building> building, MapState* state) override;
     NewMoveMainPriority getNewMoveMainPriority() const override;
     virtual Resources getActiveLimit() const = 0;
 private:
-    Resources getLimit(const Building *building) const override;
+    Resources getLimit(std::shared_ptr<const Building> building) const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

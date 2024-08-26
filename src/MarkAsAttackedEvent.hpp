@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -29,11 +30,11 @@ class Unit;
 
 class MarkAsAttackedEvent : public Event {
 public:
-    MarkAsAttackedEvent(WarriorNearMultyAttacker *attacker, Unit *target);
+    MarkAsAttackedEvent(std::shared_ptr<WarriorNearMultyAttacker>attacker, std::shared_ptr<Unit>target);
 
-    WarriorNearMultyAttacker* getAttacker();
-    Unit* getTarget();
+    std::shared_ptr<WarriorNearMultyAttacker> getAttacker();
+    std::shared_ptr<Unit> getTarget();
 private:
-    WarriorNearMultyAttacker* attacker;
-    Unit* target;
+    std::shared_ptr<WarriorNearMultyAttacker> attacker;
+    std::shared_ptr<Unit> target;
 };

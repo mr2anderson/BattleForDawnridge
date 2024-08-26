@@ -86,7 +86,7 @@ LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
     }
 
     #if defined(USE_CUSTOM_CURSOR)
-        sf::Texture* cursorTexture = Textures::get()->get("cursor");
+        sf::Texture* cursorTexture = Textures::get().get("cursor");
         sf::Image image = cursorTexture->copyToImage();
         const sf::Uint8* pixels = image.getPixelsPtr();
 
@@ -103,17 +103,17 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.display();
 }
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
-    Root::get()->setDataRoot(DATA_ROOT);
-    Root::get()->setUserdataRoot(USERDATA_ROOT);
+    Root::get().setDataRoot(DATA_ROOT);
+    Root::get().setUserdataRoot(USERDATA_ROOT);
     try {
-        Fonts::get()->add("1", "fonts/1.ttf");
-        Textures::get()->add("loading_screen", "images/loading_screen.jpg");
+        Fonts::get().add("1", "fonts/1.ttf");
+        Textures::get().add("loading_screen", "images/loading_screen.jpg");
     }
 	catch (CouldntOpen&) {
         return false;
     }
     try {
-        Locales::get()->load();
+        Locales::get().load();
         return true;
     }
 	catch (CouldntOpen &e) {
@@ -125,7 +125,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
     LoadingScreenBg bg;
 
 	sf::Text t;
-	t.setFont(*Fonts::get()->get("1"));
+	t.setFont(*Fonts::get().get("1"));
 	t.setString(StringLcl("{please_wait}").get());
 	t.setCharacterSize(31);
 	t.setFillColor(sf::Color::White);
@@ -135,25 +135,25 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window) {
 
 	window.clear();
     window.draw(bg);
-    window.draw(ClueManager::get()->getClueLabel(window.getSize().x, window.getSize().y));
+    window.draw(ClueManager::get().getClueLabel(window.getSize().x, window.getSize().y));
 	window.draw(t);
 	window.display();
 }
 bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
-        IsServerTable::get()->load();
-        Parameters::get()->load();
-        Music::get()->setDefaultVolume(40);
-        Music::get()->add("intro", "music/intro.ogg");
+        IsServerTable::get().load();
+        Parameters::get().load();
+        Music::get().setDefaultVolume(40);
+        Music::get().add("intro", "music/intro.ogg");
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
-            Music::get()->add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
+            Music::get().add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
-        Textures::get()->add("bg", "images/bg.jpg");
+        Textures::get().add("bg", "images/bg.jpg");
         #if defined(USE_CUSTOM_CURSOR)
-            Textures::get()->add("cursor", "images/cursor.png");
+            Textures::get().add("cursor", "images/cursor.png");
         #endif
-        MainServerPosition::get()->load();
-        Music::get()->add("menu", "music/menu.ogg");
+        MainServerPosition::get().load();
+        Music::get().add("menu", "music/menu.ogg");
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
@@ -172,10 +172,10 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "destroyed_icon", "heart_icon", "save_icon",
                 "plain", "slow_movement_icon", "battle_icon", "new_turn_icon",
                 "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon"}) {
-            Textures::get()->add(a, "images/" + a + ".png");
+            Textures::get().add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
-            Textures::get()->add("road_" + a, "images/road/" + a + ".png");
+            Textures::get().add("road_" + a, "images/road/" + a + ".png");
         }
         for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over"}) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
@@ -192,33 +192,33 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                         while (s.size() < 4) {
                             s = ('0' + s);
                         }
-                        Textures::get()->add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), "images/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
+                        Textures::get().add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), "images/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
                     }
                 }
             }
         }
         for (uint32_t i = 1; i <= Plant::TOTAL_TYPES; i = i + 1) {
             for (uint32_t j = 1; j <= Plant::ANIMATION_NUMBER[i - 1]; j = j + 1) {
-                Textures::get()->add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/plant/" + std::to_string(i) + "/" + std::to_string(j) + ".png");
+                Textures::get().add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/plant/" + std::to_string(i) + "/" + std::to_string(j) + ".png");
             }
         }
         for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("house" + std::to_string(i), "images/house/" + std::to_string(i) + ".png");
+            Textures::get().add("house" + std::to_string(i), "images/house/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= Well::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("well" + std::to_string(i), "images/well/" + std::to_string(i) + ".png");
+            Textures::get().add("well" + std::to_string(i), "images/well/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("big_arrow" + std::to_string(i), "images/big_arrow/" + std::to_string(i) + ".png");
+            Textures::get().add("big_arrow" + std::to_string(i), "images/big_arrow/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= HealerProjectile::TOTAL_TYPES; i = i + 1) {
-            Textures::get()->add("healer_projectile" + std::to_string(i), "images/healer_projectile/" + std::to_string(i) + ".png");
+            Textures::get().add("healer_projectile" + std::to_string(i), "images/healer_projectile/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
-            Textures::get()->add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
+            Textures::get().add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
         }
         for (uint32_t i = 0; i < BuildingStatePointer::TOTAL_HP_POINTERS; i = i + 1) {
-            Textures::get()->add("building_hp_pointer" + std::to_string(i), "images/building_hp_pointer/" + std::to_string(i) + ".png");
+            Textures::get().add("building_hp_pointer" + std::to_string(i), "images/building_hp_pointer/" + std::to_string(i) + ".png");
         }
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
@@ -227,19 +227,19 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
                                       "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "vehicle_hit",
                                       "vehicle"}) {
-            Sounds::get()->add(a, "sounds/" + a + ".ogg");
+            Sounds::get().add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
-            Sounds::get()->add("footsteps" + std::to_string(i), "sounds/footsteps/" + std::to_string(i) + ".ogg");
+            Sounds::get().add("footsteps" + std::to_string(i), "sounds/footsteps/" + std::to_string(i) + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_WINGS; i = i + 1) {
-            Sounds::get()->add("wings" + std::to_string(i), "sounds/wings/" + std::to_string(i) + ".ogg");
+            Sounds::get().add("wings" + std::to_string(i), "sounds/wings/" + std::to_string(i) + ".ogg");
         }
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
-            Sounds::get()->add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
+            Sounds::get().add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
         for (const std::string& a : { "ridge" }) {
-            Maps::get()->add(a, "levels/" + a + ".tmx");
+            Maps::get().add(a, "levels/" + a + ".tmx");
         }
         return true;
     }
@@ -252,7 +252,7 @@ void LoadingScreen::loadingError(CouldntOpen *e, sf::RenderWindow &window) {
     window.setMouseCursorVisible(true);
 
     sf::Sprite s;
-    s.setTexture(*Textures::get()->get("loading_screen"));
+    s.setTexture(*Textures::get().get("loading_screen"));
     s.setPosition(0, window.getSize().y - s.getLocalBounds().height);
 
     WindowButton element = WindowButton(StringLcl("Couldn't open " + e->getResourceName() + "\nPath: " + e->getPath()), StringLcl("OK")); // Avoid using locales cuz they can be not loaded yet

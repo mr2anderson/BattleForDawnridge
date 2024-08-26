@@ -25,9 +25,6 @@
 #include "CouldntOpenMainServerPosition.hpp"
 
 
-MainServerPosition* MainServerPosition::singletone = nullptr;
-
-
 static std::vector<std::string> split(const std::string& s, char delim) {
 	std::vector<std::string> result;
 	std::stringstream ss(s);
@@ -40,7 +37,7 @@ static std::vector<std::string> split(const std::string& s, char delim) {
 	return result;
 }
 void MainServerPosition::load() {
-	std::string path(Root::get()->getDataRoot() + "/configs/main_server_position.cfg");
+	std::string path(Root::get().getDataRoot() + "/configs/main_server_position.cfg");
 
 	std::ifstream file(path);
 

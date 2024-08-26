@@ -35,12 +35,12 @@ Fire::Fire(uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 void Fire::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
 	sprite.setScale(this->scaleX, this->scaleY);
-	sprite.setTexture(*Textures::get()->get(this->getTextureName()));
+	sprite.setTexture(*Textures::get().get(this->getTextureName()));
 	sprite.setPosition(this->x, this->y);
 	target.draw(sprite, states);
 }
 uint32_t Fire::getCurrentFrame() const {
-	return GlobalClock::get()->getMs() / (1000 / TOTAL_FRAMES) % TOTAL_FRAMES + 1;
+	return GlobalClock::get().getMs() / (1000 / TOTAL_FRAMES) % TOTAL_FRAMES + 1;
 }
 std::string Fire::getTextureName() const {
 	return "fire" + std::to_string(this->getCurrentFrame());

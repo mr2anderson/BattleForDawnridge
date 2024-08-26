@@ -26,7 +26,7 @@
 class MineSpec : public IAreaResourcePointCollectorSpec {
 public:
 	MineSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
 	std::string getResourceType() const override;
 	uint32_t getCollectionSpeed() const override;

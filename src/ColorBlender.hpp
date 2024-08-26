@@ -25,11 +25,9 @@
 
 class ColorBlender {
 public:
-    static ColorBlender* get() {
-        if (ColorBlender::singletone == nullptr) {
-            ColorBlender::singletone = new ColorBlender();
-        }
-        return ColorBlender::singletone;
+    static ColorBlender& get() {
+        static ColorBlender instance;
+        return instance;
     }
 
     sf::Color blend(sf::Color c1, sf::Color c2) const;
@@ -37,5 +35,4 @@ public:
 private:
     ColorBlender();
     ColorBlender(const ColorBlender& copy);
-    static ColorBlender* singletone;
 };

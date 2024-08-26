@@ -26,11 +26,9 @@
 
 class Sounds {
 public:
-    static Sounds *get() {
-        if (Sounds::singletone == nullptr) {
-            Sounds::singletone = new Sounds();
-        }
-        return Sounds::singletone;
+    static Sounds& get() {
+        static Sounds instance;
+        return instance;
     }
 
     void add(const std::string& name, const std::string& path);
@@ -38,7 +36,6 @@ public:
 private:
     Sounds() = default;
     Sounds(const Sounds& copy);
-    static Sounds *singletone;
 
     std::unordered_map<std::string, sf::SoundBuffer> sounds;
 };

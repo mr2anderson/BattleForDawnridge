@@ -22,19 +22,19 @@
 
 
 WallSpec::WallSpec() = default;
-IBuildingSpec* WallSpec::clone() const {
-	return new WallSpec(*this);
+std::shared_ptr<IBuildingSpec> WallSpec::clone() const {
+	return std::make_shared<WallSpec>(*this);
 }
-uint32_t WallSpec::getWarriorMovementCost(const Building *b, const Warrior *w) const {
+uint32_t WallSpec::getWarriorMovementCost(std::shared_ptr<const Building> b, std::shared_ptr<Warrior> w) const {
     if (w->isFlying()) {
         return 1;
     }
 	return 10000;
 }
-bool WallSpec::warriorCanStay(const Building *b, const Warrior *w) const {
+bool WallSpec::warriorCanStay(std::shared_ptr<const Building> b, std::shared_ptr<const Warrior> w) const {
 	return w->isFlying();
 }
-bool WallSpec::isHighObstacle(const Building *b, uint32_t playerId) const {
+bool WallSpec::isHighObstacle(std::shared_ptr<const Building> b, uint32_t playerId) const {
 	return true;
 }
 

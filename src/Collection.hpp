@@ -19,6 +19,8 @@
 
 #include <vector>
 #include <cstdint>
+#include <memory>
+#include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/access.hpp>
 
 
@@ -30,7 +32,7 @@ public:
 	Collection() = default;
     Collection(const Collection& collection) = delete;
 
-	void push(T* t) {
+	void push(std::shared_ptr<T> t) {
         this->content.push_back(t);
 	}
 	uint32_t size() const {
@@ -39,14 +41,11 @@ public:
     void clear() {
         this->content.clear();
     }
-    T* at(uint32_t i) {
-        return this->content.at(i);
-    }
-    T* at(uint32_t i) const {
+    std::shared_ptr<T> at(uint32_t i) {
         return this->content.at(i);
     }
 private:
-    std::vector<T*> content;
+    std::vector<std::shared_ptr<T>> content;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
@@ -83,7 +82,7 @@ public:
         return false;
     }
 
-    void push(GO* t) {
+    void push(std::shared_ptr<GO> t) {
         this->newMovePriority.insert(t);
         this->drawPriority.insert(t);
         this->clickPriority.insert(t);
@@ -92,14 +91,11 @@ public:
         return this->newMovePriority.size();
     }
     void clear() {
-        for (uint32_t i = 0; i < this->newMovePriority.size(); i = i + 1) {
-            delete this->newMovePriority.at(i);
-        }
         this->newMovePriority.clear();
         this->drawPriority.clear();
         this->clickPriority.clear();
     }
-    GO* at(uint32_t i, uint8_t filter) {
+    std::shared_ptr<GO> at(uint32_t i, uint8_t filter) {
         switch (filter) {
             case FILTER::NEW_MOVE_PRIORITY:
                 return this->newMovePriority.at(i);
@@ -110,7 +106,7 @@ public:
         }
         return nullptr;
     }
-    GO* at(uint32_t i, uint8_t filter) const {
+    std::shared_ptr<GO> at(uint32_t i, uint8_t filter) const {
         switch (filter) {
             case FILTER::NEW_MOVE_PRIORITY:
                 return this->newMovePriority.at(i);
@@ -122,9 +118,9 @@ public:
         return nullptr;
     }
 private:
-    SortedIndexedContainer<GO*, CompByNewMovePriority> newMovePriority;
-    SortedIndexedContainer<GO*, CompByDrawPriority> drawPriority;
-    SortedIndexedContainer<GO*, CompByClickPriority> clickPriority;
+    SortedIndexedContainer<std::shared_ptr<GO>, CompByNewMovePriority> newMovePriority;
+    SortedIndexedContainer<std::shared_ptr<GO>, CompByDrawPriority> drawPriority;
+    SortedIndexedContainer<std::shared_ptr<GO>, CompByClickPriority> clickPriority;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

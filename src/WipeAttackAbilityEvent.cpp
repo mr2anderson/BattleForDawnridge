@@ -20,9 +20,9 @@
 #include "WipeAttackAbilityEvent.hpp"
 
 
-WipeAttackAbilityEvent::WipeAttackAbilityEvent(ISingleAttacker *i) {
+WipeAttackAbilityEvent::WipeAttackAbilityEvent(std::shared_ptr<ISingleAttacker>i) {
     this->i = i;
 }
-ISingleAttacker *WipeAttackAbilityEvent::getI() {
+std::shared_ptr<ISingleAttacker>WipeAttackAbilityEvent::getI() {
     return this->i;
 }

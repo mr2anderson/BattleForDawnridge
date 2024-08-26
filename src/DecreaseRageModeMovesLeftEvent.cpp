@@ -20,9 +20,9 @@
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 
 
-DecreaseRageModeMovesLeftEvent::DecreaseRageModeMovesLeftEvent(Warrior* w) {
+DecreaseRageModeMovesLeftEvent::DecreaseRageModeMovesLeftEvent(std::shared_ptr<Warrior>  w) {
 	this->w = w;
 }
-Warrior* DecreaseRageModeMovesLeftEvent::getWarrior() {
+std::shared_ptr<Warrior>  DecreaseRageModeMovesLeftEvent::getWarrior() {
 	return this->w;
 }

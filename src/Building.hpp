@@ -32,7 +32,7 @@ public:
 	Building(uint32_t x, uint32_t y, uint32_t playerId);
 	Building(const Building& building);
 	~Building() override;
-	virtual Building* createSameTypeBuilding() const = 0;
+	virtual std::shared_ptr<Building>  createSameTypeBuilding() const = 0;
 
 	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
 		if (this->Unit::hasError(mapSize, totalPlayers)) {
@@ -56,18 +56,18 @@ public:
     bool wasWithFullHP() const;
     NewMoveMainPriority getNewMoveMainPriority() const override;
     void addHp(uint32_t delta) override;
-	bool connectedTo(MapState* state, GO* go) const;
+	bool connectedTo(MapState* state, std::shared_ptr<GO> go) const;
 	bool connectedToOrigin(MapState* state) const;
 	Events destroy(MapState *state);
 	void decreaseBurningMovesLeft();
 	void setFire();
 protected:
-	void addSpec(IBuildingSpec* spec);
+	void addSpec(std::shared_ptr<IBuildingSpec> spec);
 	virtual uint32_t getRegenerationSpeed() const = 0;
 private:
     bool _wasWithFullHP;
 	uint32_t burningMovesLeft;
-	std::vector<IBuildingSpec*> specs;
+	std::vector<std::shared_ptr<IBuildingSpec>> specs;
 
 	bool isUltraHighObstacle(uint32_t playerId) const override;
 	bool isHighObstacle(uint32_t playerId) const override;
@@ -82,8 +82,8 @@ private:
     Events newMove(MapState* state, uint32_t playerId) override;
     Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
 	sf::Color getTextureColor() const override;
-	bool warriorCanStay(const Warrior *w) const override;
-	uint32_t getWarriorMovementCost(const Warrior *w) const override;
+	bool warriorCanStay(std::shared_ptr<const Warrior> w) const override;
+	uint32_t getWarriorMovementCost(std::shared_ptr<Warrior> w) const override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
 	std::shared_ptr<ILightSource> getLightSource() const override;
 

@@ -47,7 +47,7 @@ bool Spell::isReady() const {
 uint32_t Spell::getCreationMovesLeft() const {
 	return this->creationMovesLeft.value_or(this->getCreationTime());
 }
-Events Spell::newMove(const Building *father) {
+Events Spell::newMove(std::shared_ptr<const Building> father) {
 	if (this->isReady()) {
 		return Events();
 	}
@@ -59,7 +59,7 @@ Events Spell::newMove(const Building *father) {
 	std::shared_ptr<ImageFlyingE> f = std::make_shared<ImageFlyingE>(this->getTextureName(), father->getX(), father->getY(), father->getSX(), father->getSY());
 	events.add(std::make_shared<CreateEEvent>(f));
 
-	events.add(std::make_shared<DecreaseSpellCreationMovesLeftEvent>(this));
+	events.add(std::make_shared<DecreaseSpellCreationMovesLeftEvent>(this->getThis<Spell>()));
 
 	return events;
 }
@@ -73,7 +73,7 @@ Events Spell::use() {
 
 	response.add(std::make_shared<DisableCursorEvent>());
 
-	response.add(std::make_shared<SelectEvent>(this));
+	response.add(std::make_shared<SelectEvent>(this->getThis<Spell>()));
 
 	return response;
 }
@@ -93,7 +93,7 @@ Events Spell::onUnselect(MapState* state, uint32_t x, uint32_t y, uint8_t button
 		return events;
 	}
 
-	events.add(std::make_shared<MarkSpellAsUsedEvent>(this));
+	events.add(std::make_shared<MarkSpellAsUsedEvent>(this->getThis<Spell>()));
 
 	std::shared_ptr<SpellEffect> effect = std::make_shared<SpellEffect>(this->getTextureName(), x, y);
 	events.add(std::make_shared<CreateEEvent>(effect));

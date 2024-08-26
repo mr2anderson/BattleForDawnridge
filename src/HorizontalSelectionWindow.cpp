@@ -122,14 +122,14 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint3
 
     if (this->possibleToMoveUp(structure.contentButtons.size())) {
         Events upEvent;
-        upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>(this));
+        upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>(this->getThis<HorizontalSelectionWindow>()));
         upEvent.add(std::make_shared<PlaySoundEvent>("click", true));
         structure.buttonUp->add(upEvent);
     }
 
     if (this->possibleToMoveDown()) {
         Events downEvent;
-        downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>(this));
+        downEvent.add(std::make_shared<MoveHorizontalSelectionWindowDownEvent>(this->getThis<HorizontalSelectionWindow>()));
         downEvent.add(std::make_shared<PlaySoundEvent>("click", true));
         structure.buttonDown->add(downEvent);
     }

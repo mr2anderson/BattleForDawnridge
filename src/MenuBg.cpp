@@ -29,7 +29,7 @@ void MenuBg::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     rect.setFillColor(sf::Color(11, 16, 20));
 
     sf::Sprite s;
-    s.setTexture(*Textures::get()->get("bg"));
+    s.setTexture(*Textures::get().get("bg"));
     s.setPosition(target.getSize().x - s.getLocalBounds().width, target.getSize().y - s.getLocalBounds().height);
 
     target.draw(rect, states);

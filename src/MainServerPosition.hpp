@@ -27,11 +27,9 @@
 
 class MainServerPosition {
 public:
-    static MainServerPosition* get() {
-        if (MainServerPosition::singletone == nullptr) {
-            MainServerPosition::singletone = new MainServerPosition();
-        }
-        return MainServerPosition::singletone;
+    static MainServerPosition& get() {
+        static MainServerPosition instance;
+        return instance;
     }
 
     void load();
@@ -40,7 +38,6 @@ public:
 private:
     MainServerPosition() = default;
     MainServerPosition(const MainServerPosition& copy);
-    static MainServerPosition* singletone;
 
     boost::optional<sf::IpAddress> ip;
     boost::optional<uint16_t> port;

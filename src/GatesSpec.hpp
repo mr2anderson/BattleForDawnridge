@@ -26,10 +26,10 @@
 class GatesSpec : public ITerritoryConductorSpec {
 public:
 	GatesSpec();
-	IBuildingSpec* clone() const override;
+	std::shared_ptr<IBuildingSpec> clone() const override;
 
-    uint32_t getWarriorMovementCost(const Building *building, const Warrior *w) const override;
-    bool warriorCanStay(const Building *building, const Warrior *w) const override;
+    uint32_t getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const override;
+    bool warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const override;
 	bool conductsIfNotWork() const override;
 	uint32_t getRadius() const override;
 private:

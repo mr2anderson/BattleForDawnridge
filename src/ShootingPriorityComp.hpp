@@ -17,6 +17,9 @@
  */
 
 
+#include <memory>
+
+
 #include "Damage.hpp"
 #include "Unit.hpp"
 
@@ -26,9 +29,9 @@
 
 class ShootingPriorityComp {
 public:
-    ShootingPriorityComp(const GO* shootingBuilding);
+    ShootingPriorityComp(std::shared_ptr<const GO> shootingBuilding);
 
-    bool operator()(const GO *go1, const GO *go2) const;
+    bool operator()(std::shared_ptr<const GO>go1, std::shared_ptr<const GO>go2) const;
 private:
-    const GO* shootingBuilding;
+    std::shared_ptr<const GO> shootingBuilding;
 };

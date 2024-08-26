@@ -28,7 +28,7 @@ public:
     WarriorNearAttacker();
     WarriorNearAttacker(uint32_t x, uint32_t y, uint32_t playerId);
 protected:
-    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const override;
+    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const override;
 private:
     std::vector<std::string> getAttackPossibleDirections() const override;
 

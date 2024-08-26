@@ -20,9 +20,9 @@
 #include "DecreaseSpellCreationMovesLeftEvent.hpp"
 
 
-DecreaseSpellCreationMovesLeftEvent::DecreaseSpellCreationMovesLeftEvent(Spell* spell) {
+DecreaseSpellCreationMovesLeftEvent::DecreaseSpellCreationMovesLeftEvent(std::shared_ptr<Spell> spell) {
 	this->spell = spell;
 }
-Spell* DecreaseSpellCreationMovesLeftEvent::getSpell() {
+std::shared_ptr<Spell> DecreaseSpellCreationMovesLeftEvent::getSpell() {
 	return this->spell;
 }

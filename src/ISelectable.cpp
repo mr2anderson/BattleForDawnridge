@@ -33,6 +33,12 @@ Events ISelectable::unselect(MapState *state, uint32_t x, uint32_t y, uint8_t bu
     events = events + this->onUnselect(state, x, y, button);
     return events;
 }
+Events ISelectable::onUnselect(MapState* state, uint32_t x, uint32_t y, uint8_t button) {
+    return {};
+}
+std::shared_ptr<sf::Drawable> ISelectable::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
+    return nullptr;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(ISelectable)

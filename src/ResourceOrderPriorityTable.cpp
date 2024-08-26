@@ -21,9 +21,6 @@
 #include "ResourceOrderPriorityTable.hpp"
 
 
-ResourceOrderPriorityTable *ResourceOrderPriorityTable::singletone = nullptr;
-
-
 ResourceOrderPriorityTable::ResourceOrderPriorityTable() {
     this->data["food"] = 0;
     this->data["wood"] = 1;

@@ -21,6 +21,6 @@
 #include "GO.hpp"
 
 
-bool CompByDrawPriority::operator()(GO *a, GO *b) const {
+bool CompByDrawPriority::operator()(std::shared_ptr<GO>a, std::shared_ptr<GO>b) const {
     return a->getDrawingPriority() < b->getDrawingPriority();
 }

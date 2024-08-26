@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class Warrior;
 
 class DecreaseRageModeMovesLeftEvent : public Event {
 public:
-	DecreaseRageModeMovesLeftEvent(Warrior *w);
+	DecreaseRageModeMovesLeftEvent(std::shared_ptr<Warrior> w);
 
-	Warrior* getWarrior();
+	std::shared_ptr<Warrior>  getWarrior();
 private:
-	Warrior* w;
+	std::shared_ptr<Warrior>  w;
 };

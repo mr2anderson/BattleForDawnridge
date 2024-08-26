@@ -22,7 +22,7 @@
 
 
 UUID::UUID() {
-    this->a = std::make_tuple(GlobalRandomGenerator64::get()->gen(), GlobalRandomGenerator64::get()->gen());
+    this->a = std::make_tuple(GlobalRandomGenerator64::get().gen(), GlobalRandomGenerator64::get().gen());
 }
 bool UUID::operator==(const UUID &b) const {
     return this->a == b.a;

@@ -20,9 +20,9 @@
 #include "DecreaseCurrentProducingMovesLeftEvent.hpp"
 
 
-DecreaseCurrentProducingMovesLeftEvent::DecreaseCurrentProducingMovesLeftEvent(WarriorProducerSpec* spec) {
+DecreaseCurrentProducingMovesLeftEvent::DecreaseCurrentProducingMovesLeftEvent(std::shared_ptr<WarriorProducerSpec> spec) {
 	this->spec = spec;
 }
-WarriorProducerSpec* DecreaseCurrentProducingMovesLeftEvent::getSpec() {
+std::shared_ptr<WarriorProducerSpec> DecreaseCurrentProducingMovesLeftEvent::getSpec() {
 	return this->spec;
 }

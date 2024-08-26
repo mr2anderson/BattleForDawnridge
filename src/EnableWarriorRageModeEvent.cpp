@@ -20,9 +20,9 @@
 #include "EnableWarriorRageModeEvent.hpp"
 
 
-EnableWarriorRageModeEvent::EnableWarriorRageModeEvent(Warrior *w) {
+EnableWarriorRageModeEvent::EnableWarriorRageModeEvent(std::shared_ptr<Warrior> w) {
 	this->w = w;
 }
-Warrior* EnableWarriorRageModeEvent::getWarrior() {
+std::shared_ptr<Warrior>  EnableWarriorRageModeEvent::getWarrior() {
 	return this->w;
 }

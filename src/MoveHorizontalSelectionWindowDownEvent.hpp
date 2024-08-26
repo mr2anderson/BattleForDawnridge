@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,10 +29,10 @@ class HorizontalSelectionWindow;
 
 class MoveHorizontalSelectionWindowDownEvent : public Event {
 public:
-	MoveHorizontalSelectionWindowDownEvent(HorizontalSelectionWindow *window);
+	MoveHorizontalSelectionWindowDownEvent(std::shared_ptr<HorizontalSelectionWindow>window);
 
-    HorizontalSelectionWindow* getWindow();
+    std::shared_ptr<HorizontalSelectionWindow> getWindow();
     bool isUrgent() const override;
 private:
-    HorizontalSelectionWindow* window;
+    std::shared_ptr<HorizontalSelectionWindow> window;
 };

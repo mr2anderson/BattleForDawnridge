@@ -20,9 +20,6 @@
 #include "Root.hpp"
 
 
-Root* Root::singletone = nullptr;
-
-
 Root::Root() = default;
 void Root::setDataRoot(const std::string &newDataRoot) {
     this->dataRoot = newDataRoot;

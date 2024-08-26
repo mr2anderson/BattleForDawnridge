@@ -22,19 +22,16 @@
 #include "GlobalRandomGenerator32.hpp"
 
 
-Playlist *Playlist::singletone = nullptr;
-
-
 const uint32_t Playlist::SOUNDTRACKS_N = 7;
 
 
 Playlist::Playlist() {
-    this->index = GlobalRandomGenerator32::get()->gen() % SOUNDTRACKS_N;
+    this->index = GlobalRandomGenerator32::get().gen() % SOUNDTRACKS_N;
 }
 void Playlist::update() {
-    if (Music::get()->getStatus(std::to_string(this->index)) == sf::Music::Status::Playing) {
+    if (Music::get().getStatus(std::to_string(this->index)) == sf::Music::Status::Playing) {
         return;
     }
     this->index = (this->index + 1) % SOUNDTRACKS_N;
-    Music::get()->play(std::to_string(this->index));
+    Music::get().play(std::to_string(this->index));
 }

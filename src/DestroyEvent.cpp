@@ -20,9 +20,9 @@
 #include "DestroyEvent.hpp"
 
 
-DestroyEvent::DestroyEvent(Building* b) {
+DestroyEvent::DestroyEvent(std::shared_ptr<Building>  b) {
 	this->b = b;
 }
-Building* DestroyEvent::getBuilding() {
+std::shared_ptr<Building>  DestroyEvent::getBuilding() {
 	return this->b;
 }

@@ -20,17 +20,17 @@
 #include "StartWarriorProducingEvent.hpp"
 
 
-StartWarriorProducingEvent::StartWarriorProducingEvent(const Building* b, WarriorProducerSpec* spec, std::shared_ptr<Warrior> w) {
+StartWarriorProducingEvent::StartWarriorProducingEvent(std::shared_ptr<const Building>  b, std::shared_ptr<WarriorProducerSpec> spec, std::shared_ptr<Warrior>  w) {
 	this->b = b;
 	this->spec = spec;
 	this->w = w;
 }
-const Building* StartWarriorProducingEvent::getBuilding() const {
+std::shared_ptr<const Building>  StartWarriorProducingEvent::getBuilding() const {
 	return this->b;
 }
-WarriorProducerSpec* StartWarriorProducingEvent::getSpec() {
+std::shared_ptr<WarriorProducerSpec> StartWarriorProducingEvent::getSpec() {
 	return this->spec;
 }
-std::shared_ptr<Warrior> StartWarriorProducingEvent::getWarrior() {
+std::shared_ptr<Warrior>  StartWarriorProducingEvent::getWarrior() {
 	return this->w;
 }

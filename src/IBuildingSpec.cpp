@@ -21,26 +21,25 @@
 #include "GO.hpp"
 
 
-IBuildingSpec::~IBuildingSpec() = default;
-Events IBuildingSpec::getActiveNewMoveEvent(const Building *building, MapState* state) {
+Events IBuildingSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state) {
 	return Events();
 }
-Events IBuildingSpec::getHighlightEvent(const Building *building, MapState* state, uint8_t type) const {
+Events IBuildingSpec::getHighlightEvent(std::shared_ptr<const Building> building, MapState* state, uint8_t type) const {
 	return Events();
 }
-Events IBuildingSpec::getEventOnDestroy(const Building *building, MapState* state) const {
+Events IBuildingSpec::getEventOnDestroy(std::shared_ptr<const Building> building, MapState* state) const {
 	return Events();
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IBuildingSpec::getComponents(const Building *building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IBuildingSpec::getComponents(std::shared_ptr<const Building> building, MapState* state) {
 	return std::vector<BuildingHorizontalSelectionWindowComponent>();
 }
-boost::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(const Building *building) const {
+boost::optional<BuildingShortInfo> IBuildingSpec::getShortInfo(std::shared_ptr<const Building> building) const {
 	return boost::none;
 }
-Resources IBuildingSpec::getLimit(const Building *building) const {
+Resources IBuildingSpec::getLimit(std::shared_ptr<const Building> building) const {
 	return Resources();
 }
-uint32_t IBuildingSpec::getPopulationLimit(const Building *building) const {
+uint32_t IBuildingSpec::getPopulationLimit(std::shared_ptr<const Building> building) const {
 	return 0;
 }
 bool IBuildingSpec::isVictoryCondition() const {
@@ -49,22 +48,22 @@ bool IBuildingSpec::isVictoryCondition() const {
 bool IBuildingSpec::isOrigin() const {
 	return false;
 }
-bool IBuildingSpec::isActiveConductor(const Building *building) const {
+bool IBuildingSpec::isActiveConductor(std::shared_ptr<const Building> building) const {
 	return false;
 }
-uint32_t IBuildingSpec::getWarriorMovementCost(const Building *building, const Warrior *w) const {
+uint32_t IBuildingSpec::getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const {
 	return 1;
 }
-bool IBuildingSpec::warriorCanStay(const Building *building, const Warrior *w) const {
+bool IBuildingSpec::warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const {
 	return true;
 }
-bool IBuildingSpec::isUltraHighObstacle(const Building *building, uint32_t playerId) const {
+bool IBuildingSpec::isUltraHighObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const {
 	return false;
 }
-bool IBuildingSpec::isHighObstacle(const Building *building, uint32_t playerId) const {
+bool IBuildingSpec::isHighObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const {
 	return false;
 }
-bool IBuildingSpec::isLowObstacle(const Building *building, uint32_t playerId) const {
+bool IBuildingSpec::isLowObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const {
 	return false;
 }
 NewMoveMainPriority IBuildingSpec::getNewMoveMainPriority() const {

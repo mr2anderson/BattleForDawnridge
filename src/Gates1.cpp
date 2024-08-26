@@ -27,31 +27,31 @@
 Gates1::Gates1() = default;
 Gates1::Gates1(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
-    this->addSpec(new GatesSpec());
+    this->addSpec(std::make_shared<GatesSpec>());
 }
-Building* Gates1::createSameTypeBuilding() const {
-    return new Gates1(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Gates1::createSameTypeBuilding() const {
+    return std::make_shared<Gates1>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Gates1::getTypeUUID() const {
-    return UUIDs::get()->get("gates1");
+    return UUIDs::get().get("gates1");
 }
 uint32_t Gates1::getSX() const {
-    return Parameters::get()->getInt("gates1_sx");
+    return Parameters::get().getInt("gates1_sx");
 }
 uint32_t Gates1::getSY() const {
-    return Parameters::get()->getInt("gates1_sy");
+    return Parameters::get().getInt("gates1_sy");
 }
 uint32_t Gates1::getMaxHP() const {
-    return Parameters::get()->getInt("gates1_max_hp");
+    return Parameters::get().getInt("gates1_max_hp");
 }
 Defence Gates1::getDefence() const {
-    return Parameters::get()->getDefence("gates1_defence");
+    return Parameters::get().getDefence("gates1_defence");
 }
 Resources Gates1::getCost() const {
-    return Parameters::get()->getResources("gates1_cost");
+    return Parameters::get().getResources("gates1_cost");
 }
 uint32_t Gates1::getRegenerationSpeed() const {
-    return Parameters::get()->getInt("gates1_regeneration_speed");
+    return Parameters::get().getInt("gates1_regeneration_speed");
 }
 std::string Gates1::getTextureName() const {
     return "gates1";

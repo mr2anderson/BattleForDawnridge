@@ -30,14 +30,14 @@
 #include "PlaySoundEvent.hpp"
 
 
-Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Building* building, MapState* state) {
+Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>  building, MapState* state) {
 	if (!building->works()) {
 		return Events();
 	}
 
 	Resources limit;
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->exist() and b->getPlayerId() == building->getPlayerId()) {
 			limit.plus(b->getLimit());
 		}
@@ -45,10 +45,10 @@ Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Buildi
 
 	uint32_t leftSpace = limit.get(this->getResourceType()) - state->getPlayersPtr()->getPlayerPtr(building->getPlayerId())->getResource(this->getResourceType());
 
-	std::vector<std::tuple<ResourcePoint*, uint32_t>> src;
+	std::vector<std::tuple<std::shared_ptr<ResourcePoint>, uint32_t>> src;
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalConductionRPs(); i = i + 1) {
-		ConductionResourcePoint* rp = state->getCollectionsPtr()->getConductionRP(i);
+		std::shared_ptr<ConductionResourcePoint> rp = state->getCollectionsPtr()->getConductionRP(i);
 		if (rp->exist() and rp->getResourceType() == this->getResourceType() and building->connectedTo(state, rp)) {
 			uint32_t got = rp->tryToCollect(building->getPlayerId(), std::min(leftSpace, this->getCollectionSpeed()));
 			if (got != 0) {
@@ -70,18 +70,18 @@ Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(const Buildi
 	response.add(std::make_shared<CreateEEvent>(flyingE));
 	for (uint32_t i = 0; i < src.size(); i = i + 1) {
 		response.add(std::make_shared<AddResourceEvent>(Resource(this->getResourceType(), std::get<uint32_t>(src.at(i))), limit));
-		response.add(std::make_shared<SubHpEvent>(std::get<ResourcePoint*>(src.at(i)), std::get<uint32_t>(src.at(i))));
+		response.add(std::make_shared<SubHpEvent>(std::get<std::shared_ptr<ResourcePoint>>(src.at(i)), std::get<uint32_t>(src.at(i))));
 	}
 
 	return response;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePointCollectorSpec::getComponents(const Building* building, MapState* state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePointCollectorSpec::getComponents(std::shared_ptr<const Building>  building, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
 	if (building->works()) {
 		uint32_t n = 0;
 		for (uint32_t i = 0; i < state->getCollectionsPtr()->totalConductionRPs(); i = i + 1) {
-			ConductionResourcePoint* rp = state->getCollectionsPtr()->getConductionRP(i);
+			std::shared_ptr<ConductionResourcePoint> rp = state->getCollectionsPtr()->getConductionRP(i);
 			n = n + (rp->exist() and rp->getResourceType() == this->getResourceType() and building->connectedTo(state, rp));
 		}
 

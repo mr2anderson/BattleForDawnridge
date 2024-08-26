@@ -24,11 +24,11 @@
 
 
 WarehouseFoodSpec::WarehouseFoodSpec() = default;
-IBuildingSpec* WarehouseFoodSpec::clone() const {
-	return new WarehouseFoodSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseFoodSpec::clone() const {
+	return std::make_shared<WarehouseFoodSpec>(*this);
 }
 Resources WarehouseFoodSpec::getActiveLimit() const {
-	return Parameters::get()->getResources("warehouse_food_limit");
+	return Parameters::get().getResources("warehouse_food_limit");
 }
 
 

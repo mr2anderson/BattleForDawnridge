@@ -28,17 +28,17 @@ class TradingSpec : public IBuildingSpec {
 public:
 	TradingSpec();
 
-	Events doTrade(const Building *b, const Trade& trade);
+	Events doTrade(std::shared_ptr<const Building> b, const Trade& trade);
 	void decreaseCurrentTradeMovesLeft();
-	Events getActiveNewMoveEvent(const Building *b, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(const Building *b, MapState* state) override;
-	boost::optional<BuildingShortInfo> getShortInfo(const Building *b) const override;
+	Events getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState* state) override;
+	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building> b, MapState* state) override;
+	boost::optional<BuildingShortInfo> getShortInfo(std::shared_ptr<const Building> b) const override;
 	virtual std::vector<Trade> getTrades() const = 0;
 private:
 	Trade currentTrade;
 
 	bool busy() const;
-	BuildingHorizontalSelectionWindowComponent getTradeComponent(const Building* b, const Trade& trade, MapState *state);
+	BuildingHorizontalSelectionWindowComponent getTradeComponent(std::shared_ptr<const Building>  b, const Trade& trade, MapState *state);
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

@@ -27,11 +27,9 @@
 
 class Parameters {
 public:
-    static Parameters* get() {
-        if (Parameters::singletone == nullptr) {
-            Parameters::singletone = new Parameters();
-        }
-        return Parameters::singletone;
+    static Parameters& get() {
+        static Parameters instance;
+        return instance;
     }
 
     void load();
@@ -44,7 +42,6 @@ public:
 private:
     Parameters() = default;
     Parameters(const Parameters& copy);
-    static Parameters* singletone;
 
     std::unordered_map<std::string, Damage> damages;
     std::unordered_map<std::string, Defence> defences;

@@ -27,31 +27,31 @@
 WarehouseWood::WarehouseWood() = default;
 WarehouseWood::WarehouseWood(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WarehouseWoodSpec());
+	this->addSpec(std::make_shared<WarehouseWoodSpec>());
 }
-Building* WarehouseWood::createSameTypeBuilding() const {
-	return new WarehouseWood(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  WarehouseWood::createSameTypeBuilding() const {
+	return std::make_shared<WarehouseWood>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID WarehouseWood::getTypeUUID() const {
-	return UUIDs::get()->get("warehouse_wood");
+	return UUIDs::get().get("warehouse_wood");
 }
 uint32_t WarehouseWood::getSX() const {
-	return Parameters::get()->getInt("warehouse_wood_sx");
+	return Parameters::get().getInt("warehouse_wood_sx");
 }
 uint32_t WarehouseWood::getSY() const {
-	return Parameters::get()->getInt("warehouse_wood_sy");
+	return Parameters::get().getInt("warehouse_wood_sy");
 }
 uint32_t WarehouseWood::getMaxHP() const {
-	return Parameters::get()->getInt("warehouse_wood_max_hp");
+	return Parameters::get().getInt("warehouse_wood_max_hp");
 }
 Defence WarehouseWood::getDefence() const {
-	return Parameters::get()->getDefence("warehouse_wood_defence");
+	return Parameters::get().getDefence("warehouse_wood_defence");
 }
 Resources WarehouseWood::getCost() const {
-	return Parameters::get()->getResources("warehouse_wood_cost");
+	return Parameters::get().getResources("warehouse_wood_cost");
 }
 uint32_t WarehouseWood::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("warehouse_wood_regeneration_speed");
+	return Parameters::get().getInt("warehouse_wood_regeneration_speed");
 }
 std::string WarehouseWood::getTextureName() const {
 	return "warehouse_wood";

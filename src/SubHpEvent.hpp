@@ -18,6 +18,7 @@
 
 
 #include <cstdint>
+#include <memory>
 #include "Event.hpp"
 
 
@@ -29,11 +30,11 @@ class HPGO;
 
 class SubHpEvent : public Event {
 public:
-	SubHpEvent(HPGO* hpgo, uint32_t value);
+	SubHpEvent(std::shared_ptr<HPGO> hpgo, uint32_t value);
 
-	HPGO* getHPGO();
+	std::shared_ptr<HPGO> getHPGO();
 	uint32_t getValue() const;
 private:
-	HPGO* hpgo;
+	std::shared_ptr<HPGO> hpgo;
 	uint32_t value;
 };

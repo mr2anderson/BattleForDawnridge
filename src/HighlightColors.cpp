@@ -23,9 +23,6 @@
 #include "Player.hpp"
 
 
-HighlightColors* HighlightColors::singletone = nullptr;
-
-
 static const sf::Color BLUE = sf::Color(0, 191, 255);
 static const sf::Color GREEN = sf::Color(154, 205, 50);
 static const sf::Color PURPLE = sf::Color(238, 130, 238);
@@ -47,7 +44,7 @@ static sf::Color GET_PLAYER_COLOR(uint32_t playerId) {
 
 
 static sf::Color EVAL(sf::Color c, uint32_t playerId) {
-    c = ColorBlender::get()->blend(c, GET_PLAYER_COLOR(playerId));
+    c = ColorBlender::get().blend(c, GET_PLAYER_COLOR(playerId));
     c.a = 35;
     return c;
 }

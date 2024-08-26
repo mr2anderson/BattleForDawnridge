@@ -18,6 +18,7 @@
 
 
 #include <cstdint>
+#include <memory>
 #include "Event.hpp"
 
 
@@ -29,11 +30,11 @@ class HPGO;
 
 class AddHpEvent : public Event {
 public:
-	AddHpEvent(HPGO* hpgo, uint32_t n);
+	AddHpEvent(std::shared_ptr<HPGO> hpgo, uint32_t n);
 
-	HPGO* getHPGO();
+	std::shared_ptr<HPGO> getHPGO();
 	uint32_t getN() const;
 private:
-	HPGO* hpgo;
+	std::shared_ptr<HPGO> hpgo;
 	uint32_t n;
 };

@@ -24,16 +24,16 @@
 
 
 GatesSpec::GatesSpec() = default;
-IBuildingSpec* GatesSpec::clone() const {
-	return new GatesSpec(*this);
+std::shared_ptr<IBuildingSpec> GatesSpec::clone() const {
+	return std::make_shared<GatesSpec>(*this);
 }
-uint32_t GatesSpec::getWarriorMovementCost(const Building *building, const Warrior *w) const {
+uint32_t GatesSpec::getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const {
     if (w->isFlying()) {
         return 1;
     }
     return 1 + 9999 * (building->getPlayerId() != w->getPlayerId());
 }
-bool GatesSpec::warriorCanStay(const Building *building, const Warrior *w) const {
+bool GatesSpec::warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const {
     if (w->isFlying()) {
         return true;
     }
@@ -43,7 +43,7 @@ bool GatesSpec::conductsIfNotWork() const {
 	return true;
 }
 uint32_t GatesSpec::getRadius() const {
-	return Parameters::get()->getInt("gates_radius");
+	return Parameters::get().getInt("gates_radius");
 }
 
 

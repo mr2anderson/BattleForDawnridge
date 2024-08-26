@@ -30,16 +30,16 @@ Forest::Forest(uint32_t x, uint32_t y, uint32_t type) : AreaResourcePoint(x, y) 
 	this->type = type;
 }
 UUID Forest::getTypeUUID() const {
-	return UUIDs::get()->get("forest");
+	return UUIDs::get().get("forest");
 }
 uint32_t Forest::getSX() const {
-	return Parameters::get()->getInt("forest_sx");
+	return Parameters::get().getInt("forest_sx");
 }
 uint32_t Forest::getSY() const {
-	return Parameters::get()->getInt("forest_sy");
+	return Parameters::get().getInt("forest_sy");
 }
 uint32_t Forest::getMaxHP() const {
-	return Parameters::get()->getInt("forest_max_hp");
+	return Parameters::get().getInt("forest_max_hp");
 }
 std::string Forest::getResourceType() const {
 	return "wood";
@@ -51,7 +51,7 @@ std::string Forest::getTextureName() const {
 	return "forest";
 }
 sf::IntRect Forest::getTextureRect() const {
-	return TilesetHandler::get()->getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get()->get(this->getTextureName())->getSize().x, this->type);
+	return TilesetHandler::get().getTextureRect(64 * this->getSX(), 64 * this->getSY(), Textures::get().get(this->getTextureName())->getSize().x, this->type);
 }
 StringLcl Forest::getDescription() const {
 	return StringLcl("{forest_description}");

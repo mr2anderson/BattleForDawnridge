@@ -38,7 +38,7 @@ void SpellEffect::onRestart() {
 }
 void SpellEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::Sprite sprite;
-	sprite.setTexture(*Textures::get()->get(this->textureName));
+	sprite.setTexture(*Textures::get().get(this->textureName));
 	sprite.setPosition(this->startX, this->startY + DST * std::pow(this->clock.getSecondsAsFloat(), 2) / std::pow(TIME, 2));
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	target.draw(sprite, states);

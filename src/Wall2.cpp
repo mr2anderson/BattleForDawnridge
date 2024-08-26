@@ -27,31 +27,31 @@
 Wall2::Wall2() = default;
 Wall2::Wall2(uint32_t x, uint32_t y, uint32_t playerId) :
 	Building(x, y, playerId) {
-	this->addSpec(new WallSpec());
+	this->addSpec(std::make_shared<WallSpec>());
 }
-Building* Wall2::createSameTypeBuilding() const {
-	return new Wall2(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Wall2::createSameTypeBuilding() const {
+	return std::make_shared<Wall2>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Wall2::getTypeUUID() const {
-	return UUIDs::get()->get("wall2");
+	return UUIDs::get().get("wall2");
 }
 uint32_t Wall2::getSX() const {
-	return Parameters::get()->getInt("wall2_sx");
+	return Parameters::get().getInt("wall2_sx");
 }
 uint32_t Wall2::getSY() const {
-	return Parameters::get()->getInt("wall2_sy");
+	return Parameters::get().getInt("wall2_sy");
 }
 uint32_t Wall2::getMaxHP() const {
-	return Parameters::get()->getInt("wall2_max_hp");
+	return Parameters::get().getInt("wall2_max_hp");
 }
 Defence Wall2::getDefence() const {
-	return Parameters::get()->getDefence("wall2_defence");
+	return Parameters::get().getDefence("wall2_defence");
 }
 Resources Wall2::getCost() const {
-	return Parameters::get()->getResources("wall2_cost");
+	return Parameters::get().getResources("wall2_cost");
 }
 uint32_t Wall2::getRegenerationSpeed() const {
-	return Parameters::get()->getInt("wall2_regeneration_speed");
+	return Parameters::get().getInt("wall2_regeneration_speed");
 }
 std::string Wall2::getTextureName() const {
 	return "wall2";

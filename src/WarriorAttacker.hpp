@@ -41,11 +41,11 @@ public:
     virtual std::string getStartAttackSoundName() const = 0;
 protected:
     virtual std::vector<std::string> getAttackPossibleDirections() const = 0;
-    virtual std::vector<std::tuple<uint32_t, uint32_t>> canAttack(Unit *u) const;
-    virtual Events startAttack(Unit *u, uint32_t targetX, uint32_t targetY);
+    virtual std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const;
+    virtual Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY);
     virtual Damage getBaseDamage() const = 0;
 private:
-    Unit *target;
+    std::shared_ptr<Unit>target;
 
     uint32_t getCurrentAnimationMs() const override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;

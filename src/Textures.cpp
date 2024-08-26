@@ -23,11 +23,8 @@
 #include "CouldntOpenTexture.hpp"
 
 
-Textures *Textures::singletone = nullptr;
-
-
 void Textures::add(const std::string& name, const std::string& path) {
-    if (!this->textures[name].loadFromFile(Root::get()->getDataRoot() + "/" + path)) {
+    if (!this->textures[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenTexture(path);
     }
 }

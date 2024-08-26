@@ -50,16 +50,11 @@ Building::Building(const Building& building) {
 		this->specs.at(i) = building.specs.at(i)->clone();
 	}
 }
-Building::~Building() {
-	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		delete this->specs.at(i);
-	}
-}
 Events Building::getHighlightEvent(MapState *state, uint8_t type) const {
 	Events highlightEvent;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(this, state, type);
+		highlightEvent = highlightEvent + this->specs.at(i)->getHighlightEvent(this->getThis<Building>(), state, type);
 	}
 
 	return highlightEvent;
@@ -68,7 +63,7 @@ Resources Building::getLimit() const {
 	Resources limit;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		limit.plus(this->specs.at(i)->getLimit(this));
+		limit.plus(this->specs.at(i)->getLimit(this->getThis<Building>()));
 	}
 
 	return limit;
@@ -77,7 +72,7 @@ uint32_t Building::getPopulationLimit() const {
 	uint32_t populationLimit = 0;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		populationLimit = populationLimit + this->specs.at(i)->getPopulationLimit(this);
+		populationLimit = populationLimit + this->specs.at(i)->getPopulationLimit(this->getThis<Building>());
 	}
 
 	return populationLimit;
@@ -102,7 +97,7 @@ bool Building::isOrigin() const {
 }
 bool Building::isActiveConductor() const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isActiveConductor(this)) {
+		if (this->specs.at(i)->isActiveConductor(this->getThis<Building>())) {
 			return true;
 		}
 	}
@@ -130,11 +125,11 @@ void Building::addHp(uint32_t delta) {
         this->_wasWithFullHP = true;
     }
 }
-bool Building::connectedTo(MapState* state, GO* go) const {
+bool Building::connectedTo(MapState* state, std::shared_ptr<GO> go) const {
 	ConductionGraph g;
 
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->isActiveConductor() and b->getPlayerId() == this->getPlayerId()) {
 			g.addConductor(b->getX(), b->getY(), b->getSX(), b->getSY());
 		}
@@ -146,7 +141,7 @@ bool Building::connectedTo(MapState* state, GO* go) const {
 }
 bool Building::connectedToOrigin(MapState* state) const {
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-		Building* b = state->getCollectionsPtr()->getBuilding(i);
+		std::shared_ptr<Building>  b = state->getCollectionsPtr()->getBuilding(i);
 		if (b->works() and b->isOrigin() and b->getPlayerId() == this->getPlayerId()) {
 			if (this->connectedTo(state, b)) {
 				return true;
@@ -161,7 +156,7 @@ Events Building::destroy(MapState *state) {
 	response.add(std::make_shared<SubHpEvent>(this, this->getHP()));
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		response = response + this->specs.at(i)->getEventOnDestroy(this, state);
+		response = response + this->specs.at(i)->getEventOnDestroy(this->getThis<Building>(), state);
 	}
 
 	return response;
@@ -170,24 +165,24 @@ void Building::decreaseBurningMovesLeft() {
 	this->burningMovesLeft = this->burningMovesLeft - 1;
 }
 void Building::setFire() {
-	this->burningMovesLeft = Parameters::get()->getInt("fire_lifetime");
+	this->burningMovesLeft = Parameters::get().getInt("fire_lifetime");
 }
-void Building::addSpec(IBuildingSpec* spec) {
+void Building::addSpec(std::shared_ptr<IBuildingSpec> spec) {
 	this->specs.push_back(spec);
 }
-uint32_t Building::getWarriorMovementCost(const Warrior *w) const {
+uint32_t Building::getWarriorMovementCost(std::shared_ptr<Warrior> w) const {
 	uint32_t cost = 1;
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		uint32_t specMovementCost = this->specs.at(i)->getWarriorMovementCost(this, w);
+		uint32_t specMovementCost = this->specs.at(i)->getWarriorMovementCost(this->getThis<Building>(), w);
 		cost = std::max(cost, specMovementCost);
 	}
 
 	return cost;
 }
-bool Building::warriorCanStay(const Warrior *w) const {
+bool Building::warriorCanStay(std::shared_ptr<const Warrior> w) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (!this->specs.at(i)->warriorCanStay(this, w)) {
+		if (!this->specs.at(i)->warriorCanStay(this->getThis<Building>(), w)) {
 			return false;
 		}
 	}
@@ -196,7 +191,7 @@ bool Building::warriorCanStay(const Warrior *w) const {
 }
 bool Building::isUltraHighObstacle(uint32_t playerId) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isUltraHighObstacle(this, playerId)) {
+		if (this->specs.at(i)->isUltraHighObstacle(this->getThis<Building>(), playerId)) {
 			return true;
 		}
 	}
@@ -205,7 +200,7 @@ bool Building::isUltraHighObstacle(uint32_t playerId) const {
 }
 bool Building::isHighObstacle(uint32_t playerId) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isHighObstacle(this, playerId)) {
+		if (this->specs.at(i)->isHighObstacle(this->getThis<Building>(), playerId)) {
 			return true;
 		}
 	}
@@ -214,7 +209,7 @@ bool Building::isHighObstacle(uint32_t playerId) const {
 }
 bool Building::isLowObstacle(uint32_t playerId) const {
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		if (this->specs.at(i)->isLowObstacle(this, playerId)) {
+		if (this->specs.at(i)->isLowObstacle(this->getThis<Building>(), playerId)) {
 			return true;
 		}
 	}
@@ -251,7 +246,7 @@ HorizontalSelectionWindowComponent Building::getDestroyComponent() {
 
 	Events destroyEvent;
     destroyEvent.add(std::make_shared<PlaySoundEvent>("destroy"));
-	destroyEvent.add(std::make_shared<DestroyEvent>(this));
+	destroyEvent.add(std::make_shared<DestroyEvent>(this->getThis<Building>()));
 	std::shared_ptr<WindowTwoButtons> verify = std::make_shared<WindowTwoButtons>(StringLcl("{verify_destroy}"), StringLcl("{yes}"), StringLcl("{no}"), resetHighlightEvent + destroyEvent, resetHighlightEvent + clickSoundEvent);
 	Events createVerify = clickSoundEvent;
 	createVerify.add(std::make_shared<CreateEEvent>(verify));
@@ -292,7 +287,7 @@ void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states)
     }
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		boost::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this);
+		boost::optional<BuildingShortInfo> bsi = this->specs.at(i)->getShortInfo(this->getThis<Building>());
 		if (bsi.has_value()) {
 			target.draw(bsi.value(), states);
 		}
@@ -312,13 +307,13 @@ Events Building::hit(uint32_t d) {
     response.add(std::make_shared<PlaySoundEvent>("building_hit"));
 	if (hpPointsAfterOperation == 0) {
 		response.add(std::make_shared<PlaySoundEvent>("destroy"));
-        response.add(std::make_shared<DestroyEvent>(this));
+        response.add(std::make_shared<DestroyEvent>(this->getThis<Building>()));
 	}
 	else {
         if (this->burningMovesLeft == 0) {
             response.add(std::make_shared<PlaySoundEvent>("fire"));
         }
-        response.add(std::make_shared<SetFireEvent>(this));
+        response.add(std::make_shared<SetFireEvent>(this->getThis<Building>()));
 	}
 
 	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
@@ -336,7 +331,7 @@ Events Building::newMove(MapState* state, uint32_t playerId) {
 	Events event = this->processRegeneration();
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-		event = event + this->specs.at(i)->getActiveNewMoveEvent(this, state);
+		event = event + this->specs.at(i)->getActiveNewMoveEvent(this->getThis<Building>(), state);
 	}
 
 	return event;
@@ -359,7 +354,7 @@ Events Building::processRegeneration() {
 		}
 	}
 	else {
-		events.add(std::make_shared<DecreaseBurningMovesLeftEvent>(this));
+		events.add(std::make_shared<DecreaseBurningMovesLeftEvent>(this->getThis<Building>()));
 	}
 	return events;
 }
@@ -381,7 +376,7 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
     if (this->belongTo(playerId)) {
         components.push_back(this->getDestroyComponent());
         for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
+            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this->getThis<Building>(), state);
             for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
                 components.push_back(specComponents[j].component);
             }
@@ -390,7 +385,7 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
     }
     else {
         for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this, state);
+            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this->getThis<Building>(), state);
             for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
                 if (specComponents[j].showToEnemies) {
                     components.push_back(specComponents[j].component);

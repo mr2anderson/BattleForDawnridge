@@ -26,21 +26,19 @@
 
 class Root {
 public:
-    static Root *get() {
-        if (Root::singletone == nullptr) {
-            Root::singletone = new Root();
-        }
-        return Root::singletone;
+    static Root& get() {
+        static Root instance;
+        return instance;
     }
 
     void setDataRoot(const std::string &newDataRoot);
     void setUserdataRoot(const std::string &newUserdataRoot);
+
     std::string getDataRoot() const;
     std::string getUserdataRoot() const;
 private:
     Root();
     Root(const Root& copy);
-    static Root *singletone;
 
     std::optional<std::string> dataRoot;
     std::optional<std::string> userDataRoot;

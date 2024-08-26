@@ -22,11 +22,11 @@
 
 
 WarehouseIronSpec::WarehouseIronSpec() = default;
-IBuildingSpec* WarehouseIronSpec::clone() const {
-	return new WarehouseIronSpec(*this);
+std::shared_ptr<IBuildingSpec> WarehouseIronSpec::clone() const {
+	return std::make_shared<WarehouseIronSpec>(*this);
 }
 Resources WarehouseIronSpec::getActiveLimit() const {
-	return Parameters::get()->getResources("warehouse_iron_limit");
+	return Parameters::get().getResources("warehouse_iron_limit");
 }
 
 

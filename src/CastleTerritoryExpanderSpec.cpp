@@ -22,11 +22,11 @@
 
 
 CastleTerritoryExpanderSpec::CastleTerritoryExpanderSpec() = default;
-IBuildingSpec* CastleTerritoryExpanderSpec::clone() const {
-	return new CastleTerritoryExpanderSpec(*this);
+std::shared_ptr<IBuildingSpec> CastleTerritoryExpanderSpec::clone() const {
+	return std::make_shared<CastleTerritoryExpanderSpec>(*this);
 }
 uint32_t CastleTerritoryExpanderSpec::getRadius() const {
-	return Parameters::get()->getInt("castle_radius");
+	return Parameters::get().getInt("castle_radius");
 }
 
 

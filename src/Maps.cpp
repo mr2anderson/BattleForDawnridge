@@ -22,9 +22,6 @@
 #include "GO.hpp"
 
 
-Maps* Maps::singletone = nullptr;
-
-
 const uint32_t Maps::THUMBNAIL_SIZE = 64;
 
 
@@ -49,16 +46,16 @@ void Maps::generateThumbnail(const std::string& name) {
     renderTexture.create(THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 
     for (uint32_t i = 0; i < map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
-        GO* go = map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
+        std::shared_ptr<GO> go = map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);
         float x = go->getX() * sx;
         float y = (go->getY() + 1) * sy;
         sf::Sprite sprite;
         sprite.setTextureRect(go->getTextureRect());
-        sprite.setTexture(*Textures::get()->get(go->getTextureName()));
+        sprite.setTexture(*Textures::get().get(go->getTextureName()));
         sprite.setPosition(x, THUMBNAIL_SIZE - y);
         sprite.setScale(scaleX, scaleY);
         renderTexture.draw(sprite);
     }
 
-    Textures::get()->add(name, renderTexture.getTexture());
+    Textures::get().add(name, renderTexture.getTexture());
 }

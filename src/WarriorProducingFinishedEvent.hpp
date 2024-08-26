@@ -30,11 +30,11 @@ class Warrior;
 
 class WarriorProducingFinishedEvent : public Event {
 public:
-	WarriorProducingFinishedEvent(WarriorProducerSpec* spec, std::shared_ptr<Warrior> warrior);
+	WarriorProducingFinishedEvent(std::shared_ptr<WarriorProducerSpec> spec, std::shared_ptr<Warrior>  warrior);
 
-	WarriorProducerSpec* getSpec();
-	std::shared_ptr<Warrior> getWarrior();
+	std::shared_ptr<WarriorProducerSpec> getSpec();
+	std::shared_ptr<Warrior>  getWarrior();
 private:
-	WarriorProducerSpec* spec;
-	std::shared_ptr<Warrior> warrior;
+	std::shared_ptr<WarriorProducerSpec> spec;
+	std::shared_ptr<Warrior>  warrior;
 };

@@ -38,7 +38,7 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
     this->logs.add(StringLcl());
 
-    if (this->listener.listen(MainServerPosition::get()->getPort()) != sf::Socket::Status::Done) {
+    if (this->listener.listen(MainServerPosition::get().getPort()) != sf::Socket::Status::Done) {
         this->logs.add(StringLcl("{couldnt_listen_port}"));
     }
     this->listener.setBlocking(false);
@@ -61,7 +61,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
                 }
             }
         }
-        Playlist::get()->update();
+        Playlist::get().update();
         this->checkNewConnection();
         this->updateSimpleConnections();
         this->checkRoomInitSignals();

@@ -28,29 +28,29 @@
 Workshop::Workshop() = default;
 Workshop::Workshop(uint32_t x, uint32_t y, uint32_t playerId) :
         Building(x, y, playerId) {
-    this->addSpec(new WorkshopWarriorProducerSpec());
-    this->addSpec(new WorkshopWarriorHealerSpec());
+    this->addSpec(std::make_shared<WorkshopWarriorProducerSpec>());
+    this->addSpec(std::make_shared<WorkshopWarriorHealerSpec>());
 }
-Building* Workshop::createSameTypeBuilding() const {
-    return new Workshop(this->getX(), this->getY(), this->getPlayerId());
+std::shared_ptr<Building>  Workshop::createSameTypeBuilding() const {
+    return std::make_shared<Workshop>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Workshop::getTypeUUID() const {
-    return UUIDs::get()->get("workshop");
+    return UUIDs::get().get("workshop");
 }
 uint32_t Workshop::getSX() const {
-    return Parameters::get()->getInt("workshop_sx");
+    return Parameters::get().getInt("workshop_sx");
 }
 uint32_t Workshop::getSY() const {
-    return Parameters::get()->getInt("workshop_sy");
+    return Parameters::get().getInt("workshop_sy");
 }
 uint32_t Workshop::getMaxHP() const {
-    return Parameters::get()->getInt("workshop_max_hp");
+    return Parameters::get().getInt("workshop_max_hp");
 }
 Defence Workshop::getDefence() const {
-    return Parameters::get()->getDefence("workshop_defence");
+    return Parameters::get().getDefence("workshop_defence");
 }
 Resources Workshop::getCost() const {
-    return Parameters::get()->getResources("workshop_cost");
+    return Parameters::get().getResources("workshop_cost");
 }
 std::string Workshop::getTextureName() const {
     return "workshop";
@@ -62,7 +62,7 @@ StringLcl Workshop::getDescription() const {
     return StringLcl("{workshop_description}");
 }
 uint32_t Workshop::getRegenerationSpeed() const {
-    return Parameters::get()->getInt("workshop_regeneration_speed");
+    return Parameters::get().getInt("workshop_regeneration_speed");
 }
 
 

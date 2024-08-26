@@ -31,15 +31,15 @@
 #include "PlaySoundEvent.hpp"
 
 
-Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) {
+Events IShootingSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState *state) {
     if (!b->wasWithFullHP()) {
         return Events();
     }
 
     HashTableMapPosition<uint32_t> available = this->getAvailable(b->getX(), b->getY(), b->getSX(), b->getSY(), b->getPlayerId(), state);
-    std::vector<Unit*> toShoot;
+    std::vector<std::shared_ptr<Unit>> toShoot;
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
-        Unit* u = state->getCollectionsPtr()->getUnit(i);
+        std::shared_ptr<Unit> u = state->getCollectionsPtr()->getUnit(i);
         if (u->exist() and u->getPlayerId() != b->getPlayerId() and IAreaControllerSpec::IN_RADIUS(available, u, IAreaControllerSpec::IN_RADIUS_TYPE::PARTIALLY)) {
             toShoot.push_back(u);
         }
@@ -51,7 +51,7 @@ Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) 
     std::vector<uint32_t> shots;
     uint32_t shotsLeft = this->getShotsNumber();
     for (uint32_t i = 0; i < toShoot.size(); i = i + 1) {
-        Unit *u = toShoot[i];
+        std::shared_ptr<Unit>u = toShoot[i];
         uint32_t hpLoss = this->getDamage().getHpLoss(u->getDefence());
         uint32_t shotsToKill;
         if (hpLoss == 0) {
@@ -74,7 +74,7 @@ Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) 
     }
 
     for (uint32_t i = 0; i < shots.size(); i = i + 1) {
-        Unit *u = toShoot[i];
+        std::shared_ptr<Unit>u = toShoot[i];
 
         std::shared_ptr<Projectile> projectile = this->getProjectile();
         projectile->setSrc(b->getXInPixels() + b->getSX() * 64 / 2, b->getYInPixels() + b->getSY() * 64 / 2);
@@ -89,7 +89,7 @@ Events IShootingSpec::getActiveNewMoveEvent(const Building *b, MapState *state) 
 
     return events;
 }
-std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getComponents(const Building *b, MapState *state) {
+std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getComponents(std::shared_ptr<const Building> b, MapState *state) {
     BuildingHorizontalSelectionWindowComponent component;
 
     if (b->wasWithFullHP()) {
@@ -113,7 +113,7 @@ uint32_t IShootingSpec::getRadius() const {
     return this->getShootingRadius();
 }
 sf::Color IShootingSpec::getHighlightColor(uint32_t playerId) const {
-    return HighlightColors::get()->getBuildingAttackColor(playerId);
+    return HighlightColors::get().getBuildingAttackColor(playerId);
 }
 uint8_t IShootingSpec::getHighlightType() const {
     return IAreaControllerSpec::HIGHLIGHT_TYPE::OTHER;

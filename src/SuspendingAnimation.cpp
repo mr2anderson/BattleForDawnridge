@@ -21,7 +21,7 @@
 
 
 SuspendingAnimation::SuspendingAnimation() = default;
-SuspendingAnimation::SuspendingAnimation(IWithSuspendingAnimation *animated) {
+SuspendingAnimation::SuspendingAnimation(std::shared_ptr<IWithSuspendingAnimation>animated) {
     this->animated = animated;
 }
 Events SuspendingAnimation::process(MapState *state) {

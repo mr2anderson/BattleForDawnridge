@@ -23,7 +23,7 @@
 Collections::Collections() = default;
 
 
-void Collections::add(GO *object) {
+void Collections::add(std::shared_ptr<GO>object) {
     this->gos.push(object);
     this->addToSubClassCollections(object);
 }
@@ -49,22 +49,22 @@ uint32_t Collections::totalWarriors() const {
 }
 
 
-GO* Collections::getGO(uint32_t i, uint8_t filter) {
+std::shared_ptr<GO> Collections::getGO(uint32_t i, uint8_t filter) {
 	return this->gos.at(i, filter);
 }
-AreaResourcePoint* Collections::getAreaRP(uint32_t i) {
+std::shared_ptr<AreaResourcePoint> Collections::getAreaRP(uint32_t i) {
 	return this->areaRps.at(i);
 }
-ConductionResourcePoint* Collections::getConductionRP(uint32_t i) {
+std::shared_ptr<ConductionResourcePoint> Collections::getConductionRP(uint32_t i) {
     return this->conductionRps.at(i);
 }
-Unit* Collections::getUnit(uint32_t i) {
+std::shared_ptr<Unit> Collections::getUnit(uint32_t i) {
     return this->units.at(i);
 }
-Building* Collections::getBuilding(uint32_t i) {
+std::shared_ptr<Building>  Collections::getBuilding(uint32_t i) {
 	return this->buildings.at(i);
 }
-Warrior* Collections::getWarrior(uint32_t i)  {
+std::shared_ptr<Warrior>  Collections::getWarrior(uint32_t i)  {
 	return this->warriors.at(i);
 }
 
@@ -76,20 +76,20 @@ void Collections::clearSubClassCollections() {
 	this->buildings.clear();
 	this->warriors.clear();
 }
-void Collections::addToSubClassCollections(GO* object) {
-	if (AreaResourcePoint* areaRp = dynamic_cast<AreaResourcePoint*>(object)) {
+void Collections::addToSubClassCollections(std::shared_ptr<GO> object) {
+	if (std::shared_ptr<AreaResourcePoint> areaRp = std::dynamic_pointer_cast<AreaResourcePoint>(object)) {
 		this->areaRps.push(areaRp);
 	}
-	if (ConductionResourcePoint* conductionRp = dynamic_cast<ConductionResourcePoint*>(object)) {
+	if (std::shared_ptr<ConductionResourcePoint> conductionRp = std::dynamic_pointer_cast<ConductionResourcePoint>(object)) {
 		this->conductionRps.push(conductionRp);
 	}
-	if (Unit* u = dynamic_cast<Unit*>(object)) {
+	if (std::shared_ptr<Unit> u = std::dynamic_pointer_cast<Unit>(object)) {
 		this->units.push(u);
 	}
-	if (Building* b = dynamic_cast<Building*>(object)) {
+	if (std::shared_ptr<Building>  b = std::dynamic_pointer_cast<Building>(object)) {
 		this->buildings.push(b);
 	}
-	if (Warrior* w = dynamic_cast<Warrior*>(object)) {
+	if (std::shared_ptr<Warrior>  w = std::dynamic_pointer_cast<Warrior>(object)) {
 		this->warriors.push(w);
 	}
 }
