@@ -49,6 +49,7 @@
 #include "GlobalRandomGenerator64.hpp"
 #include "NoActivePlayers.hpp"
 #include "InvalidRoomIDFormat.hpp"
+#include "string_compression.hpp"
 
 
 
@@ -148,10 +149,10 @@ std::string Room::getSaveData() const {
 
 	s.flush();
 
-	return serialStr;
+	return bfdlib::string_compression::get_compressed(serialStr);
 }
 void Room::loadSaveData(const std::string &data) {
-	std::stringstream stream(data);
+	std::stringstream stream(bfdlib::string_compression::get_decompressed(data));
 	iarchive ar(stream);
 	ar >> this->map >> this->playerIsActive >> this->currentPlayerId >> this->move;
 	this->verifyLoadedData();
@@ -398,9 +399,12 @@ void Room::initUI(RoomOutputProtocol p) {
     this->sendReady(p);
 }
 static void ADD_CHANGED_DATA_TO_PACKET(const std::string &v1, const std::string &v2, sf::Packet &dst) {
+    sf::Packet tempPacket;
+
     uint32_t blockSize = std::sqrt(v1.size());
     if (blockSize < 4) {
-        dst << (bool)false << v2;
+        tempPacket << (bool)false << v2;
+        dst << bfdlib::string_compression::get_compressed(std::string(static_cast<const char*>(tempPacket.getData()), tempPacket.getDataSize()));
         return;
     }
     // O (n)
@@ -425,16 +429,18 @@ static void ADD_CHANGED_DATA_TO_PACKET(const std::string &v1, const std::string 
         }
         else {
             if (!buff.empty()) {
-                dst << (bool)false << buff;
+                tempPacket << (bool)false << buff;
                 buff.clear();
             }
-            dst << (bool)true << it->second;
+            tempPacket << (bool)true << it->second;
             index = index + substr.size();
         }
     }
     if (!buff.empty()) {
-        dst << (bool)false << buff;
+        tempPacket << (bool)false << buff;
     }
+
+    dst << bfdlib::string_compression::get_compressed(std::string(static_cast<const char*>(tempPacket.getData()), tempPacket.getDataSize()));
 }
 void Room::syncMap(RoomOutputProtocol p) {
     for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {

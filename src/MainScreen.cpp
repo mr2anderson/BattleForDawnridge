@@ -44,6 +44,7 @@
 #include "SaveGameButtonSpec.hpp"
 #include "ReturnToMenuButtonSpec.hpp"
 #include "ServerInitError.hpp"
+#include "string_compression.hpp"
 
 
 
@@ -237,7 +238,7 @@ std::string GENERATE_SAVE_FROM_MAP(const std::string& name) {
 
 	s.flush();
 
-	return serialStr;
+	return bfdlib::string_compression::get_compressed(serialStr);
 }
 std::string READ_SAVE(const std::string& name) {
 	std::ifstream f(Root::get()->getUserdataRoot() + "/saves/" + name, std::ios::binary);
@@ -364,6 +365,12 @@ void MainScreen::receiveError(sf::Packet& remPacket) {
 	throw ServerInitError(errorCode);
 }
 static std::string UNPACK_CHANGED_DATA(const std::string &prev, sf::Packet &src) {
+    std::string string;
+    src >> string;
+    string = bfdlib::string_compression::get_decompressed(string);
+    sf::Packet temp;
+    temp.append(string.c_str(), string.size());
+
     uint32_t blockSize = std::sqrt(prev.size());
     std::unordered_map<uint16_t, std::string> blocks;
     uint16_t block = 0;
@@ -376,15 +383,15 @@ static std::string UNPACK_CHANGED_DATA(const std::string &prev, sf::Packet &src)
     std::string result;
 
     bool mode;
-    while (src >> mode) {
+    while (temp >> mode) {
         if (mode) {
             uint16_t index;
-            src >> index;
+            temp >> index;
             result.append(blocks.at(index));
         }
         else {
             std::string data;
-            src >> data;
+            temp >> data;
             result.append(data);
         }
     }
