@@ -595,11 +595,11 @@ void Room::sendReady(RoomOutputProtocol p) {
 
 
 void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName) {
-	p.logs->emplace_back("{sending_sound_to_players}");
-	
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::SOUND;
 	packet << soundName;
+
+	p.logs->emplace_back("{sending_sound_to_players }" + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClients(packet, p);
 }
@@ -621,30 +621,30 @@ void Room::sendNotTimeToSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol
     this->sendToClient(packet, p.toSend, ip);
 }
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
-	p.logs->emplace_back("{sending_return_to_menu_to_players}");
-
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
+
+	p.logs->emplace_back("{sending_return_to_menu_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClients(packet, p);
 }
 void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
 	sf::Packet packet = this->makeBasePacket();
-
 	packet << SERVER_NET_SPECS::CODES::FOCUS;
 	packet << x;
 	packet << y;
 	packet << sx;
 	packet << sy;
 
+	p.logs->emplace_back("{sending_focus_on_to_players} " + std::to_string(packet.getDataSize()) + " b");
+
 	this->sendToClients(packet, p);
 }
 void Room::sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip) {
-	p.logs->emplace_back("{sending_not_your_move_to}" + ip.toString());
-
 	sf::Packet packet = this->makeBasePacket();
-
 	packet << SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE;
+
+	p.logs->emplace_back("{sending_not_your_move_to}" + ip.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClient(packet, p.toSend, ip);
 }
