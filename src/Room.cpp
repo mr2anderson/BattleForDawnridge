@@ -599,7 +599,7 @@ void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& 
 	packet << SERVER_NET_SPECS::CODES::SOUND;
 	packet << soundName;
 
-	p.logs->emplace_back("{sending_sound_to_players }" + std::to_string(packet.getDataSize()) + " b");
+	p.logs->emplace_back("{sending_sound_to_players}" + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClients(packet, p);
 }
