@@ -134,6 +134,7 @@ private:
         ar & this->enemyMove;
         ar & this->defaultDirection;
         ar & this->currentAnimation;
+        ar & this->animationClock;
         ar & this->currentMovement;
         ar & this->toKill;
         ar & this->rageModeMovesLeft;
