@@ -887,6 +887,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\StartWarriorProducingEvent.hpp" />
     <ClInclude Include="src\Stone.hpp" />
     <ClInclude Include="src\StringLcl.hpp" />
+    <ClInclude Include="src\string_compression.hpp" />
     <ClInclude Include="src\SubHpEvent.hpp" />
     <ClInclude Include="src\SubResourceEvent.hpp" />
     <ClInclude Include="src\SubResourcesEvent.hpp" />

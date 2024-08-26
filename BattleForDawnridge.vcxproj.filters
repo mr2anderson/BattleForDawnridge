@@ -1716,12 +1716,12 @@
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\string_compression.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CloseWindowEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AddHpEvent.cpp">
