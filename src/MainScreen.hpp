@@ -72,12 +72,9 @@ private:
 	RoomID roomID;
 
 	bool readyPackageGotten;
-    std::string mapStr;
 	Map map;
-    std::string elementStr;
 	std::shared_ptr<PopUpElement> element;
 	ISelectable* selected;
-    std::string highlightTableStr;
 	HighlightTable highlightTable;
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
 	ResourceBar resourceBar;

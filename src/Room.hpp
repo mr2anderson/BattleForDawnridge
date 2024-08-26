@@ -108,13 +108,7 @@ private:
 	Restrictions restrictions;
 	Timer timeoutTimer;
 
-    std::string prevMap;
-    std::string prevElement;
-    std::string prevHighlightTable;
-    std::string prevSelected;
-    bool buttonBasesWereSent;
-    std::string prevResourceBar;
-    boost::optional<bool> prevCursorVisibility;
+    bool sendInit;
 
 	Map map;
 	std::vector<bool> playerIsActive;

@@ -63,7 +63,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 
 	this->loadSaveData(saveData);
 
-    this->mustSendInit();
+    this->sendInit = true;
 
 	this->curcorVisibility = true;
 	this->element = nullptr;
@@ -104,9 +104,10 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 		throw NoActivePlayers();
 	}
 
-    if (this->prevMap.empty()) {
+    if (this->sendInit) {
 		p.logs->emplace_back("{sending_init_world_ui_state}");
         this->initUI(p);
+        this->sendInit = false;
     }
 
 	this->receive(received, p);
@@ -123,13 +124,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& 
 	this->processBaseEvents(p);
 }
 void Room::mustSendInit() {
-    this->prevMap.clear();
-    this->prevElement.clear();
-    this->prevHighlightTable.clear();
-    this->prevSelected.clear();
-    this->buttonBasesWereSent = false;
-    this->prevResourceBar.clear();
-    this->prevCursorVisibility = boost::none;
+    this->sendInit = true;;
 }
 
 
@@ -398,50 +393,6 @@ void Room::initUI(RoomOutputProtocol p) {
     this->syncCursorVisibility(p);
     this->sendReady(p);
 }
-static void ADD_CHANGED_DATA_TO_PACKET(const std::string &v1, const std::string &v2, sf::Packet &dst) {
-    sf::Packet tempPacket;
-
-    uint32_t blockSize = std::sqrt(v1.size());
-    if (blockSize < 4) {
-        tempPacket << (bool)false << v2;
-        dst << bfdlib::string_compression::get_compressed(std::string(static_cast<const char*>(tempPacket.getData()), tempPacket.getDataSize()));
-        return;
-    }
-    // O (n)
-    std::unordered_map<std::string, uint16_t> blocks;
-    uint16_t block = 0;
-    for (uint32_t i = 0; i < v1.size(); i = i + blockSize) {
-        std::string substr = v1.substr(i, std::min<uint32_t>(blockSize, v1.size() - i));
-        blocks[substr] = block;
-        block = block + 1;
-    }
-
-    // O (n * sqrt(n)) worst
-    // O (n) best
-    std::string buff;
-    uint32_t index = 0;
-    while (index < v2.size()) {
-        std::string substr = v2.substr(index, std::min<uint32_t>(blockSize, v2.size() - index));
-        auto it = blocks.find(substr);
-        if (it == blocks.end()) {
-            buff.push_back(v2.at(index));
-            index = index + 1;
-        }
-        else {
-            if (!buff.empty()) {
-                tempPacket << (bool)false << buff;
-                buff.clear();
-            }
-            tempPacket << (bool)true << it->second;
-            index = index + substr.size();
-        }
-    }
-    if (!buff.empty()) {
-        tempPacket << (bool)false << buff;
-    }
-
-    dst << bfdlib::string_compression::get_compressed(std::string(static_cast<const char*>(tempPacket.getData()), tempPacket.getDataSize()));
-}
 void Room::syncMap(RoomOutputProtocol p) {
     for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
         this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY)->update(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
@@ -454,18 +405,14 @@ void Room::syncMap(RoomOutputProtocol p) {
     a << this->map;
     s.flush();
 
-    if (this->prevMap != str) {
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP;
-        ADD_CHANGED_DATA_TO_PACKET(this->prevMap, str, packet);
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP;
+    packet << bfdlib::string_compression::get_compressed(str);
 
-        this->prevMap = str;
+    p.logs->emplace_back("{sending_map_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_map_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::syncElement(RoomOutputProtocol p) {
     std::string str;
@@ -475,18 +422,14 @@ void Room::syncElement(RoomOutputProtocol p) {
     a << this->element;
     s.flush();
 
-    if (this->prevElement != str) {
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT;
-        ADD_CHANGED_DATA_TO_PACKET(this->prevElement, str, packet);
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT;
+    packet << bfdlib::string_compression::get_compressed(str);
 
-        this->prevElement = str;
+    p.logs->emplace_back("{sending_element_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_element_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::syncHighlightTable(RoomOutputProtocol p) {
     std::string str;
@@ -496,18 +439,14 @@ void Room::syncHighlightTable(RoomOutputProtocol p) {
     a << this->highlightTable;
     s.flush();
 
-    if (this->prevHighlightTable != str) {
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE;
-        ADD_CHANGED_DATA_TO_PACKET(this->prevHighlightTable, str, packet);
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE;
+    packet << bfdlib::string_compression::get_compressed(str);
 
-        this->prevHighlightTable = str;
+    p.logs->emplace_back("{sending_highlight_table_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_highlight_table_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::syncSelected(RoomOutputProtocol p) {
     std::string str;
@@ -517,18 +456,14 @@ void Room::syncSelected(RoomOutputProtocol p) {
     a << this->selected;
     s.flush();
 
-    if (this->prevSelected != str) {
-        this->prevSelected = str;
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
+    packet << bfdlib::string_compression::get_compressed(str);
 
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
-        packet << str;
+    p.logs->emplace_back("{sending_selected_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_selected_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::syncButtonBases(RoomOutputProtocol p) {
     std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
@@ -540,18 +475,14 @@ void Room::syncButtonBases(RoomOutputProtocol p) {
     a << buttonBases;
     s.flush();
 
-    if (!this->buttonBasesWereSent) {
-        this->buttonBasesWereSent = true;
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES;
+    packet << bfdlib::string_compression::get_compressed(str);
 
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES;
-        packet << str;
+    p.logs->emplace_back("{sending_button_bases_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_button_bases_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::syncResourceBar(RoomOutputProtocol p) {
     ResourceBar resourceBar = this->makeResourceBar();
@@ -563,32 +494,24 @@ void Room::syncResourceBar(RoomOutputProtocol p) {
     a << resourceBar;
     s.flush();
 
-    if (str != this->prevResourceBar) {
-        this->prevResourceBar = str;
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR;
+    packet << bfdlib::string_compression::get_compressed(str);
 
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR;
-        packet << str;
+    p.logs->emplace_back("{sending_resource_bar_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_resource_bar_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::syncCursorVisibility(RoomOutputProtocol p) {
-    if (!this->prevCursorVisibility.has_value() or this->prevCursorVisibility.value() != this->curcorVisibility) {
-        this->prevCursorVisibility = this->curcorVisibility;
+    sf::Packet packet = this->makeBasePacket();
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
+    packet << this->curcorVisibility;
 
-        sf::Packet packet = this->makeBasePacket();
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-        packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
-        packet << this->curcorVisibility;
+    p.logs->emplace_back("{sending_cursor_visibility_to_players} " + std::to_string(packet.getDataSize()) + " b");
 
-        p.logs->emplace_back("{sending_cursor_visibility_to_players} " + std::to_string(packet.getDataSize()) + " b");
-
-        this->sendToClients(packet, p);
-    }
+    this->sendToClients(packet, p);
 }
 void Room::sendReady(RoomOutputProtocol p) {
     sf::Packet packet = this->makeBasePacket();
