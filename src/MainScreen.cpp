@@ -114,14 +114,14 @@ void MainScreen::run(sf::RenderWindow& window) {
     sf::Event event;
 
     LOGS("Connecting to server...");
-    Timer timer(5000, Timer::TYPE::FIRST_DEFAULT);
+    Timer timer(5 * 1000, Timer::TYPE::FIRST_DEFAULT);
 	for (; ;) {
         while (window.pollEvent(event)) {}
         if (timer.ready()) {
             throw NoServerConnection();
         }
 		this->drawWaitingScreen(window);
-        if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(1000 / 60)) == sf::Socket::Status::Done) {
+        if (this->socket.connect(this->serverIP, this->serverPort, sf::milliseconds(2500)) == sf::Socket::Status::Done) {
 			this->socket.setBlocking(false);
 			this->received = std::make_tuple(false, sf::Packet());
 			break;
