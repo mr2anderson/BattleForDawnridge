@@ -55,13 +55,13 @@ const uint32_t Warrior::TOTAL_WINGS = 3;
 
 
 Warrior::Warrior() {
-    this->currentDirection = "e";
+    this->defaultDirection = "e";
     this->startAnimation("talking");
 }
 Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
 	Unit(x, y, boost::none, playerId) {
 	this->movementPoints = boost::none;
-    this->currentDirection = "e";
+    this->defaultDirection = "e";
     this->startAnimation("talking");
     this->toKill = false;
     this->rageModeMovesLeft = 0;
@@ -140,7 +140,7 @@ bool Warrior::inRage() const {
     return (this->rageModeMovesLeft > 0);
 }
 void Warrior::changeDirection(const std::string& newDirection) {
-    this->currentDirection = newDirection;
+    this->defaultDirection = newDirection;
 }
 Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
 	if (this->exist()) {
@@ -178,7 +178,12 @@ uint32_t Warrior::getSY() const {
 std::string Warrior::getTextureName() const {
 	std::string name = this->getBaseTextureName();
 	name = name + " " + this->currentAnimation;
-	name = name + " " + this->currentDirection;
+    if (this->currentAnimation == "running") {
+        name = name + " " + this->currentMovement.at(std::min<uint32_t>(this->currentMovement.size() - 1, this->animationClock.getMS() / this->getCurrentAnimationMs()));
+    }
+    else {
+        name = name + " " + this->defaultDirection;
+    }
 	name = name + std::to_string(this->getCurrentAnimationState().frame);
 
 	return name;
@@ -293,8 +298,9 @@ std::string Warrior::getCurrentAnimation() const {
 }
 AnimationState Warrior::getCurrentAnimationState() const {
     uint32_t ms = this->animationClock.getMS();
-    uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->currentDirection);
-    uint32_t msForFrame = this->getCurrentAnimationMs() / animationNumber;
+    uint32_t animationNumber = this->getAnimationNumber(this->currentAnimation, this->defaultDirection);
+    uint32_t animationMs = this->getCurrentAnimationMs();
+    uint32_t msForFrame = animationMs / animationNumber;
     uint32_t currentFrame = ms / msForFrame;
 
     if (currentFrame < animationNumber) {
@@ -306,6 +312,10 @@ AnimationState Warrior::getCurrentAnimationState() const {
             return {0, false};
         }
         return {currentFrame % animationNumber, false};
+    }
+
+    if (this->currentAnimation == "running") { // Time of running animation based on route length
+        return { currentFrame % animationNumber, ms > animationMs * this->currentMovement.size()};
     }
 
     return {animationNumber - 1, true};
@@ -343,7 +353,7 @@ bool Warrior::delayBetweenTalkingAnimations() const {
     return true;
 }
 void Warrior::setDirection(const std::string &newDirection) {
-    this->currentDirection = newDirection;
+    this->defaultDirection = newDirection;
 }
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;
@@ -375,7 +385,7 @@ Events Warrior::onUnselect(MapState *state, uint32_t x, uint32_t y, uint8_t butt
             Move move = this->getMove(state, x, y);
             this->currentMovement = move.route;
             this->startAnimation("running");
-            this->currentDirection = move.route.front();
+            this->defaultDirection = move.route.front();
             this->movementPoints = this->movementPoints.value() - move.dst;
             events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
         }
@@ -436,29 +446,24 @@ Events Warrior::processRunningAnimation(MapState *state) {
     }
 
     if (this->getCurrentAnimationState().finished) {
-        if (this->currentMovement.front() == "e") {
-            this->setX(this->getX() + 1);
+        this->startAnimation("talking");
+        for (auto& d : this->currentMovement) {
+            if (d == "e") {
+                this->setX(this->getX() + 1);
+            }
+            else if (d == "w") {
+                this->setX(this->getX() - 1);
+            }
+            else if (d == "n") {
+                this->setY(this->getY() - 1);
+            }
+            else if (d == "s") {
+                this->setY(this->getY() + 1);
+            }
         }
-        else if (this->currentMovement.front() == "w") {
-            this->setX(this->getX() - 1);
-        }
-        else if (this->currentMovement.front() == "n") {
-            this->setY(this->getY() - 1);
-        }
-        else if (this->currentMovement.front() == "s") {
-            this->setY(this->getY() + 1);
-        }
-        this->currentMovement.pop();
+        this->defaultDirection = this->currentMovement.back();
+        this->currentMovement.clear();
         events.add(std::make_shared<CloseAnimationEvent>());
-
-        if (this->currentMovement.empty()) {
-            this->startAnimation("talking");
-        }
-        else {
-            this->startAnimation("running");
-            this->currentDirection = this->currentMovement.front();
-            events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this)));
-        }
     }
 
     return events;
@@ -484,31 +489,39 @@ Events Warrior::processTippingOverAnimation() {
     return events;
 }
 float Warrior::getOffsetX() const {
-    if (this->currentMovement.empty()) {
-        return 0;
-    }
-    if (this->currentMovement.front() == "w") {
-        return -this->getOffset();
-    }
-    if (this->currentMovement.front() == "e") {
-        return this->getOffset();
-    }
-    return 0;
+    return this->getOffset("w", "e");
 }
 float Warrior::getOffsetY() const {
-    if (this->currentMovement.empty()) {
-        return 0;
-    }
-    if (this->currentMovement.front() == "n") {
-        return -this->getOffset();
-    }
-    if (this->currentMovement.front() == "s") {
-        return this->getOffset();
-    }
-    return 0;
+    return this->getOffset("n", "s");
 }
-float Warrior::getOffset() const {
-    return 64 * (float)this->animationClock.getMS() / (float)this->getCurrentAnimationMs();
+float Warrior::getOffset(const std::string& toNeg, const std::string& toPos) const {
+    uint32_t msLeft = this->animationClock.getMS();
+    std::string partial;
+    int32_t offset = 0;
+    for (uint32_t i = 0; i < this->currentMovement.size(); i = i + 1) {
+        if (this->getCurrentAnimationMs() > msLeft) {
+            partial = this->currentMovement.at(i);
+            break;
+        }
+        msLeft = msLeft - this->getCurrentAnimationMs();
+        if (this->currentMovement.at(i) == toNeg) {
+            offset = offset - 1;
+        }
+        else if (this->currentMovement.at(i) == toPos) {
+            offset = offset + 1;
+        }
+    }
+    float partialPart;
+    if (partial == toNeg) {
+        partialPart = -(float)msLeft / (float)this->getCurrentAnimationMs() * 64;
+    }
+    else if (partial == toPos) {
+        partialPart = (float)msLeft / (float)this->getCurrentAnimationMs() * 64;
+    }
+    else {
+        partialPart = 0;
+    }
+    return 64 * offset + partialPart;
 }
 sf::Color Warrior::getTextureColor() const {
     if (this->inRage()) {

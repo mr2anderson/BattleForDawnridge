@@ -18,7 +18,7 @@
 
 
 #include <limits>
-#include <stack>
+#include <algorithm>
 #include "MovementGraph.hpp"
 #include "DijkstraQueueElement.hpp"
 #include "MoveDoesNotExist.hpp"
@@ -58,21 +58,21 @@ Move MovementGraph::getMove(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, 
     while (current != from) {
         std::tuple<uint32_t, uint32_t> previous = fromToStory.at(current);
         if (std::get<0>(current) > std::get<0>(previous)) {
-            move.route.emplace("e");
+            move.route.push_back("e");
         }
         else if (std::get<0>(current) < std::get<0>(previous)) {
-            move.route.emplace("w");
+            move.route.push_back("w");
         }
         else if (std::get<1>(current) > std::get<1>(previous)) {
-            move.route.emplace("s");
+            move.route.push_back("s");
         }
         else {
-            move.route.emplace("n");
+            move.route.push_back("n");
         }
         current = previous;
     }
 
-    REVERSE_QUEUE(move.route);
+	std::reverse(move.route.begin(), move.route.end());
 
     return move;
 }
@@ -88,17 +88,6 @@ std::vector<std::tuple<uint32_t, uint32_t>> MovementGraph::getMoves(uint32_t x, 
 		}
 	}
 	return moves;
-}
-void MovementGraph::REVERSE_QUEUE(std::queue<std::string> &q) {
-    std::stack<std::string> s;
-    while (!q.empty()) {
-        s.push(q.front());
-        q.pop();
-    }
-    while (!s.empty()) {
-        q.push(s.top());
-        s.pop();
-    }
 }
 void MovementGraph::djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, 
 	HashTableMapPosition<uint32_t> &dist,

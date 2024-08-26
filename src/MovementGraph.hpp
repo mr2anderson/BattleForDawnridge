@@ -41,6 +41,5 @@ private:
 	uint32_t mapW, mapH;
 	HashTableMapPosition<MovementGraphElement> table;
 
-    static void REVERSE_QUEUE(std::queue<std::string> &q);
 	void djkstra(std::tuple<uint32_t, uint32_t> s, uint32_t movePoints, HashTableMapPosition<uint32_t> &dist, HashTableMapPosition<std::tuple<uint32_t, uint32_t>> &fromToStory);
 };

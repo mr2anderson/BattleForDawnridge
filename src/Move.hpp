@@ -30,5 +30,5 @@ struct Move {
 
 	uint32_t finalX, finalY;
     uint32_t dst;
-	std::queue<std::string> route;
+	std::vector<std::string> route;
 };

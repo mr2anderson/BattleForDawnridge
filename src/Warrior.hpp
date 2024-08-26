@@ -17,9 +17,6 @@
  */
 
 
-#include <boost/serialization/deque.hpp>
-#include <boost/serialization/stack.hpp>
-#include <boost/serialization/queue.hpp>
 #include "Unit.hpp"
 #include "ISelectable.hpp"
 #include "IWithSuspendingAnimation.hpp"
@@ -98,10 +95,10 @@ private:
 	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;
     bool enemyMove;
-	std::string currentDirection;
+	std::string defaultDirection;
 	std::string currentAnimation;
 	Clock animationClock;
-    std::queue<std::string> currentMovement;
+    std::vector<std::string> currentMovement;
     Clock footstepsClock;
 	bool toKill;
 	uint32_t rageModeMovesLeft;
@@ -116,7 +113,7 @@ private:
 	Events processTippingOverAnimation();
     float getOffsetX() const override;
     float getOffsetY() const override;
-    float getOffset() const;
+    float getOffset(const std::string &toNeg, const std::string &toPos) const;
 	sf::Color getTextureColor() const override;
 	HorizontalSelectionWindowComponent getRageModeComponent() const;
 	HorizontalSelectionWindowComponent getKillComponent();
@@ -137,11 +134,9 @@ private:
         ar & this->movementPoints;
         ar & this->hasSpecialMoves;
         ar & this->enemyMove;
-        ar & this->currentDirection;
+        ar & this->defaultDirection;
         ar & this->currentAnimation;
-        ar & this->animationClock;
         ar & this->currentMovement;
-        ar & this->footstepsClock;
         ar & this->toKill;
         ar & this->rageModeMovesLeft;
     }
