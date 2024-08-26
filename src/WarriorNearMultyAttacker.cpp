@@ -54,7 +54,7 @@ Events WarriorNearMultyAttacker::startAttack(std::shared_ptr<Unit>u, uint32_t ta
     Events events = this->WarriorAttacker::startAttack(u, targetX, targetY);
 
     Events markAsAttacked;
-    markAsAttacked.add(std::make_shared<MarkAsAttackedEvent>(this, u));
+    markAsAttacked.add(std::make_shared<MarkAsAttackedEvent>(this->getThis<WarriorNearMultyAttacker>(), u));
     events = events + markAsAttacked;
 
     return events;

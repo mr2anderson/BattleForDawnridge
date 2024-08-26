@@ -37,7 +37,7 @@ void IlluminanceTable::newFrame(const sf::View& view) {
 }
 
 
-void IlluminanceTable::add(const IWithLightSource* i) {
+void IlluminanceTable::add(std::shared_ptr<const IWithLightSource> i) {
 	if (i->getLightSource()->inView(this->view)) {
 		sf::RenderStates states;
 		states.blendMode = sf::BlendNone;
@@ -45,9 +45,6 @@ void IlluminanceTable::add(const IWithLightSource* i) {
 		std::shared_ptr<sf::Drawable> drawable = i->getLightSource()->getDrawable();
 		this->render->draw(*drawable, states);
 	}
-}
-void IlluminanceTable::add(std::shared_ptr<const IWithLightSource> i) {
-	this->add(i.get());
 }
 
 

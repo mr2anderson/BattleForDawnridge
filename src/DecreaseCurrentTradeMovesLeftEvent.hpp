@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class TradingSpec;
 
 class DecreaseCurrentTradeMovesLeftEvent : public Event {
 public:
-	DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec);
+	DecreaseCurrentTradeMovesLeftEvent(std::shared_ptr<TradingSpec> spec);
 
-	TradingSpec* getSpec();
+	std::shared_ptr<TradingSpec> getSpec();
 private:
-	TradingSpec* spec;
+	std::shared_ptr<TradingSpec> spec;
 };

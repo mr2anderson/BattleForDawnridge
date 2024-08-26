@@ -987,8 +987,8 @@ void Room::handleStartWarriorProducingEvent(std::shared_ptr<StartWarriorProducin
 }
 void Room::handleTryToBuildEvent(std::shared_ptr<TryToBuildEvent> e, RoomOutputProtocol p) {
 	if (this->getCurrentPlayer()->getResources() >= e->getBuilding()->getCost()) {
-		this->bm = BuildingMode(e->getBuilding(), this->getCurrentPlayer()->getId());
-		Events bmStartEvent = bm.start(this->map.getStatePtr());
+		std::shared_ptr<BuildingMode> bm = std::make_shared<BuildingMode>(e->getBuilding(), this->getCurrentPlayer()->getId());
+		Events bmStartEvent = bm->start(this->map.getStatePtr());
 		this->addEvents(bmStartEvent, p);
 	}
 	else {

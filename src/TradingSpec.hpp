@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "IBuildingSpec.hpp"
 #include "Trade.hpp"
 

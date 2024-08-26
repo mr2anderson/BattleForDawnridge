@@ -20,7 +20,7 @@
 #include "DoTradeEvent.hpp"
 
 
-DoTradeEvent::DoTradeEvent(std::shared_ptr<const Building>  b, TradingSpec* spec, const Trade& trade) {
+DoTradeEvent::DoTradeEvent(std::shared_ptr<const Building>  b, std::shared_ptr<TradingSpec> spec, const Trade& trade) {
 	this->building = b;
 	this->spec = spec;
 	this->trade = trade;
@@ -28,7 +28,7 @@ DoTradeEvent::DoTradeEvent(std::shared_ptr<const Building>  b, TradingSpec* spec
 std::shared_ptr<const Building>  DoTradeEvent::getBuilding() const {
 	return this->building;
 }
-TradingSpec* DoTradeEvent::getSpec() {
+std::shared_ptr<TradingSpec> DoTradeEvent::getSpec() {
 	return this->spec;
 }
 Trade DoTradeEvent::getTrade() const {

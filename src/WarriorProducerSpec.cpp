@@ -111,7 +111,7 @@ Events WarriorProducerSpec::getActiveNewMoveEvent(std::shared_ptr<const Building
 		response.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
 		response.add(std::make_shared<PlaySoundEvent>(this->currentProducing->getSoundName()));
 		response.add(std::make_shared<CreateEEvent>(flyingE));
-		response.add(std::make_shared<WarriorProducingFinishedEvent>(this, this->currentProducing));
+		response.add(std::make_shared<WarriorProducingFinishedEvent>(this->getThis<WarriorProducerSpec>(), this->currentProducing));
 
 		return response;
 	}
@@ -182,7 +182,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 				}
 				else {
 					produceEvent.add(std::make_shared<SubResourcesEvent>(w->getCost()));
-					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this, w));
+					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this->getThis<WarriorProducerSpec>(), w));
 				}
 
 				components.emplace_back(

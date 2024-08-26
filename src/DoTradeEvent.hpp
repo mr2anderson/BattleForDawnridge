@@ -31,13 +31,13 @@ class TradingSpec;
 
 class DoTradeEvent : public Event {
 public:
-	DoTradeEvent(std::shared_ptr<const Building>  b, TradingSpec* spec, const Trade& trade);
+	DoTradeEvent(std::shared_ptr<const Building>  b, std::shared_ptr<TradingSpec> spec, const Trade& trade);
 
 	std::shared_ptr<const Building>  getBuilding() const;
-	TradingSpec* getSpec();
+	std::shared_ptr<TradingSpec> getSpec();
 	Trade getTrade() const;
 private:
 	std::shared_ptr<const Building>  building;
-	TradingSpec* spec;
+	std::shared_ptr<TradingSpec> spec;
 	Trade trade;
 };

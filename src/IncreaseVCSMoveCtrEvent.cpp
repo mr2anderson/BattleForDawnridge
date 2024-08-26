@@ -20,9 +20,9 @@
 #include "IncreaseVCSMoveCtrEvent.hpp"
 
 
-IncreaseVCSMoveCtrEvent::IncreaseVCSMoveCtrEvent(VictoryConditionSpec *spec) {
+IncreaseVCSMoveCtrEvent::IncreaseVCSMoveCtrEvent(std::shared_ptr<VictoryConditionSpec>spec) {
     this->spec = spec;
 }
-VictoryConditionSpec* IncreaseVCSMoveCtrEvent::getSpec() {
+std::shared_ptr<VictoryConditionSpec> IncreaseVCSMoveCtrEvent::getSpec() {
     return this->spec;
 }

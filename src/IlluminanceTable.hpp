@@ -32,7 +32,6 @@ public:
 
 	void newFrame(const sf::View& view);
 
-	void add(const IWithLightSource* i);
 	void add(std::shared_ptr<const IWithLightSource> i);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -17,6 +17,7 @@
  */
 
 
+#include <memory>
 #include "Event.hpp"
 
 
@@ -28,9 +29,9 @@ class VictoryConditionSpec;
 
 class IncreaseVCSMoveCtrEvent : public Event {
 public:
-    IncreaseVCSMoveCtrEvent(VictoryConditionSpec *spec);
+    IncreaseVCSMoveCtrEvent(std::shared_ptr<VictoryConditionSpec> spec);
 
-    VictoryConditionSpec* getSpec();
+    std::shared_ptr<VictoryConditionSpec> getSpec();
 private:
-    VictoryConditionSpec *spec;
+    std::shared_ptr<VictoryConditionSpec> spec;
 };

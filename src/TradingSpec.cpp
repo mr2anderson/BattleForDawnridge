@@ -161,7 +161,7 @@ BuildingHorizontalSelectionWindowComponent TradingSpec::getTradeComponent(std::s
 	Events events;
 	if (state->getPlayersPtr()->getPlayerPtr(b->getPlayerId())->getResources().get(trade.sell.type) >= trade.sell.n) {
         Events doTradeEvent;
-        doTradeEvent.add(std::make_shared<DoTradeEvent>(b, this, trade));
+        doTradeEvent.add(std::make_shared<DoTradeEvent>(b, this->getThis<TradingSpec>(), trade));
         if (freeSpace >= Resources({trade.buy})) {
             events = events + doTradeEvent;
         }

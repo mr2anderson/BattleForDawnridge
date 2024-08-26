@@ -20,9 +20,9 @@
 #include "DecreaseCurrentTradeMovesLeftEvent.hpp"
 
 
-DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(TradingSpec* spec) {
+DecreaseCurrentTradeMovesLeftEvent::DecreaseCurrentTradeMovesLeftEvent(std::shared_ptr<TradingSpec> spec) {
 	this->spec = spec;
 }
-TradingSpec* DecreaseCurrentTradeMovesLeftEvent::getSpec() {
+std::shared_ptr<TradingSpec> DecreaseCurrentTradeMovesLeftEvent::getSpec() {
 	return this->spec;
 }

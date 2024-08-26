@@ -31,7 +31,6 @@ public:
 	Building();
 	Building(uint32_t x, uint32_t y, uint32_t playerId);
 	Building(const Building& building);
-	~Building() override;
 	virtual std::shared_ptr<Building>  createSameTypeBuilding() const = 0;
 
 	bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {

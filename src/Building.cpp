@@ -345,7 +345,7 @@ Events Building::processRegeneration() {
 			std::shared_ptr<HPFlyingE> element = std::make_shared<HPFlyingE>(std::min(toHeal, this->getMaxHP() - this->getHP()), true, this->getX(), this->getY(), this->getSX(), this->getSY());
 			events.add(std::make_shared<PlaySoundEvent>("regeneration"));
 			events.add(std::make_shared<CreateEEvent>(element));
-			events.add(std::make_shared<AddHpEvent>(this, toHeal));
+			events.add(std::make_shared<AddHpEvent>(this->getThis<Building>(), toHeal));
 			if (this->getHP() + toHeal >= this->getMaxHP()) {
 				std::shared_ptr<ImageFlyingE> element2 = std::make_shared<ImageFlyingE>("hammer_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
 				events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));

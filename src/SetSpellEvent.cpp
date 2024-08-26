@@ -20,11 +20,11 @@
 #include "SetSpellEvent.hpp"
 
 
-SetSpellEvent::SetSpellEvent(SpellProducerSpec* spec, std::shared_ptr<Spell> spell) {
+SetSpellEvent::SetSpellEvent(std::shared_ptr<SpellProducerSpec> spec, std::shared_ptr<Spell> spell) {
 	this->spec = spec;
 	this->spell = spell;
 }
-SpellProducerSpec* SetSpellEvent::getSpec() {
+std::shared_ptr<SpellProducerSpec> SetSpellEvent::getSpec() {
 	return this->spec;
 }
 std::shared_ptr<Spell> SetSpellEvent::getSpell() {

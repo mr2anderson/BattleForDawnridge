@@ -58,7 +58,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 					event.add(std::make_shared<PlaySoundEvent>(building->getSoundName()));
 					event.add(std::make_shared<SubResourcesEvent>(spell->getCost()));
 					event.add(std::make_shared<CreateEEvent>(w));
-					event.add(std::make_shared<SetSpellEvent>(this, spell));
+					event.add(std::make_shared<SetSpellEvent>(this->getThis<SpellProducerSpec>(), spell));
 				}
 				else {
 					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{no_resources_for_spell_producing}"), StringLcl("{OK}"), clickSoundEvent);

@@ -88,16 +88,16 @@ Events Warrior::hit(uint32_t d) {
     response.add(std::make_shared<PlaySoundEvent>(this->getBeenHitSoundName()));
 
     if (hpPointsAfterOperation == 0) {
-        response.add(std::make_shared<StartWarriorAnimationEvent>(this, "tipping over"));
+        response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "tipping over"));
     }
     else {
-        response.add(std::make_shared<StartWarriorAnimationEvent>(this, "been hit"));
+        response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "been hit"));
     }
 
     std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
-    response.add(std::make_shared<SubHpEvent>(this, this->getHP() - hpPointsAfterOperation - 1 * (hpPointsAfterOperation == 0)));
+    response.add(std::make_shared<SubHpEvent>(this->getThis<Warrior>(), this->getHP() - hpPointsAfterOperation - 1 * (hpPointsAfterOperation == 0)));
 
     response.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<Warrior>())));
 
@@ -483,7 +483,7 @@ Events Warrior::processTippingOverAnimation() {
 
     if (this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
-        events.add(std::make_shared<SubHpEvent>(this, 1));
+        events.add(std::make_shared<SubHpEvent>(this->getThis<Warrior>(), 1));
     }
 
     return events;

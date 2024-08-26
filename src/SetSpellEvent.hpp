@@ -30,11 +30,11 @@ class Spell;
 
 class SetSpellEvent : public Event {
 public:
-	SetSpellEvent(SpellProducerSpec* spec, std::shared_ptr<Spell> spell);
+	SetSpellEvent(std::shared_ptr<SpellProducerSpec> spec, std::shared_ptr<Spell> spell);
 
-	SpellProducerSpec* getSpec();
+	std::shared_ptr<SpellProducerSpec> getSpec();
 	std::shared_ptr<Spell> getSpell();
 private:
-	SpellProducerSpec* spec;
+	std::shared_ptr<SpellProducerSpec> spec;
 	std::shared_ptr<Spell> spell;
 };
