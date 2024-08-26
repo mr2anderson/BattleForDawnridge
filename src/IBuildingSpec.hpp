@@ -62,7 +62,7 @@ protected:
 		return std::static_pointer_cast<T>(this->shared_from_this());
 	}
 	template<typename T> std::shared_ptr<const T> getThis() const {
-		return std::static_pointer_cast<T>(this->shared_from_this());
+		return std::static_pointer_cast<const T>(this->shared_from_this());
 	}
 private:
     friend class boost::serialization::access;

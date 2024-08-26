@@ -153,7 +153,7 @@ bool Building::connectedToOrigin(MapState* state) const {
 }
 Events Building::destroy(MapState *state) {
     Events response;
-	response.add(std::make_shared<SubHpEvent>(this, this->getHP()));
+	response.add(std::make_shared<SubHpEvent>(this->getThis<Building>(), this->getHP()));
 
 	for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
 		response = response + this->specs.at(i)->getEventOnDestroy(this->getThis<Building>(), state);
@@ -319,7 +319,7 @@ Events Building::hit(uint32_t d) {
 	std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
 	response.add(std::make_shared<CreateEEvent>(hpFlyingE));
 
-	response.add(std::make_shared<SubHpEvent>(this, d));
+	response.add(std::make_shared<SubHpEvent>(this->getThis<Building>(), d));
 
 	return response;
 }

@@ -118,7 +118,6 @@ private:
 	std::queue<std::shared_ptr<Event>> events;
 	uint32_t move;
 	HighlightTable highlightTable;
-	BuildingMode bm;
 	uint32_t currentGOIndexNewMoveEvent;
 	uint32_t totalGONewMoveEvents;
 	std::shared_ptr<ISelectable> selected;
