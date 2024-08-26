@@ -55,6 +55,15 @@
 #endif
 
 
+#if defined(_WIN32) // Based on compilation system
+#define DATA_ROOT "resources"
+#define USERDATA_ROOT "userdata"
+#else
+#define DATA_ROOT "../resources"
+#define USERDATA_ROOT "../userdata"
+#endif
+
+
 LoadingScreen::LoadingScreen(sf::RenderWindow &window) {
     this->alreadyFinished = false;
 }
@@ -94,8 +103,8 @@ void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
 	window.display();
 }
 bool LoadingScreen::loadBase(sf::RenderWindow &window) {
-    Root::get()->setDataRoot("../resources");
-    Root::get()->setUserdataRoot("../userdata");
+    Root::get()->setDataRoot(DATA_ROOT);
+    Root::get()->setUserdataRoot(USERDATA_ROOT);
     try {
         Fonts::get()->add("1", "fonts/1.ttf");
         Textures::get()->add("loading_screen", "images/loading_screen.jpg");
