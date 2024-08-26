@@ -17,6 +17,10 @@
  */
 
 
+#include <boost/version.hpp>
+static_assert(BOOST_VERSION == 108500); // You can try to compile with different version of Boost, however, program won't be able to connect to server.
+
+
 #include "Program.hpp"
 
 
