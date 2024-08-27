@@ -96,6 +96,11 @@ LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
         }
     #endif
 
+    sf::Texture* iconTexture = Textures::get().get("icon");
+    sf::Image iconImage = iconTexture->copyToImage();
+    const sf::Uint8* iconPixels = iconImage.getPixelsPtr();
+    window.setIcon(iconImage.getSize().x, iconImage.getSize().y, iconPixels);
+
     return LoadingScreenResponse(LoadingScreenResponse::TYPE::OK);
 }
 void LoadingScreen::setBaseScreen(sf::RenderWindow &window) {
@@ -149,6 +154,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
             Music::get().add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
         Textures::get().add("bg", "images/bg.jpg");
+        Textures::get().add("icon", "images/icon.png");
         #if defined(USE_CUSTOM_CURSOR)
             Textures::get().add("cursor", "images/cursor.png");
         #endif
