@@ -167,6 +167,7 @@ private:
 
     sf::Packet makeBasePacket() const;
 	void sendToClients(const sf::Packet& what, RoomOutputProtocol p);
+	void sendToClients(const sf::Packet& forCurrentPlayer, const sf::Packet& forOther, RoomOutputProtocol p);
     void sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host);
 
 	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p);

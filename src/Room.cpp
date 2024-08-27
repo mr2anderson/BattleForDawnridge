@@ -449,21 +449,33 @@ void Room::syncHighlightTable(RoomOutputProtocol p) {
     this->sendToClients(packet, p);
 }
 void Room::syncSelected(RoomOutputProtocol p) {
-    std::string str;
-    boost::iostreams::back_insert_device<std::string> inserter(str);
-    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s(inserter);
-    oarchive a(s);
-    a << this->selected;
-    s.flush();
+    std::string str1;
+    boost::iostreams::back_insert_device<std::string> inserter1(str1);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s1(inserter1);
+    oarchive a1(s1);
+    a1 << this->selected;
+    s1.flush();
 
-    sf::Packet packet = this->makeBasePacket();
-    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
-    packet << bfdlib::string_compression::get_compressed(str);
+	std::string str2;
+	boost::iostreams::back_insert_device<std::string> inserter2(str2);
+	boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>> s2(inserter2);
+	oarchive a2(s2);
+	a2 << std::shared_ptr<ISelectable>(nullptr);
+	s2.flush();
 
-    p.logs->emplace_back("{sending_selected_to_players} " + std::to_string(packet.getDataSize()) + " b");
+    sf::Packet packet1 = this->makeBasePacket();
+    packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
+    packet1 << bfdlib::string_compression::get_compressed(str1);
 
-    this->sendToClients(packet, p);
+	sf::Packet packet2 = this->makeBasePacket();
+	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
+	packet2 << bfdlib::string_compression::get_compressed(str2);
+
+    p.logs->emplace_back("{sending_selected_to_players} " + std::to_string(packet1.getDataSize()) + " ; " + std::to_string(packet2.getDataSize()) + " b");
+
+	this->sendToClients(packet1, packet2, p);
 }
 void Room::syncButtonBases(RoomOutputProtocol p) {
     std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases = this->makeButtonBases();
@@ -504,14 +516,19 @@ void Room::syncResourceBar(RoomOutputProtocol p) {
     this->sendToClients(packet, p);
 }
 void Room::syncCursorVisibility(RoomOutputProtocol p) {
-    sf::Packet packet = this->makeBasePacket();
-    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
-    packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
-    packet << this->curcorVisibility;
+    sf::Packet packet1 = this->makeBasePacket();
+    packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+    packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
+    packet1 << this->curcorVisibility;
 
-    p.logs->emplace_back("{sending_cursor_visibility_to_players} " + std::to_string(packet.getDataSize()) + " b");
+	sf::Packet packet2 = this->makeBasePacket();
+	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
+	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
+	packet2 << (bool)true;
 
-    this->sendToClients(packet, p);
+    p.logs->emplace_back("{sending_cursor_visibility_to_players} " + std::to_string(packet1.getDataSize()) + " ; " + std::to_string(packet2.getDataSize()) + " b");
+
+    this->sendToClients(packet1, packet2, p);
 }
 void Room::sendReady(RoomOutputProtocol p) {
     sf::Packet packet = this->makeBasePacket();
@@ -596,6 +613,33 @@ void Room::sendToClients(const sf::Packet& what, RoomOutputProtocol p) {
 		if (clientTable.find(clientIpInt) == clientTable.end()) {
 			clientTable[clientIpInt] = true;
             this->sendToClient(what, p.toSend, clientIp);
+		}
+	}
+}
+void Room::sendToClients(const sf::Packet& forCurrentPlayer, const sf::Packet& forOther, RoomOutputProtocol p) {
+	std::unordered_map<uint32_t, bool> useFullPacket;
+	for (uint32_t i = 1; i <= this->playersNumber(); i = i + 1) {
+		uint32_t ip = p.remotePlayers->get(i).getIp().toInteger();
+		if (this->currentPlayerId == i) {
+			useFullPacket[ip] = true;
+		}
+		else {
+			if (useFullPacket.find(ip) == useFullPacket.end()) {
+				useFullPacket[ip] = false;
+			}
+		}
+	}
+
+	for (auto pair : useFullPacket) {
+		uint32_t ipInt;
+		bool flag;
+		std::tie(ipInt, flag) = pair;
+		sf::IpAddress ip(ipInt);
+		if (flag) {
+			this->sendToClient(forCurrentPlayer, p.toSend, ip);
+		}
+		else {
+			this->sendToClient(forOther, p.toSend, ip);
 		}
 	}
 }
