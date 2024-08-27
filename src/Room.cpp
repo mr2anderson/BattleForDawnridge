@@ -762,6 +762,7 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<ChangeMoveEvent> changeMoveEvent = std::dynamic_pointer_cast<ChangeMoveEvent>(e)) {
 		this->handleChangeMoveEvent(changeMoveEvent, p);
+		result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e)) {
 		this->handleReturnToMenuEvent(returnToMenuEvent, p);
