@@ -40,7 +40,19 @@ bool UUID::operator>(const UUID &b) const {
     return this->a > b.a;
 }
 std::string UUID::toString() const {
-    return this->a.str();
+    std::string result;
+    uint128_t buff = this->a;
+    while (buff) {
+        uint8_t c = (buff % 36).convert_to<uint8_t>();
+        buff = buff / 36;
+        if (c >= 0 and c <= 9) {
+            result.push_back('0' + c);
+        }
+        else {
+            result.push_back('a' + (c - 10));
+        }
+    }
+    return result;
 }
 uint128_t UUID::value() const {
     return this->a;
