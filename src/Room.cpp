@@ -751,7 +751,7 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<BuildEvent> buildEvent = std::dynamic_pointer_cast<BuildEvent>(e)) {
 		this->handleBuild(buildEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
+        result = result | SYNC_UI::SYNC_MAP | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<PlaySoundEvent> playSoundEvent = std::dynamic_pointer_cast<PlaySoundEvent>(e)) {
 		this->handlePlaySoundEvent(playSoundEvent, p);
@@ -813,7 +813,7 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<SubHpEvent> subHpEvent = std::dynamic_pointer_cast<SubHpEvent>(e)) {
 		this->handleSubHpEvent(subHpEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
+        result = result | SYNC_UI::SYNC_MAP | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<SetFireEvent> setFireEvent = std::dynamic_pointer_cast<SetFireEvent>(e)) {
 		this->handleSetFireEvent(setFireEvent, p);
