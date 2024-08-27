@@ -38,7 +38,7 @@ public:
 
 	void clear();
 	void mark(SetHighlightEvent e);
-	std::vector<sf::RectangleShape> getRects() const;
+	std::vector<std::shared_ptr<sf::Drawable>> getDrawable() const;
 private:
 	HashTableMapPosition<std::set<SerializableColor>> data;
 

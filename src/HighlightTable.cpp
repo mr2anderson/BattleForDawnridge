@@ -18,7 +18,6 @@
 
 
 #include "HighlightTable.hpp"
-#include "ColorBlender.hpp"
 
 
 HighlightTable::HighlightTable() = default;
@@ -40,17 +39,45 @@ static std::vector<sf::Color> TO_SF_VECTOR(const std::set<SerializableColor> &se
 }
 
 
-std::vector<sf::RectangleShape> HighlightTable::getRects() const {
-	std::vector<sf::RectangleShape> rects;
-	rects.reserve(this->data.size());
-	for (const auto& p : this->data) {
+std::vector<std::shared_ptr<sf::Drawable>> HighlightTable::getDrawable() const {
+	std::vector<std::shared_ptr<sf::Drawable>> result;
+    for (const auto& p : this->data) {
+        if (p.second.size() == 2) {
+            sf::ConvexShape shape;
+            shape.setFillColor(p.second.begin()->getSfColor());
+            shape.setPointCount(3);
+            shape.setPoint(0, sf::Vector2f(64 * std::get<0>(p.first), 64 * std::get<1>(p.first)));
+            shape.setPoint(1, sf::Vector2f(64 * std::get<0>(p.first), 64 * std::get<1>(p.first) + 64));
+            shape.setPoint(2, sf::Vector2f(64 * std::get<0>(p.first) + 64, 64 * std::get<1>(p.first)));
+            result.push_back(std::make_shared<sf::ConvexShape>(shape));
+
+            shape = sf::ConvexShape();
+            shape.setFillColor((++p.second.begin())->getSfColor());
+            shape.setPointCount(3);
+            shape.setPoint(0, sf::Vector2f(64 * std::get<0>(p.first) + 64, 64 * std::get<1>(p.first) + 64));
+            shape.setPoint(1, sf::Vector2f(64 * std::get<0>(p.first) + 64, 64 * std::get<1>(p.first)));
+            shape.setPoint(2, sf::Vector2f(64 * std::get<0>(p.first), 64 * std::get<1>(p.first) + 64));
+            result.push_back(std::make_shared<sf::ConvexShape>(shape));
+        }
+        else {
+            uint32_t rectHeight = 64 / p.second.size();
+            auto it = p.second.begin();
+            for (uint32_t i = 0; i < 64; i = i + rectHeight) {
+                sf::RectangleShape rect;
+                rect.setSize(sf::Vector2f(64, rectHeight));
+                rect.setPosition(64 * std::get<0>(p.first), 64 * std::get<1>(p.first) + i);
+                rect.setFillColor(it->getSfColor());
+                result.push_back(std::make_shared<sf::RectangleShape>(rect));
+                it++;
+            }
+        }
         sf::RectangleShape rect;
         rect.setSize(sf::Vector2f(64, 64));
         rect.setPosition(64 * std::get<0>(p.first), 64 * std::get<1>(p.first));
-        rect.setFillColor(ColorBlender::get().blend(TO_SF_VECTOR(p.second)));
-        rect.setOutlineThickness(1);
+        rect.setFillColor(sf::Color::Transparent);
         rect.setOutlineColor(sf::Color::Black);
-        rects.push_back(rect);
+        rect.setOutlineThickness(1);
+        result.push_back(std::make_shared<sf::RectangleShape>(rect));
 	}
-	return rects;
+    return result;
 }

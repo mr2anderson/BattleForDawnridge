@@ -23,20 +23,15 @@
 #include "Player.hpp"
 
 
-static const sf::Color BLUE = sf::Color(0, 191, 255);
-static const sf::Color GREEN = sf::Color(154, 205, 50);
-static const sf::Color PURPLE = sf::Color(238, 130, 238);
-
-
 static sf::Color GET_PLAYER_COLOR(uint32_t playerId) {
     if (playerId == Player::BLUE) {
-        return BLUE;
+        return sf::Color(0, 0, 255);
     }
     if (playerId == Player::GREEN) {
-        return GREEN;
+        return sf::Color(0, 255, 0);
     }
     if (playerId == Player::PURPLE) {
-        return PURPLE;
+        return sf::Color(128, 0, 128);
     }
     std::cerr << "HighlightColors: warning: unknown color" << std::endl;
     return {};
@@ -45,7 +40,7 @@ static sf::Color GET_PLAYER_COLOR(uint32_t playerId) {
 
 static sf::Color EVAL(sf::Color c, uint32_t playerId) {
     c = ColorBlender::get().blend(c, GET_PLAYER_COLOR(playerId));
-    c.a = 35;
+    c.a = 40;
     return c;
 }
 
@@ -53,37 +48,28 @@ static sf::Color EVAL(sf::Color c, uint32_t playerId) {
 HighlightColors::HighlightColors() = default;
 
 
-static const sf::Color SPRING_GREEN = sf::Color(0, 255, 127);
-static const sf::Color ORANGE_RED = sf::Color(255, 69, 0);
-static const sf::Color DARK_BLUE = sf::Color(0, 0, 255);
-static const sf::Color PERU = sf::Color(205, 133, 63);
-static const sf::Color RED = sf::Color(255, 0, 0);
-static const sf::Color TURQUOISE = sf::Color(64, 224, 208);
-static const sf::Color GOLDEN_ROD = sf::Color(218, 165, 32);
-static const sf::Color OLIVE_DRAB = sf::Color(107, 142, 35);
-
 
 sf::Color HighlightColors::getWarriorMovementColor(uint32_t playerId) const {
-    return EVAL(SPRING_GREEN, playerId);
+    return EVAL(sf::Color(0, 255, 0), playerId);
 }
 sf::Color HighlightColors::getWarriorAttackColor(uint32_t playerId) const {
-    return EVAL(ORANGE_RED, playerId);
+    return EVAL(sf::Color(255, 0, 0), playerId);
 }
 sf::Color HighlightColors::getWarriorHealColor(uint32_t playerId) const {
-    return EVAL(DARK_BLUE, playerId);
+    return EVAL(sf::Color(0, 0, 255), playerId);
 }
 sf::Color HighlightColors::getTerritoryExpandingColor(uint32_t playerId) const {
-    return EVAL(PERU, playerId);
+    return EVAL(sf::Color(255, 192, 203), playerId);
 }
 sf::Color HighlightColors::getBuildingAttackColor(uint32_t playerId) const {
-    return EVAL(RED, playerId);
+    return EVAL(sf::Color(255, 0, 0), playerId);
 }
 sf::Color HighlightColors::getBuildingHealColor(uint32_t playerId) const {
-    return EVAL(TURQUOISE, playerId);
+    return EVAL(sf::Color(0, 0, 255), playerId);
 }
 sf::Color HighlightColors::getWarriorProducingColor(uint32_t playerId) const {
-    return EVAL(GOLDEN_ROD, playerId);
+    return EVAL(sf::Color(0, 0, 255), playerId);
 }
 sf::Color HighlightColors::getResourceCollectingColor(uint32_t playerId) const {
-    return EVAL(OLIVE_DRAB, playerId);
+    return EVAL(sf::Color(0, 128, 255), playerId);
 }

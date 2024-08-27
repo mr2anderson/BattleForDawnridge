@@ -572,9 +572,9 @@ void MainScreen::drawCells(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawHighlightion(sf::RenderWindow& window) {
-	std::vector<sf::RectangleShape> rects = this->highlightTable.getRects();
-	for (const auto& rect : rects) {
-		window.draw(rect);
+	std::vector<std::shared_ptr<sf::Drawable>> d = this->highlightTable.getDrawable();
+	for (const auto& e : d) {
+		window.draw(*e);
 	}
 }
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
