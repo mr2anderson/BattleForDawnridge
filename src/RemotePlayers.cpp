@@ -27,12 +27,12 @@ void RemotePlayers::set(RemotePlayer player) {
 	}
 	this->data.at(player.getId() - 1) = player;
 }
-void RemotePlayers::add(sf::IpAddress ip) {
-    this->set(RemotePlayer(this->size() + 1, ip));
+void RemotePlayers::add(UUID uuid) {
+    this->set(RemotePlayer(this->size() + 1, uuid));
 }
 RemotePlayer RemotePlayers::get(uint32_t id) const {
     if (id - 1 >= this->data.size()) {
-        return {id, sf::IpAddress::None};
+        return {id, INVALID_UUID};
     }
 	return this->data.at(id - 1);
 }

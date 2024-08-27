@@ -44,3 +44,10 @@ private:
 		ar & this->_value;
 	}
 };
+
+
+template <> struct std::hash<RoomID> {
+	std::size_t operator()(const RoomID& k) const {
+		return std::hash<std::string>{}(k.value());
+	}
+};

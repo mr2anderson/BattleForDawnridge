@@ -113,6 +113,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
 
 
 
+    UUID id;
     std::queue<sf::Packet> toSend;
     std::tuple<bool, sf::Packet> received = std::make_tuple(false, sf::Packet());
     socket.setBlocking(false);
@@ -151,7 +152,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
             uint32_t playersAtHost;
             receivedPacket >> playersAtHost;
             while (playersAtHost and players.size() != room->playersNumber()) {
-                players.set(RemotePlayer(players.size() + 1, sf::IpAddress::getLocalAddress()));
+                players.set(RemotePlayer(players.size() + 1, id));
                 playersAtHost = playersAtHost - 1;
             }
         }
@@ -170,13 +171,13 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
         PROCESS_SENDING(socket, toSend);
         PROCESS_RECEIVING(socket, received);
 
-		boost::optional<std::tuple<sf::Packet, sf::IpAddress>> tuple = boost::none;
+		boost::optional<std::tuple<sf::Packet, UUID>> tuple = boost::none;
 		if (std::get<bool>(received)) {
-            tuple = std::make_tuple(std::get<sf::Packet>(received), sf::IpAddress::getLocalAddress());
+            tuple = std::make_tuple(std::get<sf::Packet>(received), id);
             std::get<bool>(received) = false;
         }
 
-        std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSendGlobal;
+        std::vector<std::tuple<sf::Packet, UUID>> toSendGlobal;
         std::vector<StringLcl> logs;
         RoomOutputProtocol protocol;
         protocol.logs = &logs;

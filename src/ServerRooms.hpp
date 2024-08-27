@@ -31,11 +31,9 @@ public:
     void createIfValid(const RoomID& id, const std::string &rd);
     uint32_t addPlayers(const RoomID &id, const Connection &connection, uint32_t n);
 
-    void removeConnection(const Connection &connection, std::vector<StringLcl> *toLogs);
-
 	void update(std::vector<StringLcl> *toLogs);
 private:
-    std::unordered_map<std::string, ServerRoom> data;
+    std::unordered_map<RoomID, ServerRoom> data;
 
     void updateRooms(std::vector<StringLcl> *toLogs);
 };

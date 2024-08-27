@@ -18,6 +18,7 @@
 
 
 #include <vector>
+#include <SFML/Network.hpp>
 #include "StringLcl.hpp"
 #include "RemotePlayers.hpp"
 
@@ -27,6 +28,6 @@
 
 struct RoomOutputProtocol {
 	std::vector<StringLcl>* logs;
-	std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend;
+	std::vector<std::tuple<sf::Packet, UUID>>* toSend;
 	const RemotePlayers* remotePlayers;
 };

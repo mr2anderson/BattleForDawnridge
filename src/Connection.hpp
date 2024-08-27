@@ -23,6 +23,7 @@
 #include <optional>
 #include <queue>
 #include <memory>
+#include "UUID.hpp"
 
 
 #pragma once
@@ -37,15 +38,14 @@ public:
     bool hasError() const;
     void send(const sf::Packet &packet);
     void update();
-    sf::IpAddress getIP() const;
+    UUID getUUID() const;
 private:
     bool error;
     std::shared_ptr<sf::TcpSocket> socket;
     std::queue<sf::Packet> toSend;
     std::tuple<bool, sf::Packet> received;
-    sf::IpAddress ip;
+    UUID uuid;
 
-    void updateIP();
     void processSending();
     void processReceiving();
 };

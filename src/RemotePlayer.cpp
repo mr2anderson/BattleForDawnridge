@@ -21,13 +21,13 @@
 
 
 RemotePlayer::RemotePlayer() = default;
-RemotePlayer::RemotePlayer(uint32_t id, sf::IpAddress ip) {
+RemotePlayer::RemotePlayer(uint32_t id, UUID connectionId) {
 	this->id = id;
-	this->ip = ip;
+	this->connectionId = connectionId;
 }
 uint32_t RemotePlayer::getId() const {
 	return this->id;
 }
-sf::IpAddress RemotePlayer::getIp() const {
-	return this->ip;
+UUID RemotePlayer::getConnectionId() const {
+	return this->connectionId;
 }

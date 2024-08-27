@@ -38,12 +38,10 @@ uint32_t ServerRoom::addPlayers(const Connection &connection, uint32_t n) {
         if (added == n) {
             break;
         }
-        bool free = (this->connections.find(this->players.get(i).getIp().toInteger()) == this->connections.end());
+        bool free = (this->connections.find(this->players.get(i).getConnectionId()) == this->connections.end());
         if (free) {
-            if (this->connections.find(connection.getIP().toInteger()) == this->connections.end()) {
-                this->connections[connection.getIP().toInteger()] = connection;
-            }
-            this->players.set(RemotePlayer(i, connection.getIP()));
+            this->connections[connection.getUUID()] = connection;
+            this->players.set(RemotePlayer(i, connection.getUUID()));
             added = added + 1;
         }
     }
@@ -53,22 +51,12 @@ uint32_t ServerRoom::addPlayers(const Connection &connection, uint32_t n) {
     return added;
 }
 
-ServerRoom::Status ServerRoom::removeConnection(const Connection &connection, std::vector<StringLcl> *toLogs) {
-    toLogs->emplace_back("{connection_erased}" + connection.getIP().toString());
-    this->connections.erase(connection.getIP().toInteger());
-    if (this->connections.empty()) {
-        toLogs->emplace_back("{room_will_be_removed_reason_no_connected_players}" + room->getID().value());
-        return Status::DeleteMe;
-    }
-    return Status ::OK;
-}
-
 ServerRoom::Status ServerRoom::update(std::vector<StringLcl> *toLogs) {
-    std::vector<uint32_t> toDelete;
+    std::vector<UUID> toDelete;
     for (auto &connection : this->connections) {
         connection.second.update();
         if (connection.second.hasError()) {
-            toLogs->emplace_back("{connection_erased_reason_disconnect}" + connection.second.getIP().toString());
+            toLogs->emplace_back("{connection_erased_reason_disconnect}" + connection.second.getUUID().toString());
             toDelete.push_back(connection.first);
         }
     }
@@ -80,7 +68,7 @@ ServerRoom::Status ServerRoom::update(std::vector<StringLcl> *toLogs) {
         return Status::DeleteMe;
     }
 
-    std::vector<std::tuple<sf::Packet, sf::IpAddress>> toSend;
+    std::vector<std::tuple<sf::Packet, UUID>> toSend;
     RoomOutputProtocol protocol;
     protocol.logs = toLogs;
     protocol.remotePlayers = &this->players;
@@ -88,18 +76,18 @@ ServerRoom::Status ServerRoom::update(std::vector<StringLcl> *toLogs) {
     for (auto &connection : this->connections) {
         std::optional<sf::Packet> receivedPacket = connection.second.getReceivedPacket();
         if (receivedPacket != std::nullopt) {
-            boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received = std::make_tuple(receivedPacket.value(), connection.second.getIP());
+            boost::optional<std::tuple<sf::Packet, UUID>> received = std::make_tuple(receivedPacket.value(), connection.first);
             if (this->update(received, protocol) == Status::DeleteMe) {
                 return Status::DeleteMe;
             }
         }
     }
-    boost::optional<std::tuple<sf::Packet, sf::IpAddress>> received = boost::none;
+    boost::optional<std::tuple<sf::Packet, UUID>> received = boost::none;
     if (this->update(received, protocol) == Status::DeleteMe) {
         return Status::DeleteMe;
     }
     for (const auto &t : toSend) {
-        auto it = this->connections.find(std::get<sf::IpAddress>(t).toInteger());
+        auto it = this->connections.find(std::get<UUID>(t));
         if (it != this->connections.end()) {
             it->second.send(std::get<sf::Packet>(t));
         }
@@ -107,7 +95,7 @@ ServerRoom::Status ServerRoom::update(std::vector<StringLcl> *toLogs) {
 
     return Status::OK;
 }
-ServerRoom::Status ServerRoom::update(boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p) {
+ServerRoom::Status ServerRoom::update(boost::optional<std::tuple<sf::Packet, UUID>> &received, RoomOutputProtocol p) {
     try {
         std::vector<StringLcl>* originalLogsPtr = p.logs;
         std::vector<StringLcl> logs;

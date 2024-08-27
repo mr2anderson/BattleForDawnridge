@@ -22,7 +22,10 @@
 
 
 UUID::UUID() {
-    this->a = std::make_tuple(GlobalRandomGenerator64::get().gen(), GlobalRandomGenerator64::get().gen());
+    uint128_t int64left = GlobalRandomGenerator64::get().gen();
+    uint128_t int64right = GlobalRandomGenerator64::get().gen();
+    uint128_t randomInt = (int64left << 64) | int64right;
+    this->a = randomInt;
 }
 bool UUID::operator==(const UUID &b) const {
     return this->a == b.a;
@@ -35,4 +38,10 @@ bool UUID::operator<(const UUID &b) const {
 }
 bool UUID::operator>(const UUID &b) const {
     return this->a > b.a;
+}
+std::string UUID::toString() const {
+    return this->a.str();
+}
+uint128_t UUID::value() const {
+    return this->a;
 }

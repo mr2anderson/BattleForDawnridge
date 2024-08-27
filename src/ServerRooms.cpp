@@ -28,41 +28,29 @@ void ServerRooms::update(std::vector<StringLcl> *toLogs) {
 }
 
 bool ServerRooms::exist(const RoomID &id) const {
-    return (this->data.find(id.value()) != this->data.end());
+    return (this->data.find(id) != this->data.end());
 }
 void ServerRooms::createIfValid(const RoomID &id, const std::string &rd) {
-    if (!this->data[id.value()].tryToCreate(id, rd)) {
-        this->data.erase(id.value());
+    if (!this->data[id].tryToCreate(id, rd)) {
+        this->data.erase(id);
     }
 }
 uint32_t ServerRooms::addPlayers(const RoomID &id, const Connection &connection, uint32_t n) {
-    auto it = this->data.find(id.value());
+    auto it = this->data.find(id);
     if (it == this->data.end()) {
         return 0;
     }
     return it->second.addPlayers(connection, n);
 }
 
-void ServerRooms::removeConnection(const Connection &connection, std::vector<StringLcl> *toLogs) {
-    std::vector<std::string> toDelete;
-    for (auto &room : this->data) {
-        if (room.second.removeConnection(connection, toLogs) == ServerRoom::Status::DeleteMe) {
-            toDelete.push_back(room.first);
-        }
-    }
-    for (const std::string &k : toDelete) {
-        this->data.erase(k);
-    }
-}
-
 void ServerRooms::updateRooms(std::vector<StringLcl> *toLogs) {
-    std::vector<std::string> toDelete;
+    std::vector<RoomID> toDelete;
     for (auto &room : this->data) {
         if (room.second.update(toLogs) == ServerRoom::Status::DeleteMe) {
             toDelete.push_back(room.first);
         }
     }
-    for (const std::string &k : toDelete) {
+    for (const auto &k : toDelete) {
         this->data.erase(k);
     }
 }

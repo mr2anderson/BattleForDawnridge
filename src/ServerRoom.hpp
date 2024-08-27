@@ -38,13 +38,11 @@ public:
         DeleteMe
     } Status;
 
-    Status removeConnection(const Connection &connection, std::vector<StringLcl> *toLogs);
-
     Status update(std::vector<StringLcl> *toLogs);
 private:
     std::unique_ptr<Room> room;
     RemotePlayers players;
-    std::unordered_map<uint32_t, Connection> connections;
+    std::unordered_map<UUID, Connection> connections;
 
-    Status update(boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p);
+    Status update(boost::optional<std::tuple<sf::Packet, UUID>> &received, RoomOutputProtocol p);
 };

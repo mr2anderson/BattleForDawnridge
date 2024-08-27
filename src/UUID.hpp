@@ -18,10 +18,14 @@
 
 
 #include <cstdint>
-#include <tuple>
+#include <string>
+#include <boost/multiprecision/cpp_int.hpp>
 
 
 #pragma once
+
+
+typedef boost::multiprecision::uint128_t uint128_t;
 
 
 class UUID {
@@ -32,6 +36,19 @@ public:
     bool operator!=(const UUID &b) const;
     bool operator<(const UUID &b) const;
     bool operator>(const UUID &b) const;
+    std::size_t operator()() const;
+    std::string toString() const;
+    uint128_t value() const;
 private:
-    std::tuple<uint64_t, uint64_t> a;
+    uint128_t a;
 };
+
+
+template <> struct std::hash<UUID> {
+    std::size_t operator()(const UUID& k) const {
+        return k.value().convert_to<std::size_t>();
+    }
+};
+
+
+static const UUID INVALID_UUID = UUID();

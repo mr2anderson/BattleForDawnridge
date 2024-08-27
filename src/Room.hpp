@@ -101,7 +101,7 @@ public:
 
 	uint32_t playersNumber() const;
 
-	void update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>> &received, RoomOutputProtocol p);
+	void update(const boost::optional<std::tuple<sf::Packet, UUID>> &received, RoomOutputProtocol p);
     void mustSendInit();
 private:
 	RoomID id;
@@ -159,20 +159,20 @@ private:
     void sendReady(RoomOutputProtocol p);
 
 	void sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName);
-	void sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
-    void sendNotTimeToSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p);
+	void sendSaveToClient(UUID id, RoomOutputProtocol p);
+    void sendNotTimeToSaveToClient(UUID id, RoomOutputProtocol p);
 	void sendReturnToMenuToClients(RoomOutputProtocol p);
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
-	void sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip);
+	void sendNotYourMove(RoomOutputProtocol p, UUID id);
 
     sf::Packet makeBasePacket() const;
 	void sendToClients(const sf::Packet& what, RoomOutputProtocol p);
 	void sendToClients(const sf::Packet& forCurrentPlayer, const sf::Packet& forOther, RoomOutputProtocol p);
-    void sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host);
+    void sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, UUID>>* toSend, UUID id);
 
-	void receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p);
-	void receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p);
-    void receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p);
+	void receive(const boost::optional<std::tuple<sf::Packet, UUID>>& received, RoomOutputProtocol p);
+	void receiveClick(sf::Packet& remPacket, UUID id, RoomOutputProtocol p);
+    void receiveNeedSave(UUID id, RoomOutputProtocol p);
 
     struct SYNC_UI {
         static constexpr uint8_t SYNC_MAP = 1;

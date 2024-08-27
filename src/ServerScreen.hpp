@@ -42,7 +42,7 @@ private:
 	ServerRooms rooms;
 
     sf::TcpListener listener;
-    std::unordered_map<uint32_t, Connection> simpleConnections;
+    std::unordered_map<UUID, Connection> simpleConnections;
 
     void checkNewConnection();
     void updateSimpleConnections();

@@ -43,17 +43,11 @@ void Connection::send(const sf::Packet &packet) {
     this->toSend.push(packet);
 }
 void Connection::update() {
-    this->updateIP();
     this->processSending();
     this->processReceiving();
 }
-sf::IpAddress Connection::getIP() const {
-    return this->ip;
-}
-void Connection::updateIP() {
-    if (this->socket->getRemoteAddress() != sf::IpAddress::None) {
-        this->ip = this->socket->getRemoteAddress();
-    }
+UUID Connection::getUUID() const {
+    return this->uuid;
 }
 void Connection::processSending() {
     if (this->toSend.empty()) {

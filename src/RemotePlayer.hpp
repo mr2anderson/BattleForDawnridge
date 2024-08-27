@@ -17,8 +17,7 @@
  */
 
 
-#include <SFML/Network.hpp>
-#include <cstdint>
+#include "UUID.hpp"
 
 
 #pragma once
@@ -27,11 +26,11 @@
 class RemotePlayer {
 public:
 	RemotePlayer();
-	RemotePlayer(uint32_t id, sf::IpAddress ip);
+	RemotePlayer(uint32_t id, UUID connectionId);
 
 	uint32_t getId() const;
-	sf::IpAddress getIp() const;
+	UUID getConnectionId() const;
 private:
-	sf::IpAddress ip;
+	UUID connectionId;
 	uint32_t id;
 };

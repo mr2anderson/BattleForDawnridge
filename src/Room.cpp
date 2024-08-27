@@ -99,7 +99,7 @@ uint32_t Room::playersNumber() const {
 
 
 
-void Room::update(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p) {
+void Room::update(const boost::optional<std::tuple<sf::Packet, UUID>>& received, RoomOutputProtocol p) {
 	if (this->restrictions == Restrictions::Enable and this->timeoutTimer.ready()) {
 		throw NoActivePlayers();
 	}
@@ -549,22 +549,22 @@ void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& 
 
 	this->sendToClients(packet, p);
 }
-void Room::sendSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
+void Room::sendSaveToClient(UUID id, RoomOutputProtocol p) {
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
 
-    p.logs->emplace_back("{sending_save_to}" + ip.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+    p.logs->emplace_back("{sending_save_to}" + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
-	this->sendToClient(packet, p.toSend, ip);
+	this->sendToClient(packet, p.toSend, id);
 }
-void Room::sendNotTimeToSaveToClient(const sf::IpAddress &ip, RoomOutputProtocol p) {
+void Room::sendNotTimeToSaveToClient(UUID id, RoomOutputProtocol p) {
     sf::Packet packet = this->makeBasePacket();
     packet << SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE;
 
-    p.logs->emplace_back("{sending_not_time_to_save_to}" + ip.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+    p.logs->emplace_back("{sending_not_time_to_save_to}" + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
-    this->sendToClient(packet, p.toSend, ip);
+    this->sendToClient(packet, p.toSend, id);
 }
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
 	sf::Packet packet = this->makeBasePacket();
@@ -586,13 +586,13 @@ void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, ui
 
 	this->sendToClients(packet, p);
 }
-void Room::sendNotYourMove(RoomOutputProtocol p, sf::IpAddress ip) {
+void Room::sendNotYourMove(RoomOutputProtocol p, UUID id) {
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE;
 
-	p.logs->emplace_back("{sending_not_your_move_to}" + ip.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+	p.logs->emplace_back("{sending_not_your_move_to}" + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
-	this->sendToClient(packet, p.toSend, ip);
+	this->sendToClient(packet, p.toSend, id);
 }
 
 
@@ -606,58 +606,56 @@ sf::Packet Room::makeBasePacket() const {
     return packet;
 }
 void Room::sendToClients(const sf::Packet& what, RoomOutputProtocol p) {
-	std::unordered_map<uint32_t, bool> clientTable; // in case one host has more than one player
+	std::unordered_map<UUID, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
-		sf::IpAddress clientIp = p.remotePlayers->get(i).getIp();
-		uint32_t clientIpInt = clientIp.toInteger();
-		if (clientTable.find(clientIpInt) == clientTable.end()) {
-			clientTable[clientIpInt] = true;
-            this->sendToClient(what, p.toSend, clientIp);
+		UUID client = p.remotePlayers->get(i).getConnectionId();
+		if (clientTable.find(client) == clientTable.end()) {
+			clientTable[client] = true;
+            this->sendToClient(what, p.toSend, client);
 		}
 	}
 }
 void Room::sendToClients(const sf::Packet& forCurrentPlayer, const sf::Packet& forOther, RoomOutputProtocol p) {
-	std::unordered_map<uint32_t, bool> useFullPacket;
+	std::unordered_map<UUID, bool> useFullPacket;
 	for (uint32_t i = 1; i <= this->playersNumber(); i = i + 1) {
-		uint32_t ip = p.remotePlayers->get(i).getIp().toInteger();
+		UUID client = p.remotePlayers->get(i).getConnectionId();
 		if (this->currentPlayerId == i) {
-			useFullPacket[ip] = true;
+			useFullPacket[client] = true;
 		}
 		else {
-			if (useFullPacket.find(ip) == useFullPacket.end()) {
-				useFullPacket[ip] = false;
+			if (useFullPacket.find(client) == useFullPacket.end()) {
+				useFullPacket[client] = false;
 			}
 		}
 	}
 
 	for (auto pair : useFullPacket) {
-		uint32_t ipInt;
+		UUID client;
 		bool flag;
-		std::tie(ipInt, flag) = pair;
-		sf::IpAddress ip(ipInt);
+		std::tie(client, flag) = pair;
 		if (flag) {
-			this->sendToClient(forCurrentPlayer, p.toSend, ip);
+			this->sendToClient(forCurrentPlayer, p.toSend, client);
 		}
 		else {
-			this->sendToClient(forOther, p.toSend, ip);
+			this->sendToClient(forOther, p.toSend, client);
 		}
 	}
 }
-void Room::sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, sf::IpAddress>>* toSend, const sf::IpAddress &host) {
-    toSend->emplace_back(what, host);
+void Room::sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, UUID>>* toSend, UUID id) {
+    toSend->emplace_back(what, id);
 }
 
 
 
 
 
-void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>& received, RoomOutputProtocol p) {
+void Room::receive(const boost::optional<std::tuple<sf::Packet, UUID>>& received, RoomOutputProtocol p) {
 	if (!received.has_value()) {
 		return;
 	}
 
 	sf::Packet packet = std::get<0>(received.value());
-	sf::IpAddress ip = std::get<1>(received.value());
+	UUID client = std::get<1>(received.value());
 
     std::string roomId;
     packet >> roomId;
@@ -666,20 +664,20 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, sf::IpAddress>>&
         uint8_t code;
         packet >> code;
         if (code == CLIENT_NET_SPECS::CODES::CLICK) {
-            this->receiveClick(packet, ip, p);
+            this->receiveClick(packet, client, p);
         }
         else if (code == CLIENT_NET_SPECS::CODES::NEED_SAVE) {
-            this->receiveNeedSave(ip, p);
+            this->receiveNeedSave(client, p);
         }
     }
 }
-void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutputProtocol p) {
+void Room::receiveClick(sf::Packet& remPacket, UUID id, RoomOutputProtocol p) {
 	uint8_t mouseButton;
 	uint32_t x, y, viewX, viewY, w, h;
 	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
-	p.logs->emplace_back("{received_click} " + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + ip.toString());
-	if (p.remotePlayers->get(this->currentPlayerId).getIp() != ip) {
-		this->sendNotYourMove(p, ip);
+	p.logs->emplace_back("{received_click} " + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + id.toString());
+	if (p.remotePlayers->get(this->currentPlayerId).getConnectionId() != id) {
+		this->sendNotYourMove(p, id);
 		return;
 	}
 	if (this->selected == nullptr) {
@@ -705,13 +703,13 @@ void Room::receiveClick(sf::Packet& remPacket, const sf::IpAddress &ip, RoomOutp
 		this->addEvents(events, p);
 	}
 }
-void Room::receiveNeedSave(const sf::IpAddress &ip, RoomOutputProtocol p) {
-    p.logs->emplace_back("{received_need_save}" + ip.toString());
+void Room::receiveNeedSave(UUID id, RoomOutputProtocol p) {
+    p.logs->emplace_back("{received_need_save}" + id.toString());
     if (this->possibleToSave()) {
-        this->sendSaveToClient(ip, p);
+        this->sendSaveToClient(id, p);
     }
     else {
-        this->sendNotTimeToSaveToClient(ip, p);
+        this->sendNotTimeToSaveToClient(id, p);
     }
 }
 
