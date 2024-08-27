@@ -50,11 +50,6 @@
 #include "Root.hpp"
 
 
-#if defined(_WIN32) // Unix does not support coloured cursors
-    #define USE_CUSTOM_CURSOR
-#endif
-
-
 #if defined(_WIN32) // Based on compilation system
 #define DATA_ROOT "resources"
 #define USERDATA_ROOT "userdata"
