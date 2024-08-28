@@ -272,10 +272,12 @@ void Room::addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol
 void Room::addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p) {
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		std::shared_ptr<GO> go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
-		Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, viewX, viewY);
-		if (!gor.empty()) {
-			this->addEvents(gor, p);
-			return;
+		if (go->exist()) {
+			Events gor = go->click(this->map.getStatePtr(), this->getCurrentPlayer()->getId(), button, viewX, viewY);
+			if (!gor.empty()) {
+				this->addEvents(gor, p);
+				return;
+			}
 		}
 	}
 }

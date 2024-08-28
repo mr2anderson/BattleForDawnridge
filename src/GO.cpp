@@ -120,7 +120,9 @@ Events GO::click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint
 		mouseX < 64 * (this->getX() + this->getSX()) and
 		mouseY < 64 * (this->getY() + this->getSY())) {
         Events events;
-		events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+		if (this->exist()) {
+			events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+		}
         events = events + this->getResponse(state, currentPlayerId, button);
         return events;
 	}
