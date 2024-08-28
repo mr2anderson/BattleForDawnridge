@@ -543,7 +543,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    Events killNextTurnEvent = clickSoundEvent;
+    Events killNextTurnEvent;
     killNextTurnEvent.add(std::make_shared<KillNextTurnEvent>(this->getThis<Warrior>()));
 
     std::shared_ptr<WindowTwoButtons> verifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{verify_kill}"), StringLcl("{yes}"), StringLcl("{no}"), killNextTurnEvent, clickSoundEvent);
