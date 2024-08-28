@@ -429,7 +429,7 @@ Events Warrior::processRunningAnimation(MapState *state) {
 
     if (this->isVehicle()) {
         if (this->footstepsClock.getMS() >= 1000) {
-            events.add(std::make_shared<PlaySoundEvent>("vehicle"));
+            events.add(std::make_shared<PlaySoundEvent>("vehicle", true));
             this->footstepsClock.restart();
         }
     }
