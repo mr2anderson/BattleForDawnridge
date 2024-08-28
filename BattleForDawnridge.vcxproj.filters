@@ -972,9 +972,6 @@
     <ClInclude Include="src\Gates1.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Gates2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\GatesSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1554,12 +1551,6 @@
     <ClInclude Include="src\Tower1Spec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tower2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tower2Spec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Trade.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1600,9 +1591,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Wall1.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Wall2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WallSpec.hpp">
@@ -2004,9 +1992,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Gates1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gates2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GatesSpec.cpp">
@@ -2546,12 +2531,6 @@
     <ClCompile Include="src\Tower1Spec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tower2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tower2Spec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Trade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2592,9 +2571,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Wall1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Wall2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WallSpec.cpp">

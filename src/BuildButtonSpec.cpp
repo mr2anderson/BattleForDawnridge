@@ -18,12 +18,10 @@
 
 
 #include "BuildButtonSpec.hpp"
-
 #include "HorizontalSelectionWindow.hpp"
 #include "PlaySoundEvent.hpp"
 #include "TryToBuildEvent.hpp"
 #include "CreateEEvent.hpp"
-
 #include "Road.hpp"
 #include "House.hpp"
 #include "Arable.hpp"
@@ -43,9 +41,6 @@
 #include "Wall1.hpp"
 #include "Gates1.hpp"
 #include "Tower1.hpp"
-#include "Wall2.hpp"
-#include "Gates2.hpp"
-#include "Tower2.hpp"
 #include "Market.hpp"
 #include "SpellFactory.hpp"
 
@@ -153,9 +148,6 @@ Events BuildButtonSpec::getEvents() const {
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates1>());
 	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower1>());
-	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Wall2>());
-	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Gates2>());
-	buildMenuSectionDefenceComponents.emplace_back(GET_BUILD_COMPONENT<Tower2>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionDefence = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionDefenceComponents);
 	Events createBuildWindowSectionDefenceEvent = clickEvent;

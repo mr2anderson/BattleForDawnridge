@@ -102,7 +102,7 @@ Events GuideButtonSpec::getEvents() const {
         Events()
     );
     guideWindowComponents.emplace_back(
-          "wall2",
+          "wall1",
         StringLcl("{guide_wall_system_description}"),
         false,
         Events()

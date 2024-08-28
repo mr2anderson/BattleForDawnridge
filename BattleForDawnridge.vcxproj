@@ -703,7 +703,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Fonts.hpp" />
     <ClInclude Include="src\Forest.hpp" />
     <ClInclude Include="src\Gates1.hpp" />
-    <ClInclude Include="src\Gates2.hpp" />
     <ClInclude Include="src\GatesSpec.hpp" />
     <ClInclude Include="src\GlobalClock.hpp" />
     <ClInclude Include="src\GlobalRandomGenerator.hpp" />
@@ -900,8 +899,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\TooMuchPlayers.hpp" />
     <ClInclude Include="src\Tower1.hpp" />
     <ClInclude Include="src\Tower1Spec.hpp" />
-    <ClInclude Include="src\Tower2.hpp" />
-    <ClInclude Include="src\Tower2Spec.hpp" />
     <ClInclude Include="src\Trade.hpp" />
     <ClInclude Include="src\TradingSpec.hpp" />
     <ClInclude Include="src\Treasure.hpp" />
@@ -916,7 +913,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\VersionsButtonSpec.hpp" />
     <ClInclude Include="src\VictoryConditionSpec.hpp" />
     <ClInclude Include="src\Wall1.hpp" />
-    <ClInclude Include="src\Wall2.hpp" />
     <ClInclude Include="src\WallSpec.hpp" />
     <ClInclude Include="src\WarehouseCrystal.hpp" />
     <ClInclude Include="src\WarehouseCrystalSpec.hpp" />
@@ -1050,7 +1046,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Fonts.cpp" />
     <ClCompile Include="src\Forest.cpp" />
     <ClCompile Include="src\Gates1.cpp" />
-    <ClCompile Include="src\Gates2.cpp" />
     <ClCompile Include="src\GatesSpec.cpp" />
     <ClCompile Include="src\GlobalClock.cpp" />
     <ClCompile Include="src\GO.cpp" />
@@ -1231,8 +1226,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\TooMuchPlayers.cpp" />
     <ClCompile Include="src\Tower1.cpp" />
     <ClCompile Include="src\Tower1Spec.cpp" />
-    <ClCompile Include="src\Tower2.cpp" />
-    <ClCompile Include="src\Tower2Spec.cpp" />
     <ClCompile Include="src\Trade.cpp" />
     <ClCompile Include="src\TradingSpec.cpp" />
     <ClCompile Include="src\Treasure.cpp" />
@@ -1247,7 +1240,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\VersionsButtonSpec.cpp" />
     <ClCompile Include="src\VictoryConditionSpec.cpp" />
     <ClCompile Include="src\Wall1.cpp" />
-    <ClCompile Include="src\Wall2.cpp" />
     <ClCompile Include="src\WallSpec.cpp" />
     <ClCompile Include="src\WarehouseCrystal.cpp" />
     <ClCompile Include="src\WarehouseCrystalSpec.cpp" />
