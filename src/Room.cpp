@@ -779,7 +779,7 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<WarriorProducingFinishedEvent> warriorProducingFinishedEvent = std::dynamic_pointer_cast<WarriorProducingFinishedEvent>(e)) {
 		this->handleWarriorProducingFinishedEvent(warriorProducingFinishedEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
+        result = result | SYNC_UI::SYNC_MAP | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<SelectEvent> selectEvent = std::dynamic_pointer_cast<SelectEvent>(e)) {
 		this->handleSelectEvent(selectEvent, p);
