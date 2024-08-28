@@ -24,6 +24,9 @@
 #include "PlaySoundEvent.hpp"
 
 
+static constexpr uint32_t COMPONENTS_IN_FRAME = 9;
+
+
 HorizontalSelectionWindow::HorizontalSelectionWindow() = default;
 HorizontalSelectionWindow::HorizontalSelectionWindow(const std::vector<HorizontalSelectionWindowComponent> &components, uint32_t componentSize, uint32_t marginSize) {
 	this->components = components;
@@ -69,8 +72,8 @@ Events HorizontalSelectionWindow::click(uint32_t mouseX, uint32_t mouseY, uint32
 
 	return result;
 }
-bool HorizontalSelectionWindow::possibleToMoveUp(uint32_t componentsInFrame) const {
-	return (this->offset + componentsInFrame < this->components.size());
+bool HorizontalSelectionWindow::possibleToMoveUp() const {
+	return (this->offset + COMPONENTS_IN_FRAME < this->components.size());
 }
 bool HorizontalSelectionWindow::possibleToMoveDown() const {
 	return this->offset > 0;
@@ -83,13 +86,10 @@ void HorizontalSelectionWindow::moveDown() {
 }
 
 
-uint32_t HorizontalSelectionWindow::getComponentsInFrame(uint32_t windowW, uint32_t windowH) const {
-	return std::min((uint32_t)this->components.size(), windowH / 2 / this->componentSize);
-}
 HorizontalSelectionWindowStructure HorizontalSelectionWindow::getUIStructure(uint32_t windowW, uint32_t windowH) const {
     HorizontalSelectionWindowStructure structure;
 
-    structure.contentButtons.resize(this->getComponentsInFrame(windowW, windowH));
+    structure.contentButtons.resize(COMPONENTS_IN_FRAME);
     for (uint32_t i = 0; i < structure.contentButtons.size(); i = i + 1) {
         HorizontalSelectionWindowComponent component = this->components.at(i + this->offset);
         std::string pictureName = component.pictureName;
@@ -105,7 +105,7 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getUIStructure(uin
         structure.contentButtons.at(i) = button;
     }
 
-    if (this->possibleToMoveUp(structure.contentButtons.size())) {
+    if (this->possibleToMoveUp()) {
         structure.buttonUp = Button(std::make_shared<Image>(2 * this->marginSize, windowH - this->marginSize - 2 * (this->componentSize + this->marginSize), this->componentSize, "up_icon"), Events());
     }
 
@@ -120,7 +120,7 @@ HorizontalSelectionWindowStructure HorizontalSelectionWindow::getUIStructure(uin
 HorizontalSelectionWindowStructure HorizontalSelectionWindow::getStructure(uint32_t windowW, uint32_t windowH) {
 	HorizontalSelectionWindowStructure structure = this->getUIStructure(windowW, windowH);
 
-    if (this->possibleToMoveUp(structure.contentButtons.size())) {
+    if (this->possibleToMoveUp()) {
         Events upEvent;
         upEvent.add(std::make_shared<MoveHorizontalSelectionWindowUpEvent>(this->getThis<HorizontalSelectionWindow>()));
         upEvent.add(std::make_shared<PlaySoundEvent>("click", true));

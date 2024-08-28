@@ -43,10 +43,9 @@ private:
 	uint32_t componentSize, marginSize;
 	uint32_t offset;
 
-	bool possibleToMoveUp(uint32_t componentsInFrame) const;
+	bool possibleToMoveUp() const;
 	bool possibleToMoveDown() const;
 
-	uint32_t getComponentsInFrame(uint32_t windowW, uint32_t windowH) const;
     HorizontalSelectionWindowStructure getUIStructure(uint32_t windowW, uint32_t windowH) const;
 	HorizontalSelectionWindowStructure getStructure(uint32_t windowW, uint32_t windowH);
 
