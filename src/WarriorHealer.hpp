@@ -34,6 +34,7 @@ public:
     bool blockBuildingAbility() const override;
     virtual std::string getStartHealingSoundName() const = 0;
 protected:
+    virtual bool healVehicles() const;
     virtual uint32_t getBaseHealingSpeed() const = 0;
     virtual Events heal(std::shared_ptr<Warrior> w);
 private:

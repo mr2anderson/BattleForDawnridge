@@ -79,8 +79,11 @@ Events WarriorHealer::newMove(MapState *state, uint32_t playerId) {
 
     return events;
 }
+bool WarriorHealer::healVehicles() const {
+    return false;
+}
 bool WarriorHealer::canHeal(std::shared_ptr<Warrior> w) const {
-    if (!this->healingAvailable or !w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP()) {
+    if (!this->healingAvailable or !w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP() or w->isVehicle() != this->healVehicles()) {
         return false;
     }
 
