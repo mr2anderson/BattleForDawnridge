@@ -23,6 +23,7 @@
 #include "HorizontalSelectionWindow.hpp"
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
+#include "version.hpp"
 
 
 VersionsButtonSpec::VersionsButtonSpec() = default;
@@ -42,6 +43,12 @@ Events VersionsButtonSpec::getEvents() const {
             StringLcl("{exit}"),
             true,
             clickEvent
+    );
+    components.emplace_back(
+        "icon",
+        StringLcl("{battle_for_dawnridge}" + std::string(VERSION)),
+        false,
+        Events()
     );
     components.emplace_back(
           "boost_icon",

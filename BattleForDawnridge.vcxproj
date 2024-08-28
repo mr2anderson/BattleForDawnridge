@@ -917,6 +917,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\UUID.hpp" />
     <ClInclude Include="src\UUIDs.hpp" />
     <ClInclude Include="src\Valkyr.hpp" />
+    <ClInclude Include="src\version.hpp" />
     <ClInclude Include="src\VersionsButtonSpec.hpp" />
     <ClInclude Include="src\VictoryConditionSpec.hpp" />
     <ClInclude Include="src\Wall1.hpp" />
