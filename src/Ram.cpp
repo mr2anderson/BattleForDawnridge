@@ -38,7 +38,7 @@ std::string Ram::getBeenHitSoundName() const {
     return "vehicle_hit";
 }
 std::string Ram::getStartAttackSoundName() const {
-    return "";
+    return "vehicle";
 }
 uint32_t Ram::getMaxHP() const {
     return Parameters::get().getInt("ram_max_hp");
