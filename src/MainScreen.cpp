@@ -203,7 +203,11 @@ void MainScreen::processReceiving() {
 	if (std::get<0>(this->received)) {
 		return;
 	}
-	if (this->socket.receive(std::get<sf::Packet>(this->received)) == sf::Socket::Status::Done) {
+	sf::Socket::Status status = this->socket.receive(std::get<sf::Packet>(this->received));
+	if (status == sf::Socket::Error or status == sf::Socket::Disconnected) {
+		this->error = true;
+	}
+	else if (status == sf::Socket::Done) {
 		std::get<0>(this->received) = true;
 	}
 }
