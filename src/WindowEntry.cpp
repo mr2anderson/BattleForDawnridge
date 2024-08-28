@@ -25,7 +25,7 @@ WindowEntry::WindowEntry() {
     this->dst = nullptr;
     this->settings = nullptr;
 }
-WindowEntry::WindowEntry(const StringLcl& message, const StringLcl &buttonText1, const StringLcl &buttonText2, std::shared_ptr<std::string> dst, std::shared_ptr<EntrySettings> settings, const Events &events1, const Events &events2, uint32_t w, uint32_t h) {
+WindowEntry::WindowEntry(const StringLcl& message, const StringLcl &buttonText1, const StringLcl &buttonText2, std::shared_ptr<std::string> dst, std::shared_ptr<IEntrySettings> settings, const Events &events1, const Events &events2, uint32_t w, uint32_t h) {
     this->w = w;
     this->h = h;
     this->dst = dst;

@@ -29,6 +29,7 @@
 #include "WindowEntry.hpp"
 #include "RoomID.hpp"
 #include "ConnectToRoomEvent.hpp"
+#include "EntryStrSettings.hpp"
 
 
 
@@ -180,11 +181,11 @@ Events NetworkGameButtonSpec::getConnectEvent() const {
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::shared_ptr<EntrySettings> settings = std::make_shared<EntrySettings>();
+    std::shared_ptr<EntryStrSettings> settings = std::make_shared<EntryStrSettings>();
     settings->setMaxLen(RoomID::READABLE_LEN);
-    settings->setRequireMaxLen(true);
+    settings->setMinLen(RoomID::READABLE_LEN);
     settings->regDigits();
-    settings->regLetters(EntrySettings::LETTER_REGISTRATION_TYPE::AS_UPPER_CASE);
+    settings->regLetters(EntryStrSettings::LETTER_REGISTRATION_TYPE::AS_UPPER_CASE);
 
     std::shared_ptr<std::string> result = std::make_shared<std::string>();
 

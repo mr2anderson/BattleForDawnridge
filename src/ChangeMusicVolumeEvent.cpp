@@ -17,32 +17,12 @@
  */
 
 
-#include <unordered_map>
-#include <SFML/Audio.hpp>
-#include <optional>
+#include "ChangeMusicVolumeEvent.hpp"
 
 
-#pragma once
-
-
-class Music {
-public:
-    static Music& get() {
-        static Music instance;
-        return instance;
-    }
-
-    void add(const std::string& name, const std::string& path);
-    void play(const std::string& name);
-    sf::Music::Status getStatus(const std::string &name);
-    void loadVolume();
-    uint32_t getVolume() const;
-    void setVolume(uint32_t newVolume);
-private:
-    Music();
-    Music(const Music& copy);
-
-    uint32_t volume;
-    std::optional<std::string> lastSoundtrack;
-    std::unordered_map<std::string, sf::Music> music;
-};
+ChangeMusicVolumeEvent::ChangeMusicVolumeEvent(std::shared_ptr<std::string> ptr) {
+	this->ptr = ptr;
+}
+std::string ChangeMusicVolumeEvent::getVal() const {
+	return *this->ptr;
+}

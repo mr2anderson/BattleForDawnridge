@@ -33,6 +33,8 @@
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
 #include "MoveHorizontalSelectionWindowUpEvent.hpp"
 #include "ClosePopUpElementEvent.hpp"
+#include "ChangeSoundVolumeEvent.hpp"
+#include "ChangeMusicVolumeEvent.hpp"
 
 
 #pragma once
@@ -50,7 +52,6 @@ private:
     std::queue<std::shared_ptr<Event>> events;
     std::shared_ptr<PopUpElement> element;
     std::vector<Button> buttons;
-    boost::optional<uint32_t> prevSavesNumber;
 
     void generateButtons();
     void regenerateButtons();
@@ -76,4 +77,6 @@ private:
     void handleMoveHorizontalSelectionWindowUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e);
     void handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e);
     void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e);
+    void handleChangeSoundVolumeEvent(std::shared_ptr<ChangeSoundVolumeEvent> e);
+    void handleChangeMusicVolumeEvent(std::shared_ptr<ChangeMusicVolumeEvent> e);
 };

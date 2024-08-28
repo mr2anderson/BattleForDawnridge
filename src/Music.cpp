@@ -18,6 +18,8 @@
 
 
 #include <iostream>
+#include <filesystem>
+#include <fstream>
 #include "Music.hpp"
 #include "Root.hpp"
 #include "CouldntOpenMusic.hpp"
@@ -36,11 +38,14 @@ void Music::play(const std::string &name) {
     if (it == this->music.end()) {
         std::cerr << "Invalid music uid: " << name << std::endl;
     }
-    for (auto& m : this->music) {
-        m.second.stop();
+    else {
+        for (auto& m : this->music) {
+            m.second.stop();
+        }
+        it->second.setVolume(this->volume);
+        it->second.play();
+        this->lastSoundtrack = name;
     }
-    it->second.setVolume(this->volume);
-    it->second.play();
 }
 sf::Music::Status Music::getStatus(const std::string &name) {
     auto it = this->music.find(name);
@@ -49,6 +54,27 @@ sf::Music::Status Music::getStatus(const std::string &name) {
     }
     return it->second.getStatus();
 }
-void Music::setDefaultVolume(uint32_t newVolume) {
+void Music::loadVolume() {
+    std::ifstream file(Root::get().getUserdataRoot() + "/music_volume.cfg");
+    if (file.is_open()) {
+        std::string buff;
+        std::getline(file, buff);
+        this->volume = std::stoi(buff);
+        file.close();
+    }
+}
+uint32_t Music::getVolume() const {
+    return this->volume;
+}
+void Music::setVolume(uint32_t newVolume) {
     this->volume = newVolume;
+    if (this->lastSoundtrack.has_value()) {
+        this->music.at(this->lastSoundtrack.value()).setVolume(this->volume);
+    }
+    if (!std::filesystem::is_directory(Root::get().getUserdataRoot())) {
+        std::filesystem::create_directories(Root::get().getUserdataRoot());
+    }
+    std::ofstream file(Root::get().getUserdataRoot() + "/music_volume.cfg");
+    file << std::to_string(this->volume);
+    file.close();
 }

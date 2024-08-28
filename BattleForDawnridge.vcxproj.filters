@@ -936,7 +936,7 @@
     <ClInclude Include="src\EndTurnButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\EntrySettings.hpp">
+    <ClInclude Include="src\EntryStrSettings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Event.hpp">
@@ -1707,6 +1707,21 @@
     <ClInclude Include="src\string_compression.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\SoundButtonSpec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChangeMusicVolumeEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChangeSoundVolumeEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IEntrySettings.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntryNumSettings.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
@@ -1961,7 +1976,7 @@
     <ClCompile Include="src\EndTurnButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EntrySettings.cpp">
+    <ClCompile Include="src\EntryStrSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Event.cpp">
@@ -2682,6 +2697,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundButtonSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChangeMusicVolumeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChangeSoundVolumeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EntryNumSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,24 +17,22 @@
  */
 
 
-#include <SFML/Window.hpp>
-#include <string>
 #include <cstdint>
 #include <unordered_map>
-#include <memory>
+#include "IEntrySettings.hpp"
 
 
 #pragma once
 
 
-class EntrySettings {
+class EntryStrSettings : public IEntrySettings {
 public:
-    EntrySettings();
+    EntryStrSettings();
 
+    void setMinLen(uint32_t newMinLen);
     void setMaxLen(uint32_t newMaxLen);
-    void setRequireMaxLen(bool newReguireMaxLen);
 
-    bool ok(std::shared_ptr<std::string> dstPtr) const;
+    bool ok(std::shared_ptr<std::string> dstPtr) const override;
 
     void reg(sf::Keyboard::Key key, char c);
 
@@ -46,9 +44,9 @@ public:
     } LETTER_REGISTRATION_TYPE;
     void regLetters(LETTER_REGISTRATION_TYPE type);
 
-    void mod(std::shared_ptr<std::string> dstPtr, sf::Keyboard::Key key);
+    void mod(std::shared_ptr<std::string> dstPtr, sf::Keyboard::Key key) override;
 private:
+    uint32_t minLen;
     uint32_t maxLen;
-    bool requireMaxLen;
     std::unordered_map<uint32_t, char> table;
 };

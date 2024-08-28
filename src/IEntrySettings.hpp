@@ -17,32 +17,16 @@
  */
 
 
-#include <unordered_map>
-#include <SFML/Audio.hpp>
-#include <optional>
+#include <memory>
+#include <string>
+#include <SFML/Window.hpp>
 
 
 #pragma once
 
 
-class Music {
+class IEntrySettings {
 public:
-    static Music& get() {
-        static Music instance;
-        return instance;
-    }
-
-    void add(const std::string& name, const std::string& path);
-    void play(const std::string& name);
-    sf::Music::Status getStatus(const std::string &name);
-    void loadVolume();
-    uint32_t getVolume() const;
-    void setVolume(uint32_t newVolume);
-private:
-    Music();
-    Music(const Music& copy);
-
-    uint32_t volume;
-    std::optional<std::string> lastSoundtrack;
-    std::unordered_map<std::string, sf::Music> music;
+    virtual bool ok(std::shared_ptr<std::string> dstPtr) const = 0;
+    virtual void mod(std::shared_ptr<std::string> dstPtr, sf::Keyboard::Key key) = 0;
 };

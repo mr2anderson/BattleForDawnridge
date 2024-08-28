@@ -43,6 +43,7 @@
 #include "LicenceButtonSpec.hpp"
 #include "ExitButtonSpec.hpp"
 #include "VersionsButtonSpec.hpp"
+#include "SoundButtonSpec.hpp"
 
 
 Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additionalWelcomeMsg) {
@@ -115,11 +116,12 @@ void Menu::generateButtons() {
         Button(LocalGameButtonSpec(0)),
         Button(NetworkGameButtonSpec(1)),
         Button(GuideButtonSpec(2)),
-        Button(LanguageButtonSpec(3)),
-        Button(SupportButtonSpec(4)),
-        Button(CreditsButtonSpec(5)),
-        Button(VersionsButtonSpec(6)),
-        Button(ExitButtonSpec(7))
+        Button(SoundButtonSpec(3)),
+        Button(LanguageButtonSpec(4)),
+        Button(SupportButtonSpec(5)),
+        Button(CreditsButtonSpec(6)),
+        Button(VersionsButtonSpec(7)),
+        Button(ExitButtonSpec(8))
     };
 }
 void Menu::regenerateButtons() {
@@ -131,15 +133,13 @@ void Menu::regenerateButtons() {
             }
         }
     }
+    std::vector<std::string> mapNames;
+    mapNames.push_back("ridge");
+    this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);
+    this->buttons.at(1) = NetworkGameButtonSpec(1, mapNames, saveNames);
 
-    if (!this->prevSavesNumber.has_value() or this->prevSavesNumber.value() != saveNames.size()) {
-
-        std::vector<std::string> mapNames;
-        mapNames.push_back("ridge");
-
-        this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);
-        this->buttons.at(1) = NetworkGameButtonSpec(1, mapNames, saveNames);
-    }
+    std::tuple<uint32_t, uint32_t> volumes = std::make_tuple(SoundQueue::get().getVolume(), Music::get().getVolume());
+    this->buttons.at(3) = SoundButtonSpec(3, std::get<0>(volumes), std::get<1>(volumes));
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear();
@@ -223,6 +223,12 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<ClosePopUpElementEvent> closePopUpElementEvent = std::dynamic_pointer_cast<ClosePopUpElementEvent>(e)) {
         this->handleClosePopUpElementEvent(closePopUpElementEvent);
     }
+    else if (std::shared_ptr<ChangeSoundVolumeEvent> changeSoundVolumeEvent = std::dynamic_pointer_cast<ChangeSoundVolumeEvent>(e)) {
+        this->handleChangeSoundVolumeEvent(changeSoundVolumeEvent);
+    }
+    else if (std::shared_ptr<ChangeMusicVolumeEvent> changeMusicVolumeEvent = std::dynamic_pointer_cast<ChangeMusicVolumeEvent>(e)) {
+        this->handleChangeMusicVolumeEvent(changeMusicVolumeEvent);
+    }
     else {
         std::cerr << "Menu: warning: unknown event handled" << std::endl;
     }
@@ -280,4 +286,10 @@ void Menu::handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHori
 }
 void Menu::handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e) {
     this->element = nullptr;
+}
+void Menu::handleChangeSoundVolumeEvent(std::shared_ptr<ChangeSoundVolumeEvent> e) {
+    SoundQueue::get().setVolume(std::stoi(e->getVal()));
+}
+void Menu::handleChangeMusicVolumeEvent(std::shared_ptr<ChangeMusicVolumeEvent> e) {
+    Music::get().setVolume(std::stoi(e->getVal()));
 }

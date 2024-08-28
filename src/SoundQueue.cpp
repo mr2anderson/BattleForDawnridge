@@ -17,14 +17,20 @@
  */
 
 
+#include <filesystem>
+#include <fstream>
 #include "SoundQueue.hpp"
+#include "Root.hpp"
 
 
-SoundQueue::SoundQueue() = default;
+SoundQueue::SoundQueue() {
+    this->volume = 100;
+}
 void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
     this->removeOldSounds();
     this->data.emplace_back();
     this->data.back().setBuffer(*soundbuffer);
+    this->data.back().setVolume(this->volume);
     this->data.back().play();
 }
 void SoundQueue::clear() {
@@ -32,6 +38,26 @@ void SoundQueue::clear() {
         sound.stop();
     }
     this->data.clear();
+}
+void SoundQueue::loadVolume() {
+    std::ifstream file(Root::get().getUserdataRoot() + "/sound_volume.cfg");
+    if (file.is_open()) {
+        std::string buff;
+        std::getline(file, buff);
+        this->volume = std::stoi(buff);
+    }
+}
+uint32_t SoundQueue::getVolume() const {
+    return this->volume;
+}
+void SoundQueue::setVolume(uint32_t newVolume) {
+    this->volume = newVolume;
+    if (!std::filesystem::is_directory(Root::get().getUserdataRoot())) {
+        std::filesystem::create_directories(Root::get().getUserdataRoot());
+    }
+    std::ofstream file(Root::get().getUserdataRoot() + "/sound_volume.cfg");
+    file << std::to_string(this->volume);
+    file.close();
 }
 void SoundQueue::removeOldSounds() {
     while (!this->data.empty() and this->data.front().getStatus() != sf::Sound::Status::Playing) {

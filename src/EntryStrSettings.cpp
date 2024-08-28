@@ -18,26 +18,26 @@
 
 
 #include <limits>
-#include "EntrySettings.hpp"
+#include "EntryStrSettings.hpp"
 
 
-EntrySettings::EntrySettings() {
+EntryStrSettings::EntryStrSettings() {
+    this->minLen = 0;
     this->maxLen = std::numeric_limits<uint32_t>::max();
-    this->requireMaxLen = false;
 }
-void EntrySettings::setMaxLen(uint32_t newMaxLen) {
+void EntryStrSettings::setMinLen(uint32_t newMinLen) {
+    this->minLen = newMinLen;
+}
+void EntryStrSettings::setMaxLen(uint32_t newMaxLen) {
     this->maxLen = newMaxLen;
 }
-void EntrySettings::setRequireMaxLen(bool newReguireMaxLen) {
-    this->requireMaxLen = newReguireMaxLen;
+bool EntryStrSettings::ok(std::shared_ptr<std::string> dstPtr) const {
+    return (dstPtr->size() >= this->minLen and dstPtr->size() <= this->maxLen);
 }
-bool EntrySettings::ok(std::shared_ptr<std::string> dstPtr) const {
-    return (!requireMaxLen or this->maxLen == dstPtr->size());
-}
-void EntrySettings::reg(sf::Keyboard::Key key, char c) {
+void EntryStrSettings::reg(sf::Keyboard::Key key, char c) {
     this->table[key] = c;
 }
-void EntrySettings::regDigits() {
+void EntryStrSettings::regDigits() {
     this->reg(sf::Keyboard::Key::Num0, '0');
     this->reg(sf::Keyboard::Key::Num1, '1');
     this->reg(sf::Keyboard::Key::Num2, '2');
@@ -49,7 +49,7 @@ void EntrySettings::regDigits() {
     this->reg(sf::Keyboard::Key::Num8, '8');
     this->reg(sf::Keyboard::Key::Num9, '9');
 }
-void EntrySettings::regLetters(LETTER_REGISTRATION_TYPE type) {
+void EntryStrSettings::regLetters(LETTER_REGISTRATION_TYPE type) {
     for (uint8_t i = 0; i < 26; i = i + 1) {
         char c;
         if (type == LETTER_REGISTRATION_TYPE::AS_LOWER_CASE) {
@@ -61,7 +61,7 @@ void EntrySettings::regLetters(LETTER_REGISTRATION_TYPE type) {
         this->reg((sf::Keyboard::Key)((uint32_t)sf::Keyboard::Key::A + i), c);
     }
 }
-void EntrySettings::mod(std::shared_ptr<std::string> dstPtr, sf::Keyboard::Key key) {
+void EntryStrSettings::mod(std::shared_ptr<std::string> dstPtr, sf::Keyboard::Key key) {
     if (!dstPtr->empty() and key == sf::Keyboard::BackSpace) {
         dstPtr->pop_back();
         return;

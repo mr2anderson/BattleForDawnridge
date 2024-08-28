@@ -627,6 +627,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CastleWarehouseSpec.hpp" />
     <ClInclude Include="src\CastleWoodGeneratorSpec.hpp" />
     <ClInclude Include="src\ChangeMoveEvent.hpp" />
+    <ClInclude Include="src\ChangeMusicVolumeEvent.hpp" />
+    <ClInclude Include="src\ChangeSoundVolumeEvent.hpp" />
     <ClInclude Include="src\ChangeWarriorDirectionEvent.hpp" />
     <ClInclude Include="src\ChooseLanguageEvent.hpp" />
     <ClInclude Include="src\CircleLightSource.hpp" />
@@ -686,7 +688,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\EnableCursorEvent.hpp" />
     <ClInclude Include="src\EnableWarriorRageModeEvent.hpp" />
     <ClInclude Include="src\EndTurnButtonSpec.hpp" />
-    <ClInclude Include="src\EntrySettings.hpp" />
+    <ClInclude Include="src\EntryNumSettings.hpp" />
+    <ClInclude Include="src\EntryStrSettings.hpp" />
     <ClInclude Include="src\eos\polymorphic_portable_archive.hpp" />
     <ClInclude Include="src\eos\portable_archive.hpp" />
     <ClInclude Include="src\eos\portable_archive_exception.hpp" />
@@ -728,6 +731,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IButtonSpec.hpp" />
     <ClInclude Include="src\ICollections.hpp" />
     <ClInclude Include="src\IConductionResourcePointCollectorSpec.hpp" />
+    <ClInclude Include="src\IEntrySettings.hpp" />
     <ClInclude Include="src\ILightSource.hpp" />
     <ClInclude Include="src\IlluminanceTable.hpp" />
     <ClInclude Include="src\Image.hpp" />
@@ -871,6 +875,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp" />
     <ClInclude Include="src\ShootingPriorityComp.hpp" />
     <ClInclude Include="src\SortedIndexedContainer.hpp" />
+    <ClInclude Include="src\SoundButtonSpec.hpp" />
     <ClInclude Include="src\SoundQueue.hpp" />
     <ClInclude Include="src\Sounds.hpp" />
     <ClInclude Include="src\SpecialMove.hpp" />
@@ -980,6 +985,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CastleWarehouseSpec.cpp" />
     <ClCompile Include="src\CastleWoodGeneratorSpec.cpp" />
     <ClCompile Include="src\ChangeMoveEvent.cpp" />
+    <ClCompile Include="src\ChangeMusicVolumeEvent.cpp" />
+    <ClCompile Include="src\ChangeSoundVolumeEvent.cpp" />
     <ClCompile Include="src\ChangeWarriorDirectionEvent.cpp" />
     <ClCompile Include="src\ChooseLanguageEvent.cpp" />
     <ClCompile Include="src\CircleLightSource.cpp" />
@@ -1035,7 +1042,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\EnableCursorEvent.cpp" />
     <ClCompile Include="src\EnableWarriorRageModeEvent.cpp" />
     <ClCompile Include="src\EndTurnButtonSpec.cpp" />
-    <ClCompile Include="src\EntrySettings.cpp" />
+    <ClCompile Include="src\EntryNumSettings.cpp" />
+    <ClCompile Include="src\EntryStrSettings.cpp" />
     <ClCompile Include="src\Event.cpp" />
     <ClCompile Include="src\Events.cpp" />
     <ClCompile Include="src\ExitButtonSpec.cpp" />
@@ -1199,6 +1207,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SetSpellEvent.cpp" />
     <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp" />
     <ClCompile Include="src\ShootingPriorityComp.cpp" />
+    <ClCompile Include="src\SoundButtonSpec.cpp" />
     <ClCompile Include="src\SoundQueue.cpp" />
     <ClCompile Include="src\Sounds.cpp" />
     <ClCompile Include="src\SpecialMove.cpp" />

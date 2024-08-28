@@ -22,7 +22,7 @@
 #include "CameraIndependentPopUpElement.hpp"
 #include "Label.hpp"
 #include "Button.hpp"
-#include "EntrySettings.hpp"
+#include "IEntrySettings.hpp"
 
 
 #pragma once
@@ -31,7 +31,7 @@
 class WindowEntry : public CameraIndependentPopUpElement {
 public:
     WindowEntry();
-    WindowEntry(const StringLcl& message, const StringLcl &buttonText1, const StringLcl &buttonText2, std::shared_ptr<std::string> dst, std::shared_ptr<EntrySettings> settings, const Events &events1, const Events &events2, uint32_t w = 400, uint32_t h = 225);
+    WindowEntry(const StringLcl& message, const StringLcl &buttonText1, const StringLcl &buttonText2, std::shared_ptr<std::string> dst, std::shared_ptr<IEntrySettings> settings, const Events &events1, const Events &events2, uint32_t w = 400, uint32_t h = 225);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     Events click(uint32_t mouseX, uint32_t mouseY, uint32_t windowW, uint32_t windowH) override;
@@ -42,7 +42,7 @@ private:
     StringLcl buttonText1, buttonText2;
     Events events1, events2;
     std::shared_ptr<std::string> dst;
-    std::shared_ptr<EntrySettings> settings;
+    std::shared_ptr<IEntrySettings> settings;
 
     Label getLabel(uint32_t windowW, uint32_t windowH) const;
     Button getButton1(uint32_t windowW, uint32_t windowH) const;

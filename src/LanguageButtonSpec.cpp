@@ -20,7 +20,6 @@
 #include "LanguageButtonSpec.hpp"
 #include "ChooseLanguageEvent.hpp"
 #include "HorizontalSelectionWindow.hpp"
-
 #include "CreateEEvent.hpp"
 #include "PlaySoundEvent.hpp"
 

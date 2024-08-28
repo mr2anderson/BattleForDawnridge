@@ -33,9 +33,14 @@ public:
 
     void push(sf::SoundBuffer *soundbuffer);
     void clear();
+    void loadVolume();
+    uint32_t getVolume() const;
+    void setVolume(uint32_t newVolume);
 private:
     SoundQueue();
     SoundQueue(const SoundQueue& copy);
+
+    uint32_t volume;
 
     std::list<sf::Sound> data;
 
