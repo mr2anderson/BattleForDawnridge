@@ -82,9 +82,9 @@ void Map::load(const std::string &path) {
                 this->getStatePtr()->getCollectionsPtr()->add(c);
 
                 for (uint32_t dx = 0; dx < 3; dx = dx + 1) {
-                    for (uint32_t dy = 0; dy < 3; dy = dy + 1) {
+                    for (uint32_t dy = 0; dy < 2; dy = dy + 1) {
                         uint32_t resultX = x + c->getSX() + dx;
-                        uint32_t resultY = y - 1 + dy;
+                        uint32_t resultY = y + dy;
                         if (dx == 0 and dy == 0) {
                             this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Healer>(resultX, resultY, currentPlayerId));
                         }
