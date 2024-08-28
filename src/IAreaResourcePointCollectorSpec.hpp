@@ -34,8 +34,6 @@ public:
 	virtual uint32_t getCollectionSpeed() const = 0;
 	virtual uint32_t getCollectionRadius() const = 0;
 private:
-    uint32_t countResourceInRadius(std::shared_ptr<const Building> building, MapState *state);
-
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<IAreaControllerSpec>(*this);

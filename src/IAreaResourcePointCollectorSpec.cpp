@@ -85,8 +85,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollec
 	if (building->works()) {
 		components.emplace_back(
 			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
-            StringLcl("{this_building_collects_resources_from_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())) + StringLcl(". ") +
-            StringLcl("{resource_in_radius}") + StringLcl(std::to_string(this->countResourceInRadius(building, state))),
+            StringLcl("{this_building_collects_resources_from_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())),
 			false,
 			Events()),
             true
@@ -112,19 +111,6 @@ sf::Color IAreaResourcePointCollectorSpec::getHighlightColor(uint32_t playerId) 
 }
 uint8_t IAreaResourcePointCollectorSpec::getHighlightType() const {
     return IAreaControllerSpec::OTHER;
-}
-uint32_t IAreaResourcePointCollectorSpec::countResourceInRadius(std::shared_ptr<const Building> building, MapState *state) {
-    uint32_t ctr = 0;
-
-	HashTableMapPosition<uint32_t> available = this->getAvailable(building->getX(), building->getY(), building->getSX(), building->getSY(), building->getPlayerId(), state);
-    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalAreaRPs(); i = i + 1) {
-        std::shared_ptr<AreaResourcePoint> rp = state->getCollectionsPtr()->getAreaRP(i);
-        if (rp->exist() and IAreaControllerSpec::IN_RADIUS(available, rp, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY) and rp->getResourceType() == this->getResourceType()) {
-            ctr = ctr + rp->getHP();
-        }
-    }
-
-    return ctr;
 }
 
 
