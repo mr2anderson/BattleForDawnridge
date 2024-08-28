@@ -135,6 +135,7 @@ void Menu::regenerateButtons() {
     }
     std::vector<std::string> mapNames;
     mapNames.push_back("ridge");
+    mapNames.push_back("lake");
     this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);
     this->buttons.at(1) = NetworkGameButtonSpec(1, mapNames, saveNames);
 
