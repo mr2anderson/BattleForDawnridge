@@ -431,7 +431,13 @@ Events Warrior::processRunningAnimation(MapState *state) {
 
     }
     else {
-        if (this->isFlying()) {
+        if (this->isVehicle()) {
+            if (this->footstepsClock.getMS() >= 1000) {
+                events.add(std::make_shared<PlaySoundEvent>("vehicle"));
+                this->footstepsClock.restart();
+            }
+        }
+        else if (this->isFlying()) {
             if (this->footstepsClock.getMS() >= 500) {
                 events.add(std::make_shared<PlaySoundEvent>("wings" + std::to_string(GlobalRandomGenerator32::get().gen() % TOTAL_WINGS + 1), true));
                 this->footstepsClock.restart();
