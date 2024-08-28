@@ -49,8 +49,8 @@ static std::string FORMAT_K(double a) {
 StringLcl Defence::getReadable() const {
 	StringLcl result;
 
-	result = result + StringLcl("{cut}" + FORMAT_K(this->cut) + ", ");
-	result = result + StringLcl("{stab}" + FORMAT_K(this->stab) + ", ");
+	result = result + StringLcl("{cut}" + FORMAT_K(this->cut) + " ");
+	result = result + StringLcl("{stab}" + FORMAT_K(this->stab) + " ");
 	result = result + StringLcl("{crush}" + FORMAT_K(this->crush));
 
 	return result;

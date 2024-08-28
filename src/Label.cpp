@@ -17,21 +17,18 @@
  */
 
 
+#include <sstream>
+#include <algorithm>
 #include "Label.hpp"
 #include "Fonts.hpp"
-#include "SfmlTextAline/SfmlTextAline.hpp"
+#include "RichText/RichText.hpp"
 
 
 Label::Label() = default;
-Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center) : RectangularUiElement(x, y, w, h) {
+Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center, bool colorDigits) : RectangularUiElement(x, y, w, h) {
 	this->message = str;
 	this->center = center;
-}
-void Label::makeLineBold(int32_t smartIndex) {
-	this->bold.push_back(smartIndex);
-}
-void Label::makeLineItalic(int32_t smartIndex) {
-	this->italic.push_back(smartIndex);
+	this->colorDigits = colorDigits;
 }
 static sf::String WRAP_TEXT(sf::String string, unsigned width, const sf::Font* font, unsigned charicterSize) {
 	unsigned currentOffset = 0;
@@ -69,26 +66,43 @@ static uint32_t TO_NORMAL_INDEX(uint32_t lines, int32_t smartIndex) {
 	}
 	return lines + smartIndex;
 }
+static bool SHOULD_BE_COLORED(const std::wstring& word) {
+	return std::find_if(word.begin(), word.end(), ::isdigit) != word.end();
+}
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
 	
-	SfmlTextAline text;
-	text.setPosition(this->getX() + 5, this->getY() + 5);
+	sfe::RichText text;
 	text.setCharacterSize(12);
-	if (this->center) {
-		text.setAlignment(SfmlTextAline::Alignment::Center);
-	}
-	text.setMinWidth(this->getW() - 10);
-	text.setColor(sf::Color::White);
 	text.setFont(*Fonts::get().get("1"));
-	text.setString(WRAP_TEXT(this->message.get(), this->getW() - 10, text.getFont(), text.getCharacterSize()));
 
-	uint32_t n = text.getNumberOfLines();
-	for (auto b : this->bold) {
-		text.setLineBold(TO_NORMAL_INDEX(n, b), true);
+	text << sf::Text::Regular;
+	std::wstring string = WRAP_TEXT(this->message.get(), this->getW() - 10, text.getFont(), text.getCharacterSize()).toWideString();
+	std::wstringstream lineSS(string);
+	std::wstring line;
+	uint32_t lineNumber = 0;
+	while (std::getline(lineSS, line, L'\n')) {
+		std::wstringstream wordSS(line);
+		std::wstring word;
+		while (wordSS >> word) {
+			if (this->colorDigits and SHOULD_BE_COLORED(word)) {
+				text << sf::Color(0, 250, 154);
+			}
+			else {
+				text << sf::Color::White;
+			}
+			text << word;
+			text << L' ';
+		}
+		text << L'\n';
 	}
-	for (auto i : this->italic) {
-		text.setLineItalic(TO_NORMAL_INDEX(n, i), true);
+
+	if (this->center) {
+		text.setPosition(this->getX() + this->getW() / 2, this->getY() + 5);
+		text.setOrigin(text.getGlobalBounds().width / 2, 0);
+	}
+	else {
+		text.setPosition(this->getX() + 5, this->getY() + 5);
 	}
 
 	target.draw(text, states);

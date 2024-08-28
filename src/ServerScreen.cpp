@@ -177,6 +177,6 @@ void ServerScreen::handleLogs() {
 void ServerScreen::drawEverything(sf::RenderWindow& window) {
     window.clear();
     window.draw(MenuBg());
-    window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get()));
+    window.draw(Label(10, 10, window.getSize().x - 20, window.getSize().y - 20, this->logs.get(), true, false));
     window.display();
 }

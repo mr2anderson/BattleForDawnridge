@@ -179,6 +179,8 @@
     </None>
     <None Include="README.md" />
     <None Include="src\serialize-tuple\License" />
+    <None Include="src\RichText\LICENSE" />
+    <None Include="src\RichText\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="extlibs\lib\x64\flac.lib">
@@ -650,9 +652,6 @@
     </ClInclude>
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp">
       <Filter>Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\eos\polymorphic_portable_archive.hpp">
       <Filter>Header Files</Filter>
@@ -1722,11 +1721,11 @@
     <ClInclude Include="src\EntryNumSettings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RichText\RichText.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\AddHpEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2711,8 +2710,8 @@
     <ClCompile Include="src\EntryNumSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\SfmlTextAline\licence.txt" />
+    <ClCompile Include="src\RichText\RichText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -56,7 +56,7 @@ Events WindowTwoButtons::click(uint32_t mouseX, uint32_t mouseY, uint32_t window
 
 
 Label WindowTwoButtons::getLabel(uint32_t windowW, uint32_t windowH) const {
-    return Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, this->message);
+    return Label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, this->message, true, false);
 }
 
 

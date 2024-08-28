@@ -27,7 +27,7 @@
 class LabelWithImage : public RectangularUiElement {
 public:
     LabelWithImage();
-    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, const std::string& textureName, const StringLcl &message, boost::optional<IntRectSerializable> rect = boost::none);
+    LabelWithImage(int32_t x, int32_t y, uint32_t sumW, uint32_t size, const std::string& textureName, const StringLcl &message, boost::optional<IntRectSerializable> rect = boost::none, bool colorDigits = true);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:

@@ -230,7 +230,7 @@ HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 
 	HorizontalSelectionWindowComponent component = {
 		textureName,
-		StringLcl("{hp}" + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " (") + this->getDefence().getReadable() + StringLcl(")\n") +
+		StringLcl("{hp}" + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " ") + this->getDefence().getReadable() + StringLcl("\n") +
         secondLine,
 		false,
 		Events()

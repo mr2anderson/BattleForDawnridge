@@ -437,6 +437,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <None Include="extlibs\lib\x86\sfml-window-d.pdb" />
     <None Include="extlibs\lib\x86\sfml-window-s-d.pdb" />
     <None Include="README.md" />
+    <None Include="src\RichText\LICENSE" />
+    <None Include="src\RichText\README.md" />
     <None Include="src\serialize-tuple\License" />
   </ItemGroup>
   <ItemGroup>
@@ -849,6 +851,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ReturnToMenuButtonSpec.hpp" />
     <ClInclude Include="src\ReturnToMenuEvent.hpp" />
     <ClInclude Include="src\RevertKillNextTurnEvent.hpp" />
+    <ClInclude Include="src\RichText\RichText.hpp" />
     <ClInclude Include="src\Road.hpp" />
     <ClInclude Include="src\RoadSpec.hpp" />
     <ClInclude Include="src\Room.hpp" />
@@ -872,7 +875,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SetFireEvent.hpp" />
     <ClInclude Include="src\SetHighlightEvent.hpp" />
     <ClInclude Include="src\SetSpellEvent.hpp" />
-    <ClInclude Include="src\SfmlTextAline\SfmlTextAline.hpp" />
     <ClInclude Include="src\ShootingPriorityComp.hpp" />
     <ClInclude Include="src\SortedIndexedContainer.hpp" />
     <ClInclude Include="src\SoundButtonSpec.hpp" />
@@ -1185,6 +1187,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ReturnToMenuButtonSpec.cpp" />
     <ClCompile Include="src\ReturnToMenuEvent.cpp" />
     <ClCompile Include="src\RevertKillNextTurnEvent.cpp" />
+    <ClCompile Include="src\RichText\RichText.cpp" />
     <ClCompile Include="src\Road.cpp" />
     <ClCompile Include="src\RoadSpec.cpp" />
     <ClCompile Include="src\Room.cpp" />
@@ -1205,7 +1208,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SetFireEvent.cpp" />
     <ClCompile Include="src\SetHighlightEvent.cpp" />
     <ClCompile Include="src\SetSpellEvent.cpp" />
-    <ClCompile Include="src\SfmlTextAline\SfmlTextAline.cpp" />
     <ClCompile Include="src\ShootingPriorityComp.cpp" />
     <ClCompile Include="src\SoundButtonSpec.cpp" />
     <ClCompile Include="src\SoundQueue.cpp" />
@@ -1286,9 +1288,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Workshop.cpp" />
     <ClCompile Include="src\WorkshopWarriorHealerSpec.cpp" />
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\SfmlTextAline\licence.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

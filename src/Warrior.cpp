@@ -576,7 +576,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
     return {
           "helmet",
-        StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " (" + this->getDefence().getReadable() + ")\n" +
+        StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " " + this->getDefence().getReadable() + "\n" +
         this->getSpecialInfoString() + "\n" +
         StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + std::to_string(this->getMovementPoints()) + "\n" +
         StringLcl("{population}") + std::to_string(this->getPopulation()),

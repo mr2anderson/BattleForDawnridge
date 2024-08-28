@@ -32,8 +32,8 @@ StringLcl Resource::getReadableInfo() const {
 		return result;
 	}
 
-	result = result + StringLcl("{" + this->type + "_number}");
-	result = result + StringLcl(std::to_string(this->n) + ")");
+	result = result + StringLcl("{" + this->type + "_number} ");
+	result = result + StringLcl(std::to_string(this->n));
 
 	return result;
 }
