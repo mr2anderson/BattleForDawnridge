@@ -89,7 +89,7 @@ void HorizontalSelectionWindow::moveDown() {
 HorizontalSelectionWindowStructure HorizontalSelectionWindow::getUIStructure(uint32_t windowW, uint32_t windowH) const {
     HorizontalSelectionWindowStructure structure;
 
-    structure.contentButtons.resize(COMPONENTS_IN_FRAME);
+    structure.contentButtons.resize(std::min<uint32_t>(COMPONENTS_IN_FRAME, this->components.size()));
     for (uint32_t i = 0; i < structure.contentButtons.size(); i = i + 1) {
         HorizontalSelectionWindowComponent component = this->components.at(i + this->offset);
         std::string pictureName = component.pictureName;
