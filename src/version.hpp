@@ -20,10 +20,10 @@
 #pragma once
 
 
-#define DEV_BUILD
+//#define DEV_BUILD
 
 
-#define BASE_VERSION "0.8.0"
+#define BASE_VERSION "0.8.1"
 
 
 #if defined(DEV_BUILD)
