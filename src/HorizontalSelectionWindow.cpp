@@ -24,7 +24,7 @@
 #include "PlaySoundEvent.hpp"
 
 
-static constexpr uint32_t COMPONENTS_IN_FRAME = 9;
+static constexpr uint32_t COMPONENTS_IN_FRAME = 7;
 
 
 HorizontalSelectionWindow::HorizontalSelectionWindow() = default;
