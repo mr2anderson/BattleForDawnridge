@@ -50,8 +50,8 @@ GO::GO(uint32_t x, uint32_t y) {
 }
 bool GO::inView(const sf::View& view) const {
 	sf::FloatRect thisRect;
-	thisRect.left = 64 * this->x;
-	thisRect.top = 64 * this->y;
+	thisRect.left = this->getXInPixels();
+	thisRect.top = this->getYInPixels();
 	thisRect.width = 64 * this->getSX();
 	thisRect.height = 64 * this->getSY();
 
