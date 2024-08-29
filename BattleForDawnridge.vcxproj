@@ -790,7 +790,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\MapSize.hpp" />
     <ClInclude Include="src\MapState.hpp" />
     <ClInclude Include="src\MapTooBig.hpp" />
-    <ClInclude Include="src\MarkAsAttackedEvent.hpp" />
     <ClInclude Include="src\Market.hpp" />
     <ClInclude Include="src\MarketSpec.hpp" />
     <ClInclude Include="src\MarkPlayerAsInactiveEvent.hpp" />
@@ -836,7 +835,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Ram.hpp" />
     <ClInclude Include="src\RectangularUiElement.hpp" />
     <ClInclude Include="src\RefreshAttackAbilityEvent.hpp" />
-    <ClInclude Include="src\RefreshAttackedTableEvent.hpp" />
     <ClInclude Include="src\RefreshHealingAbilityEvent.hpp" />
     <ClInclude Include="src\RefreshMovementPointsEvent.hpp" />
     <ClInclude Include="src\RemotePlayer.hpp" />
@@ -916,7 +914,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\UTFEncoder.hpp" />
     <ClInclude Include="src\UUID.hpp" />
     <ClInclude Include="src\UUIDs.hpp" />
-    <ClInclude Include="src\Valkyr.hpp" />
     <ClInclude Include="src\version.hpp" />
     <ClInclude Include="src\VersionsButtonSpec.hpp" />
     <ClInclude Include="src\VictoryConditionSpec.hpp" />
@@ -940,7 +937,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\WarriorHealer.hpp" />
     <ClInclude Include="src\WarriorHPPointer.hpp" />
     <ClInclude Include="src\WarriorNearAttacker.hpp" />
-    <ClInclude Include="src\WarriorNearMultyAttacker.hpp" />
     <ClInclude Include="src\WarriorNearSingleAttacker.hpp" />
     <ClInclude Include="src\WarriorPlayerPointer.hpp" />
     <ClInclude Include="src\WarriorProducerSpec.hpp" />
@@ -1130,7 +1126,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\MapSize.cpp" />
     <ClCompile Include="src\MapState.cpp" />
     <ClCompile Include="src\MapTooBig.cpp" />
-    <ClCompile Include="src\MarkAsAttackedEvent.cpp" />
     <ClCompile Include="src\Market.cpp" />
     <ClCompile Include="src\MarketSpec.cpp" />
     <ClCompile Include="src\MarkPlayerAsInactiveEvent.cpp" />
@@ -1173,7 +1168,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Ram.cpp" />
     <ClCompile Include="src\RectangularUiElement.cpp" />
     <ClCompile Include="src\RefreshAttackAbilityEvent.cpp" />
-    <ClCompile Include="src\RefreshAttackedTableEvent.cpp" />
     <ClCompile Include="src\RefreshHealingAbilityEvent.cpp" />
     <ClCompile Include="src\RefreshMovementPointsEvent.cpp" />
     <ClCompile Include="src\RemotePlayer.cpp" />
@@ -1248,7 +1242,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\UTFEncoder.cpp" />
     <ClCompile Include="src\UUID.cpp" />
     <ClCompile Include="src\UUIDs.cpp" />
-    <ClCompile Include="src\Valkyr.cpp" />
     <ClCompile Include="src\VersionsButtonSpec.cpp" />
     <ClCompile Include="src\VictoryConditionSpec.cpp" />
     <ClCompile Include="src\Wall1.cpp" />
@@ -1271,7 +1264,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\WarriorHealer.cpp" />
     <ClCompile Include="src\WarriorHPPointer.cpp" />
     <ClCompile Include="src\WarriorNearAttacker.cpp" />
-    <ClCompile Include="src\WarriorNearMultyAttacker.cpp" />
     <ClCompile Include="src\WarriorNearSingleAttacker.cpp" />
     <ClCompile Include="src\WarriorPlayerPointer.cpp" />
     <ClCompile Include="src\WarriorProducerSpec.cpp" />

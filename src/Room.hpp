@@ -70,8 +70,6 @@
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 #include "RefreshAttackAbilityEvent.hpp"
 #include "WipeAttackAbilityEvent.hpp"
-#include "RefreshAttackedTableEvent.hpp"
-#include "MarkAsAttackedEvent.hpp"
 #include "RefreshHealingAbilityEvent.hpp"
 #include "WipeHealingAbilityEvent.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
@@ -225,8 +223,6 @@ private:
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e, RoomOutputProtocol p);
 	void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e, RoomOutputProtocol p);
 	void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, RoomOutputProtocol p);
-	void handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e, RoomOutputProtocol p);
-	void handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e, RoomOutputProtocol p);
 	void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, RoomOutputProtocol p);
 	void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, RoomOutputProtocol p);
 	void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p);

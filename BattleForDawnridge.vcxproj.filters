@@ -1214,9 +1214,6 @@
     <ClInclude Include="src\MapTooBig.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MarkAsAttackedEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Market.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1350,9 +1347,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RefreshAttackAbilityEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RefreshAttackedTableEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RefreshHealingAbilityEvent.hpp">
@@ -1580,9 +1574,6 @@
     <ClInclude Include="src\UUIDs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Valkyr.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\VersionsButtonSpec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1647,9 +1638,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WarriorNearAttacker.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WarriorNearMultyAttacker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WarriorNearSingleAttacker.hpp">
@@ -2230,9 +2218,6 @@
     <ClCompile Include="src\MapTooBig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MarkAsAttackedEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Market.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2357,9 +2342,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\RefreshAttackAbilityEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RefreshAttackedTableEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\RefreshHealingAbilityEvent.cpp">
@@ -2578,9 +2560,6 @@
     <ClCompile Include="src\UUIDs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Valkyr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\VersionsButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2645,9 +2624,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WarriorNearAttacker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WarriorNearMultyAttacker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WarriorNearSingleAttacker.cpp">

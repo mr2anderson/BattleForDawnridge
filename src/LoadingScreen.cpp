@@ -38,7 +38,6 @@
 #include "Playlist.hpp"
 #include "Well.hpp"
 #include "Plant.hpp"
-#include "Valkyr.hpp"
 #include "Healer.hpp"
 #include "HealerProjectile.hpp"
 #include "Ram.hpp"
@@ -186,7 +185,6 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)),
                     std::make_tuple("legioner", Legioner().getAnimationNumber(a, d)),
                     std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
-                    std::make_tuple("valkyr", Valkyr().getAnimationNumber(a, d)),
                     std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)),
                     std::make_tuple("healer", Healer().getAnimationNumber(a, d)),
                     std::make_tuple("ram", Ram().getAnimationNumber(a, d))}) {
@@ -228,7 +226,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "destroy", "sword", "breath", "knight", "fire",
                                       "ouch", "spell_factory", "rage_spell",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
-                                      "ouch_woman", "valkyr", "ouch_woman_cute", "healer", "vehicle_hit",
+                                      "ouch_woman_cute", "healer", "vehicle_hit",
                                       "vehicle"}) {
             Sounds::get().add(a, "sounds/" + a + ".ogg");
         }

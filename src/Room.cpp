@@ -34,7 +34,6 @@
 #include "SpellProducerSpec.hpp"
 #include "Spell.hpp"
 #include "WarriorHealer.hpp"
-#include "WarriorNearMultyAttacker.hpp"
 #include "ISingleAttacker.hpp"
 #include "ResourceBar.hpp"
 #include "ServerNetSpecs.hpp"
@@ -887,14 +886,6 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 		this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent, p);
         result = result | SYNC_UI::SYNC_MAP;
 	}
-	else if (std::shared_ptr<RefreshAttackedTableEvent> refreshAttackedTableEvent = std::dynamic_pointer_cast<RefreshAttackedTableEvent>(e)) {
-		this->handleRefreshAttackedTableEvent(refreshAttackedTableEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
-	}
-	else if (std::shared_ptr<MarkAsAttackedEvent> markAsAttackedEvent = std::dynamic_pointer_cast<MarkAsAttackedEvent>(e)) {
-		this->handleMarkAsAttackedEvent(markAsAttackedEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
-	}
 	else if (std::shared_ptr<RefreshHealingAbilityEvent> refreshHealingAbilityEvent = std::dynamic_pointer_cast<RefreshHealingAbilityEvent>(e)) {
 		this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent, p);
         result = result | SYNC_UI::SYNC_MAP;
@@ -1081,12 +1072,6 @@ void Room::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityE
 }
 void Room::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, RoomOutputProtocol p) {
 	e->getI()->wipeAbility();
-}
-void Room::handleRefreshAttackedTableEvent(std::shared_ptr<RefreshAttackedTableEvent> e, RoomOutputProtocol p) {
-	e->getWarrior()->refreshAttackedTable();
-}
-void Room::handleMarkAsAttackedEvent(std::shared_ptr<MarkAsAttackedEvent> e, RoomOutputProtocol p) {
-	e->getAttacker()->markAsAttacked(e->getTarget());
 }
 void Room::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, RoomOutputProtocol p) {
 	e->getWarrior()->refreshHealingAbility();
