@@ -17,11 +17,21 @@
  */
 
 
+#include <filesystem>
 #include "Logs.hpp"
+#include "Root.hpp"
+#include "UTFEncoder.hpp"
 
 
 Logs::Logs() {
 	this->limit = 0;
+	if (!std::filesystem::is_directory(Root::get().getUserdataRoot())) {
+		std::filesystem::create_directories(Root::get().getUserdataRoot());
+	}
+	this->file.open(Root::get().getUserdataRoot() + "/srv_logs.txt", std::ios::app);
+}
+Logs::~Logs() {
+	this->file.close();
 }
 void Logs::setEntryLimit(uint32_t newLimit) {
 	this->limit = newLimit;
@@ -29,7 +39,17 @@ void Logs::setEntryLimit(uint32_t newLimit) {
 uint32_t Logs::getEntryLimit() const {
 	return this->limit;
 }
-void Logs::add(const StringLcl& str) {
+void Logs::add(const StringLcl &lcl) {
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	std::stringstream ss;
+	ss << std::put_time(&tm, "%Y-%m-%d-%H-%M-%S");
+	std::string time = '[' + ss.str() + "]";
+	StringLcl str = time + " ";
+	str = str + lcl;
+
+	this->file << UTFEncoder::get().utf16ToUtf8(str.get() + L"\n");
+
 	this->content.push_back(str);
 	while (this->content.size() > this->limit) {
 		this->content.pop_front();

@@ -18,6 +18,7 @@
 
 
 #include <deque>
+#include <fstream>
 #include "StringLcl.hpp"
 
 
@@ -27,12 +28,14 @@
 class Logs {
 public:
 	Logs();
+	~Logs();
 	
 	void setEntryLimit(uint32_t newLimit);
 	uint32_t getEntryLimit() const;
 	void add(const StringLcl &lcl);
 	StringLcl get() const;
 private:
+	std::ofstream file;
 	uint32_t limit;
 	std::deque<StringLcl> content;
 	StringLcl contentCached;

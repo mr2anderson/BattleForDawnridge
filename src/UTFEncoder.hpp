@@ -30,7 +30,8 @@ public:
         return instance;
     }
 
-    std::wstring utf8ToUtf16(const std::string& utf8);
+    std::wstring utf8ToUtf16(const std::string& utf8) const;
+    std::string utf16ToUtf8(const std::wstring& utf16) const;
 private:
     UTFEncoder() = default;
     UTFEncoder(const UTFEncoder& copy);

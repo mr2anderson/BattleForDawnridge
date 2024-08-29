@@ -36,7 +36,6 @@ ServerScreen::ServerScreen(sf::RenderWindow& window) {
     this->logs.setEntryLimit(50);
     this->logs.add(StringLcl("{server_mode_welcome}"));
     this->logs.add(StringLcl("{entry_limit_set}" + std::to_string(this->logs.getEntryLimit())));
-    this->logs.add(StringLcl());
 
     if (this->listener.listen(MainServerPosition::get().getPort()) != sf::Socket::Status::Done) {
         this->logs.add(StringLcl("{couldnt_listen_port}"));
