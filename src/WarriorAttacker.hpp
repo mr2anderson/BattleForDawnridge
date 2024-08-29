@@ -34,6 +34,8 @@ public:
             (this->getCurrentAnimation() == "attack" and (this->target == nullptr or this->target->hasError(mapSize, totalPlayers))));
     }
 
+    uint32_t getMinDamagePoints() const;
+    uint32_t getMaxDamagePoints() const;
     Damage getDamage() const;
     uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const override;
     bool blockBuildingAbility() const override;

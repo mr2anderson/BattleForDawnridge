@@ -47,7 +47,15 @@ uint32_t Damage::getHpLoss(Defence defence) const {
 	}
 	return k * this->points;
 }
+uint32_t Damage::getPoints() const {
+	return this->points;
+}
 StringLcl Damage::getReadable() const {
+	StringLcl result = this->getTypeReadable() + " ";
+	result = result + StringLcl(std::to_string(this->points));
+	return result;
+}
+StringLcl Damage::getTypeReadable() const {
 	StringLcl result;
 	switch (this->type) {
 	case TYPE::CUT: {
@@ -63,6 +71,5 @@ StringLcl Damage::getReadable() const {
 		break;
 	}
 	}
-	result = result + StringLcl(std::to_string(this->points));
 	return result;
 }

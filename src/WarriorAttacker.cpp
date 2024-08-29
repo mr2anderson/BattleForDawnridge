@@ -23,6 +23,10 @@
 #include "CloseAnimationEvent.hpp"
 #include "HighlightColors.hpp"
 #include "PlaySoundEvent.hpp"
+#include "GlobalRandomGenerator32.hpp"
+
+
+static const uint32_t DAMAGE_PERCENT_DELTA = 25;
 
 
 WarriorAttacker::WarriorAttacker() {
@@ -30,6 +34,14 @@ WarriorAttacker::WarriorAttacker() {
 }
 WarriorAttacker::WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId) : Warrior(x, y, playerId) {
     this->target = nullptr;
+}
+uint32_t WarriorAttacker::getMinDamagePoints() const {
+    uint32_t p = this->getDamage().getPoints();
+    return (1 - (float)DAMAGE_PERCENT_DELTA / 100) * p;
+}
+uint32_t WarriorAttacker::getMaxDamagePoints() const {
+    uint32_t p = this->getDamage().getPoints();
+    return (1 + (float)DAMAGE_PERCENT_DELTA / 100) * p;
 }
 Damage WarriorAttacker::getDamage() const {
     Damage baseDamage = this->getBaseDamage();
@@ -135,7 +147,7 @@ Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uin
 
     return Events();
 }
-Events WarriorAttacker::startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) {
+Events WarriorAttacker::startAttack(std::shared_ptr<Unit> u, uint32_t targetX, uint32_t targetY) {
     this->target = u;
     this->wipeMovementPoints();
     this->startAnimation("attack");
@@ -151,7 +163,10 @@ Events WarriorAttacker::processCurrentAnimation(MapState *state) {
 
     if (events.empty() and this->getCurrentAnimation() == "attack" and this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
-        events = events + this->target->hit(this->getDamage());
+        Damage baseDamage = this->getDamage();
+        float k = 1 - (float)DAMAGE_PERCENT_DELTA / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * DAMAGE_PERCENT_DELTA + 1)) / 100;
+        baseDamage = k * baseDamage;
+        events = events + this->target->hit(baseDamage);
         this->startAnimation("talking");
     }
 

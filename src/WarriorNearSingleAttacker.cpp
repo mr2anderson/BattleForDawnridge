@@ -62,7 +62,7 @@ void WarriorNearSingleAttacker::wipeAbility() {
 }
 StringLcl WarriorNearSingleAttacker::getSpecialInfoString() const {
     StringLcl str =
-            StringLcl("{damage}") + this->getDamage().getReadable() + ". " +
+            StringLcl("{damage}") + this->getDamage().getTypeReadable() + " " + std::to_string(this->getMinDamagePoints()) + "-" + std::to_string(this->getMaxDamagePoints()) + ". " +
             StringLcl("{single_attack}") + ". ";
 
     if (this->attackAbility) {
