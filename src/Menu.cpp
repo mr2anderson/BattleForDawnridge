@@ -138,7 +138,7 @@ void Menu::regenerateButtons() {
     std::set<std::string> saveNames;
     if (std::filesystem::is_directory(Root::get().getUserdataRoot() + "/saves")) {
         for (const auto& entry : std::filesystem::directory_iterator(Root::get().getUserdataRoot() + "/saves")) {
-            if (entry.is_regular_file() and entry.path().extension() == ".save") {
+            if (entry.is_regular_file() and entry.path().extension() == ".bfdsave") {
                 saveNames.insert(entry.path().filename().string());
             }
         }
