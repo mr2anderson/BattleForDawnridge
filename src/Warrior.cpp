@@ -600,33 +600,38 @@ HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
         Events()
     };
 }
-Events Warrior::getSelectionWindow(bool own) {
+Events Warrior::getSelectionWindow(bool own, bool minimal) {
     Events events;
 
     std::vector<HorizontalSelectionWindowComponent> components;
     components.push_back(this->getExitComponent());
-    if (!own) {
-        components.push_back(this->getWarriorOfEnemyComponent());
-    }
-    components.push_back(this->getDescriptionComponent());
-    components.push_back(this->getWarriorInfoComponent());
-    if (this->blockBuildingAbility()) {
-        components.push_back(this->getBlockingBuildingComponent());
-    }
-    if (this->inRage()) {
-        components.push_back(this->getRageModeComponent());
-    }
-    if (own) {
-        if (this->toKill) {
-            components.push_back(this->getRevertKillComponent());
-        }
-        else {
-            components.push_back(this->getKillComponent());
-        }
-        events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+    if (minimal) {
+        events.add(std::make_shared<PlaySoundEvent>("click"));
     }
     else {
-        events.add(std::make_shared<PlaySoundEvent>("click"));
+        if (!own) {
+            components.push_back(this->getWarriorOfEnemyComponent());
+        }
+        components.push_back(this->getDescriptionComponent());
+        components.push_back(this->getWarriorInfoComponent());
+        if (this->blockBuildingAbility()) {
+            components.push_back(this->getBlockingBuildingComponent());
+        }
+        if (this->inRage()) {
+            components.push_back(this->getRageModeComponent());
+        }
+        if (own) {
+            if (this->toKill) {
+                components.push_back(this->getRevertKillComponent());
+            }
+            else {
+                components.push_back(this->getKillComponent());
+            }
+            events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+        }
+        else {
+            events.add(std::make_shared<PlaySoundEvent>("click"));
+        }
     }
 
     std::shared_ptr<HorizontalSelectionWindow> w = std::make_shared<HorizontalSelectionWindow>(components);
@@ -640,7 +645,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	}
 
     if (button == sf::Mouse::Button::Right or (button == sf::Mouse::Button::Left and !this->belongTo(playerId))) {
-        return this->getMoveHighlightionEvent(state) + this->getSelectionWindow(this->belongTo(playerId));
+        return this->getMoveHighlightionEvent(state) + this->getSelectionWindow(this->belongTo(playerId), !this->belongTo(playerId) and button == sf::Mouse::Button::Right);
     }
 
     if (!this->belongTo(playerId)) {

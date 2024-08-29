@@ -120,7 +120,7 @@ private:
     HorizontalSelectionWindowComponent getWarriorInfoComponent() const;
     HorizontalSelectionWindowComponent getBlockingBuildingComponent() const;
     HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
-    Events getSelectionWindow(bool own);
+    Events getSelectionWindow(bool own, bool minimal);
 
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
