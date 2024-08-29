@@ -139,6 +139,7 @@ Events BuildButtonSpec::getEvents() const {
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
+	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionTroopsComponents);
 	Events createBuildWindowSectionTroopsEvent = clickEvent;
@@ -161,7 +162,6 @@ Events BuildButtonSpec::getEvents() const {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionOtherComponents;
 	buildMenuSectionOtherComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<Market>());
-	buildMenuSectionOtherComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionOther = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionOtherComponents);
 	Events createBuildWindowSectionOtherEvent = clickEvent;
