@@ -44,6 +44,8 @@
 #include "ExitButtonSpec.hpp"
 #include "VersionsButtonSpec.hpp"
 #include "SoundButtonSpec.hpp"
+#include "GraphicsButtonSpec.hpp"
+#include "IlluminationTableSettings.hpp"
 
 
 Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additionalWelcomeMsg) {
@@ -116,12 +118,13 @@ void Menu::generateButtons() {
         Button(LocalGameButtonSpec(0)),
         Button(NetworkGameButtonSpec(1)),
         Button(GuideButtonSpec(2)),
-        Button(SoundButtonSpec(3)),
-        Button(LanguageButtonSpec(4)),
-        Button(SupportButtonSpec(5)),
-        Button(CreditsButtonSpec(6)),
-        Button(VersionsButtonSpec(7)),
-        Button(ExitButtonSpec(8))
+        Button(GraphicsButtonSpec(3)),
+        Button(SoundButtonSpec(4)),
+        Button(LanguageButtonSpec(5)),
+        Button(SupportButtonSpec(6)),
+        Button(CreditsButtonSpec(7)),
+        Button(VersionsButtonSpec(8)),
+        Button(ExitButtonSpec(9))
     };
 }
 void Menu::regenerateButtons() {
@@ -139,8 +142,11 @@ void Menu::regenerateButtons() {
     this->buttons.at(0) = LocalGameButtonSpec(0, mapNames, saveNames);
     this->buttons.at(1) = NetworkGameButtonSpec(1, mapNames, saveNames);
 
+    std::tuple<bool, uint8_t> illumination = std::make_tuple(IlluminationTableSettings::get().isEnabled(), IlluminationTableSettings::get().getBrightness());
+    this->buttons.at(3) = GraphicsButtonSpec(3, std::get<0>(illumination), std::get<1>(illumination));
+
     std::tuple<uint32_t, uint32_t> volumes = std::make_tuple(SoundQueue::get().getVolume(), Music::get().getVolume());
-    this->buttons.at(3) = SoundButtonSpec(3, std::get<0>(volumes), std::get<1>(volumes));
+    this->buttons.at(4) = SoundButtonSpec(4, std::get<0>(volumes), std::get<1>(volumes));
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear();
@@ -230,6 +236,15 @@ void Menu::handleEvent(std::shared_ptr<Event> e) {
     else if (std::shared_ptr<ChangeMusicVolumeEvent> changeMusicVolumeEvent = std::dynamic_pointer_cast<ChangeMusicVolumeEvent>(e)) {
         this->handleChangeMusicVolumeEvent(changeMusicVolumeEvent);
     }
+    else if (std::shared_ptr<TurnOnIlluminationEvent> turnOnIlluminationEvent = std::dynamic_pointer_cast<TurnOnIlluminationEvent>(e)) {
+        this->handleTurnOnIlluminationEvent(turnOnIlluminationEvent);
+    }
+    else if (std::shared_ptr<TurnOffIlluminationEvent> turnOffIlluminationEvent = std::dynamic_pointer_cast<TurnOffIlluminationEvent>(e)) {
+        this->handleTurnOffIlluminationEvent(turnOffIlluminationEvent);
+    }
+    else if (std::shared_ptr<ChangeIlluminationBrightnessEvent> changeIlluminationBrightnessEvent = std::dynamic_pointer_cast<ChangeIlluminationBrightnessEvent>(e)) {
+        this->handleChangeIlluminationBrightnessEvent(changeIlluminationBrightnessEvent);
+    }
     else {
         std::cerr << "Menu: warning: unknown event handled" << std::endl;
     }
@@ -293,4 +308,13 @@ void Menu::handleChangeSoundVolumeEvent(std::shared_ptr<ChangeSoundVolumeEvent> 
 }
 void Menu::handleChangeMusicVolumeEvent(std::shared_ptr<ChangeMusicVolumeEvent> e) {
     Music::get().setVolume(std::stoi(e->getVal()));
+}
+void Menu::handleTurnOnIlluminationEvent(std::shared_ptr<TurnOnIlluminationEvent> e) {
+    IlluminationTableSettings::get().setEnable(true);
+}
+void Menu::handleTurnOffIlluminationEvent(std::shared_ptr<TurnOffIlluminationEvent> e) {
+    IlluminationTableSettings::get().setEnable(false);
+}
+void Menu::handleChangeIlluminationBrightnessEvent(std::shared_ptr<ChangeIlluminationBrightnessEvent> e) {
+    IlluminationTableSettings::get().setBrightness(std::stoi(e->getVal()));
 }

@@ -48,6 +48,7 @@
 #include "MainServerPosition.hpp"
 #include "Root.hpp"
 #include "SoundQueue.hpp"
+#include "IlluminationTableSettings.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -149,6 +150,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
             Music::get().add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
+        IlluminationTableSettings::get().load();
         Textures::get().add("bg", "images/bg.jpg");
         Textures::get().add("icon", "images/icon.png");
         #if defined(USE_CUSTOM_CURSOR)
@@ -173,7 +175,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon", "heart_icon", "save_icon",
                 "plain", "slow_movement_icon", "battle_icon", "new_turn_icon",
-                "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon", "sound_icon", "music_icon"}) {
+                "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon", "sound_icon", "music_icon", "illumination_settings_icon"}) {
             Textures::get().add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {

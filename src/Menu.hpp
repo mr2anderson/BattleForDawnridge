@@ -35,6 +35,9 @@
 #include "ClosePopUpElementEvent.hpp"
 #include "ChangeSoundVolumeEvent.hpp"
 #include "ChangeMusicVolumeEvent.hpp"
+#include "TurnOnIlluminationEvent.hpp"
+#include "TurnOffIlluminationEvent.hpp"
+#include "ChangeIlluminationBrightnessEvent.hpp"
 
 
 #pragma once
@@ -79,4 +82,7 @@ private:
     void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e);
     void handleChangeSoundVolumeEvent(std::shared_ptr<ChangeSoundVolumeEvent> e);
     void handleChangeMusicVolumeEvent(std::shared_ptr<ChangeMusicVolumeEvent> e);
+    void handleTurnOnIlluminationEvent(std::shared_ptr<TurnOnIlluminationEvent> e);
+    void handleTurnOffIlluminationEvent(std::shared_ptr<TurnOffIlluminationEvent> e);
+    void handleChangeIlluminationBrightnessEvent(std::shared_ptr<ChangeIlluminationBrightnessEvent> e);
 };

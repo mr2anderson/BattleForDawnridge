@@ -628,6 +628,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\CastleTerritoryExpanderSpec.hpp" />
     <ClInclude Include="src\CastleWarehouseSpec.hpp" />
     <ClInclude Include="src\CastleWoodGeneratorSpec.hpp" />
+    <ClInclude Include="src\ChangeIlluminationBrightnessEvent.hpp" />
     <ClInclude Include="src\ChangeMoveEvent.hpp" />
     <ClInclude Include="src\ChangeMusicVolumeEvent.hpp" />
     <ClInclude Include="src\ChangeSoundVolumeEvent.hpp" />
@@ -714,6 +715,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GlobalRandomGenerator32.hpp" />
     <ClInclude Include="src\GlobalRandomGenerator64.hpp" />
     <ClInclude Include="src\GO.hpp" />
+    <ClInclude Include="src\GraphicsButtonSpec.hpp" />
     <ClInclude Include="src\GuideButtonSpec.hpp" />
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
@@ -736,6 +738,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IEntrySettings.hpp" />
     <ClInclude Include="src\ILightSource.hpp" />
     <ClInclude Include="src\IlluminanceTable.hpp" />
+    <ClInclude Include="src\IlluminationTableSettings.hpp" />
     <ClInclude Include="src\Image.hpp" />
     <ClInclude Include="src\ImageFlyingE.hpp" />
     <ClInclude Include="src\IncorrectMoveRepresentation.hpp" />
@@ -908,6 +911,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\TradingSpec.hpp" />
     <ClInclude Include="src\Treasure.hpp" />
     <ClInclude Include="src\TryToBuildEvent.hpp" />
+    <ClInclude Include="src\TurnOffIlluminationEvent.hpp" />
+    <ClInclude Include="src\TurnOnIlluminationEvent.hpp" />
     <ClInclude Include="src\Unit.hpp" />
     <ClInclude Include="src\UnselectEvent.hpp" />
     <ClInclude Include="src\UseSpellEvent.hpp" />
@@ -983,6 +988,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\CastleTerritoryExpanderSpec.cpp" />
     <ClCompile Include="src\CastleWarehouseSpec.cpp" />
     <ClCompile Include="src\CastleWoodGeneratorSpec.cpp" />
+    <ClCompile Include="src\ChangeIlluminationBrightnessEvent.cpp" />
     <ClCompile Include="src\ChangeMoveEvent.cpp" />
     <ClCompile Include="src\ChangeMusicVolumeEvent.cpp" />
     <ClCompile Include="src\ChangeSoundVolumeEvent.cpp" />
@@ -1056,6 +1062,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\GatesSpec.cpp" />
     <ClCompile Include="src\GlobalClock.cpp" />
     <ClCompile Include="src\GO.cpp" />
+    <ClCompile Include="src\GraphicsButtonSpec.cpp" />
     <ClCompile Include="src\GuideButtonSpec.cpp" />
     <ClCompile Include="src\Healer.cpp" />
     <ClCompile Include="src\HealerProjectile.cpp" />
@@ -1073,6 +1080,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ICollections.cpp" />
     <ClCompile Include="src\IConductionResourcePointCollectorSpec.cpp" />
     <ClCompile Include="src\IlluminanceTable.cpp" />
+    <ClCompile Include="src\IlluminationTableSettings.cpp" />
     <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\ImageFlyingE.cpp" />
     <ClCompile Include="src\IncorrectMoveRepresentation.cpp" />
@@ -1236,6 +1244,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\TradingSpec.cpp" />
     <ClCompile Include="src\Treasure.cpp" />
     <ClCompile Include="src\TryToBuildEvent.cpp" />
+    <ClCompile Include="src\TurnOffIlluminationEvent.cpp" />
+    <ClCompile Include="src\TurnOnIlluminationEvent.cpp" />
     <ClCompile Include="src\Unit.cpp" />
     <ClCompile Include="src\UnselectEvent.cpp" />
     <ClCompile Include="src\UseSpellEvent.cpp" />

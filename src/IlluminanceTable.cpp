@@ -18,12 +18,17 @@
 
 
 #include "IlluminanceTable.hpp"
+#include "IlluminationTableSettings.hpp"
 
 
 IlluminanceTable::IlluminanceTable() = default;
 
 
 void IlluminanceTable::createRender(uint32_t windowW, uint32_t windowH, const sf::ContextSettings& parentSettings) {
+	if (!IlluminationTableSettings::get().isEnabled()) {
+		return;
+	}
+
 	this->parentSettings = parentSettings;
 	this->render = std::make_unique<sf::RenderTexture>();
 	this->render->create(windowW, windowH, this->parentSettings);
@@ -31,6 +36,10 @@ void IlluminanceTable::createRender(uint32_t windowW, uint32_t windowH, const sf
 
 
 void IlluminanceTable::newFrame(const sf::View& view) {
+	if (!IlluminationTableSettings::get().isEnabled()) {
+		return;
+	}
+
 	this->view = view;
 
 	if (this->view.getSize().x != this->render->getSize().x or this->view.getSize().y != this->render->getSize().y) {
@@ -38,12 +47,16 @@ void IlluminanceTable::newFrame(const sf::View& view) {
 		this->render->create(this->view.getSize().x, this->view.getSize().y, this->parentSettings);
 	}
 
-	this->render->clear(sf::Color(0, 0, 0, 100));
+	this->render->clear(sf::Color(0, 0, 0, 255 - IlluminationTableSettings::get().getBrightness()));
 	this->render->setView(view);
 }
 
 
 void IlluminanceTable::add(std::shared_ptr<const IWithLightSource> i) {
+	if (!IlluminationTableSettings::get().isEnabled()) {
+		return;
+	}
+
 	if (i->getLightSource()->inView(this->view)) {
 		sf::RenderStates states;
 		states.blendMode = sf::BlendNone;
@@ -55,6 +68,10 @@ void IlluminanceTable::add(std::shared_ptr<const IWithLightSource> i) {
 
 
 void IlluminanceTable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	if (!IlluminationTableSettings::get().isEnabled()) {
+		return;
+	}
+
 	this->render->display();
 
 	sf::Sprite sprite;
