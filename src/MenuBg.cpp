@@ -26,7 +26,7 @@ void MenuBg::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::RectangleShape rect;
     rect.setPosition(0, 0);
     rect.setSize(sf::Vector2f(target.getSize().x, target.getSize().y));
-    rect.setFillColor(sf::Color(27, 32, 30));
+    rect.setFillColor(sf::Color(19, 21, 20));
 
     sf::Sprite s;
     s.setTexture(*Textures::get().get("bg"));
