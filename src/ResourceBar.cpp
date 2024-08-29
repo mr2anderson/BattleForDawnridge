@@ -69,7 +69,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 		else {
 			text.setString(std::to_string(res.at(i).n) + " / " + std::to_string(this->limit.get(res.at(i).type)));
 		}
-		text.setCharacterSize(16);
+		text.setCharacterSize(13);
 		text.setFillColor(sf::Color::White);
 		text.setOutlineColor(sf::Color::Black);
 		text.setOutlineThickness(1);
