@@ -19,7 +19,7 @@
 
 #include <deque>
 #include <fstream>
-#include "StringLcl.hpp"
+#include "Label.hpp"
 
 
 #pragma once
@@ -33,7 +33,7 @@ public:
 	void setEntryLimit(uint32_t newLimit);
 	uint32_t getEntryLimit() const;
 	void add(const StringLcl &lcl);
-	StringLcl get() const;
+	Label toLabel(uint32_t windowW, uint32_t windowH) const;
 private:
 	std::ofstream file;
 	uint32_t limit;

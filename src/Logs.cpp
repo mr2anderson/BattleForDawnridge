@@ -60,6 +60,6 @@ void Logs::add(const StringLcl &lcl) {
 		this->contentCached = this->contentCached + a + "\n";
 	}
 }
-StringLcl Logs::get() const {
-	return this->contentCached;
+Label Logs::toLabel(uint32_t windowW, uint32_t windowH) const {
+	return Label(10, 10, windowW - 20, windowH - 20, this->contentCached, true, false);
 }
