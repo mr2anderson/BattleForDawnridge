@@ -62,8 +62,9 @@ StringLcl BuildButtonSpec::getString() const {
 
 template<typename T> StringLcl GET_BUILD_DESCRIPTION() {
 	std::unique_ptr<T> t = std::make_unique<T>();
-	StringLcl description = t->getDescription() + L'\n' +
-		StringLcl("{cost}") + t->getCost().getReadableInfo();
+	StringLcl description = t->getDescription() + '\n' +
+		StringLcl("{cost}") + t->getCost().getReadableInfo() + "\n" + 
+		StringLcl("{hp}") + std::to_string(t->getMaxHP()) + StringLcl(" ") + t->getDefence().getReadable() + StringLcl(". {building_speed}") + std::to_string(t->getRegenerationSpeed());
 	return description;
 }
 template<typename T> HorizontalSelectionWindowComponent GET_BUILD_COMPONENT() {
