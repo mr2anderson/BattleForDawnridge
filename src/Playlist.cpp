@@ -17,6 +17,7 @@
  */
 
 
+#include <iostream>
 #include "Playlist.hpp"
 #include "Music.hpp"
 #include "GlobalRandomGenerator32.hpp"
@@ -34,4 +35,5 @@ void Playlist::update() {
     }
     this->index = (this->index + 1) % SOUNDTRACKS_N;
     Music::get().play(std::to_string(this->index));
+    std::cout << "Playlist: playing " << this->index << std::endl;
 }
