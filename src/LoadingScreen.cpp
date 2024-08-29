@@ -180,6 +180,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "sockerer_house", "sockerer_icon", "magick_icon"}) {
             Textures::get().add(a, "images/" + a + ".png");
         }
+        for (const std::string &a : {"dawn", "morning", "day", "sunset", "night1", "night2"}) {
+            Textures::get().add(a, "images/time/" + a + ".png");
+        }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
             Textures::get().add("road_" + a, "images/road/" + a + ".png");
         }

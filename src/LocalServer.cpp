@@ -200,7 +200,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::shared_ptr<std::exception_ptr> unexpectedError, std::atomic_bool& stop, std::atomic_bool& running, std::atomic_bool &ready, std::atomic<uint16_t> &port) {
+static void THREAD_EXCEPTION_SAFE(std::atomic_bool& stop, std::atomic_bool& running, std::atomic_bool &ready, std::atomic<uint16_t> &port) {
 	running = true;
     LOGS("Local server was started in new thread");
 
@@ -208,7 +208,6 @@ static void THREAD_EXCEPTION_SAFE(std::shared_ptr<std::exception_ptr> unexpected
 		THREAD(std::ref(stop), std::ref(ready), std::ref(port));
 	}
 	catch (std::exception& e) {
-        unexpectedError = std::make_shared<std::exception_ptr>();
         LOGS("Local server thread got an unexpected error: " + std::string(e.what()));
 	}
 
@@ -236,19 +235,19 @@ LocalServer::~LocalServer() {
 }
 void LocalServer::finish() {
     this->stop = true;
+    this->thread = nullptr;
 }
 uint16_t LocalServer::launch() {
 	if (this->running) {
 		throw LocalServerAlreadyLaunched();
 	}
-    this->unexpectedError = nullptr;
     std::atomic<bool> ready;
     ready.store(false);
     std::atomic<uint16_t> port;
     port.store(0);
     LOGS("Launching local sever thread...");
     this->stop = false;
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, this->unexpectedError, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
+	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
 	this->thread->launch();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));
@@ -257,7 +256,5 @@ uint16_t LocalServer::launch() {
     return port;
 }
 void LocalServer::fine() const {
-	if (this->unexpectedError != nullptr) {
-		std::rethrow_exception(*this->unexpectedError);
-	}
+
 }

@@ -18,6 +18,7 @@
 
 
 #include <codecvt>
+#include <locale>
 #include "UTFEncoder.hpp"
 
 
