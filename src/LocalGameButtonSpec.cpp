@@ -17,6 +17,8 @@
  */
 
 
+#include <boost/algorithm/string.hpp>
+#include <iomanip>
 #include "LocalGameButtonSpec.hpp"
 #include "HorizontalSelectionWindow.hpp"
 #include "WindowTwoButtons.hpp"
@@ -113,6 +115,48 @@ Events LocalGameButtonSpec::getChooseMapEvent() const {
 
 
 
+
+static std::string TO_STRING(int32_t val, uint32_t len) {
+    std::stringstream ss;
+    ss << std::setw(len) << std::setfill('0') << val;
+    return ss.str();
+}
+static StringLcl SAVE_NAME(const std::string& save, bool upper) {
+    std::string delimiters("-.");
+    std::vector<std::string> parts;
+    boost::split(parts, save, boost::is_any_of(delimiters));
+    if (parts.size() != 5) {
+        return StringLcl("{unknown_save}");
+    }
+    int32_t month;
+    int32_t day;
+    int32_t hour;
+    int32_t minute;
+    try {
+        month = std::stoi(parts.at(0));
+        day = std::stoi(parts.at(1));
+        hour = std::stoi(parts.at(2));
+        minute = std::stoi(parts.at(3));
+    }
+    catch (std::exception&) {
+        return StringLcl("{unknown_save}");
+    }
+    if (month <= 0 or day <= 0 or hour < 0 or minute < 0 or month > 12 or day > 31 or hour > 23 or minute > 59) {
+        return StringLcl("{unknown_save}");
+    }
+    std::string startKey;
+    if (upper) {
+        startKey = "save_upper";
+    }
+    else {
+        startKey = "save";
+    }
+    return StringLcl("{" + startKey + "}") + TO_STRING(day, 2) + " " + StringLcl("{month" + std::to_string(month) + "}") + " " + StringLcl("{in}") + " " + TO_STRING(hour, 2) + ":" + TO_STRING(minute, 2);
+}
+
+
+
+
 Events LocalGameButtonSpec::getChooseSaveEvent() const {
     Events clickEvent;
     clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -131,25 +175,28 @@ Events LocalGameButtonSpec::getChooseSaveEvent() const {
         );
         for (const auto& save : this->saveNames) {
 
+            StringLcl saveNameUpper = SAVE_NAME(save, true);
+            StringLcl saveName = SAVE_NAME(save, false);
+
             Events loadSaveEvent;
             loadSaveEvent.add(std::make_shared<LoadLocalGameEvent>(save));
-            std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{load}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), loadSaveEvent, clickEvent);
+            std::shared_ptr<WindowTwoButtons> loadSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{load}") + saveName + "?", StringLcl("{yes}"), StringLcl("{no}"), loadSaveEvent, clickEvent);
             Events createLoadSaveVerifyWindowEvent = clickEvent;
             createLoadSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(loadSaveVerifyWindow));
 
             Events deleteSaveEvent = clickEvent;
             deleteSaveEvent.add(std::make_shared<DeleteSaveEvent>(save));
-            std::shared_ptr<WindowTwoButtons> deleteSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{delete}") + save + "?", StringLcl("{yes}"), StringLcl("{no}"), deleteSaveEvent, clickEvent);
+            std::shared_ptr<WindowTwoButtons> deleteSaveVerifyWindow = std::make_shared<WindowTwoButtons>(StringLcl("{delete}") + saveName + "?", StringLcl("{yes}"), StringLcl("{no}"), deleteSaveEvent, clickEvent);
             Events createDeleteSaveVerifyWindowEvent = clickEvent;
             createDeleteSaveVerifyWindowEvent.add(std::make_shared<CreateEEvent>(deleteSaveVerifyWindow));
 
-            std::shared_ptr<WindowTwoButtons> chooseActionWindow = std::make_shared<WindowTwoButtons>(StringLcl("{save}") + save, StringLcl("{load}"), StringLcl("{delete}"), createLoadSaveVerifyWindowEvent, createDeleteSaveVerifyWindowEvent);
+            std::shared_ptr<WindowTwoButtons> chooseActionWindow = std::make_shared<WindowTwoButtons>(saveNameUpper, StringLcl("{load}"), StringLcl("{delete}"), createLoadSaveVerifyWindowEvent, createDeleteSaveVerifyWindowEvent);
             Events createChooseActionWindowEvent = clickEvent;
             createChooseActionWindowEvent.add(std::make_shared<CreateEEvent>(chooseActionWindow));
 
             components.emplace_back(
                   "save_icon",
-                StringLcl("{save}") + save,
+                saveNameUpper,
                 true,
                 createChooseActionWindowEvent
             );
