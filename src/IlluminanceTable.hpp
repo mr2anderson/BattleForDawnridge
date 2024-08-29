@@ -36,6 +36,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
+	sf::ContextSettings parentSettings;
 	std::unique_ptr<sf::RenderTexture> render;
 	sf::View view;
 };

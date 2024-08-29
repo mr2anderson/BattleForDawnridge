@@ -24,13 +24,19 @@ IlluminanceTable::IlluminanceTable() = default;
 
 
 void IlluminanceTable::createRender(uint32_t windowW, uint32_t windowH, const sf::ContextSettings& parentSettings) {
+	this->parentSettings = parentSettings;
 	this->render = std::make_unique<sf::RenderTexture>();
-	this->render->create(windowW, windowH, parentSettings);
+	this->render->create(windowW, windowH, this->parentSettings);
 }
 
 
 void IlluminanceTable::newFrame(const sf::View& view) {
 	this->view = view;
+
+	if (this->view.getSize().x != this->render->getSize().x or this->view.getSize().y != this->render->getSize().y) {
+		this->render = std::make_unique<sf::RenderTexture>();
+		this->render->create(this->view.getSize().x, this->view.getSize().y, this->parentSettings);
+	}
 
 	this->render->clear(sf::Color(0, 0, 0, 100));
 	this->render->setView(view);

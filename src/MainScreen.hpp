@@ -20,6 +20,7 @@
 #include <SFML/Graphics.hpp>
 #include <queue>
 #include <SFML/Network.hpp>
+#include <boost/optional.hpp>
 #include "IlluminanceTable.hpp"
 #include "RoomID.hpp"
 #include "Map.hpp"
@@ -99,7 +100,7 @@ private:
     void sendNeedSave();
 
 
-	void receive(sf::RenderWindow &window);
+	void receive();
 	void receiveError(sf::Packet& remPacket);
 	void receiveMap(sf::Packet& remPacket);
     void receiveElement(sf::Packet& remPacket);
@@ -110,7 +111,7 @@ private:
     void receiveCursorVisibility(sf::Packet& remPacket);
     void receiveReady();
 	void receiveSound(sf::Packet& remPacket);
-	void receiveFocus(sf::Packet& remPacket, sf::RenderWindow& window);
+	void receiveFocus(sf::Packet& remPacket);
 	void receiveReturnToMenu();
 	void receiveSave(sf::Packet& remPacket);
     void receiveNotTimeToSave();
@@ -128,21 +129,24 @@ private:
     void drawWaitingScreen(sf::RenderWindow &window);
 
 
+	void zoomView(sf::RenderWindow& window, float mouseWheelDelta);
+	void verifyZoom();
+
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView(sf::RenderWindow &window) const;
 	void moveView(sf::RenderWindow &window);
 
 
-	void moveViewToNorth(sf::RenderWindow& window);
-	void moveViewToSouth(sf::RenderWindow& window);
-	void moveViewToWest(sf::RenderWindow& window);
-	void moveViewToEast(sf::RenderWindow& window);
+	void moveViewToNorth();
+	void moveViewToSouth();
+	void moveViewToWest();
+	void moveViewToEast();
 
 
-	void verifyView(sf::RenderWindow& window);
-	void verifyViewNorth(sf::RenderWindow& window);
-	void verifyViewSouth(sf::RenderWindow& window);
-	void verifyViewWest(sf::RenderWindow& window);
-	void verifyViewEast(sf::RenderWindow& window);
+	void verifyView();
+	void verifyViewNorth();
+	void verifyViewSouth();
+	void verifyViewWest();
+	void verifyViewEast();
 
     Events handleLocalButtonsClick();
 
