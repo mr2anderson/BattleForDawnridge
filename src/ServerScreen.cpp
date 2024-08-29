@@ -19,8 +19,8 @@
 
 #include "ServerScreen.hpp"
 #include "Textures.hpp"
-#include "Playlist.hpp"
 #include "SoundQueue.hpp"
+#include "Music.hpp"
 #include "Label.hpp"
 #include "ScreenAlreadyFinished.hpp"
 #include "ServerNetSpecs.hpp"
@@ -49,6 +49,7 @@ void ServerScreen::run(sf::RenderWindow& window) {
     this->alreadyFinished = true;
 
     window.setMouseCursorVisible(false);
+    Music::get().stop();
 
     sf::Event event;
     bool r = true;
@@ -60,7 +61,6 @@ void ServerScreen::run(sf::RenderWindow& window) {
                 }
             }
         }
-        Playlist::get().update();
         this->checkNewConnection();
         this->updateSimpleConnections();
         this->checkRoomInitSignals();

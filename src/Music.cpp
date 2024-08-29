@@ -39,9 +39,7 @@ void Music::play(const std::string &name) {
         std::cerr << "Invalid music uid: " << name << std::endl;
     }
     else {
-        for (auto& m : this->music) {
-            m.second.stop();
-        }
+        this->stop();
         it->second.setVolume(this->volume);
         it->second.play();
         this->lastSoundtrack = name;
@@ -77,4 +75,9 @@ void Music::setVolume(uint32_t newVolume) {
     std::ofstream file(Root::get().getUserdataRoot() + "/music_volume.cfg");
     file << std::to_string(this->volume);
     file.close();
+}
+void Music::stop() {
+    if (this->lastSoundtrack.has_value()) {
+        this->music[this->lastSoundtrack.value()].stop();
+    }
 }

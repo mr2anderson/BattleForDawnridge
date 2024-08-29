@@ -38,6 +38,7 @@ public:
     void loadVolume();
     uint32_t getVolume() const;
     void setVolume(uint32_t newVolume);
+    void stop();
 private:
     Music();
     Music(const Music& copy);
