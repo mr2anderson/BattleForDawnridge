@@ -34,7 +34,7 @@ static std::string PATH() {
 
 IlluminationTableSettings::IlluminationTableSettings() {
 	this->enable = true;
-	this->brightness = 125;
+	this->brightness = 150;
 }
 void IlluminationTableSettings::load() {
 	std::ifstream file(PATH());
