@@ -20,4 +20,4 @@
 #include "ColorTheme.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR = sf::Color(0, 0, 0, 175);
+const sf::Color COLOR_THEME::UI_COLOR = sf::Color(3, 0, 9, 75);
