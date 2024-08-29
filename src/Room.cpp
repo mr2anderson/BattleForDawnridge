@@ -744,7 +744,7 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<AddHpEvent> addHpEvent = std::dynamic_pointer_cast<AddHpEvent>(e)) {
 		this->handleAddHpEvent(addHpEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
+        result = result | SYNC_UI::SYNC_MAP | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<DecreaseCurrentTradeMovesLeftEvent> decreaseCurrentTradeMovesLeftEvent = std::dynamic_pointer_cast<DecreaseCurrentTradeMovesLeftEvent>(e)) {
 		this->handleDecreaseCurrentTradeMovesLeft(decreaseCurrentTradeMovesLeftEvent, p);

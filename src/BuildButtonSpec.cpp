@@ -43,6 +43,7 @@
 #include "Tower1.hpp"
 #include "Market.hpp"
 #include "SpellFactory.hpp"
+#include "Castle.hpp"
 
 
 BuildButtonSpec::BuildButtonSpec() = default;
@@ -95,6 +96,7 @@ Events BuildButtonSpec::getEvents() const {
 	buildMenuSectionMainComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<Road>());
 	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<House>());
+	buildMenuSectionMainComponents.emplace_back(GET_BUILD_COMPONENT<Castle>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionMain = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionMainComponents);
 	Events createBuildWindowSectionMainEvent = clickEvent;

@@ -39,7 +39,7 @@ Castle::Castle(uint32_t x, uint32_t y, uint32_t playerId) :
     this->addSpec(std::make_shared<CastleWoodGeneratorSpec>());
 	this->addSpec(std::make_shared<CastleTerritoryExpanderSpec>());
 }
-std::shared_ptr<Building>  Castle::createSameTypeBuilding() const {
+std::shared_ptr<Building> Castle::createSameTypeBuilding() const {
 	return std::make_shared<Castle>(this->getX(), this->getY(), this->getPlayerId());
 }
 UUID Castle::getTypeUUID() const {
@@ -58,7 +58,7 @@ Defence Castle::getDefence() const {
 	return Parameters::get().getDefence("castle_defence");
 }
 Resources Castle::getCost() const {
-	return Resources();
+	return Parameters::get().getResources("castle_cost");
 }
 std::string Castle::getTextureName() const {
 	return "castle";

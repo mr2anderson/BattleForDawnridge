@@ -35,8 +35,12 @@ VictoryConditionSpec::VictoryConditionSpec() {
 std::shared_ptr<IBuildingSpec> VictoryConditionSpec::clone() const {
 	return std::make_shared<VictoryConditionSpec>(*this);
 }
-Events VictoryConditionSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>  b, MapState* state) {
+Events VictoryConditionSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState* state) {
     Events events;
+
+    if (!b->wasWithFullHP()) {
+        return events;
+    }
 
     events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));
     events.add(std::make_shared<PlaySoundEvent>("bell"));
@@ -51,7 +55,7 @@ Events VictoryConditionSpec::getEventOnDestroy(std::shared_ptr<const Building> b
 	Events event;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalBuildings(); i = i + 1) {
-        std::shared_ptr<Building>  building = state->getCollectionsPtr()->getBuilding(i);
+        std::shared_ptr<Building> building = state->getCollectionsPtr()->getBuilding(i);
         if (building->getUUID() != b->getUUID() and building->getPlayerId() == b->getPlayerId() and building->exist() and building->isVictoryCondition()) {
             return event;
         }
