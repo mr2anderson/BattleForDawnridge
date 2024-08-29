@@ -44,77 +44,83 @@ void Parameters::load() {
 			words.push_back(word);
 		}
 
-		if (words.empty()) {
+		if (words.size() < 3) {
 			continue;
 		}
 
 		std::string type = words.at(0);
 		bool ref = (words.at(1) == "ref");
 		std::string key = words.at(2);
-		if (type == "damage") {
-			if (ref) {
-				this->damages[key] = this->damages[words.at(3)];
-			}
-			else {
-				uint32_t damagePoints = std::stoul(words.at(3));
-				std::string damageType = words.at(4);
-				if (damageType == "cut") {
-					this->damages[key] = Damage(damagePoints, Damage::CUT);
+		try {
+			if (type == "damage") {
+				if (ref) {
+					this->damages[key] = this->damages[words.at(3)];
 				}
-				else if (damageType == "stab") {
-					this->damages[key] = Damage(damagePoints, Damage::STAB);
+				else {
+					uint32_t damagePoints = std::stoul(words.at(3));
+					std::string damageType = words.at(4);
+					if (damageType == "cut") {
+						this->damages[key] = Damage(damagePoints, Damage::CUT);
+					}
+					else if (damageType == "stab") {
+						this->damages[key] = Damage(damagePoints, Damage::STAB);
+					}
+					else if (damageType == "crush") {
+						this->damages[key] = Damage(damagePoints, Damage::CRUSH);
+					}
 				}
-				else if (damageType == "crush") {
-					this->damages[key] = Damage(damagePoints, Damage::CRUSH);
+			}
+			else if (type == "defence") {
+				if (ref) {
+					this->defences[key] = this->defences[words.at(3)];
+				}
+				else {
+					this->defences[key] = Defence(std::stod(words.at(3)), std::stod(words.at(4)), std::stod(words.at(5)));
+				}
+			}
+			else if (type == "resources") {
+				if (ref) {
+					this->resources[key] = this->resources[words.at(3)];
+				}
+				else {
+					Resources resources;
+					for (uint32_t i = 3; i < words.size(); i = i + 2) {
+						std::string type = words.at(i);
+						uint32_t value = std::stoul(words.at(i + 1));
+						Resource resource(type, value);
+						resources.plus(resource);
+					}
+					this->resources[key] = resources;
+				}
+			}
+			else if (type == "resource") {
+				if (ref) {
+					this->resource[key] = this->resource[words.at(3)];
+				}
+				else {
+					this->resource[key] = Resource(words.at(3), std::stoul(words.at(4)));
+				}
+			}
+			else if (type == "int") {
+				if (ref) {
+					this->ints[key] = this->ints[words.at(3)];
+				}
+				else {
+					this->ints[key] = std::stoul(words.at(3));
+				}
+			}
+			else if (type == "double") {
+				if (ref) {
+					this->doubles[key] = this->doubles[words.at(3)];
+				}
+				else {
+					this->doubles[key] = std::stod(words.at(3));
 				}
 			}
 		}
-		else if (type == "defence") {
-			if (ref) {
-				this->defences[key] = this->defences[words.at(3)];
-			}
-			else {
-				this->defences[key] = Defence(std::stod(words.at(3)), std::stod(words.at(4)), std::stod(words.at(5)));
-			}
-		}
-		else if (type == "resources") {
-			if (ref) {
-				this->resources[key] = this->resources[words.at(3)];
-			}
-			else {
-				Resources resources;
-				for (uint32_t i = 3; i < words.size(); i = i + 2) {
-					std::string type = words.at(i);
-					uint32_t value = std::stoul(words.at(i + 1));
-					Resource resource(type, value);
-					resources.plus(resource);
-				}
-				this->resources[key] = resources;
-			}
-		}
-		else if (type == "resource") {
-			if (ref) {
-				this->resource[key] = this->resource[words.at(3)];
-			}
-			else {
-				this->resource[key] = Resource(words.at(3), std::stoul(words.at(4)));
-			}
-		}
-		else if (type == "int") {
-			if (ref) {
-				this->ints[key] = this->ints[words.at(3)];
-			}
-			else {
-				this->ints[key] = std::stoul(words.at(3));
-			}
-		}
-		else if (type == "double") {
-			if (ref) {
-				this->doubles[key] = this->doubles[words.at(3)];
-			}
-			else {
-				this->doubles[key] = std::stod(words.at(3));
-			}
+		catch (std::exception&) {
+			std::cout << "Error while reading key " << key << std::endl;
+			throw CouldntOpenParameters(GET_PATH());
 		}
 	}
 

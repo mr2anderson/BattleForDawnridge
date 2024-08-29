@@ -44,6 +44,7 @@
 #include "Market.hpp"
 #include "SpellFactory.hpp"
 #include "Castle.hpp"
+#include "SockererHouse.hpp"
 
 
 BuildButtonSpec::BuildButtonSpec() = default;
@@ -139,6 +140,7 @@ Events BuildButtonSpec::getEvents() const {
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
+	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<SockererHouse>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
 
 	std::shared_ptr<HorizontalSelectionWindow> buildWindowSectionTroops = std::make_shared<HorizontalSelectionWindow>(buildMenuSectionTroopsComponents);

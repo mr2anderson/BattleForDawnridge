@@ -48,6 +48,7 @@
 #include "MainServerPosition.hpp"
 #include "Root.hpp"
 #include "SoundQueue.hpp"
+#include "Golem.hpp"
 #include "IlluminationTableSettings.hpp"
 
 
@@ -175,7 +176,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
                 "destroyed_icon", "heart_icon", "save_icon",
                 "plain", "slow_movement_icon", "battle_icon", "new_turn_icon",
-                "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon", "sound_icon", "music_icon", "illumination_settings_icon"}) {
+                "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon", "sound_icon", "music_icon", "illumination_settings_icon",
+                "sockerer_house", "sockerer_icon", "magick_icon"}) {
             Textures::get().add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
@@ -189,7 +191,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
                     std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)),
                     std::make_tuple("healer", Healer().getAnimationNumber(a, d)),
-                    std::make_tuple("ram", Ram().getAnimationNumber(a, d))}) {
+                    std::make_tuple("ram", Ram().getAnimationNumber(a, d)),
+                    std::make_tuple("golem", Golem().getAnimationNumber(a, d))}) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
                         while (s.size() < 4) {
@@ -229,7 +232,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "ouch", "spell_factory", "rage_spell",
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
                                       "ouch_woman_cute", "healer", "vehicle_hit",
-                                      "vehicle"}) {
+                                      "vehicle", "sockerer_house", "roar"}) {
             Sounds::get().add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
