@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 project(BattleForDawnridge)
 set(CMAKE_CXX_STANDARD 23)
 add_definitions(-Werror)
-add_definitions(-O2) # Project does not work at -O3 for unknown reason
-add_definitions(-flto)
+add_definitions(-O3)
+#add_definitions(-flto) # Project does not work with -flto for unknown reason
 file(GLOB_RECURSE BattleForDawnridge_src ${PROJECT_SOURCE_DIR}/src/*)
 add_executable(BattleForDawnridge ${BattleForDawnridge_src})
 
