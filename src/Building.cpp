@@ -35,7 +35,7 @@
 #include "ConductionGraph.hpp"
 #include "Parameters.hpp"
 #include "IAreaControllerSpec.hpp"
-#include "CircleLightSourceStatic.hpp"
+#include "EmptyLightSource.hpp"
 
 
 Building::Building() = default;
@@ -412,10 +412,10 @@ std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
 }
 std::shared_ptr<ILightSource> Building::getLightSource() const {
-	if (this->burningMovesLeft > 0) {
-		return std::make_shared<CircleLightSourceStatic>(this->getCenterX(), this->getCenterY(), 64 * std::max(this->getSX(), this->getSY()) * 0.75);
+	if (this->wasWithFullHP()) {
+		return this->Unit::getLightSource();
 	}
-	return this->Unit::getLightSource();
+	return std::make_shared<EmptyLightSource>();
 }
 
 
