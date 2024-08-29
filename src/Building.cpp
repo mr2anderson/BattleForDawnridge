@@ -359,7 +359,7 @@ Events Building::processRegeneration() {
 	return events;
 }
 Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
-	if (!this->exist() or button == sf::Mouse::Right) {
+	if (!this->exist()) {
 		return Events();
 	}
 
@@ -367,33 +367,37 @@ Events Building::getResponse(MapState *state, uint32_t playerId, uint32_t button
 
 	std::vector<HorizontalSelectionWindowComponent> components;
     components.push_back(this->getExitComponent());
-    if (!this->belongTo(playerId)) {
-        components.push_back(this->getBuildingOfEnemyComponent());
-    }
-    components.push_back(this->getDescriptionComponent());
-    components.push_back(this->getHpInfoComponent());
-
-    if (this->belongTo(playerId)) {
-        components.push_back(this->getDestroyComponent());
-        for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this->getThis<Building>(), state);
-            for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
-                components.push_back(specComponents[j].component);
-            }
-        }
-        response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
-    }
-    else {
-        for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
-            std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this->getThis<Building>(), state);
-            for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
-                if (specComponents[j].showToEnemies) {
-                    components.push_back(specComponents[j].component);
-                }
-            }
-        }
-        response.add(std::make_shared<PlaySoundEvent>("click"));
-    }
+	if (button == sf::Mouse::Button::Left) {
+		if (!this->belongTo(playerId)) {
+			components.push_back(this->getBuildingOfEnemyComponent());
+		}
+		components.push_back(this->getDescriptionComponent());
+		components.push_back(this->getHpInfoComponent());
+		if (this->belongTo(playerId)) {
+			components.push_back(this->getDestroyComponent());
+			for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+				std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this->getThis<Building>(), state);
+				for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
+					components.push_back(specComponents[j].component);
+				}
+			}
+			response.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+		}
+		else {
+			for (uint32_t i = 0; i < this->specs.size(); i = i + 1) {
+				std::vector<BuildingHorizontalSelectionWindowComponent> specComponents = this->specs.at(i)->getComponents(this->getThis<Building>(), state);
+				for (uint32_t j = 0; j < specComponents.size(); j = j + 1) {
+					if (specComponents[j].showToEnemies) {
+						components.push_back(specComponents[j].component);
+					}
+				}
+			}
+			response.add(std::make_shared<PlaySoundEvent>("click"));
+		}
+	}
+	else {
+		response.add(std::make_shared<PlaySoundEvent>("click"));
+	}
 
     response = response + this->getHighlightEvent(state, IAreaControllerSpec::HIGHLIGHT_TYPE::UNIVERSAL);
 
