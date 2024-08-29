@@ -64,6 +64,13 @@ Menu::Menu(sf::RenderWindow& window, const boost::optional<StringLcl>& additiona
         createWelcomeWindowEvent.add(std::make_shared<CreateEEvent>(welcomeWindow));
         this->addEvents(createWelcomeWindowEvent);
     }
+    if (window.getSize().x < 1280 or window.getSize().y < 720 and !FirstTimeTipsTable::get().wasDisplayed("resolution_warning")) {
+        FirstTimeTipsTable::get().markAsDisplayed("resolution_warning");
+        std::shared_ptr<WindowButton> warningWindow = std::make_shared<WindowButton>(StringLcl("{resolution_warning}"), StringLcl("{OK}"), clickEvent);
+        Events createWarningWindowEvent;
+        createWarningWindowEvent.add(std::make_shared<CreateEEvent>(createWarningWindowEvent));
+        this->addEvents(createWarningWindowEvent);
+    }
     if (additionalWelcomeMsg.has_value()) {
         std::shared_ptr<WindowButton> msgWindow = std::make_shared<WindowButton>(additionalWelcomeMsg.value(), StringLcl("{OK}"), clickEvent);
         Events createMsgWindowEvent;
