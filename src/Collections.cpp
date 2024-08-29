@@ -52,20 +52,20 @@ uint32_t Collections::totalWarriors() const {
 std::shared_ptr<GO> Collections::getGO(uint32_t i, uint8_t filter) {
 	return this->gos.at(i, filter);
 }
-std::shared_ptr<AreaResourcePoint> Collections::getAreaRP(uint32_t i) {
-	return this->areaRps.at(i);
+std::shared_ptr<AreaResourcePoint> Collections::getAreaRP(uint32_t i, uint8_t filter) {
+	return this->areaRps.at(i, filter);
 }
-std::shared_ptr<ConductionResourcePoint> Collections::getConductionRP(uint32_t i) {
-    return this->conductionRps.at(i);
+std::shared_ptr<ConductionResourcePoint> Collections::getConductionRP(uint32_t i, uint8_t filter) {
+    return this->conductionRps.at(i, filter);
 }
-std::shared_ptr<Unit> Collections::getUnit(uint32_t i) {
-    return this->units.at(i);
+std::shared_ptr<Unit> Collections::getUnit(uint32_t i, uint8_t filter) {
+    return this->units.at(i, filter);
 }
-std::shared_ptr<Building>  Collections::getBuilding(uint32_t i) {
-	return this->buildings.at(i);
+std::shared_ptr<Building>  Collections::getBuilding(uint32_t i, uint8_t filter) {
+	return this->buildings.at(i, filter);
 }
-std::shared_ptr<Warrior>  Collections::getWarrior(uint32_t i)  {
-	return this->warriors.at(i);
+std::shared_ptr<Warrior>  Collections::getWarrior(uint32_t i, uint8_t filter)  {
+	return this->warriors.at(i, filter);
 }
 
 

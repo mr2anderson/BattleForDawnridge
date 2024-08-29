@@ -70,7 +70,7 @@ std::vector<SpecialMove> WarriorAttacker::getSpecialMoves(MapState *state) const
     std::vector<SpecialMove> specialMoves;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
-        std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i);
+        std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i, FILTER::CLICK_PRIORITY);
         std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
         for (uint32_t j = 0; j < targets.size(); j = j + 1) {
             specialMoves.emplace_back(std::get<0>(targets.at(j)), std::get<1>(targets.at(j)), HighlightColors::get().getWarriorAttackColor(this->getPlayerId()));
@@ -124,7 +124,7 @@ std::string WarriorAttacker::getDirection(uint32_t targetX, uint32_t targetY) co
 }
 Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
-        std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i);
+        std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i, FILTER::CLICK_PRIORITY);
         std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
         for (uint32_t j = 0; j < targets.size(); j = j + 1) {
             if (std::make_tuple(targetX, targetY) == targets.at(j)) {

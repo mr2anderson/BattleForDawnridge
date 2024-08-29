@@ -21,6 +21,7 @@
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/export.hpp>
+#include "Filter.hpp"
 #include "MapSize.hpp"
 #include "ArchiveType.hpp"
 
@@ -52,12 +53,12 @@ public:
 	virtual uint32_t totalBuildings() const = 0;
 	virtual uint32_t totalWarriors() const = 0;
 
-	virtual std::shared_ptr<GO> getGO(uint32_t i, uint8_t filter) = 0;
-	virtual std::shared_ptr<AreaResourcePoint> getAreaRP(uint32_t i) = 0;
-	virtual std::shared_ptr<ConductionResourcePoint> getConductionRP(uint32_t i) = 0;
-	virtual std::shared_ptr<Unit> getUnit(uint32_t i) = 0;
-	virtual std::shared_ptr<Building>  getBuilding(uint32_t i) = 0;
-	virtual std::shared_ptr<Warrior>  getWarrior(uint32_t i) = 0;
+	virtual std::shared_ptr<GO> getGO(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) = 0;
+	virtual std::shared_ptr<AreaResourcePoint> getAreaRP(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) = 0;
+	virtual std::shared_ptr<ConductionResourcePoint> getConductionRP(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) = 0;
+	virtual std::shared_ptr<Unit> getUnit(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) = 0;
+	virtual std::shared_ptr<Building> getBuilding(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) = 0;
+	virtual std::shared_ptr<Warrior> getWarrior(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) = 0;
 private:
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {

@@ -96,7 +96,7 @@ std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
     std::vector<SpecialMove> moves;
 
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i, FILTER::CLICK_PRIORITY);
         if (this->canHeal(w)) {
             moves.emplace_back(w->getX(), w->getY(), HighlightColors::get().getWarriorHealColor(this->getPlayerId()));
         }
@@ -106,7 +106,7 @@ std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
 }
 Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
+        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i, FILTER::CLICK_PRIORITY);
         if (w->getX() == targetX and w->getY() == targetY and this->canHeal(w)) {
             return this->heal(w);
         }

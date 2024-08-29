@@ -47,12 +47,12 @@ public:
 	uint32_t totalBuildings() const override;
 	uint32_t totalWarriors() const override;
 
-	std::shared_ptr<GO> getGO(uint32_t i, uint8_t filter) override;
-    std::shared_ptr<AreaResourcePoint> getAreaRP(uint32_t i) override;
-    std::shared_ptr<ConductionResourcePoint> getConductionRP(uint32_t i) override;
-    std::shared_ptr<Unit> getUnit(uint32_t i) override;
-	std::shared_ptr<Building>  getBuilding(uint32_t i) override;
-	std::shared_ptr<Warrior>  getWarrior(uint32_t i) override;
+	std::shared_ptr<GO> getGO(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) override;
+    std::shared_ptr<AreaResourcePoint> getAreaRP(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) override;
+    std::shared_ptr<ConductionResourcePoint> getConductionRP(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) override;
+    std::shared_ptr<Unit> getUnit(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) override;
+	std::shared_ptr<Building> getBuilding(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) override;
+	std::shared_ptr<Warrior> getWarrior(uint32_t i, uint8_t filter = FILTER::DEFAULT_PRIORITY) override;
 private:
 	Collection<GO> gos;
 	Collection<AreaResourcePoint> areaRps;
