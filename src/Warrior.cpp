@@ -563,7 +563,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    Events revertKillNextTurnEvent = clickSoundEvent;
+    Events revertKillNextTurnEvent;
     revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this->getThis<Warrior>()));
 
     return {
