@@ -26,11 +26,11 @@ void MenuBg::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::RectangleShape rect;
     rect.setPosition(0, 0);
     rect.setSize(sf::Vector2f(target.getSize().x, target.getSize().y));
-    rect.setFillColor(sf::Color(11, 16, 20));
+    rect.setFillColor(sf::Color(27, 32, 30));
 
     sf::Sprite s;
     s.setTexture(*Textures::get().get("bg"));
-    s.setPosition(target.getSize().x - s.getLocalBounds().width, target.getSize().y - s.getLocalBounds().height);
+    s.setPosition(0, target.getSize().y - s.getLocalBounds().height);
 
     target.draw(rect, states);
     target.draw(s, states);
