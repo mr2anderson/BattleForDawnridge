@@ -26,7 +26,7 @@
 
 
 Music::Music() {
-    this->volume = 100;
+    this->volume = 15;
 }
 void Music::add(const std::string& name, const std::string& path) {
     if (!this->music[name].openFromFile(Root::get().getDataRoot() + "/" + path)) {

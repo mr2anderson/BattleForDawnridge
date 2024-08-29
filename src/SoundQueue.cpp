@@ -24,7 +24,7 @@
 
 
 SoundQueue::SoundQueue() {
-    this->volume = 100;
+    this->volume = 40;
 }
 void SoundQueue::push(sf::SoundBuffer *soundbuffer) {
     this->removeOldSounds();
