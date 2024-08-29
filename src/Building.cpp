@@ -412,7 +412,7 @@ std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());
 }
 std::shared_ptr<ILightSource> Building::getLightSource() const {
-	if (this->wasWithFullHP()) {
+	if (this->works()) {
 		return this->Unit::getLightSource();
 	}
 	return std::make_shared<EmptyLightSource>();
