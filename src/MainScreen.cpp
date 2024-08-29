@@ -163,9 +163,19 @@ void MainScreen::run(sf::RenderWindow& window) {
 					this->addLocalEvents(events);
 				}
 			}
-			else if (event.type == sf::Event::MouseWheelScrolled and event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
-				this->zoomView(window, event.mouseWheelScroll.delta);
+			else if (event.type == sf::Event::MouseWheelScrolled) {
+                if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+                    this->zoomView(window, event.mouseWheelScroll.delta > 0);
+                }
 			}
+            else if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Key::PageUp) {
+                    this->zoomView(window, true);
+                }
+                else if (event.key.code == sf::Keyboard::Key::PageDown) {
+                    this->zoomView(window, false);
+                }
+            }
 		}
         if (this->error) {
             throw NoServerConnection();
@@ -620,11 +630,11 @@ void MainScreen::drawWaitingScreen(sf::RenderWindow &window) {
 
 
 
-void MainScreen::zoomView(sf::RenderWindow& window, float mouseWheelScrollDelta) {
-	if (mouseWheelScrollDelta > 0) {
+void MainScreen::zoomView(sf::RenderWindow& window, bool plus) {
+	if (plus) {
 		this->view.zoom(0.95f);
 	}
-	else if (mouseWheelScrollDelta < 0) {
+	else {
 		this->view.zoom(1.05f);
 	}
 	this->verifyZoom();

@@ -129,7 +129,7 @@ private:
     void drawWaitingScreen(sf::RenderWindow &window);
 
 
-	void zoomView(sf::RenderWindow& window, float mouseWheelDelta);
+	void zoomView(sf::RenderWindow& window, bool plus);
 	void verifyZoom();
 
 	std::tuple<uint32_t, uint32_t> getMousePositionBasedOnView(sf::RenderWindow &window) const;
