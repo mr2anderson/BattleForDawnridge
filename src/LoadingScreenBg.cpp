@@ -30,7 +30,8 @@ void LoadingScreenBg::draw(sf::RenderTarget &target, sf::RenderStates states) co
 
     sf::Sprite s;
     s.setTexture(*Textures::get().get("loading_screen"));
-    s.setPosition(0, target.getSize().y - s.getLocalBounds().height);
+    s.setTextureRect(sf::IntRect(0, s.getTexture()->getSize().y - std::min(s.getTexture()->getSize().y, target.getSize().y), std::min(s.getTexture()->getSize().x, target.getSize().x), std::min(s.getTexture()->getSize().y, target.getSize().y)));
+    s.setPosition(0, 0);
 
     target.draw(rect, states);
     target.draw(s, states);
