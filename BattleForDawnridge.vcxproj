@@ -717,7 +717,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\GO.hpp" />
     <ClInclude Include="src\Golem.hpp" />
     <ClInclude Include="src\GraphicsButtonSpec.hpp" />
-    <ClInclude Include="src\GuideButtonSpec.hpp" />
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
     <ClInclude Include="src\HealerProjectile.hpp" />
@@ -905,6 +904,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SuspendingAnimation.hpp" />
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
+    <ClInclude Include="src\Time.hpp" />
+    <ClInclude Include="src\TimeMod.hpp" />
     <ClInclude Include="src\Timer.hpp" />
     <ClInclude Include="src\TooMuchGameObjects.hpp" />
     <ClInclude Include="src\TooMuchPlayers.hpp" />
@@ -1067,7 +1068,6 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\GO.cpp" />
     <ClCompile Include="src\Golem.cpp" />
     <ClCompile Include="src\GraphicsButtonSpec.cpp" />
-    <ClCompile Include="src\GuideButtonSpec.cpp" />
     <ClCompile Include="src\Healer.cpp" />
     <ClCompile Include="src\HealerProjectile.cpp" />
     <ClCompile Include="src\HighlightColors.cpp" />
@@ -1241,6 +1241,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SuspendingAnimation.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\TilesetHandler.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\TimeMod.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\TooMuchGameObjects.cpp" />
     <ClCompile Include="src\TooMuchPlayers.cpp" />

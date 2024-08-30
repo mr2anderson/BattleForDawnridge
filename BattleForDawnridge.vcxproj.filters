@@ -989,9 +989,6 @@
     <ClInclude Include="src\GO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GuideButtonSpec.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\HashTableMapPosition.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1739,6 +1736,12 @@
     <ClInclude Include="src\Golem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\TimeMod.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Time.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AddHpEvent.cpp">
@@ -2030,9 +2033,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuideButtonSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Healer.cpp">
@@ -2738,6 +2738,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Golem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TimeMod.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
