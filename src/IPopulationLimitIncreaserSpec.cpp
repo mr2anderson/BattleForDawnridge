@@ -26,7 +26,7 @@
 std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(std::shared_ptr<const Building>  building, MapState* state) {
 	BuildingHorizontalSelectionWindowComponent component;
 
-	if (building->works()) {
+	if (building->wasWithFullHP()) {
 		component = {
 			HorizontalSelectionWindowComponent(  "helmet",
             StringLcl("{this_building_increases_population_limit}") + std::to_string(this->getPopulationLimit(building)),
@@ -38,7 +38,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 	else {
 		component = {
 			HorizontalSelectionWindowComponent(  "hammer_icon",
-			StringLcl("{does_not_increase_population_limit_if_hp_isnt_full}"),
+			StringLcl("{does_not_increase_population_limit_while_is_not_built_yet}"),
 			false,
 			Events()),
             true
@@ -48,7 +48,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 	return { component };
 }
 uint32_t IPopulationLimitIncreaserSpec::getPopulationLimit(std::shared_ptr<const Building>  building) const {
-	if (!building->works()) {
+	if (!building->wasWithFullHP()) {
 		return 0;
 	}
 	return this->getActivePopulationLimit();
