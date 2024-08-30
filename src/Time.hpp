@@ -17,7 +17,6 @@
  */
 
 
-#include <memory>
 #include <boost/serialization/access.hpp>
 #include <SFML/Graphics.hpp>
 #include <optional>
@@ -52,7 +51,7 @@ public:
 
     std::optional<std::string> getSoundName() const;
     sf::Sprite getIcon(uint32_t windowW, uint32_t windowH) const;
-    std::shared_ptr<sf::Drawable> getEffect(const sf::RenderWindow &window, const sf::View &view) const;
+    sf::Color getEffectColor() const;
 private:
     Type type;
 

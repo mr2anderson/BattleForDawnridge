@@ -30,12 +30,13 @@ void IlluminanceTable::createRender(uint32_t windowW, uint32_t windowH, const sf
 	}
 
 	this->parentSettings = parentSettings;
+
 	this->render = std::make_unique<sf::RenderTexture>();
 	this->render->create(windowW, windowH, this->parentSettings);
 }
 
 
-void IlluminanceTable::newFrame(const sf::View& view) {
+void IlluminanceTable::newFrame(const sf::View& view, sf::Color additionalFilter) {
 	if (!IlluminationTableSettings::get().isEnabled()) {
 		return;
 	}
@@ -48,6 +49,14 @@ void IlluminanceTable::newFrame(const sf::View& view) {
 	}
 
 	this->render->clear(sf::Color(0, 0, 0, 255 - IlluminationTableSettings::get().getBrightness()));
+
+	this->render->setView(this->render->getDefaultView());
+	sf::RectangleShape filterRect;
+	filterRect.setPosition(0, 0);
+	filterRect.setFillColor(additionalFilter);
+	filterRect.setSize(sf::Vector2f(this->render->getSize().x, this->render->getSize().y));
+	this->render->draw(filterRect);
+
 	this->render->setView(view);
 }
 

@@ -534,7 +534,6 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	this->drawMap(window);
 	this->drawHighlightion(window);
     this->drawDarkness(window);
-    window.draw(*this->map.getStatePtr()->getTimePtr()->getEffect(window, this->view));
     if (this->selected != nullptr) {
         window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView(window)), std::get<1>(this->getMousePositionBasedOnView(window))));
     }
@@ -598,7 +597,7 @@ void MainScreen::drawHighlightion(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawDarkness(sf::RenderWindow &window) {
-	this->illiminanceTable.newFrame(this->view);
+	this->illiminanceTable.newFrame(this->view, this->map.getStatePtr()->getTimePtr()->getEffectColor());
 
 	for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
 		std::shared_ptr<const GO> go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::DEFAULT_PRIORITY);

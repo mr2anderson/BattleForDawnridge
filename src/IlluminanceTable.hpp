@@ -30,7 +30,7 @@ public:
 
 	void createRender(uint32_t windowW, uint32_t windowH, const sf::ContextSettings& parentSettings);
 
-	void newFrame(const sf::View& view);
+	void newFrame(const sf::View& view, sf::Color additionFilter = sf::Color::Transparent);
 
 	void add(std::shared_ptr<const IWithLightSource> i);
 

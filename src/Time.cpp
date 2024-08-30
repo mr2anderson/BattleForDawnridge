@@ -96,31 +96,20 @@ sf::Sprite Time::getIcon(uint32_t viewW, uint32_t viewH) const {
     return sprite;
 }
 
-std::shared_ptr<sf::Drawable> Time::getEffect(const sf::RenderWindow &window, const sf::View &view) const {
-    sf::Color color;
+sf::Color Time::getEffectColor() const {
     switch (this->type) {
         case Type::Dawn:
-            color = sf::Color(238, 169, 136, 10);
-            break;
+            return sf::Color(79, 56, 45, 60);
         case Type::Morning:
-            color = sf::Color::Transparent;
-            break;
+            return sf::Color::Transparent;
         case Type::Day:
-            color = sf::Color::Transparent;
-            break;
+            return sf::Color::Transparent;
         case Type::Sunset:
-            color = sf::Color(192, 88, 126, 10);
-            break;
+            return sf::Color(64, 29, 42, 50);
         case Type::Night1:
-            color = sf::Color(0, 0, 0, 75);
-            break;
+            return sf::Color(0, 0, 0, 100);
         case Type::Night2:
-            color = sf::Color(0, 0, 0, 75);
+            return sf::Color(0, 0, 0, 100);
     }
-
-    sf::RectangleShape rect;
-    rect.setPosition(window.mapPixelToCoords(sf::Vector2i(0, 0), view));
-    rect.setSize(view.getSize());
-    rect.setFillColor(color);
-    return std::make_shared<sf::RectangleShape>(rect);
+    return sf::Color();
 }
