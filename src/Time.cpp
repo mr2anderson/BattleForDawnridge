@@ -109,7 +109,7 @@ std::shared_ptr<sf::Drawable> Time::getEffect(const sf::RenderWindow &window, co
             color = sf::Color::Transparent;
             break;
         case Type::Sunset:
-            color = sf::Color(192, 88, 126, 15);
+            color = sf::Color(192, 88, 126, 10);
             break;
         case Type::Night1:
             color = sf::Color(0, 0, 0, 50);
