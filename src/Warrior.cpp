@@ -539,6 +539,64 @@ HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
         Events()
     };
 }
+HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state) const {
+    bool isPositive = Player::IS_POSITIVE(this->getPlayerId());
+    int32_t d = state->getTimePtr()->getTimeMod().getPercentDelta(isPositive);
+    if (d > 0) {
+        if (isPositive) {
+            return {
+                "positive_good",
+                StringLcl("{good_cuz_positive}"),
+                false,
+                Events()
+            };
+        }
+        else {
+            return {
+                "negative_good",
+                StringLcl("{good_cuz_negative}"),
+                false,
+                Events()
+            };
+        }
+    }
+    else if (d < 0) {
+        if (isPositive) {
+            return {
+                "positive_bad",
+                StringLcl("{bad_cuz_positive}"),
+                false,
+                Events()
+            };
+        }
+        else {
+            return {
+                "negative_bad",
+                StringLcl("{bad_cuz_negative}"),
+                false,
+                Events()
+            };
+        }
+    }
+    else {
+        if (isPositive) {
+            return {
+                "positive_neutral",
+                StringLcl("{neutral_cuz_positive}"),
+                false,
+                Events()
+            };
+        }
+        else {
+            return {
+                "negative_neutral",
+                StringLcl("{neutral_cuz_negative}"),
+                false,
+                Events()
+            };
+        }
+    }
+}
 HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
@@ -573,11 +631,11 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
         revertKillNextTurnEvent
     };
 }
-HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent() const {
+HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent(MapState *state) const {
     return {
           "helmet",
         StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " " + this->getDefence().getReadable() + "\n" +
-        this->getSpecialInfoString() + "\n" +
+        this->getSpecialInfoString(state) + "\n" +
         StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + std::to_string(this->getMovementPoints()) + "\n" +
         StringLcl("{population}") + std::to_string(this->getPopulation()),
         false,
@@ -600,7 +658,7 @@ HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
         Events()
     };
 }
-Events Warrior::getSelectionWindow(bool own, bool minimal) {
+Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
     Events events;
 
     std::vector<HorizontalSelectionWindowComponent> components;
@@ -613,10 +671,11 @@ Events Warrior::getSelectionWindow(bool own, bool minimal) {
             components.push_back(this->getWarriorOfEnemyComponent());
         }
         components.push_back(this->getDescriptionComponent());
-        components.push_back(this->getWarriorInfoComponent());
+        components.push_back(this->getWarriorInfoComponent(state));
         if (this->blockBuildingAbility()) {
             components.push_back(this->getBlockingBuildingComponent());
         }
+        components.push_back(this->getTimeModComponent(state));
         if (this->inRage()) {
             components.push_back(this->getRageModeComponent());
         }
@@ -645,7 +704,7 @@ Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button)
 	}
 
     if (button == sf::Mouse::Button::Right or (button == sf::Mouse::Button::Left and !this->belongTo(playerId))) {
-        return this->getMoveHighlightionEvent(state) + this->getSelectionWindow(this->belongTo(playerId), !this->belongTo(playerId) and button == sf::Mouse::Button::Left);
+        return this->getMoveHighlightionEvent(state) + this->getSelectionWindow(state, this->belongTo(playerId), !this->belongTo(playerId) and button == sf::Mouse::Button::Left);
     }
 
     if (!this->belongTo(playerId)) {

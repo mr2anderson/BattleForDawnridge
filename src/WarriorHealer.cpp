@@ -37,11 +37,12 @@ void WarriorHealer::refreshHealingAbility() {
 void WarriorHealer::wipeHealingAbility() {
     this->healingAvailable = false;
 }
-uint32_t WarriorHealer::getHealingSpeed() const {
+uint32_t WarriorHealer::getHealingSpeed(MapState *state) const {
     uint32_t healingSpeed = this->getBaseHealingSpeed();
     if (this->inRage()) {
         healingSpeed = healingSpeed * (1 + Parameters::get().getDouble("rage_mode_healing_speed_bonus"));
     }
+    healingSpeed = (1 + (float)state->getTimePtr()->getTimeMod().getPercentDelta(Player::IS_POSITIVE(this->getPlayerId())) / 100) * healingSpeed;
     return healingSpeed;
 }
 bool WarriorHealer::blockBuildingAbility() const {
@@ -114,8 +115,8 @@ Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint3
 
     return {};
 }
-StringLcl WarriorHealer::getSpecialInfoString() const {
-    StringLcl str = StringLcl("{healing_speed}") + std::to_string(this->getHealingSpeed()) + ". ";
+StringLcl WarriorHealer::getSpecialInfoString(MapState *state) const {
+    StringLcl str = StringLcl("{healing_speed}") + std::to_string(this->getHealingSpeed(state)) + ". ";
     if (this->healingAvailable) {
         str = str + StringLcl("{can_heal}");
     }

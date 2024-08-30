@@ -17,32 +17,27 @@
  */
 
 
-#include "MapState.hpp"
-#include "Collections.hpp"
+#include "TimeMod.hpp"
 
 
-MapState::MapState() {
-	this->icollections = std::make_shared<Collections>();
+TimeMod::TimeMod(TimeMod::Type type) {
+    this->type = type;
 }
-
-
-std::shared_ptr<ICollections> MapState::getCollectionsPtr() {
-	return this->icollections;
-}
-MapSize* MapState::getMapSizePtr() {
-	return &this->mapSize;
-}
-Players* MapState::getPlayersPtr() {
-	return &this->players;
-}
-Time* MapState::getTimePtr() {
-    return &this->time;
-}
-
-
-const MapSize* MapState::getMapSizePtr() const {
-	return &this->mapSize;
-}
-const Players* MapState::getPlayersPtr() const {
-	return &this->players;
+int32_t TimeMod::getPercentDelta(bool positive) const {
+    if (this->type == Type::NeutralTime) {
+        return 0;
+    }
+    if (this->type == Type::PositiveTime) {
+        if (positive) {
+            return 25;
+        }
+        return -25;
+    }
+    if (this->type == Type::NegativeTime) {
+        if (positive) {
+            return -25;
+        }
+        return 25;
+    }
+    return 0;
 }

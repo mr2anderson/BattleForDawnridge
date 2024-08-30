@@ -55,6 +55,12 @@ void Unit::drawPlayerPointer(sf::RenderTarget& target, sf::RenderStates states) 
     ptr->setSide(this->getPlayerId());
 	target.draw(*ptr, states);
 }
+sf::Color Unit::getTextureColor() const {
+    if (Player::IS_POSITIVE(this->playerId)) {
+        return sf::Color(75, 225, 255);
+    }
+    return sf::Color(225, 75, 255);
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(Unit)

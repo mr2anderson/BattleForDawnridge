@@ -17,33 +17,47 @@
  */
 
 
-#include "WarriorNearAttacker.hpp"
-#include "ISingleAttacker.hpp"
+#include <memory>
+#include <boost/serialization/access.hpp>
+#include <SFML/Window.hpp>
+#include "TimeMod.hpp"
+#include "LabelWithImage.hpp"
+#include "ArchiveType.hpp"
 
 
 #pragma once
 
 
-class WarriorNearSingleAttacker : public WarriorNearAttacker, public ISingleAttacker {
+class Time {
 public:
-    WarriorNearSingleAttacker();
-    WarriorNearSingleAttacker(uint32_t x, uint32_t y, uint32_t playerId);
-private:
-    bool attackAbility;
+    Time();
 
-    Events newMove(MapState *state, uint32_t currentPlayerId) override;
-    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const override;
-    Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) override;
-    StringLcl getSpecialInfoString(MapState *state) const override;
-    void refreshAbility() override;
-    void wipeAbility() override;
+    typedef enum Type {
+        Dawn,
+        Morning,
+        Day,
+        Sunset,
+        Night1,
+        Night2
+    } Type;
+
+    bool hasError() const {
+        return this->type < 0 or this->type >= 6;
+    }
+
+    TimeMod getTimeMod() const;
+    Type getType() const;
+
+    void change();
+
+    std::string getSoundName() const;
+    LabelWithImage getIcon(uint32_t windowW, uint32_t windowH) const;
+    std::shared_ptr<sf::Drawable> getEffect(const sf::RenderWindow &window, const sf::View &view) const;
+private:
+    Type type;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<WarriorNearAttacker>(*this);
-        ar & this->attackAbility;
+        ar & this->type;
     }
 };
-
-
-BOOST_CLASS_EXPORT_KEY(WarriorNearSingleAttacker)

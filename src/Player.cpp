@@ -63,3 +63,9 @@ int32_t Player::getResource(const std::string& id) const {
 Resources Player::getResources() const {
 	return this->resources;
 }
+bool Player::IS_POSITIVE(uint32_t id) {
+    return (id % 2 == 1);
+}
+bool Player::IS_NEGATIVE(uint32_t id) {
+    return !IS_POSITIVE(id);
+}

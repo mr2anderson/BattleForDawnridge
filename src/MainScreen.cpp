@@ -534,6 +534,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	this->drawMap(window);
 	this->drawHighlightion(window);
     this->drawDarkness(window);
+    window.draw(*this->map.getStatePtr()->getTimePtr()->getEffect(window, this->view));
     if (this->selected != nullptr) {
         window.draw(*this->selected->getSelectablePointer(std::get<0>(this->getMousePositionBasedOnView(window)), std::get<1>(this->getMousePositionBasedOnView(window))));
     }
@@ -563,6 +564,7 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
     for (const auto& b : this->localButtons) {
         window.draw(b);
     }
+    window.draw(this->map.getStatePtr()->getTimePtr()->getIcon(window.getSize().x, window.getSize().y));
 	window.display();
 }
 void MainScreen::drawMap(sf::RenderWindow& window) {

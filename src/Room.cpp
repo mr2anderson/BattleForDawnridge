@@ -245,16 +245,26 @@ void Room::processNewMoveEvents(RoomOutputProtocol p) {
 bool Room::allNewMoveEventsAdded() const {
 	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
 }
-void Room::changeMove() {
+void Room::changeMove(RoomOutputProtocol p) {
 	this->move = this->move + 1;
 	this->currentGOIndexNewMoveEvent = 0;
 	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+
+    bool pass = false;
 	do {
 		this->currentPlayerId = this->currentPlayerId + 1;
 		if (this->currentPlayerId > this->map.getStatePtr()->getPlayersPtr()->total()) {
 			this->currentPlayerId = 1;
+            pass = true;
 		}
 	} while (!this->playerIsActive.at(this->currentPlayerId - 1));
+
+    if (pass) {
+        this->map.getStatePtr()->getTimePtr()->change();
+        Events soundEvent;
+        soundEvent.add(std::make_shared<PlaySoundEvent>(this->map.getStatePtr()->getTimePtr()->getSoundName()));
+        this->addEvents(soundEvent, p);
+    }
 }
 Player* Room::getCurrentPlayer() {
 	return this->map.getStatePtr()->getPlayersPtr()->getPlayerPtr(this->currentPlayerId);
@@ -958,7 +968,7 @@ void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, RoomOu
 	this->element->restart();
 }
 void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, RoomOutputProtocol p) {
-	this->changeMove();
+	this->changeMove(p);
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, RoomOutputProtocol p) {
     this->sendReturnToMenuToClients(p);

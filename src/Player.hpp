@@ -45,6 +45,9 @@ public:
         GREEN = 2,
         PURPLE = 3
     };
+
+    static bool IS_POSITIVE(uint32_t id);
+    static bool IS_NEGATIVE(uint32_t id);
 private:
 	uint32_t id;
 	Resources resources;

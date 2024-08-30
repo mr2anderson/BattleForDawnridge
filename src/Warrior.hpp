@@ -69,7 +69,7 @@ public:
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
-    virtual StringLcl getSpecialInfoString() const = 0;
+    virtual StringLcl getSpecialInfoString(MapState *state) const = 0;
     virtual std::string getBeenHitSoundName() const = 0;
 	virtual uint32_t getTimeToProduce() const = 0;
 	virtual std::string getBaseTextureName() const = 0;
@@ -115,12 +115,13 @@ private:
     float getOffset(const std::string &toNeg, const std::string &toPos) const;
 	sf::Color getTextureColor() const override;
 	HorizontalSelectionWindowComponent getRageModeComponent() const;
+    HorizontalSelectionWindowComponent getTimeModComponent(MapState *state) const;
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
-    HorizontalSelectionWindowComponent getWarriorInfoComponent() const;
+    HorizontalSelectionWindowComponent getWarriorInfoComponent(MapState *state) const;
     HorizontalSelectionWindowComponent getBlockingBuildingComponent() const;
     HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
-    Events getSelectionWindow(bool own, bool minimal);
+    Events getSelectionWindow(MapState *state, bool own, bool minimal);
 
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;

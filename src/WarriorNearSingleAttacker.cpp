@@ -60,9 +60,9 @@ void WarriorNearSingleAttacker::refreshAbility() {
 void WarriorNearSingleAttacker::wipeAbility() {
     this->attackAbility = false;
 }
-StringLcl WarriorNearSingleAttacker::getSpecialInfoString() const {
+StringLcl WarriorNearSingleAttacker::getSpecialInfoString(MapState *state) const {
     StringLcl str =
-            StringLcl("{damage}") + this->getDamage().getTypeReadable() + " " + std::to_string(this->getMinDamagePoints()) + "-" + std::to_string(this->getMaxDamagePoints()) + ". " +
+            StringLcl("{damage}") + this->getDamage(state).getTypeReadable() + " " + std::to_string(this->getMinDamagePoints(state)) + "-" + std::to_string(this->getMaxDamagePoints(state)) + ". " +
             StringLcl("{single_attack}") + ". ";
 
     if (this->attackAbility) {

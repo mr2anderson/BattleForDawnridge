@@ -135,7 +135,7 @@ private:
 
 	void processNewMoveEvents(RoomOutputProtocol p);
 	bool allNewMoveEventsAdded() const;
-	void changeMove();
+	void changeMove(RoomOutputProtocol p);
 	Player* getCurrentPlayer();
 	void addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p);
 	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);

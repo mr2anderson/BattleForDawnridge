@@ -177,7 +177,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                 "destroyed_icon", "heart_icon", "save_icon",
                 "plain", "slow_movement_icon", "battle_icon", "new_turn_icon",
                 "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon", "sound_icon", "music_icon", "illumination_settings_icon",
-                "sockerer_house", "sockerer_icon", "magick_icon"}) {
+                "sockerer_house", "sockerer_icon", "magick_icon", "positive_good", "positive_neutral", "positive_bad",
+                "negative_good", "negative_neutral", "negative_bad"}) {
             Textures::get().add(a, "images/" + a + ".png");
         }
         for (const std::string &a : {"dawn", "morning", "day", "sunset", "night1", "night2"}) {

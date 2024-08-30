@@ -30,7 +30,7 @@ public:
 
     void refreshHealingAbility();
     void wipeHealingAbility();
-    uint32_t getHealingSpeed() const;
+    uint32_t getHealingSpeed(MapState *state) const;
     bool blockBuildingAbility() const override;
     virtual std::string getStartHealingSoundName() const = 0;
 protected:
@@ -45,7 +45,7 @@ private:
     bool canHeal(std::shared_ptr<Warrior> w) const;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
-    StringLcl getSpecialInfoString() const override;
+    StringLcl getSpecialInfoString(MapState *state) const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

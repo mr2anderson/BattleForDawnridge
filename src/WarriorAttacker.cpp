@@ -35,19 +35,20 @@ WarriorAttacker::WarriorAttacker() {
 WarriorAttacker::WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId) : Warrior(x, y, playerId) {
     this->target = nullptr;
 }
-uint32_t WarriorAttacker::getMinDamagePoints() const {
-    uint32_t p = this->getDamage().getPoints();
+uint32_t WarriorAttacker::getMinDamagePoints(MapState *state) const {
+    uint32_t p = this->getDamage(state).getPoints();
     return (1 - (float)DAMAGE_PERCENT_DELTA / 100) * p;
 }
-uint32_t WarriorAttacker::getMaxDamagePoints() const {
-    uint32_t p = this->getDamage().getPoints();
+uint32_t WarriorAttacker::getMaxDamagePoints(MapState *state) const {
+    uint32_t p = this->getDamage(state).getPoints();
     return (1 + (float)DAMAGE_PERCENT_DELTA / 100) * p;
 }
-Damage WarriorAttacker::getDamage() const {
+Damage WarriorAttacker::getDamage(MapState *state) const {
     Damage baseDamage = this->getBaseDamage();
     if (this->inRage()) {
         baseDamage = (1 + Parameters::get().getDouble("rage_mode_damage_bonus")) * baseDamage;
     }
+    baseDamage = (1 + (float)state->getTimePtr()->getTimeMod().getPercentDelta(Player::IS_POSITIVE(this->getPlayerId())) / 100) * baseDamage;
     return baseDamage;
 }
 uint32_t WarriorAttacker::getAnimationNumber(const std::string& type, const std::string& direction) const {
@@ -163,7 +164,7 @@ Events WarriorAttacker::processCurrentAnimation(MapState *state) {
 
     if (events.empty() and this->getCurrentAnimation() == "attack" and this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
-        Damage baseDamage = this->getDamage();
+        Damage baseDamage = this->getDamage(state);
         float k = 1 - (float)DAMAGE_PERCENT_DELTA / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * DAMAGE_PERCENT_DELTA + 1)) / 100;
         baseDamage = k * baseDamage;
         events = events + this->target->hit(baseDamage);

@@ -22,6 +22,7 @@
 #include "ICollections.hpp"
 #include "MapSize.hpp"
 #include "Players.hpp"
+#include "Time.hpp"
 
 
 #pragma once
@@ -32,12 +33,13 @@ public:
 	MapState();
 
 	bool hasError() const {
-		return (this->icollections == nullptr or this->mapSize.hasError() or this->players.hasError() or this->icollections->hasError(this->mapSize, this->players.total()));
+		return (this->icollections == nullptr or this->mapSize.hasError() or this->players.hasError() or this->icollections->hasError(this->mapSize, this->players.total()) or time.hasError());
 	}
 
 	std::shared_ptr<ICollections> getCollectionsPtr();
 	MapSize* getMapSizePtr();
 	Players* getPlayersPtr();
+    Time* getTimePtr();
 
 	const MapSize* getMapSizePtr() const;
 	const Players* getPlayersPtr() const;
@@ -45,11 +47,13 @@ private:
 	std::shared_ptr<ICollections> icollections;
 	MapSize mapSize;
 	Players players;
+    Time time;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & this->icollections;
         ar & this->mapSize;
         ar & this->players;
+        ar & this->time;
     }
 };
