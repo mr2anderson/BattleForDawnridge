@@ -18,6 +18,8 @@
 
 
 #include <iostream>
+#include <thread>
+#include <atomic>
 #include "LocalServer.hpp"
 #include "ClientNetSpecs.hpp"
 #include "math.hpp"
@@ -200,8 +202,7 @@ static void THREAD(std::atomic<bool>& stop, std::atomic<bool>& ready, std::atomi
 
 
 
-static void THREAD_EXCEPTION_SAFE(std::atomic_bool& stop, std::atomic_bool& running, std::atomic_bool &ready, std::atomic<uint16_t> &port) {
-	running = true;
+static void THREAD_EXCEPTION_SAFE(std::atomic_bool& stop, std::atomic_bool &ready, std::atomic_bool &done, std::atomic<uint16_t> &port) {
     LOGS("Local server was started in new thread");
 
 	try {
@@ -213,7 +214,7 @@ static void THREAD_EXCEPTION_SAFE(std::atomic_bool& stop, std::atomic_bool& runn
 
     LOGS("Local server thread was closed");
     ready = true;
-	running = false;
+    done = true;
 }
 
 
@@ -222,43 +223,30 @@ static void THREAD_EXCEPTION_SAFE(std::atomic_bool& stop, std::atomic_bool& runn
 
 
 LocalServer::LocalServer() {
-	this->stop.store(false);
-	this->running.store(false);
-	this->thread = nullptr;
+    this->launched = false;
+    this->stop.store(false);
+    this->ready.store(false);
+    this->port.store(0);
+    this->done.store(false);
+    this->thread = nullptr;
 }
 LocalServer::~LocalServer() {
-    LOGS("Destroying local server...");
-
-	this->finish();
-
-    LOGS("Local server was destroyed.");
-}
-void LocalServer::finish() {
     this->stop = true;
-    if (this->thread != nullptr) {
-        try {
-            this->thread->join();
-        }
-        catch (std::exception&) {
-
-        }
+    while (!this->done) {
+        sf::sleep(sf::milliseconds(5));
     }
 }
 uint16_t LocalServer::launch() {
-	if (this->running) {
+	if (this->launched) {
 		throw LocalServerAlreadyLaunched();
 	}
-    std::atomic<bool> ready;
-    ready.store(false);
-    std::atomic<uint16_t> port;
-    port.store(0);
+    this->launched = true;
     LOGS("Launching local sever thread...");
-    this->stop = false;
-	this->thread = std::make_unique<std::thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
+	this->thread = std::make_unique<std::thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->stop), std::ref(this->ready), std::ref(this->done), std::ref(this->port)));
     this->thread->detach();
-    while (!ready) {
+    while (!this->ready) {
         sf::sleep(sf::milliseconds(5));
     }
     LOGS("Local server thread reported that it is ready to detach");
-    return port;
+    return this->port;
 }

@@ -29,12 +29,14 @@ class LocalServer {
 public:
 	LocalServer();
 	LocalServer(const LocalServer& copy) = delete;
-	~LocalServer();
+    ~LocalServer();
 
-	void finish();
 	uint16_t launch();
 private:
-	std::atomic<bool> stop;
-	std::atomic<bool> running;
-	std::unique_ptr<std::thread> thread;
+	bool launched;
+    std::atomic<bool> stop;
+    std::atomic<bool> ready;
+    std::atomic<uint16_t> port;
+    std::atomic<bool> done;
+    std::unique_ptr<std::thread> thread;
 };
