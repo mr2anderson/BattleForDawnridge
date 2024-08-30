@@ -41,6 +41,7 @@ void Locales::load() {
     }
 
     std::string current;
+    uint32_t ctr = 0;
     bool gettingId = false;
     bool gettingData = false;
 
@@ -48,7 +49,12 @@ void Locales::load() {
     std::wstring currentData;
 
     while (std::getline(file, current)) {
+        ctr = ctr + 1;
         if (current == "<ID>") {
+            if (gettingData) {
+                std::cerr << "Locales: syntax error line " << ctr << std::endl;
+                throw CouldntOpenLocales(path);
+            }
             gettingId = true;
             currentId.clear();
             continue;
@@ -58,6 +64,10 @@ void Locales::load() {
             continue;
         }
         if (current == "<DATA>") {
+            if (gettingId) {
+                std::cerr << "Locales: syntax error line " << ctr << std::endl;
+                throw CouldntOpenLocales(path);
+            }
             gettingData = true;
             currentData.clear();
             continue;
