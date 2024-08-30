@@ -48,7 +48,7 @@ uint32_t WarriorHealer::getHealingSpeed(MapState *state) const {
 bool WarriorHealer::blockBuildingAbility() const {
     return false;
 }
-Events WarriorHealer::heal(std::shared_ptr<Warrior> w) {
+Events WarriorHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
     this->wipeMovementPoints();
     this->setDirection(this->getDirection(w));
 
@@ -109,7 +109,7 @@ Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint3
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
         std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i, FILTER::CLICK_PRIORITY);
         if (w->getX() == targetX and w->getY() == targetY and this->canHeal(w)) {
-            return this->heal(w);
+            return this->heal(state, w);
         }
     }
 

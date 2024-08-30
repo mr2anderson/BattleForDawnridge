@@ -19,6 +19,7 @@
 
 #include "Time.hpp"
 #include "GlobalRandomGenerator32.hpp"
+#include "Textures.hpp"
 
 
 Time::Time() {
@@ -50,10 +51,24 @@ void Time::change() {
 }
 
 std::string Time::getSoundName() const {
-    return "click";
+    switch (this->type) {
+        case Type::Dawn:
+            return "dawn";
+        case Type::Morning:
+            return "morning";
+        case Type::Day:
+            return "day";
+        case Type::Sunset:
+            return "sunset";
+        case Type::Night1:
+            return "night";
+        case Type::Night2:
+            return "night";
+    }
+    return "";
 }
 
-LabelWithImage Time::getIcon(uint32_t viewW, uint32_t viewH) const {
+sf::Sprite Time::getIcon(uint32_t viewW, uint32_t viewH) const {
     std::string name;
     switch (this->type) {
         case Type::Dawn:
@@ -75,7 +90,10 @@ LabelWithImage Time::getIcon(uint32_t viewW, uint32_t viewH) const {
             name = "night2";
             break;
     }
-    return LabelWithImage(viewW - 200 - 5, 40, 200, 144, name, StringLcl("{" + name + "}"));
+    sf::Sprite sprite;
+    sprite.setPosition(viewW - 144 - 5, 40);
+    sprite.setTexture(*Textures::get().get(name));
+    return sprite;
 }
 
 std::shared_ptr<sf::Drawable> Time::getEffect(const sf::RenderWindow &window, const sf::View &view) const {

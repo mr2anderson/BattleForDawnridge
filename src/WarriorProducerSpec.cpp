@@ -189,7 +189,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 					HorizontalSelectionWindowComponent(w->getTextureName(),
                     w->getDescription() + StringLcl("\n") +
                     StringLcl("{hp}") + StringLcl(std::to_string(w->getMaxHP())) + StringLcl(" ") + w->getDefence().getReadable() + StringLcl("\n") +
-                    w->getSpecialInfoString() + StringLcl("\n") +
+                    w->getSpecialInfoString(state) + StringLcl("\n") +
                     StringLcl("{population}") + StringLcl(std::to_string(w->getPopulation())) + StringLcl(". ") + StringLcl("{cost}") + w->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_produce}") + StringLcl(std::to_string(w->getTimeToProduce())),
 					true,
 					produceEvent),

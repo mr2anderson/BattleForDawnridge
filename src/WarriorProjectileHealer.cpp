@@ -28,8 +28,8 @@ WarriorProjectileHealer::WarriorProjectileHealer() = default;
 WarriorProjectileHealer::WarriorProjectileHealer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorHealer(x, y, playerId) {
 
 }
-Events WarriorProjectileHealer::heal(std::shared_ptr<Warrior> w) {
-    Events events = this->WarriorHealer::heal(w);
+Events WarriorProjectileHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
+    Events events = this->WarriorHealer::heal(state, w);
 
     events.add(std::make_shared<PlaySoundEvent>(this->getStartHealingSoundName()));
 
@@ -39,8 +39,8 @@ Events WarriorProjectileHealer::heal(std::shared_ptr<Warrior> w) {
     events.add(std::make_shared<CreateEEvent>(projectile));
 
     events.add(std::make_shared<PlaySoundEvent>("heal"));
-    events.add(std::make_shared<CreateEEvent>(std::make_shared<HPFlyingE>(std::min(this->getHealingSpeed(), w->getMaxHP()- w->getHP()), true, w->getX(), w->getY(), w->getSX(), w->getSY())));
-    events.add(std::make_shared<AddHpEvent>(w, this->getHealingSpeed()));
+    events.add(std::make_shared<CreateEEvent>(std::make_shared<HPFlyingE>(std::min(this->getHealingSpeed(state), w->getMaxHP()- w->getHP()), true, w->getX(), w->getY(), w->getSX(), w->getSY())));
+    events.add(std::make_shared<AddHpEvent>(w, this->getHealingSpeed(state)));
 
     return events;
 }

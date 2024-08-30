@@ -50,8 +50,6 @@ public:
 protected:
     virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const = 0;
 	std::shared_ptr<ILightSource> getLightSource() const override;
-
-    sf::Color getTextureColor() const override;
 private:
 	uint32_t playerId;
 

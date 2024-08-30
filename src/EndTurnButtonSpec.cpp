@@ -39,7 +39,7 @@ Events EndTurnButtonSpec::getEvents() const {
 	Events clickEvent;
 	clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-	Events endMoveEvent = clickEvent;
+	Events endMoveEvent;
 	endMoveEvent.add(std::make_shared<ChangeMoveEvent>());
 
 	std::shared_ptr<WindowTwoButtons> confirmEndMoveWindow = std::make_shared<WindowTwoButtons>(StringLcl("{confirm_end_move}"), StringLcl("{yes}"), StringLcl("{no}"), endMoveEvent, clickEvent);

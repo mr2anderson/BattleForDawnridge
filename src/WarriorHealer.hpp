@@ -36,7 +36,7 @@ public:
 protected:
     virtual bool healVehicles() const;
     virtual uint32_t getBaseHealingSpeed() const = 0;
-    virtual Events heal(std::shared_ptr<Warrior> w);
+    virtual Events heal(MapState *state, std::shared_ptr<Warrior> w);
 private:
     bool healingAvailable;
 

@@ -19,9 +19,8 @@
 
 #include <memory>
 #include <boost/serialization/access.hpp>
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "TimeMod.hpp"
-#include "LabelWithImage.hpp"
 #include "ArchiveType.hpp"
 
 
@@ -51,7 +50,7 @@ public:
     void change();
 
     std::string getSoundName() const;
-    LabelWithImage getIcon(uint32_t windowW, uint32_t windowH) const;
+    sf::Sprite getIcon(uint32_t windowW, uint32_t windowH) const;
     std::shared_ptr<sf::Drawable> getEffect(const sf::RenderWindow &window, const sf::View &view) const;
 private:
     Type type;
