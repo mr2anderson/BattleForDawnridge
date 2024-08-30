@@ -26,8 +26,6 @@
 #include "Damage.hpp"
 #include "CreateEEvent.hpp"
 #include "FocusOnEvent.hpp"
-
-
 #include "PlaySoundEvent.hpp"
 
 
