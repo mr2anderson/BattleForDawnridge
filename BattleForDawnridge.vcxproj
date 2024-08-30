@@ -821,6 +821,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\PAKScreen.hpp" />
     <ClInclude Include="src\PAKScreenResponse.hpp" />
     <ClInclude Include="src\Parameters.hpp" />
+    <ClInclude Include="src\Patriarch.hpp" />
+    <ClInclude Include="src\PatriarchProjectile.hpp" />
     <ClInclude Include="src\Plant.hpp" />
     <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\PlayerLimitReached.hpp" />
@@ -1164,6 +1166,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\PAKScreen.cpp" />
     <ClCompile Include="src\PAKScreenResponse.cpp" />
     <ClCompile Include="src\Parameters.cpp" />
+    <ClCompile Include="src\Patriarch.cpp" />
+    <ClCompile Include="src\PatriarchProjectile.cpp" />
     <ClCompile Include="src\Plant.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerLimitReached.cpp" />
