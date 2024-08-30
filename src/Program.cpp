@@ -104,25 +104,12 @@ void Program::localGame(const MenuResponse &response, boost::optional<StringLcl>
     }
 
     try {
-        try {
-            MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), port, mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
-            mainScreen.run(this->window);
-        }
-        catch (NoServerConnection&) {
-            try {
-                localServer.fine();
-                std::rethrow_exception(std::current_exception());
-            }
-            catch (std::exception&) {
-                std::rethrow_exception(std::current_exception());
-            }
-        }
+        MainScreen mainScreen(this->window, sf::IpAddress::getLocalAddress(), port, mainScreenType, response.getData(), MainScreen::EVERYONE, RoomID());
+        mainScreen.run(this->window);
     }
     catch (std::exception&) {
         this->handleException(std::current_exception(), error);
     }
-
-    localServer.finish();
 }
 void Program::networkGame(const MenuResponse& response, boost::optional<StringLcl>& error) {
     try {

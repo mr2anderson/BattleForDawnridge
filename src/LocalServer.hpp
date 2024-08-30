@@ -17,8 +17,8 @@
  */
 
 
-#include <SFML/System/Thread.hpp>
 #include <atomic>
+#include <thread>
 #include "Room.hpp"
 
 
@@ -33,9 +33,8 @@ public:
 
 	void finish();
 	uint16_t launch();
-	void fine() const;
 private:
 	std::atomic<bool> stop;
 	std::atomic<bool> running;
-	std::unique_ptr<sf::Thread> thread;
+	std::unique_ptr<std::thread> thread;
 };

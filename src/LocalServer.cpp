@@ -235,7 +235,14 @@ LocalServer::~LocalServer() {
 }
 void LocalServer::finish() {
     this->stop = true;
-    this->thread = nullptr;
+    if (this->thread != nullptr) {
+        try {
+            this->thread->join();
+        }
+        catch (std::exception&) {
+
+        }
+    }
 }
 uint16_t LocalServer::launch() {
 	if (this->running) {
@@ -247,14 +254,11 @@ uint16_t LocalServer::launch() {
     port.store(0);
     LOGS("Launching local sever thread...");
     this->stop = false;
-	this->thread = std::make_unique<sf::Thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
-	this->thread->launch();
+	this->thread = std::make_unique<std::thread>(std::bind(&THREAD_EXCEPTION_SAFE, std::ref(this->stop), std::ref(this->running), std::ref(ready), std::ref(port)));
+    this->thread->detach();
     while (!ready) {
         sf::sleep(sf::milliseconds(5));
     }
     LOGS("Local server thread reported that it is ready to detach");
     return port;
-}
-void LocalServer::fine() const {
-
 }
