@@ -31,7 +31,7 @@ std::string PatriarchProjectile::getSoundName() const {
     return "patriarch_heal";
 }
 float PatriarchProjectile::getTime() const {
-    return 1;
+    return 0.5f;
 }
 
 
