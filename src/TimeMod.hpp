@@ -41,4 +41,4 @@ private:
 
 static const TimeMod POSITIVE_TIME_MOD = TimeMod(TimeMod::Type::PositiveTime);
 static const TimeMod NEGATIVE_TIME_MOD = TimeMod(TimeMod::Type::NegativeTime);
-static const TimeMod NEUTRAL_TIME_MOD = TimeMod(TimeMod::Type::NegativeTime);
+static const TimeMod NEUTRAL_TIME_MOD = TimeMod(TimeMod::Type::NeutralTime);

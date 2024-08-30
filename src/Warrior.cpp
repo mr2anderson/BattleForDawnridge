@@ -546,7 +546,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         if (isPositive) {
             return {
                 "positive_good",
-                StringLcl("{good_cuz_positive}"),
+                StringLcl("{positive_good}"),
                 false,
                 Events()
             };
@@ -554,7 +554,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         else {
             return {
                 "negative_good",
-                StringLcl("{good_cuz_negative}"),
+                StringLcl("{negative_good}"),
                 false,
                 Events()
             };
@@ -564,7 +564,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         if (isPositive) {
             return {
                 "positive_bad",
-                StringLcl("{bad_cuz_positive}"),
+                StringLcl("{positive_bad}"),
                 false,
                 Events()
             };
@@ -572,7 +572,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         else {
             return {
                 "negative_bad",
-                StringLcl("{bad_cuz_negative}"),
+                StringLcl("{negative_bad}"),
                 false,
                 Events()
             };
@@ -582,7 +582,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         if (isPositive) {
             return {
                 "positive_neutral",
-                StringLcl("{neutral_cuz_positive}"),
+                StringLcl("{positive_neutral}"),
                 false,
                 Events()
             };
@@ -590,7 +590,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         else {
             return {
                 "negative_neutral",
-                StringLcl("{neutral_cuz_negative}"),
+                StringLcl("{negative_neutral}"),
                 false,
                 Events()
             };
@@ -642,14 +642,6 @@ HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent(MapState *st
         Events()
     };
 }
-HorizontalSelectionWindowComponent Warrior::getBlockingBuildingComponent() const {
-    return {
-          "destroyed_icon",
-        StringLcl("{blocking_building}"),
-        false,
-        Events()
-    };
-}
 HorizontalSelectionWindowComponent Warrior::getWarriorOfEnemyComponent() const {
     return {
           "lord_icon",
@@ -672,9 +664,6 @@ Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
         }
         components.push_back(this->getDescriptionComponent());
         components.push_back(this->getWarriorInfoComponent(state));
-        if (this->blockBuildingAbility()) {
-            components.push_back(this->getBlockingBuildingComponent());
-        }
         components.push_back(this->getTimeModComponent(state));
         if (this->inRage()) {
             components.push_back(this->getRageModeComponent());

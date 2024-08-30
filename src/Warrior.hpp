@@ -119,7 +119,6 @@ private:
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
     HorizontalSelectionWindowComponent getWarriorInfoComponent(MapState *state) const;
-    HorizontalSelectionWindowComponent getBlockingBuildingComponent() const;
     HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
     Events getSelectionWindow(MapState *state, bool own, bool minimal);
 
