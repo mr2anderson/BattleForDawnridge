@@ -36,7 +36,6 @@
 #include "ScreenAlreadyFinished.hpp"
 #include "LocalGameButtonSpec.hpp"
 #include "NetworkGameButtonSpec.hpp"
-#include "GuideButtonSpec.hpp"
 #include "LanguageButtonSpec.hpp"
 #include "SupportButtonSpec.hpp"
 #include "CreditsButtonSpec.hpp"
@@ -124,14 +123,13 @@ void Menu::generateButtons() {
     this->buttons = {
         Button(LocalGameButtonSpec(0)),
         Button(NetworkGameButtonSpec(1)),
-        Button(GuideButtonSpec(2)),
-        Button(GraphicsButtonSpec(3)),
-        Button(SoundButtonSpec(4)),
-        Button(LanguageButtonSpec(5)),
-        Button(SupportButtonSpec(6)),
-        Button(CreditsButtonSpec(7)),
-        Button(VersionsButtonSpec(8)),
-        Button(ExitButtonSpec(9))
+        Button(GraphicsButtonSpec(2)),
+        Button(SoundButtonSpec(3)),
+        Button(LanguageButtonSpec(4)),
+        Button(SupportButtonSpec(5)),
+        Button(CreditsButtonSpec(6)),
+        Button(VersionsButtonSpec(7)),
+        Button(ExitButtonSpec(8))
     };
 }
 void Menu::regenerateButtons() {
@@ -150,10 +148,10 @@ void Menu::regenerateButtons() {
     this->buttons.at(1) = NetworkGameButtonSpec(1, mapNames, saveNames);
 
     std::tuple<bool, uint8_t> illumination = std::make_tuple(IlluminationTableSettings::get().isEnabled(), IlluminationTableSettings::get().getBrightness());
-    this->buttons.at(3) = GraphicsButtonSpec(3, std::get<0>(illumination), std::get<1>(illumination));
+    this->buttons.at(2) = GraphicsButtonSpec(2, std::get<0>(illumination), std::get<1>(illumination));
 
     std::tuple<uint32_t, uint32_t> volumes = std::make_tuple(SoundQueue::get().getVolume(), Music::get().getVolume());
-    this->buttons.at(4) = SoundButtonSpec(4, std::get<0>(volumes), std::get<1>(volumes));
+    this->buttons.at(3) = SoundButtonSpec(3, std::get<0>(volumes), std::get<1>(volumes));
 }
 void Menu::drawEverything(sf::RenderWindow &window) {
     window.clear();
