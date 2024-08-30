@@ -32,7 +32,6 @@ public:
     void wipeHealingAbility();
     uint32_t getHealingSpeed(MapState *state) const;
     bool blockBuildingAbility() const override;
-    virtual std::string getStartHealingSoundName() const = 0;
 protected:
     virtual bool healVehicles() const;
     virtual uint32_t getBaseHealingSpeed() const = 0;

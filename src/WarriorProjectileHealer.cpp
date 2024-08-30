@@ -31,9 +31,8 @@ WarriorProjectileHealer::WarriorProjectileHealer(uint32_t x, uint32_t y, uint32_
 Events WarriorProjectileHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
     Events events = this->WarriorHealer::heal(state, w);
 
-    events.add(std::make_shared<PlaySoundEvent>(this->getStartHealingSoundName()));
-
     std::shared_ptr<Projectile> projectile = this->getProjectile();
+    events.add(std::make_shared<PlaySoundEvent>(projectile->getSoundName()));
     projectile->setSrc(this->getXInPixels() + 64 / 2, this->getYInPixels() + 64 / 2);
     projectile->setDst(w->getXInPixels() + 64 / 2, w->getYInPixels() + 64 / 2);
     events.add(std::make_shared<CreateEEvent>(projectile));

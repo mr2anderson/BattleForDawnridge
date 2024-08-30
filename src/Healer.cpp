@@ -37,9 +37,6 @@ UUID Healer::getTypeUUID() const {
 std::string Healer::getBeenHitSoundName() const {
     return "ouch_woman_cute";
 }
-std::string Healer::getStartHealingSoundName() const {
-    return "healer";
-}
 uint32_t Healer::getMaxHP() const {
     return Parameters::get().getInt("healer_max_hp");
 }
