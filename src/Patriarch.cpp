@@ -37,9 +37,6 @@ UUID Patriarch::getTypeUUID() const {
 std::string Patriarch::getBeenHitSoundName() const {
     return "ouch_old";
 }
-std::string Patriarch::getStartHealingSoundName() const {
-    return "old";
-}
 uint32_t Patriarch::getMaxHP() const {
     return Parameters::get().getInt("patriarch_max_hp");
 }

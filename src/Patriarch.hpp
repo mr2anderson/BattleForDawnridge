@@ -28,7 +28,6 @@ public:
     UUID getTypeUUID() const override;
 
     std::string getBeenHitSoundName() const override;
-    std::string getStartHealingSoundName() const override;
     uint32_t getMaxHP() const override;
     Defence getBaseDefence() const override;
     uint32_t getBaseHealingSpeed() const override;
