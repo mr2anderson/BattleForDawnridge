@@ -21,6 +21,7 @@
 #include "GO.hpp"
 
 
+IBuildingSpec::~IBuildingSpec() = default;
 Events IBuildingSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state) {
 	return Events();
 }

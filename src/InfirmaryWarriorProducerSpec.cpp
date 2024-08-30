@@ -19,6 +19,7 @@
 
 #include "InfirmaryWarriorProducerSpec.hpp"
 #include "Healer.hpp"
+#include "Patriarch.hpp"
 
 
 InfirmaryWarriorProducerSpec::InfirmaryWarriorProducerSpec() = default;
@@ -29,6 +30,7 @@ std::vector<std::shared_ptr<Warrior> > InfirmaryWarriorProducerSpec::getWarriors
     std::vector<std::shared_ptr<Warrior> > toProduce;
 
     toProduce.push_back(std::make_shared<Healer>(0, 0, playerId));
+    toProduce.push_back(std::make_shared<Patriarch>(0, 0, playerId));
 
     return toProduce;
 }

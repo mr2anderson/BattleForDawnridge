@@ -35,6 +35,7 @@ class Warrior;
 
 class IBuildingSpec : public std::enable_shared_from_this<IBuildingSpec> {
 public:
+    virtual ~IBuildingSpec();
 	virtual std::shared_ptr<IBuildingSpec> clone() const = 0;
 
 	virtual bool hasError(MapSize mapSize, uint32_t totalPlayers) const {
