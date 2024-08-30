@@ -261,9 +261,12 @@ void Room::changeMove(RoomOutputProtocol p) {
 
     if (pass) {
         this->map.getStatePtr()->getTimePtr()->change();
-        Events soundEvent;
-        soundEvent.add(std::make_shared<PlaySoundEvent>(this->map.getStatePtr()->getTimePtr()->getSoundName()));
-        this->addEvents(soundEvent, p);
+        std::optional<std::string> soundName = this->map.getStatePtr()->getTimePtr()->getSoundName();
+        if (soundName.has_value()) {
+            Events soundEvent;
+            soundEvent.add(std::make_shared<PlaySoundEvent>(soundName.value()));
+            this->addEvents(soundEvent, p);
+        }
     }
 }
 Player* Room::getCurrentPlayer() {

@@ -50,20 +50,20 @@ void Time::change() {
     this->type = static_cast<Type>((this->type + 1) % 6);
 }
 
-std::string Time::getSoundName() const {
+std::optional<std::string> Time::getSoundName() const {
     switch (this->type) {
         case Type::Dawn:
             return "dawn";
         case Type::Morning:
             return "day";
         case Type::Day:
-            return "day";
+            return std::nullopt;
         case Type::Sunset:
             return "sunset";
         case Type::Night1:
             return "night";
         case Type::Night2:
-            return "night";
+            return std::nullopt;
     }
     return "";
 }
