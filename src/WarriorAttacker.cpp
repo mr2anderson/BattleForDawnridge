@@ -26,7 +26,7 @@
 #include "GlobalRandomGenerator32.hpp"
 
 
-static const uint32_t DAMAGE_PERCENT_DELTA = 25;
+static const uint32_t DAMAGE_PERCENT_DELTA = 50;
 
 
 WarriorAttacker::WarriorAttacker() {
