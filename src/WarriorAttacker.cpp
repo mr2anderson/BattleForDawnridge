@@ -26,9 +26,6 @@
 #include "GlobalRandomGenerator32.hpp"
 
 
-static const uint32_t DAMAGE_PERCENT_DELTA = 50;
-
-
 WarriorAttacker::WarriorAttacker() {
     this->target = nullptr;
 }
@@ -37,11 +34,11 @@ WarriorAttacker::WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId) : Wa
 }
 uint32_t WarriorAttacker::getMinDamagePoints(MapState *state) const {
     uint32_t p = this->getDamage(state).getPoints();
-    return (1 - (float)DAMAGE_PERCENT_DELTA / 100) * p;
+    return (1 - (float)Parameters::get().getInt("damage_random_percent") / 100) * p;
 }
 uint32_t WarriorAttacker::getMaxDamagePoints(MapState *state) const {
     uint32_t p = this->getDamage(state).getPoints();
-    return (1 + (float)DAMAGE_PERCENT_DELTA / 100) * p;
+    return (1 + (float)Parameters::get().getInt("damage_random_percent") / 100) * p;
 }
 Damage WarriorAttacker::getDamage(MapState *state) const {
     Damage baseDamage = this->getBaseDamage();
@@ -165,7 +162,7 @@ Events WarriorAttacker::processCurrentAnimation(MapState *state) {
     if (events.empty() and this->getCurrentAnimation() == "attack" and this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
         Damage baseDamage = this->getDamage(state);
-        float k = 1 - (float)DAMAGE_PERCENT_DELTA / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * DAMAGE_PERCENT_DELTA + 1)) / 100;
+        float k = 1 - (float)Parameters::get().getInt("damage_random_percent")  / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * Parameters::get().getInt("damage_random_percent") + 1)) / 100;
         baseDamage = k * baseDamage;
         events = events + this->target->hit(baseDamage);
         this->startAnimation("talking");
