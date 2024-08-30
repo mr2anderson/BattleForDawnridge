@@ -22,7 +22,7 @@
 #include "GlobalRandomGenerator32.hpp"
 
 
-const uint32_t ClueManager::TOTAL_CLUES = 37;
+const uint32_t ClueManager::TOTAL_CLUES = 38;
 
 
 const uint32_t ClueManager::W = 475;
