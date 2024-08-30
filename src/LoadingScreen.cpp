@@ -161,6 +161,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         #endif
         MainServerPosition::get().load();
         Music::get().add("menu", "music/menu.ogg");
+        Textures::get().add("tmx_tileset", "images/tmx_tileset.jpg");
         for (const std::string& a : {
                 "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
                 "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
@@ -255,7 +256,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
         for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
             Sounds::get().add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
         }
-        for (const std::string& a : { "ridge", "lake" }) {
+        for (const std::string& a : { "ridge", "lake", "river" }) {
             Maps::get().add(a, "levels/" + a + ".tmx");
         }
         return true;

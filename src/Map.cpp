@@ -34,6 +34,7 @@
 #include "Treasure.hpp"
 #include "Plant.hpp"
 #include "ArchiveType.hpp"
+#include "Textures.hpp"
 
 
 Map::Map() = default;
@@ -49,6 +50,17 @@ void Map::load(const std::string &path) {
     uint32_t x;
     uint32_t currentPlayerId = 1;
 
+    uint32_t totalWater = Textures::get().get("water")->getSize().x * Textures::get().get("water")->getSize().y / 64 / 64;
+    uint32_t totalMountains = Textures::get().get("mountains")->getSize().x * Textures::get().get("mountains")->getSize().y / 64 / 64;
+    uint32_t totalTmx = Textures::get().get("tmx_tileset")->getSize().x * Textures::get().get("tmx_tileset")->getSize().y / 64 / 64;
+    uint32_t totalForest = Textures::get().get("forest")->getSize().x * Textures::get().get("forest")->getSize().y / 64 / 64;
+
+    uint32_t waterBegin, waterEnd;
+    uint32_t mountainsBegin, mountainsEnd;
+    uint32_t tmxTilesetBegin, tmxTilesetEnd;
+    uint32_t forestBegin, forestEnd;
+    uint32_t curr = 1;
+
     while (std::getline(file, line)) {
         if (line == "  <data encoding=\"csv\">") {
             read = true;
@@ -56,6 +68,26 @@ void Map::load(const std::string &path) {
         }
         else if (line == "</data>") {
             break;
+        }
+        if (line.find("water") != std::string::npos) {
+            waterBegin = curr;
+            waterEnd = curr + totalWater;
+            curr = waterEnd;
+        }
+        else if (line.find("mountains") != std::string::npos) {
+            mountainsBegin = curr;
+            mountainsEnd = curr + totalMountains;
+            curr = mountainsEnd;
+        }
+        else if (line.find("forest") != std::string::npos) {
+            forestBegin = curr;
+            forestEnd = curr + totalForest;
+            curr = forestEnd;
+        }
+        else if (line.find("tmx_tileset") != std::string::npos) {
+            tmxTilesetBegin = curr;
+            tmxTilesetEnd = curr + totalTmx;
+            curr = tmxTilesetEnd;
         }
         if (!read) {
             continue;
@@ -65,48 +97,50 @@ void Map::load(const std::string &path) {
         x = 0;
         while (std::getline(ss, word, ',')) {
             uint32_t id = std::stoi(word);
-            if (id >= 257 and id < 281) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Forest>(x, y, id - 257));
+            if (id >= forestBegin and id < forestEnd) {
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Forest>(x, y, id - forestBegin));
             }
-            else if (id >= 281 and id < 296) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Mountains>(x, y, id - 281));
+            else if (id >= mountainsBegin and id < mountainsEnd) {
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Mountains>(x, y, id - mountainsBegin));
             }
-            else if (id >= 296) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Water>(x, y, id - 296));
+            else if (id >= waterBegin and id < waterEnd) {
+                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Water>(x, y, id - waterBegin));
             }
-            else if (id == 1) {
-                this->state.getPlayersPtr()->addPlayer(Player(currentPlayerId));
+            else if (id >= tmxTilesetBegin and id < tmxTilesetEnd) {
+                if (id == tmxTilesetBegin) {
+                    this->state.getPlayersPtr()->addPlayer(Player(currentPlayerId));
 
-                std::shared_ptr<Castle> c = std::make_shared<Castle>(x, y, currentPlayerId);
-                c->setMaxHp();
-                this->getStatePtr()->getCollectionsPtr()->add(c);
+                    std::shared_ptr<Castle> c = std::make_shared<Castle>(x, y, currentPlayerId);
+                    c->setMaxHp();
+                    this->getStatePtr()->getCollectionsPtr()->add(c);
 
-                for (uint32_t dx = 0; dx < 3; dx = dx + 1) {
-                    for (uint32_t dy = 0; dy < 2; dy = dy + 1) {
-                        uint32_t resultX = x + c->getSX() + dx;
-                        uint32_t resultY = y + dy;
-                        if (dx == 0 and dy == 0) {
-                            this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Healer>(resultX, resultY, currentPlayerId));
-                        }
-                        else {
-                            this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(resultX, resultY, currentPlayerId));
+                    for (uint32_t dx = 0; dx < 3; dx = dx + 1) {
+                        for (uint32_t dy = 0; dy < 2; dy = dy + 1) {
+                            uint32_t resultX = x + c->getSX() + dx;
+                            uint32_t resultY = y + dy;
+                            if (dx == 0 and dy == 0) {
+                                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Healer>(resultX, resultY, currentPlayerId));
+                            }
+                            else {
+                                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(resultX, resultY, currentPlayerId));
+                            }
                         }
                     }
-                }
 
-                currentPlayerId = currentPlayerId + 1;
-            }
-            else if (id == 4) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Iron>(x, y));
-            }
-            else if (id == 6) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Stone>(x, y));
-            }
-            else if (id == 8) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Treasure>(x, y));
-            }
-            else if (id == 3) {
-                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Plant>(x, y));
+                    currentPlayerId = currentPlayerId + 1;
+                }
+                else if (id == tmxTilesetBegin + 3) {
+                    this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Iron>(x, y));
+                }
+                else if (id == tmxTilesetBegin + 5) {
+                    this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Stone>(x, y));
+                }
+                else if (id == tmxTilesetBegin + 7) {
+                    this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Treasure>(x, y));
+                }
+                else if (id == tmxTilesetBegin + 2) {
+                    this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Plant>(x, y));
+                }
             }
             x = x + 1;
         }
