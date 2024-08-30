@@ -115,7 +115,7 @@ std::shared_ptr<sf::Drawable> Time::getEffect(const sf::RenderWindow &window, co
             color = sf::Color(0, 0, 0, 75);
             break;
         case Type::Night2:
-            color = sf::Color(0, 0, 0, 100);
+            color = sf::Color(0, 0, 0, 75);
     }
 
     sf::RectangleShape rect;
