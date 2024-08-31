@@ -22,6 +22,7 @@
 #include "Locales.hpp"
 #include "HighlightColors.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
+#include "FocusOnEvent.hpp"
 
 
 WarriorHealer::WarriorHealer() = default;
@@ -60,9 +61,14 @@ Events WarriorHealer::newMove(MapState *state, uint32_t playerId) {
     Events events = Warrior::newMove(state, playerId);
 
     if (this->exist() and playerId == this->getPlayerId()) {
+        bool focusAdded = false;
         for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
             std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
             if (this->canHeal(w)) {
+                if (!focusAdded) {
+                    events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+                    focusAdded = true;
+                }
                 events = events + this->heal(state, w);
             }
         }

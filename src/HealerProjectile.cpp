@@ -24,6 +24,10 @@ const uint32_t HealerProjectile::TOTAL_TYPES = 30;
 
 
 HealerProjectile::HealerProjectile() = default;
+void HealerProjectile::onRestart() {
+    this->Projectile::onRestart();
+    this->animationClock.restart();
+}
 std::string HealerProjectile::getTextureName() const {
     return "healer_projectile" + std::to_string(std::min(HealerProjectile::TOTAL_TYPES, (uint32_t)(this->animationClock.getMS() / ((uint32_t)(1000 * this->getTime()) / TOTAL_TYPES) + 1)));
 }

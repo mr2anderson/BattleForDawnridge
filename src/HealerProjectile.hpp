@@ -27,6 +27,7 @@ class HealerProjectile : public Projectile {
 public:
     HealerProjectile();
 
+    void onRestart() override;
     std::string getTextureName() const override;
     std::string getSoundName() const override;
     float getTime() const override;

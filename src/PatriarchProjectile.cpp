@@ -24,6 +24,10 @@ const uint32_t PatriarchProjectile::TOTAL_TYPES = 8;
 
 
 PatriarchProjectile::PatriarchProjectile() = default;
+void PatriarchProjectile::onRestart() {
+    this->Projectile::onRestart();
+    this->animationClock.restart();
+}
 std::string PatriarchProjectile::getTextureName() const {
     return "patriarch_projectile" + std::to_string(std::min(TOTAL_TYPES, (uint32_t)(this->animationClock.getMS() / ((uint32_t)(1000 * this->getTime()) / TOTAL_TYPES) + 1)));
 }

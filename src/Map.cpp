@@ -30,7 +30,6 @@
 #include "Root.hpp"
 #include "Castle.hpp"
 #include "Infantryman.hpp"
-#include "Healer.hpp"
 #include "Treasure.hpp"
 #include "Plant.hpp"
 #include "ArchiveType.hpp"
@@ -118,12 +117,7 @@ void Map::load(const std::string &path) {
                         for (uint32_t dy = 0; dy < 2; dy = dy + 1) {
                             uint32_t resultX = x + c->getSX() + dx;
                             uint32_t resultY = y + dy;
-                            if (dx == 0 and dy == 0) {
-                                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Healer>(resultX, resultY, currentPlayerId));
-                            }
-                            else {
-                                this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(resultX, resultY, currentPlayerId));
-                            }
+                            this->getStatePtr()->getCollectionsPtr()->add(std::make_shared<Infantryman>(resultX, resultY, currentPlayerId));
                         }
                     }
 
