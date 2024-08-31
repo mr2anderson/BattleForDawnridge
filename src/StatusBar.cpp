@@ -30,11 +30,11 @@
 StatusBar::StatusBar() = default;
 void StatusBar::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::RectangleShape rect;
-    rect.setPosition(target.getSize().x - 135 - 5, 5);
+    rect.setPosition(target.getSize().x - 200 - 5, 5);
     rect.setFillColor(COLOR_THEME::UI_COLOR_TRANSPARENT);
-    rect.setOutlineThickness(1);
+    rect.setOutlineThickness(2);
     rect.setOutlineColor(sf::Color::Black);
-    rect.setSize(sf::Vector2f(135, target.getSize().y - 10));
+    rect.setSize(sf::Vector2f(200, target.getSize().y - 10));
     target.draw(rect, states);
 
     sf::Sprite timeSprite;
@@ -47,7 +47,7 @@ void StatusBar::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     timeText.setString(std::to_string(this->timeNumber) + " / " + std::to_string(Time::TOTAL));
     timeText.setStyle(sf::Text::Style::Bold);
     timeText.setCharacterSize(13);
-    timeText.setPosition(rect.getPosition().x + 5, timeSprite.getPosition().y + timeSprite.getGlobalBounds().height + 5);
+    timeText.setPosition(rect.getPosition().x + 5, timeSprite.getPosition().y + timeSprite.getGlobalBounds().height / 2 - timeText.getGlobalBounds().height / 2);
     target.draw(timeText, states);
 
     Image goTexture(rect.getPosition().x + 5, timeText.getPosition().y + timeText.getGlobalBounds().height + 20, 128, this->goTextureName, IntRectSerializable(this->goTextureRect));

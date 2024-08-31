@@ -42,7 +42,7 @@ void ResourceBar::setPopulationLimit(uint32_t populationLimit) {
 void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
-	rect.setSize(sf::Vector2f(target.getSize().x - 15 - 192, 26));
+	rect.setSize(sf::Vector2f(target.getSize().x - 15 - 200, 26));
 	rect.setFillColor(COLOR_THEME::UI_COLOR_DEFAULT);
 	rect.setOutlineColor(sf::Color::Black);
 	rect.setOutlineThickness(2);
