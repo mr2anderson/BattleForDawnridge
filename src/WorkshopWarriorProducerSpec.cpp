@@ -33,7 +33,7 @@ std::vector<std::shared_ptr<Warrior> > WorkshopWarriorProducerSpec::getWarriorsT
     return toProduce;
 }
 std::string WorkshopWarriorProducerSpec::getProducingIconName() const {
-    return "gear";
+    return "gear_icon";
 }
 std::string WorkshopWarriorProducerSpec::getWaitingIconName() const {
     return "gear_icon";
