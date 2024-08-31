@@ -17,37 +17,22 @@
  */
 
 
-
 #include <SFML/Graphics.hpp>
-#include "CouldntOpen.hpp"
-#include "LoadingScreenResponse.hpp"
+#include <cstdint>
 
 
 #pragma once
 
 
-class LoadingScreen {
+class LoadingBar : public sf::Drawable {
 public:
-	LoadingScreen(sf::RenderWindow &window);
-	LoadingScreen(const LoadingScreen& copy) = delete;
-	LoadingScreenResponse run(sf::RenderWindow &window);
-private:
-	bool alreadyFinished;
+	LoadingBar();
 
-	bool loadBase(sf::RenderWindow &window);
-	typedef enum LoadAllBreakpoint {
-		Percent0,
-		Percent10,
-		Percent20,
-		Percent30,
-		Percent40,
-		Percent50,
-		Percent60,
-		Percent70,
-		Percent80,
-		Percent90
-	} LoadAllBreakpoint;
-	void setNormalScreen(sf::RenderWindow& window, LoadAllBreakpoint br);
-	bool loadAll(sf::RenderWindow &window, LoadAllBreakpoint br);
-    void loadingError(CouldntOpen *e, sf::RenderWindow &window);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	void setCenter(int32_t x, int32_t y);
+	void setValue(uint32_t value);
+private:
+	int32_t x, y;
+	uint32_t value;
 };

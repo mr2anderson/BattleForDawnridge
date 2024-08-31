@@ -833,6 +833,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\PopUpElement.hpp" />
     <ClInclude Include="src\Priority.hpp" />
     <ClInclude Include="src\Program.hpp" />
+    <ClInclude Include="src\LoadingBar.hpp" />
     <ClInclude Include="src\Projectile.hpp" />
     <ClInclude Include="src\Quarry.hpp" />
     <ClInclude Include="src\QuarrySpec.hpp" />
@@ -1177,6 +1178,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\PlaySoundEvent.cpp" />
     <ClCompile Include="src\PopUpElement.cpp" />
     <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\LoadingBar.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\Quarry.cpp" />
     <ClCompile Include="src\QuarrySpec.cpp" />
