@@ -53,24 +53,23 @@ void Program::run() {
     }
 
 
-    PAKScreen pakScreen(this->window);
-    PAKScreenResponse pakScreenResponse = pakScreen.run(this->window);
-    switch (pakScreenResponse.getType()) {
-    case PAKScreenResponse::TYPE::CONTINUE: {
-        break;
-    }
-    case PAKScreenResponse::TYPE::EXIT: {
-        return;
-    }
-    }
-
-
 
     if (IsServerTable::get().isServer()) {
         ServerScreen serverScreen(this->window);
         serverScreen.run(this->window);
     }
     else {
+        PAKScreen pakScreen(this->window);
+        PAKScreenResponse pakScreenResponse = pakScreen.run(this->window);
+        switch (pakScreenResponse.getType()) {
+            case PAKScreenResponse::TYPE::CONTINUE: {
+                break;
+            }
+            case PAKScreenResponse::TYPE::EXIT: {
+                return;
+            }
+        }
+
         boost::optional<StringLcl> error;
         
         for (; ;) {

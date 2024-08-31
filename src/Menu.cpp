@@ -84,7 +84,6 @@ MenuResponse Menu::run(sf::RenderWindow& window) {
     this->alreadyFinished = true;
 
     window.setMouseCursorVisible(true);
-    SoundQueue::get().clear();
     Music::get().play("menu");
 
 	sf::Event event{};
