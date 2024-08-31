@@ -91,25 +91,25 @@ sf::Sprite Time::getIcon(uint32_t viewW, uint32_t viewH) const {
             break;
     }
     sf::Sprite sprite;
-    sprite.setPosition(viewW - 114 - 5, 40);
+    sprite.setPosition(viewW - 125 - 40, 40 + 10);
     sprite.setTexture(*Textures::get().get(name));
     return sprite;
 }
 
 sf::Color Time::getEffectColor() const {
     switch (this->type) {
-        case Type::Dawn:
-            return sf::Color(79, 56, 45, 60);
-        case Type::Morning:
-            return sf::Color::Transparent;
-        case Type::Day:
-            return sf::Color::Transparent;
-        case Type::Sunset:
-            return sf::Color(64, 29, 42, 50);
-        case Type::Night1:
-            return sf::Color(0, 0, 0, 100);
-        case Type::Night2:
-            return sf::Color(0, 0, 0, 100);
+    case Type::Dawn:
+        return sf::Color(79, 56, 45, 60);
+    case Type::Morning:
+        return sf::Color::Transparent;
+    case Type::Day:
+        return sf::Color::Transparent;
+    case Type::Sunset:
+        return sf::Color(64, 29, 42, 50);
+    case Type::Night1:
+        return sf::Color(0, 0, 0, 100);
+    case Type::Night2:
+        return sf::Color(0, 0, 0, 100);
     }
     return sf::Color();
 }
