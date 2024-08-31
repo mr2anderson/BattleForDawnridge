@@ -21,7 +21,6 @@
 #include "Locales.hpp"
 #include "Parameters.hpp"
 #include "UUIDs.hpp"
-
 #include "CircleLightSourceSin.hpp"
 
 
@@ -53,7 +52,7 @@ StringLcl Treasure::getDescription() const {
 	return StringLcl("{treasure_description}");
 }
 std::shared_ptr<ILightSource> Treasure::getLightSource() const {
-	return std::make_shared<CircleLightSourceSin>(this->getCenterX(), this->getCenterY(), 32.f, 0.5f, 3.f);
+	return std::make_shared<CircleLightSourceSin>(this->getCenterX(), this->getCenterY(), 28.f, 0.2f, 1.5f);
 }
 
 
