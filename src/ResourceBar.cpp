@@ -52,7 +52,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	for (uint32_t i = 0; i <= res.size(); i = i + 1) {
 		sf::Sprite sprite;
 		if (i == res.size()) {
-			sprite.setTexture(*Textures::get().get("helmet"));
+			sprite.setTexture(*Textures::get().get("helmet_icon"));
 		}
 		else {
 			sprite.setTexture(*Textures::get().get(res.at(i).type + "_icon"));

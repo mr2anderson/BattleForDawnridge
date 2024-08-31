@@ -28,7 +28,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 
 	if (building->wasWithFullHP()) {
 		component = {
-			HorizontalSelectionWindowComponent(  "helmet",
+			HorizontalSelectionWindowComponent(  "helmet_icon",
             StringLcl("{this_building_increases_population_limit}") + std::to_string(this->getPopulationLimit(building)),
 			false,
 			Events()),

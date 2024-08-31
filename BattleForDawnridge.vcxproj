@@ -181,7 +181,7 @@
     <PreBuildEvent>
       <Command>copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -209,7 +209,7 @@ copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-system-d-2.dll"  "$(Ta
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-window-d-2.dll"  "$(TargetDir)sfml-window-d-2.dll"
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
@@ -233,7 +233,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <PreBuildEvent>
       <Command>copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -263,7 +263,7 @@ copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-system-2.dll"  "$(Targ
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-window-2.dll"  "$(TargetDir)sfml-window-2.dll"
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|x64'">
@@ -286,7 +286,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <PreBuildEvent>
       <Command>copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -313,7 +313,7 @@ copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-system-d-2.dll"  "$(Ta
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-window-d-2.dll"  "$(TargetDir)sfml-window-d-2.dll"
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|x64'">
@@ -346,7 +346,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <PreBuildEvent>
       <Command>copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -379,7 +379,7 @@ copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-system-2.dll"  "$(Targ
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\sfml-window-2.dll"  "$(TargetDir)sfml-window-2.dll"
 copy /Y "$(SolutionDir)extlibs\bin\$(PlatformTarget)\openal32.dll"  "$(TargetDir)openal32.dll"
 mkdir "$(TargetDir)resources"
-copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
+xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

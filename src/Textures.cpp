@@ -24,9 +24,11 @@
 
 
 void Textures::add(const std::string& name, const std::string& path) {
+    std::cout << "Loading " << path << "..." << std::endl;
     if (!this->textures[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenTexture(path);
     }
+    std::cout << "Completed." << std::endl;
 }
 void Textures::add(const std::string& name, const sf::Texture& texture) {
     this->textures[name] = texture;

@@ -545,7 +545,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
     if (d > 0) {
         if (isPositive) {
             return {
-                "positive_good",
+                "positive_good_icon",
                 StringLcl("{positive_good}"),
                 false,
                 Events()
@@ -553,7 +553,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         }
         else {
             return {
-                "negative_good",
+                "negative_good_icon",
                 StringLcl("{negative_good}"),
                 false,
                 Events()
@@ -563,7 +563,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
     else if (d < 0) {
         if (isPositive) {
             return {
-                "positive_bad",
+                "positive_bad_icon",
                 StringLcl("{positive_bad}"),
                 false,
                 Events()
@@ -571,7 +571,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         }
         else {
             return {
-                "negative_bad",
+                "negative_bad_icon",
                 StringLcl("{negative_bad}"),
                 false,
                 Events()
@@ -581,7 +581,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
     else {
         if (isPositive) {
             return {
-                "positive_neutral",
+                "positive_neutral_icon",
                 StringLcl("{positive_neutral}"),
                 false,
                 Events()
@@ -589,7 +589,7 @@ HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state)
         }
         else {
             return {
-                "negative_neutral",
+                "negative_neutral_icon",
                 StringLcl("{negative_neutral}"),
                 false,
                 Events()
@@ -611,7 +611,7 @@ HorizontalSelectionWindowComponent Warrior::getKillComponent() {
     killNextTurnEventVerify.add(std::make_shared<CreateEEvent>(verifyWindow));
 
     return {
-          "skull",
+          "kill_icon",
         StringLcl("{kill}"),
         true,
         killNextTurnEventVerify
@@ -625,7 +625,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
     revertKillNextTurnEvent.add(std::make_shared<RevertKillNextTurnEvent>(this->getThis<Warrior>()));
 
     return {
-          "skull",
+          "kill_icon",
         StringLcl("{revert_kill}"),
         true,
         revertKillNextTurnEvent
@@ -633,7 +633,7 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 }
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent(MapState *state) const {
     return {
-          "helmet",
+          "helmet_icon",
         StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " " + this->getDefence().getReadable() + "\n" +
         this->getSpecialInfoString(state) + "\n" +
         StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + std::to_string(this->getMovementPoints()) + "\n" +

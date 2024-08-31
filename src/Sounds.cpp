@@ -24,9 +24,11 @@
 
 
 void Sounds::add(const std::string& name, const std::string& path) {
+    std::cout << "Loading " << path << "..." << std::endl;
     if (!this->sounds[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenSound(path);
     }
+    std::cout << "Completed." << std::endl;
 }
 sf::SoundBuffer *Sounds::get(const std::string& name) {
     auto it = this->sounds.find(name);

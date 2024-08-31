@@ -24,9 +24,11 @@
 
 
 void Fonts::add(const std::string& name, const std::string& path) {
+    std::cout << "Loading " << path << "..." << std::endl;
     if (!this->fonts[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
         throw CouldntOpenFont(path);
     }
+    std::cout << "Completed." << std::endl;
 }
 sf::Font* Fonts::get(const std::string& name) {
     auto it = this->fonts.find(name);

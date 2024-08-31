@@ -84,17 +84,6 @@ LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
         return LoadingScreenResponse(LoadingScreenResponse::TYPE::LOADING_ERROR);
     }
 
-    #if defined(USE_CUSTOM_CURSOR)
-        sf::Texture* cursorTexture = Textures::get().get("cursor");
-        sf::Image image = cursorTexture->copyToImage();
-        const sf::Uint8* pixels = image.getPixelsPtr();
-
-        sf::Cursor cursor;
-        if (cursor.loadFromPixels(pixels, image.getSize(), sf::Vector2u(0, 0))) {
-            window.setMouseCursor(cursor);
-        }
-    #endif
-
     sf::Texture* iconTexture = Textures::get().get("icon");
     sf::Image iconImage = iconTexture->copyToImage();
     const sf::Uint8* iconPixels = iconImage.getPixelsPtr();
@@ -111,7 +100,7 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
     Root::get().setUserdataRoot(USERDATA_ROOT);
     try {
         Fonts::get().add("1", "fonts/1.ttf");
-        Textures::get().add("loading_screen", "images/loading_screen.jpg");
+        Textures::get().add("loading_screen", "images/backgrounds/loading_screen.jpg");
     }
 	catch (CouldntOpen&) {
         return false;
@@ -147,50 +136,93 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
     try {
         IsServerTable::get().load();
         SoundQueue::get().loadVolume();
-        Music::get().loadVolume();
         Parameters::get().load();
+        IlluminationTableSettings::get().load();
+        MainServerPosition::get().load();
+        Music::get().loadVolume();
         Music::get().add("intro", "music/intro.ogg");
         for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
             Music::get().add(std::to_string(i), "music/ingame_0" + std::to_string(i) + ".ogg");
         }
-        IlluminationTableSettings::get().load();
-        Textures::get().add("bg", "images/bg.jpg");
-        Textures::get().add("icon", "images/icon.png");
-        #if defined(USE_CUSTOM_CURSOR)
-            Textures::get().add("cursor", "images/cursor.png");
-        #endif
-        MainServerPosition::get().load();
+        Textures::get().add("bg", "images/backgrounds/bg.jpg");
         Music::get().add("menu", "music/menu.ogg");
         Textures::get().add("tmx_tileset", "images/tmx_tileset.jpg");
-        for (const std::string& a : {
-                "castle", "exit_icon", "food_icon", "forest", "gold_icon", "iron",
-                "market", "mine", "quarry", "sawmill", "stone", "stone_icon", "upgrade_icon",
-                "wood_icon", "iron_icon", "shield_icon", "hammer_icon", "trade_icon",
-                "wall1", "mountains",
-                "arable", "blue", "green",
-                "purple", "warehouse_food", "warehouse_wood", "warehouse_stone",
-                "warehouse_gold", "warehouse_iron", "resources_icon", "up_icon",
-                "down_icon", "russian_icon", "english_icon", "bell", "destroy_icon",
-                "btc", "axe_icon", "cross_icon", "barracks", "treasure", "hand", "gates1", "water",
-                "forest_icon", "water_icon", "warrior_purple0", "warrior_green0", "warrior_blue0",
-                "warrior_purple1", "warrior_green1", "warrior_blue1", "warrior_purple", "warrior_green", "warrior_blue",
-                "helmet", "skull", "spell_factory", "rage_spell",
-                "infirmary", "christianity", "tower1", "crystal_icon", "warehouse_crystal",
-                "lord_icon", "infantryman_icon", "priest_icon", "healer_icon", "workshop", "gear", "gear_icon",
-                "heart_icon", "save_icon",
-                "plain", "slow_movement_icon", "battle_icon", "new_turn_icon",
-                "to_menu_icon", "room_id_icon", "boost_icon", "sfml_icon", "sound_icon", "music_icon", "illumination_settings_icon",
-                "sockerer_house", "sockerer_icon", "magick_icon", "positive_good", "positive_neutral", "positive_bad",
-                "negative_good", "negative_neutral", "negative_bad"}) {
-            Textures::get().add(a, "images/" + a + ".png");
+        for (const std::string& a : 
+            {"axe", "battle", "bell", "christianity", "cross", "destroy", "gear", "hammer", "healer", "heart", "illumination_settings",
+            "infantryman", "kill", "lord", "magick", "music", "new_turn", "priest", "resources", "room_id", "save", "shield", "slow_movement", "sockerer",
+            "sound", "to_menu", "trade" }) {
+            Textures::get().add(a + "_icon", "images/icons/" + a + "_icon.png");
         }
-        for (const std::string &a : {"dawn", "morning", "day", "sunset", "night1", "night2"}) {
-            Textures::get().add(a, "images/time/" + a + ".png");
+        for (const std::string& a : { "boost", "sfml" }) {
+            Textures::get().add(a + "_icon", "images/icons/libs/" + a + "_icon.png");
         }
-        for (const std::string &a : {"none", "horizontal", "vertical", "all"}) {
-            Textures::get().add("road_" + a, "images/road/" + a + ".png");
+        for (const std::string& a : { "english", "russian" }) {
+            Textures::get().add(a + "_icon", "images/icons/national/" + a + "_icon.png");
         }
-        for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over"}) {
+        for (const std::string& a : { "food", "wood", "stone", "iron", "crystal", "gold", "helmet"}) {
+            Textures::get().add(a + "_icon", "images/icons/resources/" + a + "_icon.png");
+        }
+        for (const std::string& a : { "positive", "negative" }) {
+            for (const std::string& b : { "good", "bad", "neutral" }) {
+                Textures::get().add(a + "_" + b + "_icon", "images/icons/times_of_day/" + a + "_" + b + "_icon.png");
+            }
+        }
+        for (const std::string& a : { "down", "up", "exit" }) {
+            Textures::get().add(a + "_icon", "images/icons/ui/" + a + "_icon.png");
+        }
+        for (const std::string& a :
+            { "arable", "barracks", "castle", "gates1", "infirmary", "market", "mine", "quarry", "sawmill",
+            "sockerer_house", "spell_factory", "tower1", "wall1", "warehouse_crystal", "warehouse_food", "warehouse_gold",
+            "warehouse_iron", "warehouse_stone", "warehouse_wood", "workshop" }) {
+            Textures::get().add(a, "images/buildings/main/" + a + ".png");
+        }
+        for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
+            Textures::get().add("house" + std::to_string(i), "images/buildings/main/house/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 1; i <= Well::TOTAL_TYPES; i = i + 1) {
+            Textures::get().add("well" + std::to_string(i), "images/buildings/main/well/" + std::to_string(i) + ".png");
+        }
+        for (const std::string& a : { "none", "horizontal", "vertical", "all" }) {
+            Textures::get().add("road_" + a, "images/buildings/main/road/" + a + ".png");
+        }
+        for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
+            Textures::get().add("fire" + std::to_string(i), "images/buildings/fire/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 0; i < BuildingStatePointer::TOTAL_HP_POINTERS; i = i + 1) {
+            Textures::get().add("building_hp_pointer" + std::to_string(i), "images/buildings/hp_pointers/" + std::to_string(i) + ".png");
+        }
+        for (const std::string& a : { "blue", "green", "purple" }) {
+            Textures::get().add(a, "images/buildings/side_pointers/" + a + ".png");
+        }
+        for (const std::string& a : { "forest", "iron", "mountains", "stone", "treasure", "water" }) {
+            Textures::get().add(a, "images/landscape/" + a + ".png");
+        }
+        for (uint32_t i = 1; i <= Plant::TOTAL_TYPES; i = i + 1) {
+            for (uint32_t j = 1; j <= Plant::ANIMATION_NUMBER[i - 1]; j = j + 1) {
+                Textures::get().add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/landscape/plant/" + std::to_string(i) + "/" + std::to_string(j) + ".png");
+            }
+        }
+        for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
+            Textures::get().add("big_arrow" + std::to_string(i), "images/projectiles/big_arrow/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 1; i <= HealerProjectile::TOTAL_TYPES; i = i + 1) {
+            Textures::get().add("healer_projectile" + std::to_string(i), "images/projectiles/healer_projectile/" + std::to_string(i) + ".png");
+        }
+        for (uint32_t i = 1; i <= PatriarchProjectile::TOTAL_TYPES; i = i + 1) {
+            Textures::get().add("patriarch_projectile" + std::to_string(i), "images/projectiles/patriarch_projectile/" + std::to_string(i) + ".png");
+        }
+        for (const std::string& a : { "heal", "rage" }) {
+            Textures::get().add(a + "_spell", "images/spells/" + a + "_spell.png");
+        }
+        for (const std::string& a : { "dawn", "morning", "day", "sunset", "night1", "night2" }) {
+            Textures::get().add(a, "images/times_of_day/" + a + ".png");
+        }
+        for (const std::string& a : { "blue", "green", "purple" }) {
+            for (const std::string& b : { "", "0", "1" }) {
+                Textures::get().add("warrior_" + a + b, "images/warriors/side_pointers/warrior_" + a + b + ".png");
+            }
+        }
+        for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over" }) {
             for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
                 for (std::tuple<std::string, uint32_t> w : {
                     std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)),
@@ -200,42 +232,22 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                     std::make_tuple("healer", Healer().getAnimationNumber(a, d)),
                     std::make_tuple("patriarch", Patriarch().getAnimationNumber(a, d)),
                     std::make_tuple("ram", Ram().getAnimationNumber(a, d)),
-                    std::make_tuple("golem", Golem().getAnimationNumber(a, d))}) {
+                    std::make_tuple("golem", Golem().getAnimationNumber(a, d)) }) {
                     for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
                         std::string s = std::to_string(i);
                         while (s.size() < 4) {
                             s = ('0' + s);
                         }
-                        Textures::get().add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), "images/warriors/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
+                        Textures::get().add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), "images/warriors/main/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
                     }
                 }
             }
         }
-        for (uint32_t i = 1; i <= Plant::TOTAL_TYPES; i = i + 1) {
-            for (uint32_t j = 1; j <= Plant::ANIMATION_NUMBER[i - 1]; j = j + 1) {
-                Textures::get().add("plant" + std::to_string(i) + "_" + std::to_string(j), "images/plant/" + std::to_string(i) + "/" + std::to_string(j) + ".png");
-            }
+        for (const std::string& a : { "btc", "hand", "plain", "icon"}) {
+            Textures::get().add(a, "images/" + a + ".png");
         }
-        for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
-            Textures::get().add("house" + std::to_string(i), "images/house/" + std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 1; i <= Well::TOTAL_TYPES; i = i + 1) {
-            Textures::get().add("well" + std::to_string(i), "images/well/" + std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
-            Textures::get().add("big_arrow" + std::to_string(i), "images/big_arrow/" + std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 1; i <= HealerProjectile::TOTAL_TYPES; i = i + 1) {
-            Textures::get().add("healer_projectile" + std::to_string(i), "images/healer_projectile/" + std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 1; i <= PatriarchProjectile::TOTAL_TYPES; i = i + 1) {
-            Textures::get().add("patriarch_projectile" + std::to_string(i), "images/patriarch_projectile/" + std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
-            Textures::get().add("fire" + std::to_string(i), "images/fire/" + std::to_string(i) + ".png");
-        }
-        for (uint32_t i = 0; i < BuildingStatePointer::TOTAL_HP_POINTERS; i = i + 1) {
-            Textures::get().add("building_hp_pointer" + std::to_string(i), "images/building_hp_pointer/" + std::to_string(i) + ".png");
+        for (const std::string& a : { "tmx_tileset" }) {
+            Textures::get().add(a, "images/" + a + ".jpg");
         }
         for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                       "regeneration", "stone", "wood", "road", "wind", "water",
