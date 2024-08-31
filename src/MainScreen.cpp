@@ -82,6 +82,8 @@ MainScreen::MainScreen(sf::RenderWindow& window, sf::IpAddress serverIP, uint16_
 	this->playersAtThisHost = playersAtThisHost;
 	this->roomID = roomID;
 
+    this->rebuildStatusBarTimer = Timer(50, Timer::TYPE::FIRST_INSTANTLY); // This makes experience more smooth
+
 	this->readyPackageGotten = false;
 
     this->localElement = nullptr;
@@ -189,9 +191,10 @@ void MainScreen::run(sf::RenderWindow& window) {
 		this->processReceiving();
 		this->receive();
 		Playlist::get().update();
-		this->drawEverything(window);
-		this->moveView(window);
+        this->rebuildStatusBar(window);
+        this->moveView(window);
         window.setMouseCursorVisible(this->cursorVisibility);
+		this->drawEverything(window);
 	}
 	LOGS("Processing was finished");
 }
@@ -557,13 +560,13 @@ void MainScreen::drawEverything(sf::RenderWindow& window) {
 	}
 	window.setView(window.getDefaultView());
 	this->drawResourceBar(window);
+    this->drawStatusBar(window);
 	for (const auto& b : this->buttonBases) {
 		window.draw(*b);
 	}
     for (const auto& b : this->localButtons) {
         window.draw(b);
     }
-    window.draw(this->map.getStatePtr()->getTimePtr()->getIcon(window.getSize().x, window.getSize().y));
 	window.display();
 }
 void MainScreen::drawMap(sf::RenderWindow& window) {
@@ -575,7 +578,10 @@ void MainScreen::drawMap(sf::RenderWindow& window) {
 	}
 }
 void MainScreen::drawResourceBar(sf::RenderWindow& window) {
-	window.draw(resourceBar);
+	window.draw(this->resourceBar);
+}
+void MainScreen::drawStatusBar(sf::RenderWindow &window) {
+    window.draw(this->statusBar);
 }
 void MainScreen::drawCells(sf::RenderWindow& window) {
     uint32_t sx = Textures::get().get("plain")->getSize().x / 64;
@@ -628,6 +634,26 @@ void MainScreen::drawWaitingScreen(sf::RenderWindow &window) {
 
 
 
+
+
+void MainScreen::rebuildStatusBar(sf::RenderWindow &window) {
+    if (this->rebuildStatusBarTimer.ready()) {
+        this->rebuildStatusBarTimer.reset();
+
+        this->statusBar = StatusBar();
+
+        this->statusBar.setTime(this->map.getStatePtr()->getTimePtr());
+
+        std::tuple<uint32_t, uint32_t> p = this->getMousePositionBasedOnView(window);
+        for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
+            std::shared_ptr<GO> go = this->map.getStatePtr()->getCollectionsPtr()->getGO(i, FILTER::CLICK_PRIORITY);
+            if (go->exist() and std::get<0>(p) >= go->getXInPixels() and std::get<1>(p) >= go->getYInPixels() and std::get<0>(p) < go->getXInPixels() + 64 * go->getSX() and std::get<1>(p) < go->getYInPixels() + 64 * go->getSY()) {
+                this->statusBar.setGO(go, this->map.getStatePtr());
+                break;
+            }
+        }
+    }
+}
 
 
 

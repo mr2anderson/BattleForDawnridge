@@ -37,6 +37,7 @@
 #include "ReturnToMenuEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "ClosePopUpElementEvent.hpp"
+#include "StatusBar.hpp"
 
 
 #pragma once
@@ -79,6 +80,8 @@ private:
 	HighlightTable highlightTable;
 	std::vector<std::shared_ptr<const RectangularUiElement>> buttonBases;
 	ResourceBar resourceBar;
+    StatusBar statusBar;
+    Timer rebuildStatusBarTimer;
     bool cursorVisibility;
 
 	std::shared_ptr<PopUpElement> localElement;
@@ -121,12 +124,18 @@ private:
 	void drawEverything(sf::RenderWindow& window);
 	void drawMap(sf::RenderWindow& window);
 	void drawResourceBar(sf::RenderWindow& window);
+    void drawStatusBar(sf::RenderWindow& window);
 	void drawCells(sf::RenderWindow& window);
 	void drawHighlightion(sf::RenderWindow& window);
     void drawDarkness(sf::RenderWindow& window);
 
 
     void drawWaitingScreen(sf::RenderWindow &window);
+
+
+
+    void rebuildStatusBar(sf::RenderWindow &window);
+
 
 
 	void zoomView(sf::RenderWindow& window, bool plus);

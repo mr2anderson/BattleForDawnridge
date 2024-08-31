@@ -51,6 +51,10 @@ Image::Image(int32_t x, int32_t y, uint32_t size, const std::string& textureName
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
 
+    if (this->textureName.empty()) {
+        return;
+    }
+
     float scaleX, scaleY;
     if (this->size.has_value()) {
         scaleX = (float)this->size.value() / GET_TEXTURE_W(textureName, this->textureRect);

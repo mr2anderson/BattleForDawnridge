@@ -24,7 +24,7 @@
 
 
 BuildingShortInfo::BuildingShortInfo(float xInPixels, float yInPixels, uint32_t sx, uint32_t sy, const std::string& pictureName, const std::string& text) {
-	this->rect.setFillColor(COLOR_THEME::UI_COLOR);
+	this->rect.setFillColor(COLOR_THEME::UI_COLOR_TRANSPARENT);
 	this->rect.setSize(sf::Vector2f(64 * sx, 32 * sy / 2));
 	this->rect.setPosition(xInPixels, yInPixels + 64 * sy - this->rect.getSize().y);
 

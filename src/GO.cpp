@@ -167,6 +167,9 @@ sf::IntRect GO::getTextureRect() const {
 sf::Color GO::getTextureColor() const {
 	return sf::Color::White;
 }
+StringLcl GO::getDetailedDescription(MapState *state) const {
+    return this->getDescription() + "\n";
+}
 float GO::getOffsetX() const {
     return 0;
 }

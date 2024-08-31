@@ -66,6 +66,7 @@ public:
 	Defence getDefence() const override;
     std::vector<std::tuple<uint32_t, uint32_t>> getMoves(MapState *state);
     Events getMoveHighlightionEvent(MapState *state);
+    StringLcl getDetailedDescription(MapState *state) const override;
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;

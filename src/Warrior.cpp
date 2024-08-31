@@ -343,6 +343,12 @@ Events Warrior::getMoveHighlightionEvent(MapState *state) {
 
     return event;
 }
+StringLcl Warrior::getDetailedDescription(MapState *state) const {
+    return this->Unit::getDetailedDescription(state) + "\n" +
+    StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + "\n" +
+    StringLcl("{max_movement_points}") + std::to_string(this->getMovementPoints()) + "\n\n" +
+    this->getSpecialInfoString(state) + "\n";
+}
 bool Warrior::isVehicle() const {
     return false;
 }

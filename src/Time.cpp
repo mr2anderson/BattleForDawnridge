@@ -23,7 +23,7 @@
 
 
 Time::Time() {
-    this->type = static_cast<Type>(GlobalRandomGenerator32::get().gen() % 6);
+    this->type = static_cast<Type>(GlobalRandomGenerator32::get().gen() % TOTAL);
 }
 TimeMod Time::getTimeMod() const {
     switch (this->type) {
@@ -47,7 +47,7 @@ Time::Type Time::getType() const {
 }
 
 void Time::change() {
-    this->type = static_cast<Type>((this->type + 1) % 6);
+    this->type = static_cast<Type>((this->type + 1) % TOTAL);
 }
 
 std::optional<std::string> Time::getSoundName() const {
@@ -68,32 +68,22 @@ std::optional<std::string> Time::getSoundName() const {
     return "";
 }
 
-sf::Sprite Time::getIcon(uint32_t viewW, uint32_t viewH) const {
-    std::string name;
+std::string Time::getTextureName() const {
     switch (this->type) {
         case Type::Dawn:
-            name = "dawn";
-            break;
+            return "dawn";
         case Type::Morning:
-            name = "morning";
-            break;
+            return "morning";
         case Type::Day:
-            name = "day";
-            break;
+            return "day";
         case Type::Sunset:
-            name = "sunset";
-            break;
+            return "sunset";
         case Type::Night1:
-            name = "night1";
-            break;
+            return "night1";
         case Type::Night2:
-            name = "night2";
-            break;
+            return "night2";
     }
-    sf::Sprite sprite;
-    sprite.setPosition(viewW - 125 - 40, 40 + 10);
-    sprite.setTexture(*Textures::get().get(name));
-    return sprite;
+    return "";
 }
 
 sf::Color Time::getEffectColor() const {

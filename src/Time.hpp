@@ -39,6 +39,7 @@ public:
         Night1,
         Night2
     } Type;
+    static const uint32_t TOTAL = 6;
 
     bool hasError() const {
         return this->type < 0 or this->type >= 6;
@@ -50,7 +51,7 @@ public:
     void change();
 
     std::optional<std::string> getSoundName() const;
-    sf::Sprite getIcon(uint32_t windowW, uint32_t windowH) const;
+    std::string getTextureName() const;
     sf::Color getEffectColor() const;
 private:
     Type type;

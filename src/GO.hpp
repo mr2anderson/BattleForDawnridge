@@ -84,6 +84,7 @@ public:
     virtual std::string getTextureName() const = 0;
 	virtual std::string getSoundName() const = 0;
 	virtual StringLcl getDescription() const = 0;
+    virtual StringLcl getDetailedDescription(MapState *state) const;
 
     static const DrawingPriority DRAWING_PRIORITY_WARRIOR_FLYING;
     static const DrawingPriority DRAWING_PRIORITY_WARRIOR_DEFAULT;

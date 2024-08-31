@@ -24,5 +24,6 @@
 
 
 namespace COLOR_THEME {
-    extern const sf::Color UI_COLOR;
+    extern const sf::Color UI_COLOR_TRANSPARENT;
+    extern const sf::Color UI_COLOR_DEFAULT;
 }

@@ -33,6 +33,7 @@ public:
 	virtual std::string getResourceType() const = 0;
 	bool warriorCanStay(std::shared_ptr<const Warrior> w) const override;
 	uint32_t getWarriorMovementCost(std::shared_ptr<Warrior> w) const override;
+    StringLcl getDetailedDescription(MapState *state) const override;
 protected:
     virtual bool isArea() const = 0;
     virtual bool isConduction() const = 0;

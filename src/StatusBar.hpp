@@ -17,8 +17,32 @@
  */
 
 
-#include "ColorTheme.hpp"
+#include <SFML/Graphics.hpp>
+#include <memory>
+#include "StringLcl.hpp"
+#include "Time.hpp"
 
 
-const sf::Color COLOR_THEME::UI_COLOR_TRANSPARENT = sf::Color(1, 0, 3, 75);
-const sf::Color COLOR_THEME::UI_COLOR_DEFAULT = sf::Color(10, 10, 10, 150);
+#pragma once
+
+
+class Time;
+class MapState;
+class GO;
+
+
+class StatusBar : public sf::Drawable {
+public:
+    StatusBar();
+
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+    void setTime(Time *time);
+    void setGO(std::shared_ptr<GO> go, MapState *state);
+private:
+    uint32_t timeNumber;
+    std::string timeTextureName;
+    sf::IntRect goTextureRect;
+    std::string goTextureName;
+    StringLcl goDescription;
+};

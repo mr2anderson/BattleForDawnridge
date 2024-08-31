@@ -47,6 +47,7 @@ public:
 
 	virtual Defence getDefence() const = 0;
 	virtual Resources getCost() const = 0;
+    StringLcl getDetailedDescription(MapState *state) const override;
 protected:
     virtual std::shared_ptr<PlayerPointer> getPlayerPointer() const = 0;
 	std::shared_ptr<ILightSource> getLightSource() const override;

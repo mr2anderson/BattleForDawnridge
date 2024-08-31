@@ -43,6 +43,10 @@ uint32_t ResourcePoint::getWarriorMovementCost(std::shared_ptr<Warrior> w) const
     }
 	return this->getWalkingWarriorMovementCost();
 }
+StringLcl ResourcePoint::getDetailedDescription(MapState *state) const {
+    return GO::getDetailedDescription(state) + "\n" +
+            StringLcl("{left}") + std::to_string(this->getHP()) + "\n";
+}
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist() or button == sf::Mouse::Button::Right) {
 		return Events();
