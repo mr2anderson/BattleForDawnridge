@@ -31,7 +31,7 @@ StatusBar::StatusBar() = default;
 void StatusBar::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::RectangleShape rect;
     rect.setPosition(target.getSize().x - 135 - 5, 5);
-    rect.setFillColor(COLOR_THEME::UI_COLOR_DEFAULT);
+    rect.setFillColor(COLOR_THEME::UI_COLOR_TRANSPARENT);
     rect.setOutlineThickness(1);
     rect.setOutlineColor(sf::Color::Black);
     rect.setSize(sf::Vector2f(135, target.getSize().y - 10));
@@ -56,7 +56,7 @@ void StatusBar::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     Label goLabel(rect.getPosition().x + 5, goTexture.getY() + goTexture.getH() + 5, rect.getSize().x - 10, rect.getSize().y - 5 - (goTexture.getY() + goTexture.getH() + 5), this->goDescription, false);
     target.draw(goLabel, states);
 
-    sf::RectangleShape darkness;
+    sf::RectangleShape darkness; // This can move focus from status bar to field
     darkness.setPosition(rect.getPosition());
     darkness.setSize(rect.getSize());
     darkness.setFillColor(COLOR_THEME::UI_COLOR_TRANSPARENT);
