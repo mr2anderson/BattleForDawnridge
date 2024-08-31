@@ -29,11 +29,11 @@ Music::Music() {
     this->volume = 15;
 }
 void Music::add(const std::string& name, const std::string& path) {
-    std::cout << "Opening " << path << "..." << std::endl;
-    if (!this->music[name].openFromFile(Root::get().getDataRoot() + "/" + path)) {
+    std::string fpath = std::filesystem::absolute(Root::get().getDataRoot() + "/" + path).generic_string();
+    std::cout << fpath << std::endl;
+    if (!this->music[name].openFromFile(fpath)) {
         throw CouldntOpenMusic(path);
     }
-    std::cout << "Completed." << std::endl;
 }
 void Music::play(const std::string &name) {
     auto it = this->music.find(name);

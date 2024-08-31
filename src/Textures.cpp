@@ -18,17 +18,18 @@
 
 
 #include <iostream>
+#include <filesystem>
 #include "Textures.hpp"
 #include "Root.hpp"
 #include "CouldntOpenTexture.hpp"
 
 
 void Textures::add(const std::string& name, const std::string& path) {
-    std::cout << "Loading " << path << "..." << std::endl;
-    if (!this->textures[name].loadFromFile(Root::get().getDataRoot() + "/" + path)) {
+    std::string fpath = std::filesystem::absolute(Root::get().getDataRoot() + "/" + path).generic_string();
+    std::cout << fpath << std::endl;
+    if (!this->textures[name].loadFromFile(fpath)) {
         throw CouldntOpenTexture(path);
     }
-    std::cout << "Completed." << std::endl;
 }
 void Textures::add(const std::string& name, const sf::Texture& texture) {
     this->textures[name] = texture;
