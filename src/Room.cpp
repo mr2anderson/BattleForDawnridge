@@ -62,7 +62,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 
 	this->loadSaveData(saveData);
 
-    this->sendInit = true;
+	this->sendInit = true;
 
 	this->curcorVisibility = true;
 	this->element = nullptr;
@@ -123,7 +123,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, UUID>>& received,
 	this->processBaseEvents(p);
 }
 void Room::mustSendInit() {
-    this->sendInit = true;;
+    this->sendInit = true;
 }
 
 
@@ -406,6 +406,10 @@ void Room::initUI(RoomOutputProtocol p) {
     this->syncResourceBar(p);
     this->syncCursorVisibility(p);
     this->sendReady(p);
+
+	Events soundEvent;
+	soundEvent.add(std::make_shared<PlaySoundEvent>("wardrums", true));
+	this->addEvents(soundEvent, p);
 }
 void Room::syncMap(RoomOutputProtocol p) {
     for (uint32_t i = 0; i < this->map.getStatePtr()->getCollectionsPtr()->totalGOs(); i = i + 1) {
@@ -1101,12 +1105,13 @@ void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveE
 	std::shared_ptr<WindowButton> w;
 	if (count == 1) {
 		Events returnToMenuEvent;
+		returnToMenuEvent.add(std::make_shared<PlaySoundEvent>("wardrums"));
 		returnToMenuEvent.add(std::make_shared<ReturnToMenuEvent>());
 		w = std::make_shared<WindowButton>(StringLcl("{game_finished}"), StringLcl("{OK}"), returnToMenuEvent);
 	}
 	else {
 		Events event;
-		event.add(std::make_shared<PlaySoundEvent>("click"));
+		event.add(std::make_shared<PlaySoundEvent>("wardrums"));
 		if (this->currentPlayerId == e->getPlayerId()) {
 			event.add(std::make_shared<ChangeMoveEvent>());
 		}

@@ -256,7 +256,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window) {
                                       "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
                                       "ouch_woman_cute", "healer", "vehicle_hit",
                                       "vehicle", "sockerer_house", "roar", "dawn",
-                                      "day", "night", "sunset", "ouch_old", "old", "patriarch_heal"}) {
+                                      "day", "night", "sunset", "ouch_old", "old", "patriarch_heal",
+                                      "wardrums"}) {
             Sounds::get().add(a, "sounds/" + a + ".ogg");
         }
         for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
