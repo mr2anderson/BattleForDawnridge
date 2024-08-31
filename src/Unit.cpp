@@ -48,7 +48,7 @@ uint32_t Unit::getPlayerId() const {
 StringLcl Unit::getDetailedDescription(MapState *state) const {
     return GO::getDetailedDescription(state) + "\n" +
     StringLcl("{hp}") + std::to_string(this->getHP()) + "\n" +
-    StringLcl("{max_hp}") + std::to_string(this->getMaxHP()) + "\n\n" +
+    StringLcl("{max_hp}") + std::to_string(this->getMaxHP()) + "\n" +
     this->getDefence().getReadable() + "\n";
 }
 std::shared_ptr<ILightSource> Unit::getLightSource() const {
