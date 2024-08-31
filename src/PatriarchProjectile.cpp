@@ -20,7 +20,7 @@
 #include "PatriarchProjectile.hpp"
 
 
-const uint32_t PatriarchProjectile::TOTAL_TYPES = 48;
+const uint32_t PatriarchProjectile::TOTAL_TYPES = 8;
 
 
 PatriarchProjectile::PatriarchProjectile() = default;
