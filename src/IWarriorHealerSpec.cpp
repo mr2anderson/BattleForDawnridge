@@ -41,7 +41,7 @@ Events IWarriorHealerSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>
 	HashTableMapPosition<uint32_t> available = this->getAvailable(b->getX(), b->getY(), b->getSX(), b->getSY(), b->getPlayerId(), state);
 	for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
 		std::shared_ptr<Warrior>  w = state->getCollectionsPtr()->getWarrior(i);
-		if (w->exist() and w->getPlayerId() == b->getPlayerId() and
+		if (w->exist() and w->getPlayerId() == b->getPlayerId() and !w->wasHealed() and
                 w->isVehicle() == this->healVehicles() and w->getHP() != w->getMaxHP() and IAreaControllerSpec::IN_RADIUS(available, w, IAreaControllerSpec::IN_RADIUS_TYPE::FULLY)) {
 			if (first) {
 				events.add(std::make_shared<FocusOnEvent>(b->getX(), b->getY(), b->getSX(), b->getSY()));

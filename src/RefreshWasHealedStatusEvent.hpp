@@ -17,12 +17,21 @@
  */
 
 
-#include "WipeHealingAbilityEvent.hpp"
+#include <memory>
+#include "Event.hpp"
 
 
-WipeHealingAbilityEvent::WipeHealingAbilityEvent(std::shared_ptr<WarriorHealer> warrior) {
-    this->w = warrior;
-}
-std::shared_ptr<WarriorHealer> WipeHealingAbilityEvent::getWarrior() {
-    return this->w;
-}
+#pragma once
+
+
+class Warrior;
+
+
+class RefreshWasHealedStatusEvent : public Event {
+public:
+    RefreshWasHealedStatusEvent(std::shared_ptr<Warrior> w);
+
+    std::shared_ptr<Warrior> getWarrior();
+private:
+    std::shared_ptr<Warrior> w;
+};

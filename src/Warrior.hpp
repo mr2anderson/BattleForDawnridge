@@ -67,6 +67,8 @@ public:
     std::vector<std::tuple<uint32_t, uint32_t>> getMoves(MapState *state);
     Events getMoveHighlightionEvent(MapState *state);
     StringLcl getDetailedDescription(MapState *state) const override;
+    bool wasHealed() const;
+    void refreshWasHealedStatus();
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
@@ -95,6 +97,7 @@ private:
 	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;
     bool enemyMove;
+    bool wasHealedThisMove;
 	std::string defaultDirection;
 	std::string currentAnimation;
 	Clock animationClock;
@@ -122,6 +125,7 @@ private:
     HorizontalSelectionWindowComponent getWarriorInfoComponent(MapState *state) const;
     HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
     Events getSelectionWindow(MapState *state, bool own, bool minimal);
+    void addHp(uint32_t val) override;
 
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;
@@ -133,6 +137,7 @@ private:
         ar & this->movementPoints;
         ar & this->hasSpecialMoves;
         ar & this->enemyMove;
+        ar & this->wasHealedThisMove;
         ar & this->defaultDirection;
         ar & this->currentAnimation;
         ar & this->animationClock;

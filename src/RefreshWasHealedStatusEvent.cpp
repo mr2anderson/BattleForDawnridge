@@ -17,21 +17,12 @@
  */
 
 
-#include <memory>
-#include "Event.hpp"
+#include "RefreshWasHealedStatusEvent.hpp"
 
 
-#pragma once
-
-
-class WarriorHealer;
-
-
-class RefreshHealingAbilityEvent : public Event {
-public:
-    RefreshHealingAbilityEvent(std::shared_ptr<WarriorHealer> w);
-
-    std::shared_ptr<WarriorHealer> getWarrior();
-private:
-    std::shared_ptr<WarriorHealer> w;
-};
+RefreshWasHealedStatusEvent::RefreshWasHealedStatusEvent(std::shared_ptr<Warrior> w) {
+    this->w = w;
+}
+std::shared_ptr<Warrior> RefreshWasHealedStatusEvent::getWarrior() {
+    return this->w;
+}

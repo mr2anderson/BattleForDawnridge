@@ -28,28 +28,23 @@ public:
     WarriorHealer();
     WarriorHealer(uint32_t x, uint32_t y, uint32_t playerId);
 
-    void refreshHealingAbility();
-    void wipeHealingAbility();
     uint32_t getHealingSpeed(MapState *state) const;
     bool blockBuildingAbility() const override;
 protected:
     virtual bool healVehicles() const;
     virtual uint32_t getBaseHealingSpeed() const = 0;
     virtual Events heal(MapState *state, std::shared_ptr<Warrior> w);
+    virtual bool canHeal(std::shared_ptr<Warrior> w) const;
+    StringLcl getSpecialInfoString(MapState *state) const override;
 private:
-    bool healingAvailable;
-
     std::string getDirection(std::shared_ptr<Warrior> w) const;
     Events newMove(MapState *state, uint32_t playerId) override;
-    bool canHeal(std::shared_ptr<Warrior> w) const;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
-    StringLcl getSpecialInfoString(MapState *state) const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<Warrior>(*this);
-        ar & this->healingAvailable;
     }
 };
 

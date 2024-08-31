@@ -70,8 +70,6 @@
 #include "DecreaseRageModeMovesLeftEvent.hpp"
 #include "RefreshAttackAbilityEvent.hpp"
 #include "WipeAttackAbilityEvent.hpp"
-#include "RefreshHealingAbilityEvent.hpp"
-#include "WipeHealingAbilityEvent.hpp"
 #include "MarkPlayerAsInactiveEvent.hpp"
 #include "IncreaseVCSMoveCtrEvent.hpp"
 #include "LimitResourcesEvent.hpp"
@@ -80,6 +78,7 @@
 #include "MoveHorizontalSelectionWindowUpEvent.hpp"
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
 #include "ClosePopUpElementEvent.hpp"
+#include "RefreshWasHealedStatusEvent.hpp"
 
 
 #pragma once
@@ -223,12 +222,11 @@ private:
 	void handleDecreaseRageModeMovesLeftEvent(std::shared_ptr<DecreaseRageModeMovesLeftEvent> e, RoomOutputProtocol p);
 	void handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityEvent> e, RoomOutputProtocol p);
 	void handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, RoomOutputProtocol p);
-	void handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, RoomOutputProtocol p);
-	void handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, RoomOutputProtocol p);
 	void handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p);
 	void handleIncreaseVCSMoveCtrEvent(std::shared_ptr<IncreaseVCSMoveCtrEvent> e, RoomOutputProtocol p);
 	void handleLimitResourcesEvent(std::shared_ptr<LimitResourcesEvent> e, RoomOutputProtocol p);
     void handleMoveHorizontalSelectionWindowUpEvent(std::shared_ptr<MoveHorizontalSelectionWindowUpEvent> e, RoomOutputProtocol p);
     void handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e, RoomOutputProtocol p);
     void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e, RoomOutputProtocol p);
+    void handleRefreshWasHealedStatusEvent(std::shared_ptr<RefreshWasHealedStatusEvent> e, RoomOutputProtocol p);
 };

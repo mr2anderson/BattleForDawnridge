@@ -46,6 +46,9 @@ Defence Patriarch::getBaseDefence() const {
 uint32_t Patriarch::getBaseHealingSpeed() const {
     return Parameters::get().getInt("patriarch_healing_speed");
 }
+uint32_t Patriarch::getHealingRadius() const {
+    return Parameters::get().getInt("patriarch_healing_radius");
+}
 Resources Patriarch::getCost() const {
     return Parameters::get().getResources("patriarch_cost");
 }

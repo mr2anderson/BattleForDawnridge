@@ -21,21 +21,12 @@
 #include "Parameters.hpp"
 #include "Locales.hpp"
 #include "HighlightColors.hpp"
-#include "RefreshHealingAbilityEvent.hpp"
-#include "WipeHealingAbilityEvent.hpp"
+#include "ChangeWarriorDirectionEvent.hpp"
 
 
-WarriorHealer::WarriorHealer() {
-    this->healingAvailable = true;
-}
+WarriorHealer::WarriorHealer() = default;
 WarriorHealer::WarriorHealer(uint32_t x, uint32_t y, uint32_t playerId) : Warrior(x, y, playerId) {
-    this->healingAvailable = true;
-}
-void WarriorHealer::refreshHealingAbility() {
-    this->healingAvailable = true;
-}
-void WarriorHealer::wipeHealingAbility() {
-    this->healingAvailable = false;
+
 }
 uint32_t WarriorHealer::getHealingSpeed(MapState *state) const {
     uint32_t healingSpeed = this->getBaseHealingSpeed();
@@ -49,13 +40,9 @@ bool WarriorHealer::blockBuildingAbility() const {
     return false;
 }
 Events WarriorHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
-    this->wipeMovementPoints();
-    this->setDirection(this->getDirection(w));
-
-    Events events;
-    events.add(std::make_shared<WipeHealingAbilityEvent>(this->getThis<WarriorHealer>()));
-
-    return events;
+    Events changeWarriorDirectionEvent;
+    changeWarriorDirectionEvent.add(std::make_shared<ChangeWarriorDirectionEvent>(w, this->getDirection(w)));
+    return changeWarriorDirectionEvent;
 }
 std::string WarriorHealer::getDirection(std::shared_ptr<Warrior> w) const {
     if (w->getY() > this->getY()) {
@@ -72,10 +59,13 @@ std::string WarriorHealer::getDirection(std::shared_ptr<Warrior> w) const {
 Events WarriorHealer::newMove(MapState *state, uint32_t playerId) {
     Events events = Warrior::newMove(state, playerId);
 
-    if (this->exist()) {
-        Events refreshHealingAbility;
-        refreshHealingAbility.add(std::make_shared<RefreshHealingAbilityEvent>(this->getThis<WarriorHealer>()));
-        events = refreshHealingAbility + events;
+    if (this->exist() and playerId == this->getPlayerId()) {
+        for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
+            std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
+            if (this->canHeal(w)) {
+                events = events + this->heal(state, w);
+            }
+        }
     }
 
     return events;
@@ -84,45 +74,20 @@ bool WarriorHealer::healVehicles() const {
     return false;
 }
 bool WarriorHealer::canHeal(std::shared_ptr<Warrior> w) const {
-    if (!this->healingAvailable or !w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP() or w->isVehicle() != this->healVehicles()) {
+    if (!w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP() or w->isVehicle() != this->healVehicles() or w->wasHealed() or w->getUUID() == this->getUUID()) {
         return false;
     }
-
-    uint32_t dx = std::max(this->getX(), w->getX()) - std::min(this->getX(), w->getX());
-    uint32_t dy = std::max(this->getY(), w->getY()) - std::min(this->getY(), w->getY());
-
-    return (dx < 2 and dy < 2 and (uint32_t)(dx == 1) + (uint32_t)(dy == 1) == 1);
+    return true;
 }
 std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
     std::vector<SpecialMove> moves;
-
-    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i, FILTER::CLICK_PRIORITY);
-        if (this->canHeal(w)) {
-            moves.emplace_back(w->getX(), w->getY(), HighlightColors::get().getWarriorHealColor(this->getPlayerId()));
-        }
-    }
-
     return moves;
 }
 Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
-    for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
-        std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i, FILTER::CLICK_PRIORITY);
-        if (w->getX() == targetX and w->getY() == targetY and this->canHeal(w)) {
-            return this->heal(state, w);
-        }
-    }
-
-    return {};
+    return Events();
 }
 StringLcl WarriorHealer::getSpecialInfoString(MapState *state) const {
-    StringLcl str = StringLcl("{healing_speed}") + std::to_string(this->getHealingSpeed(state)) + ". ";
-    if (this->healingAvailable) {
-        str = str + StringLcl("{can_heal}");
-    }
-    else {
-        str = str + StringLcl("{cant_heal_until_next_move}");
-    }
+    StringLcl str = StringLcl("{healing_speed}") + std::to_string(this->getHealingSpeed(state)) + ".";
 
     return str;
 }

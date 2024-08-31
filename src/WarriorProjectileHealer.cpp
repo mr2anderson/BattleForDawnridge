@@ -28,6 +28,14 @@ WarriorProjectileHealer::WarriorProjectileHealer() = default;
 WarriorProjectileHealer::WarriorProjectileHealer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorHealer(x, y, playerId) {
 
 }
+bool WarriorProjectileHealer::canHeal(std::shared_ptr<Warrior> w) const {
+    if (!WarriorHealer::canHeal(w)) {
+        return false;
+    }
+    uint32_t dx = std::max(this->getX(), w->getX()) - std::min(this->getX(), w->getX());
+    uint32_t dy = std::max(this->getY(), w->getY()) - std::min(this->getY(), w->getY());
+    return (dx <= this->getHealingRadius() and dy <= this->getHealingRadius());
+}
 Events WarriorProjectileHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
     Events events = this->WarriorHealer::heal(state, w);
 
@@ -42,6 +50,11 @@ Events WarriorProjectileHealer::heal(MapState *state, std::shared_ptr<Warrior> w
     events.add(std::make_shared<AddHpEvent>(w, this->getHealingSpeed(state)));
 
     return events;
+}
+StringLcl WarriorProjectileHealer::getSpecialInfoString(MapState *state) const {
+    StringLcl str = this->WarriorHealer::getSpecialInfoString(state) + " " + StringLcl("{healing_radius}") + std::to_string(this->getHealingRadius()) + ". ";
+
+    return str;
 }
 
 

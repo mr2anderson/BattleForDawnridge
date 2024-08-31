@@ -46,8 +46,8 @@
 #include "FocusOnEvent.hpp"
 #include "Building.hpp"
 #include "IAreaControllerSpec.hpp"
-#include "CircleLightSourceSqrt.hpp"
 #include "PlaySoundEvent.hpp"
+#include "RefreshWasHealedStatusEvent.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -61,6 +61,7 @@ Warrior::Warrior() {
 Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
 	Unit(x, y, boost::none, playerId) {
 	this->movementPoints = boost::none;
+    this->wasHealedThisMove = false;
     this->defaultDirection = "e";
     this->startAnimation("talking");
     this->toKill = false;
@@ -146,6 +147,7 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
 	if (this->exist()) {
         Events events;
 
+        events.add(std::make_shared<RefreshWasHealedStatusEvent>(this->getThis<Warrior>()));
 		events.add(std::make_shared<RefreshMovementPointsEvent>(this->getThis<Warrior>()));
 
         if (this->belongTo(currentPlayerId)) {
@@ -352,6 +354,12 @@ StringLcl Warrior::getDetailedDescription(MapState *state) const {
     }
     result = result + this->getSpecialInfoString(state) + "\n";
     return result;
+}
+bool Warrior::wasHealed() const {
+    return this->wasHealedThisMove;
+}
+void Warrior::refreshWasHealedStatus() {
+    this->wasHealedThisMove = false;
 }
 bool Warrior::isVehicle() const {
     return false;
@@ -696,6 +704,10 @@ Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
     events.add(std::make_shared<CreateEEvent>(w));
 
     return events;
+}
+void Warrior::addHp(uint32_t val) {
+    this->Unit::addHp(val);
+    this->wasHealedThisMove = true;
 }
 Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist()) {

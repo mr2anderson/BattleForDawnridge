@@ -46,6 +46,9 @@ Defence Healer::getBaseDefence() const {
 uint32_t Healer::getBaseHealingSpeed() const {
     return Parameters::get().getInt("healer_healing_speed");
 }
+uint32_t Healer::getHealingRadius() const {
+    return Parameters::get().getInt("healer_healing_radius");
+}
 Resources Healer::getCost() const {
     return Parameters::get().getResources("healer_cost");
 }

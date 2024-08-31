@@ -903,14 +903,6 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 		this->handleWipeAttackAbilityEvent(wipeAttackAbilityEvent, p);
         result = result | SYNC_UI::SYNC_MAP;
 	}
-	else if (std::shared_ptr<RefreshHealingAbilityEvent> refreshHealingAbilityEvent = std::dynamic_pointer_cast<RefreshHealingAbilityEvent>(e)) {
-		this->handleRefreshHealingAbilityEvent(refreshHealingAbilityEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
-	}
-	else if (std::shared_ptr<WipeHealingAbilityEvent> wipeHealingAbilityEvent = std::dynamic_pointer_cast<WipeHealingAbilityEvent>(e)) {
-		this->handleWipeHealingAbilityEvent(wipeHealingAbilityEvent, p);
-        result = result | SYNC_UI::SYNC_MAP;
-	}
 	else if (std::shared_ptr<MarkPlayerAsInactiveEvent> markPlayerAsInactiveEvent = std::dynamic_pointer_cast<MarkPlayerAsInactiveEvent>(e)) {
 		this->handleMarkPlayerAsInactiveEvent(markPlayerAsInactiveEvent, p);
         result = result | SYNC_UI::SYNC_MAP;
@@ -934,6 +926,10 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
     else if (std::shared_ptr<ClosePopUpElementEvent> closePopUpElementEvent = std::dynamic_pointer_cast<ClosePopUpElementEvent>(e)) {
         this->handleClosePopUpElementEvent(closePopUpElementEvent, p);
         result = result | SYNC_UI::SYNC_ELEMENT;
+    }
+    else if (std::shared_ptr<RefreshWasHealedStatusEvent> refreshWasHealedStatusEvent = std::dynamic_pointer_cast<RefreshWasHealedStatusEvent>(e)) {
+        this->handleRefreshWasHealedStatusEvent(refreshWasHealedStatusEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
     }
 	else {
         p.logs->emplace_back("{unknown_event_handled}");
@@ -1090,12 +1086,6 @@ void Room::handleRefreshAttackAbilityEvent(std::shared_ptr<RefreshAttackAbilityE
 void Room::handleWipeAttackAbilityEvent(std::shared_ptr<WipeAttackAbilityEvent> e, RoomOutputProtocol p) {
 	e->getI()->wipeAbility();
 }
-void Room::handleRefreshHealingAbilityEvent(std::shared_ptr<RefreshHealingAbilityEvent> e, RoomOutputProtocol p) {
-	e->getWarrior()->refreshHealingAbility();
-}
-void Room::handleWipeHealingAbilityEvent(std::shared_ptr<WipeHealingAbilityEvent> e, RoomOutputProtocol p) {
-	e->getWarrior()->wipeHealingAbility();
-}
 void Room::handleMarkPlayerAsInactiveEvent(std::shared_ptr<MarkPlayerAsInactiveEvent> e, RoomOutputProtocol p) {
 	this->playerIsActive[e->getPlayerId() - 1] = false;
 	uint32_t count = 0;
@@ -1135,4 +1125,7 @@ void Room::handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHori
 }
 void Room::handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e, RoomOutputProtocol p) {
     this->element = nullptr;
+}
+void Room::handleRefreshWasHealedStatusEvent(std::shared_ptr<RefreshWasHealedStatusEvent> e, RoomOutputProtocol p) {
+    e->getWarrior()->refreshWasHealedStatus();
 }

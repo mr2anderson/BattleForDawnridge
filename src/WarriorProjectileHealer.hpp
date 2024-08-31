@@ -30,8 +30,11 @@ public:
     WarriorProjectileHealer(uint32_t x, uint32_t y, uint32_t playerId);
 protected:
     virtual std::shared_ptr<Projectile> getProjectile() const = 0;
+    virtual uint32_t getHealingRadius() const = 0;
 private:
+    bool canHeal(std::shared_ptr<Warrior> w) const override;
     Events heal(MapState *state, std::shared_ptr<Warrior> w) override;
+    StringLcl getSpecialInfoString(MapState *state) const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
