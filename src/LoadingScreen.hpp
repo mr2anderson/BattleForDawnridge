@@ -19,6 +19,7 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <unordered_map>
 #include "CouldntOpen.hpp"
 #include "LoadingScreenResponse.hpp"
 
@@ -35,19 +36,7 @@ private:
 	bool alreadyFinished;
 
 	bool loadBase(sf::RenderWindow &window);
-	typedef enum LoadAllBreakpoint {
-		Percent0,
-		Percent10,
-		Percent20,
-		Percent30,
-		Percent40,
-		Percent50,
-		Percent60,
-		Percent70,
-		Percent80,
-		Percent90
-	} LoadAllBreakpoint;
-	void setNormalScreen(sf::RenderWindow& window, LoadAllBreakpoint br);
-	bool loadAll(sf::RenderWindow &window, LoadAllBreakpoint br);
+	void setNormalScreen(sf::RenderWindow& window, uint32_t percent);
+	bool loadAll(sf::RenderWindow &window, uint32_t &percent);
     void loadingError(CouldntOpen *e, sf::RenderWindow &window);
 };

@@ -53,6 +53,7 @@
 #include "Patriarch.hpp"
 #include "PatriarchProjectile.hpp"
 #include "LoadingBar.hpp"
+#include "Timer.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -80,9 +81,17 @@ LoadingScreenResponse LoadingScreen::run(sf::RenderWindow &window) {
     window.setMouseCursorVisible(false);
     SoundQueue::get().push(Sounds::get().get("wardrums"));
 
-    for (uint32_t a = LoadAllBreakpoint::Percent0; a <= LoadAllBreakpoint::Percent90; a++) {
-        this->setNormalScreen(window, LoadAllBreakpoint(a));
-        if (!this->loadAll(window, LoadAllBreakpoint(a))) {
+    sf::Event event;
+
+    uint32_t percent = 0;
+    while (percent != 100) {
+        this->setNormalScreen(window, percent);
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape) {
+                return LoadingScreenResponse(LoadingScreenResponse::TYPE::EXIT);
+            }
+        }
+        if (!this->loadAll(window, percent)) {
             return LoadingScreenResponse(LoadingScreenResponse::TYPE::LOADING_ERROR);
         }
     }
@@ -117,7 +126,7 @@ bool LoadingScreen::loadBase(sf::RenderWindow &window) {
         return false;
     }
 }
-void LoadingScreen::setNormalScreen(sf::RenderWindow& window, LoadAllBreakpoint br) {
+void LoadingScreen::setNormalScreen(sf::RenderWindow& window, uint32_t percent) {
     LoadingScreenBg bg;
 
 	sf::Text t;
@@ -131,38 +140,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window, LoadAllBreakpoint 
 
     LoadingBar b;
     b.setCenter(t.getPosition().x + t.getGlobalBounds().width / 2, t.getPosition().y + 100);
-    switch (br) {
-    case LoadAllBreakpoint::Percent0:
-        b.setValue(0);
-        break;
-    case LoadAllBreakpoint::Percent10:
-        b.setValue(10);
-        break;
-    case LoadAllBreakpoint::Percent20:
-        b.setValue(20);
-        break;
-    case LoadAllBreakpoint::Percent30:
-        b.setValue(30);
-        break;
-    case LoadAllBreakpoint::Percent40:
-        b.setValue(40);
-        break;
-    case LoadAllBreakpoint::Percent50:
-        b.setValue(50);
-        break;
-    case LoadAllBreakpoint::Percent60:
-        b.setValue(60);
-        break;
-    case LoadAllBreakpoint::Percent70:
-        b.setValue(70);
-        break;
-    case LoadAllBreakpoint::Percent80:
-        b.setValue(80);
-        break;
-    case LoadAllBreakpoint::Percent90:
-        b.setValue(90);
-        break;
-    };
+    b.setValue(percent);
 
 	window.clear();
     window.draw(bg);
@@ -171,16 +149,31 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window, LoadAllBreakpoint 
 	window.draw(t);
 	window.display();
 }
-bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
+template<typename T> static void LOAD_WARRIOR_DATA() {
+    for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over" }) {
+        for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
+                for (uint32_t i = 0; i < T().getAnimationNumber(a, d); i = i + 1) {
+                    std::string s = std::to_string(i);
+                    while (s.size() < 4) {
+                        s = ('0' + s);
+                    }
+                    Textures::get().add(T().getBaseTextureName() + " " + a + " " + d + std::to_string(i), "images/warriors/main/" + T().getBaseTextureName() + "/" + a + " " + d + s + ".png");
+                }
+            }
+        }
+}
+bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
     try {
-        if (br == LoadAllBreakpoint::Percent0) {
+        if (percent == 0) {
+            percent = 5;
             IsServerTable::get().load();
             Parameters::get().load();
             IlluminationTableSettings::get().load();
             MainServerPosition::get().load();
             Textures::get().add("bg", "images/backgrounds/bg.jpg");
         }
-        else if (br == LoadAllBreakpoint::Percent10) {
+        else if (percent == 5) {
+            percent = 10;
             Music::get().loadVolume();
             Music::get().add("intro", "music/intro.ogg");
             for (uint32_t i = 0; i < Playlist::SOUNDTRACKS_N; i = i + 1) {
@@ -188,7 +181,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
             }
             Music::get().add("menu", "music/menu.ogg");
         }
-        else if (br == LoadAllBreakpoint::Percent20) {
+        else if (percent == 10) {
+            percent = 15;
             for (const std::string& a :
                 { "axe", "battle", "bell", "christianity", "cross", "destroy", "gear", "hammer", "healer", "heart", "illumination_settings",
                 "infantryman", "kill", "lord", "magick", "music", "new_turn", "priest", "resources", "room_id", "save", "shield", "slow_movement", "sockerer",
@@ -213,13 +207,17 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
                 Textures::get().add(a + "_icon", "images/icons/ui/" + a + "_icon.png");
             }
         }
-        else if (br == LoadAllBreakpoint::Percent30) {
+        else if (percent == 15) {
+            percent = 20;
             for (const std::string& a :
                 { "arable", "barracks", "castle", "gates1", "infirmary", "market", "mine", "quarry", "sawmill",
                 "sockerer_house", "spell_factory", "tower1", "wall1", "warehouse_crystal", "warehouse_food", "warehouse_gold",
                 "warehouse_iron", "warehouse_stone", "warehouse_wood", "workshop" }) {
                 Textures::get().add(a, "images/buildings/main/" + a + ".png");
             }
+        }
+        else if (percent == 20) {
+            percent = 25;
             for (uint32_t i = 1; i <= House::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("house" + std::to_string(i), "images/buildings/main/house/" + std::to_string(i) + ".png");
             }
@@ -229,6 +227,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
             for (const std::string& a : { "none", "horizontal", "vertical", "all" }) {
                 Textures::get().add("road_" + a, "images/buildings/main/road/" + a + ".png");
             }
+        }
+        else if (percent == 25) {
+            percent = 30;
             for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
                 Textures::get().add("fire" + std::to_string(i), "images/buildings/fire/" + std::to_string(i) + ".png");
             }
@@ -239,7 +240,8 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
                 Textures::get().add(a, "images/buildings/side_pointers/" + a + ".png");
             }
         }
-        else if (br == LoadAllBreakpoint::Percent40) {
+        else if (percent == 30) {
+            percent = 35;
             for (const std::string& a : { "forest", "iron", "mountains", "stone", "treasure", "water" }) {
                 Textures::get().add(a, "images/landscape/" + a + ".png");
             }
@@ -249,62 +251,75 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
                 }
             }
         }
-        else if (br == LoadAllBreakpoint::Percent50) {
+        else if (percent == 35) {
+            percent = 40;
             for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("big_arrow" + std::to_string(i), "images/projectiles/big_arrow/" + std::to_string(i) + ".png");
             }
+        }
+        else if (percent == 40) {
+            percent = 45;
             for (uint32_t i = 1; i <= HealerProjectile::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("healer_projectile" + std::to_string(i), "images/projectiles/healer_projectile/" + std::to_string(i) + ".png");
             }
+        }
+        else if (percent == 45) {
+            percent = 50;
             for (uint32_t i = 1; i <= PatriarchProjectile::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("patriarch_projectile" + std::to_string(i), "images/projectiles/patriarch_projectile/" + std::to_string(i) + ".png");
             }
         }
-        else if (br == LoadAllBreakpoint::Percent60) {
+        else if (percent == 50) {
+            percent = 55;
             for (const std::string& a : { "heal", "rage" }) {
                 Textures::get().add(a + "_spell", "images/spells/" + a + "_spell.png");
             }
+        }
+        else if (percent == 55) {
+            percent = 60;
             for (const std::string& a : { "dawn", "morning", "day", "sunset", "night1", "night2" }) {
                 Textures::get().add(a, "images/times_of_day/" + a + ".png");
             }
         }
-        else if (br == LoadAllBreakpoint::Percent70) {
+        else if (percent == 60) {
+            percent = 65;
             for (const std::string& a : { "blue", "green", "purple" }) {
                 for (const std::string& b : { "", "0", "1" }) {
                     Textures::get().add("warrior_" + a + b, "images/warriors/side_pointers/warrior_" + a + b + ".png");
                 }
             }
         }
-        else if (br == LoadAllBreakpoint::Percent80) {
-            for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over" }) {
-                for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
-                    for (std::tuple<std::string, uint32_t> w : {
-                        std::make_tuple("infantryman", Infantryman().getAnimationNumber(a, d)),
-                        std::make_tuple("legioner", Legioner().getAnimationNumber(a, d)),
-                        std::make_tuple("knight", Knight().getAnimationNumber(a, d)),
-                        std::make_tuple("black_knight", BlackKnight().getAnimationNumber(a, d)),
-                        std::make_tuple("healer", Healer().getAnimationNumber(a, d)),
-                        std::make_tuple("patriarch", Patriarch().getAnimationNumber(a, d)),
-                        std::make_tuple("ram", Ram().getAnimationNumber(a, d)),
-                        std::make_tuple("golem", Golem().getAnimationNumber(a, d)) }) {
-                        for (uint32_t i = 0; i < std::get<uint32_t>(w); i = i + 1) {
-                            std::string s = std::to_string(i);
-                            while (s.size() < 4) {
-                                s = ('0' + s);
-                            }
-                            Textures::get().add(std::get<std::string>(w) + " " + a + " " + d + std::to_string(i), "images/warriors/main/" + std::get<std::string>(w) + "/" + a + " " + d + s + ".png");
-                        }
-                    }
-                }
-            }
+        else if (percent == 65) {
+            percent = 70;
+            LOAD_WARRIOR_DATA<Infantryman>();
+            LOAD_WARRIOR_DATA<Legioner>();
         }
-        else if (br == LoadAllBreakpoint::Percent90) {
+        else if (percent == 70) {
+            percent = 75;
+            LOAD_WARRIOR_DATA<Knight>();
+            LOAD_WARRIOR_DATA<BlackKnight>();
+        }
+        else if (percent == 75) {
+            percent = 80;
+            LOAD_WARRIOR_DATA<Healer>();
+            LOAD_WARRIOR_DATA<Patriarch>();
+        }
+        else if (percent == 80) {
+            percent = 85;
+            LOAD_WARRIOR_DATA<Ram>();
+            LOAD_WARRIOR_DATA<Golem>();
+        }
+        else if (percent == 85) {
+            percent = 90;
             for (const std::string& a : { "btc", "hand", "plain", "icon" }) {
                 Textures::get().add(a, "images/" + a + ".png");
             }
             for (const std::string& a : { "tmx_tileset" }) {
                 Textures::get().add(a, "images/" + a + ".jpg");
             }
+        }
+        else if (percent == 90) {
+            percent = 95;
             for (const std::string& a : { "click", "food", "gold", "hooray", "iron",
                                           "regeneration", "stone", "wood", "road", "wind", "water",
                                           "destroy", "sword", "breath", "knight", "fire",
@@ -313,7 +328,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
                                           "ouch_woman_cute", "healer", "vehicle_hit",
                                           "vehicle", "sockerer_house", "roar", "dawn",
                                           "day", "night", "sunset", "ouch_old", "old", "patriarch_heal",
-                                          }) {
+            }) {
                 Sounds::get().add(a, "sounds/" + a + ".ogg");
             }
             for (uint32_t i = 1; i <= Warrior::TOTAL_FOOTSTEPS; i = i + 1) {
@@ -325,6 +340,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, LoadAllBreakpoint br) {
             for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
                 Sounds::get().add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
             }
+        }
+        else if (percent == 95) {
+            percent = 100;
             for (const std::string& a : { "ridge", "lake", "river" }) {
                 Maps::get().add(a, "levels/" + a + ".tmx");
             }

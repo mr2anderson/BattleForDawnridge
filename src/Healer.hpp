@@ -38,13 +38,13 @@ public:
     StringLcl getDescription() const override;
     bool isFlying() const override;
     bool delayBetweenTalkingAnimations() const override;
+    std::string getBaseTextureName() const override;
 private:
     uint32_t getTalkingAnimationsNumberInSet() const override;
     uint32_t getRunningAnimationsNumberInSet() const override;
     uint32_t getBeenHitAnimationsNumberInSet() const override;
     uint32_t getTippingOverAnimationsNumberInSet() const override;
     std::shared_ptr<Projectile> getProjectile() const override;
-    std::string getBaseTextureName() const override;
     uint32_t getMovementPoints() const override;
     uint32_t getPopulation() const override;
 

@@ -29,6 +29,7 @@ public:
 
 	enum TYPE {
 		OK,
+        EXIT,
 		LOADING_ERROR
 	};
 private:

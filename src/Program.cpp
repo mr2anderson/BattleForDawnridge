@@ -47,6 +47,9 @@ void Program::run() {
     case LoadingScreenResponse::TYPE::OK: {
         break;
     }
+    case LoadingScreenResponse::TYPE::EXIT: {
+        return;
+    }
     case LoadingScreenResponse::TYPE::LOADING_ERROR: {
         return;
     }
