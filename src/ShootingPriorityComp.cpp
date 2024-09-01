@@ -27,5 +27,9 @@ bool ShootingPriorityComp::operator()(std::shared_ptr<Unit> u1, std::shared_ptr<
     double k1 = u1->getDefence().getStab();
     double k2 = u2->getDefence().getStab();
 
+    if (k1 == k2) {
+        return (u1->getHP() < u2->getHP());
+    }
+
     return (k1 < k2); // Selecting units with the highest resistance (this is not bug)
 }
