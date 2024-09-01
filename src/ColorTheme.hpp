@@ -17,13 +17,45 @@
  */
 
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <cstdint>
 
 
 #pragma once
 
 
 namespace COLOR_THEME {
-    extern const sf::Color UI_COLOR_TRANSPARENT;
-    extern const sf::Color UI_COLOR_DEFAULT;
+    static const sf::Color UI_COLOR_TRANSPARENT = sf::Color(1, 0, 3, 75);
+
+
+
+
+    static const sf::Color STATE_COLOR_WORST = sf::Color(255, 0, 154);
+    static const sf::Color STATE_COLOR_BEST = sf::Color(0, 255, 154);
+    static const sf::Color STATE_COLOR_NEUTRAL = STATE_COLOR_BEST;
+
+    template<typename T> static sf::Color STATE_COLOR(T a, T b) {
+        if (a >= b) {
+            return STATE_COLOR_BEST;
+        }
+        uint32_t red = 255 - 255 * a / b;
+        uint32_t green = 255 * a / b;
+        uint32_t blue = 154;
+        return sf::Color(red, green, blue);
+    }
+
+    template<typename T> static sf::Color STATE_COLOR_REV(T current, T minBest, T maxWorst) {
+        if (current <= minBest) {
+            return STATE_COLOR_BEST;
+        }
+        if (current >= maxWorst) {
+            return STATE_COLOR_WORST;
+        }
+        uint32_t dstToMin = current - minBest;
+        uint32_t dstToMax = maxWorst - current;
+        uint32_t red = 255 - 255 * dstToMax / dstToMin;
+        uint32_t green = 255 * dstToMax / dstToMin;
+        uint32_t blue = 154;
+        return sf::Color(red, green, blue);
+    }
 }

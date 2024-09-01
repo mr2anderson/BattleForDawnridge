@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <string>
 #include <boost/serialization/access.hpp>
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -33,21 +34,22 @@ public:
 	bool operator==(const RoomID& b) const;
 	bool operator!=(const RoomID& b) const;
 
-	std::string value() const;
+	StringLcl string() const;
+    std::string key() const;
 
     static const uint32_t READABLE_LEN;
 private:
-	std::string _value;
+	std::string _key;
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-		ar & this->_value;
+		ar & this->_key;
 	}
 };
 
 
 template <> struct std::hash<RoomID> {
 	std::size_t operator()(const RoomID& k) const {
-		return std::hash<std::string>{}(k.value());
+		return std::hash<std::string>{}(k.key());
 	}
 };

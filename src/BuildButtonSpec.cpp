@@ -45,6 +45,7 @@
 #include "SpellFactory.hpp"
 #include "Castle.hpp"
 #include "SockererHouse.hpp"
+#include "ColorTheme.hpp"
 
 
 BuildButtonSpec::BuildButtonSpec() = default;
@@ -65,7 +66,7 @@ template<typename T> StringLcl GET_BUILD_DESCRIPTION() {
 	std::unique_ptr<T> t = std::make_unique<T>();
 	StringLcl description = t->getDescription() + '\n' +
 		StringLcl("{cost}") + t->getCost().getReadableInfo() + "\n" + 
-		StringLcl("{hp}") + std::to_string(t->getMaxHP()) + StringLcl(" ") + t->getDefence().getReadable() + StringLcl(". {building_speed}") + std::to_string(t->getRegenerationSpeed());
+		StringLcl("{hp}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(t->getMaxHP()) + StringLcl(" ") + t->getDefence().getReadable() + StringLcl(". {building_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(t->getRegenerationSpeed());
 	return description;
 }
 template<typename T> HorizontalSelectionWindowComponent GET_BUILD_COMPONENT() {

@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <string>
 #include <boost/multiprecision/cpp_int.hpp>
+#include "StringLcl.hpp"
 
 
 #pragma once
@@ -37,7 +38,7 @@ public:
     bool operator<(const UUID &b) const;
     bool operator>(const UUID &b) const;
     std::size_t operator()() const;
-    std::string toString() const;
+    StringLcl toString() const;
     uint128_t value() const;
 private:
     uint128_t a;

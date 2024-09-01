@@ -28,6 +28,7 @@
 #include "SubHpEvent.hpp"
 
 #include "PlaySoundEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 Events IConductionResourcePointCollectorSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>  building, MapState* state) {
@@ -90,12 +91,12 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IConductionResourcePoint
 			s = StringLcl("{no_conducted_resource_points}");
 		}
 		else {
-			s = StringLcl("{conducted_resource_points_number}") + StringLcl(std::to_string(n));
+			s = StringLcl("{conducted_resource_points_number}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(n));
 		}
 
 		component = {
 			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
-            StringLcl("{this_building_collects_resources_from_conducted_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())) + StringLcl(". ") + s,
+            StringLcl("{this_building_collects_resources_from_conducted_resource_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(this->getCollectionSpeed())) + StringLcl(". ") + s,
 			false,
 			Events()),
             true

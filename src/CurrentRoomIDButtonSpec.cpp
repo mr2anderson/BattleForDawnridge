@@ -25,14 +25,14 @@ CurrentRoomIDButtonSpec::CurrentRoomIDButtonSpec() = default;
 CurrentRoomIDButtonSpec::CurrentRoomIDButtonSpec(uint32_t index) : MainScreenButtonSpec(index) {
 
 }
-CurrentRoomIDButtonSpec::CurrentRoomIDButtonSpec(uint32_t index, const std::string& value) : MainScreenButtonSpec(index) {
-	this->value = value;
+CurrentRoomIDButtonSpec::CurrentRoomIDButtonSpec(uint32_t index, const RoomID &id) : MainScreenButtonSpec(index) {
+	this->id = id;
 }
 std::string CurrentRoomIDButtonSpec::getTextureName() const {
 	return "room_id_icon";
 }
 StringLcl CurrentRoomIDButtonSpec::getString() const {
-	return { "{room} " + this->value };
+	return { StringLcl("{room} ") + this->id.string() };
 }
 Events CurrentRoomIDButtonSpec::getEvents() const {
 	Events events;

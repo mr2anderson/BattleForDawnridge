@@ -25,10 +25,9 @@
 
 
 Label::Label() = default;
-Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center, bool colorDigits) : RectangularUiElement(x, y, w, h) {
+Label::Label(int32_t x, int32_t y, uint32_t w, uint32_t h, const StringLcl &str, bool center) : RectangularUiElement(x, y, w, h) {
 	this->message = str;
 	this->center = center;
-	this->colorDigits = colorDigits;
 }
 static sf::String WRAP_TEXT(sf::String string, unsigned width, const sf::Font* font, unsigned charicterSize) {
 	unsigned currentOffset = 0;
@@ -60,42 +59,34 @@ static sf::String WRAP_TEXT(sf::String string, unsigned width, const sf::Font* f
 
 	return string;
 }
-static uint32_t TO_NORMAL_INDEX(uint32_t lines, int32_t smartIndex) {
-	if (smartIndex >= 0) {
-		return smartIndex;
-	}
-	return lines + smartIndex;
-}
-static bool SHOULD_BE_COLORED(const std::wstring& word) {
-	return std::find_if(word.begin(), word.end(), ::isdigit) != word.end();
-}
 void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     this->RectangularUiElement::draw(target, states);
 	
 	sfe::RichText text;
 	text.setCharacterSize(12);
 	text.setFont(*Fonts::get().get("1"));
-
 	text << sf::Text::Regular;
-	std::wstring string = WRAP_TEXT(this->message.get(), this->getW() - 10, text.getFont(), text.getCharacterSize()).toWideString();
-	std::wstringstream lineSS(string);
-	std::wstring line;
-	uint32_t lineNumber = 0;
-	while (std::getline(lineSS, line, L'\n')) {
-		std::wstringstream wordSS(line);
-		std::wstring word;
-		while (wordSS >> word) {
-			if (this->colorDigits and SHOULD_BE_COLORED(word)) {
-				text << sf::Color(0, 250, 154);
-			}
-			else {
-				text << sf::Color::White;
-			}
-			text << word;
-			text << L' ';
-		}
-		text << L'\n';
-	}
+    std::wstring string = WRAP_TEXT(this->message.getNoColor(), this->getW() - 10, text.getFont(), text.getCharacterSize()).toWideString();
+    std::wstringstream lineSS(string);
+    std::wstring line;
+    uint32_t ctr = 0;
+    std::unordered_map<uint32_t, sf::Color> colors = this->message.getColors();
+    while (std::getline(lineSS, line, L'\n')) {
+        std::wstringstream wordSS(line);
+        std::wstring word;
+        while (wordSS >> word) {
+            if (colors.find(ctr) != colors.end()) {
+                text << colors[ctr];
+            }
+            else {
+                text << sf::Color::White;
+            }
+            text << word;
+            text << L' ';
+            ctr = ctr + 1;
+        }
+        text << L'\n';
+    }
 
 	if (this->center) {
 		text.setPosition(this->getX() + this->getW() / 2, this->getY() + 5);

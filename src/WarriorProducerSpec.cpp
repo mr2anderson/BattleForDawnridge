@@ -33,6 +33,7 @@
 #include "SubResourcesEvent.hpp"
 #include "StartWarriorProducingEvent.hpp"
 #include "HighlightColors.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorProducerSpec::WarriorProducerSpec() {
@@ -126,7 +127,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 		if (this->producing) {
 			StringLcl text;
 			if (this->currentProducingMovesLeft > 0) {
-				text = StringLcl("{producing_in_progress}" + std::to_string(this->currentProducingMovesLeft));
+				text = StringLcl("{producing_in_progress}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->currentProducingMovesLeft);
 			}
 			else {
 				text = StringLcl("{couldnt_place_warrior}");
@@ -185,12 +186,12 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this->getThis<WarriorProducerSpec>(), w));
 				}
 
-				components.emplace_back(
-					HorizontalSelectionWindowComponent(w->getTextureName(),
-                    w->getDescription() + StringLcl("\n") +
-                    StringLcl("{hp}") + StringLcl(std::to_string(w->getMaxHP())) + StringLcl(" ") + w->getDefence().getReadable() + StringLcl("\n") +
-                    w->getSpecialInfoString(state) + StringLcl("\n") +
-                    StringLcl("{population}") + StringLcl(std::to_string(w->getPopulation())) + StringLcl(". ") + StringLcl("{cost}") + w->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_produce}") + StringLcl(std::to_string(w->getTimeToProduce())),
+                components.emplace_back(
+                        HorizontalSelectionWindowComponent(w->getTextureName(),
+                w->getDescription() + StringLcl("\n") +
+                StringLcl("{hp}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + StringLcl(std::to_string(w->getMaxHP())) + StringLcl(" ") + w->getDefence().getReadable() + StringLcl("\n") +
+                w->getSpecialInfoString(state) + StringLcl("\n") +
+                StringLcl("{population}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(w->getPopulation())) + StringLcl(". ") + StringLcl("{cost}") + w->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_produce}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(w->getTimeToProduce())),
 					true,
 					produceEvent),
                     false

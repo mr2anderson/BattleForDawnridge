@@ -235,7 +235,7 @@ void MainScreen::processReceiving() {
 
 sf::Packet MainScreen::makeBasePacket() const {
     sf::Packet packet;
-    packet << this->roomID.value();
+    packet << this->roomID.key();
     return packet;
 }
 void MainScreen::send(sf::Packet &what) {
@@ -318,7 +318,7 @@ void MainScreen::receive() {
 	sf::Packet receivedPacket = std::get<sf::Packet>(this->received);
     std::string id;
     receivedPacket >> id;
-    if (this->roomID.value() == id) {
+    if (this->roomID.key() == id) {
         uint8_t code;
         receivedPacket >> code;
 

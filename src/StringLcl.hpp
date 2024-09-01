@@ -19,6 +19,8 @@
 
 #include <string>
 #include <boost/serialization/access.hpp>
+#include <unordered_map>
+#include <SFML/Graphics/Color.hpp>
 #include "ArchiveType.hpp"
 
 
@@ -30,7 +32,9 @@ public:
 	StringLcl();
 	StringLcl(const std::string& data);
 
-	std::wstring get() const;
+	std::unordered_map<uint32_t, sf::Color> getColors() const;
+    std::wstring getNoColor() const;
+
 	std::string toRawString() const;
 
 	StringLcl operator+(const StringLcl& b) const;
@@ -38,11 +42,16 @@ public:
 	StringLcl operator+(char c) const;
 
 	void clear();
+
+    static StringLcl COLOR(uint32_t r, uint32_t g, uint32_t b);
+    static StringLcl COLOR(sf::Color c);
 private:
 	std::string data;
 
 	friend class boost::serialization::access;
 	template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-		ar& this->data;
+		ar & this->data;
 	}
+
+    std::wstring toWstring() const;
 };

@@ -17,7 +17,6 @@
  */
 
 
-#include <limits>
 #include "Warrior.hpp"
 #include "SelectEvent.hpp"
 #include "SetHighlightEvent.hpp"
@@ -48,6 +47,7 @@
 #include "IAreaControllerSpec.hpp"
 #include "PlaySoundEvent.hpp"
 #include "RefreshWasHealedStatusEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -355,17 +355,17 @@ StringLcl Warrior::getDetailedDescription(MapState *state) const {
         timeBonus = StringLcl("{negative}");
     }
     if (timeBonusVal >= 0) {
-        timeBonus = timeBonus + " +" + std::to_string(timeBonusVal) + "%";
+        timeBonus = timeBonus + " " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + "+" + std::to_string(timeBonusVal) + "%";
     }
     else {
-        timeBonus = timeBonus + " " + std::to_string(timeBonusVal) + "%";
+        timeBonus = timeBonus + " " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_WORST) + std::to_string(timeBonusVal) + "%";
     }
     StringLcl result = this->Unit::getDetailedDescription(state) + "\n" +
-                       StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + "\n" +
-                       StringLcl("{max_movement_points}") + std::to_string(this->getMovementPoints()) + "\n\n" +
+                       StringLcl("{movement_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->movementPoints.value_or(this->getMovementPoints()), this->getMovementPoints())) + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + "\n" +
+                       StringLcl("{max_movement_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(this->getMovementPoints()) + "\n\n" +
                        timeBonus + "\n\n";
     if (this->inRage()) {
-        result = result + StringLcl("{in_rage}" + std::to_string(this->rageModeMovesLeft)) + "\n\n";
+        result = result + StringLcl("{in_rage}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->rageModeMovesLeft) + "\n\n";
     }
     result = result + this->getSpecialInfoString(state) + "\n";
     return result;
@@ -567,7 +567,7 @@ HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
           "rage_spell",
         StringLcl("{rage_spell_description}") + "\n" +
-        StringLcl("{moves_left}") + std::to_string(this->rageModeMovesLeft),
+        StringLcl("{moves_left}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->rageModeMovesLeft),
         false,
         Events()
     };
@@ -667,10 +667,10 @@ HorizontalSelectionWindowComponent Warrior::getRevertKillComponent() {
 HorizontalSelectionWindowComponent Warrior::getWarriorInfoComponent(MapState *state) const {
     return {
           "helmet_icon",
-        StringLcl("{hp}") + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " " + this->getDefence().getReadable() + "\n" +
+        StringLcl("{hp}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->getHP(), this->getMaxHP())) + std::to_string(this->getHP()) + " / " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(this->getMaxHP()) + " " + this->getDefence().getReadable() + "\n" +
         this->getSpecialInfoString(state) + "\n" +
-        StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + std::to_string(this->getMovementPoints()) + "\n" +
-        StringLcl("{population}") + std::to_string(this->getPopulation()),
+        StringLcl("{movement_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->movementPoints.value_or(this->getMovementPoints()), this->getMovementPoints())) + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + " / " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(this->getMovementPoints()) + "\n" +
+        StringLcl("{population}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getPopulation()),
         false,
         Events()
     };

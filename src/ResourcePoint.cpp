@@ -22,7 +22,7 @@
 #include "WarriorHPPointer.hpp"
 #include "Parameters.hpp"
 #include "Warrior.hpp"
-
+#include "ColorTheme.hpp"
 #include "PlaySoundEvent.hpp"
 
 
@@ -45,7 +45,7 @@ uint32_t ResourcePoint::getWarriorMovementCost(std::shared_ptr<Warrior> w) const
 }
 StringLcl ResourcePoint::getDetailedDescription(MapState *state) const {
     return GO::getDetailedDescription(state) + "\n" +
-            StringLcl("{left}") + std::to_string(this->getHP()) + "\n";
+            StringLcl("{left}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->getHP(), this->getMaxHP())) + std::to_string(this->getHP()) + "\n";
 }
 Events ResourcePoint::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist() or button == sf::Mouse::Button::Right) {
@@ -71,7 +71,7 @@ Events ResourcePoint::getSelectionWindow() {
 HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		this->getResourceType() + "_icon",
-        StringLcl("{left}") + std::to_string(this->getHP()),
+        StringLcl("{left}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->getHP(), this->getMaxHP())) + std::to_string(this->getHP()),
 		false,
 		Events()
 	};
@@ -80,7 +80,7 @@ HorizontalSelectionWindowComponent ResourcePoint::getResourceLeftComponent() con
 HorizontalSelectionWindowComponent ResourcePoint::getSlowMovementComponent() const {
 	HorizontalSelectionWindowComponent component = {
 		  "slow_movement_icon",
-		StringLcl("{slow_movement}") + std::to_string(this->getWalkingWarriorMovementCost()),
+		StringLcl("{slow_movement}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_WORST) + std::to_string(this->getWalkingWarriorMovementCost()),
 		false,
 		Events()
 	};

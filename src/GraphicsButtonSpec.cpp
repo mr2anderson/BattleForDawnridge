@@ -27,6 +27,7 @@
 #include "TurnOffIlluminationEvent.hpp"
 #include "ChangeIlluminationBrightnessEvent.hpp"
 #include "EntryNumSettings.hpp"
+#include "ColorTheme.hpp"
 
 
 GraphicsButtonSpec::GraphicsButtonSpec() : GraphicsButtonSpec(1) {
@@ -150,7 +151,7 @@ HorizontalSelectionWindowComponent GraphicsButtonSpec::getSwitchIlluminationBrig
 
 	return {
 		"illumination_settings_icon",
-		StringLcl("{change_brightness}" + std::to_string(this->illuminationBrightness)),
+		StringLcl("{change_brightness}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->illuminationBrightness),
 		true,
 		result
 	};

@@ -18,7 +18,7 @@
 
 
 #include "Unit.hpp"
-
+#include "ColorTheme.hpp"
 
 
 Unit::Unit() = default;
@@ -47,8 +47,8 @@ uint32_t Unit::getPlayerId() const {
 }
 StringLcl Unit::getDetailedDescription(MapState *state) const {
     return GO::getDetailedDescription(state) + "\n" +
-    StringLcl("{hp}") + std::to_string(this->getHP()) + "\n" +
-    StringLcl("{max_hp}") + std::to_string(this->getMaxHP()) + "\n" +
+    StringLcl("{hp}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->getHP(), this->getMaxHP())) + std::to_string(this->getHP()) + "\n" +
+    StringLcl("{max_hp}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(this->getMaxHP()) + "\n" +
     this->getDefence().getReadable() + "\n";
 }
 std::shared_ptr<ILightSource> Unit::getLightSource() const {

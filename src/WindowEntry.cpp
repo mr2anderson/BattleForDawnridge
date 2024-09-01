@@ -74,7 +74,7 @@ Label WindowEntry::getLabel(uint32_t windowW, uint32_t windowH) const {
             currentMessage = currentMessage + *this->dst;
         }
     }
-    Label label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, currentMessage, true, false);
+    Label label((windowW - this->w) / 2, (windowH - this->h) / 2, this->w, this->h, currentMessage, true);
     return label;
 }
 

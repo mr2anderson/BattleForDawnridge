@@ -27,6 +27,7 @@
 #include "SetSpellEvent.hpp"
 #include "UseSpellEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 SpellProducerSpec::SpellProducerSpec() {
@@ -69,7 +70,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> SpellProducerSpec::getCo
 				components.emplace_back(
 					HorizontalSelectionWindowComponent(spell->getTextureName(),
                     spell->getDescription() + StringLcl("\n") +
-                    StringLcl("{cost}") + spell->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_make_spell}") + StringLcl(std::to_string(spell->getCreationTime())),
+                    StringLcl("{cost}") + spell->getCost().getReadableInfo() + StringLcl(". ") + StringLcl("{time_to_make_spell}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(spell->getCreationTime())),
 					true,
 					event),
                     false

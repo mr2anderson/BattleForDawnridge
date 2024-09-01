@@ -18,6 +18,7 @@
 
 
 #include "MainScreenButtonSpec.hpp"
+#include "RoomID.hpp"
 
 
 #pragma once
@@ -27,9 +28,9 @@ class CurrentRoomIDButtonSpec : public MainScreenButtonSpec {
 public:
 	CurrentRoomIDButtonSpec();
 	CurrentRoomIDButtonSpec(uint32_t index);
-	CurrentRoomIDButtonSpec(uint32_t index, const std::string& value);
+	CurrentRoomIDButtonSpec(uint32_t index, const RoomID &id);
 private:
-	std::string value;
+	RoomID id;
 
 	std::string getTextureName() const override;
 	StringLcl getString() const override;

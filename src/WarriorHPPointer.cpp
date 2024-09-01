@@ -20,6 +20,7 @@
 
 #include "WarriorHPPointer.hpp"
 #include "Textures.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorHPPointer::WarriorHPPointer() = default;
@@ -34,9 +35,10 @@ WarriorHPPointer::WarriorHPPointer(float xInPixels, float yInPixels, uint32_t sx
     this->max = maxHP;
 }
 void WarriorHPPointer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	uint32_t red = 255 - 255 * this->current / this->max;
-	uint32_t green = 255 * this->current / this->max;
-	uint32_t blue = 0;
+    sf::Color color = COLOR_THEME::STATE_COLOR(this->current, this->max);
+	uint32_t red = color.r;
+	uint32_t green = color.g;
+	uint32_t blue = color.b;
 
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get().get("heart_icon"));

@@ -19,6 +19,7 @@
 
 #include "Resource.hpp"
 #include "Locales.hpp"
+#include "ColorTheme.hpp"
 
 
 Resource::Resource() = default;
@@ -33,7 +34,7 @@ StringLcl Resource::getReadableInfo() const {
 	}
 
 	result = result + StringLcl("{" + this->type + "_number} ");
-	result = result + StringLcl(std::to_string(this->n));
+	result = result + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(this->n));
 
 	return result;
 }

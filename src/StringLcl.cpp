@@ -18,49 +18,73 @@
 
 
 #include <iostream>
+#include <sstream>
 #include "StringLcl.hpp"
 #include "Locales.hpp"
 #include "UTFEncoder.hpp"
-
 
 
 StringLcl::StringLcl() = default;
 StringLcl::StringLcl(const std::string& data) {
 	this->data = data;
 }
-std::wstring StringLcl::get() const {
-	try {
-		std::wstring result;
-
-		std::string buff;
-		bool isLocaleKey = false;
-		for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
-			if (this->data.at(i) == '{') {
-				result = result + UTFEncoder::get().utf8ToUtf16(buff);
-				buff.clear();
-				isLocaleKey = true;
-				continue;
-			}
-			if (this->data.at(i) == '}') {
-				isLocaleKey = false;
-				result = result + *Locales::get().get(buff);
-				buff.clear();
-				continue;
-			}
-			buff = buff + this->data.at(i);
-		}
-		result = result + UTFEncoder::get().utf8ToUtf16(buff);
-		return result;
-	}
-	catch (std::exception&) {
-		std::cout << "Invalid string lcl format: " << this->data << std::endl;
-		try {
-			return UTFEncoder::get().utf8ToUtf16(this->data);
-		}
-		catch (std::exception&) {
-			return UTFEncoder::get().utf8ToUtf16("COULDNT_FORMAT_STRING_LCL_CONTENT_REPORT_DEVELOPER");
-		}
-	}
+std::unordered_map<uint32_t, sf::Color> StringLcl::getColors() const {
+    try {
+        std::unordered_map<uint32_t, sf::Color> result;
+        std::wstringstream ss(this->toWstring());
+        std::wstring line;
+        sf::Color currentColor = sf::Color::White;
+        uint32_t ctr = 0;
+        while (std::getline(ss, line, L'\n')) {
+            std::wstringstream wordSS(line);
+            std::wstring word;
+            while (wordSS >> word) {
+                if (word == L"[c]") {
+                    std::wstring r, g, b;
+                    wordSS >> r >> g >> b;
+                    currentColor = sf::Color(std::stoi(r), std::stoi(g), std::stoi(b));
+                }
+                else {
+                    if (currentColor != sf::Color::White) {
+                        result[ctr] = currentColor;
+                        currentColor = sf::Color::White;
+                    }
+                    ctr = ctr + 1;
+                }
+            }
+        }
+        return result;
+    }
+    catch (std::exception&) {
+        std::cout << "Invalid string lcl format: " << this->data << std::endl;
+        return {};
+    }
+}
+std::wstring StringLcl::getNoColor() const {
+    try {
+        std::wstring result;
+        std::wstringstream ss(this->toWstring());
+        std::wstring line;
+        while (std::getline(ss, line, L'\n')) {
+            std::wstringstream wordSS(line);
+            std::wstring word;
+            while (wordSS >> word) {
+                if (word == L"[c]") {
+                    std::wstring trash;
+                    wordSS >> trash >> trash >> trash;
+                }
+                else {
+                    result = result + word + L' ';
+                }
+            }
+            result = result + L'\n';
+        }
+        return result;
+    }
+    catch (std::exception&) {
+        std::cout << "Invalid string lcl format: " << this->data << std::endl;
+        return L"COULDNT'T CONVERT STRING LCL FORMAT REPORT DEVELOPER";
+    }
 }
 std::string StringLcl::toRawString() const {
 	return this->data;
@@ -78,4 +102,39 @@ StringLcl StringLcl::operator+(char c) const {
 }
 void StringLcl::clear() {
 	this->data.clear();
+}
+std::wstring StringLcl::toWstring() const {
+    std::wstring result;
+
+    std::string buff;
+    for (uint32_t i = 0; i < this->data.size(); i = i + 1) {
+        if (this->data.at(i) == '{') {
+            result = result + UTFEncoder::get().utf8ToUtf16(buff);
+            buff.clear();
+            continue;
+        }
+        if (this->data.at(i) == '}') {;
+            result = result + *Locales::get().get(buff);
+            buff.clear();
+            continue;
+        }
+        buff = buff + this->data.at(i);
+    }
+    result = result + UTFEncoder::get().utf8ToUtf16(buff);
+
+    return result;
+}
+StringLcl StringLcl::COLOR(uint32_t r, uint32_t g, uint32_t b) {
+    StringLcl s("[c]");
+    s = s + " ";
+    s = s + std::to_string(r);
+    s = s + " ";
+    s = s + std::to_string(g);
+    s = s + " ";
+    s = s + std::to_string(b);
+    s = s + " ";
+    return s;
+}
+StringLcl StringLcl::COLOR(sf::Color c) {
+    return COLOR(c.r, c.g, c.b);
 }

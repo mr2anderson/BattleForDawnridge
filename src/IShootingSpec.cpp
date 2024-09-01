@@ -27,6 +27,7 @@
 #include "CreateEEvent.hpp"
 #include "FocusOnEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 Events IShootingSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> b, MapState *state) {
@@ -92,7 +93,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IShootingSpec::getCompon
 
     if (b->wasWithFullHP()) {
         component = {HorizontalSelectionWindowComponent(this->getProjectile()->getTextureName(),
-                                                       StringLcl("{this_building_shoots_to_enemies}") + this->getDamage().getReadable() + " x " + std::to_string(this->getShotsNumber()),
+                                                       StringLcl("{this_building_shoots_to_enemies}") + this->getDamage().getReadable() + " x " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getShotsNumber()),
                                                        false,
                                                        Events()),
                 true};

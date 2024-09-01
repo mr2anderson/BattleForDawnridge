@@ -56,7 +56,7 @@ ServerRoom::Status ServerRoom::update(std::vector<StringLcl> *toLogs) {
     for (auto &connection : this->connections) {
         connection.second.update();
         if (connection.second.hasError()) {
-            toLogs->emplace_back("{connection_erased_reason_disconnect}" + connection.second.getUUID().toString());
+            toLogs->emplace_back(StringLcl("{connection_erased_reason_disconnect}") + connection.second.getUUID().toString());
             toDelete.push_back(connection.first);
         }
     }
@@ -64,7 +64,7 @@ ServerRoom::Status ServerRoom::update(std::vector<StringLcl> *toLogs) {
         connections.erase(a);
     }
     if (this->connections.empty()) {
-        toLogs->emplace_back("{room_will_be_removed_reason_no_connected_players}" + room->getID().value());
+        toLogs->emplace_back(StringLcl("{room_will_be_removed_reason_no_connected_players}") + room->getID().string());
         return Status::DeleteMe;
     }
 
@@ -102,16 +102,16 @@ ServerRoom::Status ServerRoom::update(boost::optional<std::tuple<sf::Packet, UUI
         p.logs = &logs;
         room->update(received, p);
         for (const auto &s : logs) {
-            originalLogsPtr->emplace_back("{room} " + this->room->getID().value() + " " + s.toRawString());
+            originalLogsPtr->emplace_back(StringLcl("{room} ") + this->room->getID().string() + " " + s);
         }
         return Status::OK;
     }
     catch (NoActivePlayers&) {
-        p.logs->emplace_back("{room_will_be_removed_reason_no_active_players}" + room->getID().value());
+        p.logs->emplace_back(StringLcl("{room_will_be_removed_reason_no_active_players}") + room->getID().string());
         return Status::DeleteMe;
     }
     catch (std::exception& e) {
-        p.logs->emplace_back("{room_will_be_removed_reason_unknown_error}" + room->getID().value() + " " + std::string(e.what()));
+        p.logs->emplace_back(StringLcl("{room_will_be_removed_reason_unknown_error}") + room->getID().string() + " " + std::string(e.what()));
         return Status::DeleteMe;
     }
 }

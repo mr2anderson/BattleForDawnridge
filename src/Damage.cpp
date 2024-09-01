@@ -19,6 +19,7 @@
 
 #include "Damage.hpp"
 #include "Locales.hpp"
+#include "ColorTheme.hpp"
 
 
 Damage::Damage() = default;
@@ -52,7 +53,7 @@ uint32_t Damage::getPoints() const {
 }
 StringLcl Damage::getReadable() const {
 	StringLcl result = this->getTypeReadable() + " ";
-	result = result + StringLcl(std::to_string(this->points));
+	result = result + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(this->points));
 	return result;
 }
 StringLcl Damage::getTypeReadable() const {

@@ -29,6 +29,7 @@
 #include "HighlightColors.hpp"
 
 #include "PlaySoundEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 Events IAreaResourcePointCollectorSpec::getActiveNewMoveEvent(std::shared_ptr<const Building> building, MapState* state) {
@@ -85,7 +86,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IAreaResourcePointCollec
 	if (building->works()) {
 		components.emplace_back(
 			HorizontalSelectionWindowComponent(this->getResourceType() + "_icon",
-            StringLcl("{this_building_collects_resources_from_resource_points}") + StringLcl(std::to_string(this->getCollectionSpeed())),
+            StringLcl("{this_building_collects_resources_from_resource_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(this->getCollectionSpeed())),
 			false,
 			Events()),
             true

@@ -28,5 +28,5 @@ MainScreenButtonSpec::MainScreenButtonSpec(uint32_t index) {
 	this->index = index;
 }
 std::shared_ptr<RectangularUiElement> MainScreenButtonSpec::getBase() const {
-	return std::make_shared<LabelWithImage>(5, 40 + this->index * (64 + 10), 200, 64, this->getTextureName(), this->getString(), boost::none, false);
+	return std::make_shared<LabelWithImage>(5, 40 + this->index * (64 + 10), 200, 64, this->getTextureName(), this->getString(), boost::none);
 }

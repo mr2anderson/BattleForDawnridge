@@ -20,7 +20,7 @@
 #include "IPopulationLimitIncreaserSpec.hpp"
 #include "Building.hpp"
 #include "Locales.hpp"
-
+#include "ColorTheme.hpp"
 
 
 std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncreaserSpec::getComponents(std::shared_ptr<const Building>  building, MapState* state) {
@@ -29,7 +29,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IPopulationLimitIncrease
 	if (building->wasWithFullHP()) {
 		component = {
 			HorizontalSelectionWindowComponent(  "helmet_icon",
-            StringLcl("{this_building_increases_population_limit}") + std::to_string(this->getPopulationLimit(building)),
+            StringLcl("{this_building_increases_population_limit}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getPopulationLimit(building)),
 			false,
 			Events()),
             true

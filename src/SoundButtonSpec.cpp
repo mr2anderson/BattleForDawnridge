@@ -26,6 +26,7 @@
 #include "ChangeSoundVolumeEvent.hpp"
 #include "ChangeMusicVolumeEvent.hpp"
 #include "EntryNumSettings.hpp"
+#include "ColorTheme.hpp"
 
 
 SoundButtonSpec::SoundButtonSpec() : SoundButtonSpec(0) {
@@ -76,13 +77,13 @@ Events SoundButtonSpec::getEvents() const {
     );
     soundWindowComponents.emplace_back(
         "sound_icon",
-        StringLcl("{current_sound_volume}" + std::to_string(this->currentSoundVolume) + "%. {you_can_change_it_if_you_want}"),
+        StringLcl("{current_sound_volume}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->currentSoundVolume) + "%. {you_can_change_it_if_you_want}",
         true,
         createSoundVolumeWindowEvent
     );
     soundWindowComponents.emplace_back(
         "music_icon",
-        StringLcl("{current_music_volume}" + std::to_string(this->currentMusicVolume) + "%. {you_can_change_it_if_you_want}"),
+        StringLcl("{current_music_volume}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->currentMusicVolume) + "%. {you_can_change_it_if_you_want}",
         true,
         createMusicVolumeWindowEvent
     );

@@ -21,6 +21,7 @@
 #include "RefreshAttackAbilityEvent.hpp"
 #include "WipeAttackAbilityEvent.hpp"
 #include "Locales.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorNearSingleAttacker::WarriorNearSingleAttacker() {
@@ -62,7 +63,7 @@ void WarriorNearSingleAttacker::wipeAbility() {
 }
 StringLcl WarriorNearSingleAttacker::getSpecialInfoString(MapState *state) const {
     StringLcl str =
-            StringLcl("{damage}") + this->getDamage(state).getTypeReadable() + " " + std::to_string(this->getMinDamagePoints(state)) + "-" + std::to_string(this->getMaxDamagePoints(state)) + ". " +
+            StringLcl("{damage}") + this->getDamage(state).getTypeReadable() + " " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getMinDamagePoints(state)) + "-" + std::to_string(this->getMaxDamagePoints(state)) + ". " +
             StringLcl("{single_attack}") + ". ";
 
     if (this->attackAbility) {

@@ -48,7 +48,7 @@ void Logs::add(const StringLcl &lcl) {
 	StringLcl str = time + " ";
 	str = str + lcl;
 
-	this->file << UTFEncoder::get().utf16ToUtf8(str.get() + L"\n");
+	this->file << UTFEncoder::get().utf16ToUtf8(str.getNoColor() + L"\n");
 
 	this->content.push_back(str);
 	while (this->content.size() > this->limit) {
@@ -61,5 +61,5 @@ void Logs::add(const StringLcl &lcl) {
 	}
 }
 Label Logs::toLabel(uint32_t windowW, uint32_t windowH) const {
-	return Label(10, 10, windowW - 20, windowH - 20, this->contentCached, true, false);
+	return Label(10, 10, windowW - 20, windowH - 20, this->contentCached, true);
 }

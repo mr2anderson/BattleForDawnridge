@@ -43,7 +43,7 @@ void ResourceBar::drawEverything(sf::RenderTarget& target, sf::RenderStates stat
 	sf::RectangleShape rect;
 	rect.setPosition(sf::Vector2f(5, 5));
 	rect.setSize(sf::Vector2f(target.getSize().x - 15 - 200, 26));
-	rect.setFillColor(COLOR_THEME::UI_COLOR_DEFAULT);
+	rect.setFillColor(COLOR_THEME::UI_COLOR_TRANSPARENT);
 	rect.setOutlineColor(sf::Color::Black);
 	rect.setOutlineThickness(2);
 	target.draw(rect, states);

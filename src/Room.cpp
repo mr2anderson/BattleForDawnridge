@@ -72,7 +72,7 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->buttons.emplace_back(EndTurnButtonSpec(2));
 	this->buttons.emplace_back(BuildButtonSpec(3));
-	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id.value()));
+	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id));
 }
 
 
@@ -572,7 +572,7 @@ void Room::sendSaveToClient(UUID id, RoomOutputProtocol p) {
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
 
-    p.logs->emplace_back("{sending_save_to}" + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+    p.logs->push_back(StringLcl("{sending_save_to}") + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClient(packet, p.toSend, id);
 }
@@ -580,7 +580,7 @@ void Room::sendNotTimeToSaveToClient(UUID id, RoomOutputProtocol p) {
     sf::Packet packet = this->makeBasePacket();
     packet << SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE;
 
-    p.logs->emplace_back("{sending_not_time_to_save_to}" + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+    p.logs->push_back(StringLcl("{sending_not_time_to_save_to}") + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
     this->sendToClient(packet, p.toSend, id);
 }
@@ -608,7 +608,7 @@ void Room::sendNotYourMove(RoomOutputProtocol p, UUID id) {
 	sf::Packet packet = this->makeBasePacket();
 	packet << SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE;
 
-	p.logs->emplace_back("{sending_not_your_move_to}" + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
+	p.logs->push_back(StringLcl("{sending_not_your_move_to}") + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
 
 	this->sendToClient(packet, p.toSend, id);
 }
@@ -620,7 +620,7 @@ void Room::sendNotYourMove(RoomOutputProtocol p, UUID id) {
 
 sf::Packet Room::makeBasePacket() const {
     sf::Packet packet;
-    packet << this->getID().value();
+    packet << this->getID().key();
     return packet;
 }
 void Room::sendToClients(const sf::Packet& what, RoomOutputProtocol p) {
@@ -677,7 +677,7 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, UUID>>& received
 
     std::string roomId;
     packet >> roomId;
-    if (this->id.value() == roomId) {
+    if (this->id.key() == roomId) {
 		this->timeoutTimer.reset();
         uint8_t code;
         packet >> code;
@@ -693,7 +693,7 @@ void Room::receiveClick(sf::Packet& remPacket, UUID id, RoomOutputProtocol p) {
 	uint8_t mouseButton;
 	uint32_t x, y, viewX, viewY, w, h;
 	remPacket >> mouseButton >> x >> y >> viewX >> viewY >> w >> h;
-	p.logs->emplace_back("{received_click} " + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + id.toString());
+	p.logs->push_back(StringLcl("{received_click} ") + std::to_string(mouseButton) + " (" + std::to_string(x) + ", " + std::to_string(y) + ") (" + std::to_string(viewX) + ", " + std::to_string(viewY) + ") (" + std::to_string(w) + ", " + std::to_string(h) + ") " + id.toString());
 	if (p.remotePlayers->get(this->currentPlayerId).getConnectionId() != id) {
 		this->sendNotYourMove(p, id);
 		return;
@@ -722,7 +722,7 @@ void Room::receiveClick(sf::Packet& remPacket, UUID id, RoomOutputProtocol p) {
 	}
 }
 void Room::receiveNeedSave(UUID id, RoomOutputProtocol p) {
-    p.logs->emplace_back("{received_need_save}" + id.toString());
+    p.logs->push_back(StringLcl("{received_need_save}") + id.toString());
     if (this->possibleToSave()) {
         this->sendSaveToClient(id, p);
     }

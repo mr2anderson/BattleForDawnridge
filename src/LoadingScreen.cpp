@@ -131,7 +131,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window, uint32_t percent) 
 
 	sf::Text t;
 	t.setFont(*Fonts::get().get("1"));
-	t.setString(StringLcl("{please_wait}").get());
+	t.setString(StringLcl("{please_wait}").getNoColor());
 	t.setCharacterSize(31);
 	t.setFillColor(sf::Color::White);
 	t.setOutlineColor(sf::Color::Black);

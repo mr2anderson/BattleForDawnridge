@@ -36,6 +36,7 @@
 #include "Parameters.hpp"
 #include "IAreaControllerSpec.hpp"
 #include "EmptyLightSource.hpp"
+#include "ColorTheme.hpp"
 
 
 Building::Building() = default;
@@ -220,17 +221,17 @@ HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 	std::string textureName;
 	StringLcl secondLine;
 	if (this->burningMovesLeft == 0) {
-		textureName =   "shield_icon";
-		secondLine = StringLcl("{building_speed}" + std::to_string(this->getRegenerationSpeed()) + "{p_per_move}. {everything_is_alright}");
+		textureName =  "shield_icon";
+		secondLine = StringLcl("{building_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getRegenerationSpeed()) + "{p_per_move}. {everything_is_alright}";
 	}
 	else {
 		textureName = "fire1";
-		secondLine = StringLcl("{building_on_fire}" + std::to_string(this->burningMovesLeft));
+		secondLine = StringLcl("{building_on_fire}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->burningMovesLeft);
 	}
 
 	HorizontalSelectionWindowComponent component = {
 		textureName,
-		StringLcl("{hp}" + std::to_string(this->getHP()) + " / " + std::to_string(this->getMaxHP()) + " ") + this->getDefence().getReadable() + StringLcl("\n") +
+		StringLcl("{hp}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->getHP(), this->getMaxHP())) + std::to_string(this->getHP()) + " / " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(this->getMaxHP()) + " " + this->getDefence().getReadable() + StringLcl("\n") +
         secondLine,
 		false,
 		Events()

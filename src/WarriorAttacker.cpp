@@ -24,6 +24,7 @@
 #include "HighlightColors.hpp"
 #include "PlaySoundEvent.hpp"
 #include "GlobalRandomGenerator32.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorAttacker::WarriorAttacker() {

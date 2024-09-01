@@ -17,10 +17,9 @@
  */
 
 
-#include <iomanip>
-#include <sstream>
 #include "Defence.hpp"
 #include "Locales.hpp"
+#include "ColorTheme.hpp"
 
 
 Defence::Defence() = default;
@@ -44,9 +43,13 @@ double Defence::getCrush() const {
 StringLcl Defence::getReadable() const {
 	StringLcl result;
 
-	result = result + StringLcl("{cut} " + std::to_string((uint32_t)(this->cut * 100)) + "% ");
-	result = result + StringLcl("{stab} " + std::to_string((uint32_t)(this->stab * 100)) + "% ");
-	result = result + StringLcl("{crush} " + std::to_string((uint32_t)(this->crush * 100)) + "%");
+    auto cutInt = (uint32_t)(this->cut * 100);
+    auto stabInt = (uint32_t)(this->stab * 100);
+    auto crushInt = (uint32_t)(this->crush * 100);
+
+	result = result + StringLcl("{cut} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(cutInt, 10, 100)) + std::to_string(cutInt) + "% ";
+	result = result + StringLcl("{stab} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(stabInt, 10, 100)) + std::to_string(stabInt) + "% ";
+	result = result + StringLcl("{crush} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(crushInt, 10, 100)) + std::to_string(crushInt) + "%";
 
 	return result;
 }

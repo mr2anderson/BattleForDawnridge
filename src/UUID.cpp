@@ -19,6 +19,7 @@
 
 #include "UUID.hpp"
 #include "GlobalRandomGenerator64.hpp"
+#include "ColorTheme.hpp"
 
 
 UUID::UUID() {
@@ -39,7 +40,7 @@ bool UUID::operator<(const UUID &b) const {
 bool UUID::operator>(const UUID &b) const {
     return this->a > b.a;
 }
-std::string UUID::toString() const {
+StringLcl UUID::toString() const {
     std::string result;
     uint128_t buff = this->a;
     while (buff) {
@@ -52,7 +53,7 @@ std::string UUID::toString() const {
             result.push_back('a' + (c - 10));
         }
     }
-    return result;
+    return StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + result;
 }
 uint128_t UUID::value() const {
     return this->a;

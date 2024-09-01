@@ -24,6 +24,7 @@
 #include "PlaySoundEvent.hpp"
 #include "CreateEEvent.hpp"
 #include "version.hpp"
+#include "ColorTheme.hpp"
 
 
 VersionsButtonSpec::VersionsButtonSpec() = default;
@@ -46,19 +47,19 @@ Events VersionsButtonSpec::getEvents() const {
     );
     components.emplace_back(
         "icon",
-        StringLcl("{battle_for_dawnridge}" + std::string(VERSION)),
+        StringLcl("{battle_for_dawnridge}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::string(VERSION)),
         false,
         Events()
     );
     components.emplace_back(
           "boost_icon",
-          StringLcl("{boost}" + std::string(BOOST_LIB_VERSION)),
+          StringLcl("{boost}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::string(BOOST_LIB_VERSION)),
           false,
           Events()
     );
     components.emplace_back(
             "sfml_icon",
-            StringLcl("{sfml}" + std::to_string(SFML_VERSION_MAJOR) + "." + std::to_string(SFML_VERSION_MINOR) + "." + std::to_string(SFML_VERSION_PATCH)),
+            StringLcl("{sfml}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + StringLcl(std::to_string(SFML_VERSION_MAJOR)) + StringLcl(".") + StringLcl(std::to_string(SFML_VERSION_MINOR)) + StringLcl(".") + StringLcl(std::to_string(SFML_VERSION_PATCH)),
             false,
             Events()
     );

@@ -21,6 +21,7 @@
 #include "RoomID.hpp"
 #include "GlobalRandomGenerator32.hpp"
 #include "InvalidRoomIDFormat.hpp"
+#include "ColorTheme.hpp"
 
 
 const uint32_t RoomID::READABLE_LEN = 12;
@@ -30,10 +31,10 @@ RoomID::RoomID() {
 	for (uint32_t i = 0; i < READABLE_LEN; i = i + 1) {
 		uint8_t r = GlobalRandomGenerator32::get().gen() % 36;
 		if (r < 10) {
-			this->_value.push_back('0' + r);
+			this->_key.push_back('0' + r);
 		}
 		else {
-			this->_value.push_back('A' + (r - 10));
+			this->_key.push_back('A' + (r - 10));
 		}
 	}
 }
@@ -52,18 +53,21 @@ RoomID::RoomID(const std::string& readableValue) {
 		throw InvalidRoomIDFormat();
 	}
 
-    this->_value = readableValue;
+    this->_key = readableValue;
 }
 
 
 bool RoomID::operator==(const RoomID& b) const {
-	return (this->_value == b._value);
+	return (this->_key == b._key);
 }
 bool RoomID::operator!=(const RoomID& b) const {
-	return (this->_value != b._value);
+	return (this->_key != b._key);
 }
 
 
-std::string RoomID::value() const {
-	return this->_value;
+StringLcl RoomID::string() const {
+	return StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + this->_key;
+}
+std::string RoomID::key() const {
+    return this->_key;
 }

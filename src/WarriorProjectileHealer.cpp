@@ -22,6 +22,7 @@
 #include "HPFlyingE.hpp"
 #include "AddHpEvent.hpp"
 #include "PlaySoundEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorProjectileHealer::WarriorProjectileHealer() = default;
@@ -52,7 +53,7 @@ Events WarriorProjectileHealer::heal(MapState *state, std::shared_ptr<Warrior> w
     return events;
 }
 StringLcl WarriorProjectileHealer::getSpecialInfoString(MapState *state) const {
-    StringLcl str = this->WarriorHealer::getSpecialInfoString(state) + " " + StringLcl("{healing_radius}") + std::to_string(this->getHealingRadius()) + ". ";
+    StringLcl str = this->WarriorHealer::getSpecialInfoString(state) + " " + StringLcl("{healing_radius}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getHealingRadius()) + ". ";
 
     return str;
 }

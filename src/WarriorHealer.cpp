@@ -23,6 +23,7 @@
 #include "HighlightColors.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
 #include "FocusOnEvent.hpp"
+#include "ColorTheme.hpp"
 
 
 WarriorHealer::WarriorHealer() = default;
@@ -93,7 +94,7 @@ Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint3
     return Events();
 }
 StringLcl WarriorHealer::getSpecialInfoString(MapState *state) const {
-    StringLcl str = StringLcl("{healing_speed}") + std::to_string(this->getHealingSpeed(state)) + ".";
+    StringLcl str = StringLcl("{healing_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getHealingSpeed(state)) + ".";
 
     return str;
 }
