@@ -233,11 +233,6 @@ void MainScreen::processReceiving() {
 
 
 
-sf::Packet MainScreen::makeBasePacket() const {
-    sf::Packet packet;
-    packet << this->roomID.key();
-    return packet;
-}
 void MainScreen::send(sf::Packet &what) {
     this->toSend.push(what);
 }
@@ -269,7 +264,8 @@ std::string READ_SAVE(const std::string& name) {
 	return buffer.str();
 }
 void MainScreen::sendInit() {
-	sf::Packet packet = this->makeBasePacket();
+	sf::Packet packet;
+    packet << this->roomID.key();
 	if (this->type == MainScreen::Type::CreateFromMap) {
 		packet << CLIENT_NET_SPECS::CODES::CREATE;
 		packet << GENERATE_SAVE_FROM_MAP(this->data);
@@ -287,7 +283,7 @@ void MainScreen::sendInit() {
 	this->send(packet);
 }
 void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << CLIENT_NET_SPECS::CODES::CLICK;
     packet << button;
     packet << (uint32_t)sf::Mouse::getPosition().x;
@@ -299,7 +295,7 @@ void MainScreen::sendClick(sf::RenderWindow &window, uint8_t button) {
     this->send(packet);
 }
 void MainScreen::sendNeedSave() {
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << CLIENT_NET_SPECS::CODES::NEED_SAVE;
     this->send(packet);
 }
@@ -316,67 +312,63 @@ void MainScreen::receive() {
 	}
 	std::get<bool>(this->received) = false;
 	sf::Packet receivedPacket = std::get<sf::Packet>(this->received);
-    std::string id;
-    receivedPacket >> id;
-    if (this->roomID.key() == id) {
-        uint8_t code;
-        receivedPacket >> code;
+    uint8_t code;
+    receivedPacket >> code;
 
-		if (code == SERVER_NET_SPECS::CODES::ERROR) {
-			this->receiveError(receivedPacket);
-		}
-        else if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
-            uint8_t worldUiStateCode;
-            receivedPacket >> worldUiStateCode;
-            if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP) {
-                this->receiveMap(receivedPacket);
-            }
-            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT) {
-                this->receiveElement(receivedPacket);
-            }
-            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE) {
-                this->receiveHighlightTable(receivedPacket);
-            }
-            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED) {
-                this->receiveSelected(receivedPacket);
-            }
-            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES) {
-                this->receiveButtonBases(receivedPacket);
-            }
-            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR) {
-                this->receiveResourceBar(receivedPacket);
-            }
-            else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY) {
-                this->receiveCursorVisibility(receivedPacket);
-            }
-            else {
-                LOGS("Warning: unknown world ui state code received from server: " + std::to_string((uint32_t)worldUiStateCode));
-            }
+    if (code == SERVER_NET_SPECS::CODES::ERROR) {
+        this->receiveError(receivedPacket);
+    }
+    else if (code == SERVER_NET_SPECS::CODES::WORLD_UI_STATE) {
+        uint8_t worldUiStateCode;
+        receivedPacket >> worldUiStateCode;
+        if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP) {
+            this->receiveMap(receivedPacket);
         }
-        else if (code == SERVER_NET_SPECS::CODES::READY) {
-            this->receiveReady();
+        else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT) {
+            this->receiveElement(receivedPacket);
         }
-        else if (code == SERVER_NET_SPECS::CODES::SOUND) {
-            this->receiveSound(receivedPacket);
+        else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE) {
+            this->receiveHighlightTable(receivedPacket);
         }
-        else if (code == SERVER_NET_SPECS::CODES::FOCUS) {
-            this->receiveFocus(receivedPacket);
+        else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED) {
+            this->receiveSelected(receivedPacket);
         }
-        else if (code == SERVER_NET_SPECS::CODES::RETURN_TO_MENU) {
-            this->receiveReturnToMenu();
+        else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES) {
+            this->receiveButtonBases(receivedPacket);
         }
-        else if (code == SERVER_NET_SPECS::CODES::SAVE) {
-            this->receiveSave(receivedPacket);
+        else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR) {
+            this->receiveResourceBar(receivedPacket);
         }
-        else if (code == SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE) {
-            this->receiveNotTimeToSave();
+        else if (worldUiStateCode == SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY) {
+            this->receiveCursorVisibility(receivedPacket);
         }
-		else if (code == SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE) {
-			this->receiveNotYourMove();
-		}
         else {
-            LOGS("Warning: unknown code received from server: " + std::to_string((uint32_t) code));
+            LOGS("Warning: unknown world ui state code received from server: " + std::to_string((uint32_t)worldUiStateCode));
         }
+    }
+    else if (code == SERVER_NET_SPECS::CODES::READY) {
+        this->receiveReady();
+    }
+    else if (code == SERVER_NET_SPECS::CODES::SOUND) {
+        this->receiveSound(receivedPacket);
+    }
+    else if (code == SERVER_NET_SPECS::CODES::FOCUS) {
+        this->receiveFocus(receivedPacket);
+    }
+    else if (code == SERVER_NET_SPECS::CODES::RETURN_TO_MENU) {
+        this->receiveReturnToMenu();
+    }
+    else if (code == SERVER_NET_SPECS::CODES::SAVE) {
+        this->receiveSave(receivedPacket);
+    }
+    else if (code == SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE) {
+        this->receiveNotTimeToSave();
+    }
+    else if (code == SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE) {
+        this->receiveNotYourMove();
+    }
+    else {
+        LOGS("Warning: unknown code received from server: " + std::to_string((uint32_t) code));
     }
 }
 void MainScreen::receiveError(sf::Packet& remPacket) {

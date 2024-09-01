@@ -95,7 +95,6 @@ private:
 	void processSending();
 	void processReceiving();
 
-    sf::Packet makeBasePacket() const;
     void send(sf::Packet &what);
 
 	void sendInit();

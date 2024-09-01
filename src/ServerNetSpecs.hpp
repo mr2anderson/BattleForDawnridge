@@ -23,12 +23,6 @@
 #pragma once
 
 
-// Package format:
-/*
- * room_id (std::string)
- * code (uint8_t)
- * additional_code_info
- */
 namespace SERVER_NET_SPECS {
     namespace CODES { // enum is not used cuz it is implementation-defined
         static constexpr uint8_t ERROR = 0;

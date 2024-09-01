@@ -162,7 +162,6 @@ private:
 	void sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 	void sendNotYourMove(RoomOutputProtocol p, UUID id);
 
-    sf::Packet makeBasePacket() const;
 	void sendToClients(const sf::Packet& what, RoomOutputProtocol p);
 	void sendToClients(const sf::Packet& forCurrentPlayer, const sf::Packet& forOther, RoomOutputProtocol p);
     void sendToClient(const sf::Packet &what, std::vector<std::tuple<sf::Packet, UUID>>* toSend, UUID id);

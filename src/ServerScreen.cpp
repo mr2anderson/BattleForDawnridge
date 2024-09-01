@@ -91,7 +91,6 @@ void ServerScreen::updateSimpleConnections() {
 }
 static void SEND_ERROR_PACKAGE(Connection& connection, const RoomID &roomID, uint8_t errorCode) {
     sf::Packet packet;
-    packet << roomID.key();
     packet << SERVER_NET_SPECS::CODES::ERROR;
     packet << errorCode;
     connection.send(packet);

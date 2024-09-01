@@ -423,7 +423,7 @@ void Room::syncMap(RoomOutputProtocol p) {
     a << this->map;
     s.flush();
 
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::MAP;
     packet << bfdlib::string_compression::get_compressed(str);
@@ -440,7 +440,7 @@ void Room::syncElement(RoomOutputProtocol p) {
     a << this->element;
     s.flush();
 
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::ELEMENT;
     packet << bfdlib::string_compression::get_compressed(str);
@@ -457,7 +457,7 @@ void Room::syncHighlightTable(RoomOutputProtocol p) {
     a << this->highlightTable;
     s.flush();
 
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::HIGHLIGHT_TABLE;
     packet << bfdlib::string_compression::get_compressed(str);
@@ -481,12 +481,12 @@ void Room::syncSelected(RoomOutputProtocol p) {
 	a2 << std::shared_ptr<ISelectable>(nullptr);
 	s2.flush();
 
-    sf::Packet packet1 = this->makeBasePacket();
+    sf::Packet packet1;
     packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
     packet1 << bfdlib::string_compression::get_compressed(str1);
 
-	sf::Packet packet2 = this->makeBasePacket();
+	sf::Packet packet2;
 	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
 	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::SELECTED;
 	packet2 << bfdlib::string_compression::get_compressed(str2);
@@ -505,7 +505,7 @@ void Room::syncButtonBases(RoomOutputProtocol p) {
     a << buttonBases;
     s.flush();
 
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::BUTTON_BASES;
     packet << bfdlib::string_compression::get_compressed(str);
@@ -524,7 +524,7 @@ void Room::syncResourceBar(RoomOutputProtocol p) {
     a << resourceBar;
     s.flush();
 
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::RESOURCE_BAR;
     packet << bfdlib::string_compression::get_compressed(str);
@@ -534,12 +534,12 @@ void Room::syncResourceBar(RoomOutputProtocol p) {
     this->sendToClients(packet, p);
 }
 void Room::syncCursorVisibility(RoomOutputProtocol p) {
-    sf::Packet packet1 = this->makeBasePacket();
+    sf::Packet packet1;
     packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
     packet1 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
     packet1 << this->curcorVisibility;
 
-	sf::Packet packet2 = this->makeBasePacket();
+	sf::Packet packet2;
 	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE;
 	packet2 << SERVER_NET_SPECS::CODES::WORLD_UI_STATE_CODES::CURSOR_VISIBILITY;
 	packet2 << (bool)true;
@@ -549,7 +549,7 @@ void Room::syncCursorVisibility(RoomOutputProtocol p) {
     this->sendToClients(packet1, packet2, p);
 }
 void Room::sendReady(RoomOutputProtocol p) {
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::READY;
 
     p.logs->emplace_back("{sending_ready_to_clients} " + std::to_string(packet.getDataSize()) + " b");
@@ -559,7 +559,7 @@ void Room::sendReady(RoomOutputProtocol p) {
 
 
 void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& soundName) {
-	sf::Packet packet = this->makeBasePacket();
+	sf::Packet packet;
 	packet << SERVER_NET_SPECS::CODES::SOUND;
 	packet << soundName;
 
@@ -568,7 +568,7 @@ void Room::sendPlaySoundEventToClients(RoomOutputProtocol p, const std::string& 
 	this->sendToClients(packet, p);
 }
 void Room::sendSaveToClient(UUID id, RoomOutputProtocol p) {
-	sf::Packet packet = this->makeBasePacket();
+	sf::Packet packet;
 	packet << SERVER_NET_SPECS::CODES::SAVE;
 	packet << this->getSaveData();
 
@@ -577,7 +577,7 @@ void Room::sendSaveToClient(UUID id, RoomOutputProtocol p) {
 	this->sendToClient(packet, p.toSend, id);
 }
 void Room::sendNotTimeToSaveToClient(UUID id, RoomOutputProtocol p) {
-    sf::Packet packet = this->makeBasePacket();
+    sf::Packet packet;
     packet << SERVER_NET_SPECS::CODES::NOT_TIME_TO_SAVE;
 
     p.logs->push_back(StringLcl("{sending_not_time_to_save_to}") + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
@@ -585,7 +585,7 @@ void Room::sendNotTimeToSaveToClient(UUID id, RoomOutputProtocol p) {
     this->sendToClient(packet, p.toSend, id);
 }
 void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
-	sf::Packet packet = this->makeBasePacket();
+	sf::Packet packet;
 	packet << SERVER_NET_SPECS::CODES::RETURN_TO_MENU;
 
 	p.logs->emplace_back("{sending_return_to_menu_to_players} " + std::to_string(packet.getDataSize()) + " b");
@@ -593,7 +593,7 @@ void Room::sendReturnToMenuToClients(RoomOutputProtocol p) {
 	this->sendToClients(packet, p);
 }
 void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) {
-	sf::Packet packet = this->makeBasePacket();
+	sf::Packet packet;
 	packet << SERVER_NET_SPECS::CODES::FOCUS;
 	packet << x;
 	packet << y;
@@ -605,7 +605,7 @@ void Room::sendFocusOnToClients(RoomOutputProtocol p, uint32_t x, uint32_t y, ui
 	this->sendToClients(packet, p);
 }
 void Room::sendNotYourMove(RoomOutputProtocol p, UUID id) {
-	sf::Packet packet = this->makeBasePacket();
+	sf::Packet packet;
 	packet << SERVER_NET_SPECS::CODES::NOT_YOUR_MOVE;
 
 	p.logs->push_back(StringLcl("{sending_not_your_move_to}") + id.toString() + " " + std::to_string(packet.getDataSize()) + " b");
@@ -618,11 +618,6 @@ void Room::sendNotYourMove(RoomOutputProtocol p, UUID id) {
 
 
 
-sf::Packet Room::makeBasePacket() const {
-    sf::Packet packet;
-    packet << this->getID().key();
-    return packet;
-}
 void Room::sendToClients(const sf::Packet& what, RoomOutputProtocol p) {
 	std::unordered_map<UUID, bool> clientTable; // in case one host has more than one player
 	for (uint32_t i = 1; i <= this->map.getStatePtr()->getPlayersPtr()->total(); i = i + 1) {
@@ -675,18 +670,14 @@ void Room::receive(const boost::optional<std::tuple<sf::Packet, UUID>>& received
 	sf::Packet packet = std::get<0>(received.value());
 	UUID client = std::get<1>(received.value());
 
-    std::string roomId;
-    packet >> roomId;
-    if (this->id.key() == roomId) {
-		this->timeoutTimer.reset();
-        uint8_t code;
-        packet >> code;
-        if (code == CLIENT_NET_SPECS::CODES::CLICK) {
-            this->receiveClick(packet, client, p);
-        }
-        else if (code == CLIENT_NET_SPECS::CODES::NEED_SAVE) {
-            this->receiveNeedSave(client, p);
-        }
+    this->timeoutTimer.reset();
+    uint8_t code;
+    packet >> code;
+    if (code == CLIENT_NET_SPECS::CODES::CLICK) {
+        this->receiveClick(packet, client, p);
+    }
+    else if (code == CLIENT_NET_SPECS::CODES::NEED_SAVE) {
+        this->receiveNeedSave(client, p);
     }
 }
 void Room::receiveClick(sf::Packet& remPacket, UUID id, RoomOutputProtocol p) {
