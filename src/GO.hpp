@@ -95,6 +95,8 @@ public:
     static const ClickPriority CLICK_PRIORITY_LOWEST;
 
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_VICTORY_CONDITION;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_HEALER;
+    static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_WARRIOR_HEALER;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_WARRIOR;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_SHOOTING;
     static const NewMoveMainPriority NEW_MOVE_MAIN_PRIORITY_TERRITORY_CONDUCTOR;

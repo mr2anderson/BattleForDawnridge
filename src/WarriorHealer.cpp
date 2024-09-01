@@ -98,6 +98,9 @@ StringLcl WarriorHealer::getSpecialInfoString(MapState *state) const {
 
     return str;
 }
+NewMoveMainPriority WarriorHealer::getNewMoveMainPriority() const {
+    return NEW_MOVE_MAIN_PRIORITY_WARRIOR_HEALER;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(WarriorHealer)

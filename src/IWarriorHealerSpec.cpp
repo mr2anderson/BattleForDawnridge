@@ -95,6 +95,9 @@ uint8_t IWarriorHealerSpec::getHighlightType() const {
 bool IWarriorHealerSpec::healVehicles() const {
     return false;
 }
+NewMoveMainPriority IWarriorHealerSpec::getNewMoveMainPriority() const {
+    return GO::NEW_MOVE_MAIN_PRIORITY_HEALER;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(IWarriorHealerSpec)

@@ -32,6 +32,7 @@ public:
     uint8_t getHighlightType() const override;
 	virtual uint32_t getHealingSpeed() const = 0;
     virtual bool healVehicles() const;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
     virtual std::string getHealTextureName() const = 0;
 private:
     friend class boost::serialization::access;

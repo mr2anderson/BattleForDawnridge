@@ -41,6 +41,7 @@ private:
     Events newMove(MapState *state, uint32_t playerId) override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
+    NewMoveMainPriority getNewMoveMainPriority() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
