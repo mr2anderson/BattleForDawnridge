@@ -23,12 +23,13 @@
 
 
 Damage::Damage() = default;
-Damage::Damage(uint32_t points, uint8_t type) {
+Damage::Damage(uint32_t points, uint8_t type, uint8_t spec) {
 	this->points = points;
 	this->type = type;
+    this->spec = spec;
 }
 Damage operator*(double k, Damage damage) {
-	return Damage(damage.points * k, damage.type);
+	return Damage(damage.points * k, damage.type, damage.spec);
 }
 uint32_t Damage::getHpLoss(Defence defence) const {
 	double k;
@@ -45,6 +46,9 @@ uint32_t Damage::getHpLoss(Defence defence) const {
 				k = defence.getStab();
 				break;
 			}
+            case TYPE::SERVICE:
+                k = 1;
+                break;
 	}
 	return k * this->points;
 }
@@ -72,5 +76,13 @@ StringLcl Damage::getTypeReadable() const {
 		break;
 	}
 	}
+
+    if (this->hasSpec(SPEC::POISON)) {
+        result = result + " {poison}";
+    }
+
 	return result;
+}
+bool Damage::hasSpec(uint8_t val) const {
+    return (this->spec & val);
 }

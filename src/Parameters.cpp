@@ -58,16 +58,27 @@ void Parameters::load() {
 				}
 				else {
 					uint32_t damagePoints = std::stoul(words.at(3));
-					std::string damageType = words.at(4);
-					if (damageType == "cut") {
-						this->damages[key] = Damage(damagePoints, Damage::CUT);
+					std::string damageTypeVal = words.at(4);
+                    uint8_t damageType;
+					if (damageTypeVal == "cut") {
+                        damageType = Damage::CUT;
 					}
-					else if (damageType == "stab") {
-						this->damages[key] = Damage(damagePoints, Damage::STAB);
+					else if (damageTypeVal == "stab") {
+						damageType = Damage::STAB;
 					}
-					else if (damageType == "crush") {
-						this->damages[key] = Damage(damagePoints, Damage::CRUSH);
+					else if (damageTypeVal == "crush") {
+						damageType = Damage::CRUSH;
 					}
+                    else if (damageTypeVal == "service") {
+                        damageType = Damage::SERVICE;
+                    }
+                    uint8_t damageSpec = Damage::SPEC::NONE;
+                    for (uint32_t i = 5; i < words.size(); i = i + 1) {
+                        if (words.at(i) == "poison") {
+                            damageSpec = damageSpec | Damage::SPEC::POISON;
+                        }
+                    }
+                    this->damages[key] = Damage(damagePoints, damageType, damageSpec);
 				}
 			}
 			else if (type == "defence") {

@@ -38,7 +38,7 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-	Events hit(uint32_t d) override;
+	Events hit(Damage d) override;
 	Events killNextTurn();
 	Events revertKillNextTurn();
 	void enableRageMode();
@@ -69,6 +69,7 @@ public:
     StringLcl getDetailedDescription(MapState *state) const override;
     bool wasHealed() const;
     void refreshWasHealedStatus();
+    void setPoisonStatus();
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
@@ -105,6 +106,7 @@ private:
     Clock footstepsClock;
 	bool toKill;
 	uint32_t rageModeMovesLeft;
+    bool poison;
 
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
     void update(MapState *state, uint32_t playerId) override;
@@ -119,6 +121,7 @@ private:
     float getOffset(const std::string &toNeg, const std::string &toPos) const;
 	sf::Color getTextureColor() const override;
 	HorizontalSelectionWindowComponent getRageModeComponent() const;
+    HorizontalSelectionWindowComponent getPoisonComponent() const;
     HorizontalSelectionWindowComponent getTimeModComponent(MapState *state) const;
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
@@ -144,6 +147,7 @@ private:
         ar & this->currentMovement;
         ar & this->toKill;
         ar & this->rageModeMovesLeft;
+        ar & this->poison;
     }
 };
 

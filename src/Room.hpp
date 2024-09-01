@@ -79,6 +79,7 @@
 #include "MoveHorizontalSelectionWindowDownEvent.hpp"
 #include "ClosePopUpElementEvent.hpp"
 #include "RefreshWasHealedStatusEvent.hpp"
+#include "SetPoisonEffectEvent.hpp"
 
 
 #pragma once
@@ -228,4 +229,5 @@ private:
     void handleMoveHorizontalSelectionWindowDownEvent(std::shared_ptr<MoveHorizontalSelectionWindowDownEvent> e, RoomOutputProtocol p);
     void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e, RoomOutputProtocol p);
     void handleRefreshWasHealedStatusEvent(std::shared_ptr<RefreshWasHealedStatusEvent> e, RoomOutputProtocol p);
+    void handleSetPoisonEffectEvent(std::shared_ptr<SetPoisonEffectEvent> e, RoomOutputProtocol p);
 };

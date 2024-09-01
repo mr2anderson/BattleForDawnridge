@@ -26,10 +26,6 @@ Unit::Unit(uint32_t x, uint32_t y, boost::optional<uint32_t> currentHp, uint32_t
 	HPGO(x, y, currentHp) {
 	this->playerId = playerId;
 }
-Events Unit::hit(Damage d) {
-	uint32_t dPoints = d.getHpLoss(this->getDefence());
-	return this->hit(dPoints);
-}
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->HPGO::draw(target, states);
     if (this->exist() and this->getPlayerId() != 0) {

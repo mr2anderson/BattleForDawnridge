@@ -48,6 +48,9 @@
 #include "PlaySoundEvent.hpp"
 #include "RefreshWasHealedStatusEvent.hpp"
 #include "ColorTheme.hpp"
+#include "ImageFlyingE.hpp"
+#include "SetPoisonEffectEvent.hpp"
+#include "ColorBlender.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -66,6 +69,7 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->startAnimation("talking");
     this->toKill = false;
     this->rageModeMovesLeft = 0;
+    this->poison = false;
     this->hasSpecialMoves = false;
     this->enemyMove = true;
 }
@@ -75,7 +79,9 @@ void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         this->drawHPPointer(target, states);
     }
 }
-Events Warrior::hit(uint32_t d) {
+Events Warrior::hit(Damage damage) {
+    uint32_t d = damage.getHpLoss(this->getDefence());
+
     uint32_t hpPointsAfterOperation;
     if (d >= this->getHP()) {
         hpPointsAfterOperation = 0;
@@ -85,6 +91,17 @@ Events Warrior::hit(uint32_t d) {
     }
 
     Events response;
+
+    response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+
+    if (hpPointsAfterOperation != 0 and damage.hasSpec(Damage::SPEC::POISON) and !this->isVehicle()) {
+        response.add(std::make_shared<SetPoisonEffectEvent>(this->getThis<Warrior>()));
+
+        response.add(std::make_shared<PlaySoundEvent>("poison"));
+
+        std::shared_ptr<ImageFlyingE> imageFlyingE = std::make_shared<ImageFlyingE>("poison_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
+        response.add(std::make_shared<CreateEEvent>(imageFlyingE));
+    }
 
     response.add(std::make_shared<PlaySoundEvent>(this->getBeenHitSoundName()));
 
@@ -156,8 +173,10 @@ Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
             }
 
             if (this->toKill) {
-                events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
-                events = events + this->hit(this->getHP());
+                events = events + this->hit(Damage(this->getHP(), Damage::TYPE::SERVICE));
+            }
+            else if (this->poison and this->getHP() != 1) {
+                events = events + this->hit(Damage(std::min(this->getHP() - 1, Parameters::get().getInt("poison_damage")), Damage::TYPE::SERVICE));
             }
         }
 
@@ -367,6 +386,9 @@ StringLcl Warrior::getDetailedDescription(MapState *state) const {
     if (this->inRage()) {
         result = result + StringLcl("{in_rage}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->rageModeMovesLeft) + "\n\n";
     }
+    if (this->poison) {
+        result = result + StringLcl("{poison_effect_short}") + "\n\n";
+    }
     result = result + this->getSpecialInfoString(state) + "\n";
     return result;
 }
@@ -375,6 +397,9 @@ bool Warrior::wasHealed() const {
 }
 void Warrior::refreshWasHealedStatus() {
     this->wasHealedThisMove = false;
+}
+void Warrior::setPoisonStatus() {
+    this->poison = true;
 }
 bool Warrior::isVehicle() const {
     return false;
@@ -558,10 +583,17 @@ float Warrior::getOffset(const std::string& toNeg, const std::string& toPos) con
     return 64 * offset + partialPart;
 }
 sf::Color Warrior::getTextureColor() const {
+    std::vector<sf::Color> colors;
     if (this->inRage()) {
-        return sf::Color(150, 0, 255);
+        colors.emplace_back(150, 0, 255);
     }
-    return this->Unit::getTextureColor();
+    if (this->poison) {
+        colors.emplace_back(0, 100, 10);
+    }
+    if (colors.empty()) {
+        return this->Unit::getTextureColor();
+    }
+    return ColorBlender::get().blend(colors);
 }
 HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
     return {
@@ -570,6 +602,14 @@ HorizontalSelectionWindowComponent Warrior::getRageModeComponent() const {
         StringLcl("{moves_left}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->rageModeMovesLeft),
         false,
         Events()
+    };
+}
+HorizontalSelectionWindowComponent Warrior::getPoisonComponent() const {
+    return {
+            "poison_effect_icon",
+            StringLcl("{poison_effect}"),
+            false,
+            Events()
     };
 }
 HorizontalSelectionWindowComponent Warrior::getTimeModComponent(MapState *state) const {
@@ -701,6 +741,9 @@ Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
         if (this->inRage()) {
             components.push_back(this->getRageModeComponent());
         }
+        if (this->poison) {
+            components.push_back(this->getPoisonComponent());
+        }
         if (own) {
             if (this->toKill) {
                 components.push_back(this->getRevertKillComponent());
@@ -723,6 +766,7 @@ Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
 void Warrior::addHp(uint32_t val) {
     this->Unit::addHp(val);
     this->wasHealedThisMove = true;
+    this->poison = false;
 }
 Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist()) {

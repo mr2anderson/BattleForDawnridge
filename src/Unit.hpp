@@ -39,8 +39,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Events hit(Damage d);
-	virtual Events hit(uint32_t d) = 0;
+	virtual Events hit(Damage d) = 0;
 	bool belongTo(uint32_t playerId) const;
 	void changePlayer(uint32_t newPlayerId);
 	uint32_t getPlayerId() const;

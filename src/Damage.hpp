@@ -26,21 +26,29 @@
 
 class Damage {
 public:
+    struct SPEC {
+        static constexpr uint8_t NONE = 0;
+        static constexpr uint8_t POISON = 1;
+    };
+
 	Damage();
-	Damage(uint32_t points, uint8_t type);
+	Damage(uint32_t points, uint8_t type, uint8_t spec = SPEC::NONE);
 
 	friend Damage operator*(double k, Damage damage);
 	uint32_t getHpLoss(Defence defence) const;
 	uint32_t getPoints() const;
 	StringLcl getReadable() const;
 	StringLcl getTypeReadable() const;
+    bool hasSpec(uint8_t val) const;
 
 	enum TYPE {
 		CUT,
 		STAB,
 		CRUSH,
+        SERVICE
 	};
 private:
 	uint32_t points;
 	uint8_t type;
+    uint8_t spec;
 };

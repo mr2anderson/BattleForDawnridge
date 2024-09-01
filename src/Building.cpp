@@ -294,7 +294,9 @@ void Building::drawShortInfos(sf::RenderTarget& target, sf::RenderStates states)
 		}
 	}
 }
-Events Building::hit(uint32_t d) {
+Events Building::hit(Damage damage) {
+    uint32_t d = damage.getHpLoss(this->getDefence());
+
 	uint32_t hpPointsAfterOperation;
 	if (d >= this->getHP()) {
 		hpPointsAfterOperation = 0;
