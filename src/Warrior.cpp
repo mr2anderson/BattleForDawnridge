@@ -94,23 +94,28 @@ Events Warrior::hit(Damage damage) {
 
     response.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
 
-    if (hpPointsAfterOperation != 0 and damage.hasSpec(Damage::SPEC::POISON) and !this->isVehicle()) {
+    bool mustBePoisoned = (hpPointsAfterOperation != 0 and damage.hasSpec(Damage::SPEC::POISON) and !this->isVehicle());
+
+    if (mustBePoisoned) {
         response.add(std::make_shared<SetPoisonEffectEvent>(this->getThis<Warrior>()));
 
         response.add(std::make_shared<PlaySoundEvent>("poison"));
 
+        response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "been hit"));
+
         std::shared_ptr<ImageFlyingE> imageFlyingE = std::make_shared<ImageFlyingE>("poison_icon", this->getX(), this->getY(), this->getSX(), this->getSY());
         response.add(std::make_shared<CreateEEvent>(imageFlyingE));
     }
-
-    response.add(std::make_shared<PlaySoundEvent>(this->getBeenHitSoundName()));
-
-    if (hpPointsAfterOperation == 0) {
-        response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "tipping over"));
-    }
     else {
-        response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "been hit"));
-    }
+        response.add(std::make_shared<PlaySoundEvent>(this->getBeenHitSoundName()));
+
+        if (hpPointsAfterOperation == 0) {
+            response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "tipping over"));
+        }
+        else {
+            response.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "been hit"));
+        }
+    };
 
     std::shared_ptr<HPFlyingE> hpFlyingE = std::make_shared<HPFlyingE>(d, false, this->getX(), this->getY(), this->getSX(), this->getSY());
     response.add(std::make_shared<CreateEEvent>(hpFlyingE));
@@ -588,7 +593,7 @@ sf::Color Warrior::getTextureColor() const {
         colors.emplace_back(150, 0, 255);
     }
     if (this->poison) {
-        colors.emplace_back(0, 100, 10);
+        colors.emplace_back(100, 150, 100);
     }
     if (colors.empty()) {
         return this->Unit::getTextureColor();
