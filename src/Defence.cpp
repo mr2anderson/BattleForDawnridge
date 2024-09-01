@@ -41,17 +41,12 @@ double Defence::getStab() const {
 double Defence::getCrush() const {
 	return this->crush;
 }
-static std::string FORMAT_K(double a) {
-	std::stringstream ss;
-	ss << std::setprecision(8) << std::noshowpoint << a;
-	return ss.str();
-}
 StringLcl Defence::getReadable() const {
 	StringLcl result;
 
-	result = result + StringLcl("{cut} " + FORMAT_K(this->cut) + " ");
-	result = result + StringLcl("{stab} " + FORMAT_K(this->stab) + " ");
-	result = result + StringLcl("{crush} " + FORMAT_K(this->crush));
+	result = result + StringLcl("{cut} " + std::to_string((uint32_t)(this->cut * 100)) + "% ");
+	result = result + StringLcl("{stab} " + std::to_string((uint32_t)(this->stab * 100)) + "% ");
+	result = result + StringLcl("{crush} " + std::to_string((uint32_t)(this->crush * 100)) + "%");
 
 	return result;
 }
