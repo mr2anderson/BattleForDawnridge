@@ -30,17 +30,17 @@ namespace COLOR_THEME {
 
 
 
-    static const sf::Color STATE_COLOR_WORST = sf::Color(255, 0, 154);
-    static const sf::Color STATE_COLOR_BEST = sf::Color(0, 255, 154);
+    static const sf::Color STATE_COLOR_WORST = sf::Color(200, 0, 150);
+    static const sf::Color STATE_COLOR_BEST = sf::Color(0, 200, 150);
     static const sf::Color STATE_COLOR_NEUTRAL = STATE_COLOR_BEST;
 
     template<typename T> static sf::Color STATE_COLOR(T a, T b) {
         if (a >= b) {
             return STATE_COLOR_BEST;
         }
-        uint32_t red = 255 - 255 * a / b;
-        uint32_t green = 255 * a / b;
-        uint32_t blue = 154;
+        uint32_t red = 200 - 200 * a / b;
+        uint32_t green = 200 * a / b;
+        uint32_t blue = 150;
         return sf::Color(red, green, blue);
     }
 
@@ -53,9 +53,9 @@ namespace COLOR_THEME {
         }
         uint32_t dstToMin = current - minBest;
         uint32_t dstToMax = maxWorst - current;
-        uint32_t red = 255 - 255 * dstToMax / dstToMin;
-        uint32_t green = 255 * dstToMax / dstToMin;
-        uint32_t blue = 154;
+        uint32_t red = 200 - 200 * dstToMax / dstToMin;
+        uint32_t green = 200 * dstToMax / dstToMin;
+        uint32_t blue = 150;
         return sf::Color(red, green, blue);
     }
 }
