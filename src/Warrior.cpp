@@ -346,9 +346,24 @@ Events Warrior::getMoveHighlightionEvent(MapState *state) {
     return event;
 }
 StringLcl Warrior::getDetailedDescription(MapState *state) const {
+    int32_t timeBonusVal = state->getTimePtr()->getTimeMod().getPercentDelta(Player::IS_POSITIVE(this->getPlayerId()));
+    StringLcl timeBonus;
+    if (Player::IS_POSITIVE(this->getPlayerId())) {
+        timeBonus = StringLcl("{positive}");
+    }
+    else {
+        timeBonus = StringLcl("{negative}");
+    }
+    if (timeBonusVal >= 0) {
+        timeBonus = timeBonus + " +" + std::to_string(timeBonusVal) + "%";
+    }
+    else {
+        timeBonus = timeBonus + " " + std::to_string(timeBonusVal) + "%";
+    }
     StringLcl result = this->Unit::getDetailedDescription(state) + "\n" +
                        StringLcl("{movement_points}") + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + "\n" +
-                       StringLcl("{max_movement_points}") + std::to_string(this->getMovementPoints()) + "\n\n";
+                       StringLcl("{max_movement_points}") + std::to_string(this->getMovementPoints()) + "\n\n" +
+                       timeBonus + "\n\n";
     if (this->inRage()) {
         result = result + StringLcl("{in_rage}" + std::to_string(this->rageModeMovesLeft)) + "\n\n";
     }
