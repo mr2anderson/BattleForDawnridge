@@ -166,28 +166,35 @@ void Warrior::changeDirection(const std::string& newDirection) {
     this->defaultDirection = newDirection;
 }
 Events Warrior::newMove(MapState *state, uint32_t currentPlayerId) {
-	if (this->exist()) {
+	if (this->exist() and this->belongTo(currentPlayerId)) {
         Events events;
 
-        events.add(std::make_shared<RefreshWasHealedStatusEvent>(this->getThis<Warrior>()));
-		events.add(std::make_shared<RefreshMovementPointsEvent>(this->getThis<Warrior>()));
+        if (this->inRage()) {
+            events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this->getThis<Warrior>()));
+        }
 
-        if (this->belongTo(currentPlayerId)) {
-            if (this->inRage()) {
-                events.add(std::make_shared<DecreaseRageModeMovesLeftEvent>(this->getThis<Warrior>()));
-            }
-
-            if (this->toKill) {
-                events = events + this->hit(Damage(this->getHP(), Damage::TYPE::SERVICE));
-            }
-            else if (this->poison and this->getHP() != 1) {
-                events = events + this->hit(Damage(std::min(this->getHP() - 1, Parameters::get().getInt("poison_damage")), Damage::TYPE::SERVICE));
-            }
+        if (this->poison and this->getHP() != 1) {
+            events = events + this->hit(Damage(std::min(this->getHP() - 1, Parameters::get().getInt("poison_damage")), Damage::TYPE::SERVICE));
         }
 
 		return events;
 	}
 	return Events();
+}
+Events Warrior::endMove(MapState *state, uint32_t playerId) {
+    if (this->exist() and this->belongTo(playerId)) {
+        Events events;
+
+        events.add(std::make_shared<RefreshWasHealedStatusEvent>(this->getThis<Warrior>()));
+        events.add(std::make_shared<RefreshMovementPointsEvent>(this->getThis<Warrior>()));
+
+        if (this->toKill) {
+            events = events + this->hit(Damage(this->getHP(), Damage::TYPE::SERVICE));
+        }
+
+        return events;
+    }
+    return Events();
 }
 void Warrior::refreshMovementPoints() {
 	this->movementPoints = this->getMovementPoints();

@@ -116,8 +116,9 @@ private:
 	std::queue<std::shared_ptr<Event>> events;
 	uint32_t move;
 	HighlightTable highlightTable;
-	uint32_t currentGOIndexNewMoveEvent;
-	uint32_t totalGONewMoveEvents;
+	uint32_t currentGOIndexNewMoveEvent, totalGONewMoveEvents;
+    uint32_t currentGOIndexEndMoveEvent, totalGOEndMoveEvents;
+    bool mustChangeMove;
 	std::shared_ptr<ISelectable> selected;
 	bool curcorVisibility;
 	std::vector<Button> buttons;
@@ -133,9 +134,10 @@ private:
 	void verifyTooMuchPlayers();
 	void verifyMapTooBig();
 
-	void processNewMoveEvents(RoomOutputProtocol p);
-	bool allNewMoveEventsAdded() const;
-	void changeMove(RoomOutputProtocol p);
+	void processMoveEvents(RoomOutputProtocol p);
+	bool allMoveEventsAdded() const;
+    void startChangeMove(RoomOutputProtocol p);
+	void finishChangeMove(RoomOutputProtocol p);
 	Player* getCurrentPlayer();
 	void addButtonClickEventToQueue(uint32_t x, uint32_t y, RoomOutputProtocol p);
 	void addGameObjectClickEventToQueue(uint8_t button, uint32_t viewX, uint32_t viewY, RoomOutputProtocol p);

@@ -75,6 +75,7 @@ public:
 	bool intersects(std::shared_ptr<GO> go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
+    virtual Events endMove(MapState *state, uint32_t currentPlayerId);
 	virtual DrawingPriority getDrawingPriority() const;
 	virtual ClickPriority getClickPriority() const;
     virtual NewMoveMainPriority getNewMoveMainPriority() const;

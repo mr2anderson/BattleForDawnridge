@@ -46,6 +46,7 @@ public:
     bool inRage() const;
 	void changeDirection(const std::string& newDirection);
 	Events newMove(MapState *state, uint32_t playerId) override;
+    Events endMove(MapState *state, uint32_t playerId) override;
 	void refreshMovementPoints();
     void wipeMovementPoints();
     uint32_t getSX() const override;

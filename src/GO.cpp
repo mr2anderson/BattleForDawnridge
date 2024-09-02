@@ -151,6 +151,9 @@ bool GO::intersects(std::shared_ptr<GO> go) const {
 Events GO::newMove(MapState* state, uint32_t currentPlayerId) {
 	return Events();
 }
+Events GO::endMove(MapState *state, uint32_t currentPlayerId) {
+    return Events();
+}
 DrawingPriority GO::getDrawingPriority() const {
 	return GO::DRAWING_PRIORITY_LOWEST;
 }

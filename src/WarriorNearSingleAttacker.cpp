@@ -30,8 +30,8 @@ WarriorNearSingleAttacker::WarriorNearSingleAttacker() {
 WarriorNearSingleAttacker::WarriorNearSingleAttacker(uint32_t x, uint32_t y, uint32_t playerId) : WarriorNearAttacker(x, y, playerId) {
     this->attackAbility = true;
 }
-Events WarriorNearSingleAttacker::newMove(MapState *state, uint32_t currentPlayerId) {
-    Events events = Warrior::newMove(state, currentPlayerId);
+Events WarriorNearSingleAttacker::endMove(MapState *state, uint32_t currentPlayerId) {
+    Events events = Warrior::endMove(state, currentPlayerId);
 
     if (this->exist()) {
         Events refreshAttackAbilityEvent;

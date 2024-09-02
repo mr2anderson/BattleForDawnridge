@@ -70,6 +70,9 @@ Room::Room(RoomID id, const std::string &saveData, Restrictions restrictions) {
 	this->animation = boost::none;
 	this->currentGOIndexNewMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
 	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->currentGOIndexEndMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->totalGOEndMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->mustChangeMove = false;
 	this->buttons.emplace_back(EndTurnButtonSpec(2));
 	this->buttons.emplace_back(BuildButtonSpec(3));
 	this->buttons.emplace_back(CurrentRoomIDButtonSpec(4, this->id));
@@ -119,7 +122,7 @@ void Room::update(const boost::optional<std::tuple<sf::Packet, UUID>>& received,
 		Events animationEvent = this->animation.value().process(this->map.getStatePtr());
 		this->addEvents(animationEvent, p);
 	}
-	this->processNewMoveEvents(p);
+	this->processMoveEvents(p);
 	this->processBaseEvents(p);
 }
 void Room::mustSendInit() {
@@ -229,23 +232,49 @@ void Room::verifyMapTooBig() {
 
 
 
-void Room::processNewMoveEvents(RoomOutputProtocol p) {
+void Room::processMoveEvents(RoomOutputProtocol p) {
 	uint8_t processed = 0;
-	while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
-		if (this->element != nullptr or !this->events.empty()) {
-			break;
-		}
-		Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
-		this->addEvents(newMoveEvent, p);
-		this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
-		processed = processed | this->processBaseEvents(p, false);
-	}
+
+    if (this->mustChangeMove) {
+        while (this->currentGOIndexEndMoveEvent != this->totalGOEndMoveEvents) {
+            if (this->element != nullptr or !this->events.empty() or this->animation.has_value()) {
+                break;
+            }
+            Events endMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexEndMoveEvent)->endMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
+            this->addEvents(endMoveEvent, p);
+            this->currentGOIndexEndMoveEvent = this->currentGOIndexEndMoveEvent + 1;
+            processed = processed | this->processBaseEvents(p, false);
+        }
+    }
+
+    if (this->currentGOIndexEndMoveEvent == this->totalGOEndMoveEvents) {
+        if (this->mustChangeMove) {
+            this->finishChangeMove(p);
+            this->mustChangeMove = false;
+        }
+        while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
+            if (this->element != nullptr or !this->events.empty() or this->animation.has_value()) {
+                break;
+            }
+            Events newMoveEvent = this->map.getStatePtr()->getCollectionsPtr()->getGO(this->currentGOIndexNewMoveEvent, FILTER::NEW_MOVE_PRIORITY)->newMove(this->map.getStatePtr(), this->getCurrentPlayer()->getId());
+            this->addEvents(newMoveEvent, p);
+            this->currentGOIndexNewMoveEvent = this->currentGOIndexNewMoveEvent + 1;
+            processed = processed | this->processBaseEvents(p, false);
+        }
+    }
+
 	this->syncUI(processed, p);
 }
-bool Room::allNewMoveEventsAdded() const {
-	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents);
+bool Room::allMoveEventsAdded() const {
+	return (this->currentGOIndexNewMoveEvent == this->totalGONewMoveEvents and
+    this->currentGOIndexEndMoveEvent == this->totalGOEndMoveEvents);
 }
-void Room::changeMove(RoomOutputProtocol p) {
+void Room::startChangeMove(RoomOutputProtocol p) {
+    this->currentGOIndexEndMoveEvent = 0;
+    this->totalGOEndMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
+    this->mustChangeMove = true;
+}
+void Room::finishChangeMove(RoomOutputProtocol p) {
 	this->move = this->move + 1;
 	this->currentGOIndexNewMoveEvent = 0;
 	this->totalGONewMoveEvents = this->map.getStatePtr()->getCollectionsPtr()->totalGOs();
@@ -691,7 +720,7 @@ void Room::receiveClick(sf::Packet& remPacket, UUID id, RoomOutputProtocol p) {
 	}
 	if (this->selected == nullptr) {
 		if (this->element == nullptr) {
-			if (!this->animation.has_value() and this->events.empty() and this->allNewMoveEventsAdded()) {
+			if (!this->animation.has_value() and this->events.empty() and this->allMoveEventsAdded()) {
 				if (mouseButton == sf::Mouse::Button::Left) {
 					this->addButtonClickEventToQueue(x, y, p);
 				}
@@ -966,7 +995,7 @@ void Room::handleCreatePopUpElementEvent(std::shared_ptr<CreateEEvent> e, RoomOu
 	this->element->restart();
 }
 void Room::handleChangeMoveEvent(std::shared_ptr<ChangeMoveEvent> e, RoomOutputProtocol p) {
-	this->changeMove(p);
+	this->startChangeMove(p);
 }
 void Room::handleReturnToMenuEvent(std::shared_ptr<ReturnToMenuEvent> e, RoomOutputProtocol p) {
     this->sendReturnToMenuToClients(p);

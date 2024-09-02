@@ -31,7 +31,7 @@ public:
 private:
     bool attackAbility;
 
-    Events newMove(MapState *state, uint32_t currentPlayerId) override;
+    Events endMove(MapState *state, uint32_t currentPlayerId) override;
     std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const override;
     Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) override;
     StringLcl getSpecialInfoString(MapState *state) const override;
