@@ -173,14 +173,6 @@ std::vector<BuildingHorizontalSelectionWindowComponent> WarriorProducerSpec::get
 					produceEvent = produceEvent + clickEvent;
 					produceEvent.add(std::make_shared<CreateEEvent>(w));
 				}
-				else if (population + w->getPopulation() > populationLimit) {
-					Events clickEvent;
-					clickEvent.add(std::make_shared<PlaySoundEvent>("click"));
-
-					std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{population_limit}"), StringLcl("{OK}"), clickEvent);
-					produceEvent = produceEvent + clickEvent;
-					produceEvent.add(std::make_shared<CreateEEvent>(w));
-				}
 				else {
 					produceEvent.add(std::make_shared<SubResourcesEvent>(w->getCost()));
 					produceEvent.add(std::make_shared<StartWarriorProducingEvent>(b, this->getThis<WarriorProducerSpec>(), w));
