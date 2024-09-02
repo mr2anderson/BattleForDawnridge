@@ -272,7 +272,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
         }
         else if (percent == 50) {
             percent = 55;
-            for (const std::string& a : { "heal", "rage" }) {
+            for (const std::string& a : { "rage", "poison" }) {
                 Textures::get().add(a + "_spell", "images/spells/" + a + "_spell.png");
             }
         }
