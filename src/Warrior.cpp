@@ -130,7 +130,7 @@ Events Warrior::killNextTurn() {
     Events clickSoundEvent;
     clickSoundEvent.add(std::make_shared<PlaySoundEvent>("click"));
 
-    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{will_be_killed_on_next_turn}"), StringLcl("{OK}"), clickSoundEvent);
+    std::shared_ptr<WindowButton> w = std::make_shared<WindowButton>(StringLcl("{will_be_killed}"), StringLcl("{OK}"), clickSoundEvent);
 
     Events event = clickSoundEvent;
     event.add(std::make_shared<CreateEEvent>(w));
