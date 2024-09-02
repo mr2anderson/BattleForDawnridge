@@ -53,8 +53,8 @@
 #include "Patriarch.hpp"
 #include "PatriarchProjectile.hpp"
 #include "LoadingBar.hpp"
-#include "Timer.hpp"
 #include "Killer.hpp"
+#include "Barbar.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -304,6 +304,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             percent = 80;
             LOAD_WARRIOR_DATA<Healer>();
             LOAD_WARRIOR_DATA<Patriarch>();
+            LOAD_WARRIOR_DATA<Barbar>();
         }
         else if (percent == 80) {
             percent = 85;
@@ -330,7 +331,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
                                           "ouch_woman_cute", "healer", "vehicle_hit",
                                           "vehicle", "sockerer_house", "roar", "dawn",
                                           "day", "night", "sunset", "ouch_old", "old", "patriarch_heal",
-                                          "poison", "knife", "heal_spell"
+                                          "poison", "knife", "heal_spell", "barbar"
             }) {
                 Sounds::get().add(a, "sounds/" + a + ".ogg");
             }

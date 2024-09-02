@@ -22,6 +22,7 @@
 #include "Legioner.hpp"
 #include "Killer.hpp"
 #include "Knight.hpp"
+#include "Barbar.hpp"
 #include "BlackKnight.hpp"
 
 
@@ -37,6 +38,7 @@ std::vector<std::shared_ptr<Warrior>> BarracksSpec::getWarriorsToProduce(uint32_
     warriors.push_back(std::make_shared<Killer>(0, 0, playerId));
 	warriors.push_back(std::make_shared<Knight>(0, 0, playerId));
 	warriors.push_back(std::make_shared<BlackKnight>(0, 0, playerId));
+    warriors.push_back(std::make_shared<Barbar>(0, 0, playerId));
 
 	return warriors;
 }
