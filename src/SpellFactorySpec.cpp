@@ -18,6 +18,7 @@
 
 
 #include "SpellFactorySpec.hpp"
+#include "HealSpell.hpp"
 #include "RageSpell.hpp"
 #include "PoisonSpell.hpp"
 
@@ -29,6 +30,7 @@ std::shared_ptr<IBuildingSpec> SpellFactorySpec::clone() const {
 std::vector<std::shared_ptr<Spell>> SpellFactorySpec::getSpellsToProduce(uint32_t playerId) const {
 	std::vector<std::shared_ptr<Spell>> toProduce;
 
+    toProduce.push_back(std::make_shared<HealSpell>(playerId));
 	toProduce.push_back(std::make_shared<RageSpell>(playerId));
     toProduce.push_back(std::make_shared<PoisonSpell>(playerId));
 

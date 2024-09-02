@@ -272,7 +272,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
         }
         else if (percent == 50) {
             percent = 55;
-            for (const std::string& a : { "rage", "poison" }) {
+            for (const std::string& a : { "rage", "poison", "heal" }) {
                 Textures::get().add(a + "_spell", "images/spells/" + a + "_spell.png");
             }
         }
@@ -330,7 +330,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
                                           "ouch_woman_cute", "healer", "vehicle_hit",
                                           "vehicle", "sockerer_house", "roar", "dawn",
                                           "day", "night", "sunset", "ouch_old", "old", "patriarch_heal",
-                                          "poison", "knife"
+                                          "poison", "knife", "heal_spell"
             }) {
                 Sounds::get().add(a, "sounds/" + a + ".ogg");
             }
