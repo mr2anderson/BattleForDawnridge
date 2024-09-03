@@ -20,7 +20,6 @@
 #include "WarriorProjectileHealer.hpp"
 #include "CreateEEvent.hpp"
 #include "HPFlyingE.hpp"
-#include "AddHpEvent.hpp"
 #include "PlaySoundEvent.hpp"
 #include "ColorTheme.hpp"
 
@@ -46,9 +45,8 @@ Events WarriorProjectileHealer::heal(MapState *state, std::shared_ptr<Warrior> w
     projectile->setDst(w->getXInPixels() + 64 / 2, w->getYInPixels() + 64 / 2);
     events.add(std::make_shared<CreateEEvent>(projectile));
 
-    events.add(std::make_shared<PlaySoundEvent>("heal"));
-    events.add(std::make_shared<CreateEEvent>(std::make_shared<HPFlyingE>(std::min(this->getHealingSpeed(state), w->getMaxHP()- w->getHP()), true, w->getX(), w->getY(), w->getSX(), w->getSY())));
-    events.add(std::make_shared<AddHpEvent>(w, this->getHealingSpeed(state)));
+    Events healEvent = w->heal();
+    events = events + healEvent;
 
     return events;
 }

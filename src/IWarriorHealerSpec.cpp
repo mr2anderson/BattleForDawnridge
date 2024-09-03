@@ -22,11 +22,9 @@
 #include "Warrior.hpp"
 #include "FocusOnEvent.hpp"
 #include "PlaySoundEvent.hpp"
-#include "AddHpEvent.hpp"
-#include "CreateEEvent.hpp"
 #include "HPFlyingE.hpp"
-#include "Locales.hpp"
 #include "HighlightColors.hpp"
+#include "Parameters.hpp"
 
 
 
@@ -48,12 +46,7 @@ Events IWarriorHealerSpec::getActiveNewMoveEvent(std::shared_ptr<const Building>
 				first = false;
 			}
 
-			events.add(std::make_shared<PlaySoundEvent>("heal"));
-
-			std::shared_ptr<HPFlyingE> flyingE = std::make_shared<HPFlyingE>(std::min(this->getHealingSpeed(), w->getMaxHP() - w->getHP()), true, w->getX(), w->getY(), w->getSX(), w->getSY());
-			events.add(std::make_shared<CreateEEvent>(flyingE));
-
-			events.add(std::make_shared<AddHpEvent>(w, this->getHealingSpeed()));
+            events = events + w->heal();
 		}
 	}
 
@@ -65,7 +58,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getC
 	if (b->works()) {
 		component = {
 			HorizontalSelectionWindowComponent(this->getHealTextureName(),
-            StringLcl("{this_building_heals_warriors}") + std::to_string(this->getHealingSpeed()),
+            StringLcl("{this_building_heals_warriors}") + std::to_string(Parameters::get().getInt("healing_speed")),
 			false,
 			Events()),
             true

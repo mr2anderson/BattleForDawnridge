@@ -51,6 +51,9 @@
 #include "ImageFlyingE.hpp"
 #include "SetPoisonEffectEvent.hpp"
 #include "ColorBlender.hpp"
+#include "AddHpEvent.hpp"
+#include "TextFlyingE.hpp"
+#include "WipePoisonEffectEvent.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -125,6 +128,24 @@ Events Warrior::hit(Damage damage) {
     response.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<Warrior>())));
 
     return response;
+}
+Events Warrior::heal() {
+    Events events;
+
+    if (this->poison) {
+        events.add(std::make_shared<PlaySoundEvent>("heal"));
+        events.add(std::make_shared<CreateEEvent>(std::make_shared<TextFlyingE>(StringLcl::COLOR(sf::Color::Green) + StringLcl("{poison_removed}"), this->getX(), this->getY(), this->getSX(), this->getSY())));
+        events.add(std::make_shared<WipePoisonEffectEvent>(this->getThis<Warrior>()));
+    }
+    else {
+        uint32_t toAdd = std::min(Parameters::get().getInt("healing_speed"), this->getMaxHP()- this->getHP());
+        if (toAdd != 0) {
+            events.add(std::make_shared<PlaySoundEvent>("heal"));
+            events.add(std::make_shared<CreateEEvent>(std::make_shared<HPFlyingE>(toAdd, true, this->getX(), this->getY(), this->getSX(), this->getSY())));
+            events.add(std::make_shared<AddHpEvent>(this->getThis<HPGO>(), Parameters::get().getInt("healing_speed")));
+        }
+    }
+    return events;
 }
 Events Warrior::killNextTurn() {
     Events clickSoundEvent;
@@ -412,6 +433,9 @@ void Warrior::refreshWasHealedStatus() {
 }
 void Warrior::setPoisonStatus() {
     this->poison = true;
+}
+void Warrior::wipePoisonStatus() {
+    this->poison = false;
 }
 bool Warrior::isVehicle() const {
     return false;
@@ -778,7 +802,6 @@ Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
 void Warrior::addHp(uint32_t val) {
     this->Unit::addHp(val);
     this->wasHealedThisMove = true;
-    this->poison = false;
 }
 Events Warrior::getResponse(MapState *state, uint32_t playerId, uint32_t button) {
 	if (!this->exist()) {

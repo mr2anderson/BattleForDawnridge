@@ -17,24 +17,12 @@
  */
 
 
-#include "IWarriorHealerSpec.hpp"
+#include "SetPoisonEffectEvent.hpp"
 
 
-#pragma once
-
-
-class InfirmaryWarriorHealerSpec : public IWarriorHealerSpec {
-public:
-	InfirmaryWarriorHealerSpec();
-	std::shared_ptr<IBuildingSpec> clone() const override;
-
-    std::string getHealTextureName() const override;
-private:
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<IWarriorHealerSpec>(*this);
-    }
-};
-
-
-BOOST_CLASS_EXPORT_KEY(InfirmaryWarriorHealerSpec)
+SetPoisonEffectEvent::SetPoisonEffectEvent(std::shared_ptr<Warrior> w) {
+    this->w = w;
+}
+std::shared_ptr<Warrior> SetPoisonEffectEvent::getWarrior() {
+    return this->w;
+}

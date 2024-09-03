@@ -18,16 +18,11 @@
 
 
 #include "InfirmaryWarriorHealerSpec.hpp"
-#include "Parameters.hpp"
-#include "Warrior.hpp"
 
 
 InfirmaryWarriorHealerSpec::InfirmaryWarriorHealerSpec() = default;
 std::shared_ptr<IBuildingSpec> InfirmaryWarriorHealerSpec::clone() const {
 	return std::make_shared<InfirmaryWarriorHealerSpec>(*this);
-}
-uint32_t InfirmaryWarriorHealerSpec::getHealingSpeed() const {
-	return Parameters::get().getInt("infirmary_healing_speed");
 }
 std::string InfirmaryWarriorHealerSpec::getHealTextureName() const {
     return "christianity_icon";

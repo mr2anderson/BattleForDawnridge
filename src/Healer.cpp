@@ -43,9 +43,6 @@ uint32_t Healer::getMaxHP() const {
 Defence Healer::getBaseDefence() const {
     return Parameters::get().getDefence("healer_defence");
 }
-uint32_t Healer::getBaseHealingSpeed() const {
-    return Parameters::get().getInt("healer_healing_speed");
-}
 uint32_t Healer::getHealingRadius() const {
     return Parameters::get().getInt("healer_healing_radius");
 }

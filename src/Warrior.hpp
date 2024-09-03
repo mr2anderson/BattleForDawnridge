@@ -39,6 +39,7 @@ public:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	Events hit(Damage d) override;
+    Events heal();
 	Events killNextTurn();
 	Events revertKillNextTurn();
 	void enableRageMode();
@@ -71,6 +72,7 @@ public:
     bool wasHealed() const;
     void refreshWasHealedStatus();
     void setPoisonStatus();
+    void wipePoisonStatus();
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
@@ -129,7 +131,7 @@ private:
     HorizontalSelectionWindowComponent getWarriorInfoComponent(MapState *state) const;
     HorizontalSelectionWindowComponent getWarriorOfEnemyComponent() const;
     Events getSelectionWindow(MapState *state, bool own, bool minimal);
-    void addHp(uint32_t val) override;
+    void addHp(uint32_t value) override;
 
 	Events getResponse(MapState *state, uint32_t playerId, uint32_t button) override;
     std::shared_ptr<PlayerPointer> getPlayerPointer() const override;

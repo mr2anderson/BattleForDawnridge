@@ -28,7 +28,6 @@ public:
     WorkshopWarriorHealerSpec();
     std::shared_ptr<IBuildingSpec> clone() const override;
 
-    uint32_t getHealingSpeed() const override;
     std::string getHealTextureName() const override;
     bool healVehicles() const override;
 private:

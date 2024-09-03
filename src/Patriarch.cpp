@@ -43,9 +43,6 @@ uint32_t Patriarch::getMaxHP() const {
 Defence Patriarch::getBaseDefence() const {
     return Parameters::get().getDefence("patriarch_defence");
 }
-uint32_t Patriarch::getBaseHealingSpeed() const {
-    return Parameters::get().getInt("patriarch_healing_speed");
-}
 uint32_t Patriarch::getHealingRadius() const {
     return Parameters::get().getInt("patriarch_healing_radius");
 }

@@ -67,12 +67,7 @@ Events HealSpell::changeMap(MapState* state, uint32_t centerX, uint32_t centerY)
             if (std::max(centerY, w->getY()) - std::min(centerY, w->getY()) > this->getRadius()) {
                 continue;
             }
-            uint32_t toAdd = std::min(Parameters::get().getInt("heal_spell_healing_speed"), w->getMaxHP() - w->getHP());
-            if (toAdd != 0) {
-                events.add(std::make_shared<PlaySoundEvent>("heal"));
-                events.add(std::make_shared<CreateEEvent>(std::make_shared<HPFlyingE>(toAdd, true, w->getX(), w->getY(), w->getSX(), w->getSY())));
-                events.add(std::make_shared<AddHpEvent>(w, toAdd));
-            }
+            events = events + w->heal();
         }
     }
 

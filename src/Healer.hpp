@@ -30,7 +30,6 @@ public:
     std::string getBeenHitSoundName() const override;
     uint32_t getMaxHP() const override;
     Defence getBaseDefence() const override;
-    uint32_t getBaseHealingSpeed() const override;
     uint32_t getHealingRadius() const override;
     Resources getCost() const override;
     uint32_t getTimeToProduce() const override;

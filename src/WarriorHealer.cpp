@@ -30,14 +30,6 @@ WarriorHealer::WarriorHealer() = default;
 WarriorHealer::WarriorHealer(uint32_t x, uint32_t y, uint32_t playerId) : Warrior(x, y, playerId) {
 
 }
-uint32_t WarriorHealer::getHealingSpeed(MapState *state) const {
-    uint32_t healingSpeed = this->getBaseHealingSpeed();
-    if (this->inRage()) {
-        healingSpeed = healingSpeed * (1 + Parameters::get().getDouble("rage_mode_healing_speed_bonus"));
-    }
-    healingSpeed = (1 + (float)state->getTimePtr()->getTimeMod().getPercentDelta(Player::IS_POSITIVE(this->getPlayerId())) / 100) * healingSpeed;
-    return healingSpeed;
-}
 bool WarriorHealer::blockBuildingAbility() const {
     return false;
 }
@@ -94,7 +86,7 @@ Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint3
     return Events();
 }
 StringLcl WarriorHealer::getSpecialInfoString(MapState *state) const {
-    StringLcl str = StringLcl("{healing_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getHealingSpeed(state)) + ".";
+    StringLcl str = StringLcl("{healing_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(Parameters::get().getInt("healing_speed")) + ".";
 
     return str;
 }

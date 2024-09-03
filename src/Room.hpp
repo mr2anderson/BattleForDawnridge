@@ -80,6 +80,7 @@
 #include "ClosePopUpElementEvent.hpp"
 #include "RefreshWasHealedStatusEvent.hpp"
 #include "SetPoisonEffectEvent.hpp"
+#include "WipePoisonEffectEvent.hpp"
 
 
 #pragma once
@@ -232,4 +233,5 @@ private:
     void handleClosePopUpElementEvent(std::shared_ptr<ClosePopUpElementEvent> e, RoomOutputProtocol p);
     void handleRefreshWasHealedStatusEvent(std::shared_ptr<RefreshWasHealedStatusEvent> e, RoomOutputProtocol p);
     void handleSetPoisonEffectEvent(std::shared_ptr<SetPoisonEffectEvent> e, RoomOutputProtocol p);
+    void handleWipePoisonEffectEvent(std::shared_ptr<WipePoisonEffectEvent> e, RoomOutputProtocol p);
 };

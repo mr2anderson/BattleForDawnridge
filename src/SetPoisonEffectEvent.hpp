@@ -17,24 +17,21 @@
  */
 
 
-#include "IWarriorHealerSpec.hpp"
+#include <memory>
+#include "Event.hpp"
 
 
 #pragma once
 
 
-class InfirmaryWarriorHealerSpec : public IWarriorHealerSpec {
+class Warrior;
+
+
+class SetPoisonEffectEvent : public Event {
 public:
-	InfirmaryWarriorHealerSpec();
-	std::shared_ptr<IBuildingSpec> clone() const override;
+    SetPoisonEffectEvent(std::shared_ptr<Warrior> w);
 
-    std::string getHealTextureName() const override;
+    std::shared_ptr<Warrior> getWarrior();
 private:
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<IWarriorHealerSpec>(*this);
-    }
+    std::shared_ptr<Warrior> w;
 };
-
-
-BOOST_CLASS_EXPORT_KEY(InfirmaryWarriorHealerSpec)

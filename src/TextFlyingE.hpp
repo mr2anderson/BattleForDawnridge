@@ -17,28 +17,28 @@
  */
 
 
-#include "IAreaControllerSpec.hpp"
+#include "FlyingE.hpp"
+#include "StringLcl.hpp"
 
 
 #pragma once
 
 
-class IWarriorHealerSpec : public IAreaControllerSpec {
+class TextFlyingE : public FlyingE {
 public:
-	Events getActiveNewMoveEvent(std::shared_ptr<const Building>  b, MapState* state) override;
-	std::vector<BuildingHorizontalSelectionWindowComponent> getComponents(std::shared_ptr<const Building>  b, MapState* state) override;
-	uint32_t getRadius() const override;
-    sf::Color getHighlightColor(uint32_t playerId) const override;
-    uint8_t getHighlightType() const override;
-    virtual bool healVehicles() const;
-    NewMoveMainPriority getNewMoveMainPriority() const override;
-    virtual std::string getHealTextureName() const = 0;
+    TextFlyingE();
+    TextFlyingE(const StringLcl& str, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy);
 private:
+    StringLcl str;
+
+    std::unique_ptr<sf::Drawable> getDrawable(sf::Vector2f position, sf::Color color) const override;
+
     friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<IAreaControllerSpec>(*this);
+    template<class Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& boost::serialization::base_object<FlyingE>(*this);
+        ar& this->str;
     }
 };
 
 
-BOOST_CLASS_EXPORT_KEY(IWarriorHealerSpec)
+BOOST_CLASS_EXPORT_KEY(TextFlyingE)

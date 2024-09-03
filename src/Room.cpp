@@ -955,6 +955,10 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
         this->handleSetPoisonEffectEvent(setPoisonEffectEvent, p);
         result = result | SYNC_UI::SYNC_MAP;
     }
+    else if (std::shared_ptr<WipePoisonEffectEvent> wipePoisonEffectEvent = std::dynamic_pointer_cast<WipePoisonEffectEvent>(e)) {
+        this->handleWipePoisonEffectEvent(wipePoisonEffectEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
+    }
 	else {
         p.logs->emplace_back("{unknown_event_handled}");
     }
@@ -1155,4 +1159,7 @@ void Room::handleRefreshWasHealedStatusEvent(std::shared_ptr<RefreshWasHealedSta
 }
 void Room::handleSetPoisonEffectEvent(std::shared_ptr<SetPoisonEffectEvent> e, RoomOutputProtocol p) {
     e->getWarrior()->setPoisonStatus();
+}
+void Room::handleWipePoisonEffectEvent(std::shared_ptr<WipePoisonEffectEvent> e, RoomOutputProtocol p) {
+    e->getWarrior()->wipePoisonStatus();
 }

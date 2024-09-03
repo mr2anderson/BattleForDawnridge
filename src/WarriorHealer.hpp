@@ -28,11 +28,9 @@ public:
     WarriorHealer();
     WarriorHealer(uint32_t x, uint32_t y, uint32_t playerId);
 
-    uint32_t getHealingSpeed(MapState *state) const;
     bool blockBuildingAbility() const override;
 protected:
     virtual bool healVehicles() const;
-    virtual uint32_t getBaseHealingSpeed() const = 0;
     virtual Events heal(MapState *state, std::shared_ptr<Warrior> w);
     virtual bool canHeal(std::shared_ptr<Warrior> w) const;
     StringLcl getSpecialInfoString(MapState *state) const override;

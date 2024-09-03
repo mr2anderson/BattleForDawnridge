@@ -18,29 +18,24 @@
 
 
 #include "HPFlyingE.hpp"
-#include "Fonts.hpp"
+
+
+static StringLcl GET(uint32_t delta, bool plus) {
+    StringLcl result;
+    if (plus) {
+        result = result + StringLcl::COLOR(sf::Color::Green);
+    }
+    else {
+        result = result + StringLcl::COLOR(sf::Color::Red);
+    }
+    result = result + std::to_string(delta);
+    return result;
+}
 
 
 HPFlyingE::HPFlyingE() = default;
-HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : FlyingE(64 * x + 64 * sx / 2, 64 * y + 64 * sy / 2)  {
-    this->delta = delta;
-    this->plus = plus;
-}
-std::unique_ptr<sf::Drawable> HPFlyingE::getDrawable(sf::Vector2f position, sf::Color color) const {
-    sf::Text text;
-    text.setFont(*Fonts::get().get("1"));
-    text.setString(std::to_string(delta));
-    if (plus) {
-        text.setFillColor(sf::Color(0, 255, 0, color.a));
-    }
-    else {
-        text.setFillColor(sf::Color(255, 0, 0, color.a));
-    }
-    text.setCharacterSize(18);
-    text.setPosition(position);
-    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+HPFlyingE::HPFlyingE(uint32_t delta, bool plus, uint32_t x, uint32_t y, uint32_t sx, uint32_t sy) : TextFlyingE(GET(delta, plus), x, y, sx, sy)  {
 
-    return std::make_unique<sf::Text>(text);
 }
 
 

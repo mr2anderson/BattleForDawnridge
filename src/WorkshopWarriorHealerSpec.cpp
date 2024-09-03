@@ -18,15 +18,11 @@
 
 
 #include "WorkshopWarriorHealerSpec.hpp"
-#include "Parameters.hpp"
 
 
 WorkshopWarriorHealerSpec::WorkshopWarriorHealerSpec() = default;
 std::shared_ptr<IBuildingSpec>WorkshopWarriorHealerSpec::clone() const {
     return std::make_shared<WorkshopWarriorHealerSpec>(*this);
-}
-uint32_t WorkshopWarriorHealerSpec::getHealingSpeed() const {
-    return Parameters::get().getInt("workshop_healing_speed");
 }
 std::string WorkshopWarriorHealerSpec::getHealTextureName() const {
     return "gear_icon";
