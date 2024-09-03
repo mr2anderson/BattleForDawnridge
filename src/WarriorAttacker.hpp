@@ -28,12 +28,6 @@ public:
     WarriorAttacker();
     WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId);
 
-    bool hasError(MapSize mapSize, uint32_t totalPlayers) const override {
-        return 
-            (this->Warrior::hasError(mapSize, totalPlayers) or 
-            (this->getCurrentAnimation() == "attack" and (this->target == nullptr or this->target->hasError(mapSize, totalPlayers))));
-    }
-
     uint32_t getMinDamagePoints(MapState *state) const;
     uint32_t getMaxDamagePoints(MapState *state) const;
     Damage getDamage(MapState *state) const;
@@ -44,11 +38,9 @@ public:
 protected:
     virtual std::vector<std::string> getAttackPossibleDirections() const = 0;
     virtual std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const;
-    virtual Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY);
+    virtual Events startAttack(MapState *state, std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY);
     virtual Damage getBaseDamage() const = 0;
 private:
-    std::shared_ptr<Unit> target;
-
     uint32_t getCurrentAnimationMs() const override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     std::string getDirection(uint32_t targetX, uint32_t targetY) const;
@@ -58,7 +50,6 @@ private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<Warrior>(*this);
-        ar & this->target;
     }
 };
 

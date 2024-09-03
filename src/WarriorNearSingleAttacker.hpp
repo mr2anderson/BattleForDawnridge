@@ -33,7 +33,7 @@ private:
 
     Events endMove(MapState *state, uint32_t currentPlayerId) override;
     std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const override;
-    Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) override;
+    Events startAttack(MapState *state, std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) override;
     StringLcl getSpecialInfoString(MapState *state) const override;
     void refreshAbility() override;
     void wipeAbility() override;

@@ -24,13 +24,13 @@
 #include "HighlightColors.hpp"
 #include "PlaySoundEvent.hpp"
 #include "GlobalRandomGenerator32.hpp"
+#include "StartWarriorAnimationEvent.hpp"
+#include "ChangeWarriorDirectionEvent.hpp"
 
 
-WarriorAttacker::WarriorAttacker() {
-    this->target = nullptr;
-}
+WarriorAttacker::WarriorAttacker() = default;
 WarriorAttacker::WarriorAttacker(uint32_t x, uint32_t y, uint32_t playerId) : Warrior(x, y, playerId) {
-    this->target = nullptr;
+
 }
 uint32_t WarriorAttacker::getMinDamagePoints(MapState *state) const {
     uint32_t p = this->getDamage(state).getPoints();
@@ -143,22 +143,32 @@ Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uin
         std::vector<std::tuple<uint32_t, uint32_t>> targets = this->canAttack(u);
         for (uint32_t j = 0; j < targets.size(); j = j + 1) {
             if (std::make_tuple(targetX, targetY) == targets.at(j)) {
-                return this->startAttack(u, targetX, targetY);
+                return this->startAttack(state, u, targetX, targetY);
             }
         }
     }
 
     return Events();
 }
-Events WarriorAttacker::startAttack(std::shared_ptr<Unit> u, uint32_t targetX, uint32_t targetY) {
-    this->target = u;
-    this->wipeMovementPoints();
-    this->startAnimation("attack");
-    this->setDirection(this->getDirection(targetX, targetY));
-
+Events WarriorAttacker::startAttack(MapState *state, std::shared_ptr<Unit> u, uint32_t targetX, uint32_t targetY) {
     Events events;
+
+    this->wipeMovementPoints();
+
+    events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "attack"));
+    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirection(targetX, targetY)));
+
     events.add(std::make_shared<PlaySoundEvent>(this->getStartAttackSoundName()));
+
     events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<WarriorAttacker>())));
+
+    Damage baseDamage = this->getDamage(state);
+    float k = 1 - (float)Parameters::get().getInt("damage_random_percent")  / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * Parameters::get().getInt("damage_random_percent") + 1)) / 100;
+    baseDamage = k * baseDamage;
+    events = events + u->hit(baseDamage);
+
+    events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "talking"));
+
     return events;
 }
 Events WarriorAttacker::processCurrentAnimation(MapState *state) {
@@ -166,11 +176,6 @@ Events WarriorAttacker::processCurrentAnimation(MapState *state) {
 
     if (events.empty() and this->getCurrentAnimation() == "attack" and this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
-        Damage baseDamage = this->getDamage(state);
-        float k = 1 - (float)Parameters::get().getInt("damage_random_percent")  / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * Parameters::get().getInt("damage_random_percent") + 1)) / 100;
-        baseDamage = k * baseDamage;
-        events = events + this->target->hit(baseDamage);
-        this->startAnimation("talking");
     }
 
     return events;

@@ -47,8 +47,8 @@ std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearSingleAttacker::canAttack
     }
     return {};
 }
-Events WarriorNearSingleAttacker::startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) {
-    Events events = WarriorNearAttacker::startAttack(u, targetX, targetY);
+Events WarriorNearSingleAttacker::startAttack(MapState *state, std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY) {
+    Events events = WarriorNearAttacker::startAttack(state, u, targetX, targetY);
 
     Events wipeAttackAbilityEvent;
     wipeAttackAbilityEvent.add(std::make_shared<WipeAttackAbilityEvent>(this->getThis<WarriorNearSingleAttacker>()));
