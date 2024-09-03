@@ -46,6 +46,7 @@
 #include "Castle.hpp"
 #include "SockererHouse.hpp"
 #include "ColorTheme.hpp"
+#include "Church.hpp"
 
 
 BuildButtonSpec::BuildButtonSpec() = default;
@@ -140,6 +141,7 @@ Events BuildButtonSpec::getEvents() const {
 	buildMenuSectionTroopsComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
+    buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Church>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<SockererHouse>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<SpellFactory>());
