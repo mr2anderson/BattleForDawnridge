@@ -81,6 +81,8 @@
 #include "RefreshWasHealedStatusEvent.hpp"
 #include "SetPoisonEffectEvent.hpp"
 #include "WipePoisonEffectEvent.hpp"
+#include "SetInspiredEffectEvent.hpp"
+#include "WipeInspiredEffectEvent.hpp"
 
 
 #pragma once
@@ -234,4 +236,6 @@ private:
     void handleRefreshWasHealedStatusEvent(std::shared_ptr<RefreshWasHealedStatusEvent> e, RoomOutputProtocol p);
     void handleSetPoisonEffectEvent(std::shared_ptr<SetPoisonEffectEvent> e, RoomOutputProtocol p);
     void handleWipePoisonEffectEvent(std::shared_ptr<WipePoisonEffectEvent> e, RoomOutputProtocol p);
+    void handleSetInspiredEffectEvent(std::shared_ptr<SetInspiredEffectEvent> e, RoomOutputProtocol p);
+    void handleWipeInspiredEffectEvent(std::shared_ptr<WipeInspiredEffectEvent> e, RoomOutputProtocol p);
 };

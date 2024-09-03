@@ -24,7 +24,6 @@
 #include "HighlightColors.hpp"
 #include "PlaySoundEvent.hpp"
 #include "GlobalRandomGenerator32.hpp"
-#include "ColorTheme.hpp"
 
 
 WarriorAttacker::WarriorAttacker() {
@@ -43,10 +42,15 @@ uint32_t WarriorAttacker::getMaxDamagePoints(MapState *state) const {
 }
 Damage WarriorAttacker::getDamage(MapState *state) const {
     Damage baseDamage = this->getBaseDamage();
+    double k = 0;
+    k = k + (double)state->getTimePtr()->getTimeMod().getPercentDelta(Player::IS_POSITIVE(this->getPlayerId())) / (double)100;
     if (this->inRage()) {
-        baseDamage = (1 + Parameters::get().getDouble("rage_mode_damage_bonus")) * baseDamage;
+        k = k + Parameters::get().getDouble("rage_mode_damage_bonus");
     }
-    baseDamage = (1 + (float)state->getTimePtr()->getTimeMod().getPercentDelta(Player::IS_POSITIVE(this->getPlayerId())) / 100) * baseDamage;
+    if (this->isInspired()) {
+        k = k + Parameters::get().getDouble("inspired_damage_bonus");
+    }
+    baseDamage = (1 + k) * baseDamage;
     return baseDamage;
 }
 uint32_t WarriorAttacker::getAnimationNumber(const std::string& type, const std::string& direction) const {

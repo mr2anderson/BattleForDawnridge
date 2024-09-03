@@ -959,6 +959,14 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
         this->handleWipePoisonEffectEvent(wipePoisonEffectEvent, p);
         result = result | SYNC_UI::SYNC_MAP;
     }
+    else if (std::shared_ptr<SetInspiredEffectEvent> setInspiredEffectEvent = std::dynamic_pointer_cast<SetInspiredEffectEvent>(e)) {
+        this->handleSetInspiredEffectEvent(setInspiredEffectEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
+    }
+    else if (std::shared_ptr<WipeInspiredEffectEvent> wipeInspiredEffectEvent = std::dynamic_pointer_cast<WipeInspiredEffectEvent>(e)) {
+        this->handleWipeInspiredEffectEvent(wipeInspiredEffectEvent, p);
+        result = result | SYNC_UI::SYNC_MAP;
+    }
 	else {
         p.logs->emplace_back("{unknown_event_handled}");
     }
@@ -1162,4 +1170,10 @@ void Room::handleSetPoisonEffectEvent(std::shared_ptr<SetPoisonEffectEvent> e, R
 }
 void Room::handleWipePoisonEffectEvent(std::shared_ptr<WipePoisonEffectEvent> e, RoomOutputProtocol p) {
     e->getWarrior()->wipePoisonStatus();
+}
+void Room::handleSetInspiredEffectEvent(std::shared_ptr<SetInspiredEffectEvent> e, RoomOutputProtocol p) {
+    e->getWarrior()->setInspiredStatus();
+}
+void Room::handleWipeInspiredEffectEvent(std::shared_ptr<WipeInspiredEffectEvent> e, RoomOutputProtocol p) {
+    e->getWarrior()->wipeInspiredStatus();
 }

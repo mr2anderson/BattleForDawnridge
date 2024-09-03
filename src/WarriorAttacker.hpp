@@ -47,7 +47,7 @@ protected:
     virtual Events startAttack(std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY);
     virtual Damage getBaseDamage() const = 0;
 private:
-    std::shared_ptr<Unit>target;
+    std::shared_ptr<Unit> target;
 
     uint32_t getCurrentAnimationMs() const override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;

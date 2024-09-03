@@ -187,7 +187,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             for (const std::string& a :
                 { "axe", "battle", "bell", "christianity", "cross", "destroy", "gear", "hammer", "healer", "heart", "illumination_settings",
                 "infantryman", "kill", "lord", "magick", "music", "new_turn", "priest", "resources", "room_id", "save", "shield", "slow_movement", "sockerer",
-                "sound", "to_menu", "trade", "poison", "poison_effect" }) {
+                "sound", "to_menu", "trade", "poison", "poison_effect", "inspired_effect" }) {
                 Textures::get().add(a + "_icon", "images/icons/" + a + "_icon.png");
             }
             for (const std::string& a : { "boost", "sfml" }) {

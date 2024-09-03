@@ -40,6 +40,7 @@ public:
 
 	Events hit(Damage d) override;
     Events heal();
+    Events inspire();
 	Events killNextTurn();
 	Events revertKillNextTurn();
 	void enableRageMode();
@@ -73,6 +74,9 @@ public:
     void refreshWasHealedStatus();
     void setPoisonStatus();
     void wipePoisonStatus();
+    void setInspiredStatus();
+    void wipeInspiredStatus();
+    bool isInspired() const;
 
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
@@ -110,6 +114,7 @@ private:
 	bool toKill;
 	uint32_t rageModeMovesLeft;
     bool poison;
+    bool inspired;
 
 	std::shared_ptr<sf::Drawable> getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const override;
     void update(MapState *state, uint32_t playerId) override;
@@ -125,6 +130,7 @@ private:
 	sf::Color getTextureColor() const override;
 	HorizontalSelectionWindowComponent getRageModeComponent() const;
     HorizontalSelectionWindowComponent getPoisonComponent() const;
+    HorizontalSelectionWindowComponent getInspiredComponent() const;
     HorizontalSelectionWindowComponent getTimeModComponent(MapState *state) const;
 	HorizontalSelectionWindowComponent getKillComponent();
 	HorizontalSelectionWindowComponent getRevertKillComponent();
@@ -151,6 +157,7 @@ private:
         ar & this->toKill;
         ar & this->rageModeMovesLeft;
         ar & this->poison;
+        ar & this->inspired;
     }
 };
 

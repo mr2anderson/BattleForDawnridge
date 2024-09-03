@@ -43,7 +43,9 @@ std::unique_ptr<sf::Drawable> TextFlyingE::getDrawable(sf::Vector2f position, sf
                 text << sf::Color::White;
             }
             else {
-                text << colors[ctr];
+                sf::Color orColor = colors[ctr];
+                orColor.a = color.a;
+                text << orColor;
             }
             text << word + L' ';
             ctr = ctr + 1;

@@ -54,6 +54,8 @@
 #include "AddHpEvent.hpp"
 #include "TextFlyingE.hpp"
 #include "WipePoisonEffectEvent.hpp"
+#include "SetInspiredEffectEvent.hpp"
+#include "WipeInspiredEffectEvent.hpp"
 
 
 const uint32_t Warrior::TOTAL_FOOTSTEPS = 10;
@@ -73,6 +75,7 @@ Warrior::Warrior(uint32_t x, uint32_t y, uint32_t playerId) :
     this->toKill = false;
     this->rageModeMovesLeft = 0;
     this->poison = false;
+    this->inspired = false;
     this->hasSpecialMoves = false;
     this->enemyMove = true;
 }
@@ -129,10 +132,21 @@ Events Warrior::hit(Damage damage) {
 
     return response;
 }
+Events Warrior::inspire() {
+    Events events;
+
+    events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
+    events.add(std::make_shared<PlaySoundEvent>(this->getSoundName()));
+    events.add(std::make_shared<SetInspiredEffectEvent>(this->getThis<Warrior>()));
+    events.add(std::make_shared<CreateEEvent>(std::make_shared<TextFlyingE>(StringLcl::COLOR(sf::Color::Green) + StringLcl("{inspired_effect_short}"), this->getX(), this->getY(), this->getSX(), this->getSY())));
+
+    return events;
+}
 Events Warrior::heal() {
     Events events;
 
     if (this->poison) {
+        events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
         events.add(std::make_shared<PlaySoundEvent>("heal"));
         events.add(std::make_shared<CreateEEvent>(std::make_shared<TextFlyingE>(StringLcl::COLOR(sf::Color::Green) + StringLcl("{poison_removed}"), this->getX(), this->getY(), this->getSX(), this->getSY())));
         events.add(std::make_shared<WipePoisonEffectEvent>(this->getThis<Warrior>()));
@@ -140,6 +154,7 @@ Events Warrior::heal() {
     else {
         uint32_t toAdd = std::min(Parameters::get().getInt("healing_speed"), this->getMaxHP()- this->getHP());
         if (toAdd != 0) {
+            events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
             events.add(std::make_shared<PlaySoundEvent>("heal"));
             events.add(std::make_shared<CreateEEvent>(std::make_shared<HPFlyingE>(toAdd, true, this->getX(), this->getY(), this->getSX(), this->getSY())));
             events.add(std::make_shared<AddHpEvent>(this->getThis<HPGO>(), Parameters::get().getInt("healing_speed")));
@@ -208,6 +223,7 @@ Events Warrior::endMove(MapState *state, uint32_t playerId) {
 
         events.add(std::make_shared<RefreshWasHealedStatusEvent>(this->getThis<Warrior>()));
         events.add(std::make_shared<RefreshMovementPointsEvent>(this->getThis<Warrior>()));
+        events.add(std::make_shared<WipeInspiredEffectEvent>(this->getThis<Warrior>()));
 
         if (this->toKill) {
             events = events + this->hit(Damage(this->getHP(), Damage::TYPE::SERVICE));
@@ -422,6 +438,9 @@ StringLcl Warrior::getDetailedDescription(MapState *state) const {
     if (this->poison) {
         result = result + StringLcl("{poison_effect_short}") + "\n\n";
     }
+    if (this->inspired) {
+        result = result + StringLcl("{inspired_effect_short}") + "\n\n";
+    }
     result = result + this->getSpecialInfoString(state) + "\n";
     return result;
 }
@@ -436,6 +455,15 @@ void Warrior::setPoisonStatus() {
 }
 void Warrior::wipePoisonStatus() {
     this->poison = false;
+}
+void Warrior::setInspiredStatus() {
+    this->inspired = true;
+}
+void Warrior::wipeInspiredStatus() {
+    this->inspired = false;
+}
+bool Warrior::isInspired() const {
+    return this->inspired;
 }
 bool Warrior::isVehicle() const {
     return false;
@@ -626,6 +654,9 @@ sf::Color Warrior::getTextureColor() const {
     if (this->poison) {
         colors.emplace_back(100, 150, 100);
     }
+    if (this->inspired) {
+        colors.emplace_back(65, 105, 225);
+    }
     if (colors.empty()) {
         return this->Unit::getTextureColor();
     }
@@ -644,6 +675,14 @@ HorizontalSelectionWindowComponent Warrior::getPoisonComponent() const {
     return {
             "poison_effect_icon",
             StringLcl("{poison_effect}"),
+            false,
+            Events()
+    };
+}
+HorizontalSelectionWindowComponent Warrior::getInspiredComponent() const {
+    return {
+            "inspired_effect_icon",
+            StringLcl("{inspired_effect}"),
             false,
             Events()
     };
@@ -779,6 +818,9 @@ Events Warrior::getSelectionWindow(MapState *state, bool own, bool minimal) {
         }
         if (this->poison) {
             components.push_back(this->getPoisonComponent());
+        }
+        if (this->inspired) {
+            components.push_back(this->getInspiredComponent());
         }
         if (own) {
             if (this->toKill) {

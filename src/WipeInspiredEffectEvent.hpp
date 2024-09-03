@@ -17,29 +17,18 @@
  */
 
 
-#include "TimeMod.hpp"
-#include "Parameters.hpp"
+#include <memory>
+#include "Event.hpp"
 
 
-TimeMod::TimeMod(TimeMod::Type type) {
-    this->type = type;
-}
-int32_t TimeMod::getPercentDelta(bool positive) const {
-    if (this->type == Type::NeutralTime) {
-        return 0;
-    }
-    int32_t delta = Parameters::get().getInt("time_max_percent_delta");
-    if (this->type == Type::PositiveTime) {
-        if (positive) {
-            return delta;
-        }
-        return -delta;
-    }
-    if (this->type == Type::NegativeTime) {
-        if (positive) {
-            return -delta;
-        }
-        return delta;
-    }
-    return 0;
-}
+class Warrior;
+
+
+class WipeInspiredEffectEvent : public Event {
+public:
+    WipeInspiredEffectEvent(std::shared_ptr<Warrior> w);
+
+    std::shared_ptr<Warrior> getWarrior();
+private:
+    std::shared_ptr<Warrior> w;
+};
