@@ -17,26 +17,16 @@
  */
 
 
-#include "WarriorAttacker.hpp"
+#include <string>
+#include <cstdint>
 
 
 #pragma once
 
 
-class WarriorNearAttacker : public WarriorAttacker {
-public:
-    WarriorNearAttacker();
-    WarriorNearAttacker(uint32_t x, uint32_t y, uint32_t playerId);
-protected:
-    std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const override;
-private:
-    bool haveObliquelyAttacks() const override;
-
-    friend class boost::serialization::access;
-    template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<WarriorAttacker>(*this);
-    }
+struct SpecialAnimation {
+    std::string name;
+    uint32_t straightFrames;
+    uint32_t obliquelyFrames;
+    uint32_t ms;
 };
-
-
-BOOST_CLASS_EXPORT_KEY(WarriorNearAttacker)

@@ -53,33 +53,8 @@ Damage WarriorAttacker::getDamage(MapState *state) const {
     baseDamage = (1 + k) * baseDamage;
     return baseDamage;
 }
-uint32_t WarriorAttacker::getAnimationNumber(const std::string& type, const std::string& direction) const {
-    uint32_t baseResult = this->Warrior::getAnimationNumber(type, direction);
-    if (baseResult != 0) {
-        return baseResult;
-    }
-
-    if (type == "attack") {
-        std::vector<std::string> possibleDirections = this->getAttackPossibleDirections();
-        if (std::find(possibleDirections.begin(), possibleDirections.end(), direction) != possibleDirections.end()) {
-            return this->getAttackAnimationsNumberInSet();
-        }
-    }
-    return 0;
-}
 bool WarriorAttacker::blockBuildingAbility() const {
     return true;
-}
-uint32_t WarriorAttacker::getCurrentAnimationMs() const {
-    uint32_t baseResult = this->Warrior::getCurrentAnimationMs();
-    if (baseResult != 0) {
-        return baseResult;
-    }
-
-    if (this->getCurrentAnimation() == "attack") {
-        return 600;
-    }
-    return 0;
 }
 std::vector<SpecialMove> WarriorAttacker::getSpecialMoves(MapState *state) const {
     std::vector<SpecialMove> specialMoves;
@@ -111,32 +86,6 @@ std::vector<std::tuple<uint32_t, uint32_t>> WarriorAttacker::canAttack(std::shar
 
     return result;
 }
-std::string WarriorAttacker::getDirection(uint32_t targetX, uint32_t targetY) const {
-    if (targetY > this->getY()) {
-        if (targetX > this->getX()) {
-            return "se";
-        }
-        if (targetX < this->getX()) {
-            return "sw";
-        }
-        return "s";
-    }
-
-    if (targetY < this->getY()) {
-        if (targetX > this->getX()) {
-            return "ne";
-        }
-        if (targetX < this->getX()) {
-            return "nw";
-        }
-        return "n";
-    }
-
-    if (targetX < this->getX()) {
-        return "w";
-    }
-    return "e";
-}
 Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
     for (uint32_t i = 0; i < state->getCollectionsPtr()->totalUnits(); i = i + 1) {
         std::shared_ptr<Unit>u = state->getCollectionsPtr()->getUnit(i, FILTER::CLICK_PRIORITY);
@@ -156,26 +105,33 @@ Events WarriorAttacker::startAttack(MapState *state, std::shared_ptr<Unit> u, ui
     this->wipeMovementPoints();
 
     events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "attack"));
-    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirection(targetX, targetY)));
+    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirectionTo(u)));
 
     events.add(std::make_shared<PlaySoundEvent>(this->getStartAttackSoundName()));
 
     events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<WarriorAttacker>())));
 
     Damage baseDamage = this->getDamage(state);
-    float k = 1 - (float)Parameters::get().getInt("damage_random_percent")  / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * Parameters::get().getInt("damage_random_percent") + 1)) / 100;
+    float k = 1 - (float)Parameters::get().getInt("damage_random_percent") / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * Parameters::get().getInt("damage_random_percent") + 1)) / 100;
     baseDamage = k * baseDamage;
     events = events + u->hit(baseDamage);
 
-    events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "talking"));
-
     return events;
 }
-Events WarriorAttacker::processCurrentAnimation(MapState *state) {
-    Events events = this->Warrior::processCurrentAnimation(state);
+boost::optional<SpecialAnimation> WarriorAttacker::getSpecialAnimation() const {
+    SpecialAnimation special;
+    special.name = "attack";
+    special.ms = 600;
+    special.straightFrames = this->getAttackAnimationsNumberInSet();
+    special.obliquelyFrames = this->haveObliquelyAttacks() * this->getAttackAnimationsNumberInSet();
+    return special;
+}
+Events WarriorAttacker::processSpecialAnimation() {
+    Events events;
 
-    if (events.empty() and this->getCurrentAnimation() == "attack" and this->getCurrentAnimationState().finished) {
+    if (this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
+        events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "talking"));
     }
 
     return events;

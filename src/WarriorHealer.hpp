@@ -18,6 +18,7 @@
 
 
 #include "Warrior.hpp"
+#include "Projectile.hpp"
 
 
 #pragma once
@@ -30,13 +31,16 @@ public:
 
     bool blockBuildingAbility() const override;
 protected:
+    virtual std::shared_ptr<Projectile> getProjectile() const = 0;
+    virtual uint32_t getHealingRadius() const = 0;
     virtual bool healVehicles() const;
     virtual Events heal(MapState *state, std::shared_ptr<Warrior> w);
     virtual bool canHeal(std::shared_ptr<Warrior> w) const;
     StringLcl getSpecialInfoString(MapState *state) const override;
 private:
-    std::string getDirection(std::shared_ptr<Warrior> w) const;
     Events newMove(MapState *state, uint32_t playerId) override;
+    boost::optional<SpecialAnimation> getSpecialAnimation() const override;
+    Events processSpecialAnimation() override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
     NewMoveMainPriority getNewMoveMainPriority() const override;

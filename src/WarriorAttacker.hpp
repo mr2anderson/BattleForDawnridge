@@ -31,21 +31,19 @@ public:
     uint32_t getMinDamagePoints(MapState *state) const;
     uint32_t getMaxDamagePoints(MapState *state) const;
     Damage getDamage(MapState *state) const;
-    uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const override;
     bool blockBuildingAbility() const override;
     virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
     virtual std::string getStartAttackSoundName() const = 0;
 protected:
-    virtual std::vector<std::string> getAttackPossibleDirections() const = 0;
+    virtual bool haveObliquelyAttacks() const = 0;
     virtual std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const;
     virtual Events startAttack(MapState *state, std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY);
     virtual Damage getBaseDamage() const = 0;
 private:
-    uint32_t getCurrentAnimationMs() const override;
+    boost::optional<SpecialAnimation> getSpecialAnimation() const override;
+    Events processSpecialAnimation() override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
-    std::string getDirection(uint32_t targetX, uint32_t targetY) const;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
-    Events processCurrentAnimation(MapState *state) override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

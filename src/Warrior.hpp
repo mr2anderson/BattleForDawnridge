@@ -25,6 +25,7 @@
 #include "SpecialMove.hpp"
 #include "Clock.hpp"
 #include "Timer.hpp"
+#include "SpecialAnimation.hpp"
 
 
 #pragma once
@@ -34,7 +35,7 @@ class Warrior : public Unit, public IWithSuspendingAnimation {
 public:
 	Warrior();
 	Warrior(uint32_t x, uint32_t y, uint32_t playerId);
-    virtual std::shared_ptr<Warrior>  cloneWarrior() const = 0;
+    virtual std::shared_ptr<Warrior> cloneWarrior() const = 0;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
@@ -54,8 +55,8 @@ public:
     uint32_t getSX() const override;
     uint32_t getSY() const override;
 	std::string getTextureName() const override;
-	virtual uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
-    virtual uint32_t getCurrentAnimationMs() const;
+	uint32_t getAnimationNumber(const std::string& type, const std::string& direction) const;
+    uint32_t getCurrentAnimationMs() const;
 	bool canStay(MapState *state, uint32_t newX, uint32_t newY) const;
 	bool warriorCanStay(std::shared_ptr<const Warrior> w) const override;
 	uint32_t getWarriorMovementCost(std::shared_ptr<Warrior> w) const override;
@@ -96,11 +97,11 @@ public:
 	static const uint32_t TOTAL_FOOTSTEPS;
     static const uint32_t TOTAL_WINGS;
 protected:
+    virtual boost::optional<SpecialAnimation> getSpecialAnimation() const = 0;
+    virtual Events processSpecialAnimation() = 0;
     virtual std::vector<SpecialMove> getSpecialMoves(MapState *state) const = 0;
     virtual Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) = 0;
 	virtual Defence getBaseDefence() const = 0;
-
-    void setDirection(const std::string &newDirection);
 private:
 	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;

@@ -24,6 +24,8 @@
 #include "ChangeWarriorDirectionEvent.hpp"
 #include "FocusOnEvent.hpp"
 #include "ColorTheme.hpp"
+#include "PlaySoundEvent.hpp"
+#include "CreateEEvent.hpp"
 
 
 WarriorHealer::WarriorHealer() = default;
@@ -34,21 +36,19 @@ bool WarriorHealer::blockBuildingAbility() const {
     return false;
 }
 Events WarriorHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
-    Events changeWarriorDirectionEvent;
-    changeWarriorDirectionEvent.add(std::make_shared<ChangeWarriorDirectionEvent>(w, this->getDirection(w)));
-    return changeWarriorDirectionEvent;
-}
-std::string WarriorHealer::getDirection(std::shared_ptr<Warrior> w) const {
-    if (w->getY() > this->getY()) {
-        return "s";
-    }
-    if (w->getY() < this->getY()) {
-        return "n";
-    }
-    if (w->getX() > this->getX()) {
-        return "e";
-    }
-    return "w";
+    Events events;
+    events.add(std::make_shared<ChangeWarriorDirectionEvent>(w, this->getDirectionTo(w)));
+
+    std::shared_ptr<Projectile> projectile = this->getProjectile();
+    events.add(std::make_shared<PlaySoundEvent>(projectile->getSoundName()));
+    projectile->setSrc(this->getXInPixels() + 64 / 2, this->getYInPixels() + 64 / 2);
+    projectile->setDst(w->getXInPixels() + 64 / 2, w->getYInPixels() + 64 / 2);
+    events.add(std::make_shared<CreateEEvent>(projectile));
+
+    Events healEvent = w->heal();
+    events = events + healEvent;
+
+    return events;
 }
 Events WarriorHealer::newMove(MapState *state, uint32_t playerId) {
     Events events = Warrior::newMove(state, playerId);
@@ -76,7 +76,15 @@ bool WarriorHealer::canHeal(std::shared_ptr<Warrior> w) const {
     if (!w->exist() or w->getPlayerId() != this->getPlayerId() or w->getHP() == w->getMaxHP() or w->isVehicle() != this->healVehicles() or w->wasHealed() or w->getUUID() == this->getUUID()) {
         return false;
     }
-    return true;
+    uint32_t dx = std::max(this->getX(), w->getX()) - std::min(this->getX(), w->getX());
+    uint32_t dy = std::max(this->getY(), w->getY()) - std::min(this->getY(), w->getY());
+    return (dx <= this->getHealingRadius() and dy <= this->getHealingRadius());
+}
+boost::optional<SpecialAnimation> WarriorHealer::getSpecialAnimation() const {
+    return boost::none;
+}
+Events WarriorHealer::processSpecialAnimation() {
+    return Events();
 }
 std::vector<SpecialMove> WarriorHealer::getSpecialMoves(MapState *state) const {
     std::vector<SpecialMove> moves;
@@ -86,7 +94,7 @@ Events WarriorHealer::handleSpecialMove(MapState *state, uint32_t targetX, uint3
     return Events();
 }
 StringLcl WarriorHealer::getSpecialInfoString(MapState *state) const {
-    StringLcl str = StringLcl("{healing_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(Parameters::get().getInt("healing_speed")) + ".";
+    StringLcl str = StringLcl("{healing_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(Parameters::get().getInt("healing_speed")) + "." + " " + StringLcl("{healing_radius}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getHealingRadius()) + ". ";
 
     return str;
 }

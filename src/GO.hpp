@@ -73,6 +73,7 @@ public:
 	Events click(MapState *state, uint32_t currentPlayerId, uint8_t button, uint32_t mouseX, uint32_t mouseY);
     virtual void update(MapState *state, uint32_t playerId);
 	bool intersects(std::shared_ptr<GO> go) const;
+    std::string getDirectionTo(std::shared_ptr<GO> go) const;
 
 	virtual Events newMove(MapState *state, uint32_t currentPlayerId);
     virtual Events endMove(MapState *state, uint32_t currentPlayerId);

@@ -283,6 +283,18 @@ uint32_t Warrior::getAnimationNumber(const std::string &type, const std::string 
 		}
 		return 0;
 	}
+    boost::optional<SpecialAnimation> special = this->getSpecialAnimation();
+    if (special.has_value()) {
+        if (type == special->name) {
+            if (direction == "n" or direction == "s" or direction == "w" or direction == "e") {
+                return special->straightFrames;
+            }
+            if (direction == "nw" or direction == "ne" or direction == "sw" or direction == "se") {
+                return special->obliquelyFrames;
+            }
+            return 0;
+        }
+    }
 	return 0;
 }
 uint32_t Warrior::getCurrentAnimationMs() const {
@@ -297,6 +309,12 @@ uint32_t Warrior::getCurrentAnimationMs() const {
     }
     if (this->currentAnimation == "tipping over") {
         return 600;
+    }
+    boost::optional<SpecialAnimation> special = this->getSpecialAnimation();
+    if (special.has_value()) {
+        if (this->currentAnimation == special->name) {
+            return special->ms;
+        }
     }
     return 0;
 }
@@ -356,6 +374,12 @@ Events Warrior::processCurrentAnimation(MapState *state) {
     }
     if (currentAnimation == "tipping over") {
         return this->processTippingOverAnimation();
+    }
+    boost::optional<SpecialAnimation> special = this->getSpecialAnimation();
+    if (special.has_value()) {
+        if (currentAnimation == special->name) {
+            return this->processSpecialAnimation();
+        }
     }
     return Events();
 }
@@ -473,9 +497,6 @@ bool Warrior::isFlying() const {
 }
 bool Warrior::delayBetweenTalkingAnimations() const {
     return true;
-}
-void Warrior::setDirection(const std::string &newDirection) {
-    this->defaultDirection = newDirection;
 }
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;

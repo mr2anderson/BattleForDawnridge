@@ -25,7 +25,7 @@
 
 
 Healer::Healer() = default;
-Healer::Healer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorProjectileHealer(x, y, playerId) {
+Healer::Healer(uint32_t x, uint32_t y, uint32_t playerId) : WarriorHealer(x, y, playerId) {
 
 }
 std::shared_ptr<Warrior> Healer::cloneWarrior() const {

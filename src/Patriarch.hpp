@@ -17,10 +17,10 @@
  */
 
 
-#include "WarriorProjectileHealer.hpp"
+#include "WarriorHealer.hpp"
 
 
-class Patriarch : public WarriorProjectileHealer {
+class Patriarch : public WarriorHealer {
 public:
     Patriarch();
     Patriarch(uint32_t x, uint32_t y, uint32_t playerId);
@@ -47,7 +47,7 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
-        ar & boost::serialization::base_object<WarriorProjectileHealer>(*this);
+        ar & boost::serialization::base_object<WarriorHealer>(*this);
     }
 };
 

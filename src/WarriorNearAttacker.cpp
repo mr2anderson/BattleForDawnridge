@@ -39,10 +39,11 @@ std::vector<std::tuple<uint32_t, uint32_t>> WarriorNearAttacker::canAttack(std::
         }
         result.push_back(candidates[i]);
     }
+
     return result;
 }
-std::vector<std::string> WarriorNearAttacker::getAttackPossibleDirections() const {
-    return {"n", "s", "w", "e"};
+bool WarriorNearAttacker::haveObliquelyAttacks() const {
+    return false;
 }
 
 

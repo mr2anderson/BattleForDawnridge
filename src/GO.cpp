@@ -148,6 +148,33 @@ bool GO::intersects(std::shared_ptr<GO> go) const {
 
 	return rect1.intersects(rect2);
 }
+std::string GO::getDirectionTo(std::shared_ptr <GO> go) const {
+    if (go->getY() < this->getY()) {
+        if (go->getX() < this->getX()) {
+            return "nw";
+        }
+        if (go->getX() > this->getX()) {
+            return "ne";
+        }
+        return "n";
+    }
+    if (go->getY() > this->getY()) {
+        if (go->getX() < this->getX()) {
+            return "sw";
+        }
+        if (go->getX() > this->getX()) {
+            return "se";
+        }
+        return "s";
+    }
+    if (go->getX() < this->getX()) {
+        return "w";
+    }
+    if (go->getX() > this->getX()) {
+        return "e";
+    }
+    return "";
+}
 Events GO::newMove(MapState* state, uint32_t currentPlayerId) {
 	return Events();
 }

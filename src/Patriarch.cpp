@@ -25,7 +25,7 @@
 
 
 Patriarch::Patriarch() = default;
-Patriarch::Patriarch(uint32_t x, uint32_t y, uint32_t playerId) : WarriorProjectileHealer(x, y, playerId) {
+Patriarch::Patriarch(uint32_t x, uint32_t y, uint32_t playerId) : WarriorHealer(x, y, playerId) {
 
 }
 std::shared_ptr<Warrior> Patriarch::cloneWarrior() const {
