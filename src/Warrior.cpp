@@ -676,7 +676,7 @@ sf::Color Warrior::getTextureColor() const {
         colors.emplace_back(100, 150, 100);
     }
     if (this->inspired) {
-        colors.emplace_back(65, 105, 225);
+        colors.emplace_back(130, 210, 255);
     }
     if (colors.empty()) {
         return this->Unit::getTextureColor();
