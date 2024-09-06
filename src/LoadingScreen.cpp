@@ -55,6 +55,7 @@
 #include "LoadingBar.hpp"
 #include "Killer.hpp"
 #include "Barbar.hpp"
+#include "Princess.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -151,7 +152,7 @@ void LoadingScreen::setNormalScreen(sf::RenderWindow& window, uint32_t percent) 
 	window.display();
 }
 template<typename T> static void LOAD_WARRIOR_DATA() {
-    for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over" }) {
+    for (const std::string& a : { "talking", "running", "attack", "been hit", "tipping over", "inspire" }) {
         for (const std::string& d : { "n", "s", "w", "e", "nw", "ne", "sw", "se" }) {
                 for (uint32_t i = 0; i < T().getAnimationNumber(a, d); i = i + 1) {
                     std::string s = std::to_string(i);
@@ -299,6 +300,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             percent = 75;
             LOAD_WARRIOR_DATA<Knight>();
             LOAD_WARRIOR_DATA<BlackKnight>();
+            LOAD_WARRIOR_DATA<Princess>();
         }
         else if (percent == 75) {
             percent = 80;
@@ -328,10 +330,10 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
                                           "destroy", "sword", "breath", "knight", "fire",
                                           "ouch", "spell_factory", "rage_spell",
                                           "infantryman", "heal", "building_hit", "bell", "crystal", "swing",
-                                          "ouch_woman_cute", "healer", "vehicle_hit",
+                                          "ouch_woman_cute", "ouch_woman_cute2", "healer", "vehicle_hit",
                                           "vehicle", "sockerer_house", "roar", "dawn",
                                           "day", "night", "sunset", "ouch_old", "old", "patriarch_heal",
-                                          "poison", "knife", "heal_spell", "barbar", "church"
+                                          "poison", "knife", "heal_spell", "barbar", "church", "princess"
             }) {
                 Sounds::get().add(a, "sounds/" + a + ".ogg");
             }

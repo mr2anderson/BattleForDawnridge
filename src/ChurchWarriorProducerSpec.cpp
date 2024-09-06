@@ -19,6 +19,7 @@
 
 #include "ChurchWarriorProducerSpec.hpp"
 #include "Warrior.hpp"
+#include "Princess.hpp"
 
 
 ChurchWarriorProducerSpec::ChurchWarriorProducerSpec() = default;
@@ -27,6 +28,8 @@ std::shared_ptr<IBuildingSpec> ChurchWarriorProducerSpec::clone() const {
 }
 std::vector<std::shared_ptr<Warrior>> ChurchWarriorProducerSpec::getWarriorsToProduce(uint32_t playerId) {
     std::vector<std::shared_ptr<Warrior>> toProduce;
+
+    toProduce.push_back(std::make_shared<Princess>(0, 0, playerId));
 
     return toProduce;
 }
