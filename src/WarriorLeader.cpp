@@ -73,8 +73,6 @@ Events WarriorLeader::handleSpecialMove(MapState *state, uint32_t targetX, uint3
 Events WarriorLeader::startInspire(MapState *state, std::shared_ptr<Warrior> w) {
     Events events;
 
-    this->wipeMovementPoints();
-
     events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "inspire"));
     events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirectionTo(w->getX(), w->getY())));
 
