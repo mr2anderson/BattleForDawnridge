@@ -105,7 +105,7 @@ Events WarriorAttacker::startAttack(MapState *state, std::shared_ptr<Unit> u, ui
     this->wipeMovementPoints();
 
     events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "attack"));
-    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirectionTo(u)));
+    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirectionTo(targetX, targetY)));
 
     events.add(std::make_shared<PlaySoundEvent>(this->getStartAttackSoundName()));
 

@@ -19,7 +19,6 @@
 
 #include "WarriorHealer.hpp"
 #include "Parameters.hpp"
-#include "Locales.hpp"
 #include "HighlightColors.hpp"
 #include "ChangeWarriorDirectionEvent.hpp"
 #include "FocusOnEvent.hpp"
@@ -37,7 +36,7 @@ bool WarriorHealer::blockBuildingAbility() const {
 }
 Events WarriorHealer::heal(MapState *state, std::shared_ptr<Warrior> w) {
     Events events;
-    events.add(std::make_shared<ChangeWarriorDirectionEvent>(w, this->getDirectionTo(w)));
+    events.add(std::make_shared<ChangeWarriorDirectionEvent>(w, this->getDirectionTo(w->getX(), w->getY())));
 
     std::shared_ptr<Projectile> projectile = this->getProjectile();
     events.add(std::make_shared<PlaySoundEvent>(projectile->getSoundName()));
