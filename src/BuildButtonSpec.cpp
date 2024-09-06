@@ -47,6 +47,7 @@
 #include "SockererHouse.hpp"
 #include "ColorTheme.hpp"
 #include "Church.hpp"
+#include "Range.hpp"
 
 
 BuildButtonSpec::BuildButtonSpec() = default;
@@ -140,6 +141,7 @@ Events BuildButtonSpec::getEvents() const {
 	std::vector<HorizontalSelectionWindowComponent> buildMenuSectionTroopsComponents;
 	buildMenuSectionTroopsComponents.emplace_back(  "hammer_icon", StringLcl("{leave}"), true, clickEvent);
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Barracks>());
+    buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Range>());;
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Infirmary>());
     buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Church>());
 	buildMenuSectionTroopsComponents.emplace_back(GET_BUILD_COMPONENT<Workshop>());
