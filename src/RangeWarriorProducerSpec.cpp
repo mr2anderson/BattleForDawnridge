@@ -19,6 +19,7 @@
 
 #include "RangeWarriorProducerSpec.hpp"
 #include "Hunter.hpp"
+#include "Poisoner.hpp"
 
 
 RangeWarriorProducerSpec::RangeWarriorProducerSpec() = default;
@@ -29,6 +30,7 @@ std::vector<std::shared_ptr<Warrior>> RangeWarriorProducerSpec::getWarriorsToPro
     std::vector<std::shared_ptr<Warrior>> warriors;
 
     warriors.push_back(std::make_shared<Hunter>(0, 0, playerId));
+    warriors.push_back(std::make_shared<Poisoner>(0, 0, playerId));
 
     return warriors;
 }

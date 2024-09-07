@@ -58,6 +58,8 @@
 #include "Princess.hpp"
 #include "Hunter.hpp"
 #include "HunterArrow.hpp"
+#include "PoisonerArrow.hpp"
+#include "Poisoner.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -263,6 +265,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             for (uint32_t i = 1; i <= HunterArrow::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("hunter_arrow" + std::to_string(i), "images/projectiles/hunter_arrow/" + std::to_string(i) + ".png");
             }
+            for (uint32_t i = 1; i <= PoisonerArrow::TOTAL_TYPES; i = i + 1) {
+                Textures::get().add("poisoner_arrow" + std::to_string(i), "images/projectiles/poisoner_arrow/" + std::to_string(i) + ".png");
+            }
         }
         else if (percent == 40) {
             percent = 45;
@@ -319,6 +324,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             LOAD_WARRIOR_DATA<Ram>();
             LOAD_WARRIOR_DATA<Golem>();
             LOAD_WARRIOR_DATA<Killer>();
+            LOAD_WARRIOR_DATA<Poisoner>();
         }
         else if (percent == 85) {
             percent = 90;
