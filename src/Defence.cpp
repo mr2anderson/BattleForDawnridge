@@ -23,13 +23,14 @@
 
 
 Defence::Defence() = default;
-Defence::Defence(double cut, double stab, double crush) {
+Defence::Defence(double cut, double stab, double crush, double magick) {
 	this->cut = cut;
 	this->stab = stab;
 	this->crush = crush;
+    this->magick = magick;
 }
 Defence operator*(double k, Defence defence) {
-	return Defence(defence.cut * (2 - k), defence.stab * (2 - k), defence.crush * (2 - k));
+	return Defence(defence.cut * (2 - k), defence.stab * (2 - k), defence.crush * (2 - k), defence.magick * (2 - k));
 }
 double Defence::getCut() const {
 	return this->cut;
@@ -40,16 +41,21 @@ double Defence::getStab() const {
 double Defence::getCrush() const {
 	return this->crush;
 }
+double Defence::getMagick() const {
+    return this->magick;
+}
 StringLcl Defence::getReadable() const {
 	StringLcl result;
 
     auto cutInt = (uint32_t)(this->cut * 100);
     auto stabInt = (uint32_t)(this->stab * 100);
     auto crushInt = (uint32_t)(this->crush * 100);
+    auto magickInt = (uint32_t)(this->magick * 100);
 
 	result = result + StringLcl("{cut} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(cutInt, 10, 100)) + std::to_string(cutInt) + "% ";
 	result = result + StringLcl("{stab} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(stabInt, 10, 100)) + std::to_string(stabInt) + "% ";
-	result = result + StringLcl("{crush} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(crushInt, 10, 100)) + std::to_string(crushInt) + "%";
+	result = result + StringLcl("{crush} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(crushInt, 10, 100)) + std::to_string(crushInt) + "% ";
+    result = result + StringLcl("{magick} ") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_REV<uint32_t>(magickInt, 10, 100)) + std::to_string(magickInt) + "%";
 
 	return result;
 }

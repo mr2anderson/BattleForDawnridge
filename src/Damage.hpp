@@ -45,6 +45,7 @@ public:
 		CUT,
 		STAB,
 		CRUSH,
+        MAGICK,
         SERVICE
 	};
 private:

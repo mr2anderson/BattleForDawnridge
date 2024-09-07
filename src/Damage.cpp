@@ -46,9 +46,14 @@ uint32_t Damage::getHpLoss(Defence defence) const {
 				k = defence.getStab();
 				break;
 			}
-            case TYPE::SERVICE:
+            case TYPE::MAGICK: {
+                k = defence.getMagick();
+                break;
+            }
+            case TYPE::SERVICE: {
                 k = 1;
                 break;
+            }
 	}
 	return k * this->points;
 }
@@ -75,6 +80,10 @@ StringLcl Damage::getTypeReadable() const {
 		result = result + StringLcl("{stab}");
 		break;
 	}
+    case TYPE::MAGICK: {
+        result = result + StringLcl("{magick}");
+        break;
+    }
 	}
 
     if (this->hasSpec(SPEC::POISON)) {

@@ -60,6 +60,8 @@
 #include "HunterArrow.hpp"
 #include "PoisonerArrow.hpp"
 #include "Poisoner.hpp"
+#include "HolyMagick.hpp"
+#include "WhiteMage.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -218,7 +220,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             for (const std::string& a :
                 { "arable", "barracks", "castle", "gates1", "infirmary", "market", "mine", "quarry", "sawmill",
                 "sockerer_house", "spell_factory", "tower1", "wall1", "warehouse_crystal", "warehouse_food", "warehouse_gold",
-                "warehouse_iron", "warehouse_stone", "warehouse_wood", "workshop", "church", "range" }) {
+                "warehouse_iron", "warehouse_stone", "warehouse_wood", "workshop", "church", "range"}) {
                 Textures::get().add(a, "images/buildings/main/" + a + ".png");
             }
         }
@@ -268,17 +270,20 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             for (uint32_t i = 1; i <= PoisonerArrow::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("poisoner_arrow" + std::to_string(i), "images/projectiles/poisoner_arrow/" + std::to_string(i) + ".png");
             }
-        }
-        else if (percent == 40) {
-            percent = 45;
             for (uint32_t i = 1; i <= HealerProjectile::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("healer_projectile" + std::to_string(i), "images/projectiles/healer_projectile/" + std::to_string(i) + ".png");
             }
+            for (uint32_t i = 1; i <= PatriarchProjectile::TOTAL_TYPES; i = i + 1) {
+                Textures::get().add("patriarch_projectile" + std::to_string(i), "images/projectiles/patriarch_projectile/" + std::to_string(i) + ".png");
+            }
+        }
+        else if (percent == 40) {
+            percent = 45;
         }
         else if (percent == 45) {
             percent = 50;
-            for (uint32_t i = 1; i <= PatriarchProjectile::TOTAL_TYPES; i = i + 1) {
-                Textures::get().add("patriarch_projectile" + std::to_string(i), "images/projectiles/patriarch_projectile/" + std::to_string(i) + ".png");
+            for (uint32_t i = 1; i <= HolyMagick::TOTAL_TEXTURES; i = i + 1) {
+                Textures::get().add("holy_magick" + std::to_string(i), "images/magick/holy_magick/" + std::to_string(i) + ".png");
             }
         }
         else if (percent == 50) {
@@ -318,6 +323,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             LOAD_WARRIOR_DATA<Healer>();
             LOAD_WARRIOR_DATA<Patriarch>();
             LOAD_WARRIOR_DATA<Barbar>();
+            LOAD_WARRIOR_DATA<WhiteMage>();
         }
         else if (percent == 80) {
             percent = 85;
@@ -357,6 +363,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             }
             for (uint32_t i = 1; i <= BigArrow::TOTAL_SOUNDS; i = i + 1) {
                 Sounds::get().add("big_arrow" + std::to_string(i), "sounds/big_arrow/" + std::to_string(i) + ".ogg");
+            }
+            for (uint32_t i = 1; i <= HolyMagick::TOTAL_SOUNDS; i = i + 1) {
+                Sounds::get().add("holy_magick" + std::to_string(i), "sounds/holy_magick/" + std::to_string(i) + ".ogg");
             }
         }
         else if (percent == 95) {

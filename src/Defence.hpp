@@ -26,13 +26,14 @@
 class Defence {
 public:
     Defence();
-	Defence(double cut, double stab, double crush);
+	Defence(double cut, double stab, double crush, double magick);
 
 	friend Defence operator*(double k, Defence defence);
 	double getCut() const;
 	double getStab() const;
 	double getCrush() const;
+    double getMagick() const;
 	StringLcl getReadable() const;
 private:
-	double cut, stab, crush;
+	double cut, stab, crush, magick;
 };

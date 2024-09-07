@@ -69,6 +69,9 @@ void Parameters::load() {
 					else if (damageTypeVal == "crush") {
 						damageType = Damage::CRUSH;
 					}
+                    else if (damageTypeVal == "magick") {
+                        damageType = Damage::MAGICK;
+                    }
                     else if (damageTypeVal == "service") {
                         damageType = Damage::SERVICE;
                     }
@@ -86,7 +89,7 @@ void Parameters::load() {
 					this->defences[key] = this->defences[words.at(3)];
 				}
 				else {
-					this->defences[key] = Defence(std::stod(words.at(3)), std::stod(words.at(4)), std::stod(words.at(5)));
+					this->defences[key] = Defence(std::stod(words.at(3)), std::stod(words.at(4)), std::stod(words.at(5)), std::stod(words.at(6)));
 				}
 			}
 			else if (type == "resources") {
@@ -149,7 +152,7 @@ Defence Parameters::getDefence(const std::string& id) const {
 	auto it = this->defences.find(id);
 	if (it == this->defences.end()) {
 		std::cerr << "Invalid defence uid: " << id << std::endl;
-		return Defence(1, 1, 1);
+		return Defence(1, 1, 1, 1);
 	}
 	return it->second;
 }
