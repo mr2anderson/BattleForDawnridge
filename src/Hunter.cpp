@@ -58,7 +58,7 @@ uint32_t Hunter::getTimeToProduce() const {
     return Parameters::get().getInt("hunter_time_to_produce");
 }
 std::string Hunter::getSoundName() const {
-    return "bow";
+    return "infantryman";
 }
 StringLcl Hunter::getDescription() const {
     return StringLcl("{hunter_description}");
