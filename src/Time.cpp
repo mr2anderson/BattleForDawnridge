@@ -97,9 +97,9 @@ sf::Color Time::getEffectColor() const {
     case Type::Sunset:
         return sf::Color(64, 29, 42, 50);
     case Type::Night1:
-        return sf::Color(0, 0, 0, 100);
+        return sf::Color(0, 0, 0, 75);
     case Type::Night2:
-        return sf::Color(0, 0, 0, 100);
+        return sf::Color(0, 0, 0, 75);
     }
     return sf::Color();
 }
