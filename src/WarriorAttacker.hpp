@@ -35,6 +35,7 @@ public:
     virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
     virtual std::string getStartAttackSoundName() const = 0;
 protected:
+    virtual Events eventAfterAnimation(uint32_t targetX, uint32_t targetY);
     virtual bool haveObliquelyAttacks() const = 0;
     virtual std::vector<std::tuple<uint32_t, uint32_t>> canAttack(std::shared_ptr<Unit>u) const;
     virtual Events startAttack(MapState *state, std::shared_ptr<Unit>u, uint32_t targetX, uint32_t targetY);

@@ -18,7 +18,7 @@
 
 
 #include "RangeWarriorProducerSpec.hpp"
-#include "Warrior.hpp"
+#include "Hunter.hpp"
 
 
 RangeWarriorProducerSpec::RangeWarriorProducerSpec() = default;
@@ -27,6 +27,8 @@ std::shared_ptr<IBuildingSpec> RangeWarriorProducerSpec::clone() const {
 }
 std::vector<std::shared_ptr<Warrior>> RangeWarriorProducerSpec::getWarriorsToProduce(uint32_t playerId) {
     std::vector<std::shared_ptr<Warrior>> warriors;
+
+    warriors.push_back(std::make_shared<Hunter>(0, 0, playerId));
 
     return warriors;
 }

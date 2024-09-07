@@ -69,6 +69,9 @@ std::vector<SpecialMove> WarriorAttacker::getSpecialMoves(MapState *state) const
 
     return specialMoves;
 }
+Events WarriorAttacker::eventAfterAnimation(uint32_t targetX, uint32_t targetY) {
+    return Events();
+}
 std::vector<std::tuple<uint32_t, uint32_t>> WarriorAttacker::canAttack(std::shared_ptr<Unit>u) const {
     std::vector<std::tuple<uint32_t, uint32_t>> result;
     if (!u->exist() or u->getPlayerId() == this->getPlayerId()) {
@@ -110,6 +113,8 @@ Events WarriorAttacker::startAttack(MapState *state, std::shared_ptr<Unit> u, ui
     events.add(std::make_shared<PlaySoundEvent>(this->getStartAttackSoundName()));
 
     events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<WarriorAttacker>())));
+
+    events = events + this->eventAfterAnimation(targetX, targetY);
 
     Damage baseDamage = this->getDamage(state);
     float k = 1 - (float)Parameters::get().getInt("damage_random_percent") / 100 + (float)(GlobalRandomGenerator32::get().gen() % (2 * Parameters::get().getInt("damage_random_percent") + 1)) / 100;

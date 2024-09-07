@@ -56,6 +56,7 @@
 #include "Killer.hpp"
 #include "Barbar.hpp"
 #include "Princess.hpp"
+#include "Hunter.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -295,6 +296,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             percent = 70;
             LOAD_WARRIOR_DATA<Infantryman>();
             LOAD_WARRIOR_DATA<Legioner>();
+            LOAD_WARRIOR_DATA<Hunter>();
         }
         else if (percent == 70) {
             percent = 75;
