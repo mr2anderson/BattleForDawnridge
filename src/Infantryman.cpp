@@ -37,8 +37,8 @@ UUID Infantryman::getTypeUUID() const {
 std::string Infantryman::getBeenHitSoundName() const {
     return "ouch";
 }
-std::string Infantryman::getStartAttackSoundName() const {
-    return "swing";
+boost::optional<std::string> Infantryman::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("swing");
 }
 uint32_t Infantryman::getMaxHP() const {
 	return Parameters::get().getInt("infantryman_max_hp");

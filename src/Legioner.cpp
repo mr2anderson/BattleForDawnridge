@@ -37,8 +37,8 @@ UUID Legioner::getTypeUUID() const {
 std::string Legioner::getBeenHitSoundName() const {
     return "ouch";
 }
-std::string Legioner::getStartAttackSoundName() const {
-    return "swing";
+boost::optional<std::string> Legioner::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("swing");
 }
 uint32_t Legioner::getMaxHP() const {
 	return Parameters::get().getInt("legioner_max_hp");

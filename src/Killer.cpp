@@ -37,8 +37,8 @@ UUID Killer::getTypeUUID() const {
 std::string Killer::getBeenHitSoundName() const {
     return "ouch";
 }
-std::string Killer::getStartAttackSoundName() const {
-    return "knife";
+boost::optional<std::string> Killer::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("knife");
 }
 uint32_t Killer::getMaxHP() const {
     return Parameters::get().getInt("killer_max_hp");

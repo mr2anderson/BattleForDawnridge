@@ -37,8 +37,8 @@ UUID Barbar::getTypeUUID() const {
 std::string Barbar::getBeenHitSoundName() const {
     return "barbar";
 }
-std::string Barbar::getStartAttackSoundName() const {
-    return "swing";
+boost::optional<std::string> Barbar::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("swing");
 }
 uint32_t Barbar::getMaxHP() const {
     return Parameters::get().getInt("barbar_max_hp");

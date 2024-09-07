@@ -37,8 +37,8 @@ UUID BlackKnight::getTypeUUID() const {
 std::string BlackKnight::getBeenHitSoundName() const {
     return "ouch";
 }
-std::string BlackKnight::getStartAttackSoundName() const {
-    return "swing";
+boost::optional<std::string> BlackKnight::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("swing");
 }
 uint32_t BlackKnight::getMaxHP() const {
 	return Parameters::get().getInt("black_knight_max_hp");

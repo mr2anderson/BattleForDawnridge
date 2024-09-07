@@ -18,11 +18,10 @@
 
 
 #include "Hunter.hpp"
-#include "Locales.hpp"
 #include "Parameters.hpp"
 #include "UUIDs.hpp"
 #include "CreateEEvent.hpp"
-#include "BigArrow.hpp"
+#include "HunterArrow.hpp"
 #include "PlaySoundEvent.hpp"
 
 
@@ -40,8 +39,8 @@ UUID Hunter::getTypeUUID() const {
 std::string Hunter::getBeenHitSoundName() const {
     return "ouch";
 }
-std::string Hunter::getStartAttackSoundName() const {
-    return "bow";
+boost::optional<std::string> Hunter::getStartAttackSoundName() const {
+    return boost::none;
 }
 uint32_t Hunter::getMaxHP() const {
     return Parameters::get().getInt("hunter_max_hp");
@@ -92,13 +91,13 @@ uint32_t Hunter::getAttackRadius() const {
     return Parameters::get().getInt("hunter_attack_radius");
 }
 Events Hunter::eventAfterAnimation(uint32_t targetX, uint32_t targetY) {
-    std::shared_ptr<BigArrow> bigArrow = std::make_shared<BigArrow>();
-    bigArrow->setSrc(this->getCenterX(), this->getCenterY());
-    bigArrow->setDst(64 * targetX + 32, 64 * targetY + 32);
+    std::shared_ptr<HunterArrow> hunterArrow = std::make_shared<HunterArrow>();
+    hunterArrow->setSrc(this->getCenterX(), this->getCenterY());
+    hunterArrow->setDst(64 * targetX + 32, 64 * targetY + 32);
 
     Events events;
-    events.add(std::make_shared<PlaySoundEvent>(bigArrow->getSoundName()));
-    events.add(std::make_shared<CreateEEvent>(bigArrow));
+    events.add(std::make_shared<PlaySoundEvent>(hunterArrow->getSoundName()));
+    events.add(std::make_shared<CreateEEvent>(hunterArrow));
 
     return events;
 }

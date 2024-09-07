@@ -57,6 +57,7 @@
 #include "Barbar.hpp"
 #include "Princess.hpp"
 #include "Hunter.hpp"
+#include "HunterArrow.hpp"
 
 
 #if defined(_WIN32) // Based on compilation system
@@ -258,6 +259,9 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             percent = 40;
             for (uint32_t i = 1; i <= BigArrow::TOTAL_TYPES; i = i + 1) {
                 Textures::get().add("big_arrow" + std::to_string(i), "images/projectiles/big_arrow/" + std::to_string(i) + ".png");
+            }
+            for (uint32_t i = 1; i <= HunterArrow::TOTAL_TYPES; i = i + 1) {
+                Textures::get().add("hunter_arrow" + std::to_string(i), "images/projectiles/hunter_arrow/" + std::to_string(i) + ".png");
             }
         }
         else if (percent == 40) {

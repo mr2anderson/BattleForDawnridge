@@ -37,8 +37,8 @@ UUID Golem::getTypeUUID() const {
 std::string Golem::getBeenHitSoundName() const {
 	return "roar";
 }
-std::string Golem::getStartAttackSoundName() const {
-	return "roar";
+boost::optional<std::string> Golem::getStartAttackSoundName() const {
+	return boost::make_optional<std::string>("roar");
 }
 uint32_t Golem::getMaxHP() const {
 	return Parameters::get().getInt("golem_max_hp");

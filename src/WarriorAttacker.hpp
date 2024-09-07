@@ -33,7 +33,7 @@ public:
     Damage getDamage(MapState *state) const;
     bool blockBuildingAbility() const override;
     virtual uint32_t getAttackAnimationsNumberInSet() const = 0;
-    virtual std::string getStartAttackSoundName() const = 0;
+    virtual boost::optional<std::string> getStartAttackSoundName() const = 0;
 protected:
     virtual Events eventAfterAnimation(uint32_t targetX, uint32_t targetY);
     virtual bool haveObliquelyAttacks() const = 0;

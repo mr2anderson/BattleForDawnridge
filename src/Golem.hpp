@@ -31,7 +31,7 @@ public:
 	UUID getTypeUUID() const override;
 
 	std::string getBeenHitSoundName() const override;
-	std::string getStartAttackSoundName() const override;
+	boost::optional<std::string> getStartAttackSoundName() const override;
 	uint32_t getMaxHP() const override;
 	Defence getBaseDefence() const override;
 	Damage getBaseDamage() const override;

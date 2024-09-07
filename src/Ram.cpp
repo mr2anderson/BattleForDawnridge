@@ -37,8 +37,8 @@ std::shared_ptr<Warrior>  Ram::cloneWarrior() const {
 std::string Ram::getBeenHitSoundName() const {
     return "vehicle_hit";
 }
-std::string Ram::getStartAttackSoundName() const {
-    return "vehicle";
+boost::optional<std::string> Ram::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("vehicle");
 }
 uint32_t Ram::getMaxHP() const {
     return Parameters::get().getInt("ram_max_hp");

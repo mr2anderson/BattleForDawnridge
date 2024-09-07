@@ -37,8 +37,8 @@ UUID Knight::getTypeUUID() const {
 std::string Knight::getBeenHitSoundName() const {
     return "ouch";
 }
-std::string Knight::getStartAttackSoundName() const {
-    return "swing";
+boost::optional<std::string> Knight::getStartAttackSoundName() const {
+    return boost::make_optional<std::string>("swing");
 }
 uint32_t Knight::getMaxHP() const {
 	return Parameters::get().getInt("knight_max_hp");
