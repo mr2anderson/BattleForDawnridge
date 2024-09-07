@@ -194,7 +194,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             for (const std::string& a :
                 { "axe", "battle", "bell", "christianity", "cross", "destroy", "gear", "hammer", "healer", "heart", "illumination_settings",
                 "infantryman", "kill", "lord", "magick", "music", "new_turn", "priest", "resources", "room_id", "save", "shield", "slow_movement", "sockerer",
-                "sound", "to_menu", "trade", "poison", "poison_effect", "inspired_effect", "princess", "archer", "bow" }) {
+                "sound", "to_menu", "trade", "poison", "poison_effect", "inspired_effect", "princess", "archer", "bow", "book", "mage" }) {
                 Textures::get().add(a + "_icon", "images/icons/" + a + "_icon.png");
             }
             for (const std::string& a : { "boost", "sfml" }) {
@@ -220,7 +220,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
             for (const std::string& a :
                 { "arable", "barracks", "castle", "gates1", "infirmary", "market", "mine", "quarry", "sawmill",
                 "sockerer_house", "spell_factory", "tower1", "wall1", "warehouse_crystal", "warehouse_food", "warehouse_gold",
-                "warehouse_iron", "warehouse_stone", "warehouse_wood", "workshop", "church", "range"}) {
+                "warehouse_iron", "warehouse_stone", "warehouse_wood", "workshop", "church", "range", "academy"}) {
                 Textures::get().add(a, "images/buildings/main/" + a + ".png");
             }
         }
@@ -351,7 +351,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
                                           "ouch_woman_cute", "ouch_woman_cute2", "healer", "vehicle_hit",
                                           "vehicle", "sockerer_house", "roar", "dawn",
                                           "day", "night", "sunset", "ouch_old", "old", "patriarch_heal",
-                                          "poison", "knife", "heal_spell", "barbar", "church", "princess", "bow"
+                                          "poison", "knife", "heal_spell", "barbar", "church", "princess", "bow", "academy"
             }) {
                 Sounds::get().add(a, "sounds/" + a + ".ogg");
             }
