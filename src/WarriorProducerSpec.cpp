@@ -228,7 +228,7 @@ boost::optional<BuildingShortInfo> WarriorProducerSpec::getShortInfo(std::shared
 	return BuildingShortInfo(b->getXInPixels(), b->getYInPixels(), b->getSX(), b->getSY(), pictureName, text);
 }
 uint32_t WarriorProducerSpec::getRadius() const {
-	return 1;
+	return 0;
 }
 sf::Color WarriorProducerSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get().getWarriorProducingColor(playerId);
