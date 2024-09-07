@@ -38,15 +38,19 @@ Events WarriorLeader::newMove(MapState *state, uint32_t playerId) {
     Events events = Warrior::newMove(state, playerId);
 
     if (this->exist() and playerId == this->getPlayerId()) {
-        bool focusAdded = false;
+        bool initDone = false;
         for (uint32_t i = 0; i < state->getCollectionsPtr()->totalWarriors(); i = i + 1) {
             std::shared_ptr<Warrior> w = state->getCollectionsPtr()->getWarrior(i);
             if (this->canInspire(w)) {
-                if (!focusAdded) {
+                if (!initDone) {
                     events.add(std::make_shared<FocusOnEvent>(this->getX(), this->getY(), this->getSX(), this->getSY()));
-                    focusAdded = true;
+                    events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "inspire"));
+                    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirectionTo(w->getX(), w->getY())));
+                    events.add(std::make_shared<PlaySoundEvent>(this->getStartInspireSoundName()));
+                    events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<WarriorLeader>())));
+                    initDone = true;
                 }
-                events = events + this->startInspire(state, w);
+                events = events + w->inspire();
             }
         }
     }
@@ -69,20 +73,6 @@ bool WarriorLeader::canInspire(std::shared_ptr<Warrior> w) const {
 }
 Events WarriorLeader::handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) {
     return Events();
-}
-Events WarriorLeader::startInspire(MapState *state, std::shared_ptr<Warrior> w) {
-    Events events;
-
-    events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "inspire"));
-    events.add(std::make_shared<ChangeWarriorDirectionEvent>(this->getThis<Warrior>(), this->getDirectionTo(w->getX(), w->getY())));
-
-    events.add(std::make_shared<PlaySoundEvent>(this->getStartInspireSoundName()));
-
-    events.add(std::make_shared<CreateAnimationEvent>(SuspendingAnimation(this->getThis<WarriorLeader>())));
-
-    events = events + w->inspire();
-
-    return events;
 }
 boost::optional<SpecialAnimation> WarriorLeader::getSpecialAnimation() const {
     SpecialAnimation special;

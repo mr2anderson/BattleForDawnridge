@@ -35,7 +35,6 @@ public:
 protected:
     virtual uint32_t getInspireRadius() const = 0;
     bool canInspire(std::shared_ptr<Warrior> w) const;
-    Events startInspire(MapState *state, std::shared_ptr<Warrior> w);
 private:
     boost::optional<SpecialAnimation> getSpecialAnimation() const override;
     Events processSpecialAnimation() override;
