@@ -234,7 +234,6 @@ void Room::verifyMapTooBig() {
 
 void Room::processMoveEvents(RoomOutputProtocol p) {
 	uint8_t processed = 0;
-
     if (this->mustChangeMove) {
         while (this->currentGOIndexEndMoveEvent != this->totalGOEndMoveEvents) {
             if (this->element != nullptr or !this->events.empty() or this->animation.has_value()) {
@@ -246,11 +245,11 @@ void Room::processMoveEvents(RoomOutputProtocol p) {
             processed = processed | this->processBaseEvents(p, false);
         }
     }
-
     if (this->currentGOIndexEndMoveEvent == this->totalGOEndMoveEvents) {
         if (this->mustChangeMove) {
             this->finishChangeMove(p);
             this->mustChangeMove = false;
+            processed = processed | SYNC_UI::SYNC_RESOURCE_BAR;
         }
         while (this->currentGOIndexNewMoveEvent != this->totalGONewMoveEvents) {
             if (this->element != nullptr or !this->events.empty() or this->animation.has_value()) {
@@ -262,7 +261,6 @@ void Room::processMoveEvents(RoomOutputProtocol p) {
             processed = processed | this->processBaseEvents(p, false);
         }
     }
-
 	this->syncUI(processed, p);
 }
 bool Room::allMoveEventsAdded() const {
@@ -800,7 +798,6 @@ uint8_t Room::handleEvent(std::shared_ptr<Event> e, RoomOutputProtocol p) {
 	}
 	else if (std::shared_ptr<ChangeMoveEvent> changeMoveEvent = std::dynamic_pointer_cast<ChangeMoveEvent>(e)) {
 		this->handleChangeMoveEvent(changeMoveEvent, p);
-		result = result | SYNC_UI::SYNC_RESOURCE_BAR;
 	}
 	else if (std::shared_ptr<ReturnToMenuEvent> returnToMenuEvent = std::dynamic_pointer_cast<ReturnToMenuEvent>(e)) {
 		this->handleReturnToMenuEvent(returnToMenuEvent, p);
