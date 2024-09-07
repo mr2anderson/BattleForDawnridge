@@ -23,6 +23,7 @@
 #include "UUIDs.hpp"
 #include "CreateEEvent.hpp"
 #include "BigArrow.hpp"
+#include "PlaySoundEvent.hpp"
 
 
 Hunter::Hunter() = default;
@@ -96,6 +97,7 @@ Events Hunter::eventAfterAnimation(uint32_t targetX, uint32_t targetY) {
     bigArrow->setDst(64 * targetX + 32, 64 * targetY + 32);
 
     Events events;
+    events.add(std::make_shared<PlaySoundEvent>(bigArrow->getSoundName()));
     events.add(std::make_shared<CreateEEvent>(bigArrow));
 
     return events;
