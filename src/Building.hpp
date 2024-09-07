@@ -19,7 +19,6 @@
 
 #include <boost/serialization/vector.hpp>
 #include "Unit.hpp"
-#include "Fire.hpp"
 #include "IBuildingSpec.hpp"
 
 

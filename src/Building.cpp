@@ -225,7 +225,7 @@ HorizontalSelectionWindowComponent Building::getHpInfoComponent() const {
 		secondLine = StringLcl("{building_speed}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->getRegenerationSpeed()) + "{p_per_move}. {everything_is_alright}";
 	}
 	else {
-		textureName = "fire1";
+		textureName = "fire";
 		secondLine = StringLcl("{building_on_fire}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_NEUTRAL) + std::to_string(this->burningMovesLeft);
 	}
 
@@ -270,9 +270,6 @@ HorizontalSelectionWindowComponent Building::getBuildingOfEnemyComponent() {
 void Building::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	this->Unit::draw(target, states);
 	if (this->exist()) {
-        if (this->burningMovesLeft > 0) {
-            target.draw(Fire(this->getX(), this->getY(), this->getSX(), this->getSY()), states);
-        }
 		this->drawShortInfos(target, states);
 	}
 }
@@ -413,7 +410,10 @@ sf::Color Building::getTextureColor() const {
 	if (this->getHP() == this->getMaxHP()) {
 		return this->Unit::getTextureColor();
 	}
-	return {175, 175, 175};
+    if (this->burningMovesLeft > 0) {
+        return {75, 75, 75};
+    }
+	return {200, 200, 200};
 }
 std::shared_ptr<PlayerPointer> Building::getPlayerPointer() const {
     return std::make_shared<BuildingStatePointer>(this->getXInPixels(), this->getYInPixels(), this->getSX(), this->getSY(), this->getHP(), this->getMaxHP());

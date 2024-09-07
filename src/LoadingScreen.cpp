@@ -30,7 +30,6 @@
 #include "BlackKnight.hpp"
 #include "WindowButton.hpp"
 #include "ClueManager.hpp"
-#include "Fire.hpp"
 #include "House.hpp"
 #include "Parameters.hpp"
 #include "CouldntOpenParameters.hpp"
@@ -238,15 +237,13 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
         }
         else if (percent == 25) {
             percent = 30;
-            for (uint32_t i = 1; i <= Fire::TOTAL_FRAMES; i = i + 1) {
-                Textures::get().add("fire" + std::to_string(i), "images/buildings/fire/" + std::to_string(i) + ".png");
-            }
             for (uint32_t i = 0; i < BuildingStatePointer::TOTAL_HP_POINTERS; i = i + 1) {
                 Textures::get().add("building_hp_pointer" + std::to_string(i), "images/buildings/hp_pointers/" + std::to_string(i) + ".png");
             }
             for (const std::string& a : { "blue", "green", "purple" }) {
                 Textures::get().add(a, "images/buildings/side_pointers/" + a + ".png");
             }
+            Textures::get().add("fire", "images/buildings/fire.png");
         }
         else if (percent == 30) {
             percent = 35;
