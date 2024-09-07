@@ -58,6 +58,9 @@ std::string Healer::getSoundName() const {
 StringLcl Healer::getDescription() const {
     return StringLcl("{healer_description}");
 }
+bool Healer::isFemale() const {
+    return true;
+}
 bool Healer::isFlying() const {
     return true;
 }

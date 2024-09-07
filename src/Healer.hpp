@@ -35,6 +35,7 @@ public:
     uint32_t getTimeToProduce() const override;
     std::string getSoundName() const override;
     StringLcl getDescription() const override;
+    bool isFemale() const override;
     bool isFlying() const override;
     bool delayBetweenTalkingAnimations() const override;
     std::string getBaseTextureName() const override;

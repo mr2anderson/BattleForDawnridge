@@ -81,6 +81,7 @@ public:
     void wipeInspiredStatus();
     bool isInspired() const;
 
+    virtual bool isFemale() const;
     virtual bool isVehicle() const;
     virtual bool isFlying() const;
     virtual StringLcl getSpecialInfoString(MapState *state) const = 0;

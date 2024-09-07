@@ -79,6 +79,9 @@ uint32_t Princess::getInspireAnimationsNumberInSet() const {
 std::string Princess::getBaseTextureName() const {
     return "princess";
 }
+bool Princess::isFemale() const {
+    return true;
+}
 uint32_t Princess::getMovementPoints() const {
     return Parameters::get().getInt("princess_movement_points");
 }

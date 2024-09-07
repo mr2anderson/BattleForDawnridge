@@ -28,15 +28,19 @@
 
 class Name {
 public:
+    typedef enum Gender {
+        Male,
+        Female
+    } Gender;
+
     Name();
 
-    StringLcl toString() const;
+    StringLcl toString(Gender gender) const;
 private:
-    uint32_t a, b;
+    uint32_t seed;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive& ar, const unsigned int version) {
-        ar & this->a;
-        ar & this->b;
+        ar & this->seed;
     }
 };

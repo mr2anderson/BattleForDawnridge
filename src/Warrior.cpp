@@ -89,7 +89,10 @@ StringLcl Warrior::getNameString() const {
     if (this->isVehicle()) {
         return {};
     }
-    return this->name.toString();
+    if (this->isFemale()) {
+        return this->name.toString(Name::Gender::Female);
+    }
+    return this->name.toString(Name::Gender::Male);
 }
 Events Warrior::hit(Damage damage) {
     uint32_t d = damage.getHpLoss(this->getDefence());
@@ -494,6 +497,9 @@ void Warrior::wipeInspiredStatus() {
 }
 bool Warrior::isInspired() const {
     return this->inspired;
+}
+bool Warrior::isFemale() const {
+    return false;
 }
 bool Warrior::isVehicle() const {
     return false;

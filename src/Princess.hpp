@@ -40,6 +40,7 @@ public:
     std::string getSoundName() const override;
     StringLcl getDescription() const override;
     std::string getBaseTextureName() const override;
+    bool isFemale() const override;
 private:
     uint32_t getTalkingAnimationsNumberInSet() const override;
     uint32_t getRunningAnimationsNumberInSet() const override;
