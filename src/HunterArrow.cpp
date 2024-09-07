@@ -21,7 +21,7 @@
 #include "GlobalClock.hpp"
 
 
-const uint32_t HunterArrow::TOTAL_TYPES = 1;
+const uint32_t HunterArrow::TOTAL_TYPES = 36;
 
 
 HunterArrow::HunterArrow() = default;
