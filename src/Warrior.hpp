@@ -26,6 +26,7 @@
 #include "Clock.hpp"
 #include "Timer.hpp"
 #include "SpecialAnimation.hpp"
+#include "Name.hpp"
 
 
 #pragma once
@@ -39,6 +40,7 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+    StringLcl getNameString() const;
 	Events hit(Damage d) override;
     Events heal();
     Events inspire();
@@ -103,6 +105,7 @@ protected:
     virtual Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) = 0;
 	virtual Defence getBaseDefence() const = 0;
 private:
+    Name name;
 	boost::optional<uint32_t> movementPoints;
     bool hasSpecialMoves;
     bool enemyMove;
@@ -147,6 +150,7 @@ private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {
         ar & boost::serialization::base_object<Unit>(*this);
+        ar & this->name;
         ar & this->movementPoints;
         ar & this->hasSpecialMoves;
         ar & this->enemyMove;

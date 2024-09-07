@@ -28,12 +28,13 @@ StringLcl::StringLcl() = default;
 StringLcl::StringLcl(const std::string& data) {
 	this->data = data;
 }
-std::unordered_map<uint32_t, sf::Color> StringLcl::getColors() const {
+std::unordered_map<uint32_t, StringLcl::Style> StringLcl::getStyles() const {
     try {
-        std::unordered_map<uint32_t, sf::Color> result;
+        std::unordered_map<uint32_t, StringLcl::Style> result;
         std::wstringstream ss(this->toWstring());
         std::wstring line;
         sf::Color currentColor = sf::Color::White;
+        sf::Text::Style currentStyle = sf::Text::Style::Regular;
         uint32_t ctr = 0;
         while (std::getline(ss, line, L'\n')) {
             std::wstringstream wordSS(line);
@@ -44,10 +45,16 @@ std::unordered_map<uint32_t, sf::Color> StringLcl::getColors() const {
                     wordSS >> r >> g >> b;
                     currentColor = sf::Color(std::stoi(r), std::stoi(g), std::stoi(b));
                 }
+                else if (word == L"[b]") {
+                    currentStyle = sf::Text::Style::Bold;
+                }
                 else {
-                    if (currentColor != sf::Color::White) {
-                        result[ctr] = currentColor;
+                    if (currentColor != sf::Color::White or currentStyle != sf::Text::Style::Regular) {
+                        result[ctr] = Style();
+                        result[ctr].color = currentColor;
+                        result[ctr].style = currentStyle;
                         currentColor = sf::Color::White;
+                        currentStyle = sf::Text::Style::Regular;
                     }
                     ctr = ctr + 1;
                 }
@@ -60,7 +67,7 @@ std::unordered_map<uint32_t, sf::Color> StringLcl::getColors() const {
         return {};
     }
 }
-std::wstring StringLcl::getNoColor() const {
+std::wstring StringLcl::getWithoutStyles() const {
     try {
         std::wstring result;
         std::wstringstream ss(this->toWstring());
@@ -72,6 +79,9 @@ std::wstring StringLcl::getNoColor() const {
                 if (word == L"[c]") {
                     std::wstring trash;
                     wordSS >> trash >> trash >> trash;
+                }
+                else if (word == L"[b]") {
+
                 }
                 else {
                     result = result + word + L' ';
@@ -137,4 +147,7 @@ StringLcl StringLcl::COLOR(uint32_t r, uint32_t g, uint32_t b) {
 }
 StringLcl StringLcl::COLOR(sf::Color c) {
     return COLOR(c.r, c.g, c.b);
+}
+StringLcl StringLcl::BOLD() {
+    return {"[b] "};
 }

@@ -85,6 +85,12 @@ void Warrior::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         this->drawHPPointer(target, states);
     }
 }
+StringLcl Warrior::getNameString() const {
+    if (this->isVehicle()) {
+        return {};
+    }
+    return this->name.toString();
+}
 Events Warrior::hit(Damage damage) {
     uint32_t d = damage.getHpLoss(this->getDefence());
 
@@ -452,7 +458,7 @@ StringLcl Warrior::getDetailedDescription(MapState *state) const {
     else {
         timeBonus = timeBonus + " " + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_WORST) + std::to_string(timeBonusVal) + "%";
     }
-    StringLcl result = this->Unit::getDetailedDescription(state) + "\n" +
+    StringLcl result = this->getNameString() + "\n\n" + this->Unit::getDetailedDescription(state) + "\n" +
                        StringLcl("{movement_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR(this->movementPoints.value_or(this->getMovementPoints()), this->getMovementPoints())) + std::to_string(this->movementPoints.value_or(this->getMovementPoints())) + "\n" +
                        StringLcl("{max_movement_points}") + StringLcl::COLOR(COLOR_THEME::STATE_COLOR_BEST) + std::to_string(this->getMovementPoints()) + "\n\n" +
                        timeBonus + "\n\n";

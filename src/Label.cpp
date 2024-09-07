@@ -65,21 +65,20 @@ void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sfe::RichText text;
 	text.setCharacterSize(12);
 	text.setFont(*Fonts::get().get("1"));
-	text << sf::Text::Regular;
-    std::wstring string = WRAP_TEXT(this->message.getNoColor(), this->getW() - 10, text.getFont(), text.getCharacterSize()).toWideString();
+    std::wstring string = WRAP_TEXT(this->message.getWithoutStyles(), this->getW() - 10, text.getFont(), text.getCharacterSize()).toWideString();
     std::wstringstream lineSS(string);
     std::wstring line;
     uint32_t ctr = 0;
-    std::unordered_map<uint32_t, sf::Color> colors = this->message.getColors();
+    std::unordered_map<uint32_t, StringLcl::Style> styles = this->message.getStyles();
     while (std::getline(lineSS, line, L'\n')) {
         std::wstringstream wordSS(line);
         std::wstring word;
         while (wordSS >> word) {
-            if (colors.find(ctr) != colors.end()) {
-                text << colors[ctr];
+            if (styles.find(ctr) != styles.end()) {
+                text << styles[ctr].color << styles[ctr].style;
             }
             else {
-                text << sf::Color::White;
+                text << sf::Color::White << sf::Text::Style::Regular;
             }
             text << word;
             text << L' ';

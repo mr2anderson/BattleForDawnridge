@@ -31,21 +31,21 @@ std::unique_ptr<sf::Drawable> TextFlyingE::getDrawable(sf::Vector2f position, sf
     sfe::RichText text;
     text.setFont(*Fonts::get().get("1"));
 
-    std::wstringstream ss(this->str.getNoColor());
-    std::unordered_map<uint32_t, sf::Color> colors = this->str.getColors();
+    std::wstringstream ss(this->str.getWithoutStyles());
+    std::unordered_map<uint32_t, StringLcl::Style> styles = this->str.getStyles();
     std::wstring line;
     uint32_t ctr = 0;
     while (std::getline(ss, line, L'\n')) {
         std::wstringstream wordss(line);
         std::wstring word;
         while (std::getline(wordss, word, L' ')) {
-            if (colors.find(ctr) == colors.end()) {
-                text << sf::Color::White;
+            if (styles.find(ctr) == styles.end()) {
+                text << sf::Color::White << sf::Text::Style::Regular;
             }
             else {
-                sf::Color orColor = colors[ctr];
+                sf::Color orColor = styles[ctr].color;
                 orColor.a = color.a;
-                text << orColor;
+                text << orColor << styles[ctr].style;
             }
             text << word + L' ';
             ctr = ctr + 1;

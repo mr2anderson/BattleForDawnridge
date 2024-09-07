@@ -20,7 +20,8 @@
 #include <string>
 #include <boost/serialization/access.hpp>
 #include <unordered_map>
-#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics.hpp>
+#include "RichText/RichText.hpp"
 #include "ArchiveType.hpp"
 
 
@@ -29,11 +30,16 @@
 
 class StringLcl {
 public:
+    struct Style {
+        sf::Color color;
+        sf::Text::Style style;
+    };
+
 	StringLcl();
 	StringLcl(const std::string& data);
 
-	std::unordered_map<uint32_t, sf::Color> getColors() const;
-    std::wstring getNoColor() const;
+	std::unordered_map<uint32_t, Style> getStyles() const;
+    std::wstring getWithoutStyles() const;
 
 	std::string toRawString() const;
 
@@ -45,6 +51,8 @@ public:
 
     static StringLcl COLOR(uint32_t r, uint32_t g, uint32_t b);
     static StringLcl COLOR(sf::Color c);
+
+    static StringLcl BOLD();
 private:
 	std::string data;
 
