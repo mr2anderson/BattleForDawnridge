@@ -27,7 +27,6 @@ static constexpr uint32_t MALE_NAMES = 21;
 static constexpr uint32_t MALE_SURNAMES = 21;
 static constexpr uint32_t FEMALE_NAMES = 16;
 static constexpr uint32_t FEMALE_SURNAMES = 21;
-static constexpr uint32_t THIRD_NAMES = 6;
 
 
 Name::Name() {
@@ -36,13 +35,12 @@ Name::Name() {
 StringLcl Name::toString(Gender gender) const {
     uint32_t name = (this->seed >> 24) & 0xFF;
     uint32_t surName = (this->seed >> 16) & 0xFF;
-    uint32_t thirdName = (this->seed >> 8) & 0xFF;
 
     switch (gender) {
         case Gender::Male:
-            return StringLcl::BOLD() + StringLcl("{name_male_" + std::to_string(name % MALE_NAMES) + "} ") + StringLcl::BOLD() + StringLcl("{surname_male_" + std::to_string(surName % MALE_SURNAMES) + "} ") + StringLcl::BOLD() + StringLcl(std::to_string(thirdName % THIRD_NAMES + 1));
+            return StringLcl::BOLD() + StringLcl("{name_male_" + std::to_string(name % MALE_NAMES) + "} ") + StringLcl::BOLD() + StringLcl("{surname_male_" + std::to_string(surName % MALE_SURNAMES) + "} ");
         case Gender::Female:
-            return StringLcl::BOLD() + StringLcl("{name_female_" + std::to_string(name % FEMALE_NAMES) + "} ") + StringLcl::BOLD() + StringLcl("{surname_female_" + std::to_string(surName % FEMALE_SURNAMES) + "} ") + StringLcl::BOLD() + StringLcl(std::to_string(thirdName % THIRD_NAMES + 1));
+            return StringLcl::BOLD() + StringLcl("{name_female_" + std::to_string(name % FEMALE_NAMES) + "} ") + StringLcl::BOLD() + StringLcl("{surname_female_" + std::to_string(surName % FEMALE_SURNAMES) + "} ");
         default:
             return {};
     }
