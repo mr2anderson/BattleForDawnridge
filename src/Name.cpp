@@ -20,27 +20,17 @@
 #include "Name.hpp"
 #include "GlobalRandomGenerator32.hpp"
 #include "Locales.hpp"
-#include "ColorTheme.hpp"
-
-
-static constexpr uint32_t MALE_NAMES = 21;
-static constexpr uint32_t MALE_SURNAMES = 21;
-static constexpr uint32_t FEMALE_NAMES = 16;
-static constexpr uint32_t FEMALE_SURNAMES = 21;
 
 
 Name::Name() {
     this->seed = GlobalRandomGenerator32::get().gen();
 }
 StringLcl Name::toString(Gender gender) const {
-    uint32_t name = (this->seed >> 24) & 0xFF;
-    uint32_t surName = (this->seed >> 16) & 0xFF;
-
     switch (gender) {
         case Gender::Male:
-            return StringLcl::BOLD() + StringLcl("{name_male_" + std::to_string(name % MALE_NAMES) + "} ") + StringLcl::BOLD() + StringLcl("{surname_male_" + std::to_string(surName % MALE_SURNAMES) + "} ");
+            return StringLcl::BOLD() + StringLcl("{male_" + std::to_string(this->seed % Locales::get().totalMaleNames()) + "}");
         case Gender::Female:
-            return StringLcl::BOLD() + StringLcl("{name_female_" + std::to_string(name % FEMALE_NAMES) + "} ") + StringLcl::BOLD() + StringLcl("{surname_female_" + std::to_string(surName % FEMALE_SURNAMES) + "} ");
+            return StringLcl::BOLD() + StringLcl("{female_" + std::to_string(this->seed % Locales::get().totalFemaleNames()) + "}");
         default:
             return {};
     }

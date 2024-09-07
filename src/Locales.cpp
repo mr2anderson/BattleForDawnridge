@@ -32,9 +32,69 @@
 
 Locales::Locales() {
     this->error = UTFEncoder::get().utf8ToUtf16("UNKNOWN_LOCALES_KEY_REPORT_DEVELOPER");
+    this->maleNames = 0;
+    this->femaleNames = 0;
 }
 void Locales::load() {
-    std::string path = Root::get().getDataRoot() + "/locales/" + this->getPath();
+    std::string basePath, maleNamesPath, femaleNamesPath;
+    this->loadShortPaths(basePath, maleNamesPath, femaleNamesPath);
+
+    this->loadBase(basePath);
+    this->loadMaleNames(maleNamesPath);
+    this->loadFemaleNames(femaleNamesPath);
+}
+void Locales::setDefaultPath(const std::string& path) {
+    if (path == this->getMainShortPath()) {
+        throw LanguageAlreadyInUse();
+    }
+
+    if (!std::filesystem::is_directory(Root::get().getUserdataRoot())) {
+        std::filesystem::create_directories(Root::get().getUserdataRoot());
+    }
+
+    std::ofstream file(Root::get().getUserdataRoot() + "/language.cfg");
+    file << path;
+    file.close();
+}
+std::wstring* Locales::get(const std::string& name) {
+    auto it = this->texts.find(name);
+    if (it == this->texts.end()) {
+        std::cerr << "Invalid text uid: " << name << std::endl;
+        return &this->error;
+    }
+    return &it->second;
+}
+uint32_t Locales::totalMaleNames() const {
+    return this->maleNames;
+}
+uint32_t Locales::totalFemaleNames() const {
+    return this->femaleNames;
+}
+std::string Locales::getMainShortPath() const {
+    std::ifstream file(Root::get().getUserdataRoot() + "/language.cfg");
+    if (file.is_open()) {
+        std::string path;
+        std::getline(file, path);
+        file.close();
+        return path;
+    }
+    return "en.cfg";
+}
+void Locales::loadShortPaths(std::string &base, std::string &maleNames, std::string &femaleNames) {
+    std::string path = Root::get().getDataRoot() + "/locales/" + this->getMainShortPath();
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        throw CouldntOpenLocales(path);
+    }
+
+    std::getline(file, base);
+    std::getline(file, maleNames);
+    std::getline(file, femaleNames);
+
+    file.close();
+}
+void Locales::loadBase(const std::string &shortPath) {
+    std::string path = Root::get().getDataRoot() + "/locales/" + shortPath;
     std::ifstream file(path);
     if (!file.is_open()) {
         throw CouldntOpenLocales(path);
@@ -81,7 +141,7 @@ void Locales::load() {
                 currentData.pop_back();
             }
             this->texts[currentId] = currentData;
-            
+
             continue;
         }
 
@@ -95,34 +155,41 @@ void Locales::load() {
 
     file.close();
 }
-void Locales::setDefaultPath(const std::string& path) {
-    if (path == this->getPath()) {
-        throw LanguageAlreadyInUse();
+void Locales::loadMaleNames(const std::string &shortPath) {
+    std::string path = Root::get().getDataRoot() + "/locales/" + shortPath;
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        throw CouldntOpenLocales(path);
     }
 
-    if (!std::filesystem::is_directory(Root::get().getUserdataRoot())) {
-        std::filesystem::create_directories(Root::get().getUserdataRoot());
+    std::string buff;
+    while (std::getline(file, buff)) {
+        this->texts["male_" + std::to_string(this->maleNames)] = UTFEncoder::get().utf8ToUtf16(buff);
+        this->maleNames = this->maleNames + 1;
     }
 
-    std::ofstream file(Root::get().getUserdataRoot() + "/language.cfg");
-    file << path;
+    if (this->maleNames == 0) {
+        throw CouldntOpenLocales(path);
+    }
+
     file.close();
 }
-std::wstring* Locales::get(const std::string& name) {
-    auto it = this->texts.find(name);
-    if (it == this->texts.end()) {
-        std::cerr << "Invalid text uid: " << name << std::endl;
-        return &this->error;
+void Locales::loadFemaleNames(const std::string &shortPath) {
+    std::string path = Root::get().getDataRoot() + "/locales/" + shortPath;
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        throw CouldntOpenLocales(path);
     }
-    return &it->second;
-}
-std::string Locales::getPath() const {
-    std::ifstream file(Root::get().getUserdataRoot() + "/language.cfg");
-    if (file.is_open()) {
-        std::string path;
-        std::getline(file, path);
-        file.close();
-        return path;
+
+    std::string buff;
+    while (std::getline(file, buff)) {
+        this->texts["female_" + std::to_string(this->femaleNames)] = UTFEncoder::get().utf8ToUtf16(buff);
+        this->femaleNames = this->femaleNames + 1;
     }
-    return "en.cfg";
+
+    if (this->femaleNames == 0) {
+        throw CouldntOpenLocales(path);
+    }
+
+    file.close();
 }

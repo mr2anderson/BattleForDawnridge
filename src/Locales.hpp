@@ -35,12 +35,20 @@ public:
     void load();
     void setDefaultPath(const std::string& path);
     std::wstring* get(const std::string& name);
+    uint32_t totalMaleNames() const;
+    uint32_t totalFemaleNames() const;
 private:
     Locales();
     Locales(const Locales& copy);
 
     std::unordered_map<std::string, std::wstring> texts;
     std::wstring error;
+    uint32_t maleNames, femaleNames;
 
-    std::string getPath() const;
+    std::string getMainShortPath() const;
+
+    void loadShortPaths(std::string &base, std::string &maleNames, std::string &femaleNames);
+    void loadBase(const std::string &shortPath);
+    void loadMaleNames(const std::string &shortPath);
+    void loadFemaleNames(const std::string &shortPath);
 };
