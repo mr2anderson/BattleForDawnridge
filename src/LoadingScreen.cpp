@@ -361,7 +361,7 @@ bool LoadingScreen::loadAll(sf::RenderWindow &window, uint32_t &percent) {
         }
         else if (percent == 95) {
             percent = 100;
-            for (const std::string& a : { "ridge", "lake", "river" }) {
+            for (const std::string& a : { "ridge", "lake" }) {
                 Maps::get().add(a, "levels/" + a + ".tmx");
             }
         }
