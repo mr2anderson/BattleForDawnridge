@@ -45,6 +45,7 @@ private:
     Events processSpecialAnimation() override;
     std::vector<SpecialMove> getSpecialMoves(MapState *state) const override;
     Events handleSpecialMove(MapState *state, uint32_t targetX, uint32_t targetY) override;
+    bool isInspirable() const override;
 
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

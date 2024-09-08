@@ -102,6 +102,9 @@ Events WarriorAttacker::handleSpecialMove(MapState *state, uint32_t targetX, uin
 
     return Events();
 }
+bool WarriorAttacker::isInspirable() const {
+    return true;
+}
 Events WarriorAttacker::startAttack(MapState *state, std::shared_ptr<Unit> u, uint32_t targetX, uint32_t targetY) {
     Events events;
 

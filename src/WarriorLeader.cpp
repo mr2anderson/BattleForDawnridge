@@ -63,7 +63,7 @@ std::vector<SpecialMove> WarriorLeader::getSpecialMoves(MapState *state) const {
     return {};
 }
 bool WarriorLeader::canInspire(std::shared_ptr<Warrior> w) const {
-    if (!w->exist() or w->getPlayerId() != this->getPlayerId() or w->isInspired() or this->getUUID() == w->getUUID()) {
+    if (!w->exist() or w->getPlayerId() != this->getPlayerId() or w->isInspired() or this->getUUID() == w->getUUID() or !w->isInspirable()) {
         return false;
     }
     uint32_t dx = std::max(this->getX(), w->getX()) - std::min(this->getX(), w->getX());

@@ -510,6 +510,9 @@ bool Warrior::isFlying() const {
 bool Warrior::delayBetweenTalkingAnimations() const {
     return true;
 }
+bool Warrior::isInspirable() const {
+    return false;
+}
 std::shared_ptr<sf::Drawable> Warrior::getSelectablePointer(uint32_t mouseX, uint32_t mouseY) const {
     sf::Sprite sprite;
     sprite.setTexture(*Textures::get().get("hand"));

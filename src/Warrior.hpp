@@ -96,6 +96,7 @@ public:
 	virtual uint32_t getPopulation() const = 0;
 	virtual uint32_t getMovementPoints() const = 0;
     virtual bool blockBuildingAbility() const = 0;
+    virtual bool isInspirable() const;
 
 	static const uint32_t TOTAL_FOOTSTEPS;
     static const uint32_t TOTAL_WINGS;
