@@ -379,7 +379,6 @@ boost*
 bzip2*
 
 
-CMakeLists.txt
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake
