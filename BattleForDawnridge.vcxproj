@@ -383,6 +383,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
     <None Include="extlibs\bin\x64\openal32.dll" />
     <None Include="extlibs\bin\x64\sfml-audio-2.dll" />
     <None Include="extlibs\bin\x64\sfml-audio-d-2.dll" />
@@ -600,6 +602,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\Window.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
+    <ClInclude Include="src\Academy.hpp" />
+    <ClInclude Include="src\AcademySpec.hpp" />
     <ClInclude Include="src\AddHpEvent.hpp" />
     <ClInclude Include="src\AddResourceEvent.hpp" />
     <ClInclude Include="src\AddResourcesEvent.hpp" />
@@ -608,6 +612,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ArableSpec.hpp" />
     <ClInclude Include="src\ArchiveType.hpp" />
     <ClInclude Include="src\AreaResourcePoint.hpp" />
+    <ClInclude Include="src\Barbar.hpp" />
     <ClInclude Include="src\Barracks.hpp" />
     <ClInclude Include="src\BarracksSpec.hpp" />
     <ClInclude Include="src\BigArrow.hpp" />
@@ -634,6 +639,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ChangeSoundVolumeEvent.hpp" />
     <ClInclude Include="src\ChangeWarriorDirectionEvent.hpp" />
     <ClInclude Include="src\ChooseLanguageEvent.hpp" />
+    <ClInclude Include="src\Church.hpp" />
+    <ClInclude Include="src\ChurchWarriorProducerSpec.hpp" />
     <ClInclude Include="src\CircleLightSource.hpp" />
     <ClInclude Include="src\CircleLightSourceDynamic.hpp" />
     <ClInclude Include="src\CircleLightSourceLinear.hpp" />
@@ -702,7 +709,6 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Events.hpp" />
     <ClInclude Include="src\ExitButtonSpec.hpp" />
     <ClInclude Include="src\Filter.hpp" />
-    <ClInclude Include="src\Fire.hpp" />
     <ClInclude Include="src\FirstTimeTipsTable.hpp" />
     <ClInclude Include="src\FlyingE.hpp" />
     <ClInclude Include="src\FocusOnEvent.hpp" />
@@ -720,8 +726,10 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\HashTableMapPosition.hpp" />
     <ClInclude Include="src\Healer.hpp" />
     <ClInclude Include="src\HealerProjectile.hpp" />
+    <ClInclude Include="src\HealSpell.hpp" />
     <ClInclude Include="src\HighlightColors.hpp" />
     <ClInclude Include="src\HighlightTable.hpp" />
+    <ClInclude Include="src\HolyMagick.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindow.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindowComponent.hpp" />
     <ClInclude Include="src\HorizontalSelectionWindowStructure.hpp" />
@@ -729,6 +737,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\HouseSpec.hpp" />
     <ClInclude Include="src\HPFlyingE.hpp" />
     <ClInclude Include="src\HPGO.hpp" />
+    <ClInclude Include="src\Hunter.hpp" />
+    <ClInclude Include="src\HunterArrow.hpp" />
     <ClInclude Include="src\IAreaControllerSpec.hpp" />
     <ClInclude Include="src\IAreaResourcePointCollectorSpec.hpp" />
     <ClInclude Include="src\IBuildingSpec.hpp" />
@@ -763,6 +773,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\IWarriorHealerSpec.hpp" />
     <ClInclude Include="src\IWithLightSource.hpp" />
     <ClInclude Include="src\IWithSuspendingAnimation.hpp" />
+    <ClInclude Include="src\Killer.hpp" />
     <ClInclude Include="src\KillNextTurnEvent.hpp" />
     <ClInclude Include="src\Knight.hpp" />
     <ClInclude Include="src\Label.hpp" />
@@ -783,6 +794,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\LocalServer.hpp" />
     <ClInclude Include="src\LocalServerAlreadyLaunched.hpp" />
     <ClInclude Include="src\Logs.hpp" />
+    <ClInclude Include="src\Magick.hpp" />
     <ClInclude Include="src\MainScreen.hpp" />
     <ClInclude Include="src\MainScreenButtonSpec.hpp" />
     <ClInclude Include="src\MainServerPosition.hpp" />
@@ -812,6 +824,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\MovementGraph.hpp" />
     <ClInclude Include="src\MovementGraphElement.hpp" />
     <ClInclude Include="src\Music.hpp" />
+    <ClInclude Include="src\Name.hpp" />
     <ClInclude Include="src\NetworkGameButtonSpec.hpp" />
     <ClInclude Include="src\NewMoveMainPriority.hpp" />
     <ClInclude Include="src\NewMovePriority.hpp" />
@@ -830,7 +843,11 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\Players.hpp" />
     <ClInclude Include="src\Playlist.hpp" />
     <ClInclude Include="src\PlaySoundEvent.hpp" />
+    <ClInclude Include="src\Poisoner.hpp" />
+    <ClInclude Include="src\PoisonerArrow.hpp" />
+    <ClInclude Include="src\PoisonSpell.hpp" />
     <ClInclude Include="src\PopUpElement.hpp" />
+    <ClInclude Include="src\Princess.hpp" />
     <ClInclude Include="src\Priority.hpp" />
     <ClInclude Include="src\Program.hpp" />
     <ClInclude Include="src\LoadingBar.hpp" />
@@ -839,10 +856,12 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\QuarrySpec.hpp" />
     <ClInclude Include="src\RageSpell.hpp" />
     <ClInclude Include="src\Ram.hpp" />
+    <ClInclude Include="src\Range.hpp" />
+    <ClInclude Include="src\RangeWarriorProducerSpec.hpp" />
     <ClInclude Include="src\RectangularUiElement.hpp" />
     <ClInclude Include="src\RefreshAttackAbilityEvent.hpp" />
-    <ClInclude Include="src\RefreshHealingAbilityEvent.hpp" />
     <ClInclude Include="src\RefreshMovementPointsEvent.hpp" />
+    <ClInclude Include="src\RefreshWasHealedStatusEvent.hpp" />
     <ClInclude Include="src\RemotePlayer.hpp" />
     <ClInclude Include="src\RemotePlayers.hpp" />
     <ClInclude Include="src\ResetHighlightEvent.hpp" />
@@ -878,6 +897,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\ServerScreen.hpp" />
     <ClInclude Include="src\SetFireEvent.hpp" />
     <ClInclude Include="src\SetHighlightEvent.hpp" />
+    <ClInclude Include="src\SetInspiredEffectEvent.hpp" />
+    <ClInclude Include="src\SetPoisonEffectEvent.hpp" />
     <ClInclude Include="src\SetSpellEvent.hpp" />
     <ClInclude Include="src\ShootingPriorityComp.hpp" />
     <ClInclude Include="src\SockererHouse.hpp" />
@@ -886,6 +907,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SoundButtonSpec.hpp" />
     <ClInclude Include="src\SoundQueue.hpp" />
     <ClInclude Include="src\Sounds.hpp" />
+    <ClInclude Include="src\SpecialAnimation.hpp" />
     <ClInclude Include="src\SpecialMove.hpp" />
     <ClInclude Include="src\Spell.hpp" />
     <ClInclude Include="src\SpellEffect.hpp" />
@@ -897,6 +919,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\StartNetworkGameEvent.hpp" />
     <ClInclude Include="src\StartWarriorAnimationEvent.hpp" />
     <ClInclude Include="src\StartWarriorProducingEvent.hpp" />
+    <ClInclude Include="src\StatusBar.hpp" />
     <ClInclude Include="src\Stone.hpp" />
     <ClInclude Include="src\StringLcl.hpp" />
     <ClInclude Include="src\string_compression.hpp" />
@@ -905,6 +928,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\SubResourcesEvent.hpp" />
     <ClInclude Include="src\SupportButtonSpec.hpp" />
     <ClInclude Include="src\SuspendingAnimation.hpp" />
+    <ClInclude Include="src\TextFlyingE.hpp" />
     <ClInclude Include="src\Textures.hpp" />
     <ClInclude Include="src\TilesetHandler.hpp" />
     <ClInclude Include="src\Time.hpp" />
@@ -946,28 +970,34 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="src\WarehouseWoodSpec.hpp" />
     <ClInclude Include="src\Warrior.hpp" />
     <ClInclude Include="src\WarriorAttacker.hpp" />
+    <ClInclude Include="src\WarriorDstAttacker.hpp" />
+    <ClInclude Include="src\WarriorDstSingleAttacker.hpp" />
     <ClInclude Include="src\WarriorHealer.hpp" />
     <ClInclude Include="src\WarriorHPPointer.hpp" />
+    <ClInclude Include="src\WarriorLeader.hpp" />
     <ClInclude Include="src\WarriorNearAttacker.hpp" />
     <ClInclude Include="src\WarriorNearSingleAttacker.hpp" />
     <ClInclude Include="src\WarriorPlayerPointer.hpp" />
     <ClInclude Include="src\WarriorProducerSpec.hpp" />
     <ClInclude Include="src\WarriorProducingFinishedEvent.hpp" />
-    <ClInclude Include="src\WarriorProjectileHealer.hpp" />
     <ClInclude Include="src\Water.hpp" />
     <ClInclude Include="src\Well.hpp" />
     <ClInclude Include="src\WellSpec.hpp" />
+    <ClInclude Include="src\WhiteMage.hpp" />
     <ClInclude Include="src\WindowButton.hpp" />
     <ClInclude Include="src\WindowButtonImage.hpp" />
     <ClInclude Include="src\WindowEntry.hpp" />
     <ClInclude Include="src\WindowTwoButtons.hpp" />
     <ClInclude Include="src\WipeAttackAbilityEvent.hpp" />
-    <ClInclude Include="src\WipeHealingAbilityEvent.hpp" />
+    <ClInclude Include="src\WipeInspiredEffectEvent.hpp" />
+    <ClInclude Include="src\WipePoisonEffectEvent.hpp" />
     <ClInclude Include="src\Workshop.hpp" />
     <ClInclude Include="src\WorkshopWarriorHealerSpec.hpp" />
     <ClInclude Include="src\WorkshopWarriorProducerSpec.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Academy.cpp" />
+    <ClCompile Include="src\AcademySpec.cpp" />
     <ClCompile Include="src\AddHpEvent.cpp" />
     <ClCompile Include="src\AddResourceEvent.cpp" />
     <ClCompile Include="src\AddResourcesEvent.cpp" />
@@ -975,6 +1005,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Arable.cpp" />
     <ClCompile Include="src\ArableSpec.cpp" />
     <ClCompile Include="src\AreaResourcePoint.cpp" />
+    <ClCompile Include="src\Barbar.cpp" />
     <ClCompile Include="src\Barracks.cpp" />
     <ClCompile Include="src\BarracksSpec.cpp" />
     <ClCompile Include="src\BigArrow.cpp" />
@@ -1001,6 +1032,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ChangeSoundVolumeEvent.cpp" />
     <ClCompile Include="src\ChangeWarriorDirectionEvent.cpp" />
     <ClCompile Include="src\ChooseLanguageEvent.cpp" />
+    <ClCompile Include="src\Church.cpp" />
+    <ClCompile Include="src\ChurchWarriorProducerSpec.cpp" />
     <ClCompile Include="src\CircleLightSource.cpp" />
     <ClCompile Include="src\CircleLightSourceDynamic.cpp" />
     <ClCompile Include="src\CircleLightSourceLinear.cpp" />
@@ -1015,7 +1048,6 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ClueManager.cpp" />
     <ClCompile Include="src\Collections.cpp" />
     <ClCompile Include="src\ColorBlender.cpp" />
-    <ClCompile Include="src\ColorTheme.cpp" />
     <ClCompile Include="src\CompByClickPriority.cpp" />
     <ClCompile Include="src\CompByDrawPriority.cpp" />
     <ClCompile Include="src\CompByNewMovePriority.cpp" />
@@ -1059,7 +1091,6 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Event.cpp" />
     <ClCompile Include="src\Events.cpp" />
     <ClCompile Include="src\ExitButtonSpec.cpp" />
-    <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\FirstTimeTipsTable.cpp" />
     <ClCompile Include="src\FlyingE.cpp" />
     <ClCompile Include="src\FocusOnEvent.cpp" />
@@ -1073,14 +1104,18 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\GraphicsButtonSpec.cpp" />
     <ClCompile Include="src\Healer.cpp" />
     <ClCompile Include="src\HealerProjectile.cpp" />
+    <ClCompile Include="src\HealSpell.cpp" />
     <ClCompile Include="src\HighlightColors.cpp" />
     <ClCompile Include="src\HighlightTable.cpp" />
+    <ClCompile Include="src\HolyMagick.cpp" />
     <ClCompile Include="src\HorizontalSelectionWindow.cpp" />
     <ClCompile Include="src\HorizontalSelectionWindowComponent.cpp" />
     <ClCompile Include="src\House.cpp" />
     <ClCompile Include="src\HouseSpec.cpp" />
     <ClCompile Include="src\HPFlyingE.cpp" />
     <ClCompile Include="src\HPGO.cpp" />
+    <ClCompile Include="src\Hunter.cpp" />
+    <ClCompile Include="src\HunterArrow.cpp" />
     <ClCompile Include="src\IAreaControllerSpec.cpp" />
     <ClCompile Include="src\IAreaResourcePointCollectorSpec.cpp" />
     <ClCompile Include="src\IBuildingSpec.cpp" />
@@ -1110,6 +1145,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\IWarehouseSpec.cpp" />
     <ClCompile Include="src\IWarriorHealerSpec.cpp" />
     <ClCompile Include="src\IWithLightSource.cpp" />
+    <ClCompile Include="src\Killer.cpp" />
     <ClCompile Include="src\KillNextTurnEvent.cpp" />
     <ClCompile Include="src\Knight.cpp" />
     <ClCompile Include="src\Label.cpp" />
@@ -1130,6 +1166,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\LocalServer.cpp" />
     <ClCompile Include="src\LocalServerAlreadyLaunched.cpp" />
     <ClCompile Include="src\Logs.cpp" />
+    <ClCompile Include="src\Magick.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainScreen.cpp" />
     <ClCompile Include="src\MainScreenButtonSpec.cpp" />
@@ -1159,6 +1196,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\MovementGraph.cpp" />
     <ClCompile Include="src\MovementGraphElement.cpp" />
     <ClCompile Include="src\Music.cpp" />
+    <ClCompile Include="src\Name.cpp" />
     <ClCompile Include="src\NetworkGameButtonSpec.cpp" />
     <ClCompile Include="src\NewMovePriority.cpp" />
     <ClCompile Include="src\NextClueEvent.cpp" />
@@ -1176,7 +1214,11 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\Players.cpp" />
     <ClCompile Include="src\Playlist.cpp" />
     <ClCompile Include="src\PlaySoundEvent.cpp" />
+    <ClCompile Include="src\Poisoner.cpp" />
+    <ClCompile Include="src\PoisonerArrow.cpp" />
+    <ClCompile Include="src\PoisonSpell.cpp" />
     <ClCompile Include="src\PopUpElement.cpp" />
+    <ClCompile Include="src\Princess.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\LoadingBar.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
@@ -1184,10 +1226,12 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\QuarrySpec.cpp" />
     <ClCompile Include="src\RageSpell.cpp" />
     <ClCompile Include="src\Ram.cpp" />
+    <ClCompile Include="src\Range.cpp" />
+    <ClCompile Include="src\RangeWarriorProducerSpec.cpp" />
     <ClCompile Include="src\RectangularUiElement.cpp" />
     <ClCompile Include="src\RefreshAttackAbilityEvent.cpp" />
-    <ClCompile Include="src\RefreshHealingAbilityEvent.cpp" />
     <ClCompile Include="src\RefreshMovementPointsEvent.cpp" />
+    <ClCompile Include="src\RefreshWasHealedStatusEvent.cpp" />
     <ClCompile Include="src\RemotePlayer.cpp" />
     <ClCompile Include="src\RemotePlayers.cpp" />
     <ClCompile Include="src\ResetHighlightEvent.cpp" />
@@ -1220,6 +1264,8 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\ServerScreen.cpp" />
     <ClCompile Include="src\SetFireEvent.cpp" />
     <ClCompile Include="src\SetHighlightEvent.cpp" />
+    <ClCompile Include="src\SetInspiredEffectEvent.cpp" />
+    <ClCompile Include="src\SetPoisonEffectEvent.cpp" />
     <ClCompile Include="src\SetSpellEvent.cpp" />
     <ClCompile Include="src\ShootingPriorityComp.cpp" />
     <ClCompile Include="src\SockererHouse.cpp" />
@@ -1238,6 +1284,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\StartNetworkGameEvent.cpp" />
     <ClCompile Include="src\StartWarriorAnimationEvent.cpp" />
     <ClCompile Include="src\StartWarriorProducingEvent.cpp" />
+    <ClCompile Include="src\StatusBar.cpp" />
     <ClCompile Include="src\Stone.cpp" />
     <ClCompile Include="src\StringLcl.cpp" />
     <ClCompile Include="src\SubHpEvent.cpp" />
@@ -1245,6 +1292,7 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\SubResourcesEvent.cpp" />
     <ClCompile Include="src\SupportButtonSpec.cpp" />
     <ClCompile Include="src\SuspendingAnimation.cpp" />
+    <ClCompile Include="src\TextFlyingE.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\TilesetHandler.cpp" />
     <ClCompile Include="src\Time.cpp" />
@@ -1285,26 +1333,33 @@ xcopy /E /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClCompile Include="src\WarehouseWoodSpec.cpp" />
     <ClCompile Include="src\Warrior.cpp" />
     <ClCompile Include="src\WarriorAttacker.cpp" />
+    <ClCompile Include="src\WarriorDstAttacker.cpp" />
+    <ClCompile Include="src\WarriorDstSingleAttacker.cpp" />
     <ClCompile Include="src\WarriorHealer.cpp" />
     <ClCompile Include="src\WarriorHPPointer.cpp" />
+    <ClCompile Include="src\WarriorLeader.cpp" />
     <ClCompile Include="src\WarriorNearAttacker.cpp" />
     <ClCompile Include="src\WarriorNearSingleAttacker.cpp" />
     <ClCompile Include="src\WarriorPlayerPointer.cpp" />
     <ClCompile Include="src\WarriorProducerSpec.cpp" />
     <ClCompile Include="src\WarriorProducingFinishedEvent.cpp" />
-    <ClCompile Include="src\WarriorProjectileHealer.cpp" />
     <ClCompile Include="src\Water.cpp" />
     <ClCompile Include="src\Well.cpp" />
     <ClCompile Include="src\WellSpec.cpp" />
+    <ClCompile Include="src\WhiteMage.cpp" />
     <ClCompile Include="src\WindowButton.cpp" />
     <ClCompile Include="src\WindowButtonImage.cpp" />
     <ClCompile Include="src\WindowEntry.cpp" />
     <ClCompile Include="src\WindowTwoButtons.cpp" />
     <ClCompile Include="src\WipeAttackAbilityEvent.cpp" />
-    <ClCompile Include="src\WipeHealingAbilityEvent.cpp" />
+    <ClCompile Include="src\WipeInspiredEffectEvent.cpp" />
+    <ClCompile Include="src\WipePoisonEffectEvent.cpp" />
     <ClCompile Include="src\Workshop.cpp" />
     <ClCompile Include="src\WorkshopWarriorHealerSpec.cpp" />
     <ClCompile Include="src\WorkshopWarriorProducerSpec.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
