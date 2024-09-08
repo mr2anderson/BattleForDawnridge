@@ -363,13 +363,20 @@ MigrationBackup/
 FodyWeavers.xsd
 
 
+.idea
+cmake-build-debug
+cmake-build-rease
+build
+cmake-build-main
+
+
 
 userdata
 
 
 extlibs
-boost_1_85_0
-bzip2-1.0.6
+boost*
+bzip2*
 
 
 CMakeLists.txt
