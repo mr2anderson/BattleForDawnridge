@@ -20,13 +20,17 @@
 #include "StartWarriorAnimationEvent.hpp"
 
 
-StartWarriorAnimationEvent::StartWarriorAnimationEvent(std::shared_ptr<Warrior>  w, const std::string& animation) {
+StartWarriorAnimationEvent::StartWarriorAnimationEvent(std::shared_ptr<Warrior>  w, const std::string& animation, bool urgent) {
 	this->w = w;
 	this->animation = animation;
+    this->urgent = urgent;
 }
 std::shared_ptr<Warrior>  StartWarriorAnimationEvent::getWarrior() {
 	return this->w;
 }
 std::string StartWarriorAnimationEvent::getAnimation() const {
 	return this->animation;
+}
+bool StartWarriorAnimationEvent::isUrgent() const {
+    return this->urgent;
 }

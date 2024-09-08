@@ -30,11 +30,13 @@ class Warrior;
 
 class StartWarriorAnimationEvent : public Event {
 public:
-	StartWarriorAnimationEvent(std::shared_ptr<Warrior>  w, const std::string& animation);
+	StartWarriorAnimationEvent(std::shared_ptr<Warrior>  w, const std::string& animation, bool urgent = false);
 
-	std::shared_ptr<Warrior>  getWarrior();
+	std::shared_ptr<Warrior> getWarrior();
 	std::string getAnimation() const;
+    bool isUrgent() const override;
 private:
 	std::shared_ptr<Warrior>  w;
 	std::string animation;
+    bool urgent;
 };

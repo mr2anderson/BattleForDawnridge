@@ -21,7 +21,6 @@
 #include "Parameters.hpp"
 #include "CreateAnimationEvent.hpp"
 #include "CloseAnimationEvent.hpp"
-#include "HighlightColors.hpp"
 #include "PlaySoundEvent.hpp"
 #include "GlobalRandomGenerator32.hpp"
 #include "StartWarriorAnimationEvent.hpp"
@@ -87,7 +86,7 @@ Events WarriorLeader::processSpecialAnimation() {
 
     if (this->getCurrentAnimationState().finished) {
         events.add(std::make_shared<CloseAnimationEvent>());
-        events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "talking"));
+        events.add(std::make_shared<StartWarriorAnimationEvent>(this->getThis<Warrior>(), "talking", true));
     }
 
     return events;
