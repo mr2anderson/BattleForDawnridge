@@ -77,7 +77,7 @@ std::vector<BuildingHorizontalSelectionWindowComponent> IWarriorHealerSpec::getC
 	return { component };
 }
 uint32_t IWarriorHealerSpec::getRadius() const {
-	return 0;
+	return 1;
 }
 sf::Color IWarriorHealerSpec::getHighlightColor(uint32_t playerId) const {
     return HighlightColors::get().getBuildingHealColor(playerId);

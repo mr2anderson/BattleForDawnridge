@@ -31,6 +31,12 @@ bool RoadSpec::conductsIfNotWork() const {
 uint32_t RoadSpec::getRadius() const {
 	return Parameters::get().getInt("road_radius");
 }
+uint32_t RoadSpec::getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const {
+    return 1;
+}
+bool RoadSpec::warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const {
+    return true;
+}
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT(RoadSpec)

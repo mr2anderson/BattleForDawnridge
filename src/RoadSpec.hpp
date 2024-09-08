@@ -30,6 +30,8 @@ public:
 
 	bool conductsIfNotWork() const override;
 	uint32_t getRadius() const override;
+    uint32_t getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const override;
+    bool warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const override;
 private:
     friend class boost::serialization::access;
     template<class Archive> void serialize(Archive &ar, const unsigned int version) {

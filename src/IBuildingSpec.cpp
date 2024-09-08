@@ -19,6 +19,7 @@
 
 #include "IBuildingSpec.hpp"
 #include "GO.hpp"
+#include "Warrior.hpp"
 
 
 IBuildingSpec::~IBuildingSpec() = default;
@@ -53,10 +54,10 @@ bool IBuildingSpec::isActiveConductor(std::shared_ptr<const Building> building) 
 	return false;
 }
 uint32_t IBuildingSpec::getWarriorMovementCost(std::shared_ptr<const Building> building, std::shared_ptr<Warrior> w) const {
-	return 1;
+	return 1 + 999 * (!w->isFlying());
 }
 bool IBuildingSpec::warriorCanStay(std::shared_ptr<const Building> building, std::shared_ptr<const Warrior> w) const {
-	return true;
+	return w->isFlying();
 }
 bool IBuildingSpec::isUltraHighObstacle(std::shared_ptr<const Building> building, uint32_t playerId) const {
 	return false;
