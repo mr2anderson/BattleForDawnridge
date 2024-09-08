@@ -23,7 +23,6 @@
 #include <optional>
 #include <queue>
 #include <memory>
-#include "Timer.hpp"
 #include "UUID.hpp"
 
 
@@ -46,10 +45,8 @@ private:
     std::queue<sf::Packet> toSend;
     std::tuple<bool, sf::Packet> received;
     UUID uuid;
-    Timer validateTimer;
     bool work;
 
-    void validate();
     void processSending();
     void processReceiving();
 };

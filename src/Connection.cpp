@@ -25,7 +25,6 @@ Connection::Connection() {
     this->socket = std::make_shared<sf::TcpSocket>();
     this->socket->setBlocking(false);
     this->received = std::make_tuple(false, sf::Packet());
-    this->validateTimer = Timer(10 * 1000, Timer::TYPE::FIRST_DEFAULT);
     this->work = false;
 }
 std::shared_ptr<sf::TcpSocket> Connection::getSocketRef() {
@@ -50,19 +49,11 @@ void Connection::update() {
     if (!this->work) {
         return;
     }
-    if (this->validateTimer.ready()) {
-        this->validate();
-        this->validateTimer.reset();
-    }
     this->processSending();
     this->processReceiving();
 }
 UUID Connection::getUUID() const {
     return this->uuid;
-}
-void Connection::validate() {
-    sf::Packet emptyPacket;
-    this->toSend.push(emptyPacket);
 }
 void Connection::processSending() {
     if (this->toSend.empty()) {
